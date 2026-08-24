@@ -26,6 +26,13 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepValue<int> TargetMaxThroughput { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class AzureBlobDataTransferDataSourceSink : Azure.Provisioning.CosmosDB.DataTransferDataSourceSink
+    {
+        public AzureBlobDataTransferDataSourceSink() { }
+        public Azure.Provisioning.BicepValue<string> ContainerName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> EndpointUri { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class BackupPolicyMigrationState : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public BackupPolicyMigrationState() { }
@@ -45,6 +52,12 @@ namespace Azure.Provisioning.CosmosDB
     {
         Periodic = 0,
         Continuous = 1,
+    }
+    public partial class BaseCosmosDataTransferDataSourceSink : Azure.Provisioning.CosmosDB.DataTransferDataSourceSink
+    {
+        public BaseCosmosDataTransferDataSourceSink() { }
+        public Azure.Provisioning.BicepValue<string> RemoteAccountName { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum CassandraAuthenticationMethod
     {
@@ -79,6 +92,18 @@ namespace Azure.Provisioning.CosmosDB
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -123,7 +148,7 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.CosmosDB.CassandraError ProvisionError { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.CassandraProvisioningState> ProvisioningState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> RestoreFromBackupId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.ScheduledEventStrategy> ScheduledEventStrategy { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.CassandraScheduledEventStrategy> ScheduledEventStrategy { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CosmosDB.CassandraDataCenterSeedNode> SeedNodes { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -147,6 +172,18 @@ namespace Azure.Provisioning.CosmosDB
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -193,7 +230,7 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.CosmosDB.CassandraKeyspacePropertiesConfig Options { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.CosmosDBAccount Parent { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.ExtendedCassandraKeyspaceResourceInfo Resource { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -202,6 +239,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.CassandraKeyspace FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -231,6 +295,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.CassandraKeyspaceThroughputSetting FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -286,6 +377,12 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2026_03_15;
         }
     }
+    public enum CassandraScheduledEventStrategy
+    {
+        Ignore = 0,
+        StopAny = 1,
+        StopByRack = 2,
+    }
     public partial class CassandraSchema : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public CassandraSchema() { }
@@ -310,6 +407,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.CassandraTable FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -342,7 +466,145 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.CassandraTableThroughputSetting FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
+        }
+    }
+    public partial class CassandraViewGetPropertiesOptions : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CassandraViewGetPropertiesOptions() { }
+        public Azure.Provisioning.BicepValue<int> AutoscaleMaxThroughput { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Throughput { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class CassandraViewGetPropertiesResource : Azure.Provisioning.CosmosDB.CassandraViewResource
+    {
+        public CassandraViewGetPropertiesResource() { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Rid { get { throw null; } }
+        public Azure.Provisioning.BicepValue<float> Timestamp { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class CassandraViewGetResult : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public CassandraViewGetResult(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.CassandraKeyspace? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.CassandraViewResource Resource { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.CosmosDB.CassandraViewGetResult FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
+        }
+    }
+    public partial class CassandraViewResource : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CassandraViewResource() { }
+        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ViewDefinition { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class CassandraViewThroughputSetting : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public CassandraViewThroughputSetting(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.CosmosDB.CassandraViewGetResult? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.ThroughputSettingsResourceInfo Resource { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.CosmosDB.CassandraViewThroughputSetting FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
         }
     }
     public enum CompositePathSortOrder
@@ -395,6 +657,13 @@ namespace Azure.Provisioning.CosmosDB
         Continuous7Days = 0,
         Continuous30Days = 1,
     }
+    public partial class CosmosCassandraDataTransferDataSourceSink : Azure.Provisioning.CosmosDB.BaseCosmosDataTransferDataSourceSink
+    {
+        public CosmosCassandraDataTransferDataSourceSink() { }
+        public Azure.Provisioning.BicepValue<string> KeyspaceName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> TableName { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class CosmosDBAccount : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public CosmosDBAccount(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -421,7 +690,6 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepValue<bool> EnablePartitionMerge { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnablePerRegionPerPartitionAutoscale { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnablePriorityBasedExecution { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnforceHierarchicalPartitionKeyIdLastLevel { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CosmosDB.CosmosDBFailoverPolicy> FailoverPolicies { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -429,6 +697,7 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepList<Azure.Provisioning.CosmosDB.CosmosDBIPAddressOrRange> IPRules { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsAnalyticalStorageEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsFreeTierEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsHierarchicalPartitionKeyIdLastLevelEnforced { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsVirtualNetworkFilterEnabled { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.DatabaseAccountKeysMetadata KeysMetadata { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Uri> KeyVaultKeyUri { get { throw null; } set { } }
@@ -449,11 +718,41 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CosmosDB.CosmosDBVirtualNetworkRule> VirtualNetworkRules { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CosmosDB.CosmosDBAccountLocation> WriteLocations { get { throw null; } }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.CosmosDB.CosmosDBAccount FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public Azure.Provisioning.CosmosDB.CosmosDBAccountKeyList GetKeys() { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -483,6 +782,16 @@ namespace Azure.Provisioning.CosmosDB
     {
         Default = 0,
         Restore = 1,
+        PointInTimeRestore = 2,
+    }
+    public partial class CosmosDBAccountKeyList : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CosmosDBAccountKeyList() { }
+        public Azure.Provisioning.BicepValue<string> PrimaryMasterKey { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> PrimaryReadonlyMasterKey { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SecondaryMasterKey { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> SecondaryReadonlyMasterKey { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public enum CosmosDBAccountKind
     {
@@ -543,6 +852,26 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepValue<int> Throughput { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct CosmosDBBuiltInRole : System.IEquatable<Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public CosmosDBBuiltInRole(string value) { throw null; }
+        public static Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole CosmosBackupOperator { get { throw null; } }
+        public static Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole CosmosDBAccountReaderRole { get { throw null; } }
+        public static Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole CosmosDBOperator { get { throw null; } }
+        public static Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole CosmosRestoreOperator { get { throw null; } }
+        public static Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole DocumentDBAccountContributor { get { throw null; } }
+        public bool Equals(Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public static string GetBuiltInRoleName(Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole value) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole left, Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole right) { throw null; }
+        public static implicit operator Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole (string value) { throw null; }
+        public static bool operator !=(Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole left, Azure.Provisioning.CosmosDB.CosmosDBBuiltInRole right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class CosmosDBClientEncryptionIncludedPath : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public CosmosDBClientEncryptionIncludedPath() { }
@@ -575,6 +904,13 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepValue<int> Version { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class CosmosDBCreateUpdateConfig : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CosmosDBCreateUpdateConfig() { }
+        public Azure.Provisioning.BicepValue<int> AutoscaleMaxThroughput { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Throughput { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public enum CosmosDBDataType
     {
         String = 0,
@@ -583,6 +919,13 @@ namespace Azure.Provisioning.CosmosDB
         Polygon = 3,
         LineString = 4,
         MultiPolygon = 5,
+    }
+    public partial class CosmosDBErrorResult : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CosmosDBErrorResult() { }
+        public Azure.Provisioning.BicepValue<string> Code { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Message { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class CosmosDBExcludedPath : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -804,6 +1147,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.CosmosDBPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -858,13 +1228,13 @@ namespace Azure.Provisioning.CosmosDB
     public enum CosmosDBServerVersion
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="3.2")]
-        Three2 = 0,
+        V3_2 = 0,
         [System.Runtime.Serialization.DataMemberAttribute(Name="3.6")]
-        Three6 = 1,
+        V3_6 = 1,
         [System.Runtime.Serialization.DataMemberAttribute(Name="4.0")]
-        Four0 = 2,
+        V4_0 = 2,
         [System.Runtime.Serialization.DataMemberAttribute(Name="4.2")]
-        Four2 = 3,
+        V4_2 = 3,
         [System.Runtime.Serialization.DataMemberAttribute(Name="5.0")]
         Five0 = 4,
         [System.Runtime.Serialization.DataMemberAttribute(Name="6.0")]
@@ -875,7 +1245,6 @@ namespace Azure.Provisioning.CosmosDB
     public partial class CosmosDBService : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public CosmosDBService(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.CosmosDB.CosmosDBServiceProperties CreateOrUpdateProperties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.CosmosDBAccount Parent { get { throw null; } set { } }
@@ -886,6 +1255,33 @@ namespace Azure.Provisioning.CosmosDB
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -943,6 +1339,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.CosmosDBSqlClientEncryptionKey FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -979,6 +1402,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.CosmosDBSqlContainer FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -1020,6 +1470,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.CosmosDBSqlContainerThroughputSetting FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -1039,6 +1516,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.CosmosDBSqlDatabase FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -1070,6 +1574,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.CosmosDBSqlDatabaseThroughputSetting FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -1087,6 +1618,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.CosmosDBSqlRoleAssignment FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -1105,6 +1663,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.CosmosDBSqlRoleDefinition FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -1128,6 +1713,7 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.CosmosDBSqlContainer Parent { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.ExtendedCosmosDBSqlStoredProcedureResourceInfo Resource { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -1136,6 +1722,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.CosmosDBSqlStoredProcedure FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -1153,6 +1766,7 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.CosmosDBSqlContainer Parent { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.ExtendedCosmosDBSqlTriggerResourceInfo Resource { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -1161,6 +1775,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.CosmosDBSqlTrigger FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -1193,6 +1834,7 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.CosmosDBSqlContainer Parent { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo Resource { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -1201,6 +1843,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.CosmosDBSqlUserDefinedFunction FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -1240,6 +1909,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.CosmosDBTable FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -1279,6 +1975,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.CosmosDBTableRoleAssignment FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -1298,7 +2021,64 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.CosmosDBTableRoleDefinition FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
+        }
+    }
+    public partial class CosmosDBThroughputPool : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public CosmosDBThroughputPool(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> MaxThroughput { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.CosmosDBStatus> ProvisioningState { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.CosmosDB.CosmosDBThroughputPool FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+    }
+    public partial class CosmosDBThroughputPoolAccount : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public CosmosDBThroughputPoolAccount(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> AccountInstanceId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> AccountLocation { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> AccountResourceIdentifier { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.CosmosDBThroughputPool? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.CosmosDBStatus> ProvisioningState { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.CosmosDB.CosmosDBThroughputPoolAccount FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
         }
     }
     public partial class CosmosDBUniqueKey : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1353,6 +2133,20 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepValue<bool> IgnoreMissingVnetServiceEndpoint { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class CosmosMongoDataTransferDataSourceSink : Azure.Provisioning.CosmosDB.BaseCosmosDataTransferDataSourceSink
+    {
+        public CosmosMongoDataTransferDataSourceSink() { }
+        public Azure.Provisioning.BicepValue<string> CollectionName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DatabaseName { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class CosmosSqlDataTransferDataSourceSink : Azure.Provisioning.CosmosDB.BaseCosmosDataTransferDataSourceSink
+    {
+        public CosmosSqlDataTransferDataSourceSink() { }
+        public Azure.Provisioning.BicepValue<string> ContainerName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> DatabaseName { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class CosmosTableThroughputSetting : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public CosmosTableThroughputSetting(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -1368,6 +2162,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.CosmosTableThroughputSetting FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -1385,6 +2206,86 @@ namespace Azure.Provisioning.CosmosDB
         public DatabaseRestoreResourceInfo() { }
         public Azure.Provisioning.BicepList<string> CollectionNames { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DatabaseName { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DataTransferDataSourceSink : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DataTransferDataSourceSink() { }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class DataTransferJobGetResult : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DataTransferJobGetResult(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.CosmosDB.DataTransferDataSourceSink Destination { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.TimeSpan> Duration { get { throw null; } }
+        public Azure.Provisioning.CosmosDB.ErrorResponse? Error { get { throw null; } }
+        public Azure.Provisioning.CosmosDB.CosmosDBErrorResult ErrorResult { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> JobName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastUpdatedUtcOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.DataTransferJobMode> Mode { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.CosmosDBAccount? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> ProcessedCount { get { throw null; } }
+        public Azure.Provisioning.CosmosDB.DataTransferJobProperties Properties { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.DataTransferDataSourceSink Source { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Status { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<long> TotalCount { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> WorkerCount { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.CosmosDB.DataTransferJobGetResult FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
+        }
+    }
+    public enum DataTransferJobMode
+    {
+        Offline = 0,
+        Online = 1,
+    }
+    public partial class DataTransferJobProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DataTransferJobProperties() { }
+        public Azure.Provisioning.CosmosDB.DataTransferDataSourceSink Destination { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.TimeSpan> Duration { get { throw null; } }
+        public Azure.Provisioning.CosmosDB.ErrorResponse? Error { get { throw null; } }
+        public Azure.Provisioning.CosmosDB.CosmosDBErrorResult ErrorResult { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> JobName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastUpdatedUtcOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.DataTransferJobMode> Mode { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<long> ProcessedCount { get { throw null; } }
+        public Azure.Provisioning.CosmosDB.DataTransferDataSourceSink Source { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Status { get { throw null; } }
+        public Azure.Provisioning.BicepValue<long> TotalCount { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> WorkerCount { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DataTransferRegionalService : Azure.Provisioning.CosmosDB.CosmosDBRegionalService
@@ -1415,6 +2316,12 @@ namespace Azure.Provisioning.CosmosDB
     {
         High = 0,
         Low = 1,
+    }
+    public partial class ErrorResponse : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public ErrorResponse() { }
+        public Azure.Provisioning.BicepValue<string> Code { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Message { get { throw null; } }
     }
     public partial class ExtendedCassandraKeyspaceResourceInfo : Azure.Provisioning.CosmosDB.CassandraKeyspaceResourceInfo
     {
@@ -1547,6 +2454,58 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepList<Azure.Provisioning.CosmosDB.GraphApiComputeRegionalService> Locations { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class GraphResourceGetPropertiesOptions : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public GraphResourceGetPropertiesOptions() { }
+        public Azure.Provisioning.BicepValue<int> AutoscaleMaxThroughput { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Throughput { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class GraphResourceGetResult : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public GraphResourceGetResult(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.CosmosDBAccount? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.CosmosDB.GraphResourceGetResult FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
+        }
+    }
     public partial class GremlinDatabase : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public GremlinDatabase(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -1563,6 +2522,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.GremlinDatabase FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -1601,6 +2587,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.GremlinDatabaseThroughputSetting FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -1620,6 +2633,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.GremlinGraph FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -1657,6 +2697,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.GremlinGraphThroughputSetting FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -1766,6 +2833,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.MongoDBCollection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -1800,6 +2894,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.MongoDBCollectionThroughputSetting FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -1819,6 +2940,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.MongoDBDatabase FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -1850,6 +2998,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.MongoDBDatabaseThroughputSetting FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -1892,6 +3067,7 @@ namespace Azure.Provisioning.CosmosDB
     {
         public MongoDBRoleDefinition(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> DatabaseName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.MongoDBRoleDefinitionType> DefinitionType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.CosmosDBAccount Parent { get { throw null; } set { } }
@@ -1904,6 +3080,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.MongoDBRoleDefinition FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -1929,6 +3132,33 @@ namespace Azure.Provisioning.CosmosDB
         public static Azure.Provisioning.CosmosDB.MongoDBUserDefinition FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
+            public static readonly string V2014_04_01;
+            public static readonly string V2015_04_08;
+            public static readonly string V2015_11_06;
+            public static readonly string V2016_03_19;
+            public static readonly string V2016_03_31;
+            public static readonly string V2019_08_01;
+            public static readonly string V2019_12_12;
+            public static readonly string V2020_03_01;
+            public static readonly string V2020_04_01;
+            public static readonly string V2020_09_01;
+            public static readonly string V2021_01_15;
+            public static readonly string V2021_03_15;
+            public static readonly string V2021_04_15;
+            public static readonly string V2021_05_15;
+            public static readonly string V2021_06_15;
+            public static readonly string V2021_10_15;
+            public static readonly string V2022_05_15;
+            public static readonly string V2022_08_15;
+            public static readonly string V2022_11_15;
+            public static readonly string V2023_03_15;
+            public static readonly string V2023_04_15;
+            public static readonly string V2023_09_15;
+            public static readonly string V2023_11_15;
+            public static readonly string V2024_05_15;
+            public static readonly string V2024_08_15;
+            public static readonly string V2024_11_15;
+            public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
     }
@@ -2060,12 +3290,6 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepValue<string> RestoreSource { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> RestoreTimestampInUtc { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-    }
-    public enum ScheduledEventStrategy
-    {
-        Ignore = 0,
-        StopAny = 1,
-        StopByRack = 2,
     }
     public enum ServiceConnectionType
     {
