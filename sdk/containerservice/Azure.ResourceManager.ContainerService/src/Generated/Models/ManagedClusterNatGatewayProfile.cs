@@ -26,14 +26,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterNatGatewayProfile"/>. </summary>
+        /// <param name="sku"> The SKU of the managed cluster NAT Gateway. Defaults to 'StandardV2' where available in the region, otherwise 'Standard'. </param>
         /// <param name="managedOutboundIPProfile"> Profile of the managed outbound IP resources of the cluster NAT gateway. </param>
         /// <param name="effectiveOutboundIPs"> The effective outbound IP resources of the cluster NAT gateway. </param>
         /// <param name="outboundIPPrefixes"> Desired outbound IP Prefix resources for the managed NAT Gateway. Only compatible with NAT Gateway V2. </param>
         /// <param name="outboundIPs"> Desired outbound IP resources for the managed NAT Gateway. </param>
         /// <param name="idleTimeoutInMinutes"> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 4 minutes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedClusterNatGatewayProfile(ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile, IList<WritableSubResource> effectiveOutboundIPs, ManagedClusterNATGatewayProfileOutboundIPPrefixes outboundIPPrefixes, ManagedClusterNATGatewayProfileOutboundIPs outboundIPs, int? idleTimeoutInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedClusterNatGatewayProfile(ManagedClusterNatGatewaySku? sku, ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile, IList<WritableSubResource> effectiveOutboundIPs, ManagedClusterNATGatewayProfileOutboundIPPrefixes outboundIPPrefixes, ManagedClusterNATGatewayProfileOutboundIPs outboundIPs, int? idleTimeoutInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            Sku = sku;
             ManagedOutboundIPProfile = managedOutboundIPProfile;
             EffectiveOutboundIPs = effectiveOutboundIPs;
             OutboundIPPrefixes = outboundIPPrefixes;
@@ -41,6 +43,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             IdleTimeoutInMinutes = idleTimeoutInMinutes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The SKU of the managed cluster NAT Gateway. Defaults to 'StandardV2' where available in the region, otherwise 'Standard'. </summary>
+        [WirePath("sku")]
+        public ManagedClusterNatGatewaySku? Sku { get; set; }
 
         /// <summary> Profile of the managed outbound IP resources of the cluster NAT gateway. </summary>
         [WirePath("managedOutboundIPProfile")]
