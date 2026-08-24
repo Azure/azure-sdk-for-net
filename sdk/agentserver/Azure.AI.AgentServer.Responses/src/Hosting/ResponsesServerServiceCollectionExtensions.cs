@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Linq;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Core.Streaming;
 using Azure.AI.AgentServer.Core.Tasks;
@@ -149,30 +148,26 @@ public static class ResponsesServerServiceCollectionExtensions
         // which uses the core EventStream registry directly. Register it once here. The backing is
         // chosen eagerly: local + ResilientBackground uses a durable file-backed replay so a
         // reconnecting client can replay pre-restart SSE events after a single-sandbox recovery;
-        // otherwise an in-memory replay buffer is sufficient. Core's AddAgentEventStreams selects the
-        // backing exactly once per process and throws on a second configuring call, so only register
-        // when no backing has been chosen yet — a consumer (or test) that registered its own backing
-        // first wins, preserving the prior override semantics.
+        // otherwise an in-memory replay buffer is sufficient. Register this as a protocol default:
+        // an explicit application backing overrides it regardless of registration order, while
+        // conflicting protocol defaults fail when the registry is materialized.
         var eagerOptions = new ResponsesServerOptions();
         configure?.Invoke(eagerOptions);
         var useDurableStreams = eagerOptions.ResilientBackground && !FoundryEnvironment.IsHosted;
         var streamTtl = new InMemoryProviderOptions().EventStreamTtl;
-        if (!services.Any(d => d.ServiceType == typeof(AgentEventStreamRegistry)))
+        services.AddAgentEventStreamsDefault("ResponsesServer", o =>
         {
-            services.AddAgentEventStreams(o =>
+            if (useDurableStreams)
             {
-                if (useDurableStreams)
-                {
-                    o.UseFileBackedReplay(
-                        storageDirectory: Internal.Resilience.ResponsesStatePaths.StreamsRoot(),
-                        ttl: streamTtl);
-                }
-                else
-                {
-                    o.UseInMemoryReplay(ttl: streamTtl);
-                }
-            });
-        }
+                o.UseFileBackedReplay(
+                    storageDirectory: Internal.Resilience.ResponsesStatePaths.StreamsRoot(),
+                    ttl: streamTtl);
+            }
+            else
+            {
+                o.UseInMemoryReplay(ttl: streamTtl);
+            }
+        });
 
         services.AddSingleton<ResponseExecutionTracker>();
         services.AddHostedService(sp => sp.GetRequiredService<ResponseExecutionTracker>());

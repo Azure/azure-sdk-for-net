@@ -67,7 +67,8 @@ the stream contract, and a few stream-specific exceptions (covered in
 
 | Type | Role |
 |---|---|
-| `IServiceCollection.AddAgentEventStreams(configure?)` | registration; selects the backing |
+| `IServiceCollection.AddAgentEventStreams(configure?)` | code-based application registration; selects the backing |
+| `IHostApplicationBuilder.AddAgentEventStreams(sectionName)` | binds application backing selection from configuration |
 | `AgentEventStreamOptions` | chooses and configures the single process backing |
 | `AgentEventStreamRegistry` | maps stream ids to live `AgentEventStream` instances |
 | `AgentEventStream` | a single producer/consumer event stream |
@@ -100,6 +101,11 @@ Choose the backing before you create streams (typically once at app startup thro
 `AddAgentEventStreams`). The .NET registry selects exactly **one** backing per process; if
 you select none, the default is in-memory live.
 
+An explicit application selection overrides protocol-package defaults regardless of
+registration order. Repeating the same canonical selection is idempotent. Conflicting
+selections at the same precedence (two application selections, or two protocol defaults)
+fail when the registry is first resolved, with both sources and selections in the error.
+
 | Backing | Use when | Reconnect / replay? | Survives process restart? | Notes |
 |---|---|---|---|---|
 | `UseInMemoryLive()` (default) | A subscriber attaches before the producer; lowest memory; late subscribers do not need to catch up. | No — late subscribers miss earlier events. | No. | Constant memory: only live subscribers, no event buffer. |
@@ -109,20 +115,43 @@ you select none, the default is in-memory live.
 ### Configurator signatures
 
 ```csharp
-builder.Services.AddAgentEventStreams(o => o.UseInMemoryLive());            // default
-
-builder.Services.AddAgentEventStreams(o => o.UseInMemoryReplay(
-    ttl: TimeSpan.FromMinutes(10)));                                  // optional retention
-
-// File-backed replay: the storage directory (~/.agentserver/streams) and a 10-minute
-// TTL both default. The event text lives in SseItem<string>.Data, so no payload codec
-// is needed — the caller serializes its own event and supplies an opaque EventId.
-builder.Services.AddAgentEventStreams(o => o.UseFileBackedReplay());
-
+// Choose exactly one application backing.
 builder.Services.AddAgentEventStreams(o => o.UseFileBackedReplay(
     storageDirectory: "/var/streams",                                 // one file per stream id
     ttl: TimeSpan.FromHours(1)));
 ```
+
+Other choices are `o.UseInMemoryLive()` (the Core default),
+`o.UseInMemoryReplay(ttl)`, and `o.UseFileBackedReplay()` with its default directory and
+10-minute TTL.
+
+### Configuration binding
+
+```C# Snippet:StreamingGuide_ConfigBinding
+public static IHostApplicationBuilder ConfigureStreams(
+    IHostApplicationBuilder builder)
+{
+    return builder.AddAgentEventStreams("ResilientTasks:Streams");
+}
+```
+
+```json
+{
+  "ResilientTasks": {
+    "Streams": {
+      "Backing": "FileBackedReplay",
+      "StorageDirectory": "/var/streams",
+      "Ttl": "01:00:00"
+    }
+  }
+}
+```
+
+`Backing` accepts `InMemoryLive`, `InMemoryReplay`, or `FileBackedReplay`
+case-insensitively. `StorageDirectory` is valid only for file-backed replay. `Ttl` is a
+non-negative invariant-culture `TimeSpan` and applies to replay backings.
+The section is read when the registry is first resolved, so configuration providers and
+overrides added after this registration call but before host startup are honored.
 
 - **`ttl`** — retention for replay backings. It bounds buffered history and also drives
   close-clock auto-destroy for closed streams (see *Lifecycle*).

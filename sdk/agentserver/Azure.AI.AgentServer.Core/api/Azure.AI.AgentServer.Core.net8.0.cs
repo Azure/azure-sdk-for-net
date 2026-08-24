@@ -365,6 +365,8 @@ namespace Azure.AI.AgentServer.Core.Streaming
     public static partial class AgentEventStreamServiceCollectionExtensions
     {
         public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddAgentEventStreams(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, System.Action<Azure.AI.AgentServer.Core.Streaming.AgentEventStreamOptions>? configure = null) { throw null; }
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddAgentEventStreams(this Microsoft.Extensions.Hosting.IHostApplicationBuilder builder, string sectionName) { throw null; }
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddAgentEventStreamsDefault(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, string source, System.Action<Azure.AI.AgentServer.Core.Streaming.AgentEventStreamOptions> configure) { throw null; }
     }
 }
 namespace Azure.AI.AgentServer.Core.Tasks

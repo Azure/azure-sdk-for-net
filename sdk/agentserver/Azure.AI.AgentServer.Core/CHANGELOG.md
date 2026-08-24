@@ -8,6 +8,11 @@
   `IResilientTaskHandler<TInput, TOutput>` registration overloads. The task engine creates
   and asynchronously disposes a fresh dependency-injection scope for every execution
   attempt, including retries, steered turns, and recovered attempts.
+- Added deterministic event-stream backing composition and
+  `IHostApplicationBuilder.AddAgentEventStreams(sectionName)`. Explicit application
+  configuration now overrides protocol defaults regardless of registration order,
+  identical selections are idempotent, and conflicting same-precedence selections fail
+  with source diagnostics instead of silently discarding durability settings.
 
 ### Breaking Changes
 

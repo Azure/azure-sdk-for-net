@@ -2,12 +2,15 @@
 // Licensed under the MIT License.
 
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http.Json;
+using System.Net.ServerSentEvents;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.Json;
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Core.Streaming;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
@@ -90,6 +93,48 @@ public class ServiceRegistrationTests
         // file-backed replay is an internal Core selection; from the Responses layer
         // we assert the registry is available for the orchestrator/replay to use.
         Assert.That(sp.GetService<Core.Streaming.AgentEventStreamRegistry>(), Is.Not.Null);
+    }
+
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task Application_EventStream_Backing_Overrides_Responses_Default(
+        bool applicationFirst)
+    {
+        var services = new ServiceCollection();
+        services.AddSingleton<ResponseHandler>(new TestHandler());
+
+        void AddApplicationBacking() =>
+            services.AddAgentEventStreams(options => options.UseInMemoryLive());
+        void AddResponses() =>
+            services.AddResponsesServer(options => options.ResilientBackground = true);
+
+        if (applicationFirst)
+        {
+            AddApplicationBacking();
+            AddResponses();
+        }
+        else
+        {
+            AddResponses();
+            AddApplicationBacking();
+        }
+
+        await using ServiceProvider provider = services.BuildServiceProvider();
+        AgentEventStreamRegistry registry =
+            provider.GetRequiredService<AgentEventStreamRegistry>();
+        AgentEventStream stream = await registry.GetOrCreateAsync("application-backing");
+        await stream.EmitAsync(
+            new SseItem<string>("not-replayed", "test"),
+            close: true);
+
+        var replayed = new List<SseItem<string>>();
+        await foreach (SseItem<string> item in stream.Subscribe())
+        {
+            replayed.Add(item);
+        }
+
+        Assert.That(replayed, Is.Empty,
+            "The explicit in-memory live application backing must override Responses replay defaults.");
     }
 
     [Test]

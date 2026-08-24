@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.IO;
 using System.Net.ServerSentEvents;
 using Azure.AI.AgentServer.Core.Streaming.Backings;
 
@@ -17,14 +18,23 @@ public sealed class AgentEventStreamOptions
     /// <summary>The default per-event retention for the file-backed replay backing (10 minutes).</summary>
     private static readonly TimeSpan DefaultFileBackedTtl = TimeSpan.FromMinutes(10);
 
-    private Func<string, Action, AgentEventStream> _factory = (id, _) => new BroadcastEventStream(id);
+    private AgentEventStreamConfiguration _configuration =
+        AgentEventStreamConfiguration.InMemoryLive;
+
+    /// <summary>Initializes options with the in-memory live backing.</summary>
+    public AgentEventStreamOptions()
+    {
+    }
+
+    internal AgentEventStreamOptions(AgentEventStreamConfiguration configuration)
+        => _configuration = configuration;
 
     /// <summary>
     /// Selects the in-memory live backing (the default): constant memory, no
     /// replay; late subscribers miss earlier events.
     /// </summary>
     public void UseInMemoryLive()
-        => _factory = (id, _) => new BroadcastEventStream(id);
+        => _configuration = AgentEventStreamConfiguration.InMemoryLive;
 
     /// <summary>
     /// Selects the in-memory replay backing: retained history with optional
@@ -33,7 +43,7 @@ public sealed class AgentEventStreamOptions
     /// </summary>
     /// <param name="ttl">Per-event retention; events become evictable after this duration.</param>
     public void UseInMemoryReplay(TimeSpan? ttl = null)
-        => _factory = (id, onDestroy) => new ReplayEventStream(id, ttl, onDestroy);
+        => _configuration = AgentEventStreamConfiguration.InMemoryReplay(ttl);
 
     /// <summary>
     /// Selects the file-backed replay backing: events persist to
@@ -53,8 +63,9 @@ public sealed class AgentEventStreamOptions
         string? storageDirectory = null,
         TimeSpan? ttl = null)
     {
-        _factory = (id, onDestroy) => new FileBackedReplayEventStream(
-            id, ResolveStreamDirectory(storageDirectory), ttl ?? DefaultFileBackedTtl, onDestroy);
+        _configuration = AgentEventStreamConfiguration.FileBackedReplay(
+            ResolveStreamDirectory(storageDirectory),
+            ttl ?? DefaultFileBackedTtl);
     }
 
     // Defaults an unspecified stream directory to the shared agent-server state root so streams
@@ -65,5 +76,99 @@ public sealed class AgentEventStreamOptions
             : storageDirectory;
 
     /// <summary>Builds a backing instance for the given id, wiring its self-destroy callback.</summary>
-    internal AgentEventStream CreateStream(string id, Action onDestroy) => _factory(id, onDestroy);
+    internal AgentEventStreamConfiguration Configuration => _configuration;
+
+    /// <summary>Builds a backing instance for the given id, wiring its self-destroy callback.</summary>
+    internal AgentEventStream CreateStream(string id, Action onDestroy)
+        => _configuration.CreateStream(id, onDestroy);
+}
+
+internal enum AgentEventStreamBackingKind
+{
+    InMemoryLive,
+    InMemoryReplay,
+    FileBackedReplay,
+}
+
+internal sealed class AgentEventStreamConfiguration : IEquatable<AgentEventStreamConfiguration>
+{
+    private static readonly StringComparer PathComparer =
+        OperatingSystem.IsWindows() ? StringComparer.OrdinalIgnoreCase : StringComparer.Ordinal;
+
+    private AgentEventStreamConfiguration(
+        AgentEventStreamBackingKind backing,
+        TimeSpan? ttl,
+        string? storageDirectory)
+    {
+        Backing = backing;
+        Ttl = ttl;
+        StorageDirectory = storageDirectory;
+    }
+
+    public static AgentEventStreamConfiguration InMemoryLive { get; } =
+        new(AgentEventStreamBackingKind.InMemoryLive, ttl: null, storageDirectory: null);
+
+    public AgentEventStreamBackingKind Backing { get; }
+
+    public TimeSpan? Ttl { get; }
+
+    public string? StorageDirectory { get; }
+
+    public static AgentEventStreamConfiguration InMemoryReplay(TimeSpan? ttl)
+        => new(AgentEventStreamBackingKind.InMemoryReplay, ttl, storageDirectory: null);
+
+    public static AgentEventStreamConfiguration FileBackedReplay(
+        string storageDirectory,
+        TimeSpan ttl)
+        => new(
+            AgentEventStreamBackingKind.FileBackedReplay,
+            ttl,
+            Path.TrimEndingDirectorySeparator(Path.GetFullPath(storageDirectory)));
+
+    public AgentEventStream CreateStream(string id, Action onDestroy)
+        => Backing switch
+        {
+            AgentEventStreamBackingKind.InMemoryLive => new BroadcastEventStream(id),
+            AgentEventStreamBackingKind.InMemoryReplay => new ReplayEventStream(id, Ttl, onDestroy),
+            AgentEventStreamBackingKind.FileBackedReplay => new FileBackedReplayEventStream(
+                id,
+                StorageDirectory!,
+                Ttl!.Value,
+                onDestroy),
+            _ => throw new InvalidOperationException(
+                $"Unsupported AgentEventStream backing '{Backing}'."),
+        };
+
+    public bool Equals(AgentEventStreamConfiguration? other)
+        => other is not null
+        && Backing == other.Backing
+        && Ttl == other.Ttl
+        && PathComparer.Equals(StorageDirectory, other.StorageDirectory);
+
+    public override bool Equals(object? obj)
+        => obj is AgentEventStreamConfiguration other && Equals(other);
+
+    public override int GetHashCode()
+    {
+        var hash = new HashCode();
+        hash.Add(Backing);
+        hash.Add(Ttl);
+        hash.Add(StorageDirectory, PathComparer);
+        return hash.ToHashCode();
+    }
+
+    public override string ToString()
+        => Backing switch
+        {
+            AgentEventStreamBackingKind.InMemoryLive => nameof(AgentEventStreamBackingKind.InMemoryLive),
+            AgentEventStreamBackingKind.InMemoryReplay =>
+                $"{nameof(AgentEventStreamBackingKind.InMemoryReplay)}(ttl='{FormatTtl(Ttl)}')",
+            AgentEventStreamBackingKind.FileBackedReplay =>
+                $"{nameof(AgentEventStreamBackingKind.FileBackedReplay)}" +
+                $"(path='{StorageDirectory}', ttl='{FormatTtl(Ttl)}')",
+            _ => Backing.ToString(),
+        };
+
+    private static string FormatTtl(TimeSpan? ttl)
+        => ttl?.ToString("c", System.Globalization.CultureInfo.InvariantCulture) ?? "none";
 }
