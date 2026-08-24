@@ -100,9 +100,9 @@ namespace Azure.AI.AnomalyDetector
                 writer.WriteNumberValue(TopContributorCount.Value);
             }
             writer.WritePropertyName("startTime"u8);
-            writer.WriteStringValue(StartTime, "O");
+            writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("endTime"u8);
-            writer.WriteStringValue(EndTime, "O");
+            writer.WriteStringValue(EndOn, "O");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -147,8 +147,8 @@ namespace Azure.AI.AnomalyDetector
             }
             Uri dataSource = default;
             int? topContributorCount = default;
-            DateTimeOffset startTime = default;
-            DateTimeOffset endTime = default;
+            DateTimeOffset startOn = default;
+            DateTimeOffset endOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,12 +168,12 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startTime = prop.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
-                    endTime = prop.Value.GetDateTimeOffset("O");
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -181,7 +181,7 @@ namespace Azure.AI.AnomalyDetector
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MultivariateBatchDetectionOptions(dataSource, topContributorCount, startTime, endTime, additionalBinaryDataProperties);
+            return new MultivariateBatchDetectionOptions(dataSource, topContributorCount, startOn, endOn, additionalBinaryDataProperties);
         }
     }
 }
