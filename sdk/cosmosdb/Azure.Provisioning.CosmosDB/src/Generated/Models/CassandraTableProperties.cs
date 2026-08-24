@@ -9,11 +9,9 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
 {
-    /// <summary> The properties of an Azure Cosmos DB Cassandra table. </summary>
     internal partial class CassandraTableProperties : ProvisionableConstruct
     {
         private ExtendedCassandraTableResourceInfo _resource;
-        private CassandraTablePropertiesConfig _options;
 
         /// <summary> Creates a new CassandraTableProperties. </summary>
         public CassandraTableProperties()
@@ -35,27 +33,11 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the Options. </summary>
-        public CassandraTablePropertiesConfig Options
-        {
-            get
-            {
-                Initialize();
-                return _options;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _options, value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for CassandraTableProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _resource = DefineModelProperty<ExtendedCassandraTableResourceInfo>(nameof(Resource), new string[] { "resource" });
-            _options = DefineModelProperty<CassandraTablePropertiesConfig>(nameof(Options), new string[] { "options" });
             DefineAdditionalProperties();
         }
 

@@ -9,11 +9,9 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
 {
-    /// <summary> The properties of an Azure Cosmos DB SQL database. </summary>
     internal partial class CosmosDBSqlDatabaseProperties : ProvisionableConstruct
     {
         private ExtendedCosmosDBSqlDatabaseResourceInfo _resource;
-        private CosmosDBSqlDatabasePropertiesConfig _options;
 
         /// <summary> Creates a new CosmosDBSqlDatabaseProperties. </summary>
         public CosmosDBSqlDatabaseProperties()
@@ -35,27 +33,11 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the Options. </summary>
-        public CosmosDBSqlDatabasePropertiesConfig Options
-        {
-            get
-            {
-                Initialize();
-                return _options;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _options, value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for CosmosDBSqlDatabaseProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _resource = DefineModelProperty<ExtendedCosmosDBSqlDatabaseResourceInfo>(nameof(Resource), new string[] { "resource" });
-            _options = DefineModelProperty<CosmosDBSqlDatabasePropertiesConfig>(nameof(Options), new string[] { "options" });
             DefineAdditionalProperties();
         }
 

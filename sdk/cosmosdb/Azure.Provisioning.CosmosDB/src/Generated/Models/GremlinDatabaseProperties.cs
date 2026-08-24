@@ -9,11 +9,9 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
 {
-    /// <summary> The properties of an Azure Cosmos DB SQL database. </summary>
     internal partial class GremlinDatabaseProperties : ProvisionableConstruct
     {
         private ExtendedGremlinDatabaseResourceInfo _resource;
-        private GremlinDatabasePropertiesConfig _options;
 
         /// <summary> Creates a new GremlinDatabaseProperties. </summary>
         public GremlinDatabaseProperties()
@@ -35,27 +33,11 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the Options. </summary>
-        public GremlinDatabasePropertiesConfig Options
-        {
-            get
-            {
-                Initialize();
-                return _options;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _options, value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for GremlinDatabaseProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _resource = DefineModelProperty<ExtendedGremlinDatabaseResourceInfo>(nameof(Resource), new string[] { "resource" });
-            _options = DefineModelProperty<GremlinDatabasePropertiesConfig>(nameof(Options), new string[] { "options" });
             DefineAdditionalProperties();
         }
 

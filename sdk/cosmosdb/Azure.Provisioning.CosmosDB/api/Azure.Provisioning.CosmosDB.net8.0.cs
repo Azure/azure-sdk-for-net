@@ -398,7 +398,7 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.CosmosDB.CassandraTablePropertiesConfig Options { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.CassandraKeyspace Parent { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.ExtendedCassandraTableResourceInfo Resource { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -1393,7 +1393,7 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.CosmosDB.CosmosDBSqlContainerPropertiesConfig Options { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.CosmosDBSqlDatabase Parent { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.ExtendedCosmosDBSqlContainerResourceInfo Resource { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -1507,7 +1507,7 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.CosmosDB.CosmosDBSqlDatabasePropertiesConfig Options { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.CosmosDBAccount Parent { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.ExtendedCosmosDBSqlDatabaseResourceInfo Resource { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -1900,7 +1900,7 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.CosmosDB.CosmosDBTablePropertiesOptions Options { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.CosmosDBAccount Parent { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.CosmosDBTablePropertiesResource Resource { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -2513,7 +2513,7 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.CosmosDB.GremlinDatabasePropertiesConfig Options { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.CosmosDBAccount Parent { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.ExtendedGremlinDatabaseResourceInfo Resource { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -2624,7 +2624,7 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.CosmosDB.GremlinGraphPropertiesConfig Options { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.GremlinDatabase Parent { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.ExtendedGremlinGraphResourceInfo Resource { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -2824,7 +2824,7 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.CosmosDB.MongoDBCollectionPropertiesConfig Options { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.MongoDBDatabase Parent { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.ExtendedMongoDBCollectionResourceInfo Resource { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -2931,7 +2931,7 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.CosmosDB.MongoDBDatabasePropertiesConfig Options { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.CosmosDBAccount Parent { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.ExtendedMongoDBDatabaseResourceInfo Resource { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }

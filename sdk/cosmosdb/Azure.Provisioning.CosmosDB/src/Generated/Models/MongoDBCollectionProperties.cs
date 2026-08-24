@@ -9,11 +9,9 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
 {
-    /// <summary> The properties of an Azure Cosmos DB MongoDB collection. </summary>
     internal partial class MongoDBCollectionProperties : ProvisionableConstruct
     {
         private ExtendedMongoDBCollectionResourceInfo _resource;
-        private MongoDBCollectionPropertiesConfig _options;
 
         /// <summary> Creates a new MongoDBCollectionProperties. </summary>
         public MongoDBCollectionProperties()
@@ -35,27 +33,11 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the Options. </summary>
-        public MongoDBCollectionPropertiesConfig Options
-        {
-            get
-            {
-                Initialize();
-                return _options;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _options, value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for MongoDBCollectionProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _resource = DefineModelProperty<ExtendedMongoDBCollectionResourceInfo>(nameof(Resource), new string[] { "resource" });
-            _options = DefineModelProperty<MongoDBCollectionPropertiesConfig>(nameof(Options), new string[] { "options" });
             DefineAdditionalProperties();
         }
 
