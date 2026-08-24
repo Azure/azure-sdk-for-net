@@ -374,6 +374,27 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 await FinishTurn(store, stream, invId, "completed");
                 return new ResearchResult("done", allFindings.ToArray());
             }
+            catch (OperationCanceledException)
+                when (ctx.CancelRequested || ctx.TimeoutExceeded)
+            {
+                string terminalStatus = ctx.TimeoutExceeded ? "timed_out" : "cancelled";
+                string message = ctx.TimeoutExceeded ? "Task timed out." : "Task cancelled.";
+
+                // Explicit cancellation and timeout are terminal for this turn. Emit the
+                // protocol event and close with a non-cancelable token because the handler's
+                // token is already signaled. Shutdown/lease-loss cancellations intentionally
+                // bypass this branch so Core can defer the turn for recovery.
+                seq++;
+                var failEvt = new ResearchEvent(seq, "run_failed", message);
+                await stream.EmitAsync(
+                    new SseItem<string>(JsonSerializer.Serialize(failEvt), "run_failed")
+                    {
+                        EventId = seq.ToString(CultureInfo.InvariantCulture),
+                    },
+                    close: true, cancellationToken: CancellationToken.None);
+                await FinishTurn(store, stream, invId, terminalStatus, message);
+                throw;
+            }
             catch (Exception ex) when (ex is not OperationCanceledException)
             {
                 // Terminal failure frame — emit before re-raising so the SSE subscriber
@@ -412,7 +433,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 terminal,
                 tags: new Dictionary<string, string> { ["invocation_id"] = invId },
                 cancellationToken: CancellationToken.None);
-            await stream.CloseAsync();
+            await stream.CloseAsync(CancellationToken.None);
         }
 
         private static Task SaveCheckpointAsync(
@@ -487,7 +508,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                         invId,
                         context.SessionId,
                         context.PlatformContext.CallId),
-                    new RunOptions { TaskId = taskId },
+                    new RunOptions { TaskId = taskId, InputId = invId },
                     cancellationToken);
 
                 // Non-streaming clients get 202 + the invocation id to resume later via GET.
@@ -560,7 +581,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                     : TaskIdForSession(context.SessionId);
 
                 TaskRun<ResearchResult>? run = await research
-                    .GetActiveRunAsync(taskId, cancellationToken);
+                    .GetActiveRunAsync(taskId, invocationId, cancellationToken);
 
                 if (run is null)
                 {

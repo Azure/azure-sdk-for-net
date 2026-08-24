@@ -342,6 +342,27 @@ public static async Task<ResearchResult> RunResearchAsync(
         await FinishTurn(store, stream, invId, "completed");
         return new ResearchResult("done", allFindings.ToArray());
     }
+    catch (OperationCanceledException)
+        when (ctx.CancelRequested || ctx.TimeoutExceeded)
+    {
+        string terminalStatus = ctx.TimeoutExceeded ? "timed_out" : "cancelled";
+        string message = ctx.TimeoutExceeded ? "Task timed out." : "Task cancelled.";
+
+        // Explicit cancellation and timeout are terminal for this turn. Emit the
+        // protocol event and close with a non-cancelable token because the handler's
+        // token is already signaled. Shutdown/lease-loss cancellations intentionally
+        // bypass this branch so Core can defer the turn for recovery.
+        seq++;
+        var failEvt = new ResearchEvent(seq, "run_failed", message);
+        await stream.EmitAsync(
+            new SseItem<string>(JsonSerializer.Serialize(failEvt), "run_failed")
+            {
+                EventId = seq.ToString(CultureInfo.InvariantCulture),
+            },
+            close: true, cancellationToken: CancellationToken.None);
+        await FinishTurn(store, stream, invId, terminalStatus, message);
+        throw;
+    }
     catch (Exception ex) when (ex is not OperationCanceledException)
     {
         // Terminal failure frame — emit before re-raising so the SSE subscriber
@@ -380,7 +401,7 @@ private static async Task FinishTurn(
         terminal,
         tags: new Dictionary<string, string> { ["invocation_id"] = invId },
         cancellationToken: CancellationToken.None);
-    await stream.CloseAsync();
+    await stream.CloseAsync(CancellationToken.None);
 }
 
 private static Task SaveCheckpointAsync(
@@ -455,7 +476,7 @@ public class ResilientResearchHandler : InvocationHandler
                 invId,
                 context.SessionId,
                 context.PlatformContext.CallId),
-            new RunOptions { TaskId = taskId },
+            new RunOptions { TaskId = taskId, InputId = invId },
             cancellationToken);
 
         // Non-streaming clients get 202 + the invocation id to resume later via GET.
@@ -528,7 +549,7 @@ public class ResilientResearchHandler : InvocationHandler
             : TaskIdForSession(context.SessionId);
 
         TaskRun<ResearchResult>? run = await research
-            .GetActiveRunAsync(taskId, cancellationToken);
+            .GetActiveRunAsync(taskId, invocationId, cancellationToken);
 
         if (run is null)
         {
@@ -654,9 +675,10 @@ This is the **Task ⇄ Stream bridge** pattern. The durable producer is the
 `ResilientResearch_Handler` snippet:
 
 1. **`POST` (`HandleAsync`)** reserves a stream keyed by the per-turn invocation id, then
-   starts the durable task with `TaskId = research-{sessionId}`. With the same `TaskId`, a
-   `POST` while a turn is running is transparently enqueued as *steering*. The replay backing
-   covers late subscribers, so attaching after the producer starts loses nothing.
+   starts the durable task with `TaskId = research-{sessionId}` and
+   `InputId = invocationId`. With the same `TaskId`, a `POST` while a turn is running is
+   transparently enqueued as *steering*. The replay backing covers late subscribers, so
+   attaching after the producer starts loses nothing.
 2. The producer makes **real streaming model calls** per sub-call, serializes each
    `ResearchEvent` into `SseItem<string>.Data`, and emits it with the SSE event name and
    opaque `EventId` resume token.
@@ -664,8 +686,11 @@ This is the **Task ⇄ Stream bridge** pattern. The durable producer is the
    `afterEventId` to `Subscribe`, and the replay backing fills in missed events — or returns
    a JSON snapshot with `GetLastEventIdAsync` when SSE isn't requested. HTTP framing is
    delegated to `SseFormatter`. A late reconnect (run already finished) replays the retained stream.
-4. **`POST .../cancel` (`CancelAsync`)** resolves the active run via `GetActiveRunAsync` and
-   calls `CancelAsync`, which the producer observes as a cooperative wind-down.
+4. **`POST .../cancel` (`CancelAsync`)** resolves the active turn by its task and input ids
+   and requests cancellation. Explicit cancellation and timeout emit a terminal
+   `run_failed` event, persist terminal status, and close the stream with a fresh token so
+   subscribers complete. Shutdown/recovery cancellation intentionally does not close the
+   stream because another process resumes the same turn.
 
 > **Cleanup:** the file-backed replay backing uses its retention settings to reclaim
 > retained streams; long-lived hosts can also call `AgentEventStreamRegistry.DeleteAsync` once a
