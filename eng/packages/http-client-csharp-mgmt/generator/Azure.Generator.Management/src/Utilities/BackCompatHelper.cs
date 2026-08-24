@@ -105,6 +105,11 @@ namespace Azure.Generator.Management.Utilities
                 MethodSignature.MethodSignatureComparer);
 
             var enclosingType = backCompatMethods[0].EnclosingType;
+            if (enclosingType.CustomCodeView is { } customCodeView)
+            {
+                existingSignatures.UnionWith(customCodeView.Methods.Select(method => method.Signature));
+            }
+
             if (enclosingType.LastContractView?.Methods is { Count: > 0 } previousMethods)
             {
                 AddETagBackwardCompatibilityMethods(

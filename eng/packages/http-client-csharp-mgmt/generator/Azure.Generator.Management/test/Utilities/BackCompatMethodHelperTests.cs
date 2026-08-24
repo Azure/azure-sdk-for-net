@@ -207,6 +207,28 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
 
+        [Test]
+        public void DoesNotDuplicateCustomETagCompatibilityOverload()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(ETag), isNullable: true), defaultValue: Default)]);
+            var previous = CreateMethod(
+                enclosingType,
+                [new ParameterProvider("ifMatch", $"The match condition.", typeof(string))]);
+            var customCodeView = new TestTypeView(enclosingType.Name);
+            var customMethod = CreateMethod(
+                customCodeView,
+                [new ParameterProvider("ifMatch", $"The match condition.", typeof(string))]);
+            customCodeView.MethodsToBuild = [customMethod];
+            ManagementMockHelpers.SetCustomCodeView(enclosingType, customCodeView);
+
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
         [TestCase("etag")]
         [TestCase("condition")]
         public void DoesNotAddStringOverloadForNonConditionalETagParameter(string parameterName)
