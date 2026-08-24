@@ -76,6 +76,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 throw new FormatException($"The model {nameof(ManagedClusterNatGatewayProfile)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteStringValue(Sku.Value.ToString());
+            }
             if (Optional.IsDefined(ManagedOutboundIPProfile))
             {
                 writer.WritePropertyName("managedOutboundIPProfile"u8);
@@ -153,6 +158,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
+            ManagedClusterNatGatewaySku? sku = default;
             ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile = default;
             IList<WritableSubResource> effectiveOutboundIPs = default;
             ManagedClusterNATGatewayProfileOutboundIPPrefixes outboundIPPrefixes = default;
@@ -161,6 +167,15 @@ namespace Azure.ResourceManager.ContainerService.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("sku"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = new ManagedClusterNatGatewaySku(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("managedOutboundIPProfile"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -224,6 +239,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             return new ManagedClusterNatGatewayProfile(
+                sku,
                 managedOutboundIPProfile,
                 effectiveOutboundIPs ?? new ChangeTrackingList<WritableSubResource>(),
                 outboundIPPrefixes,
