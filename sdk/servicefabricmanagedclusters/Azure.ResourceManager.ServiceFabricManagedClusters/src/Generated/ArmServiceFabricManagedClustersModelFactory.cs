@@ -1052,26 +1052,6 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new NodeTypeFaultSimulation(nodeTypeName, status, operationId, operationStatus, default);
         }
 
-        /// <param name="faultKind"> The kind of fault to be simulated. </param>
-        /// <param name="isForced"> Force the action to go through without any check on the cluster. </param>
-        /// <param name="constraintsExpireOn"> The absolute expiration timestamp (UTC) after which this fault simulation should be stopped if it's still active. </param>
-        /// <returns> A new <see cref="Models.FaultSimulationContent"/> instance for mocking. </returns>
-        public static FaultSimulationContent FaultSimulationContent(string faultKind = default, bool? isForced = default, DateTimeOffset? constraintsExpireOn = default)
-        {
-            return new UnknownFaultSimulationContent(default, isForced, constraintsExpireOn is null ? default : new FaultSimulationConstraints(constraintsExpireOn, default), default);
-        }
-
-        /// <param name="isForced"> Force the action to go through without any check on the cluster. </param>
-        /// <param name="constraintsExpireOn"> The absolute expiration timestamp (UTC) after which this fault simulation should be stopped if it's still active. </param>
-        /// <param name="zones"> Indicates the zones of the fault simulation. </param>
-        /// <returns> A new <see cref="Models.ZoneFaultSimulationContent"/> instance for mocking. </returns>
-        public static ZoneFaultSimulationContent ZoneFaultSimulationContent(bool? isForced = default, DateTimeOffset? constraintsExpireOn = default, IEnumerable<string> zones = default)
-        {
-            zones ??= new ChangeTrackingList<string>();
-
-            return new ZoneFaultSimulationContent(default, isForced, constraintsExpireOn is null ? default : new FaultSimulationConstraints(constraintsExpireOn, default), default, (zones ?? new ChangeTrackingList<string>()).ToList());
-        }
-
         /// <param name="parameters"> Parameters for Fault Simulation start action. </param>
         /// <returns> A new <see cref="Models.FaultSimulationContentWrapper"/> instance for mocking. </returns>
         public static FaultSimulationContentWrapper FaultSimulationContentWrapper(FaultSimulationContent parameters = default)
