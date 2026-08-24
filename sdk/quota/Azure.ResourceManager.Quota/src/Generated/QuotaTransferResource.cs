@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<QuotaTransferResource>> CancelAsync(QuotaTransferCancelRequest content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<QuotaTransferResource>> CancelAsync(QuotaTransferCancelContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _quotaTransfersClientDiagnostics.CreateScope("QuotaTransferResource.Cancel");
             scope.Start();
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaTransfersRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Name, QuotaTransferCancelRequest.ToRequestContent(content), context);
+                HttpMessage message = _quotaTransfersRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Name, QuotaTransferCancelContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<QuotaTransferData> response = Response.FromValue(QuotaTransferData.FromResponse(result), result);
                 if (response.Value == null)
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Quota
         /// </summary>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<QuotaTransferResource> Cancel(QuotaTransferCancelRequest content = default, CancellationToken cancellationToken = default)
+        public virtual Response<QuotaTransferResource> Cancel(QuotaTransferCancelContent content = default, CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _quotaTransfersClientDiagnostics.CreateScope("QuotaTransferResource.Cancel");
             scope.Start();
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _quotaTransfersRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Name, QuotaTransferCancelRequest.ToRequestContent(content), context);
+                HttpMessage message = _quotaTransfersRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Name, QuotaTransferCancelContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<QuotaTransferData> response = Response.FromValue(QuotaTransferData.FromResponse(result), result);
                 if (response.Value == null)

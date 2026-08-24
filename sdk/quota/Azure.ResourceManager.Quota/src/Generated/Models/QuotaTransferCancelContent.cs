@@ -12,20 +12,20 @@ using Azure.ResourceManager.Quota;
 namespace Azure.ResourceManager.Quota.Models
 {
     /// <summary> Request body for the donor cancel action. </summary>
-    public partial class QuotaTransferCancelRequest
+    public partial class QuotaTransferCancelContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="QuotaTransferCancelRequest"/>. </summary>
-        public QuotaTransferCancelRequest()
+        /// <summary> Initializes a new instance of <see cref="QuotaTransferCancelContent"/>. </summary>
+        public QuotaTransferCancelContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="QuotaTransferCancelRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="QuotaTransferCancelContent"/>. </summary>
         /// <param name="reason"> Optional free-text reason recorded on the transfer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal QuotaTransferCancelRequest(string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal QuotaTransferCancelContent(string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Reason = reason;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

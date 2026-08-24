@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<IncomingQuotaTransferResource>> ApproveAsync(WaitUntil waitUntil, string ifMatch, IncomingQuotaTransferApproveRequest content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<IncomingQuotaTransferResource>> ApproveAsync(WaitUntil waitUntil, string ifMatch, IncomingQuotaTransferApproveContent content = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
 
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _incomingQuotaTransfersRestClient.CreateApproveRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Name, ifMatch, IncomingQuotaTransferApproveRequest.ToRequestContent(content), context);
+                HttpMessage message = _incomingQuotaTransfersRestClient.CreateApproveRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Name, ifMatch, IncomingQuotaTransferApproveContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 QuotaArmOperation<IncomingQuotaTransferResource> operation = new QuotaArmOperation<IncomingQuotaTransferResource>(
                     new IncomingQuotaTransferResourceOperationSource(Client),
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<IncomingQuotaTransferResource> Approve(WaitUntil waitUntil, string ifMatch, IncomingQuotaTransferApproveRequest content = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<IncomingQuotaTransferResource> Approve(WaitUntil waitUntil, string ifMatch, IncomingQuotaTransferApproveContent content = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
 
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _incomingQuotaTransfersRestClient.CreateApproveRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Name, ifMatch, IncomingQuotaTransferApproveRequest.ToRequestContent(content), context);
+                HttpMessage message = _incomingQuotaTransfersRestClient.CreateApproveRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Name, ifMatch, IncomingQuotaTransferApproveContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 QuotaArmOperation<IncomingQuotaTransferResource> operation = new QuotaArmOperation<IncomingQuotaTransferResource>(
                     new IncomingQuotaTransferResourceOperationSource(Client),
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<IncomingQuotaTransferResource>> RejectAsync(string ifMatch, IncomingQuotaTransferRejectRequest content = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IncomingQuotaTransferResource>> RejectAsync(string ifMatch, IncomingQuotaTransferRejectContent content = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
 
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _incomingQuotaTransfersRestClient.CreateRejectRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Name, ifMatch, IncomingQuotaTransferRejectRequest.ToRequestContent(content), context);
+                HttpMessage message = _incomingQuotaTransfersRestClient.CreateRejectRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Name, ifMatch, IncomingQuotaTransferRejectContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<IncomingQuotaTransferData> response = Response.FromValue(IncomingQuotaTransferData.FromResponse(result), result);
                 if (response.Value == null)
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Quota
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ifMatch"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ifMatch"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<IncomingQuotaTransferResource> Reject(string ifMatch, IncomingQuotaTransferRejectRequest content = default, CancellationToken cancellationToken = default)
+        public virtual Response<IncomingQuotaTransferResource> Reject(string ifMatch, IncomingQuotaTransferRejectContent content = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ifMatch, nameof(ifMatch));
 
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Quota
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _incomingQuotaTransfersRestClient.CreateRejectRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Name, ifMatch, IncomingQuotaTransferRejectRequest.ToRequestContent(content), context);
+                HttpMessage message = _incomingQuotaTransfersRestClient.CreateRejectRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.ResourceType.Namespace, Id.Parent.Name, Id.Name, ifMatch, IncomingQuotaTransferRejectContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<IncomingQuotaTransferData> response = Response.FromValue(IncomingQuotaTransferData.FromResponse(result), result);
                 if (response.Value == null)

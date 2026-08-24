@@ -12,20 +12,20 @@ using Azure.ResourceManager.Quota;
 namespace Azure.ResourceManager.Quota.Models
 {
     /// <summary> Request body for the recipient reject action. </summary>
-    public partial class IncomingQuotaTransferRejectRequest
+    public partial class IncomingQuotaTransferRejectContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IncomingQuotaTransferRejectRequest"/>. </summary>
-        public IncomingQuotaTransferRejectRequest()
+        /// <summary> Initializes a new instance of <see cref="IncomingQuotaTransferRejectContent"/>. </summary>
+        public IncomingQuotaTransferRejectContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IncomingQuotaTransferRejectRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncomingQuotaTransferRejectContent"/>. </summary>
         /// <param name="reason"> Optional free-text reason recorded on the transfer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IncomingQuotaTransferRejectRequest(string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IncomingQuotaTransferRejectContent(string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Reason = reason;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

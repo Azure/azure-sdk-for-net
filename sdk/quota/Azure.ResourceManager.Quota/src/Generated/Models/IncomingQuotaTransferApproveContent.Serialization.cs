@@ -14,62 +14,62 @@ using Azure.ResourceManager.Quota;
 
 namespace Azure.ResourceManager.Quota.Models
 {
-    /// <summary> Request body for the donor cancel action. </summary>
-    public partial class QuotaTransferCancelRequest : IJsonModel<QuotaTransferCancelRequest>
+    /// <summary> Request body for the recipient approve action. </summary>
+    public partial class IncomingQuotaTransferApproveContent : IJsonModel<IncomingQuotaTransferApproveContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual QuotaTransferCancelRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual IncomingQuotaTransferApproveContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuotaTransferCancelRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IncomingQuotaTransferApproveContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeQuotaTransferCancelRequest(document.RootElement, options);
+                        return DeserializeIncomingQuotaTransferApproveContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuotaTransferCancelRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IncomingQuotaTransferApproveContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuotaTransferCancelRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IncomingQuotaTransferApproveContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerQuotaContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(QuotaTransferCancelRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IncomingQuotaTransferApproveContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<QuotaTransferCancelRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<IncomingQuotaTransferApproveContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        QuotaTransferCancelRequest IPersistableModel<QuotaTransferCancelRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        IncomingQuotaTransferApproveContent IPersistableModel<IncomingQuotaTransferApproveContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<QuotaTransferCancelRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<IncomingQuotaTransferApproveContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="quotaTransferCancelRequest"> The <see cref="QuotaTransferCancelRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(QuotaTransferCancelRequest quotaTransferCancelRequest)
+        /// <param name="incomingQuotaTransferApproveContent"> The <see cref="IncomingQuotaTransferApproveContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(IncomingQuotaTransferApproveContent incomingQuotaTransferApproveContent)
         {
-            if (quotaTransferCancelRequest == null)
+            if (incomingQuotaTransferApproveContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(quotaTransferCancelRequest, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(incomingQuotaTransferApproveContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<QuotaTransferCancelRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<IncomingQuotaTransferApproveContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuotaTransferCancelRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IncomingQuotaTransferApproveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaTransferCancelRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(IncomingQuotaTransferApproveContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Reason))
+            if (Optional.IsDefined(Comment))
             {
-                writer.WritePropertyName("reason"u8);
-                writer.WriteStringValue(Reason);
+                writer.WritePropertyName("comment"u8);
+                writer.WriteStringValue(Comment);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -109,36 +109,36 @@ namespace Azure.ResourceManager.Quota.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        QuotaTransferCancelRequest IJsonModel<QuotaTransferCancelRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        IncomingQuotaTransferApproveContent IJsonModel<IncomingQuotaTransferApproveContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual QuotaTransferCancelRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual IncomingQuotaTransferApproveContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<QuotaTransferCancelRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<IncomingQuotaTransferApproveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaTransferCancelRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(IncomingQuotaTransferApproveContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeQuotaTransferCancelRequest(document.RootElement, options);
+            return DeserializeIncomingQuotaTransferApproveContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static QuotaTransferCancelRequest DeserializeQuotaTransferCancelRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static IncomingQuotaTransferApproveContent DeserializeIncomingQuotaTransferApproveContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string reason = default;
+            string comment = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("reason"u8))
+                if (prop.NameEquals("comment"u8))
                 {
-                    reason = prop.Value.GetString();
+                    comment = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Quota.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new QuotaTransferCancelRequest(reason, additionalBinaryDataProperties);
+            return new IncomingQuotaTransferApproveContent(comment, additionalBinaryDataProperties);
         }
     }
 }

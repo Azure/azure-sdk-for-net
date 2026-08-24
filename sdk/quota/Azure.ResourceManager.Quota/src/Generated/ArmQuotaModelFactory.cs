@@ -602,10 +602,10 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <param name="reason"> Optional free-text reason recorded on the transfer. </param>
-        /// <returns> A new <see cref="Models.QuotaTransferCancelRequest"/> instance for mocking. </returns>
-        public static QuotaTransferCancelRequest QuotaTransferCancelRequest(string reason = default)
+        /// <returns> A new <see cref="Models.QuotaTransferCancelContent"/> instance for mocking. </returns>
+        public static QuotaTransferCancelContent QuotaTransferCancelContent(string reason = default)
         {
-            return new QuotaTransferCancelRequest(reason, default);
+            return new QuotaTransferCancelContent(reason, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -677,17 +677,17 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <param name="comment"> Optional free-text comment recorded on the transfer. </param>
-        /// <returns> A new <see cref="Models.IncomingQuotaTransferApproveRequest"/> instance for mocking. </returns>
-        public static IncomingQuotaTransferApproveRequest IncomingQuotaTransferApproveRequest(string comment = default)
+        /// <returns> A new <see cref="Models.IncomingQuotaTransferApproveContent"/> instance for mocking. </returns>
+        public static IncomingQuotaTransferApproveContent IncomingQuotaTransferApproveContent(string comment = default)
         {
-            return new IncomingQuotaTransferApproveRequest(comment, default);
+            return new IncomingQuotaTransferApproveContent(comment, default);
         }
 
         /// <param name="reason"> Optional free-text reason recorded on the transfer. </param>
-        /// <returns> A new <see cref="Models.IncomingQuotaTransferRejectRequest"/> instance for mocking. </returns>
-        public static IncomingQuotaTransferRejectRequest IncomingQuotaTransferRejectRequest(string reason = default)
+        /// <returns> A new <see cref="Models.IncomingQuotaTransferRejectContent"/> instance for mocking. </returns>
+        public static IncomingQuotaTransferRejectContent IncomingQuotaTransferRejectContent(string reason = default)
         {
-            return new IncomingQuotaTransferRejectRequest(reason, default);
+            return new IncomingQuotaTransferRejectContent(reason, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaLimitProperties"/>. </summary>

@@ -12,20 +12,20 @@ using Azure.ResourceManager.Quota;
 namespace Azure.ResourceManager.Quota.Models
 {
     /// <summary> Request body for the recipient approve action. </summary>
-    public partial class IncomingQuotaTransferApproveRequest
+    public partial class IncomingQuotaTransferApproveContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="IncomingQuotaTransferApproveRequest"/>. </summary>
-        public IncomingQuotaTransferApproveRequest()
+        /// <summary> Initializes a new instance of <see cref="IncomingQuotaTransferApproveContent"/>. </summary>
+        public IncomingQuotaTransferApproveContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IncomingQuotaTransferApproveRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="IncomingQuotaTransferApproveContent"/>. </summary>
         /// <param name="comment"> Optional free-text comment recorded on the transfer. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IncomingQuotaTransferApproveRequest(string comment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IncomingQuotaTransferApproveContent(string comment, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Comment = comment;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
