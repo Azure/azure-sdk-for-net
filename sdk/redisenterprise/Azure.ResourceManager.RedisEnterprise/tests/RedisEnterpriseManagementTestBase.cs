@@ -35,13 +35,13 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             DefaultSubscription = await Client.GetDefaultSubscriptionAsync().ConfigureAwait(false);
         }
 
-        protected async Task<ResourceGroupResource> CreateResourceGroupAsync()
+        protected async Task<ResourceGroupResource> CreateResourceGroupAsync(AzureLocation? location = null)
         {
             var resourceGroupName = Recording.GenerateAssetName("testRG-");
             var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 resourceGroupName,
-                new ResourceGroupData(DefaultLocation)
+                new ResourceGroupData(location ?? DefaultLocation)
                 {
                     Tags =
                     {

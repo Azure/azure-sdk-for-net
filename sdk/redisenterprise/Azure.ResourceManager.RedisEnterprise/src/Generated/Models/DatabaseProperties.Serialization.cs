@@ -139,6 +139,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WritePropertyName("accessKeysAuthentication"u8);
                 writer.WriteStringValue(AccessKeysAuthentication.Value.ToString());
             }
+            if (Optional.IsDefined(NotifyKeyspaceEvents))
+            {
+                writer.WritePropertyName("notifyKeyspaceEvents"u8);
+                writer.WriteStringValue(NotifyKeyspaceEvents);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -193,6 +198,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             string redisVersion = default;
             DeferUpgradeSetting? deferUpgrade = default;
             AccessKeysAuthentication? accessKeysAuthentication = default;
+            string notifyKeyspaceEvents = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -305,6 +311,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                     accessKeysAuthentication = new AccessKeysAuthentication(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("notifyKeyspaceEvents"u8))
+                {
+                    notifyKeyspaceEvents = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -323,6 +334,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 redisVersion,
                 deferUpgrade,
                 accessKeysAuthentication,
+                notifyKeyspaceEvents,
                 additionalBinaryDataProperties);
         }
     }
