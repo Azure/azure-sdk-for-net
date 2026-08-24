@@ -201,6 +201,42 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="FabricShortcutResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsArmClient.GetFabricShortcutResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FabricShortcutResource"/> object. </returns>
+        public static FabricShortcutResource GetFabricShortcutResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableEventHubsArmClient(client).GetFabricShortcutResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="UpgradePreferencesResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableEventHubsArmClient.GetUpgradePreferencesResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="UpgradePreferencesResource"/> object. </returns>
+        public static UpgradePreferencesResource GetUpgradePreferencesResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableEventHubsArmClient(client).GetUpgradePreferencesResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="EventHubsNamespaceResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
