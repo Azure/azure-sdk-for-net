@@ -120,7 +120,7 @@ namespace Azure.Provisioning.TrafficManager
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<HeatMapProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<TrafficManagerProfile>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<TrafficManagerProfile>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

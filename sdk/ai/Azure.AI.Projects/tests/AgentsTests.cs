@@ -739,7 +739,7 @@ public class AgentsTests : AgentsTestBase
         global::Azure.AI.Projects.Memory.MemorySearchOptions opts = new(scope)
         {
             Items = { ResponseItem.CreateUserMessageItem("Name your favorite animal") },
-            ResultOptions = new MemorySearchResultOptions()
+            ResultOptions = new global::Azure.AI.Projects.Memory.MemorySearchResultOptions()
             {
                 MaxMemories = 1,
             }
