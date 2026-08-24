@@ -1,5 +1,15 @@
 # Release History
 
+## 3.0.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
 ## 3.0.0-beta.1 (2026-08-24)
 
 This release migrates the library from emitting its own copies of the OpenAI Responses object model to consuming the types provided by the [`OpenAI`](https://www.nuget.org/packages/OpenAI) .NET library (2.12.0). This is a large, breaking change. See the [Migration Guide](https://aka.ms/Azure.AI.Extensions.OpenAI-V2V3Migration) for step-by-step upgrade guidance.
