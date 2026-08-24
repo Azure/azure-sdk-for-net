@@ -13,52 +13,52 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> The execution parameters the scheduled action is supposed to follow. </summary>
-    public partial class RecurringScheduledActionsExecutionParametersContent : IJsonModel<RecurringScheduledActionsExecutionParametersContent>
+    /// <summary> Retry policy the scheduled action can pass. </summary>
+    public partial class ScheduledActionsRetryPolicy : IJsonModel<ScheduledActionsRetryPolicy>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RecurringScheduledActionsExecutionParametersContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ScheduledActionsRetryPolicy PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RecurringScheduledActionsExecutionParametersContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionsRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeRecurringScheduledActionsExecutionParametersContent(document.RootElement, options);
+                        return DeserializeScheduledActionsRetryPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecurringScheduledActionsExecutionParametersContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionsRetryPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RecurringScheduledActionsExecutionParametersContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionsRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerComputeBulkActionsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(RecurringScheduledActionsExecutionParametersContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledActionsRetryPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<RecurringScheduledActionsExecutionParametersContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ScheduledActionsRetryPolicy>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RecurringScheduledActionsExecutionParametersContent IPersistableModel<RecurringScheduledActionsExecutionParametersContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ScheduledActionsRetryPolicy IPersistableModel<ScheduledActionsRetryPolicy>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<RecurringScheduledActionsExecutionParametersContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ScheduledActionsRetryPolicy>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<RecurringScheduledActionsExecutionParametersContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ScheduledActionsRetryPolicy>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,25 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RecurringScheduledActionsExecutionParametersContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionsRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecurringScheduledActionsExecutionParametersContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionsRetryPolicy)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(OptimizationPreference))
+            if (Optional.IsDefined(RetryCount))
             {
-                writer.WritePropertyName("optimizationPreference"u8);
-                writer.WriteStringValue(OptimizationPreference.Value.ToString());
+                writer.WritePropertyName("retryCount"u8);
+                writer.WriteNumberValue(RetryCount.Value);
             }
-            if (Optional.IsDefined(RetryPolicy))
+            if (Optional.IsDefined(RetryWindowInMinutes))
             {
-                writer.WritePropertyName("retryPolicy"u8);
-                writer.WriteObjectValue(RetryPolicy, options);
+                writer.WritePropertyName("retryWindowInMinutes"u8);
+                writer.WriteNumberValue(RetryWindowInMinutes.Value);
+            }
+            if (Optional.IsDefined(OnFailureAction))
+            {
+                writer.WritePropertyName("onFailureAction"u8);
+                writer.WriteStringValue(OnFailureAction.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,50 +108,60 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        RecurringScheduledActionsExecutionParametersContent IJsonModel<RecurringScheduledActionsExecutionParametersContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ScheduledActionsRetryPolicy IJsonModel<ScheduledActionsRetryPolicy>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual RecurringScheduledActionsExecutionParametersContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ScheduledActionsRetryPolicy JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<RecurringScheduledActionsExecutionParametersContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScheduledActionsRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecurringScheduledActionsExecutionParametersContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledActionsRetryPolicy)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeRecurringScheduledActionsExecutionParametersContent(document.RootElement, options);
+            return DeserializeScheduledActionsRetryPolicy(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static RecurringScheduledActionsExecutionParametersContent DeserializeRecurringScheduledActionsExecutionParametersContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static ScheduledActionsRetryPolicy DeserializeScheduledActionsRetryPolicy(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            OptimizationPreference? optimizationPreference = default;
-            RecurringScheduledActionsRetryPolicy retryPolicy = default;
+            int? retryCount = default;
+            int? retryWindowInMinutes = default;
+            ScheduledActionsResourceOperationType? onFailureAction = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("optimizationPreference"u8))
+                if (prop.NameEquals("retryCount"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    optimizationPreference = new OptimizationPreference(prop.Value.GetString());
+                    retryCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (prop.NameEquals("retryPolicy"u8))
+                if (prop.NameEquals("retryWindowInMinutes"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    retryPolicy = RecurringScheduledActionsRetryPolicy.DeserializeRecurringScheduledActionsRetryPolicy(prop.Value, options);
+                    retryWindowInMinutes = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("onFailureAction"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    onFailureAction = new ScheduledActionsResourceOperationType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +169,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RecurringScheduledActionsExecutionParametersContent(optimizationPreference, retryPolicy, additionalBinaryDataProperties);
+            return new ScheduledActionsRetryPolicy(retryCount, retryWindowInMinutes, onFailureAction, additionalBinaryDataProperties);
         }
     }
 }
