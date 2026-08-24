@@ -36,8 +36,8 @@ namespace Azure.AI.AnomalyDetector
     public partial class AnomalyDetectionModel : System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.AnomalyDetectionModel>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.AnomalyDetectionModel>
     {
         internal AnomalyDetectionModel() { }
-        public System.DateTimeOffset CreatedTime { get { throw null; } }
-        public System.DateTimeOffset LastUpdatedTime { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public System.Guid ModelId { get { throw null; } }
         public Azure.AI.AnomalyDetector.ModelInfo ModelInfo { get { throw null; } }
         protected virtual Azure.AI.AnomalyDetector.AnomalyDetectionModel JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -89,16 +89,16 @@ namespace Azure.AI.AnomalyDetector
     public static partial class AnomalyDetectorModelFactory
     {
         public static Azure.AI.AnomalyDetector.AlignPolicy AlignPolicy(Azure.AI.AnomalyDetector.AlignMode? alignMode = default(Azure.AI.AnomalyDetector.AlignMode?), Azure.AI.AnomalyDetector.FillNAMethod? fillNAMethod = default(Azure.AI.AnomalyDetector.FillNAMethod?), float? paddingValue = default(float?)) { throw null; }
-        public static Azure.AI.AnomalyDetector.AnomalyDetectionModel AnomalyDetectionModel(System.Guid modelId = default(System.Guid), System.DateTimeOffset createdTime = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedTime = default(System.DateTimeOffset), Azure.AI.AnomalyDetector.ModelInfo modelInfo = null) { throw null; }
+        public static Azure.AI.AnomalyDetector.AnomalyDetectionModel AnomalyDetectionModel(System.Guid modelId = default(System.Guid), System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), Azure.AI.AnomalyDetector.ModelInfo modelInfo = null) { throw null; }
         public static Azure.AI.AnomalyDetector.AnomalyInterpretation AnomalyInterpretation(string variable = null, float? contributionScore = default(float?), Azure.AI.AnomalyDetector.CorrelationChanges correlationChanges = null) { throw null; }
         public static Azure.AI.AnomalyDetector.AnomalyState AnomalyState(System.DateTimeOffset timestamp = default(System.DateTimeOffset), Azure.AI.AnomalyDetector.AnomalyValue value = null, System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.ErrorResponse> errors = null) { throw null; }
         public static Azure.AI.AnomalyDetector.AnomalyValue AnomalyValue(bool isAnomaly = false, float severity = 0f, float score = 0f, System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.AnomalyInterpretation> interpretation = null) { throw null; }
         public static Azure.AI.AnomalyDetector.CorrelationChanges CorrelationChanges(System.Collections.Generic.IEnumerable<string> changedVariables = null) { throw null; }
         public static Azure.AI.AnomalyDetector.DiagnosticsInfo DiagnosticsInfo(Azure.AI.AnomalyDetector.ModelState modelState = null, System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.VariableState> variableStates = null) { throw null; }
         public static Azure.AI.AnomalyDetector.ErrorResponse ErrorResponse(string code = null, string message = null) { throw null; }
-        public static Azure.AI.AnomalyDetector.ModelInfo ModelInfo(System.Uri dataSource = null, Azure.AI.AnomalyDetector.DataSchema? dataSchema = default(Azure.AI.AnomalyDetector.DataSchema?), System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset endTime = default(System.DateTimeOffset), string displayName = null, int? slidingWindow = default(int?), Azure.AI.AnomalyDetector.AlignPolicy alignPolicy = null, Azure.AI.AnomalyDetector.ModelStatus? status = default(Azure.AI.AnomalyDetector.ModelStatus?), System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.ErrorResponse> errors = null, Azure.AI.AnomalyDetector.DiagnosticsInfo diagnosticsInfo = null) { throw null; }
+        public static Azure.AI.AnomalyDetector.ModelInfo ModelInfo(System.Uri dataSource = null, Azure.AI.AnomalyDetector.DataSchema? dataSchema = default(Azure.AI.AnomalyDetector.DataSchema?), System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset endOn = default(System.DateTimeOffset), string displayName = null, int? slidingWindow = default(int?), Azure.AI.AnomalyDetector.AlignPolicy alignPolicy = null, Azure.AI.AnomalyDetector.ModelStatus? status = default(Azure.AI.AnomalyDetector.ModelStatus?), System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.ErrorResponse> errors = null, Azure.AI.AnomalyDetector.DiagnosticsInfo diagnosticsInfo = null) { throw null; }
         public static Azure.AI.AnomalyDetector.ModelState ModelState(System.Collections.Generic.IEnumerable<int> epochIds = null, System.Collections.Generic.IEnumerable<float> trainLosses = null, System.Collections.Generic.IEnumerable<float> validationLosses = null, System.Collections.Generic.IEnumerable<float> latenciesInSeconds = null) { throw null; }
-        public static Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions MultivariateBatchDetectionOptions(System.Uri dataSource = null, int? topContributorCount = default(int?), System.DateTimeOffset startTime = default(System.DateTimeOffset), System.DateTimeOffset endTime = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions MultivariateBatchDetectionOptions(System.Uri dataSource = null, int? topContributorCount = default(int?), System.DateTimeOffset startOn = default(System.DateTimeOffset), System.DateTimeOffset endOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary MultivariateBatchDetectionResultSummary(Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus status = default(Azure.AI.AnomalyDetector.MultivariateBatchDetectionStatus), System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.ErrorResponse> errors = null, System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.VariableState> variableStates = null, Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions setupInfo = null) { throw null; }
         public static Azure.AI.AnomalyDetector.MultivariateDetectionResult MultivariateDetectionResult(System.Guid resultId = default(System.Guid), Azure.AI.AnomalyDetector.MultivariateBatchDetectionResultSummary summary = null, System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.AnomalyState> results = null) { throw null; }
         public static Azure.AI.AnomalyDetector.MultivariateLastDetectionOptions MultivariateLastDetectionOptions(System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.VariableValues> variables = null, int? topContributorCount = default(int?)) { throw null; }
@@ -108,7 +108,7 @@ namespace Azure.AI.AnomalyDetector
         public static Azure.AI.AnomalyDetector.UnivariateChangePointDetectionResult UnivariateChangePointDetectionResult(int? period = default(int?), System.Collections.Generic.IEnumerable<bool> isChangePoint = null, System.Collections.Generic.IEnumerable<float> confidenceScores = null) { throw null; }
         public static Azure.AI.AnomalyDetector.UnivariateDetectionOptions UnivariateDetectionOptions(System.Collections.Generic.IEnumerable<Azure.AI.AnomalyDetector.TimeSeriesPoint> series = null, Azure.AI.AnomalyDetector.TimeGranularity? granularity = default(Azure.AI.AnomalyDetector.TimeGranularity?), int? customInterval = default(int?), int? period = default(int?), float? maxAnomalyRatio = default(float?), int? sensitivity = default(int?), Azure.AI.AnomalyDetector.ImputeMode? imputeMode = default(Azure.AI.AnomalyDetector.ImputeMode?), float? imputeFixedValue = default(float?)) { throw null; }
         public static Azure.AI.AnomalyDetector.UnivariateLastDetectionResult UnivariateLastDetectionResult(int period = 0, int suggestedWindow = 0, float expectedValue = 0f, float upperMargin = 0f, float lowerMargin = 0f, bool isAnomaly = false, bool isNegativeAnomaly = false, bool isPositiveAnomaly = false, float? severity = default(float?)) { throw null; }
-        public static Azure.AI.AnomalyDetector.VariableState VariableState(string variable = null, float? filledNARatio = default(float?), int? effectiveCount = default(int?), System.DateTimeOffset? firstTimestamp = default(System.DateTimeOffset?), System.DateTimeOffset? lastTimestamp = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.AI.AnomalyDetector.VariableState VariableState(string variable = null, float? filledNARatio = default(float?), int? effectiveCount = default(int?), System.DateTimeOffset? firstOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.AI.AnomalyDetector.VariableValues VariableValues(string variable = null, System.Collections.Generic.IEnumerable<string> timestamps = null, System.Collections.Generic.IEnumerable<float> values = null) { throw null; }
     }
     public partial class AnomalyInterpretation : System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.AnomalyInterpretation>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.AnomalyInterpretation>
@@ -270,16 +270,16 @@ namespace Azure.AI.AnomalyDetector
     }
     public partial class ModelInfo : System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.ModelInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.ModelInfo>
     {
-        public ModelInfo(System.Uri dataSource, System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
+        public ModelInfo(System.Uri dataSource, System.DateTimeOffset startOn, System.DateTimeOffset endOn) { }
         public Azure.AI.AnomalyDetector.AlignPolicy AlignPolicy { get { throw null; } set { } }
         public Azure.AI.AnomalyDetector.DataSchema? DataSchema { get { throw null; } set { } }
         public System.Uri DataSource { get { throw null; } set { } }
         public Azure.AI.AnomalyDetector.DiagnosticsInfo DiagnosticsInfo { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
-        public System.DateTimeOffset EndTime { get { throw null; } set { } }
+        public System.DateTimeOffset EndOn { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.AnomalyDetector.ErrorResponse> Errors { get { throw null; } }
         public int? SlidingWindow { get { throw null; } set { } }
-        public System.DateTimeOffset StartTime { get { throw null; } set { } }
+        public System.DateTimeOffset StartOn { get { throw null; } set { } }
         public Azure.AI.AnomalyDetector.ModelStatus? Status { get { throw null; } }
         protected virtual Azure.AI.AnomalyDetector.ModelInfo JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -330,10 +330,10 @@ namespace Azure.AI.AnomalyDetector
     }
     public partial class MultivariateBatchDetectionOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions>
     {
-        public MultivariateBatchDetectionOptions(System.Uri dataSource, System.DateTimeOffset startTime, System.DateTimeOffset endTime) { }
+        public MultivariateBatchDetectionOptions(System.Uri dataSource, System.DateTimeOffset startOn, System.DateTimeOffset endOn) { }
         public System.Uri DataSource { get { throw null; } set { } }
-        public System.DateTimeOffset EndTime { get { throw null; } set { } }
-        public System.DateTimeOffset StartTime { get { throw null; } set { } }
+        public System.DateTimeOffset EndOn { get { throw null; } set { } }
+        public System.DateTimeOffset StartOn { get { throw null; } set { } }
         public int? TopContributorCount { get { throw null; } set { } }
         protected virtual Azure.AI.AnomalyDetector.MultivariateBatchDetectionOptions JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -605,8 +605,8 @@ namespace Azure.AI.AnomalyDetector
         internal VariableState() { }
         public int? EffectiveCount { get { throw null; } }
         public float? FilledNARatio { get { throw null; } }
-        public System.DateTimeOffset? FirstTimestamp { get { throw null; } }
-        public System.DateTimeOffset? LastTimestamp { get { throw null; } }
+        public System.DateTimeOffset? FirstOn { get { throw null; } }
+        public System.DateTimeOffset? LastOn { get { throw null; } }
         public string Variable { get { throw null; } }
         protected virtual Azure.AI.AnomalyDetector.VariableState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
