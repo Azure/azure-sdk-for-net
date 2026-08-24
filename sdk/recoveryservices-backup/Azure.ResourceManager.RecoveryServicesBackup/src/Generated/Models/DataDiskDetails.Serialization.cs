@@ -13,52 +13,52 @@ using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Recovery Point Properties Contract for Update Recovery Point API. </summary>
-    internal partial class PatchRecoveryPointPropertiesInput : IJsonModel<PatchRecoveryPointPropertiesInput>
+    /// <summary> Data disk details. </summary>
+    internal partial class DataDiskDetails : IJsonModel<DataDiskDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PatchRecoveryPointPropertiesInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DataDiskDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PatchRecoveryPointPropertiesInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePatchRecoveryPointPropertiesInput(document.RootElement, options);
+                        return DeserializeDataDiskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PatchRecoveryPointPropertiesInput)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataDiskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PatchRecoveryPointPropertiesInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PatchRecoveryPointPropertiesInput)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataDiskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PatchRecoveryPointPropertiesInput>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DataDiskDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PatchRecoveryPointPropertiesInput IPersistableModel<PatchRecoveryPointPropertiesInput>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DataDiskDetails IPersistableModel<DataDiskDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PatchRecoveryPointPropertiesInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataDiskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PatchRecoveryPointPropertiesInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataDiskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,15 +69,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PatchRecoveryPointPropertiesInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PatchRecoveryPointPropertiesInput)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DataDiskDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ExpiryOn))
+            if (Optional.IsCollectionDefined(EncryptedDataDisks))
             {
-                writer.WritePropertyName("expiryTime"u8);
-                writer.WriteStringValue(ExpiryOn.Value, "O");
+                writer.WritePropertyName("encryptedDataDisks"u8);
+                writer.WriteStartArray();
+                foreach (DiskDetails item in EncryptedDataDisks)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -98,40 +103,45 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PatchRecoveryPointPropertiesInput IJsonModel<PatchRecoveryPointPropertiesInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DataDiskDetails IJsonModel<DataDiskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PatchRecoveryPointPropertiesInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DataDiskDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PatchRecoveryPointPropertiesInput>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DataDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PatchRecoveryPointPropertiesInput)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DataDiskDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePatchRecoveryPointPropertiesInput(document.RootElement, options);
+            return DeserializeDataDiskDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PatchRecoveryPointPropertiesInput DeserializePatchRecoveryPointPropertiesInput(JsonElement element, ModelReaderWriterOptions options)
+        internal static DataDiskDetails DeserializeDataDiskDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset? expiryOn = default;
+            IList<DiskDetails> encryptedDataDisks = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("expiryTime"u8))
+                if (prop.NameEquals("encryptedDataDisks"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    expiryOn = prop.Value.GetDateTimeOffset("O");
+                    List<DiskDetails> array = new List<DiskDetails>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(DiskDetails.DeserializeDiskDetails(item, options));
+                    }
+                    encryptedDataDisks = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PatchRecoveryPointPropertiesInput(expiryOn, additionalBinaryDataProperties);
+            return new DataDiskDetails(encryptedDataDisks ?? new ChangeTrackingList<DiskDetails>(), additionalBinaryDataProperties);
         }
     }
 }

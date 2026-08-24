@@ -9,57 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
-    /// <summary> Restore request parameters for Secured VMs. </summary>
-    internal partial class SecuredVMDetails : IJsonModel<SecuredVMDetails>
+    /// <summary> Disk details. </summary>
+    public partial class DiskDetails : IJsonModel<DiskDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SecuredVMDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DiskDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecuredVMDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSecuredVMDetails(document.RootElement, options);
+                        return DeserializeDiskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecuredVMDetails)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecuredVMDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SecuredVMDetails)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SecuredVMDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DiskDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SecuredVMDetails IPersistableModel<SecuredVMDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DiskDetails IPersistableModel<DiskDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SecuredVMDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DiskDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SecuredVMDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DiskDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,15 +69,20 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecuredVMDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecuredVMDetails)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SecuredVmOSDiskEncryptionSetId))
+            if (Optional.IsDefined(Lun))
             {
-                writer.WritePropertyName("securedVMOsDiskEncryptionSetId"u8);
-                writer.WriteStringValue(SecuredVmOSDiskEncryptionSetId);
+                writer.WritePropertyName("lun"u8);
+                writer.WriteNumberValue(Lun.Value);
+            }
+            if (Optional.IsDefined(DiskName))
+            {
+                writer.WritePropertyName("diskName"u8);
+                writer.WriteStringValue(DiskName);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -99,40 +103,46 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SecuredVMDetails IJsonModel<SecuredVMDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DiskDetails IJsonModel<DiskDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SecuredVMDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DiskDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SecuredVMDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecuredVMDetails)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskDetails)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSecuredVMDetails(document.RootElement, options);
+            return DeserializeDiskDetails(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SecuredVMDetails DeserializeSecuredVMDetails(JsonElement element, ModelReaderWriterOptions options)
+        internal static DiskDetails DeserializeDiskDetails(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier securedVmOSDiskEncryptionSetId = default;
+            int? lun = default;
+            string diskName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("securedVMOsDiskEncryptionSetId"u8))
+                if (prop.NameEquals("lun"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    securedVmOSDiskEncryptionSetId = new ResourceIdentifier(prop.Value.GetString());
+                    lun = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("diskName"u8))
+                {
+                    diskName = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -140,7 +150,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SecuredVMDetails(securedVmOSDiskEncryptionSetId, additionalBinaryDataProperties);
+            return new DiskDetails(lun, diskName, additionalBinaryDataProperties);
         }
     }
 }
