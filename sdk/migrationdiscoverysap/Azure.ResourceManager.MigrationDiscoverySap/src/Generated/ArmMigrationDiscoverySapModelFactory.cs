@@ -17,33 +17,6 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmMigrationDiscoverySapModelFactory
     {
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="masterSiteId"> The master site ID from Azure Migrate. </param>
-        /// <param name="migrateProjectId"> The migrate project ID from Azure Migrate. </param>
-        /// <param name="provisioningState"> Defines the provisioning states. </param>
-        /// <param name="errors"> Indicates any errors on the SAP Migration discovery site resource. </param>
-        /// <param name="extendedLocation"> The extended location definition. </param>
-        /// <returns> A new <see cref="MigrationDiscoverySap.SapDiscoverySiteData"/> instance for mocking. </returns>
-        public static SapDiscoverySiteData SapDiscoverySiteData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string masterSiteId = default, string migrateProjectId = default, SapDiscoveryProvisioningState? provisioningState = default, SapMigrateError errors = default, SapDiscoveryExtendedLocation extendedLocation = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new SapDiscoverySiteData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                masterSiteId is null && migrateProjectId is null && provisioningState is null && errors is null ? default : new SAPDiscoverySiteProperties(masterSiteId, migrateProjectId, provisioningState, errors, default),
-                extendedLocation,
-                default);
-        }
 
         /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
         /// <param name="message"> Description of the error. </param>

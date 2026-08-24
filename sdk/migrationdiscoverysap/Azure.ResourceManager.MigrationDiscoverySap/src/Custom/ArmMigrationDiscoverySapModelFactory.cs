@@ -4,13 +4,16 @@
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
+    // The TypeSpec generator places the top-level extendedLocation property after the flattened properties.
+    // When all default, it will be ambiguous.
+    // Preserve the previously shipped parameter order for callers that use positional or named arguments.
+    [CodeGenSuppress("SapDiscoverySiteData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(string), typeof(string), typeof(SapDiscoveryProvisioningState?), typeof(SapMigrateError), typeof(SapDiscoveryExtendedLocation))]
     public static partial class ArmMigrationDiscoverySapModelFactory
     {
-        // The TypeSpec generator places the top-level extendedLocation property after the flattened properties.
-        // Preserve the previously shipped parameter order for callers that use positional or named arguments.
         /// <param name="id"> Fully qualified resource ID for the resource. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. </param>
@@ -36,18 +39,18 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             SapDiscoveryProvisioningState? provisioningState = default,
             SapMigrateError errors = default)
         {
-            return SapDiscoverySiteData(
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new SapDiscoverySiteData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                tags,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                masterSiteId,
-                migrateProjectId,
-                provisioningState,
-                errors,
-                legacyExtendedLocation);
+                masterSiteId is null && migrateProjectId is null && provisioningState is null && errors is null ? default : new SAPDiscoverySiteProperties(masterSiteId, migrateProjectId, provisioningState, errors, default),
+                legacyExtendedLocation,
+                default);
         }
     }
 }
