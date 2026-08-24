@@ -182,5 +182,23 @@ namespace Azure.ResourceManager.Network
                 Properties.Scope = value;
             }
         }
+
+        /// <summary> The load balancer mode. Set to `Advanced` to enable additional capabilities on a Standard SKU load balancer. Advanced mode must be specified at creation and cannot be changed afterward. </summary>
+        [WirePath("properties.mode")]
+        public LoadBalancerMode? Mode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Mode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancerPropertiesFormat();
+                }
+                Properties.Mode = value;
+            }
+        }
     }
 }
