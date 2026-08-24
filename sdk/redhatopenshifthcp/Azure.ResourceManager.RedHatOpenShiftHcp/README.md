@@ -1,4 +1,4 @@
-# Azure.ResourceManager.RedHatOpenShiftHcp management client library for .NET
+# Azure Red Hat OpenShift HCP management client library for .NET
 
 This library supports managing Microsoft Azure resources.
 

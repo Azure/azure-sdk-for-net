@@ -360,10 +360,10 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         }
 
         /// <param name="certificateSigningRequest"> PEM encoded certificate request. </param>
-        /// <returns> A new <see cref="Models.HcpOpenShiftClusterAdminCredentialRequest"/> instance for mocking. </returns>
-        public static HcpOpenShiftClusterAdminCredentialRequest HcpOpenShiftClusterAdminCredentialRequest(string certificateSigningRequest = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterAdminCredentialContent"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterAdminCredentialContent HcpOpenShiftClusterAdminCredentialContent(string certificateSigningRequest = default)
         {
-            return new HcpOpenShiftClusterAdminCredentialRequest(certificateSigningRequest, default);
+            return new HcpOpenShiftClusterAdminCredentialContent(certificateSigningRequest, default);
         }
 
         /// <param name="kubeconfig"> Admin kubeconfig with a temporary client certificate. </param>
