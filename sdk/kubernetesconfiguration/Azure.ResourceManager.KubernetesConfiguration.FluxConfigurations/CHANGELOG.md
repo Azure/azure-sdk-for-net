@@ -6,6 +6,8 @@
 
 ### Breaking Changes
 
+- Renamed `Kustomization` to `FluxConfigurationsKustomization`.
+
 ### Bugs Fixed
 
 ### Other Changes
@@ -16,4 +18,3 @@
 
 - Initial release of the Azure Kubernetes Configuration FluxConfigurations management library.
 - API version `2025-04-01`.
-

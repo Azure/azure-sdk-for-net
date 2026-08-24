@@ -12,18 +12,18 @@ using Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations;
 namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Models
 {
     /// <summary> The Kustomization defining how to reconcile the artifact pulled by the source type on the cluster. </summary>
-    public partial class Kustomization
+    public partial class FluxConfigurationsKustomization
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Kustomization"/>. </summary>
-        public Kustomization()
+        /// <summary> Initializes a new instance of <see cref="FluxConfigurationsKustomization"/>. </summary>
+        public FluxConfigurationsKustomization()
         {
             DependsOn = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="Kustomization"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="FluxConfigurationsKustomization"/>. </summary>
         /// <param name="name"> Name of the Kustomization, matching the key in the Kustomizations object map. </param>
         /// <param name="path"> The path in the source reference to reconcile on the cluster. </param>
         /// <param name="dependsOn"> Specifies other Kustomizations that this Kustomization depends on. This Kustomization will not reconcile until all dependencies have completed their reconciliation. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="isWait"> Enable/disable health check for all Kubernetes objects created by this Kustomization. </param>
         /// <param name="postBuild"> Used for variable substitution for this Kustomization after kustomize build. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Kustomization(string name, string path, IList<string> dependsOn, long? timeoutInSeconds, long? syncIntervalInSeconds, long? retryIntervalInSeconds, bool? isPrune, bool? isForce, bool? isWait, FluxPostBuild postBuild, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FluxConfigurationsKustomization(string name, string path, IList<string> dependsOn, long? timeoutInSeconds, long? syncIntervalInSeconds, long? retryIntervalInSeconds, bool? isPrune, bool? isForce, bool? isWait, FluxPostBuild postBuild, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Path = path;
