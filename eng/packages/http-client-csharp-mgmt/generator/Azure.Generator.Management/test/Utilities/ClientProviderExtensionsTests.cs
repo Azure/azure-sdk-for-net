@@ -15,7 +15,7 @@ namespace Azure.Generator.Management.Tests.Utilities
         public void UsesFinalProviderContractToPreserveUrlOperationName()
         {
             var operation = InputFactory.Operation("GetUrl");
-            operation.GetType().GetProperty("OriginalName")!.SetValue(operation, "GetUrl");
+            operation.GetType().GetProperty("OriginalName")!.GetSetMethod(true)!.Invoke(operation, ["GetUrl"]);
             var serviceMethod = InputFactory.BasicServiceMethod("GetUrl", operation);
             var client = InputFactory.Client("TestClient", methods: [serviceMethod]);
             var plugin = ManagementMockHelpers.LoadMockPlugin(
@@ -45,7 +45,7 @@ namespace Azure.Generator.Management.Tests.Utilities
         public void NormalizesUrlOperationNameForNewContract()
         {
             var operation = InputFactory.Operation("GetUrl");
-            operation.GetType().GetProperty("OriginalName")!.SetValue(operation, "GetUrl");
+            operation.GetType().GetProperty("OriginalName")!.GetSetMethod(true)!.Invoke(operation, ["GetUrl"]);
             var serviceMethod = InputFactory.BasicServiceMethod("GetUrl", operation);
             var client = InputFactory.Client("TestClient", methods: [serviceMethod]);
             var plugin = ManagementMockHelpers.LoadMockPlugin(clients: () => [client]);
