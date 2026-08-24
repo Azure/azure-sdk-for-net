@@ -58,144 +58,6 @@ namespace Azure.ResourceManager.Resources.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of ArmDeploymentResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of ArmDeploymentResources and their operations over a ArmDeploymentResource. </returns>
-        public virtual ArmDeploymentCollection GetArmDeployments()
-        {
-            return GetCachedClient(client => new ArmDeploymentCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a deployment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_GetAtScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ArmDeploymentResource>> GetArmDeploymentAsync(string deploymentName, CancellationToken cancellationToken = default)
-        {
-            return await GetArmDeployments().GetAsync(deploymentName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a deployment.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deployments/{deploymentName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Deployments_GetAtScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2025-04-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ArmDeploymentResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="deploymentName"> The name of the deployment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ArmDeploymentResource> GetArmDeployment(string deploymentName, CancellationToken cancellationToken = default)
-        {
-            return GetArmDeployments().Get(deploymentName, cancellationToken);
-        }
-
-        /// <summary> Gets a collection of DeploymentStackResources in the SubscriptionResource. </summary>
-        /// <returns> An object representing collection of DeploymentStackResources and their operations over a DeploymentStackResource. </returns>
-        public virtual DeploymentStackCollection GetDeploymentStacks()
-        {
-            return GetCachedClient(client => new DeploymentStackCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Gets a Deployment stack with a given name at specific scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeploymentStacks_GetAtScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeploymentStackResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentStackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<DeploymentStackResource>> GetDeploymentStackAsync(string deploymentStackName, CancellationToken cancellationToken = default)
-        {
-            return await GetDeploymentStacks().GetAsync(deploymentStackName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Gets a Deployment stack with a given name at specific scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/{scope}/providers/Microsoft.Resources/deploymentStacks/{deploymentStackName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>DeploymentStacks_GetAtScope</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="DeploymentStackResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="deploymentStackName"> Name of the deployment stack. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="deploymentStackName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="deploymentStackName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<DeploymentStackResource> GetDeploymentStack(string deploymentStackName, CancellationToken cancellationToken = default)
-        {
-            return GetDeploymentStacks().Get(deploymentStackName, cancellationToken);
-        }
-
         /// <summary>
         /// Lists all the Template Specs within the specified subscriptions.
         /// <list type="bullet">
@@ -222,8 +84,8 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <returns> An async collection of <see cref="TemplateSpecResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<TemplateSpecResource> GetTemplateSpecsAsync(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => TemplateSpecRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
-            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TemplateSpecRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => TemplateSpecRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TemplateSpecRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new TemplateSpecResource(Client, TemplateSpecData.DeserializeTemplateSpecData(e)), TemplateSpecClientDiagnostics, Pipeline, "MockableResourcesSubscriptionResource.GetTemplateSpecs", "value", "nextLink", cancellationToken);
         }
 
@@ -253,8 +115,8 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <returns> A collection of <see cref="TemplateSpecResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<TemplateSpecResource> GetTemplateSpecs(TemplateSpecExpandKind? expand = null, CancellationToken cancellationToken = default)
         {
-            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => TemplateSpecRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
-            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TemplateSpecRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => TemplateSpecRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, expand);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => TemplateSpecRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, expand);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new TemplateSpecResource(Client, TemplateSpecData.DeserializeTemplateSpecData(e)), TemplateSpecClientDiagnostics, Pipeline, "MockableResourcesSubscriptionResource.GetTemplateSpecs", "value", "nextLink", cancellationToken);
         }
 
@@ -283,8 +145,8 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <returns> An async collection of <see cref="ArmDeploymentScriptResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ArmDeploymentScriptResource> GetArmDeploymentScriptsAsync(CancellationToken cancellationToken = default)
         {
-            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => ArmDeploymentScriptDeploymentScriptsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ArmDeploymentScriptDeploymentScriptsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ArmDeploymentScriptDeploymentScriptsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ArmDeploymentScriptDeploymentScriptsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentScriptResource(Client, ArmDeploymentScriptData.DeserializeArmDeploymentScriptData(e)), ArmDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, "MockableResourcesSubscriptionResource.GetArmDeploymentScripts", "value", "nextLink", cancellationToken);
         }
 
@@ -313,8 +175,8 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <returns> A collection of <see cref="ArmDeploymentScriptResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ArmDeploymentScriptResource> GetArmDeploymentScripts(CancellationToken cancellationToken = default)
         {
-            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => ArmDeploymentScriptDeploymentScriptsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ArmDeploymentScriptDeploymentScriptsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ArmDeploymentScriptDeploymentScriptsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ArmDeploymentScriptDeploymentScriptsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArmDeploymentScriptResource(Client, ArmDeploymentScriptData.DeserializeArmDeploymentScriptData(e)), ArmDeploymentScriptDeploymentScriptsClientDiagnostics, Pipeline, "MockableResourcesSubscriptionResource.GetArmDeploymentScripts", "value", "nextLink", cancellationToken);
         }
 
@@ -343,8 +205,8 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <returns> An async collection of <see cref="ArmApplicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ArmApplicationResource> GetArmApplicationsAsync(CancellationToken cancellationToken = default)
         {
-            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => ArmApplicationApplicationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ArmApplicationApplicationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ArmApplicationApplicationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ArmApplicationApplicationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ArmApplicationResource(Client, ArmApplicationData.DeserializeArmApplicationData(e)), ArmApplicationApplicationsClientDiagnostics, Pipeline, "MockableResourcesSubscriptionResource.GetArmApplications", "value", "nextLink", cancellationToken);
         }
 
@@ -373,8 +235,8 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <returns> A collection of <see cref="ArmApplicationResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ArmApplicationResource> GetArmApplications(CancellationToken cancellationToken = default)
         {
-            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => ArmApplicationApplicationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            Core.HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ArmApplicationApplicationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => ArmApplicationApplicationsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => ArmApplicationApplicationsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ArmApplicationResource(Client, ArmApplicationData.DeserializeArmApplicationData(e)), ArmApplicationApplicationsClientDiagnostics, Pipeline, "MockableResourcesSubscriptionResource.GetArmApplications", "value", "nextLink", cancellationToken);
         }
 
@@ -403,7 +265,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <returns> An async collection of <see cref="JitRequestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<JitRequestResource> GetJitRequestDefinitionsAsync(CancellationToken cancellationToken = default)
         {
-            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => JitRequestRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => JitRequestRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => new JitRequestResource(Client, JitRequestData.DeserializeJitRequestData(e)), JitRequestClientDiagnostics, Pipeline, "MockableResourcesSubscriptionResource.GetJitRequestDefinitions", "value", null, cancellationToken);
         }
 
@@ -432,7 +294,7 @@ namespace Azure.ResourceManager.Resources.Mocking
         /// <returns> A collection of <see cref="JitRequestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<JitRequestResource> GetJitRequestDefinitions(CancellationToken cancellationToken = default)
         {
-            Core.HttpMessage FirstPageRequest(int? pageSizeHint) => JitRequestRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => JitRequestRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => new JitRequestResource(Client, JitRequestData.DeserializeJitRequestData(e)), JitRequestClientDiagnostics, Pipeline, "MockableResourcesSubscriptionResource.GetJitRequestDefinitions", "value", null, cancellationToken);
         }
 
