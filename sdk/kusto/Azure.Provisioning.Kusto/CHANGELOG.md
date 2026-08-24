@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.3 (2026-08-24)
 
 ### Features Added
 
@@ -9,8 +9,6 @@
 ### Breaking Changes
 
 - Removed resource API versions older than `2025-02-14`.
-
-### Bugs Fixed
 
 ### Other Changes
 
