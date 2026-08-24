@@ -1,14 +1,18 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.3 (2026-08-24)
 
 ### Features Added
 
+- Added support for the `2025-02-14` API version.
+
 ### Breaking Changes
 
-### Bugs Fixed
+- Removed resource API versions older than `2025-02-14`.
 
 ### Other Changes
+
+- Regenerated the library with the TypeSpec-based provisioning generator.
 
 ## 1.0.0-beta.2 (2026-03-02)
 
