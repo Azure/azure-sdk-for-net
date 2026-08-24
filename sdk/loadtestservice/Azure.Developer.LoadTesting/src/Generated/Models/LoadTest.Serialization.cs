@@ -218,20 +218,20 @@ namespace Azure.Developer.LoadTesting
                 writer.WritePropertyName("preferences"u8);
                 writer.WriteObjectValue(Preferences, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedDateTime))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDateTime"u8);
-                writer.WriteStringValue(CreatedDateTime.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedDateTime))
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedDateTime"u8);
-                writer.WriteStringValue(LastModifiedDateTime.Value, "O");
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
@@ -302,9 +302,9 @@ namespace Azure.Developer.LoadTesting
             IList<string> engineBuiltInIdentityIds = default;
             double? estimatedVirtualUserHours = default;
             TestPreferences preferences = default;
-            DateTimeOffset? createdDateTime = default;
+            DateTimeOffset? createdOn = default;
             string createdBy = default;
-            DateTimeOffset? lastModifiedDateTime = default;
+            DateTimeOffset? lastModifiedOn = default;
             string lastModifiedBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -510,7 +510,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    createdDateTime = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("createdBy"u8))
@@ -524,7 +524,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    lastModifiedDateTime = prop.Value.GetDateTimeOffset("O");
+                    lastModifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedBy"u8))
@@ -560,9 +560,9 @@ namespace Azure.Developer.LoadTesting
                 engineBuiltInIdentityIds ?? new ChangeTrackingList<string>(),
                 estimatedVirtualUserHours,
                 preferences,
-                createdDateTime,
+                createdOn,
                 createdBy,
-                lastModifiedDateTime,
+                lastModifiedOn,
                 lastModifiedBy,
                 additionalBinaryDataProperties);
         }
