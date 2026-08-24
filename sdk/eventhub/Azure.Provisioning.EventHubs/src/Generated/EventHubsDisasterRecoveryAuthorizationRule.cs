@@ -131,7 +131,7 @@ namespace Azure.Provisioning.EventHubs
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<AuthorizationRuleProperties>(nameof(Properties), new string[] { "properties" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
-            _parent = DefineResource<EventHubsDisasterRecovery>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<EventHubsDisasterRecovery>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
