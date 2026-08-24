@@ -8,15 +8,59 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
+    /// <summary>
+    /// The target service properties
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureResourceInfo"/>, <see cref="ConfluentBootstrapServerInfo"/>, <see cref="FabricPlatformTargetService"/>, <see cref="SelfHostedServerTargetService"/>, and <see cref="ConfluentSchemaRegistryInfo"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownTargetServiceBase))]
-    public partial class TargetServiceBaseInfo : IUtf8JsonSerializable, IJsonModel<TargetServiceBaseInfo>
+    public abstract partial class TargetServiceBaseInfo : IJsonModel<TargetServiceBaseInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TargetServiceBaseInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TargetServiceBaseInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TargetServiceBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTargetServiceBaseInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TargetServiceBaseInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TargetServiceBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TargetServiceBaseInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TargetServiceBaseInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TargetServiceBaseInfo IPersistableModel<TargetServiceBaseInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TargetServiceBaseInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<TargetServiceBaseInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,23 +72,22 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetServiceBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TargetServiceBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TargetServiceBaseInfo)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(TargetServiceType.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            writer.WriteStringValue(Type.ToString());
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -53,67 +96,48 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
         }
 
-        TargetServiceBaseInfo IJsonModel<TargetServiceBaseInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TargetServiceBaseInfo IJsonModel<TargetServiceBaseInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TargetServiceBaseInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetServiceBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TargetServiceBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(TargetServiceBaseInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeTargetServiceBaseInfo(document.RootElement, options);
         }
 
-        internal static TargetServiceBaseInfo DeserializeTargetServiceBaseInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TargetServiceBaseInfo DeserializeTargetServiceBaseInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("type", out JsonElement discriminator))
+            if (element.TryGetProperty("type"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureResource": return AzureResourceInfo.DeserializeAzureResourceInfo(element, options);
-                    case "ConfluentBootstrapServer": return ConfluentBootstrapServerInfo.DeserializeConfluentBootstrapServerInfo(element, options);
-                    case "ConfluentSchemaRegistry": return ConfluentSchemaRegistryInfo.DeserializeConfluentSchemaRegistryInfo(element, options);
+                    case "AzureResource":
+                        return AzureResourceInfo.DeserializeAzureResourceInfo(element, options);
+                    case "ConfluentBootstrapServer":
+                        return ConfluentBootstrapServerInfo.DeserializeConfluentBootstrapServerInfo(element, options);
+                    case "FabricPlatform":
+                        return FabricPlatformTargetService.DeserializeFabricPlatformTargetService(element, options);
+                    case "SelfHostedServer":
+                        return SelfHostedServerTargetService.DeserializeSelfHostedServerTargetService(element, options);
+                    case "ConfluentSchemaRegistry":
+                        return ConfluentSchemaRegistryInfo.DeserializeConfluentSchemaRegistryInfo(element, options);
                 }
             }
             return UnknownTargetServiceBase.DeserializeUnknownTargetServiceBase(element, options);
         }
-
-        BinaryData IPersistableModel<TargetServiceBaseInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetServiceBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(TargetServiceBaseInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        TargetServiceBaseInfo IPersistableModel<TargetServiceBaseInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<TargetServiceBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeTargetServiceBaseInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(TargetServiceBaseInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<TargetServiceBaseInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

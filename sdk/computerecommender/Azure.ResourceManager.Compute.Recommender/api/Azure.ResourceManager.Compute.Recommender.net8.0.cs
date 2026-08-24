@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         public Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementAllocationStrategy? AllocationStrategy { get { throw null; } set { } }
         public int Capacity { get { throw null; } }
         public Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementCapacityType CapacityType { get { throw null; } }
-        public Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementOSType? OsType { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementOSType? OSType { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementPriority Priority { get { throw null; } }
         public double? SpotPriorityMaxPricePerVm { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Recommender.Models.SkuMixPlacementZoneAllocationPolicy ZoneAllocationPolicy { get { throw null; } set { } }
