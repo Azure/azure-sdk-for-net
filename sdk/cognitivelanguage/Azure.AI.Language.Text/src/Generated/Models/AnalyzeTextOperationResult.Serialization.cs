@@ -82,7 +82,7 @@ namespace Azure.AI.Language.Text
                 throw new FormatException($"The model {nameof(AnalyzeTextOperationResult)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("lastUpdateDateTime"u8);
-            writer.WriteStringValue(LastUpdateDateTime, "O");
+            writer.WriteStringValue(LastUpdateOn, "O");
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             if (Optional.IsDefined(TaskName))
