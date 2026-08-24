@@ -1,0 +1,10 @@
+# Vally starts MCP servers from a per-stimulus temporary directory. Rewrite the checked-in relative
+# DLL path to an absolute path immediately before each shard so startup is independent of that cwd.
+
+steps:
+  - script: |
+      set -e
+      f="$(Build.SourcesDirectory)/.github/skills/.vally.yaml"
+      sed -i "s#\.\./\.\./artifacts/mcp/#$(Build.SourcesDirectory)/artifacts/mcp/#g" "$f"
+      grep -n "artifacts/mcp/" "$f"
+    displayName: 'Rewrite MCP DLL paths to absolute'

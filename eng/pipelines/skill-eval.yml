@@ -1,0 +1,29 @@
+# Vally skill-eval pilot using the framework synced from azure-sdk-tools under eng/common.
+# Starts scheduled/manual and report-only; PR triggers and gating can follow after the pilot is stable.
+
+trigger: none
+
+pr: none
+
+schedules:
+  - cron: '0 8 * * *'
+    displayName: 'Daily skill-eval pilot'
+    branches:
+      include:
+        - main
+    always: true
+
+variables:
+  - template: /eng/pipelines/templates/variables/image.yml
+  - group: AzSDK_Eval_Variable_group
+
+extends:
+  template: /eng/common/pipelines/templates/stages/archetype-eval.yml
+  parameters:
+    mcpSetupTemplate: /eng/pipelines/templates/steps/eval-mcp-setup.yml
+    preEvalTemplate: /eng/pipelines/templates/steps/eval-fix-mcp-paths.yml
+    TestType: mock
+    vallyRoot: .github/skills
+    evalGlobs:
+      - 'pre-commit-checks/evals/smoke.eval.yaml'
+    failOnFailedTests: false

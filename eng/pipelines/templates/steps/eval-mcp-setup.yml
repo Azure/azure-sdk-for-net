@@ -1,0 +1,38 @@
+# Repo-local MCP build swap point for the shared eval archetype. Azure/azure-sdk-tools is public,
+# so the pilot checks it out anonymously without a GitHub service connection.
+
+parameters:
+  - name: TestType
+    type: string
+    default: mock
+    values:
+      - mock
+      - live
+  - name: toolsRepo
+    type: string
+    default: ''
+
+steps:
+  - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+    parameters:
+      SkipCheckoutNone: true
+      Paths:
+        - '/tools'
+      Repositories:
+        - Name: Azure/azure-sdk-tools
+          Commitish: main
+          WorkingDirectory: azure-sdk-tools
+
+  - ${{ if eq(parameters.TestType, 'live') }}:
+    - script: |
+        set -e
+        dotnet build tools/azsdk-cli/Azure.Sdk.Tools.Cli -c Release -o "$(Build.SourcesDirectory)/artifacts/mcp/cli" --nologo
+      displayName: 'Build MCP: Cli (live) server'
+      workingDirectory: $(Build.SourcesDirectory)/azure-sdk-tools
+
+  - ${{ else }}:
+    - script: |
+        set -e
+        dotnet build tools/azsdk-cli/Azure.Sdk.Tools.Mock -c Release -o "$(Build.SourcesDirectory)/artifacts/mcp/mock" --nologo
+      displayName: 'Build MCP: Mock server'
+      workingDirectory: $(Build.SourcesDirectory)/azure-sdk-tools

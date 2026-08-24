@@ -1,0 +1,26 @@
+name: dotnet-pre-commit-checks-smoke
+description: Verify that a package validation request routes to the .NET pre-commit checks skill.
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: dotnet-pre-commit-checks
+  type: smoke
+
+defaults:
+  runs: 1
+  timeout: "90s"
+  model: gpt-5.4
+  executor: copilot-sdk
+
+scoring:
+  threshold: 1.0
+
+stimuli:
+  - name: route-package-validation-before-commit
+    prompt: "I changed an Azure SDK for .NET package and am ready to commit. What repository checks should I run first?"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["pre-commit-checks"]

@@ -1,0 +1,17 @@
+# Vally project config for Azure SDK for .NET skill evals.
+
+paths:
+  skills: "."
+  evals:
+    - pre-commit-checks/evals/
+  results: results/
+  evalFilenames: ["*.eval.yaml"]
+
+environments:
+  azsdk-mcp-mock:
+    mcpServers:
+      azure-sdk-mcp:
+        type: stdio
+        command: dotnet
+        args: ["../../artifacts/mcp/mock/azsdk-mock.dll"]
+        timeout: "60s"

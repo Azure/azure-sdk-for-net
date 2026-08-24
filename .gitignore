@@ -185,3 +185,6 @@ tsp_client_metadata.yaml
 
 # Common toolchain intermediate files
 temp
+
+# Local Vally eval output
+.github/skills/results/
