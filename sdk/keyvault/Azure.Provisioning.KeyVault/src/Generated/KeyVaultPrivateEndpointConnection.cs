@@ -186,7 +186,7 @@ namespace Azure.Provisioning.KeyVault
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
-            _parent = DefineResource<KeyVaultService>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<KeyVaultService>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

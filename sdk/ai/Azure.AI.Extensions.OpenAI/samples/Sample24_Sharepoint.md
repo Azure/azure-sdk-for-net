@@ -25,7 +25,7 @@ SharePointGroundingToolOptions sharepointToolOption = new()
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
-    Tools = { new SharepointPreviewTool(sharepointToolOption), }
+    Tools = { new SharePointPreviewTool(sharepointToolOption), }
 };
 ProjectsAgentVersion agentVersion = projectClient.AgentAdministrationClient.CreateAgentVersion(
     agentName: "myAgent",
@@ -42,7 +42,7 @@ SharePointGroundingToolOptions sharepointToolOption = new()
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
 {
     Instructions = "You are a helpful assistant.",
-    Tools = { new SharepointPreviewTool(sharepointToolOption), }
+    Tools = { new SharePointPreviewTool(sharepointToolOption), }
 };
 ProjectsAgentVersion agentVersion = await projectClient.AgentAdministrationClient.CreateAgentVersionAsync(
     agentName: "myAgent",
