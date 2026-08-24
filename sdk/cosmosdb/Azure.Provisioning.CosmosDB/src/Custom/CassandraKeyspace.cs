@@ -1,10 +1,32 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Provisioning;
+
 namespace Azure.Provisioning.CosmosDB;
 
 public partial class CassandraKeyspace
 {
+    // CUSTOMIZATION: Preserve the legacy flattened keyspace name while the generated model exposes it through Resource.
+    /// <summary>
+    /// Name of the Cosmos DB Cassandra keyspace.
+    /// </summary>
+    public BicepValue<string> ResourceKeyspaceName
+    {
+        get
+        {
+            return Resource is null ? default : Resource.KeyspaceName;
+        }
+        set
+        {
+            if (Resource is null)
+            {
+                Resource = new ExtendedCassandraKeyspaceResourceInfo();
+            }
+            Resource.KeyspaceName = value;
+        }
+    }
+
     public static partial class ResourceVersions
     {
         /// <summary> API version "2014-04-01". </summary>

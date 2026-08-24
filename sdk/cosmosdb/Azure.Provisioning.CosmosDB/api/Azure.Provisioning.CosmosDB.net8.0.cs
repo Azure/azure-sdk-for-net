@@ -129,6 +129,7 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.CassandraAutoReplicateForm> AutoReplicate { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.ServiceConnectionType> AzureConnectionMethod { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CosmosDB.CassandraClusterBackupSchedule> BackupSchedules { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.CassandraScheduledEventStrategy> CassandraScheduledEventStrategy { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> CassandraVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CosmosDB.CassandraCertificate> ClientCertificates { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ClusterNameOverride { get { throw null; } set { } }
@@ -149,7 +150,7 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.CosmosDB.CassandraError ProvisionError { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.CassandraProvisioningState> ProvisioningState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> RestoreFromBackupId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.CassandraScheduledEventStrategy> ScheduledEventStrategy { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.ScheduledEventStrategy> ScheduledEventStrategy { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CosmosDB.CassandraDataCenterSeedNode> SeedNodes { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -239,6 +240,7 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.CosmosDB.CosmosDBCreateUpdateConfig Options { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.CosmosDBAccount Parent { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.ExtendedCassandraKeyspaceResourceInfo Resource { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ResourceKeyspaceName { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -3296,6 +3298,12 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepValue<string> RestoreSource { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> RestoreTimestampInUtc { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public enum ScheduledEventStrategy
+    {
+        Ignore = 0,
+        StopAny = 1,
+        StopByRack = 2,
     }
     public enum ServiceConnectionType
     {
