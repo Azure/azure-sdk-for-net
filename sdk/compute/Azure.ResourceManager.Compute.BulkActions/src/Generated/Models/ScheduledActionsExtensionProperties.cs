@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
         /// <param name="resourceNotificationSettings"> The notification settings for the scheduled action at a resource level. Resource level notification settings are scope to specific resources only and submitted through attach requests. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionsExtensionProperties(ScheduledActionsResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, DateTimeOffset? endOn, ScheduledActionsSchedule schedule, IList<NotificationProperties> notificationSettings, bool? disabled, RecurringScheduledActionsProvisioningState? provisioningState, IReadOnlyList<NotificationProperties> resourceNotificationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionsExtensionProperties(ScheduledActionsResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, DateTimeOffset? endOn, ScheduledActionsSchedule schedule, IList<NotificationProperties> notificationSettings, bool? disabled, ScheduledActionsProvisioningState? provisioningState, IReadOnlyList<NotificationProperties> resourceNotificationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             ActionType = actionType;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public bool? Disabled { get; }
 
         /// <summary> The status of the last provisioning operation performed on the resource. </summary>
-        public RecurringScheduledActionsProvisioningState? ProvisioningState { get; }
+        public ScheduledActionsProvisioningState? ProvisioningState { get; }
 
         /// <summary> The notification settings for the scheduled action at a resource level. Resource level notification settings are scope to specific resources only and submitted through attach requests. </summary>
         public IReadOnlyList<NotificationProperties> ResourceNotificationSettings { get; }
