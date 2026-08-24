@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
     public static partial class ArmMigrationDiscoverySapModelFactory
     {
         public static Azure.ResourceManager.MigrationDiscoverySap.Models.ConfigurationDetail ConfigurationDetail(int? saps = default(int?), int? cpu = default(int?), string cpuType = null, int? cpuInMhz = default(int?), int? ram = default(int?), string hardwareManufacturer = null, string model = null, int? totalDiskSizeGB = default(int?), int? totalDiskIops = default(int?), Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryDatabaseType? databaseType = default(Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryDatabaseType?), int? targetHanaRamSizeGB = default(int?)) { throw null; }
-        public static Azure.ResourceManager.MigrationDiscoverySap.Models.ExcelPerformanceDetail ExcelPerformanceDetail(int? maxCpuLoad = default(int?), int? totalSourceDBSizeGB = default(int?)) { throw null; }
+        public static Azure.ResourceManager.MigrationDiscoverySap.Models.ExcelPerformanceDetail ExcelPerformanceDetail(int? maxCpuLoad = default(int?), int? totalSourceDbSizeGB = default(int?)) { throw null; }
         public static Azure.ResourceManager.MigrationDiscoverySap.Models.NativePerformanceDetail NativePerformanceDetail() { throw null; }
         public static Azure.ResourceManager.MigrationDiscoverySap.Models.PerformanceDetail PerformanceDetail(string dataSource = null) { throw null; }
         public static Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryErrorDetail SapDiscoveryErrorDetail(string code = null, string message = null, string recommendation = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MigrationDiscoverySap.Models.SapDiscoveryErrorDetail> details = null) { throw null; }
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
     {
         internal ExcelPerformanceDetail() { }
         public int? MaxCpuLoad { get { throw null; } }
-        public int? TotalSourceDBSizeGB { get { throw null; } }
+        public int? TotalSourceDbSizeGB { get { throw null; } }
         protected override Azure.ResourceManager.MigrationDiscoverySap.Models.PerformanceDetail JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected override Azure.ResourceManager.MigrationDiscoverySap.Models.PerformanceDetail PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
