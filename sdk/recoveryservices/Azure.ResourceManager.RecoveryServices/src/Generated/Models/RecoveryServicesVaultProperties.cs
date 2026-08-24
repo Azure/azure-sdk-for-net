@@ -159,5 +159,22 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 RestoreSettings.CrossSubscriptionRestoreState = value;
             }
         }
+
+        /// <summary> The status of region of choice settings - Enabled or Disabled. </summary>
+        public RecoveryServicesSourceScanState? RegionOfChoiceStatus
+        {
+            get
+            {
+                return RegionOfChoiceSettings is null ? default : RegionOfChoiceSettings.Status;
+            }
+            set
+            {
+                if (RegionOfChoiceSettings is null)
+                {
+                    RegionOfChoiceSettings = new RegionOfChoiceSettings();
+                }
+                RegionOfChoiceSettings.Status = value;
+            }
+        }
     }
 }
