@@ -698,15 +698,15 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </param>
         /// <param name="publicIPAllocationMethod"> Specify the public IP allocation type. </param>
         /// <returns> A new <see cref="Models.ComputeBulkActionsVirtualMachinePublicIPAddressConfigurationProperties"/> instance for mocking. </returns>
-        public static ComputeBulkActionsVirtualMachinePublicIPAddressConfigurationProperties ComputeBulkActionsVirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default, ComputeBulkActionsDeleteOption? deleteOption = default, ComputeBulkActionsVirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default, IEnumerable<ComputeBulkActionsVirtualMachineIpTag> ipTags = default, ResourceIdentifier publicIPPrefixId = default, ComputeBulkActionsIPVersion? publicIPAddressVersion = default, ComputeBulkActionsPublicIPAllocationMethod? publicIPAllocationMethod = default)
+        public static ComputeBulkActionsVirtualMachinePublicIPAddressConfigurationProperties ComputeBulkActionsVirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default, ComputeBulkActionsDeleteOption? deleteOption = default, ComputeBulkActionsVirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default, IEnumerable<ComputeBulkActionsVirtualMachineIPTag> ipTags = default, ResourceIdentifier publicIPPrefixId = default, ComputeBulkActionsIPVersion? publicIPAddressVersion = default, ComputeBulkActionsPublicIPAllocationMethod? publicIPAllocationMethod = default)
         {
-            ipTags ??= new ChangeTrackingList<ComputeBulkActionsVirtualMachineIpTag>();
+            ipTags ??= new ChangeTrackingList<ComputeBulkActionsVirtualMachineIPTag>();
 
             return new ComputeBulkActionsVirtualMachinePublicIPAddressConfigurationProperties(
                 idleTimeoutInMinutes,
                 deleteOption,
                 dnsSettings,
-                (ipTags ?? new ChangeTrackingList<ComputeBulkActionsVirtualMachineIpTag>()).ToList(),
+                (ipTags ?? new ChangeTrackingList<ComputeBulkActionsVirtualMachineIPTag>()).ToList(),
                 publicIPPrefixId is null ? default : new ComputeBulkActionsSubResource(publicIPPrefixId, default),
                 publicIPAddressVersion,
                 publicIPAllocationMethod,
@@ -723,10 +723,10 @@ namespace Azure.ResourceManager.ComputeBulkActions.Models
 
         /// <param name="ipTagType"> IP tag type. Example: FirstPartyUsage. </param>
         /// <param name="tag"> IP tag associated with the public IP. Example: SQL, Storage etc. </param>
-        /// <returns> A new <see cref="Models.ComputeBulkActionsVirtualMachineIpTag"/> instance for mocking. </returns>
-        public static ComputeBulkActionsVirtualMachineIpTag ComputeBulkActionsVirtualMachineIpTag(string ipTagType = default, string tag = default)
+        /// <returns> A new <see cref="Models.ComputeBulkActionsVirtualMachineIPTag"/> instance for mocking. </returns>
+        public static ComputeBulkActionsVirtualMachineIPTag ComputeBulkActionsVirtualMachineIPTag(string ipTagType = default, string tag = default)
         {
-            return new ComputeBulkActionsVirtualMachineIpTag(ipTagType, tag, default);
+            return new ComputeBulkActionsVirtualMachineIPTag(ipTagType, tag, default);
         }
 
         /// <param name="name"> Specify public IP sku name. </param>

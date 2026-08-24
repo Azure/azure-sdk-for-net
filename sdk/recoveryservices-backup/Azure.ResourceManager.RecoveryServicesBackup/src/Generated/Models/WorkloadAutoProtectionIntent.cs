@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="WorkloadAutoProtectionIntent"/>. </summary>
         /// <param name="protectionIntentItemType"> backup protectionIntent type. </param>
-        private protected WorkloadAutoProtectionIntent(ProtectionIntentItemType protectionIntentItemType) : base("AzureWorkloadAutoProtectionIntent")
+        private protected WorkloadAutoProtectionIntent(ProtectionIntentItemType protectionIntentItemType) : base(protectionIntentItemType)
         {
         }
     }

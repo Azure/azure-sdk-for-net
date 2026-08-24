@@ -404,11 +404,11 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         /// <param name="region"> The region of the VM. </param>
         /// <param name="networkId"> The network Id of the VM. </param>
         /// <param name="subnetId"> The subnet Id of the VM. </param>
-        /// <param name="shouldAttachAndSwapOsDisk"> The identifier to check if to attach and swap disk of the VM. </param>
+        /// <param name="shouldAttachAndSwapOSDisk"> The identifier to check if to attach and swap disk of the VM. </param>
         /// <param name="targetVmGuid"> The GUID of target VM used in DISK ATTACH. </param>
         /// <param name="vmTags"> The vmTag of the VM. </param>
         /// <returns> A new <see cref="Models.VmInfo"/> instance for mocking. </returns>
-        public static VmInfo VmInfo(string sourceVmGuid = default, string storageAccountId = default, bool? shouldPowerOnVmAfterRestore = default, string name = default, string resourceGroup = default, string region = default, string networkId = default, string subnetId = default, bool? shouldAttachAndSwapOsDisk = default, string targetVmGuid = default, IEnumerable<VmTag> vmTags = default)
+        public static VmInfo VmInfo(string sourceVmGuid = default, string storageAccountId = default, bool? shouldPowerOnVmAfterRestore = default, string name = default, string resourceGroup = default, string region = default, string networkId = default, string subnetId = default, bool? shouldAttachAndSwapOSDisk = default, string targetVmGuid = default, IEnumerable<VmTag> vmTags = default)
         {
             vmTags ??= new ChangeTrackingList<VmTag>();
 
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
                 region,
                 networkId,
                 subnetId,
-                shouldAttachAndSwapOsDisk,
+                shouldAttachAndSwapOSDisk,
                 targetVmGuid,
                 (vmTags ?? new ChangeTrackingList<VmTag>()).ToList(),
                 default);
