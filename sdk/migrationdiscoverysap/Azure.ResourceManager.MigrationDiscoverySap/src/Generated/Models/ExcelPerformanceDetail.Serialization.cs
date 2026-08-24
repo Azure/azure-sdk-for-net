@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 writer.WritePropertyName("maxCpuLoad"u8);
                 writer.WriteNumberValue(MaxCpuLoad.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TotalSourceDbSizeGB))
+            if (options.Format != "W" && Optional.IsDefined(TotalSourceDBSizeGB))
             {
                 writer.WritePropertyName("totalSourceDbSizeGB"u8);
-                writer.WriteNumberValue(TotalSourceDbSizeGB.Value);
+                writer.WriteNumberValue(TotalSourceDBSizeGB.Value);
             }
         }
 
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             SapDiscoveryDataSource dataSource = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             int? maxCpuLoad = default;
-            int? totalSourceDbSizeGB = default;
+            int? totalSourceDBSizeGB = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("dataSource"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                     {
                         continue;
                     }
-                    totalSourceDbSizeGB = prop.Value.GetInt32();
+                    totalSourceDBSizeGB = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExcelPerformanceDetail(dataSource, additionalBinaryDataProperties, maxCpuLoad, totalSourceDbSizeGB);
+            return new ExcelPerformanceDetail(dataSource, additionalBinaryDataProperties, maxCpuLoad, totalSourceDBSizeGB);
         }
     }
 }

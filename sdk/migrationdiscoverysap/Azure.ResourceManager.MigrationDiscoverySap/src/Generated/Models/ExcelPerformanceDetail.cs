@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <param name="dataSource"> The data source of the performance data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="maxCpuLoad"> Provide the max CPU percentage load on the server. Omit the percentage symbol while filling this value. </param>
-        /// <param name="totalSourceDbSizeGB"> Provide the source Database size in GB. Applicable only if SAP instance type for this server instance is 'DB'. </param>
-        internal ExcelPerformanceDetail(SapDiscoveryDataSource dataSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? maxCpuLoad, int? totalSourceDbSizeGB) : base(dataSource, additionalBinaryDataProperties)
+        /// <param name="totalSourceDBSizeGB"> Provide the source Database size in GB. Applicable only if SAP instance type for this server instance is 'DB'. </param>
+        internal ExcelPerformanceDetail(SapDiscoveryDataSource dataSource, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? maxCpuLoad, int? totalSourceDBSizeGB) : base(dataSource, additionalBinaryDataProperties)
         {
             MaxCpuLoad = maxCpuLoad;
-            TotalSourceDbSizeGB = totalSourceDbSizeGB;
+            TotalSourceDBSizeGB = totalSourceDBSizeGB;
         }
 
         /// <summary> Provide the max CPU percentage load on the server. Omit the percentage symbol while filling this value. </summary>
         public int? MaxCpuLoad { get; }
 
         /// <summary> Provide the source Database size in GB. Applicable only if SAP instance type for this server instance is 'DB'. </summary>
-        public int? TotalSourceDbSizeGB { get; }
+        public int? TotalSourceDBSizeGB { get; }
     }
 }

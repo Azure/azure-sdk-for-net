@@ -229,11 +229,11 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         }
 
         /// <param name="maxCpuLoad"> Provide the max CPU percentage load on the server. Omit the percentage symbol while filling this value. </param>
-        /// <param name="totalSourceDbSizeGB"> Provide the source Database size in GB. Applicable only if SAP instance type for this server instance is 'DB'. </param>
+        /// <param name="totalSourceDBSizeGB"> Provide the source Database size in GB. Applicable only if SAP instance type for this server instance is 'DB'. </param>
         /// <returns> A new <see cref="Models.ExcelPerformanceDetail"/> instance for mocking. </returns>
-        public static ExcelPerformanceDetail ExcelPerformanceDetail(int? maxCpuLoad = default, int? totalSourceDbSizeGB = default)
+        public static ExcelPerformanceDetail ExcelPerformanceDetail(int? maxCpuLoad = default, int? totalSourceDBSizeGB = default)
         {
-            return new ExcelPerformanceDetail(default, default, maxCpuLoad, totalSourceDbSizeGB);
+            return new ExcelPerformanceDetail(default, default, maxCpuLoad, totalSourceDBSizeGB);
         }
 
         /// <returns> A new <see cref="Models.NativePerformanceDetail"/> instance for mocking. </returns>
