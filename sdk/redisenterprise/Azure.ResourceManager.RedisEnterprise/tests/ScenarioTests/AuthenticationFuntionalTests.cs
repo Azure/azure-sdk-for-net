@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.RedisEnterprise.Models;
 using Azure.ResourceManager.Resources;
 using NUnit.Framework;
-using System;
-using System.Threading.Tasks;
 
 namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
 {
