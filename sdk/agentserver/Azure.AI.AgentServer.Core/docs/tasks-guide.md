@@ -43,7 +43,7 @@ What this primitive solves:
   persists the input and surfaces the output through a typed handle.
 - **Cooperative cancellation.** The caller can ask the handler to stop; the handler
   decides how to wind down.
-- **Lightweight, small surface.** A registration builder, a few types, and a handful of
+- **Lightweight, small surface.** Typed registration methods, a few types, and a handful of
   exceptions.
 
 What this primitive deliberately does **not** do:
@@ -160,6 +160,40 @@ string result = await echo.RunAsync("hello again");
 
 Both return the *same* handle instance; use whichever is convenient at the call site. See §5.2 for
 the full `GetResilientTask` signature and the keyed-registration rationale.
+
+### Constructor-injected handler
+
+Use a class handler when the task needs services from dependency injection:
+
+```C# Snippet:TasksGuide_ScopedHandler
+internal sealed class GreetingPrefix
+{
+    public string Value => "injected: ";
+}
+
+internal sealed class ScopedEchoHandler(
+    GreetingPrefix prefix)
+    : IResilientTaskHandler<string, string>
+{
+    public Task<string> RunAsync(
+        TaskContext<string> context,
+        CancellationToken cancellationToken)
+        => Task.FromResult(prefix.Value + context.Input);
+}
+
+public static TaskDefinition<string, string> RegisterScopedHandler(
+    IServiceCollection services)
+{
+    services.AddScoped<GreetingPrefix>();
+    return services.AddResilientTask<string, string, ScopedEchoHandler>(
+        "scoped-echo");
+}
+```
+
+The framework creates a fresh asynchronous dependency-injection scope for every execution
+attempt. Constructor dependencies therefore follow normal scoped lifetime rules and are disposed
+before a retry starts. Recovered and steered attempts receive new scopes. Delegate registrations
+remain available for handlers that do not need scoped activation.
 
 ### Multi-turn chain
 
@@ -504,6 +538,19 @@ TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput>(
     Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
     bool steerable = false,
     Action<TaskRegistrationOptions>? configure = null);
+
+TaskDefinition<TInput, TOutput> AddResilientTask<TInput, TOutput, THandler>(
+    this IServiceCollection services,
+    string name,
+    Action<TaskRegistrationOptions>? configure = null)
+    where THandler : class, IResilientTaskHandler<TInput, TOutput>;
+
+TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput, THandler>(
+    this IServiceCollection services,
+    string name,
+    bool steerable = false,
+    Action<TaskRegistrationOptions>? configure = null)
+    where THandler : class, IResilientTaskHandler<TInput, TOutput>;
 ```
 
 `AddResilientTask`/`AddResilientMultiTurnTask` self-initialize the resilient-tasks

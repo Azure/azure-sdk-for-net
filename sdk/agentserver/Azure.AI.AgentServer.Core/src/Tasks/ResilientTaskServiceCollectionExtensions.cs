@@ -78,6 +78,38 @@ public static class ResilientTaskServiceCollectionExtensions
     }
 
     /// <summary>
+    /// Registers a one-shot task whose handler and dependencies are resolved from a fresh
+    /// dependency-injection scope for each execution attempt.
+    /// </summary>
+    /// <typeparam name="TInput">The task input type.</typeparam>
+    /// <typeparam name="TOutput">The task output type.</typeparam>
+    /// <typeparam name="THandler">The scoped task handler type.</typeparam>
+    /// <param name="services">The service collection.</param>
+    /// <param name="name">The unique task name.</param>
+    /// <param name="configure">An optional callback to configure per-task options.</param>
+    /// <returns>A typed task definition for running the registered task.</returns>
+    [RequiresUnreferencedCode(DefaultResilientTaskBuilder.ReflectionTrimWarning)]
+    [RequiresDynamicCode(DefaultResilientTaskBuilder.ReflectionAotWarning)]
+    public static TaskDefinition<TInput, TOutput> AddResilientTask<TInput, TOutput, THandler>(
+        this IServiceCollection services,
+        string name,
+        Action<TaskRegistrationOptions>? configure = null)
+        where THandler : class, IResilientTaskHandler<TInput, TOutput>
+    {
+        ArgumentNullException.ThrowIfNull(services);
+        DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
+        TaskDefinition<TInput, TOutput> definition = registrar.AddTask<TInput, TOutput>(
+            name,
+            (serviceProvider, context, cancellationToken) =>
+                serviceProvider.GetRequiredKeyedService<THandler>(name)
+                    .RunAsync(context, cancellationToken),
+            configure);
+        services.AddKeyedScoped<THandler>(name);
+        services.AddKeyedSingleton(name, definition);
+        return definition;
+    }
+
+    /// <summary>
     /// Registers a one-shot task using a source-generated <see cref="JsonTypeInfo{T}"/> for the
     /// input type, so the task input is serialized without runtime reflection (Native-AOT /
     /// trimming-safe). The returned handle is also registered as a keyed singleton service, keyed
@@ -103,6 +135,40 @@ public static class ResilientTaskServiceCollectionExtensions
         ArgumentNullException.ThrowIfNull(services);
         DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
         TaskDefinition<TInput, TOutput> definition = registrar.AddTask(name, handler, inputTypeInfo, configure);
+        services.AddKeyedSingleton(name, definition);
+        return definition;
+    }
+
+    /// <summary>
+    /// Registers a one-shot scoped task handler using source-generated input serialization metadata.
+    /// </summary>
+    /// <typeparam name="TInput">The task input type.</typeparam>
+    /// <typeparam name="TOutput">The task output type.</typeparam>
+    /// <typeparam name="THandler">The scoped task handler type.</typeparam>
+    /// <param name="services">The service collection.</param>
+    /// <param name="name">The unique task name.</param>
+    /// <param name="inputTypeInfo">The source-generated serialization metadata for the input.</param>
+    /// <param name="configure">An optional callback to configure per-task options.</param>
+    /// <returns>A typed task definition for running the registered task.</returns>
+    public static TaskDefinition<TInput, TOutput> AddResilientTask<TInput, TOutput, THandler>(
+        this IServiceCollection services,
+        string name,
+#pragma warning disable AZC0014 // JsonTypeInfo<T> is the sanctioned Native-AOT escape hatch (see Azure.Search.Documents).
+        JsonTypeInfo<TInput> inputTypeInfo,
+#pragma warning restore AZC0014
+        Action<TaskRegistrationOptions>? configure = null)
+        where THandler : class, IResilientTaskHandler<TInput, TOutput>
+    {
+        ArgumentNullException.ThrowIfNull(services);
+        DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
+        TaskDefinition<TInput, TOutput> definition = registrar.AddTask<TInput, TOutput>(
+            name,
+            (serviceProvider, context, cancellationToken) =>
+                serviceProvider.GetRequiredKeyedService<THandler>(name)
+                    .RunAsync(context, cancellationToken),
+            inputTypeInfo,
+            configure);
+        services.AddKeyedScoped<THandler>(name);
         services.AddKeyedSingleton(name, definition);
         return definition;
     }
@@ -140,6 +206,41 @@ public static class ResilientTaskServiceCollectionExtensions
     }
 
     /// <summary>
+    /// Registers a multi-turn task whose handler and dependencies are resolved from a fresh
+    /// dependency-injection scope for each execution attempt.
+    /// </summary>
+    /// <typeparam name="TInput">The task input type.</typeparam>
+    /// <typeparam name="TOutput">The task output type.</typeparam>
+    /// <typeparam name="THandler">The scoped task handler type.</typeparam>
+    /// <param name="services">The service collection.</param>
+    /// <param name="name">The unique task name.</param>
+    /// <param name="steerable">Whether the task accepts steering input.</param>
+    /// <param name="configure">An optional callback to configure per-task options.</param>
+    /// <returns>A typed task definition for running the registered task.</returns>
+    [RequiresUnreferencedCode(DefaultResilientTaskBuilder.ReflectionTrimWarning)]
+    [RequiresDynamicCode(DefaultResilientTaskBuilder.ReflectionAotWarning)]
+    public static TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput, THandler>(
+        this IServiceCollection services,
+        string name,
+        bool steerable = false,
+        Action<TaskRegistrationOptions>? configure = null)
+        where THandler : class, IResilientTaskHandler<TInput, TOutput>
+    {
+        ArgumentNullException.ThrowIfNull(services);
+        DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
+        TaskDefinition<TInput, TOutput> definition = registrar.AddMultiTurnTask<TInput, TOutput>(
+            name,
+            (serviceProvider, context, cancellationToken) =>
+                serviceProvider.GetRequiredKeyedService<THandler>(name)
+                    .RunAsync(context, cancellationToken),
+            steerable,
+            configure);
+        services.AddKeyedScoped<THandler>(name);
+        services.AddKeyedSingleton(name, definition);
+        return definition;
+    }
+
+    /// <summary>
     /// Registers a multi-turn task (optionally steerable) using a source-generated
     /// <see cref="JsonTypeInfo{T}"/> for the input type (Native-AOT / trimming-safe). The returned
     /// handle is also registered as a keyed singleton service, keyed by <paramref name="name"/>.
@@ -166,6 +267,43 @@ public static class ResilientTaskServiceCollectionExtensions
         ArgumentNullException.ThrowIfNull(services);
         DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
         TaskDefinition<TInput, TOutput> definition = registrar.AddMultiTurnTask(name, handler, inputTypeInfo, steerable, configure);
+        services.AddKeyedSingleton(name, definition);
+        return definition;
+    }
+
+    /// <summary>
+    /// Registers a multi-turn scoped task handler using source-generated input serialization metadata.
+    /// </summary>
+    /// <typeparam name="TInput">The task input type.</typeparam>
+    /// <typeparam name="TOutput">The task output type.</typeparam>
+    /// <typeparam name="THandler">The scoped task handler type.</typeparam>
+    /// <param name="services">The service collection.</param>
+    /// <param name="name">The unique task name.</param>
+    /// <param name="inputTypeInfo">The source-generated serialization metadata for the input.</param>
+    /// <param name="steerable">Whether the task accepts steering input.</param>
+    /// <param name="configure">An optional callback to configure per-task options.</param>
+    /// <returns>A typed task definition for running the registered task.</returns>
+    public static TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput, THandler>(
+        this IServiceCollection services,
+        string name,
+#pragma warning disable AZC0014 // JsonTypeInfo<T> is the sanctioned Native-AOT escape hatch (see Azure.Search.Documents).
+        JsonTypeInfo<TInput> inputTypeInfo,
+#pragma warning restore AZC0014
+        bool steerable = false,
+        Action<TaskRegistrationOptions>? configure = null)
+        where THandler : class, IResilientTaskHandler<TInput, TOutput>
+    {
+        ArgumentNullException.ThrowIfNull(services);
+        DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
+        TaskDefinition<TInput, TOutput> definition = registrar.AddMultiTurnTask<TInput, TOutput>(
+            name,
+            (serviceProvider, context, cancellationToken) =>
+                serviceProvider.GetRequiredKeyedService<THandler>(name)
+                    .RunAsync(context, cancellationToken),
+            inputTypeInfo,
+            steerable,
+            configure);
+        services.AddKeyedScoped<THandler>(name);
         services.AddKeyedSingleton(name, definition);
         return definition;
     }
@@ -293,7 +431,13 @@ public static class ResilientTaskServiceCollectionExtensions
                 ?? NullLogger.Instance;
             (string agentName, string sessionId) = ResolveScope();
 
-            var engine = new TaskEngine(store, reg, agentName, sessionId, logger);
+            var engine = new TaskEngine(
+                store,
+                reg,
+                agentName,
+                sessionId,
+                logger,
+                sp.GetRequiredService<IServiceScopeFactory>());
 
             // Late-bind the engine so a TaskDefinition (created at registration time, before the
             // container existed) can resolve it at invocation time. The engine is always resolved

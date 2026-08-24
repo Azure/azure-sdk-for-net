@@ -59,6 +59,33 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
             return await echo.RunAsync("hello again");
         }
 
+        #region Snippet:TasksGuide_ScopedHandler
+
+        internal sealed class GreetingPrefix
+        {
+            public string Value => "injected: ";
+        }
+
+        internal sealed class ScopedEchoHandler(
+            GreetingPrefix prefix)
+            : IResilientTaskHandler<string, string>
+        {
+            public Task<string> RunAsync(
+                TaskContext<string> context,
+                CancellationToken cancellationToken)
+                => Task.FromResult(prefix.Value + context.Input);
+        }
+
+        public static TaskDefinition<string, string> RegisterScopedHandler(
+            IServiceCollection services)
+        {
+            services.AddScoped<GreetingPrefix>();
+            return services.AddResilientTask<string, string, ScopedEchoHandler>(
+                "scoped-echo");
+        }
+
+        #endregion
+
         // §3 Hello world — multi-turn chain.
         public static async Task MultiTurnChain(IServiceCollection services)
         {

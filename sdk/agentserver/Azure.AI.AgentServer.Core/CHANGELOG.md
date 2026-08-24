@@ -4,6 +4,11 @@
 
 ### Features Added
 
+- Added constructor-injected resilient task handlers through
+  `IResilientTaskHandler<TInput, TOutput>` registration overloads. The task engine creates
+  and asynchronously disposes a fresh dependency-injection scope for every execution
+  attempt, including retries, steered turns, and recovered attempts.
+
 ### Breaking Changes
 
 ### Bugs Fixed

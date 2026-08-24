@@ -12,6 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Providers;
 using Azure.AI.AgentServer.Core.Tasks.Serialization;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
@@ -31,6 +32,7 @@ internal sealed partial class TaskEngine : IDisposable
     private readonly LeaseManager _lease;
     private readonly TaskRegistry _registry;
     private readonly ILogger _logger;
+    private readonly IServiceScopeFactory? _scopeFactory;
     private readonly string _agentName;
     private readonly string _sessionId;
     private readonly string _owner;
@@ -49,7 +51,8 @@ internal sealed partial class TaskEngine : IDisposable
         TaskRegistry registry,
         string agentName,
         string sessionId,
-        ILogger? logger = null)
+        ILogger? logger = null,
+        IServiceScopeFactory? scopeFactory = null)
     {
         _store = store ?? throw new ArgumentNullException(nameof(store));
         _registry = registry ?? throw new ArgumentNullException(nameof(registry));
@@ -57,6 +60,7 @@ internal sealed partial class TaskEngine : IDisposable
         _sessionId = sessionId;
         _owner = LeaseManager.FormatOwner(agentName, sessionId);
         _logger = logger ?? NullLogger.Instance;
+        _scopeFactory = scopeFactory;
         _serializer = new TaskWriteSerializer(store);
         _lease = new LeaseManager(_serializer);
     }
@@ -665,7 +669,12 @@ internal sealed partial class TaskEngine : IDisposable
         CancellationTokenSource handlerCts,
         bool isSteeredTurn = false)
     {
-        var handler = (Func<TaskContext<TInput>, CancellationToken, Task<TOutput>>)registration.Handler;
+        var handler = registration.RequiresServiceScope
+            ? null
+            : (Func<TaskContext<TInput>, CancellationToken, Task<TOutput>>)registration.Handler;
+        var scopedHandler = registration.RequiresServiceScope
+            ? (Func<IServiceProvider, TaskContext<TInput>, CancellationToken, Task<TOutput>>)registration.Handler
+            : null;
         // Retry is opt-in (spec §15): a handler with no configured TaskRetryPolicy fails on the first
         // raise, matching the Python reference (retry only applies when a policy is supplied).
         TaskRetryPolicy retry = registration.Options?.Retry ?? new TaskRetryPolicy { MaxAttempts = 1 };
@@ -682,7 +691,7 @@ internal sealed partial class TaskEngine : IDisposable
             while (true)
             {
                 TurnOutcome<TOutput> outcome = await RunTurnAsync(
-                    registration, handler, retry, activeRun, currentRun, currentInput, taskId, currentInputId,
+                    registration, handler, scopedHandler, retry, activeRun, currentRun, currentInput, taskId, currentInputId,
                     currentMode, steered, TaskEngineConstants.ResolveTaskTimeout(registration.Options?.Timeout), currentCts).ConfigureAwait(false);
 
                 if (outcome.Kind == TurnOutcomeKind.Deferred)
@@ -867,7 +876,8 @@ internal sealed partial class TaskEngine : IDisposable
     // handle resolution, or active-run cleanup (the orchestrator owns those).
     private async Task<TurnOutcome<TOutput>> RunTurnAsync<TInput, TOutput>(
         TaskRegistration registration,
-        Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
+        Func<TaskContext<TInput>, CancellationToken, Task<TOutput>>? handler,
+        Func<IServiceProvider, TaskContext<TInput>, CancellationToken, Task<TOutput>>? scopedHandler,
         TaskRetryPolicy retry,
         ActiveRun<TOutput> activeRun,
         TaskRunState<TOutput> runState,
@@ -968,8 +978,24 @@ internal sealed partial class TaskEngine : IDisposable
                     TOutput result;
                     try
                     {
-                        result = await handler(
-                            new TaskContext<TInput>(ctxState), handlerCts.Token).ConfigureAwait(false);
+                        var context = new TaskContext<TInput>(ctxState);
+                        if (scopedHandler is null)
+                        {
+                            result = await handler!(
+                                context, handlerCts.Token).ConfigureAwait(false);
+                        }
+                        else
+                        {
+                            if (_scopeFactory is null)
+                            {
+                                throw new InvalidOperationException(
+                                    "The task engine cannot activate a class handler because no service scope factory is available.");
+                            }
+
+                            await using AsyncServiceScope scope = _scopeFactory.CreateAsyncScope();
+                            result = await scopedHandler(
+                                scope.ServiceProvider, context, handlerCts.Token).ConfigureAwait(false);
+                        }
                     }
                     finally
                     {
