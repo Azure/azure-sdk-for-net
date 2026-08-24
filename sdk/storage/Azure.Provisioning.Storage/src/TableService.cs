@@ -1,18 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Provisioning.Expressions;
-
 namespace Azure.Provisioning.Storage;
 
-// Customize the generated TableService resource.
+// TypeSpec suppresses the singleton Name when this shipped get-only property is present.
+// Define it manually with the required "default" value to preserve the existing API and Bicep.
 public partial class TableService
 {
-    /// <summary>
-    /// Get the default value for the Name property.
-    /// </summary>
-    private partial BicepValue<string> GetNameDefaultValue() =>
-        new StringLiteralExpression("default");
+    private BicepValue<string>? _name;
 
     /// <summary>
     /// Gets the Name.
@@ -20,5 +15,10 @@ public partial class TableService
     public BicepValue<string> Name
     {
         get { Initialize(); return _name!; }
+    }
+
+    partial void DefineAdditionalProperties()
+    {
+        _name = DefineProperty<string>(nameof(Name), ["name"], isRequired: true, defaultValue: "default");
     }
 }

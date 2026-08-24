@@ -11,6 +11,8 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Storage;
 
+// TypeSpec models private endpoint connections as child resources. Preserve the shipped data
+// model because StorageAccount.PrivateEndpointConnections still exposes it for compatibility.
 /// <summary>
 /// A class representing the StoragePrivateEndpointConnection data model.
 /// The Private Endpoint Connection resource.
