@@ -88,8 +88,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="versions"> The protocols that the agent supports for ingress communication. </param>
         /// <param name="codeConfiguration"> Code-based deployment configuration. Provide this for code-based deployments. Mutually exclusive with container_configuration — the service validates that exactly one is set. </param>
         /// <param name="telemetryConfig"> Optional customer-supplied telemetry configuration for exporting container logs, traces, and metrics. </param>
+        /// <param name="sessionConfiguration"> Optional session defaults (for example, the idle timeout) applied to sessions created for this agent version. </param>
         /// <returns> A new <see cref="Agents.HostedAgentDefinition"/> instance for mocking. </returns>
-        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, ContainerConfiguration containerConfiguration = default, IEnumerable<ProtocolVersionRecord> versions = default, CodeConfiguration codeConfiguration = default, TelemetryConfig telemetryConfig = default)
+        public static HostedAgentDefinition HostedAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, string cpu = default, string memory = default, IDictionary<string, string> environmentVariables = default, ContainerConfiguration containerConfiguration = default, IEnumerable<ProtocolVersionRecord> versions = default, CodeConfiguration codeConfiguration = default, TelemetryConfig telemetryConfig = default, SessionConfiguration sessionConfiguration = default)
         {
             environmentVariables ??= new ChangeTrackingDictionary<string, string>();
             versions ??= new ChangeTrackingList<ProtocolVersionRecord>();
@@ -104,7 +105,8 @@ namespace Azure.AI.Projects.Agents
                 containerConfiguration,
                 versions.ToList(),
                 codeConfiguration,
-                telemetryConfig);
+                telemetryConfig,
+                sessionConfiguration);
         }
 
         /// <summary> Container-based deployment configuration for a hosted agent. </summary>
@@ -214,6 +216,18 @@ namespace Azure.AI.Projects.Agents
                 protocol);
         }
 
+        /// <summary> Session defaults applied to sessions created for a hosted agent version. </summary>
+        /// <param name="idleTimeoutSeconds">
+        /// The idle duration, in seconds, before a session's sandbox is suspended. Optional — when
+        /// unset, the server default of 900 seconds is used. Must be between 300 and 3600 seconds
+        /// (inclusive).
+        /// </param>
+        /// <returns> A new <see cref="Agents.SessionConfiguration"/> instance for mocking. </returns>
+        public static SessionConfiguration SessionConfiguration(TimeSpan? idleTimeoutSeconds = default)
+        {
+            return new SessionConfiguration(idleTimeoutSeconds, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> The prompt agent definition. </summary>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
         /// <param name="model"> The model deployment to use for this agent. </param>
@@ -264,7 +278,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// A tool that can be used to generate a response.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.FabricIQPreviewTool"/>, <see cref="Agents.BingGroundingTool"/>, <see cref="Agents.MicrosoftFabricPreviewTool"/>, <see cref="Agents.SharepointPreviewTool"/>, <see cref="Agents.AzureAISearchTool"/>, <see cref="Agents.OpenAPITool"/>, <see cref="Agents.BingCustomSearchPreviewTool"/>, <see cref="Agents.BrowserAutomationPreviewTool"/>, <see cref="Agents.AzureFunctionTool"/>, <see cref="Agents.CaptureStructuredOutputsTool"/>, <see cref="Agents.A2APreviewTool"/>, <see cref="Agents.WorkIQPreviewTool"/>, <see cref="Agents.MemorySearchPreviewTool"/>, and <see cref="Agents.ToolSearchTool"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.FabricIQPreviewTool"/>, <see cref="Agents.BingGroundingTool"/>, <see cref="Agents.MicrosoftFabricPreviewTool"/>, <see cref="Agents.SharepointPreviewTool"/>, <see cref="Agents.AzureAISearchTool"/>, <see cref="Agents.OpenAPITool"/>, <see cref="Agents.BingCustomSearchPreviewTool"/>, <see cref="Agents.BrowserAutomationPreviewTool"/>, <see cref="Agents.AzureFunctionTool"/>, <see cref="Agents.CaptureStructuredOutputsTool"/>, <see cref="Agents.A2APreviewTool"/>, <see cref="Agents.A2ATool"/>, <see cref="Agents.WorkIQPreviewTool"/>, <see cref="Agents.WebIQPreviewTool"/>, <see cref="Agents.MemorySearchPreviewTool"/>, and <see cref="Agents.ToolSearchTool"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Agents.ProjectsAgentTool"/> instance for mocking. </returns>
@@ -738,6 +752,35 @@ namespace Azure.AI.Projects.Agents
                 sendCredentialsForAgentCard);
         }
 
+        /// <summary> An agent implementing the A2A protocol. </summary>
+        /// <param name="baseUrl"> Base URL of the agent. </param>
+        /// <param name="agentCardPath">
+        /// The path to the agent card relative to the `base_url`.
+        /// If not provided, defaults to  `/.well-known/agent-card.json`
+        /// </param>
+        /// <param name="projectConnectionId">
+        /// The connection ID in the project for the A2A server.
+        /// The connection stores authentication and other connection details needed to connect to the A2A server.
+        /// </param>
+        /// <param name="sendCredentialsForAgentCard">
+        /// When `true`, Foundry sends its credentials when fetching the remote
+        /// agent's Agent Card. The service defaults to `false` if a value is not
+        /// specified by the caller (anonymous fetch).
+        /// </param>
+        /// <param name="a2aVersion"> The A2A protocol version supported by the agent. </param>
+        /// <returns> A new <see cref="Agents.A2ATool"/> instance for mocking. </returns>
+        public static A2ATool A2ATool(Uri baseUrl = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default, A2AProtocolVersion a2aVersion = default)
+        {
+            return new A2ATool(
+                ToolType.A2a,
+                additionalBinaryDataProperties: null,
+                baseUrl,
+                agentCardPath,
+                projectConnectionId,
+                sendCredentialsForAgentCard,
+                a2aVersion);
+        }
+
         /// <summary> A WorkIQ server-side tool. </summary>
         /// <param name="projectConnectionId"> The ID of the WorkIQ project connection. </param>
         /// <returns> A new <see cref="Agents.WorkIQPreviewTool"/> instance for mocking. </returns>
@@ -745,6 +788,17 @@ namespace Azure.AI.Projects.Agents
         public static WorkIQPreviewTool WorkIQPreviewTool(string projectConnectionId = default)
         {
             return new WorkIQPreviewTool(ToolType.WorkIqPreview, additionalBinaryDataProperties: null, projectConnectionId);
+        }
+
+        /// <summary> A WebIQ server-side tool. </summary>
+        /// <param name="projectConnectionId"> The ID of the WebIQ project connection. </param>
+        /// <param name="serverLabel"> The label of the WebIQ MCP server to connect to. When omitted, the service defaults to connection name extracted from project_connection_id. </param>
+        /// <param name="requireApproval"> Whether the agent requires approval before executing actions. When omitted, the service defaults to "always". </param>
+        /// <returns> A new <see cref="Agents.WebIQPreviewTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static WebIQPreviewTool WebIQPreviewTool(string projectConnectionId = default, string serverLabel = default, BinaryData requireApproval = default)
+        {
+            return new WebIQPreviewTool(ToolType.WebIqPreview, additionalBinaryDataProperties: null, projectConnectionId, serverLabel, requireApproval);
         }
 
         /// <summary> A tool for integrating memories into the agent. </summary>
@@ -1160,19 +1214,19 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentSessionId"> The session identifier. </param>
         /// <param name="versionIndicator"> The version indicator determining which agent version backs this session. </param>
         /// <param name="status"> The current status of the session. </param>
-        /// <param name="createdAt"> The Unix timestamp (in seconds) when the session was created. </param>
-        /// <param name="lastAccessedAt"> The Unix timestamp (in seconds) when the session was last accessed. </param>
-        /// <param name="expiresAt"> The Unix timestamp (in seconds) when the session expires (rolling, 30 days from last activity). </param>
+        /// <param name="createdOn"> The Unix timestamp (in seconds) when the session was created. </param>
+        /// <param name="lastAccessedOn"> The Unix timestamp (in seconds) when the session was last accessed. </param>
+        /// <param name="expiresOn"> The Unix timestamp (in seconds) when the session expires (rolling, 30 days from last activity). </param>
         /// <returns> A new <see cref="Agents.ProjectAgentSession"/> instance for mocking. </returns>
-        public static ProjectAgentSession ProjectAgentSession(string agentSessionId = default, VersionIndicator versionIndicator = default, AgentSessionStatus status = default, DateTimeOffset createdAt = default, DateTimeOffset lastAccessedAt = default, DateTimeOffset expiresAt = default)
+        public static ProjectAgentSession ProjectAgentSession(string agentSessionId = default, VersionIndicator versionIndicator = default, AgentSessionStatus status = default, DateTimeOffset createdOn = default, DateTimeOffset lastAccessedOn = default, DateTimeOffset expiresOn = default)
         {
             return new ProjectAgentSession(
                 agentSessionId,
                 versionIndicator,
                 status,
-                createdAt,
-                lastAccessedAt,
-                expiresAt,
+                createdOn,
+                lastAccessedOn,
+                expiresOn,
                 additionalBinaryDataProperties: null);
         }
 
@@ -1203,7 +1257,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary>
         /// An abstract representation of a tool stored in a toolbox.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.FabricIQPreviewToolboxTool"/>, <see cref="Agents.CodeInterpreterToolboxTool"/>, <see cref="FileSearchToolboxTool"/>, <see cref="Agents.WebSearchToolboxTool"/>, <see cref="Agents.MCPToolboxTool"/>, <see cref="Agents.AzureAISearchToolboxTool"/>, <see cref="Agents.OpenApiToolboxTool"/>, <see cref="Agents.A2APreviewToolboxTool"/>, <see cref="Agents.BrowserAutomationPreviewToolboxTool"/>, <see cref="Agents.ReminderPreviewToolboxTool"/>, <see cref="Agents.WorkIQPreviewToolboxTool"/>, <see cref="Agents.ToolboxSearchPreviewToolboxTool"/>, and <see cref="Agents.ToolSearchToolboxTool"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.FabricIQPreviewToolboxTool"/>, <see cref="Agents.CodeInterpreterToolboxTool"/>, <see cref="FileSearchToolboxTool"/>, <see cref="Agents.WebSearchToolboxTool"/>, <see cref="Agents.MCPToolboxTool"/>, <see cref="Agents.AzureAISearchToolboxTool"/>, <see cref="Agents.OpenApiToolboxTool"/>, <see cref="Agents.A2AToolboxTool"/>, <see cref="Agents.A2APreviewToolboxTool"/>, <see cref="Agents.BrowserAutomationPreviewToolboxTool"/>, <see cref="Agents.ReminderPreviewToolboxTool"/>, <see cref="Agents.WorkIQPreviewToolboxTool"/>, <see cref="Agents.WebIQPreviewToolboxTool"/>, <see cref="Agents.ToolboxSearchPreviewToolboxTool"/>, and <see cref="Agents.ToolSearchToolboxTool"/>.
         /// </summary>
         /// <param name="type"> The type of tool. </param>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
@@ -1434,6 +1488,47 @@ namespace Azure.AI.Projects.Agents
         /// agent's Agent Card. The service defaults to `false` if a value is not
         /// specified by the caller (anonymous fetch).
         /// </param>
+        /// <param name="a2aVersion"> The A2A protocol version supported by the agent. </param>
+        /// <returns> A new <see cref="Agents.A2AToolboxTool"/> instance for mocking. </returns>
+        public static A2AToolboxTool A2AToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, Uri baseUrl = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default, A2AProtocolVersion a2aVersion = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new A2AToolboxTool(
+                ToolboxToolType.A2a,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                baseUrl,
+                agentCardPath,
+                projectConnectionId,
+                sendCredentialsForAgentCard,
+                a2aVersion);
+        }
+
+        /// <summary> An A2A tool stored in a toolbox. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="baseUrl"> Base URL of the agent. </param>
+        /// <param name="agentCardPath">
+        /// The path to the agent card relative to the `base_url`.
+        /// If not provided, defaults to  `/.well-known/agent-card.json`
+        /// </param>
+        /// <param name="projectConnectionId">
+        /// The connection ID in the project for the A2A server.
+        /// The connection stores authentication and other connection details needed to connect to the A2A server.
+        /// </param>
+        /// <param name="sendCredentialsForAgentCard">
+        /// When `true`, Foundry sends its credentials when fetching the remote
+        /// agent's Agent Card. The service defaults to `false` if a value is not
+        /// specified by the caller (anonymous fetch).
+        /// </param>
         /// <returns> A new <see cref="Agents.A2APreviewToolboxTool"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
         public static A2APreviewToolboxTool A2APreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, Uri baseUrl = default, string agentCardPath = default, string projectConnectionId = default, bool? sendCredentialsForAgentCard = default)
@@ -1517,6 +1612,34 @@ namespace Azure.AI.Projects.Agents
                 projectConnectionId);
         }
 
+        /// <summary> A WebIQ tool stored in a toolbox. </summary>
+        /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
+        /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
+        /// <param name="toolConfigs">
+        /// Per-tool configuration map. Keys are tool names or `*` (catch-all default).
+        /// Resolution order: exact tool name match takes priority over `*`.
+        /// Unknown tool names are silently ignored at runtime.
+        /// </param>
+        /// <param name="projectConnectionId"> The ID of the WebIQ project connection. </param>
+        /// <param name="serverLabel"> The label of the WebIQ MCP server to connect to. When omitted, the service defaults to connection name extracted from project_connection_id. </param>
+        /// <param name="requireApproval"> Whether the agent requires approval before executing actions. When omitted, the service defaults to "always". </param>
+        /// <returns> A new <see cref="Agents.WebIQPreviewToolboxTool"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static WebIQPreviewToolboxTool WebIQPreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string projectConnectionId = default, string serverLabel = default, BinaryData requireApproval = default)
+        {
+            toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
+
+            return new WebIQPreviewToolboxTool(
+                ToolboxToolType.WebIqPreview,
+                name,
+                description,
+                toolConfigs,
+                additionalBinaryDataProperties: null,
+                projectConnectionId,
+                serverLabel,
+                requireApproval);
+        }
+
         /// <summary> A toolbox search tool stored in a toolbox. </summary>
         /// <param name="name"> Optional user-defined name for this tool or configuration. </param>
         /// <param name="description"> Optional user-defined description for this tool or configuration. </param>
@@ -1590,12 +1713,12 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the toolbox. </param>
         /// <param name="version"> The version identifier of the toolbox. Toolbox versions are immutable and every update creates a new version. </param>
         /// <param name="description"> A human-readable description of the toolbox. </param>
-        /// <param name="createdAt"> The Unix timestamp (seconds) when the toolbox version was created. </param>
+        /// <param name="createdOn"> The Unix timestamp (seconds) when the toolbox version was created. </param>
         /// <param name="tools"> The list of tools contained in this toolbox version. </param>
         /// <param name="skills"> The list of skill sources included in this toolbox version. </param>
         /// <param name="policies"> Policy configuration for the toolbox version. </param>
         /// <returns> A new <see cref="Agents.ToolboxVersion"/> instance for mocking. </returns>
-        public static ToolboxVersion ToolboxVersion(IDictionary<string, string> metadata = default, string id = default, string name = default, string version = default, string description = default, DateTimeOffset createdAt = default, IEnumerable<ToolboxTool> tools = default, IEnumerable<ToolboxSkill> skills = default, ToolboxPolicies policies = default)
+        public static ToolboxVersion ToolboxVersion(IDictionary<string, string> metadata = default, string id = default, string name = default, string version = default, string description = default, DateTimeOffset createdOn = default, IEnumerable<ToolboxTool> tools = default, IEnumerable<ToolboxSkill> skills = default, ToolboxPolicies policies = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
             tools ??= new ChangeTrackingList<ToolboxTool>();
@@ -1607,7 +1730,7 @@ namespace Azure.AI.Projects.Agents
                 name,
                 version,
                 description,
-                createdAt,
+                createdOn,
                 tools.ToList(),
                 skills.ToList(),
                 policies,
@@ -1628,18 +1751,18 @@ namespace Azure.AI.Projects.Agents
         /// <param name="id"> The unique identifier of the skill. </param>
         /// <param name="name"> The unique name of the skill. </param>
         /// <param name="description"> A human-readable description of the skill. </param>
-        /// <param name="createdAt"> The Unix timestamp (seconds) when the skill was created. </param>
+        /// <param name="createdOn"> The Unix timestamp (seconds) when the skill was created. </param>
         /// <param name="defaultVersion"> The default version for the skill. Can be changed via updateSkill. </param>
         /// <param name="latestVersion"> The latest version for the skill. </param>
         /// <returns> A new <see cref="Agents.AgentsSkill"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static AgentsSkill AgentsSkill(string id = default, string name = default, string description = default, DateTimeOffset createdAt = default, string defaultVersion = default, string latestVersion = default)
+        public static AgentsSkill AgentsSkill(string id = default, string name = default, string description = default, DateTimeOffset createdOn = default, string defaultVersion = default, string latestVersion = default)
         {
             return new AgentsSkill(
                 id,
                 name,
                 description,
-                createdAt,
+                createdOn,
                 defaultVersion,
                 latestVersion,
                 additionalBinaryDataProperties: null);
@@ -1686,10 +1809,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the skill version. </param>
         /// <param name="version"> The version identifier. Skill versions are immutable. </param>
         /// <param name="description"> A human-readable description of the skill version. </param>
-        /// <param name="createdAt"> The Unix timestamp (seconds) when the skill version was created. </param>
+        /// <param name="createdOn"> The Unix timestamp (seconds) when the skill version was created. </param>
         /// <returns> A new <see cref="Agents.SkillVersion"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static SkillVersion SkillVersion(string id = default, string skillId = default, string name = default, string version = default, string description = default, DateTimeOffset createdAt = default)
+        public static SkillVersion SkillVersion(string id = default, string skillId = default, string name = default, string version = default, string description = default, DateTimeOffset createdOn = default)
         {
             return new SkillVersion(
                 id,
@@ -1697,7 +1820,7 @@ namespace Azure.AI.Projects.Agents
                 name,
                 version,
                 description,
-                createdAt,
+                createdOn,
                 additionalBinaryDataProperties: null);
         }
 
@@ -1726,11 +1849,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="name"> The name of the file or directory. </param>
         /// <param name="sizeInBytes"> The size in bytes (0 for directories). </param>
         /// <param name="isDirectory"> Whether this entry is a directory. </param>
-        /// <param name="modifiedAt"> The Unix timestamp (in seconds) when the file was last modified. </param>
+        /// <param name="modifiedOn"> The Unix timestamp (in seconds) when the file was last modified. </param>
         /// <returns> A new <see cref="Agents.SessionDirectoryEntry"/> instance for mocking. </returns>
-        public static SessionDirectoryEntry SessionDirectoryEntry(string name = default, long sizeInBytes = default, bool isDirectory = default, DateTimeOffset modifiedAt = default)
+        public static SessionDirectoryEntry SessionDirectoryEntry(string name = default, long sizeInBytes = default, bool isDirectory = default, DateTimeOffset modifiedOn = default)
         {
-            return new SessionDirectoryEntry(name, sizeInBytes, isDirectory, modifiedAt, additionalBinaryDataProperties: null);
+            return new SessionDirectoryEntry(name, sizeInBytes, isDirectory, modifiedOn, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Caller-supplied inputs for an optimization job. </summary>
@@ -1895,14 +2018,14 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Promotion metadata recorded when a candidate is deployed to a Foundry agent. </summary>
-        /// <param name="promotedAt"> Timestamp when promotion occurred, represented in Unix time. </param>
+        /// <param name="promotedOn"> Timestamp when promotion occurred, represented in Unix time. </param>
         /// <param name="agentName"> Name of the Foundry agent this candidate was promoted to. </param>
         /// <param name="agentVersion"> Version of the Foundry agent this candidate was promoted to. </param>
         /// <returns> A new <see cref="Agents.PromotionInfo"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static PromotionInfo PromotionInfo(DateTimeOffset promotedAt = default, string agentName = default, string agentVersion = default)
+        public static PromotionInfo PromotionInfo(DateTimeOffset promotedOn = default, string agentName = default, string agentVersion = default)
         {
-            return new PromotionInfo(promotedAt, agentName, agentVersion, additionalBinaryDataProperties: null);
+            return new PromotionInfo(promotedOn, agentName, agentVersion, additionalBinaryDataProperties: null);
         }
 
         /// <summary> In-flight progress; only populated while status is queued or in_progress. </summary>
@@ -2100,6 +2223,7 @@ namespace Azure.AI.Projects.Agents
                 environmentVariables,
                 default,
                 versions.ToList(),
+                default,
                 default,
                 default);
         }

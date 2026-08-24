@@ -2520,7 +2520,7 @@ namespace Azure.Provisioning.Compute
     public partial class UefiKeySignatures : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public UefiKeySignatures() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.UefiKey> Db { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.UefiKey> DB { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.UefiKey> Dbx { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.UefiKey> Kek { get { throw null; } set { } }
         public Azure.Provisioning.Compute.UefiKey Pk { get { throw null; } set { } }

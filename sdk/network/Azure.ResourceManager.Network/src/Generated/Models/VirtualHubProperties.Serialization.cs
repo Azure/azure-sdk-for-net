@@ -206,6 +206,26 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(AddressPrefixV6))
+            {
+                writer.WritePropertyName("addressPrefixV6"u8);
+                writer.WriteStringValue(AddressPrefixV6);
+            }
+            if (Optional.IsCollectionDefined(VirtualRouterIpsV6))
+            {
+                writer.WritePropertyName("virtualRouterIpsV6"u8);
+                writer.WriteStartArray();
+                foreach (string item in VirtualRouterIpsV6)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(AllowBranchToBranchTraffic))
             {
                 writer.WritePropertyName("allowBranchToBranchTraffic"u8);
@@ -286,6 +306,8 @@ namespace Azure.ResourceManager.Network.Models
             IReadOnlyList<WritableSubResource> routeMaps = default;
             long? virtualRouterAsn = default;
             IList<string> virtualRouterIPs = default;
+            string addressPrefixV6 = default;
+            IList<string> virtualRouterIpsV6 = default;
             bool? allowBranchToBranchTraffic = default;
             PreferredRoutingGateway? preferredRoutingGateway = default;
             HubRoutingPreference? hubRoutingPreference = default;
@@ -489,6 +511,32 @@ namespace Azure.ResourceManager.Network.Models
                     virtualRouterIPs = array;
                     continue;
                 }
+                if (prop.NameEquals("addressPrefixV6"u8))
+                {
+                    addressPrefixV6 = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("virtualRouterIpsV6"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    virtualRouterIpsV6 = array;
+                    continue;
+                }
                 if (prop.NameEquals("allowBranchToBranchTraffic"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -549,6 +597,8 @@ namespace Azure.ResourceManager.Network.Models
                 routeMaps ?? new ChangeTrackingList<WritableSubResource>(),
                 virtualRouterAsn,
                 virtualRouterIPs ?? new ChangeTrackingList<string>(),
+                addressPrefixV6,
+                virtualRouterIpsV6 ?? new ChangeTrackingList<string>(),
                 allowBranchToBranchTraffic,
                 preferredRoutingGateway,
                 hubRoutingPreference,
