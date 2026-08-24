@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (Unreleased)
+## 1.0.0 (2026-10-01)
 
 This release is the first stable release of the Edge Zones Management client library.
 
