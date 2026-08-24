@@ -106,9 +106,9 @@ namespace Azure.Analytics.Defender.Easm
             writer.WritePropertyName("dateAdded"u8);
             writer.WriteStringValue(DateAdded, "O");
             writer.WritePropertyName("dueDate"u8);
-            writer.WriteStringValue(DueDate, "O");
+            writer.WriteStringValue(DueOn, "O");
             writer.WritePropertyName("updatedAt"u8);
-            writer.WriteStringValue(UpdatedAt, "O");
+            writer.WriteStringValue(UpdatedOn, "O");
             writer.WritePropertyName("count"u8);
             writer.WriteNumberValue(Count);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -161,8 +161,8 @@ namespace Azure.Analytics.Defender.Easm
             string requiredAction = default;
             string notes = default;
             DateTimeOffset dateAdded = default;
-            DateTimeOffset dueDate = default;
-            DateTimeOffset updatedAt = default;
+            DateTimeOffset dueOn = default;
+            DateTimeOffset updatedOn = default;
             long count = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -209,12 +209,12 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("dueDate"u8))
                 {
-                    dueDate = prop.Value.GetDateTimeOffset("O");
+                    dueOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("updatedAt"u8))
                 {
-                    updatedAt = prop.Value.GetDateTimeOffset("O");
+                    updatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("count"u8))
@@ -236,8 +236,8 @@ namespace Azure.Analytics.Defender.Easm
                 requiredAction,
                 notes,
                 dateAdded,
-                dueDate,
-                updatedAt,
+                dueOn,
+                updatedOn,
                 count,
                 additionalBinaryDataProperties);
         }
