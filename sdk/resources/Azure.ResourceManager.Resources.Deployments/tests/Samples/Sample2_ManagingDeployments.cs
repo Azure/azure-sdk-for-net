@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#region Snippet:Manage_Deployments_Namespaces
+#region Snippet:Deployments_Manage_Deployments_Namespaces
 using System;
 using System.IO;
 using System.Text.Json;
@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Deployments.Models;
 using Azure.ResourceManager.Resources.Models;
 using NUnit.Framework;
 using JsonObject = System.Collections.Generic.Dictionary<string, object>;
-#endregion Manage_Deployments_Namespaces
+#endregion Deployments_Manage_Deployments_Namespaces
 
 namespace Azure.ResourceManager.Resources.Deployments.Tests.Samples
 {
@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests.Samples
         [Ignore("Only verifying that the sample builds")]
         public async Task CreateDeployments()
         {
-            #region Snippet:Managing_Deployments_CreateADeployment
+            #region Snippet:Deployments_Managing_Deployments_CreateADeployment
             // First we need to get the deployment collection from the resource group
             ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployments();
             // Use the same location as the resource group
@@ -47,14 +47,14 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests.Samples
             });
             ArmOperation<ArmDeploymentResource> lro = await ArmDeploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
             ArmDeploymentResource deployment = lro.Value;
-            #endregion Snippet:Managing_Deployments_CreateADeployment
+            #endregion Snippet:Deployments_Managing_Deployments_CreateADeployment
         }
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
         public async Task CreateDeploymentsUsingJsonElement()
         {
-            #region Snippet:Managing_Deployments_CreateADeploymentUsingJsonElement
+            #region Snippet:Deployments_Managing_Deployments_CreateADeploymentUsingJsonElement
             // First we need to get the deployment collection from the resource group
             ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployments();
             // Use the same location as the resource group
@@ -75,14 +75,14 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests.Samples
             });
             ArmOperation<ArmDeploymentResource> lro = await ArmDeploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
             ArmDeploymentResource deployment = lro.Value;
-            #endregion Snippet:Managing_Deployments_CreateADeploymentUsingJsonElement
+            #endregion Snippet:Deployments_Managing_Deployments_CreateADeploymentUsingJsonElement
         }
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
         public async Task CreateDeploymentsUsingString()
         {
-            #region Snippet:Managing_Deployments_CreateADeploymentUsingString
+            #region Snippet:Deployments_Managing_Deployments_CreateADeploymentUsingString
             // First we need to get the deployment collection from the resource group
             ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployments();
             // Use the same location as the resource group
@@ -95,14 +95,14 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests.Samples
             });
             ArmOperation<ArmDeploymentResource> lro = await ArmDeploymentCollection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, input);
             ArmDeploymentResource deployment = lro.Value;
-            #endregion Snippet:Managing_Deployments_CreateADeploymentUsingString
+            #endregion Snippet:Deployments_Managing_Deployments_CreateADeploymentUsingString
         }
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
         public async Task ListDeployments()
         {
-            #region Snippet:Managing_Deployments_ListAllDeployments
+            #region Snippet:Deployments_Managing_Deployments_ListAllDeployments
             // First we need to get the deployment collection from the resource group
             ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployments();
             // With GetAllAsync(), we can get a list of the deployments in the collection
@@ -111,21 +111,21 @@ namespace Azure.ResourceManager.Resources.Deployments.Tests.Samples
             {
                 Console.WriteLine(deployment.Data.Name);
             }
-            #endregion Snippet:Managing_Deployments_ListAllDeployments
+            #endregion Snippet:Deployments_Managing_Deployments_ListAllDeployments
         }
 
         [Test]
         [Ignore("Only verifying that the sample builds")]
         public async Task DeleteDeployments()
         {
-            #region Snippet:Managing_Deployments_DeleteADeployment
+            #region Snippet:Deployments_Managing_Deployments_DeleteADeployment
             // First we need to get the deployment collection from the resource group
             ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployments();
             // Now we can get the deployment with GetAsync()
             ArmDeploymentResource deployment = await ArmDeploymentCollection.GetAsync("myDeployment");
             // With DeleteAsync(), we can delete the deployment
             await deployment.DeleteAsync(WaitUntil.Completed);
-            #endregion Snippet:Managing_Deployments_DeleteADeployment
+            #endregion Snippet:Deployments_Managing_Deployments_DeleteADeployment
         }
 
         [SetUp]

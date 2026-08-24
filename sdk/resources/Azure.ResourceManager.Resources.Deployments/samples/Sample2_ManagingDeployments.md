@@ -3,7 +3,7 @@
 >Note: Before getting started with the samples, go through the [prerequisites](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/resourcemanager/Azure.ResourceManager#prerequisites).
 
 Namespaces for this example:
-```C# Snippet:Manage_Deployments_Namespaces
+```C# Snippet:Deployments_Manage_Deployments_Namespaces
 using System;
 using System.IO;
 using System.Text.Json;
@@ -39,7 +39,7 @@ Now that we have the resource group created, we can manage the deployments insid
 
 ***Create a deployment using dictionary***
 
-```C# Snippet:Managing_Deployments_CreateADeployment
+```C# Snippet:Deployments_Managing_Deployments_CreateADeployment
 // First we need to get the deployment collection from the resource group
 ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployments();
 // Use the same location as the resource group
@@ -65,7 +65,7 @@ ArmDeploymentResource deployment = lro.Value;
 
 ***Create a deployment using string***
 
-```C# Snippet:Managing_Deployments_CreateADeploymentUsingString
+```C# Snippet:Deployments_Managing_Deployments_CreateADeploymentUsingString
 // First we need to get the deployment collection from the resource group
 ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployments();
 // Use the same location as the resource group
@@ -82,7 +82,7 @@ ArmDeploymentResource deployment = lro.Value;
 
 ***Create a deployment using JsonElement***
 
-```C# Snippet:Managing_Deployments_CreateADeploymentUsingJsonElement
+```C# Snippet:Deployments_Managing_Deployments_CreateADeploymentUsingJsonElement
 // First we need to get the deployment collection from the resource group
 ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployments();
 // Use the same location as the resource group
@@ -107,7 +107,7 @@ ArmDeploymentResource deployment = lro.Value;
 
 ***List all deployments***
 
-```C# Snippet:Managing_Deployments_ListAllDeployments
+```C# Snippet:Deployments_Managing_Deployments_ListAllDeployments
 // First we need to get the deployment collection from the resource group
 ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployments();
 // With GetAllAsync(), we can get a list of the deployments in the collection
@@ -120,7 +120,7 @@ await foreach (ArmDeploymentResource deployment in response)
 
 ***Delete a deployment***
 
-```C# Snippet:Managing_Deployments_DeleteADeployment
+```C# Snippet:Deployments_Managing_Deployments_DeleteADeployment
 // First we need to get the deployment collection from the resource group
 ArmDeploymentCollection ArmDeploymentCollection = resourceGroup.GetArmDeployments();
 // Now we can get the deployment with GetAsync()

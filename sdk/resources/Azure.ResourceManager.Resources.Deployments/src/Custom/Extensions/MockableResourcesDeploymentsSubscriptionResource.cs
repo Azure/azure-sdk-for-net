@@ -6,8 +6,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.Resources.Deployments.Models;
+using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 // NOTE: All the GetArmDeployments and GetArmDeployment operations are existed in the library before, but now can't be generated from TypeSpec because of the scope implementation change.
