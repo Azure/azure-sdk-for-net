@@ -132,6 +132,7 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepValue<string> CassandraVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CosmosDB.CassandraCertificate> ClientCertificates { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ClusterNameOverride { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.CassandraClusterType> ClusterType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DelegatedManagementSubnetId { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> Extensions { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> ExternalDataCenters { get { throw null; } set { } }
@@ -151,6 +152,11 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.CassandraScheduledEventStrategy> ScheduledEventStrategy { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CosmosDB.CassandraDataCenterSeedNode> SeedNodes { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public enum CassandraClusterType
+    {
+        Production = 0,
+        NonProduction = 1,
     }
     public partial class CassandraColumn : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
