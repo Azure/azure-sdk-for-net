@@ -9,6 +9,8 @@ extends:
     Artifacts:
     - name: Azure.Provisioning.KubernetesConfiguration
       safeName: AzureProvisioningKubernetesConfiguration
+    - name: Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
+      safeName: AzureProvisioningKubernetesConfigurationExtensionTypes
     - name: Azure.Provisioning.KubernetesConfiguration.Extensions
       safeName: AzureProvisioningKubernetesConfigurationExtensions
     - name: Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
