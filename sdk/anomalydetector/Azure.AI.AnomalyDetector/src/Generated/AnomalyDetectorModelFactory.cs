@@ -67,12 +67,12 @@ namespace Azure.AI.AnomalyDetector
         }
 
         /// <summary> Definition of input time series points. </summary>
-        /// <param name="timestamp"> Argument that indicates the time stamp of a data point (ISO8601 format). </param>
+        /// <param name="on"> Argument that indicates the time stamp of a data point (ISO8601 format). </param>
         /// <param name="value"> Measurement of that point. </param>
         /// <returns> A new <see cref="AnomalyDetector.TimeSeriesPoint"/> instance for mocking. </returns>
-        public static TimeSeriesPoint TimeSeriesPoint(DateTimeOffset? timestamp = default, float value = default)
+        public static TimeSeriesPoint TimeSeriesPoint(DateTimeOffset? @on = default, float value = default)
         {
-            return new TimeSeriesPoint(timestamp, value, additionalBinaryDataProperties: null);
+            return new TimeSeriesPoint(@on, value, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Response of the last anomaly detection. </summary>
@@ -226,17 +226,17 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="variable"> Variable name in variable states. </param>
         /// <param name="filledNARatio"> Proportion of missing values that need to be filled by fillNAMethod. </param>
         /// <param name="effectiveCount"> Number of effective data points before fillNAMethod is applied. </param>
-        /// <param name="firstTimestamp"> First valid time stamp with a value of input data. </param>
-        /// <param name="lastTimestamp"> Last valid time stamp with a value of input data. </param>
+        /// <param name="firstOn"> First valid time stamp with a value of input data. </param>
+        /// <param name="lastOn"> Last valid time stamp with a value of input data. </param>
         /// <returns> A new <see cref="AnomalyDetector.VariableState"/> instance for mocking. </returns>
-        public static VariableState VariableState(string variable = default, float? filledNARatio = default, int? effectiveCount = default, DateTimeOffset? firstTimestamp = default, DateTimeOffset? lastTimestamp = default)
+        public static VariableState VariableState(string variable = default, float? filledNARatio = default, int? effectiveCount = default, DateTimeOffset? firstOn = default, DateTimeOffset? lastOn = default)
         {
             return new VariableState(
                 variable,
                 filledNARatio,
                 effectiveCount,
-                firstTimestamp,
-                lastTimestamp,
+                firstOn,
+                lastOn,
                 additionalBinaryDataProperties: null);
         }
 
@@ -253,30 +253,30 @@ namespace Azure.AI.AnomalyDetector
         /// to be detected.
         /// </param>
         /// <param name="topContributorCount"> Number of top contributed variables for one anomalous time stamp in the response. </param>
-        /// <param name="startTime">
+        /// <param name="startOn">
         /// Start date/time of data for detection, which should
         /// be in ISO 8601 format.
         /// </param>
-        /// <param name="endTime">
+        /// <param name="endOn">
         /// End date/time of data for detection, which should
         /// be in ISO 8601 format.
         /// </param>
         /// <returns> A new <see cref="AnomalyDetector.MultivariateBatchDetectionOptions"/> instance for mocking. </returns>
-        public static MultivariateBatchDetectionOptions MultivariateBatchDetectionOptions(Uri dataSource = default, int? topContributorCount = default, DateTimeOffset startTime = default, DateTimeOffset endTime = default)
+        public static MultivariateBatchDetectionOptions MultivariateBatchDetectionOptions(Uri dataSource = default, int? topContributorCount = default, DateTimeOffset startOn = default, DateTimeOffset endOn = default)
         {
-            return new MultivariateBatchDetectionOptions(dataSource, topContributorCount, startTime, endTime, additionalBinaryDataProperties: null);
+            return new MultivariateBatchDetectionOptions(dataSource, topContributorCount, startOn, endOn, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Anomaly status and information. </summary>
-        /// <param name="timestamp"> Time stamp for this anomaly. </param>
+        /// <param name="on"> Time stamp for this anomaly. </param>
         /// <param name="value"> Detailed value of this anomalous time stamp. </param>
         /// <param name="errors"> Error message for the current time stamp. </param>
         /// <returns> A new <see cref="AnomalyDetector.AnomalyState"/> instance for mocking. </returns>
-        public static AnomalyState AnomalyState(DateTimeOffset timestamp = default, AnomalyValue value = default, IEnumerable<ErrorResponse> errors = default)
+        public static AnomalyState AnomalyState(DateTimeOffset @on = default, AnomalyValue value = default, IEnumerable<ErrorResponse> errors = default)
         {
             errors ??= new ChangeTrackingList<ErrorResponse>();
 
-            return new AnomalyState(timestamp, value, errors.ToList(), additionalBinaryDataProperties: null);
+            return new AnomalyState(@on, value, errors.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Detailed information of the anomalous time stamp. </summary>
@@ -331,11 +331,11 @@ namespace Azure.AI.AnomalyDetector
         /// Data schema of the input data source. The default
         /// is OneTable.
         /// </param>
-        /// <param name="startTime">
+        /// <param name="startOn">
         /// Start date/time of training data, which should be
         /// in ISO 8601 format.
         /// </param>
-        /// <param name="endTime">
+        /// <param name="endOn">
         /// End date/time of training data, which should be
         /// in ISO 8601 format.
         /// </param>
@@ -352,15 +352,15 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="errors"> Error messages after failure to create a model. </param>
         /// <param name="diagnosticsInfo"> Diagnostics information to help inspect the states of a model or variable. </param>
         /// <returns> A new <see cref="AnomalyDetector.ModelInfo"/> instance for mocking. </returns>
-        public static ModelInfo ModelInfo(Uri dataSource = default, DataSchema? dataSchema = default, DateTimeOffset startTime = default, DateTimeOffset endTime = default, string displayName = default, int? slidingWindow = default, AlignPolicy alignPolicy = default, ModelStatus? status = default, IEnumerable<ErrorResponse> errors = default, DiagnosticsInfo diagnosticsInfo = default)
+        public static ModelInfo ModelInfo(Uri dataSource = default, DataSchema? dataSchema = default, DateTimeOffset startOn = default, DateTimeOffset endOn = default, string displayName = default, int? slidingWindow = default, AlignPolicy alignPolicy = default, ModelStatus? status = default, IEnumerable<ErrorResponse> errors = default, DiagnosticsInfo diagnosticsInfo = default)
         {
             errors ??= new ChangeTrackingList<ErrorResponse>();
 
             return new ModelInfo(
                 dataSource,
                 dataSchema,
-                startTime,
-                endTime,
+                startOn,
+                endOn,
                 displayName,
                 slidingWindow,
                 alignPolicy,
@@ -421,16 +421,16 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Response of getting a model. </summary>
         /// <param name="modelId"> Model identifier. </param>
-        /// <param name="createdTime"> Date and time (UTC) when the model was created. </param>
-        /// <param name="lastUpdatedTime"> Date and time (UTC) when the model was last updated. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the model was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the model was last updated. </param>
         /// <param name="modelInfo">
         /// Training result of a model, including its status, errors, and diagnostics
         /// information.
         /// </param>
         /// <returns> A new <see cref="AnomalyDetector.AnomalyDetectionModel"/> instance for mocking. </returns>
-        public static AnomalyDetectionModel AnomalyDetectionModel(Guid modelId = default, DateTimeOffset createdTime = default, DateTimeOffset lastUpdatedTime = default, ModelInfo modelInfo = default)
+        public static AnomalyDetectionModel AnomalyDetectionModel(Guid modelId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, ModelInfo modelInfo = default)
         {
-            return new AnomalyDetectionModel(modelId, createdTime, lastUpdatedTime, modelInfo, additionalBinaryDataProperties: null);
+            return new AnomalyDetectionModel(modelId, createdOn, lastUpdatedOn, modelInfo, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Request of the last detection. </summary>

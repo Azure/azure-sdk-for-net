@@ -26,5 +26,11 @@ namespace Azure.Storage.Queues.Models
             DequeueCount = dequeueCount;
             MessageText = messageText;
         }
+
+        /// <summary> The time the message was inserted into the queue. </summary>
+        public DateTimeOffset InsertionOn { get; }
+
+        /// <summary> The time that the message will expire and be automatically deleted. </summary>
+        public DateTimeOffset ExpireOn { get; }
     }
 }

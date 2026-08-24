@@ -18,27 +18,27 @@ namespace Azure.Analytics.Defender.Easm
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DeltaDateResult"/>. </summary>
-        /// <param name="date"> The date that is being requested. </param>
+        /// <param name="on"> The date that is being requested. </param>
         /// <param name="deltas"> A list of summary counts per day. </param>
-        internal DeltaDateResult(DateTimeOffset date, IEnumerable<DailyDeltaTypeResult> deltas)
+        internal DeltaDateResult(DateTimeOffset @on, IEnumerable<DailyDeltaTypeResult> deltas)
         {
-            Date = date;
+            On = @on;
             Deltas = deltas.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="DeltaDateResult"/>. </summary>
-        /// <param name="date"> The date that is being requested. </param>
+        /// <param name="on"> The date that is being requested. </param>
         /// <param name="deltas"> A list of summary counts per day. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeltaDateResult(DateTimeOffset date, IList<DailyDeltaTypeResult> deltas, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeltaDateResult(DateTimeOffset @on, IList<DailyDeltaTypeResult> deltas, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Date = date;
+            On = @on;
             Deltas = deltas;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The date that is being requested. </summary>
-        public DateTimeOffset Date { get; }
+        public DateTimeOffset On { get; }
 
         /// <summary> A list of summary counts per day. </summary>
         public IList<DailyDeltaTypeResult> Deltas { get; }
