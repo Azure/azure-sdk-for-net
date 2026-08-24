@@ -7177,7 +7177,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.RestApiPollerRequestPagingKind CountBasedPaging { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.RestApiPollerRequestPagingKind LinkHeader { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.RestApiPollerRequestPagingKind NextPageToken { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.RestApiPollerRequestPagingKind NextPageUrl { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.RestApiPollerRequestPagingKind NextPageUri { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.RestApiPollerRequestPagingKind Offset { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.RestApiPollerRequestPagingKind PersistentLinkHeader { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.RestApiPollerRequestPagingKind PersistentToken { get { throw null; } }
@@ -8016,7 +8016,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityType SecurityAlert { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityType SecurityGroup { get { throw null; } }
         public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityType SubmissionMail { get { throw null; } }
-        public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityType Url { get { throw null; } }
+        public static Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityType Uri { get { throw null; } }
         public bool Equals(Azure.ResourceManager.SecurityInsights.Models.SecurityInsightsEntityType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
