@@ -10,13 +10,13 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
-    /// <summary> The CosmosDbSettings. </summary>
-    internal partial class CosmosDbSettings : ProvisionableConstruct
+    /// <summary> The CosmosDBSettings. </summary>
+    internal partial class CosmosDBSettings : ProvisionableConstruct
     {
         private BicepValue<int> _collectionsThroughput;
 
-        /// <summary> Creates a new CosmosDbSettings. </summary>
-        public CosmosDbSettings()
+        /// <summary> Creates a new CosmosDBSettings. </summary>
+        public CosmosDBSettings()
         {
         }
 
@@ -35,7 +35,7 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
-        /// <summary> Define all the provisionable properties for CosmosDbSettings. </summary>
+        /// <summary> Define all the provisionable properties for CosmosDBSettings. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -43,7 +43,7 @@ namespace Azure.Provisioning.MachineLearning
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for CosmosDbSettings that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for CosmosDBSettings that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }
