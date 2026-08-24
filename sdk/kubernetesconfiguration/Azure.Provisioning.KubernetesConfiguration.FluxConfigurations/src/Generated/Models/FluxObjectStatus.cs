@@ -19,7 +19,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         private BicepValue<FluxComplianceState> _complianceState;
         private FluxObjectReference _appliedBy;
         private BicepList<FluxObjectStatusCondition> _statusConditions;
-        private HelmReleaseProperties _helmReleaseProperties;
+        private FluxHelmReleaseProperties _helmReleaseProperties;
 
         /// <summary> Creates a new FluxObjectStatus. </summary>
         public FluxObjectStatus()
@@ -87,7 +87,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets the HelmReleaseProperties. </summary>
-        public HelmReleaseProperties HelmReleaseProperties
+        public FluxHelmReleaseProperties HelmReleaseProperties
         {
             get
             {
@@ -106,7 +106,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             _complianceState = DefineProperty<FluxComplianceState>(nameof(ComplianceState), new string[] { "complianceState" });
             _appliedBy = DefineModelProperty<FluxObjectReference>(nameof(AppliedBy), new string[] { "appliedBy" });
             _statusConditions = DefineListProperty<FluxObjectStatusCondition>(nameof(StatusConditions), new string[] { "statusConditions" });
-            _helmReleaseProperties = DefineModelProperty<HelmReleaseProperties>(nameof(HelmReleaseProperties), new string[] { "helmReleaseProperties" });
+            _helmReleaseProperties = DefineModelProperty<FluxHelmReleaseProperties>(nameof(HelmReleaseProperties), new string[] { "helmReleaseProperties" });
             DefineAdditionalProperties();
         }
 

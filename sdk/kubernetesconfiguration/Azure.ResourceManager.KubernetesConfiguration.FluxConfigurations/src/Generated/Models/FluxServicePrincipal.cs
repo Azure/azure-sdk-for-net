@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="clientSecret"> The client secret for authenticating a Service Principal. </param>
         /// <param name="clientCertificate"> Base64-encoded certificate used to authenticate a Service Principal. </param>
         /// <param name="clientCertificatePassword"> The password for the certificate used to authenticate a Service Principal. </param>
-        /// <param name="isClientCertificateSendChain"> Specifies whether to include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the Client Certificate. </param>
+        /// <param name="isClientCertificateChainIncluded"> Specifies whether to include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the Client Certificate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FluxServicePrincipal(string clientId, string tenantId, string clientSecret, string clientCertificate, string clientCertificatePassword, bool? isClientCertificateSendChain, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FluxServicePrincipal(string clientId, string tenantId, string clientSecret, string clientCertificate, string clientCertificatePassword, bool? isClientCertificateChainIncluded, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClientId = clientId;
             TenantId = tenantId;
             ClientSecret = clientSecret;
             ClientCertificate = clientCertificate;
             ClientCertificatePassword = clientCertificatePassword;
-            IsClientCertificateSendChain = isClientCertificateSendChain;
+            IsClientCertificateChainIncluded = isClientCertificateChainIncluded;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         public string ClientCertificatePassword { get; set; }
 
         /// <summary> Specifies whether to include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the Client Certificate. </summary>
-        public bool? IsClientCertificateSendChain { get; set; }
+        public bool? IsClientCertificateChainIncluded { get; set; }
     }
 }

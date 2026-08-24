@@ -18,9 +18,9 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         private BicepValue<bool> _isSuspended;
         private FluxGitRepository _gitRepository;
         private FluxBucket _bucket;
-        private AzureBlob _azureBlob;
-        private OciRepository _ociRepository;
-        private BicepDictionary<FluxConfigurationsKustomization> _kustomizations;
+        private FluxAzureBlob _azureBlob;
+        private FluxOciRepository _ociRepository;
+        private BicepDictionary<FluxKustomization> _kustomizations;
         private BicepDictionary<string> _configurationProtectedSettings;
         private BicepList<FluxObjectStatus> _statuses;
         private BicepValue<string> _repositoryPublicKey;
@@ -114,7 +114,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets or sets the AzureBlob. </summary>
-        public AzureBlob AzureBlob
+        public FluxAzureBlob AzureBlob
         {
             get
             {
@@ -129,7 +129,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets or sets the OciRepository. </summary>
-        public OciRepository OciRepository
+        public FluxOciRepository OciRepository
         {
             get
             {
@@ -144,7 +144,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets or sets the Kustomizations. </summary>
-        public BicepDictionary<FluxConfigurationsKustomization> Kustomizations
+        public BicepDictionary<FluxKustomization> Kustomizations
         {
             get
             {
@@ -292,9 +292,9 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             _isSuspended = DefineProperty<bool>(nameof(IsSuspended), new string[] { "suspend" });
             _gitRepository = DefineModelProperty<FluxGitRepository>(nameof(GitRepository), new string[] { "gitRepository" });
             _bucket = DefineModelProperty<FluxBucket>(nameof(Bucket), new string[] { "bucket" });
-            _azureBlob = DefineModelProperty<AzureBlob>(nameof(AzureBlob), new string[] { "azureBlob" });
-            _ociRepository = DefineModelProperty<OciRepository>(nameof(OciRepository), new string[] { "ociRepository" });
-            _kustomizations = DefineDictionaryProperty<FluxConfigurationsKustomization>(nameof(Kustomizations), new string[] { "kustomizations" });
+            _azureBlob = DefineModelProperty<FluxAzureBlob>(nameof(AzureBlob), new string[] { "azureBlob" });
+            _ociRepository = DefineModelProperty<FluxOciRepository>(nameof(OciRepository), new string[] { "ociRepository" });
+            _kustomizations = DefineDictionaryProperty<FluxKustomization>(nameof(Kustomizations), new string[] { "kustomizations" });
             _configurationProtectedSettings = DefineDictionaryProperty<string>(nameof(ConfigurationProtectedSettings), new string[] { "configurationProtectedSettings" });
             _statuses = DefineListProperty<FluxObjectStatus>(nameof(Statuses), new string[] { "statuses" }, isOutput: true);
             _repositoryPublicKey = DefineProperty<string>(nameof(RepositoryPublicKey), new string[] { "repositoryPublicKey" }, isOutput: true);

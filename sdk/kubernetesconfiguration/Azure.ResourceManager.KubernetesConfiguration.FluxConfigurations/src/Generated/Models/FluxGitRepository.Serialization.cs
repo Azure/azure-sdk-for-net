@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 writer.WritePropertyName("httpsUser"u8);
                 writer.WriteStringValue(HttpsUser);
             }
-            if (Optional.IsDefined(HttpsCACert))
+            if (Optional.IsDefined(HttpsCaCertificate))
             {
                 writer.WritePropertyName("httpsCACert"u8);
-                writer.WriteStringValue(HttpsCACert);
+                writer.WriteStringValue(HttpsCaCertificate);
             }
             if (Optional.IsDefined(LocalAuthRef))
             {
@@ -167,9 +167,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             FluxRepositoryReference repositoryRef = default;
             string sshKnownHosts = default;
             string httpsUser = default;
-            string httpsCACert = default;
+            string httpsCaCertificate = default;
             string localAuthRef = default;
-            FluxConfigurationProviderType? provider = default;
+            FluxGitRepositoryProviderType? provider = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -236,10 +236,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        httpsCACert = null;
+                        httpsCaCertificate = null;
                         continue;
                     }
-                    httpsCACert = prop.Value.GetString();
+                    httpsCaCertificate = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("localAuthRef"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                         provider = null;
                         continue;
                     }
-                    provider = new FluxConfigurationProviderType(prop.Value.GetString());
+                    provider = new FluxGitRepositoryProviderType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 repositoryRef,
                 sshKnownHosts,
                 httpsUser,
-                httpsCACert,
+                httpsCaCertificate,
                 localAuthRef,
                 provider,
                 additionalBinaryDataProperties);

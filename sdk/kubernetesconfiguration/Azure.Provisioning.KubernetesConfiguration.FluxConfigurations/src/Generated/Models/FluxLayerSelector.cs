@@ -14,7 +14,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
     public partial class FluxLayerSelector : ProvisionableConstruct
     {
         private BicepValue<string> _mediaType;
-        private BicepValue<FluxConfigurationOperationType> _operation;
+        private BicepValue<FluxLayerOperationType> _operation;
 
         /// <summary> Creates a new FluxLayerSelector. </summary>
         public FluxLayerSelector()
@@ -37,7 +37,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets or sets the Operation. </summary>
-        public BicepValue<FluxConfigurationOperationType> Operation
+        public BicepValue<FluxLayerOperationType> Operation
         {
             get
             {
@@ -56,7 +56,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         {
             base.DefineProvisionableProperties();
             _mediaType = DefineProperty<string>(nameof(MediaType), new string[] { "mediaType" });
-            _operation = DefineProperty<FluxConfigurationOperationType>(nameof(Operation), new string[] { "operation" });
+            _operation = DefineProperty<FluxLayerOperationType>(nameof(Operation), new string[] { "operation" });
             DefineAdditionalProperties();
         }
 

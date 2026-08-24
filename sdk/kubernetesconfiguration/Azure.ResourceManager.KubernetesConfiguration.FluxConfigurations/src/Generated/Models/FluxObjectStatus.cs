@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="statusConditions"> List of Kubernetes object status conditions present on the cluster. </param>
         /// <param name="helmReleaseProperties"> Additional properties that are provided from objects of the HelmRelease kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FluxObjectStatus(string name, string @namespace, string kind, FluxComplianceState? complianceState, FluxObjectReference appliedBy, IList<FluxObjectStatusCondition> statusConditions, HelmReleaseProperties helmReleaseProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FluxObjectStatus(string name, string @namespace, string kind, FluxComplianceState? complianceState, FluxObjectReference appliedBy, IList<FluxObjectStatusCondition> statusConditions, FluxHelmReleaseProperties helmReleaseProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Namespace = @namespace;
@@ -63,6 +63,6 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         public IList<FluxObjectStatusCondition> StatusConditions { get; }
 
         /// <summary> Additional properties that are provided from objects of the HelmRelease kind. </summary>
-        public HelmReleaseProperties HelmReleaseProperties { get; }
+        public FluxHelmReleaseProperties HelmReleaseProperties { get; }
     }
 }

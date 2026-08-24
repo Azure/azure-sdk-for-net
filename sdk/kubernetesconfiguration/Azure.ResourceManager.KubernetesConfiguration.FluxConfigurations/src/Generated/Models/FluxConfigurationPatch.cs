@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         }
 
         /// <summary> Parameters to reconcile to the AzureBlob source kind type. </summary>
-        public AzureBlobPatch AzureBlob
+        public FluxAzureBlobPatch AzureBlob
         {
             get
             {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         }
 
         /// <summary> Parameters to reconcile to the OCIRepository source kind type. </summary>
-        public OciRepositoryPatch OciRepository
+        public FluxOciRepositoryPatch OciRepository
         {
             get
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         }
 
         /// <summary> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </summary>
-        public IDictionary<string, KustomizationPatch> Kustomizations
+        public IDictionary<string, FluxKustomizationPatch> Kustomizations
         {
             get
             {

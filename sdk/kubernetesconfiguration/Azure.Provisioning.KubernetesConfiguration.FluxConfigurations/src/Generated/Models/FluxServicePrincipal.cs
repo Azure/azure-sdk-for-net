@@ -18,7 +18,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         private BicepValue<string> _clientSecret;
         private BicepValue<string> _clientCertificate;
         private BicepValue<string> _clientCertificatePassword;
-        private BicepValue<bool> _isClientCertificateSendChain;
+        private BicepValue<bool> _isClientCertificateChainIncluded;
 
         /// <summary> Creates a new FluxServicePrincipal. </summary>
         public FluxServicePrincipal()
@@ -100,18 +100,18 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             }
         }
 
-        /// <summary> Gets or sets the IsClientCertificateSendChain. </summary>
-        public BicepValue<bool> IsClientCertificateSendChain
+        /// <summary> Gets or sets the IsClientCertificateChainIncluded. </summary>
+        public BicepValue<bool> IsClientCertificateChainIncluded
         {
             get
             {
                 Initialize();
-                return _isClientCertificateSendChain;
+                return _isClientCertificateChainIncluded;
             }
             set
             {
                 Initialize();
-                _isClientCertificateSendChain.Assign(value);
+                _isClientCertificateChainIncluded.Assign(value);
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             _clientSecret = DefineProperty<string>(nameof(ClientSecret), new string[] { "clientSecret" });
             _clientCertificate = DefineProperty<string>(nameof(ClientCertificate), new string[] { "clientCertificate" });
             _clientCertificatePassword = DefineProperty<string>(nameof(ClientCertificatePassword), new string[] { "clientCertificatePassword" });
-            _isClientCertificateSendChain = DefineProperty<bool>(nameof(IsClientCertificateSendChain), new string[] { "clientCertificateSendChain" });
+            _isClientCertificateChainIncluded = DefineProperty<bool>(nameof(IsClientCertificateChainIncluded), new string[] { "clientCertificateSendChain" });
             DefineAdditionalProperties();
         }
 

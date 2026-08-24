@@ -28,11 +28,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="repositoryRef"> The source reference for the GitRepository object. </param>
         /// <param name="sshKnownHosts"> Base64-encoded known_hosts value containing public SSH keys required to access private git repositories over SSH. </param>
         /// <param name="httpsUser"> Plaintext HTTPS username used to access private git repositories over HTTPS. </param>
-        /// <param name="httpsCACert"> Base64-encoded HTTPS certificate authority contents used to access git private git repositories over HTTPS. </param>
+        /// <param name="httpsCaCertificate"> Base64-encoded HTTPS certificate authority contents used to access git private git repositories over HTTPS. </param>
         /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
         /// <param name="provider"> Name of the provider used for authentication. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FluxGitRepository(string uri, long? timeoutInSeconds, long? syncIntervalInSeconds, FluxRepositoryReference repositoryRef, string sshKnownHosts, string httpsUser, string httpsCACert, string localAuthRef, FluxConfigurationProviderType? provider, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FluxGitRepository(string uri, long? timeoutInSeconds, long? syncIntervalInSeconds, FluxRepositoryReference repositoryRef, string sshKnownHosts, string httpsUser, string httpsCaCertificate, string localAuthRef, FluxGitRepositoryProviderType? provider, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             TimeoutInSeconds = timeoutInSeconds;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             RepositoryRef = repositoryRef;
             SshKnownHosts = sshKnownHosts;
             HttpsUser = httpsUser;
-            HttpsCACert = httpsCACert;
+            HttpsCaCertificate = httpsCaCertificate;
             LocalAuthRef = localAuthRef;
             Provider = provider;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         public string HttpsUser { get; set; }
 
         /// <summary> Base64-encoded HTTPS certificate authority contents used to access git private git repositories over HTTPS. </summary>
-        public string HttpsCACert { get; set; }
+        public string HttpsCaCertificate { get; set; }
 
         /// <summary> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </summary>
         public string LocalAuthRef { get; set; }
 
         /// <summary> Name of the provider used for authentication. </summary>
-        public FluxConfigurationProviderType? Provider { get; set; }
+        public FluxGitRepositoryProviderType? Provider { get; set; }
     }
 }
