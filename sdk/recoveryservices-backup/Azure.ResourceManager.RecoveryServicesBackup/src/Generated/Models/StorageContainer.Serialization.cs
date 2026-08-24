@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string healthStatus = default;
             ProtectableContainerType containerType = default;
             string protectableObjectType = default;
-            string sourceLocation = default;
+            AzureLocation? sourceLocation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier sourceResourceId = default;
             string storageAccountVersion = default;
@@ -197,7 +197,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 if (prop.NameEquals("sourceLocation"u8))
                 {
-                    sourceLocation = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sourceResourceId"u8))

@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (options.Format != "W" && Optional.IsDefined(SourceLocation))
             {
                 writer.WritePropertyName("sourceLocation"u8);
-                writer.WriteStringValue(SourceLocation);
+                writer.WriteStringValue(SourceLocation.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

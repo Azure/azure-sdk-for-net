@@ -10,11 +10,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <summary> Gets or sets the disk encryption set ID for the secured VM OS disk. </summary>
         public ResourceIdentifier SecuredVmOSDiskEncryptionSetId
         {
-            get => SecuredVMDetails?.SecuredVmOSDiskEncryptionSetId;
+            get => SecuredVmDetails?.SecuredVmOSDiskEncryptionSetId;
             set
             {
-                SecuredVMDetails ??= new SecuredVmDetails();
-                SecuredVMDetails.SecuredVmOSDiskEncryptionSetId = value;
+                SecuredVmDetails ??= new SecuredVmDetails();
+                SecuredVmDetails.SecuredVmOSDiskEncryptionSetId = value;
             }
         }
     }

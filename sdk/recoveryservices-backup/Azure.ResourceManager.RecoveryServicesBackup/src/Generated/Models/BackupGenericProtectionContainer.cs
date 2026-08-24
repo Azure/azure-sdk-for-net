@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
         /// <param name="sourceLocation"> Source location of the container. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupGenericProtectionContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, string sourceLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupGenericProtectionContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, AzureLocation? sourceLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FriendlyName = friendlyName;
             BackupManagementType = backupManagementType;
@@ -81,6 +82,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string ProtectableObjectType { get; set; }
 
         /// <summary> Source location of the container. </summary>
-        public string SourceLocation { get; }
+        public AzureLocation? SourceLocation { get; }
     }
 }
