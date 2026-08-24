@@ -49,7 +49,7 @@ namespace Azure.Identity
             return chain;
         }
 
-        private static TokenCredential CreateCredential(DefaultAzureCredentialOptions source)
+        internal static TokenCredential CreateCredential(DefaultAzureCredentialOptions source)
         {
             var credentialSource = source.CredentialSource;
 

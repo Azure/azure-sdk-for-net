@@ -82,7 +82,7 @@ namespace Azure.AI.Projects.Agents
             writer.WritePropertyName("is_directory"u8);
             writer.WriteBooleanValue(IsDirectory);
             writer.WritePropertyName("modified_time"u8);
-            writer.WriteNumberValue(ModifiedAt, "U");
+            writer.WriteNumberValue(ModifiedOn, "U");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -128,7 +128,7 @@ namespace Azure.AI.Projects.Agents
             string name = default;
             long sizeInBytes = default;
             bool isDirectory = default;
-            DateTimeOffset modifiedAt = default;
+            DateTimeOffset modifiedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,7 +149,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("modified_time"u8))
                 {
-                    modifiedAt = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    modifiedOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (options.Format != "W")
@@ -157,7 +157,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SessionDirectoryEntry(name, sizeInBytes, isDirectory, modifiedAt, additionalBinaryDataProperties);
+            return new SessionDirectoryEntry(name, sizeInBytes, isDirectory, modifiedOn, additionalBinaryDataProperties);
         }
     }
 }
