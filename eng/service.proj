@@ -274,13 +274,9 @@
 
   <Target Name="GenerateRepositoryProjectGraphWithProjectGraph"
           DependsOnTargets="_BuildRepositoryProjectGraphTask">
-    <CallTarget Targets="_GenerateRepositoryProjectGraphRecordsWithProjectGraph"
-                Condition="'$(IncludeRepositoryProjectGraphInputs)' != 'true'" />
-    <!-- Including inputs materially increases the graph's working set. Isolate that mode so every
-         evaluated ProjectInstance is released before the artifact builder starts. -->
+    <!-- Release evaluated ProjectInstances and NuGet lock files before the artifact builder starts. -->
     <RunIsolatedRepositoryProjectGraphTask Project="$(MSBuildProjectFullPath)"
-                                           Target="_GenerateRepositoryProjectGraphRecordsWithProjectGraph"
-                                           Condition="'$(IncludeRepositoryProjectGraphInputs)' == 'true'" />
+                                           Target="_GenerateRepositoryProjectGraphRecordsWithProjectGraph" />
     <Exec Command="pwsh -NoProfile -NonInteractive -File &quot;$(RepoRoot)eng/scripts/RepositoryProjectGraph.ps1&quot; -Operation Build -GraphPath &quot;$(RepositoryProjectGraphReaderPath)&quot; -RecordsPath &quot;$(RepositoryProjectGraphReaderRecordsPath)&quot; -PackageRecordsPath &quot;$(RepositoryProjectGraphPackageRecordsPath)&quot; -RepoRoot &quot;$(RepoRoot)&quot;" />
   </Target>
 
