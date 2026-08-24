@@ -223,7 +223,7 @@ namespace Azure.Provisioning.Kusto
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<DatabasePrincipalProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<KustoDatabase>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<KustoDatabase>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

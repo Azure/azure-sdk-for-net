@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Kusto
     /// <summary> Class representing a CosmosDb data connection. </summary>
     public partial class KustoCosmosDBDataConnection : KustoDataConnection
     {
-        private CosmosDbDataConnectionProperties _properties;
+        private CosmosDBDataConnectionProperties _properties;
 
         /// <summary> Creates a new KustoCosmosDBDataConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Kusto
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        internal CosmosDbDataConnectionProperties Properties
+        internal CosmosDBDataConnectionProperties Properties
         {
             get
             {
@@ -49,7 +49,7 @@ namespace Azure.Provisioning.Kusto
             {
                 if (Properties is null)
                 {
-                    Properties = new CosmosDbDataConnectionProperties();
+                    Properties = new CosmosDBDataConnectionProperties();
                 }
                 Properties.TableName = value;
             }
@@ -66,7 +66,7 @@ namespace Azure.Provisioning.Kusto
             {
                 if (Properties is null)
                 {
-                    Properties = new CosmosDbDataConnectionProperties();
+                    Properties = new CosmosDBDataConnectionProperties();
                 }
                 Properties.MappingRuleName = value;
             }
@@ -83,7 +83,7 @@ namespace Azure.Provisioning.Kusto
             {
                 if (Properties is null)
                 {
-                    Properties = new CosmosDbDataConnectionProperties();
+                    Properties = new CosmosDBDataConnectionProperties();
                 }
                 Properties.ManagedIdentityResourceId = value;
             }
@@ -96,7 +96,7 @@ namespace Azure.Provisioning.Kusto
             {
                 if (Properties is null)
                 {
-                    Properties = new CosmosDbDataConnectionProperties();
+                    Properties = new CosmosDBDataConnectionProperties();
                 }
                 return Properties.ManagedIdentityObjectId;
             }
@@ -113,7 +113,7 @@ namespace Azure.Provisioning.Kusto
             {
                 if (Properties is null)
                 {
-                    Properties = new CosmosDbDataConnectionProperties();
+                    Properties = new CosmosDBDataConnectionProperties();
                 }
                 Properties.CosmosDBAccountResourceId = value;
             }
@@ -130,7 +130,7 @@ namespace Azure.Provisioning.Kusto
             {
                 if (Properties is null)
                 {
-                    Properties = new CosmosDbDataConnectionProperties();
+                    Properties = new CosmosDBDataConnectionProperties();
                 }
                 Properties.CosmosDBDatabase = value;
             }
@@ -147,7 +147,7 @@ namespace Azure.Provisioning.Kusto
             {
                 if (Properties is null)
                 {
-                    Properties = new CosmosDbDataConnectionProperties();
+                    Properties = new CosmosDBDataConnectionProperties();
                 }
                 Properties.CosmosDBContainer = value;
             }
@@ -164,7 +164,7 @@ namespace Azure.Provisioning.Kusto
             {
                 if (Properties is null)
                 {
-                    Properties = new CosmosDbDataConnectionProperties();
+                    Properties = new CosmosDBDataConnectionProperties();
                 }
                 Properties.RetrievalStartOn = value;
             }
@@ -177,7 +177,7 @@ namespace Azure.Provisioning.Kusto
             {
                 if (Properties is null)
                 {
-                    Properties = new CosmosDbDataConnectionProperties();
+                    Properties = new CosmosDBDataConnectionProperties();
                 }
                 return Properties.ProvisioningState;
             }
@@ -188,7 +188,7 @@ namespace Azure.Provisioning.Kusto
         {
             base.DefineProvisionableProperties();
             DefineProperty<string>("kind", new string[] { "kind" }, defaultValue: "CosmosDb");
-            _properties = DefineModelProperty<CosmosDbDataConnectionProperties>(nameof(Properties), new string[] { "properties" });
+            _properties = DefineModelProperty<CosmosDBDataConnectionProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }
 

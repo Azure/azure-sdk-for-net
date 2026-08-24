@@ -13,7 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Kusto
 {
     /// <summary> Class representing the Kusto CosmosDb data connection properties. </summary>
-    internal partial class CosmosDbDataConnectionProperties : ProvisionableConstruct
+    internal partial class CosmosDBDataConnectionProperties : ProvisionableConstruct
     {
         private BicepValue<string> _tableName;
         private BicepValue<string> _mappingRuleName;
@@ -25,8 +25,8 @@ namespace Azure.Provisioning.Kusto
         private BicepValue<DateTimeOffset> _retrievalStartOn;
         private BicepValue<KustoProvisioningState> _provisioningState;
 
-        /// <summary> Creates a new CosmosDbDataConnectionProperties. </summary>
-        public CosmosDbDataConnectionProperties()
+        /// <summary> Creates a new CosmosDBDataConnectionProperties. </summary>
+        public CosmosDBDataConnectionProperties()
         {
         }
 
@@ -155,7 +155,7 @@ namespace Azure.Provisioning.Kusto
             }
         }
 
-        /// <summary> Define all the provisionable properties for CosmosDbDataConnectionProperties. </summary>
+        /// <summary> Define all the provisionable properties for CosmosDBDataConnectionProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -171,7 +171,7 @@ namespace Azure.Provisioning.Kusto
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for CosmosDbDataConnectionProperties that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for CosmosDBDataConnectionProperties that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }
