@@ -12,8 +12,6 @@ using Azure.Provisioning.Storage;
 // namespace so `using Azure.Provisioning;` helps you easily get started.
 namespace Azure.Provisioning;
 
-// The provisioning emitter only generates service resources and models. Keep these experimental
-// high-level composition helpers behind the existing feature flag for prototype compatibility.
 // TODO: This is a rough outline of what the higher level conveniences could
 // look like.  Pulling the most common types out will help with discovery.
 // Adding ResourceResolver will help with easy of composition.

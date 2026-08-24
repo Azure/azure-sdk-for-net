@@ -123,6 +123,19 @@ namespace Azure.Provisioning.Storage
             }
         }
 
+        /// <summary> Gets the Id. </summary>
+        public BicepValue<string> PrivateEndpointId
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new StoragePrivateEndpointConnectionProperties();
+                }
+                return Properties.PrivateEndpointId;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for StoragePrivateEndpointConnection. </summary>
         protected override void DefineProvisionableProperties()
         {

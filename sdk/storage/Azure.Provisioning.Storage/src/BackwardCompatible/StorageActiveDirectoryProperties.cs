@@ -11,8 +11,6 @@ namespace Azure.Provisioning.Storage;
 
 public partial class StorageActiveDirectoryProperties : ProvisionableConstruct
 {
-    // TypeSpec emits ActiveDirectoryDomainGuid; keep the previously shipped DomainGuid property
-    // mapped to the same wire path for compatibility.
     /// <summary>
     /// Specifies the domain GUID.
     ///
@@ -27,7 +25,7 @@ public partial class StorageActiveDirectoryProperties : ProvisionableConstruct
     }
     private BicepValue<Guid>? _domainGuid;
 
-    partial void DefineAdditionalProperties()
+    private partial void DefineAdditionalProperties()
     {
         _domainGuid = DefineProperty<Guid>("DomainGuid", ["domainGuid"]);
     }

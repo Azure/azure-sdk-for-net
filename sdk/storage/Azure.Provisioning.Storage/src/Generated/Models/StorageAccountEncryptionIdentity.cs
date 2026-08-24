@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Storage
@@ -12,15 +13,40 @@ namespace Azure.Provisioning.Storage
     /// <summary> Encryption identity for the storage account. </summary>
     public partial class StorageAccountEncryptionIdentity : ProvisionableConstruct
     {
+        private BicepValue<string> _encryptionUserAssignedIdentity;
+        private BicepValue<string> _encryptionFederatedIdentityClientId;
+
         /// <summary> Creates a new StorageAccountEncryptionIdentity. </summary>
         public StorageAccountEncryptionIdentity()
         {
+        }
+
+        /// <summary> Gets the EncryptionUserAssignedIdentity. </summary>
+        public BicepValue<string> EncryptionUserAssignedIdentity
+        {
+            get
+            {
+                Initialize();
+                return _encryptionUserAssignedIdentity;
+            }
+        }
+
+        /// <summary> Gets the EncryptionFederatedIdentityClientId. </summary>
+        public BicepValue<string> EncryptionFederatedIdentityClientId
+        {
+            get
+            {
+                Initialize();
+                return _encryptionFederatedIdentityClientId;
+            }
         }
 
         /// <summary> Define all the provisionable properties for StorageAccountEncryptionIdentity. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _encryptionUserAssignedIdentity = DefineProperty<string>(nameof(EncryptionUserAssignedIdentity), new string[] { "userAssignedIdentity" });
+            _encryptionFederatedIdentityClientId = DefineProperty<string>(nameof(EncryptionFederatedIdentityClientId), new string[] { "federatedIdentityClientId" });
             DefineAdditionalProperties();
         }
 

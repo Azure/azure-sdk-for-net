@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Storage
@@ -12,15 +13,40 @@ namespace Azure.Provisioning.Storage
     /// <summary> Blob range. </summary>
     public partial class BlobRestoreRange : ProvisionableConstruct
     {
+        private BicepValue<string> _startRange;
+        private BicepValue<string> _endRange;
+
         /// <summary> Creates a new BlobRestoreRange. </summary>
         public BlobRestoreRange()
         {
+        }
+
+        /// <summary> Gets the StartRange. </summary>
+        public BicepValue<string> StartRange
+        {
+            get
+            {
+                Initialize();
+                return _startRange;
+            }
+        }
+
+        /// <summary> Gets the EndRange. </summary>
+        public BicepValue<string> EndRange
+        {
+            get
+            {
+                Initialize();
+                return _endRange;
+            }
         }
 
         /// <summary> Define all the provisionable properties for BlobRestoreRange. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _startRange = DefineProperty<string>(nameof(StartRange), new string[] { "startRange" });
+            _endRange = DefineProperty<string>(nameof(EndRange), new string[] { "endRange" });
             DefineAdditionalProperties();
         }
 

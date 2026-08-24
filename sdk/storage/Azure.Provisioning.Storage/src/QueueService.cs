@@ -1,13 +1,18 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Provisioning.Expressions;
+
 namespace Azure.Provisioning.Storage;
 
-// TypeSpec suppresses the singleton Name when this shipped get-only property is present.
-// Define it manually with the required "default" value to preserve the existing API and Bicep.
+// Customize the generated QueueService resource.
 public partial class QueueService
 {
-    private BicepValue<string>? _name;
+    /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue() =>
+        new StringLiteralExpression("default");
 
     /// <summary>
     /// Gets the Name.
@@ -15,10 +20,5 @@ public partial class QueueService
     public BicepValue<string> Name
     {
         get { Initialize(); return _name!; }
-    }
-
-    partial void DefineAdditionalProperties()
-    {
-        _name = DefineProperty<string>(nameof(Name), ["name"], isRequired: true, defaultValue: "default");
     }
 }

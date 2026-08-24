@@ -14,27 +14,15 @@ namespace Azure.Provisioning.Storage
     {
         /// <summary> Tls10. </summary>
         [DataMember(Name = "TLS1_0")]
-        Tls10 = 4,
+        Tls10 = 0,
         /// <summary> Tls11. </summary>
         [DataMember(Name = "TLS1_1")]
-        Tls11 = 5,
+        Tls11 = 1,
         /// <summary> Tls12. </summary>
         [DataMember(Name = "TLS1_2")]
-        Tls12 = 6,
+        Tls12 = 2,
         /// <summary> Tls13. </summary>
         [DataMember(Name = "TLS1_3")]
-        Tls13 = 7,
-        /// <summary> Tls1_0. </summary>
-        [DataMember(Name = "TLS1_0")]
-        Tls1_0 = 0,
-        /// <summary> Tls1_1. </summary>
-        [DataMember(Name = "TLS1_1")]
-        Tls1_1 = 1,
-        /// <summary> Tls1_2. </summary>
-        [DataMember(Name = "TLS1_2")]
-        Tls1_2 = 2,
-        /// <summary> Tls1_3. </summary>
-        [DataMember(Name = "TLS1_3")]
-        Tls1_3 = 3
+        Tls13 = 3
     }
 }

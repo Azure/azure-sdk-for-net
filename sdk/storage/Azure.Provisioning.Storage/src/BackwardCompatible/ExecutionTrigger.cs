@@ -11,8 +11,6 @@ namespace Azure.Provisioning.Storage;
 
 public partial class ExecutionTrigger : ProvisionableConstruct
 {
-    // TypeSpec generates TaskExecutionTriggerType; keep the shipped TriggerType property and enum
-    // on the same wire path so existing callers remain source and binary compatible.
     /// <summary>
     /// The trigger type of the storage task assignment execution.
     ///
@@ -27,7 +25,7 @@ public partial class ExecutionTrigger : ProvisionableConstruct
     }
     private BicepValue<ExecutionTriggerType>? _triggerType;
 
-    partial void DefineAdditionalProperties()
+    private partial void DefineAdditionalProperties()
     {
         _triggerType = DefineProperty<ExecutionTriggerType>("TriggerType", ["type"]);
     }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Storage
@@ -12,15 +13,40 @@ namespace Azure.Provisioning.Storage
     /// <summary> SasPolicy assigned to the storage account. </summary>
     public partial class StorageAccountSasPolicy : ProvisionableConstruct
     {
+        private BicepValue<string> _sasExpirationPeriod;
+        private BicepValue<ExpirationAction> _expirationAction;
+
         /// <summary> Creates a new StorageAccountSasPolicy. </summary>
         public StorageAccountSasPolicy()
         {
+        }
+
+        /// <summary> Gets the SasExpirationPeriod. </summary>
+        public BicepValue<string> SasExpirationPeriod
+        {
+            get
+            {
+                Initialize();
+                return _sasExpirationPeriod;
+            }
+        }
+
+        /// <summary> Gets the ExpirationAction. </summary>
+        public BicepValue<ExpirationAction> ExpirationAction
+        {
+            get
+            {
+                Initialize();
+                return _expirationAction;
+            }
         }
 
         /// <summary> Define all the provisionable properties for StorageAccountSasPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _sasExpirationPeriod = DefineProperty<string>(nameof(SasExpirationPeriod), new string[] { "sasExpirationPeriod" });
+            _expirationAction = DefineProperty<ExpirationAction>(nameof(ExpirationAction), new string[] { "expirationAction" });
             DefineAdditionalProperties();
         }
 

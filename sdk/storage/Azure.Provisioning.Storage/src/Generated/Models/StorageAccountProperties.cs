@@ -12,6 +12,7 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Storage
 {
+    /// <summary> Properties of the storage account. </summary>
     internal partial class StorageAccountProperties : ProvisionableConstruct
     {
         private BicepValue<StorageAccountProvisioningState> _provisioningState;
@@ -22,11 +23,16 @@ namespace Azure.Provisioning.Storage
         private BicepValue<AzureLocation> _secondaryLocation;
         private BicepValue<StorageAccountStatus> _statusOfSecondary;
         private BicepValue<DateTimeOffset> _createdOn;
+        private StorageCustomDomain _customDomain;
+        private StorageAccountSasPolicy _sasPolicy;
         private KeyPolicy _keyPolicy;
         private StorageAccountKeyCreationTime _keyCreationTime;
         private StorageAccountEndpoints _secondaryEndpoints;
+        private StorageAccountEncryption _encryption;
+        private BicepValue<StorageAccountAccessTier> _accessTier;
         private FilesIdentityBasedAuthentication _azureFilesIdentityBasedAuthentication;
         private BicepValue<bool> _enableHttpsTrafficOnly;
+        private StorageAccountNetworkRuleSet _networkRuleSet;
         private BicepValue<bool> _isSftpEnabled;
         private BicepValue<bool> _isLocalUserEnabled;
         private BicepValue<bool> _isExtendedGroupEnabled;
@@ -138,6 +144,26 @@ namespace Azure.Provisioning.Storage
             }
         }
 
+        /// <summary> Gets the CustomDomain. </summary>
+        public StorageCustomDomain CustomDomain
+        {
+            get
+            {
+                Initialize();
+                return _customDomain;
+            }
+        }
+
+        /// <summary> Gets the SasPolicy. </summary>
+        public StorageAccountSasPolicy SasPolicy
+        {
+            get
+            {
+                Initialize();
+                return _sasPolicy;
+            }
+        }
+
         /// <summary> Gets the KeyPolicy. </summary>
         internal KeyPolicy KeyPolicy
         {
@@ -168,6 +194,26 @@ namespace Azure.Provisioning.Storage
             }
         }
 
+        /// <summary> Gets the Encryption. </summary>
+        public StorageAccountEncryption Encryption
+        {
+            get
+            {
+                Initialize();
+                return _encryption;
+            }
+        }
+
+        /// <summary> Gets the AccessTier. </summary>
+        public BicepValue<StorageAccountAccessTier> AccessTier
+        {
+            get
+            {
+                Initialize();
+                return _accessTier;
+            }
+        }
+
         /// <summary> Gets or sets the AzureFilesIdentityBasedAuthentication. </summary>
         public FilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication
         {
@@ -195,6 +241,16 @@ namespace Azure.Provisioning.Storage
             {
                 Initialize();
                 _enableHttpsTrafficOnly.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the NetworkRuleSet. </summary>
+        public StorageAccountNetworkRuleSet NetworkRuleSet
+        {
+            get
+            {
+                Initialize();
+                return _networkRuleSet;
             }
         }
 
@@ -543,6 +599,15 @@ namespace Azure.Provisioning.Storage
             }
         }
 
+        /// <summary> Gets the KeyExpirationPeriodInDays. </summary>
+        public BicepValue<int> KeyExpirationPeriodInDays
+        {
+            get
+            {
+                return KeyPolicy.KeyExpirationPeriodInDays;
+            }
+        }
+
         /// <summary> Gets or sets the IsIPv6EndpointToBePublished. </summary>
         public BicepValue<bool> IsIPv6EndpointToBePublished
         {
@@ -589,11 +654,16 @@ namespace Azure.Provisioning.Storage
             _secondaryLocation = DefineProperty<AzureLocation>(nameof(SecondaryLocation), new string[] { "secondaryLocation" }, isOutput: true);
             _statusOfSecondary = DefineProperty<StorageAccountStatus>(nameof(StatusOfSecondary), new string[] { "statusOfSecondary" }, isOutput: true);
             _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationTime" }, isOutput: true, format: "O");
+            _customDomain = DefineModelProperty<StorageCustomDomain>(nameof(CustomDomain), new string[] { "customDomain" }, isOutput: true);
+            _sasPolicy = DefineModelProperty<StorageAccountSasPolicy>(nameof(SasPolicy), new string[] { "sasPolicy" }, isOutput: true);
             _keyPolicy = DefineModelProperty<KeyPolicy>(nameof(KeyPolicy), new string[] { "keyPolicy" }, isOutput: true);
             _keyCreationTime = DefineModelProperty<StorageAccountKeyCreationTime>(nameof(KeyCreationTime), new string[] { "keyCreationTime" }, isOutput: true);
             _secondaryEndpoints = DefineModelProperty<StorageAccountEndpoints>(nameof(SecondaryEndpoints), new string[] { "secondaryEndpoints" }, isOutput: true);
+            _encryption = DefineModelProperty<StorageAccountEncryption>(nameof(Encryption), new string[] { "encryption" }, isOutput: true);
+            _accessTier = DefineProperty<StorageAccountAccessTier>(nameof(AccessTier), new string[] { "accessTier" }, isOutput: true);
             _azureFilesIdentityBasedAuthentication = DefineModelProperty<FilesIdentityBasedAuthentication>(nameof(AzureFilesIdentityBasedAuthentication), new string[] { "azureFilesIdentityBasedAuthentication" });
             _enableHttpsTrafficOnly = DefineProperty<bool>(nameof(EnableHttpsTrafficOnly), new string[] { "supportsHttpsTrafficOnly" });
+            _networkRuleSet = DefineModelProperty<StorageAccountNetworkRuleSet>(nameof(NetworkRuleSet), new string[] { "networkAcls" }, isOutput: true);
             _isSftpEnabled = DefineProperty<bool>(nameof(IsSftpEnabled), new string[] { "isSftpEnabled" });
             _isLocalUserEnabled = DefineProperty<bool>(nameof(IsLocalUserEnabled), new string[] { "isLocalUserEnabled" });
             _isExtendedGroupEnabled = DefineProperty<bool>(nameof(IsExtendedGroupEnabled), new string[] { "enableExtendedGroups" });

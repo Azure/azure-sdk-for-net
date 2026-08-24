@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Azure.Core;
+using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 #if EXPERIMENTAL_PROVISIONING
 using Azure.Storage.Blobs;
@@ -11,13 +13,18 @@ using Azure.Storage.Blobs;
 
 namespace Azure.Provisioning.Storage;
 
-// The provisioning emitter cannot generate the experimental deployed-client factory integration.
-// Keep this helper under its existing feature flag without changing the generated resource API.
+// Customize the generated BlobService resource.
 public partial class BlobService
 #if EXPERIMENTAL_PROVISIONING
     : IClientCreator<BlobServiceClient, BlobClientOptions>
 #endif
 {
+    /// <summary>
+    /// Get the default value for the Name property.
+    /// </summary>
+    private partial BicepValue<string> GetNameDefaultValue() =>
+        new StringLiteralExpression("default");
+
 #if EXPERIMENTAL_PROVISIONING
     /// <inheritdoc/>
     IEnumerable<ProvisioningOutput> IClientCreator.GetOutputs()

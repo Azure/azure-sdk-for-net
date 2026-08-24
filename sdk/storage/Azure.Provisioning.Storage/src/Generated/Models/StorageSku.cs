@@ -13,11 +13,22 @@ namespace Azure.Provisioning.Storage
     /// <summary> The SKU of the storage account. </summary>
     public partial class StorageSku : ProvisionableConstruct
     {
+        private BicepValue<StorageSkuName> _name;
         private BicepValue<StorageSkuTier> _tier;
 
         /// <summary> Creates a new StorageSku. </summary>
         public StorageSku()
         {
+        }
+
+        /// <summary> Gets the Name. </summary>
+        public BicepValue<StorageSkuName> Name
+        {
+            get
+            {
+                Initialize();
+                return _name;
+            }
         }
 
         /// <summary> Gets the Tier. </summary>
@@ -34,6 +45,7 @@ namespace Azure.Provisioning.Storage
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _name = DefineProperty<StorageSkuName>(nameof(Name), new string[] { "name" });
             _tier = DefineProperty<StorageSkuTier>(nameof(Tier), new string[] { "tier" }, isOutput: true);
             DefineAdditionalProperties();
         }

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Storage
@@ -12,15 +13,76 @@ namespace Azure.Provisioning.Storage
     /// <summary> The encryption settings on the storage account. </summary>
     public partial class StorageAccountEncryption : ProvisionableConstruct
     {
+        private StorageAccountEncryptionServices _services;
+        private BicepValue<StorageAccountKeySource> _keySource;
+        private BicepValue<bool> _requireInfrastructureEncryption;
+        private StorageAccountKeyVaultProperties _keyVaultProperties;
+        private StorageAccountEncryptionIdentity _encryptionIdentity;
+
         /// <summary> Creates a new StorageAccountEncryption. </summary>
         public StorageAccountEncryption()
         {
+        }
+
+        /// <summary> Gets the Services. </summary>
+        public StorageAccountEncryptionServices Services
+        {
+            get
+            {
+                Initialize();
+                return _services;
+            }
+        }
+
+        /// <summary> Gets the KeySource. </summary>
+        public BicepValue<StorageAccountKeySource> KeySource
+        {
+            get
+            {
+                Initialize();
+                return _keySource;
+            }
+        }
+
+        /// <summary> Gets the RequireInfrastructureEncryption. </summary>
+        public BicepValue<bool> RequireInfrastructureEncryption
+        {
+            get
+            {
+                Initialize();
+                return _requireInfrastructureEncryption;
+            }
+        }
+
+        /// <summary> Gets the KeyVaultProperties. </summary>
+        public StorageAccountKeyVaultProperties KeyVaultProperties
+        {
+            get
+            {
+                Initialize();
+                return _keyVaultProperties;
+            }
+        }
+
+        /// <summary> Gets the EncryptionIdentity. </summary>
+        public StorageAccountEncryptionIdentity EncryptionIdentity
+        {
+            get
+            {
+                Initialize();
+                return _encryptionIdentity;
+            }
         }
 
         /// <summary> Define all the provisionable properties for StorageAccountEncryption. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _services = DefineModelProperty<StorageAccountEncryptionServices>(nameof(Services), new string[] { "services" });
+            _keySource = DefineProperty<StorageAccountKeySource>(nameof(KeySource), new string[] { "keySource" });
+            _requireInfrastructureEncryption = DefineProperty<bool>(nameof(RequireInfrastructureEncryption), new string[] { "requireInfrastructureEncryption" });
+            _keyVaultProperties = DefineModelProperty<StorageAccountKeyVaultProperties>(nameof(KeyVaultProperties), new string[] { "keyvaultproperties" });
+            _encryptionIdentity = DefineModelProperty<StorageAccountEncryptionIdentity>(nameof(EncryptionIdentity), new string[] { "identity" });
             DefineAdditionalProperties();
         }
 

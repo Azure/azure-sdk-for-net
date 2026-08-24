@@ -4,15 +4,11 @@
 
 ### Features Added
 
-- Added `DeletedAccount`, `FileServiceUsage`, `NetworkSecurityPerimeterConfiguration`, and `StorageAccountMigration` resources with their related models.
-
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
-
-- Migrated code generation to the TypeSpec provisioning emitter while retaining stable API version `2025-06-01` and existing compatibility behavior.
 
 ## 1.2.0-beta.1 (2026-03-02)
 

@@ -5,20 +5,12 @@ using Azure.Provisioning.Expressions;
 
 namespace Azure.Provisioning.Storage;
 
-// Customize the generated TableService resource.
-public partial class TableService
+// Customize the generated StorageAccountManagementPolicy resource.
+public partial class StorageAccountManagementPolicy
 {
     /// <summary>
     /// Get the default value for the Name property.
     /// </summary>
     private partial BicepValue<string> GetNameDefaultValue() =>
         new StringLiteralExpression("default");
-
-    /// <summary>
-    /// Gets the Name.
-    /// </summary>
-    public BicepValue<string> Name
-    {
-        get { Initialize(); return _name!; }
-    }
 }

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Core;
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Storage
@@ -12,15 +14,52 @@ namespace Azure.Provisioning.Storage
     /// <summary> Virtual Network rule. </summary>
     public partial class StorageAccountVirtualNetworkRule : ProvisionableConstruct
     {
+        private BicepValue<ResourceIdentifier> _virtualNetworkResourceId;
+        private BicepValue<StorageAccountNetworkRuleAction> _action;
+        private BicepValue<StorageAccountNetworkRuleState> _state;
+
         /// <summary> Creates a new StorageAccountVirtualNetworkRule. </summary>
         public StorageAccountVirtualNetworkRule()
         {
+        }
+
+        /// <summary> Gets the VirtualNetworkResourceId. </summary>
+        public BicepValue<ResourceIdentifier> VirtualNetworkResourceId
+        {
+            get
+            {
+                Initialize();
+                return _virtualNetworkResourceId;
+            }
+        }
+
+        /// <summary> Gets the Action. </summary>
+        public BicepValue<StorageAccountNetworkRuleAction> Action
+        {
+            get
+            {
+                Initialize();
+                return _action;
+            }
+        }
+
+        /// <summary> Gets the State. </summary>
+        public BicepValue<StorageAccountNetworkRuleState> State
+        {
+            get
+            {
+                Initialize();
+                return _state;
+            }
         }
 
         /// <summary> Define all the provisionable properties for StorageAccountVirtualNetworkRule. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _virtualNetworkResourceId = DefineProperty<ResourceIdentifier>(nameof(VirtualNetworkResourceId), new string[] { "id" });
+            _action = DefineProperty<StorageAccountNetworkRuleAction>(nameof(Action), new string[] { "action" });
+            _state = DefineProperty<StorageAccountNetworkRuleState>(nameof(State), new string[] { "state" });
             DefineAdditionalProperties();
         }
 

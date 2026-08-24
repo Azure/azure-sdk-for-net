@@ -18,6 +18,7 @@ namespace Azure.Provisioning.Storage
     public partial class ObjectReplicationPolicy : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
+        private BicepValue<string> _name;
         private SystemData _systemData;
         private ObjectReplicationPolicyProperties _properties;
         private ResourceReference<StorageAccount> _parent;
@@ -36,6 +37,21 @@ namespace Azure.Provisioning.Storage
             {
                 Initialize();
                 return _id;
+            }
+        }
+
+        /// <summary> Gets or sets the Name. </summary>
+        public BicepValue<string> Name
+        {
+            get
+            {
+                Initialize();
+                return _name;
+            }
+            set
+            {
+                Initialize();
+                _name.Assign(value);
             }
         }
 
@@ -195,6 +211,7 @@ namespace Azure.Provisioning.Storage
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ObjectReplicationPolicyProperties>(nameof(Properties), new string[] { "properties" });
             _parent = DefineResource<StorageAccount>(nameof(Parent), new string[] { "parent" }, isRequired: true);

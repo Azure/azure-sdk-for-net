@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Storage
@@ -12,15 +14,40 @@ namespace Azure.Provisioning.Storage
     /// <summary> Blob restore parameters. </summary>
     public partial class BlobRestoreContent : ProvisionableConstruct
     {
+        private BicepValue<DateTimeOffset> _timeToRestore;
+        private BicepList<BlobRestoreRange> _blobRanges;
+
         /// <summary> Creates a new BlobRestoreContent. </summary>
         public BlobRestoreContent()
         {
+        }
+
+        /// <summary> Gets the TimeToRestore. </summary>
+        public BicepValue<DateTimeOffset> TimeToRestore
+        {
+            get
+            {
+                Initialize();
+                return _timeToRestore;
+            }
+        }
+
+        /// <summary> Gets the BlobRanges. </summary>
+        public BicepList<BlobRestoreRange> BlobRanges
+        {
+            get
+            {
+                Initialize();
+                return _blobRanges;
+            }
         }
 
         /// <summary> Define all the provisionable properties for BlobRestoreContent. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _timeToRestore = DefineProperty<DateTimeOffset>(nameof(TimeToRestore), new string[] { "timeToRestore" }, format: "O");
+            _blobRanges = DefineListProperty<BlobRestoreRange>(nameof(BlobRanges), new string[] { "blobRanges" });
             DefineAdditionalProperties();
         }
 

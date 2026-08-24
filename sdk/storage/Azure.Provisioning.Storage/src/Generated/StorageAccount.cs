@@ -207,6 +207,19 @@ namespace Azure.Provisioning.Storage
             }
         }
 
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<StorageAccountProvisioningState> ProvisioningState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                return Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Gets the PrimaryEndpoints. </summary>
         public StorageAccountEndpoints PrimaryEndpoints
         {
@@ -294,6 +307,24 @@ namespace Azure.Provisioning.Storage
             }
         }
 
+        /// <summary> Gets the CustomDomain. </summary>
+        public StorageCustomDomain CustomDomain
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomDomain;
+            }
+        }
+
+        /// <summary> Gets the SasPolicy. </summary>
+        public StorageAccountSasPolicy SasPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SasPolicy;
+            }
+        }
+
         /// <summary> Gets the KeyCreationTime. </summary>
         public StorageAccountKeyCreationTime KeyCreationTime
         {
@@ -309,6 +340,28 @@ namespace Azure.Provisioning.Storage
             get
             {
                 return Properties is null ? default : Properties.SecondaryEndpoints;
+            }
+        }
+
+        /// <summary> Gets the Encryption. </summary>
+        public StorageAccountEncryption Encryption
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Encryption;
+            }
+        }
+
+        /// <summary> Gets the AccessTier. </summary>
+        public BicepValue<StorageAccountAccessTier> AccessTier
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                return Properties.AccessTier;
             }
         }
 
@@ -343,6 +396,15 @@ namespace Azure.Provisioning.Storage
                     Properties = new StorageAccountProperties();
                 }
                 Properties.EnableHttpsTrafficOnly = value;
+            }
+        }
+
+        /// <summary> Gets the NetworkRuleSet. </summary>
+        public StorageAccountNetworkRuleSet NetworkRuleSet
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkRuleSet;
             }
         }
 
@@ -632,6 +694,23 @@ namespace Azure.Provisioning.Storage
             }
         }
 
+        /// <summary> Gets or sets the StorageAccountSkuConversionStatus. </summary>
+        public StorageAccountSkuConversionStatus StorageAccountSkuConversionStatus
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StorageAccountSkuConversionStatus;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                Properties.StorageAccountSkuConversionStatus = value;
+            }
+        }
+
         /// <summary> Gets or sets the DnsEndpointType. </summary>
         public BicepValue<StorageDnsEndpointType> DnsEndpointType
         {
@@ -672,6 +751,19 @@ namespace Azure.Provisioning.Storage
                     Properties = new StorageAccountProperties();
                 }
                 return Properties.IsAccountMigrationInProgress;
+            }
+        }
+
+        /// <summary> Gets the KeyExpirationPeriodInDays. </summary>
+        public BicepValue<int> KeyExpirationPeriodInDays
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageAccountProperties();
+                }
+                return Properties.KeyExpirationPeriodInDays;
             }
         }
 
