@@ -448,6 +448,7 @@ namespace Azure.AI.AgentServer.Core.Tasks
         public virtual int RecoveryCount { get { throw null; } }
         public virtual int RetryAttempt { get { throw null; } }
         public virtual System.Threading.CancellationToken Shutdown { get { throw null; } }
+        public virtual Azure.AI.AgentServer.Core.Tasks.TaskStreamWriter Stream { get { throw null; } }
         public virtual string TaskId { get { throw null; } }
         public virtual bool TimeoutExceeded { get { throw null; } }
         public virtual System.Threading.Tasks.Task ExitForRecoveryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -505,7 +506,20 @@ namespace Azure.AI.AgentServer.Core.Tasks
         public virtual System.Threading.Tasks.Task<TOutput> Completion { get { throw null; } }
         public virtual string InputId { get { throw null; } }
         public virtual bool IsQueued { get { throw null; } }
+        public virtual Azure.AI.AgentServer.Core.Tasks.TaskStream Stream { get { throw null; } }
         public virtual string TaskId { get { throw null; } }
         public virtual System.Threading.Tasks.Task RequestCancellationAsync() { throw null; }
+    }
+    public partial class TaskStream
+    {
+        protected TaskStream() { }
+        public virtual System.Threading.Tasks.ValueTask<string?> GetLastEventIdAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Collections.Generic.IAsyncEnumerable<System.Net.ServerSentEvents.SseItem<string>> Subscribe(string? afterEventId = null, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class TaskStreamWriter
+    {
+        protected TaskStreamWriter() { }
+        public virtual System.Threading.Tasks.ValueTask EmitAsync(System.Net.ServerSentEvents.SseItem<string> item, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.ValueTask<string?> GetLastEventIdAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }

@@ -10,6 +10,7 @@ using System.Text.Json.Nodes;
 using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.AgentServer.Core.Streaming;
 using Azure.AI.AgentServer.Core.Tasks.Providers;
 using Azure.AI.AgentServer.Core.Tasks.Serialization;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,6 +32,7 @@ internal sealed partial class TaskEngine : IDisposable
     private readonly TaskWriteSerializer _serializer;
     private readonly LeaseManager _lease;
     private readonly TaskRegistry _registry;
+    private readonly AgentEventStreamRegistry _streams;
     private readonly ILogger _logger;
     private readonly IServiceScopeFactory? _scopeFactory;
     private readonly string _agentName;
@@ -51,11 +53,13 @@ internal sealed partial class TaskEngine : IDisposable
         TaskRegistry registry,
         string agentName,
         string sessionId,
+        AgentEventStreamRegistry streams,
         ILogger? logger = null,
         IServiceScopeFactory? scopeFactory = null)
     {
         _store = store ?? throw new ArgumentNullException(nameof(store));
         _registry = registry ?? throw new ArgumentNullException(nameof(registry));
+        _streams = streams ?? throw new ArgumentNullException(nameof(streams));
         _agentName = agentName;
         _sessionId = sessionId;
         _owner = LeaseManager.FormatOwner(agentName, sessionId);
@@ -169,6 +173,16 @@ internal sealed partial class TaskEngine : IDisposable
         return $"{name}:{suffix}";
     }
 
+    private TaskRunState<TOutput> CreateRunState<TOutput>(
+        string taskId,
+        string inputId,
+        bool isQueued)
+        => new(
+            taskId,
+            inputId,
+            isQueued,
+            new TaskStreamState(_streams, inputId));
+
     private async Task<TaskRun<TOutput>> StartOneShotAsync<TInput, TOutput>(
         TaskRegistration registration, string name, string taskId, string inputId, bool persistInputId, TInput input,
         CancellationToken cancellationToken)
@@ -195,9 +209,6 @@ internal sealed partial class TaskEngine : IDisposable
         // Stamp the schema version at create (spec §20/§38). Its presence is REQUIRED: a stale
         // in_progress record lacking it is legacy and deleted (not recovered) by the recovery scan.
         payload[TaskWireKeys.PayloadSchemaVersion] = TaskWireKeys.SchemaVersionValue;
-
-        var runState = new TaskRunState<TOutput>(taskId, inputId, isQueued: false);
-        var activeRun = new ActiveRun<TOutput>(runState);
 
         EntryMode entryMode = EntryMode.Fresh;
         TaskRecord record;
@@ -238,10 +249,14 @@ internal sealed partial class TaskEngine : IDisposable
             record = current;
             entryMode = EntryMode.Recovered;
             inputId = (string?)current.Payload[TaskWireKeys.PayloadLastInputId] ?? inputId;
-            runState.InputId = inputId;
             input = ResolveInput<TInput>(current, registration);
         }
 
+        TaskRunState<TOutput> runState =
+            CreateRunState<TOutput>(taskId, inputId, isQueued: false);
+        var activeRun = new ActiveRun<TOutput>(
+            runState,
+            exception => _logger.HandlerFailure(taskId, 0, exception.GetType().Name));
         runState.RecoveryCount = (int)(record.Lease?.Generation ?? 0);
         if (entryMode == EntryMode.Fresh)
         {
@@ -408,9 +423,15 @@ internal sealed partial class TaskEngine : IDisposable
             }
         }
 
-        var runState = new TaskRunState<TOutput>(taskId, inputId, isQueued: false);
+        TaskRunState<TOutput> runState =
+            CreateRunState<TOutput>(taskId, inputId, isQueued: false);
         runState.RecoveryCount = (int)(record.Lease?.Generation ?? 0);
-        var activeRun = new ActiveRun<TOutput>(runState) { Steerable = registration.Steerable };
+        var activeRun = new ActiveRun<TOutput>(
+            runState,
+            exception => _logger.HandlerFailure(taskId, 0, exception.GetType().Name))
+        {
+            Steerable = registration.Steerable,
+        };
         if (registration.Steerable && HasPersistedSteering(record))
         {
             SeedSteeringSeq(activeRun.Steering, record);
@@ -526,7 +547,8 @@ internal sealed partial class TaskEngine : IDisposable
                 attachmentKey: $"{AttachmentPromoter.SteeringAttachmentKeyPrefix}{seq}",
                 thresholdBytes: AttachmentPromoter.SteeringThresholdBytes));
 
-        var runState = new TaskRunState<TOutput>(taskId, inputId, isQueued: true);
+        TaskRunState<TOutput> runState =
+            CreateRunState<TOutput>(taskId, inputId, isQueued: true);
         var queued = new QueuedInput<TOutput>(inputSlot, inputAttachments, inputId, persistInputId, runState);
 
         // A queued caller can cancel before promotion: drop the slot, re-persist the trimmed
@@ -556,6 +578,7 @@ internal sealed partial class TaskEngine : IDisposable
                 WriteIntent.SteeringAppend,
                 CancellationToken.None).ConfigureAwait(false);
 
+            await CloseStreamAsync(runState).ConfigureAwait(false);
             runState.SetException(new OperationCanceledException(
                 $"Task '{taskId}' input '{inputId}' was cancelled before the queued input was promoted."));
         };
@@ -711,7 +734,12 @@ internal sealed partial class TaskEngine : IDisposable
                     {
                         // One-shot cancel: remove the record so the recovery scanner
                         // does not re-invoke a cancelled handler.
-                        await TryDeleteAsync(taskId).ConfigureAwait(false);
+                        bool deleted = await TryDeleteAsync(taskId).ConfigureAwait(false);
+                        if (deleted)
+                        {
+                            await CloseStreamAsync(currentRun).ConfigureAwait(false);
+                        }
+
                         FinishTurn(taskId, multiTurn);
                         currentRun.SetException(new OperationCanceledException($"Task '{taskId}' was cancelled."));
                         return;
@@ -726,6 +754,7 @@ internal sealed partial class TaskEngine : IDisposable
 
                     if (cancelDrained is { } cancelPromotion)
                     {
+                        await CloseStreamAsync(currentRun).ConfigureAwait(false);
                         currentRun.SetException(new OperationCanceledException($"Task '{taskId}' was cancelled."));
 
                         var nextCts = new CancellationTokenSource();
@@ -744,13 +773,20 @@ internal sealed partial class TaskEngine : IDisposable
                         continue;
                     }
 
+                    bool suspended = false;
                     try
                     {
                         await SuspendAsync(taskId, activeRun.Steering.HasState ? activeRun.Steering.ToPayload() : null, CancellationToken.None).ConfigureAwait(false);
+                        suspended = true;
                     }
                     catch (Exception suspendEx)
                     {
                         _logger.HandlerFailure(taskId, 0, suspendEx.GetType().Name);
+                    }
+
+                    if (suspended)
+                    {
+                        await CloseStreamAsync(currentRun).ConfigureAwait(false);
                     }
 
                     FinishTurn(taskId, multiTurn);
@@ -764,6 +800,7 @@ internal sealed partial class TaskEngine : IDisposable
                     // observes success: if CompleteAsync fails the record stays in_progress and a
                     // later recovery scan could re-run the turn, so surface the failure to the caller
                     // instead of reporting a completion that is not durable.
+                    bool durablyCompleted = false;
                     if (outcome.Kind == TurnOutcomeKind.Completed)
                     {
                         try
@@ -786,18 +823,26 @@ internal sealed partial class TaskEngine : IDisposable
                             });
                             return;
                         }
+
+                        durablyCompleted = true;
                     }
 
                     // The record is now durably completed (or the outcome was not a completion). The
                     // delete is best-effort cleanup — a failure here leaves a completed record that
                     // recovery will not re-run, so it must not fail the caller.
+                    bool deleted = false;
                     try
                     {
-                        await TryDeleteAsync(taskId).ConfigureAwait(false);
+                        deleted = await TryDeleteAsync(taskId).ConfigureAwait(false);
                     }
                     catch (Exception deleteEx)
                     {
                         _logger.HandlerFailure(taskId, 0, deleteEx.GetType().Name);
+                    }
+
+                    if (durablyCompleted || deleted)
+                    {
+                        await CloseStreamAsync(currentRun).ConfigureAwait(false);
                     }
 
                     FinishTurn(taskId, multiTurn);
@@ -812,6 +857,7 @@ internal sealed partial class TaskEngine : IDisposable
 
                 if (drained is { } promotion)
                 {
+                    await CloseStreamAsync(currentRun).ConfigureAwait(false);
                     ResolveOutcome(currentRun, outcome);
 
                     var nextCts = new CancellationTokenSource();
@@ -856,6 +902,7 @@ internal sealed partial class TaskEngine : IDisposable
                     return;
                 }
 
+                await CloseStreamAsync(currentRun).ConfigureAwait(false);
                 FinishTurn(taskId, multiTurn);
                 ResolveOutcome(currentRun, outcome);
                 return;
@@ -889,7 +936,11 @@ internal sealed partial class TaskEngine : IDisposable
         TimeSpan? timeout,
         CancellationTokenSource handlerCts)
     {
-        var ctxState = new TaskContextState<TInput>(input, taskId, inputId)
+        var ctxState = new TaskContextState<TInput>(
+            input,
+            taskId,
+            inputId,
+            runState.StreamState)
         {
             EntryMode = entryMode,
             RecoveryCount = runState.RecoveryCount,
@@ -1302,7 +1353,8 @@ internal sealed partial class TaskEngine : IDisposable
     public async Task DeleteAsync(string taskId, CancellationToken cancellationToken = default)
     {
         // Cancel an in-flight turn and resolve its caller as cancelled.
-        if (_activeRuns.TryRemove(taskId, out IActiveRun? run))
+        _activeRuns.TryRemove(taskId, out IActiveRun? run);
+        if (run is not null)
         {
             await run.CancelAsync().ConfigureAwait(false);
         }
@@ -1319,6 +1371,18 @@ internal sealed partial class TaskEngine : IDisposable
         catch (TaskStoreException ex) when (ex.StatusCode == 404)
         {
             // Idempotent: deleting an absent chain is a no-op.
+        }
+
+        if (run is not null)
+        {
+            try
+            {
+                await run.CloseCurrentStreamAsync().ConfigureAwait(false);
+            }
+            catch (Exception closeException)
+            {
+                _logger.HandlerFailure(taskId, 0, closeException.GetType().Name);
+            }
         }
     }
 
@@ -1354,7 +1418,7 @@ internal sealed partial class TaskEngine : IDisposable
         }
     }
 
-    private async Task TryDeleteAsync(string taskId)
+    private async Task<bool> TryDeleteAsync(string taskId)
     {
         try
         {
@@ -1362,10 +1426,28 @@ internal sealed partial class TaskEngine : IDisposable
             // delete so an in_progress record (cancelled mid-flight) is removed
             // rather than left for the recovery scanner (Python parity).
             await _store.DeleteAsync(taskId, force: true).ConfigureAwait(false);
+            return true;
+        }
+        catch (TaskStoreException exception) when (exception.StatusCode == 404)
+        {
+            return true;
         }
         catch (TaskStoreException)
         {
             // Best-effort one-shot cleanup.
+            return false;
+        }
+    }
+
+    private async Task CloseStreamAsync<TOutput>(TaskRunState<TOutput> runState)
+    {
+        try
+        {
+            await runState.StreamState.CloseAsync().ConfigureAwait(false);
+        }
+        catch (Exception closeException)
+        {
+            _logger.HandlerFailure(runState.TaskId, 0, closeException.GetType().Name);
         }
     }
 
@@ -1534,7 +1616,8 @@ internal sealed partial class TaskEngine : IDisposable
                 persistInputId = true;
             }
 
-            var runState = new TaskRunState<TOutput>(taskId, inputId, isQueued: true);
+            TaskRunState<TOutput> runState =
+                CreateRunState<TOutput>(taskId, inputId, isQueued: true);
             restored.Add(new QueuedInput<TOutput>(slotClone, attachments, inputId, persistInputId, runState));
         }
 
@@ -1743,9 +1826,15 @@ internal sealed partial class TaskEngine : IDisposable
             }
         }
 
-        var runState = new TaskRunState<TOutput>(taskId, inputId, isQueued: false);
+        TaskRunState<TOutput> runState =
+            CreateRunState<TOutput>(taskId, inputId, isQueued: false);
         runState.RecoveryCount = (int)(record.Lease?.Generation ?? 0);
-        var activeRun = new ActiveRun<TOutput>(runState) { Steerable = registration.Steerable };
+        var activeRun = new ActiveRun<TOutput>(
+            runState,
+            exception => _logger.HandlerFailure(taskId, 0, exception.GetType().Name))
+        {
+            Steerable = registration.Steerable,
+        };
         if (registration.Steerable && HasPersistedSteering(record))
         {
             SeedSteeringSeq(activeRun.Steering, record);
@@ -2001,6 +2090,8 @@ internal sealed partial class TaskEngine : IDisposable
 
         Task CancelAsync();
 
+        Task CloseCurrentStreamAsync();
+
         void CancelForShutdown();
 
         void StopRenewal();
@@ -2011,12 +2102,16 @@ internal sealed partial class TaskEngine : IDisposable
     private sealed class ActiveRun<TOutput> : IActiveRun
     {
         private readonly object _gate = new();
+        private readonly Action<Exception> _streamCloseFailed;
         private TaskRunState<TOutput> _state;
         private TaskRunState<TOutput>? _pendingCancel;
 
-        public ActiveRun(TaskRunState<TOutput> state)
+        public ActiveRun(
+            TaskRunState<TOutput> state,
+            Action<Exception> streamCloseFailed)
         {
             _state = state;
+            _streamCloseFailed = streamCloseFailed;
             WireCancel(state);
         }
 
@@ -2151,12 +2246,15 @@ internal sealed partial class TaskEngine : IDisposable
             }
         }
 
-        public Task CancelAsync()
+        public async Task CancelAsync()
         {
             // Resolve every still-queued caller as cancelled, then cancel the active turn.
-            DrainQueuedAsCancelled();
-            return _state.RequestCancellationAsync();
+            await DrainQueuedAsCancelledAsync().ConfigureAwait(false);
+            await _state.RequestCancellationAsync().ConfigureAwait(false);
         }
+
+        public Task CloseCurrentStreamAsync()
+            => _state.StreamState.CloseAsync().AsTask();
 
         /// <summary>
         /// Wakes the running handler on graceful shutdown by signalling its cooperative
@@ -2210,12 +2308,21 @@ internal sealed partial class TaskEngine : IDisposable
             }
         }
 
-        private void DrainQueuedAsCancelled()
+        private async Task DrainQueuedAsCancelledAsync()
         {
             while (Steering.Promote() is { } promoted)
             {
                 promoted.RunState.SetException(
                     new OperationCanceledException($"Task '{TaskId}' was cancelled before the queued input was promoted."));
+                try
+                {
+                    await promoted.RunState.StreamState.CloseAsync().ConfigureAwait(false);
+                }
+                catch (Exception closeException)
+                {
+                    _streamCloseFailed(closeException);
+                }
+
                 Steering.CompleteDrain();
             }
         }

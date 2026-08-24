@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Streaming;
+using Azure.AI.AgentServer.Core.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
@@ -53,6 +54,36 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
             IHostApplicationBuilder builder)
         {
             return builder.AddAgentEventStreams("ResilientTasks:Streams");
+        }
+
+        #endregion
+
+        #region Snippet:StreamingGuide_TaskBoundStreams
+
+        public static ValueTask EmitTaskProgress(
+            TaskContext<string> context,
+            CancellationToken cancellationToken)
+        {
+            return context.Stream.EmitAsync(
+                new SseItem<string>("working", "progress") { EventId = "1" },
+                cancellationToken);
+        }
+
+        public static async Task ConsumeTaskProgress(
+            TaskDefinition<string, string> task,
+            CancellationToken cancellationToken)
+        {
+            TaskRun<string> run = await task.StartAsync(
+                "input",
+                cancellationToken: cancellationToken);
+
+            await foreach (SseItem<string> item in
+                run.Stream.Subscribe(cancellationToken: cancellationToken))
+            {
+                _ = item.Data;
+            }
+
+            _ = await run.Completion;
         }
 
         #endregion

@@ -167,6 +167,62 @@ you want subscribers to use. Because replay stores strings, the previous
 `serializer`/`deserializer` options and typed `UseFileBackedReplay<TPayload>` overload
 are no longer needed.
 
+## Task-bound streams
+
+Every resilient task input has a lazy event stream keyed by its final `InputId`.
+Handlers receive producer-only access through `TaskContext<TInput>.Stream`; callers
+receive consumer-only access through `TaskRun<TOutput>.Stream`.
+
+```C# Snippet:StreamingGuide_TaskBoundStreams
+public static ValueTask EmitTaskProgress(
+    TaskContext<string> context,
+    CancellationToken cancellationToken)
+{
+    return context.Stream.EmitAsync(
+        new SseItem<string>("working", "progress") { EventId = "1" },
+        cancellationToken);
+}
+
+public static async Task ConsumeTaskProgress(
+    TaskDefinition<string, string> task,
+    CancellationToken cancellationToken)
+{
+    TaskRun<string> run = await task.StartAsync(
+        "input",
+        cancellationToken: cancellationToken);
+
+    await foreach (SseItem<string> item in
+        run.Stream.Subscribe(cancellationToken: cancellationToken))
+    {
+        _ = item.Data;
+    }
+
+    _ = await run.Completion;
+}
+```
+
+The underlying backing is created only when a producer emits, a consumer subscribes, or
+either side asks for the last event id. A task that never uses its stream creates no
+file or replay buffer.
+
+Core owns transport closure:
+
+- success, final failure, cancellation, and timeout close after the existing terminal
+  task-store transition or cleanup succeeds;
+- retry does not close;
+- shutdown, lease loss, and `ExitForRecoveryAsync` leave the stream open for the next
+  process;
+- each multi-turn input gets a distinct stream because its `InputId` is distinct.
+
+Core does not emit protocol terminal events. A protocol handler must emit its semantic
+terminal event before returning or throwing the terminal outcome. The advanced
+`AgentEventStreamRegistry` remains available for later GET replay, id-addressed deletion,
+custom backings, and standalone streams.
+
+Task-bound handles do not change the in-memory live backing's timing semantics: events
+emitted before subscription are still not replayed. Use a replay backing when the caller
+cannot subscribe before the producer emits.
+
 ---
 
 ## The stream id

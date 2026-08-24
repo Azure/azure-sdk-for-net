@@ -1349,37 +1349,26 @@ public class SampleEndToEndTests
     {
         var model = CreateMockResponsesClient(modelHandler);
 
-        AgentEventStreamRegistry? streamsRef = null;
-
         var env = await CreateTestServerAsync<Snippets.SampleResilientResearchSnippets.ResilientResearchHandler>(
             services =>
             {
+                services.AddSingleton(model);
+
                 // In-memory replay with a TTL so retained streams are reclaimed.
                 services.AddAgentEventStreams(o => o.UseInMemoryReplay(
                     ttl: TimeSpan.FromMinutes(5)));
 
                 // AddResilientMultiTurnTask self-initializes the resilient-tasks services and
-                // registers the returned TaskDefinition as a keyed singleton (keyed by task name),
-                // so the handler resolves it via GetResilientTask. The stream registry is a
-                // singleton resolved from the built provider below and read lazily when a turn
-                // actually runs, so capturing it via streamsRef is safe.
-                services.AddResilientMultiTurnTask<Snippets.SampleResilientResearchSnippets.ResearchRequest,
-                             Snippets.SampleResilientResearchSnippets.ResearchResult>(
-                        "research",
-                        (ctx, ct) => Snippets.SampleResilientResearchSnippets.RunResearchAsync(
-                            streamsRef!, model, "test-model", ctx,
-                            numPhases: 2, callsPerPhase: 2,
-                            interPhaseCooldown: TimeSpan.Zero,
-                            intraPhaseCooldown: TimeSpan.Zero,
-                            ct: ct),
-                        steerable: true,
-                        configure: options => options.Timeout = timeout);
-            },
-            configurePostBuild: app =>
-            {
-                // Resolve the singleton AgentEventStreamRegistry from the built container so the
-                // captured delegate can reach it (the registry is read lazily at invocation time).
-                streamsRef = app.Services.GetRequiredService<AgentEventStreamRegistry>();
+                // registers the returned TaskDefinition as a keyed singleton. The task engine
+                // constructs ResearchTask and its ResponsesClient dependency in a fresh scope for
+                // every attempt.
+                services.AddResilientMultiTurnTask<
+                    Snippets.SampleResilientResearchSnippets.ResearchRequest,
+                    Snippets.SampleResilientResearchSnippets.ResearchResult,
+                    Snippets.SampleResilientResearchSnippets.ResearchTask>(
+                    "research",
+                    steerable: true,
+                    configure: options => options.Timeout = timeout);
             });
 
         return env;

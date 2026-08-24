@@ -13,6 +13,10 @@
   configuration now overrides protocol defaults regardless of registration order,
   identical selections are idempotent, and conflicting same-precedence selections fail
   with source diagnostics instead of silently discarding durability settings.
+- Added lazy task-bound stream capabilities: handlers emit through
+  `TaskContext<TInput>.Stream`, and callers subscribe through `TaskRun<TOutput>.Stream`.
+  Streams use the per-turn `InputId`, remain open across retry and recovery deferral, and
+  close only after the existing terminal task-store transition succeeds.
 
 ### Breaking Changes
 

@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization.Metadata;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.AI.AgentServer.Core.Streaming;
 using Azure.AI.AgentServer.Core.Tasks.Engine;
 using Azure.AI.AgentServer.Core.Tasks.Providers;
 using Azure.AI.AgentServer.Core.Tasks.Providers.Hosted;
@@ -360,6 +361,7 @@ public static class ResilientTaskServiceCollectionExtensions
 
         var environment = new TaskHostEnvironment(credential);
         services.TryAddSingleton(environment);
+        services.AddAgentEventStreams();
 
         // The store is environment-selected: filesystem-backed locally, hosted in Foundry.
         services.TryAddSingleton<ITaskStore>(sp =>
@@ -436,6 +438,7 @@ public static class ResilientTaskServiceCollectionExtensions
                 reg,
                 agentName,
                 sessionId,
+                sp.GetRequiredService<AgentEventStreamRegistry>(),
                 logger,
                 sp.GetRequiredService<IServiceScopeFactory>());
 

@@ -135,6 +135,7 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
             _ = run.TaskId;
             _ = run.InputId;
             _ = run.IsQueued;
+            _ = run.Stream;
             string r = await run.Completion;
             string r2 = await run.Completion;
             await run.RequestCancellationAsync();

@@ -295,6 +295,7 @@ Every turn receives a `TaskContext<TInput>`:
 |---|---|
 | `Input` | the typed input for this turn |
 | `TaskId` / `InputId` | identifiers for the run / this input |
+| `Stream` | producer access to the event stream keyed by this input's `InputId` |
 | `EntryMode` | fresh, resumed, or recovered |
 | `RetryAttempt` | zero-based retry attempt for the current turn |
 | `RecoveryCount` | zero-based crash-recovery count (mirrors the durable lease generation); a signal, not a guarantee (§4.2) |
@@ -327,6 +328,7 @@ TaskRun<string> run = await echo.StartAsync("hi");
 run.TaskId;            // the run's id
 run.InputId;          // the input id assigned to this run
 run.IsQueued;         // true if this input was queued as steering, not a fresh run
+run.Stream;           // consumer stream for this input
 string r = await run.Completion;                        // await the result
 string c = await run.Completion.WaitAsync(token);       // cancel only your wait
 await run.RequestCancellationAsync();                   // request cancellation of the run
@@ -587,8 +589,9 @@ turn's `inputId` and want that turn's handle; it is required for multi-turn task
 
 ### 5.3 `TaskRun<TOutput>`
 
-`TaskId`, `InputId`, `IsQueued`, `Completion` (a `Task<TOutput>` — await it for the result,
-or `Completion.WaitAsync(token)` to cancel only your wait), and `RequestCancellationAsync()`.
+`TaskId`, `InputId`, `IsQueued`, `Stream`, `Completion` (a `Task<TOutput>` — await it for
+the result, or `Completion.WaitAsync(token)` to cancel only your wait), and
+`RequestCancellationAsync()`.
 
 ### 5.4 `TaskContext<TInput>`
 
