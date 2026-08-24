@@ -12,7 +12,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
     /// <summary> The type of deadline the scheduled action follows for its schedule. </summary>
-    public readonly partial struct RecurringScheduledActionsDeadlineType : IEquatable<RecurringScheduledActionsDeadlineType>
+    public readonly partial struct ScheduledActionsDeadlineType : IEquatable<ScheduledActionsDeadlineType>
     {
         private readonly string _value;
         /// <summary> Default value of Unknown. </summary>
@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Complete the operation by the given deadline. </summary>
         private const string CompleteByValue = "CompleteBy";
 
-        /// <summary> Initializes a new instance of <see cref="RecurringScheduledActionsDeadlineType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ScheduledActionsDeadlineType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public RecurringScheduledActionsDeadlineType(string value)
+        public ScheduledActionsDeadlineType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -33,38 +33,38 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         }
 
         /// <summary> Default value of Unknown. </summary>
-        public static RecurringScheduledActionsDeadlineType Unknown { get; } = new RecurringScheduledActionsDeadlineType(UnknownValue);
+        public static ScheduledActionsDeadlineType Unknown { get; } = new ScheduledActionsDeadlineType(UnknownValue);
 
         /// <summary> Initiate the operation at the given deadline. </summary>
-        public static RecurringScheduledActionsDeadlineType InitiateAt { get; } = new RecurringScheduledActionsDeadlineType(InitiateAtValue);
+        public static ScheduledActionsDeadlineType InitiateAt { get; } = new ScheduledActionsDeadlineType(InitiateAtValue);
 
         /// <summary> Complete the operation by the given deadline. </summary>
-        public static RecurringScheduledActionsDeadlineType CompleteBy { get; } = new RecurringScheduledActionsDeadlineType(CompleteByValue);
+        public static ScheduledActionsDeadlineType CompleteBy { get; } = new ScheduledActionsDeadlineType(CompleteByValue);
 
-        /// <summary> Determines if two <see cref="RecurringScheduledActionsDeadlineType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ScheduledActionsDeadlineType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(RecurringScheduledActionsDeadlineType left, RecurringScheduledActionsDeadlineType right) => left.Equals(right);
+        public static bool operator ==(ScheduledActionsDeadlineType left, ScheduledActionsDeadlineType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="RecurringScheduledActionsDeadlineType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ScheduledActionsDeadlineType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(RecurringScheduledActionsDeadlineType left, RecurringScheduledActionsDeadlineType right) => !left.Equals(right);
+        public static bool operator !=(ScheduledActionsDeadlineType left, ScheduledActionsDeadlineType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="RecurringScheduledActionsDeadlineType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ScheduledActionsDeadlineType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecurringScheduledActionsDeadlineType(string value) => new RecurringScheduledActionsDeadlineType(value);
+        public static implicit operator ScheduledActionsDeadlineType(string value) => new ScheduledActionsDeadlineType(value);
 
-        /// <summary> Converts a string to a <see cref="RecurringScheduledActionsDeadlineType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ScheduledActionsDeadlineType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator RecurringScheduledActionsDeadlineType?(string value) => value == null ? null : new RecurringScheduledActionsDeadlineType(value);
+        public static implicit operator ScheduledActionsDeadlineType?(string value) => value == null ? null : new ScheduledActionsDeadlineType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is RecurringScheduledActionsDeadlineType other && Equals(other);
+        public override bool Equals(object obj) => obj is ScheduledActionsDeadlineType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(RecurringScheduledActionsDeadlineType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ScheduledActionsDeadlineType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
