@@ -244,9 +244,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             bool? isSuspended = default;
             FluxGitRepository gitRepository = default;
             FluxBucket bucket = default;
-            FluxAzureBlob azureBlob = default;
-            FluxOciRepository ociRepository = default;
-            IDictionary<string, FluxKustomization> kustomizations = default;
+            AzureBlob azureBlob = default;
+            OciRepository ociRepository = default;
+            IDictionary<string, Kustomization> kustomizations = default;
             IDictionary<string, string> configurationProtectedSettings = default;
             IReadOnlyList<FluxObjectStatus> statuses = default;
             string repositoryPublicKey = default;
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    azureBlob = FluxAzureBlob.DeserializeFluxAzureBlob(prop.Value, options);
+                    azureBlob = AzureBlob.DeserializeAzureBlob(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("ociRepository"u8))
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    ociRepository = FluxOciRepository.DeserializeFluxOciRepository(prop.Value, options);
+                    ociRepository = OciRepository.DeserializeOciRepository(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("kustomizations"u8))
@@ -335,10 +335,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    Dictionary<string, FluxKustomization> dictionary = new Dictionary<string, FluxKustomization>();
+                    Dictionary<string, Kustomization> dictionary = new Dictionary<string, Kustomization>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, FluxKustomization.DeserializeFluxKustomization(prop0.Value, options));
+                        dictionary.Add(prop0.Name, Kustomization.DeserializeKustomization(prop0.Value, options));
                     }
                     kustomizations = dictionary;
                     continue;
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 bucket,
                 azureBlob,
                 ociRepository,
-                kustomizations ?? new ChangeTrackingDictionary<string, FluxKustomization>(),
+                kustomizations ?? new ChangeTrackingDictionary<string, Kustomization>(),
                 configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
                 statuses ?? new ChangeTrackingList<FluxObjectStatus>(),
                 repositoryPublicKey,

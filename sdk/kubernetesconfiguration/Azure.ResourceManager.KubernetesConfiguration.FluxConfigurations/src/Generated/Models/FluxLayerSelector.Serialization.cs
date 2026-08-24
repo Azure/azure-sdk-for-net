@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 return null;
             }
             string mediaType = default;
-            FluxLayerOperationType? operation = default;
+            FluxConfigurationOperationType? operation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                         operation = null;
                         continue;
                     }
-                    operation = new FluxLayerOperationType(prop.Value.GetString());
+                    operation = new FluxConfigurationOperationType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

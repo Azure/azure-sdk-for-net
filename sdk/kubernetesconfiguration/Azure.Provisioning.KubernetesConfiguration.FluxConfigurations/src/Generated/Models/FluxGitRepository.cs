@@ -19,9 +19,9 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         private FluxRepositoryReference _repositoryRef;
         private BicepValue<string> _sshKnownHosts;
         private BicepValue<string> _httpsUser;
-        private BicepValue<string> _httpsCaCertificate;
+        private BicepValue<string> _httpsCACert;
         private BicepValue<string> _localAuthRef;
-        private BicepValue<FluxGitRepositoryProviderType> _provider;
+        private BicepValue<FluxConfigurationProviderType> _provider;
 
         /// <summary> Creates a new FluxGitRepository. </summary>
         public FluxGitRepository()
@@ -118,18 +118,18 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             }
         }
 
-        /// <summary> Gets or sets the HttpsCaCertificate. </summary>
-        public BicepValue<string> HttpsCaCertificate
+        /// <summary> Gets or sets the HttpsCACert. </summary>
+        public BicepValue<string> HttpsCACert
         {
             get
             {
                 Initialize();
-                return _httpsCaCertificate;
+                return _httpsCACert;
             }
             set
             {
                 Initialize();
-                _httpsCaCertificate.Assign(value);
+                _httpsCACert.Assign(value);
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets or sets the Provider. </summary>
-        public BicepValue<FluxGitRepositoryProviderType> Provider
+        public BicepValue<FluxConfigurationProviderType> Provider
         {
             get
             {
@@ -173,9 +173,9 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             _repositoryRef = DefineModelProperty<FluxRepositoryReference>(nameof(RepositoryRef), new string[] { "repositoryRef" });
             _sshKnownHosts = DefineProperty<string>(nameof(SshKnownHosts), new string[] { "sshKnownHosts" });
             _httpsUser = DefineProperty<string>(nameof(HttpsUser), new string[] { "httpsUser" });
-            _httpsCaCertificate = DefineProperty<string>(nameof(HttpsCaCertificate), new string[] { "httpsCACert" });
+            _httpsCACert = DefineProperty<string>(nameof(HttpsCACert), new string[] { "httpsCACert" });
             _localAuthRef = DefineProperty<string>(nameof(LocalAuthRef), new string[] { "localAuthRef" });
-            _provider = DefineProperty<FluxGitRepositoryProviderType>(nameof(Provider), new string[] { "provider" });
+            _provider = DefineProperty<FluxConfigurationProviderType>(nameof(Provider), new string[] { "provider" });
             DefineAdditionalProperties();
         }
 

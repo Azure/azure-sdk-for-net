@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 writer.WritePropertyName("clientCertificatePassword"u8);
                 writer.WriteStringValue(ClientCertificatePassword);
             }
-            if (Optional.IsDefined(IsClientCertificateChainIncluded))
+            if (Optional.IsDefined(IsClientCertificateSendChain))
             {
                 writer.WritePropertyName("clientCertificateSendChain"u8);
-                writer.WriteBooleanValue(IsClientCertificateChainIncluded.Value);
+                writer.WriteBooleanValue(IsClientCertificateSendChain.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             string clientSecret = default;
             string clientCertificate = default;
             string clientCertificatePassword = default;
-            bool? isClientCertificateChainIncluded = default;
+            bool? isClientCertificateSendChain = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    isClientCertificateChainIncluded = prop.Value.GetBoolean();
+                    isClientCertificateSendChain = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 clientSecret,
                 clientCertificate,
                 clientCertificatePassword,
-                isClientCertificateChainIncluded,
+                isClientCertificateSendChain,
                 additionalBinaryDataProperties);
         }
     }

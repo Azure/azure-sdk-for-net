@@ -181,7 +181,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets or sets the AzureBlob. </summary>
-        public FluxAzureBlob AzureBlob
+        public AzureBlob AzureBlob
         {
             get
             {
@@ -198,7 +198,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets or sets the OciRepository. </summary>
-        public FluxOciRepository OciRepository
+        public OciRepository OciRepository
         {
             get
             {
@@ -215,7 +215,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
         }
 
         /// <summary> Gets or sets the Kustomizations. </summary>
-        public BicepDictionary<FluxKustomization> Kustomizations
+        public BicepDictionary<FluxConfigurationsKustomization> Kustomizations
         {
             get
             {

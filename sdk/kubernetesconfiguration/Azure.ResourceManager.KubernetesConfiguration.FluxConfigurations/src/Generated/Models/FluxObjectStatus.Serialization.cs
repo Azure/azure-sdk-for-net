@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             FluxComplianceState? complianceState = default;
             FluxObjectReference appliedBy = default;
             IList<FluxObjectStatusCondition> statusConditions = default;
-            FluxHelmReleaseProperties helmReleaseProperties = default;
+            HelmReleaseProperties helmReleaseProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    helmReleaseProperties = FluxHelmReleaseProperties.DeserializeFluxHelmReleaseProperties(prop.Value, options);
+                    helmReleaseProperties = HelmReleaseProperties.DeserializeHelmReleaseProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

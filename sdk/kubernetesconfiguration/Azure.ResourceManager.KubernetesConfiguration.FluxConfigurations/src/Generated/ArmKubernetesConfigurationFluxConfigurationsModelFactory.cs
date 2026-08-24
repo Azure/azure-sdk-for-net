@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="provisioningState"> Status of the creation of the fluxConfiguration. </param>
         /// <param name="errorMessage"> Error message returned to the user in the case of provisioning failure. </param>
         /// <returns> A new <see cref="FluxConfigurations.FluxConfigurationData"/> instance for mocking. </returns>
-        public static FluxConfigurationData FluxConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FluxConfigurationScopeType? scope = default, string @namespace = default, FluxConfigurationSourceKindType? sourceKind = default, bool? isSuspended = default, FluxGitRepository gitRepository = default, FluxBucket bucket = default, FluxAzureBlob azureBlob = default, FluxOciRepository ociRepository = default, IDictionary<string, FluxKustomization> kustomizations = default, IDictionary<string, string> configurationProtectedSettings = default, IEnumerable<FluxObjectStatus> statuses = default, string repositoryPublicKey = default, string sourceSyncedCommitId = default, DateTimeOffset? sourceUpdatedOn = default, DateTimeOffset? statusUpdatedOn = default, bool? isWaitForReconciliation = default, string reconciliationWaitDuration = default, FluxComplianceState? complianceState = default, FluxConfigurationProvisioningState? provisioningState = default, string errorMessage = default)
+        public static FluxConfigurationData FluxConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FluxConfigurationScopeType? scope = default, string @namespace = default, FluxConfigurationSourceKindType? sourceKind = default, bool? isSuspended = default, FluxGitRepository gitRepository = default, FluxBucket bucket = default, AzureBlob azureBlob = default, OciRepository ociRepository = default, IDictionary<string, Kustomization> kustomizations = default, IDictionary<string, string> configurationProtectedSettings = default, IEnumerable<FluxObjectStatus> statuses = default, string repositoryPublicKey = default, string sourceSyncedCommitId = default, DateTimeOffset? sourceUpdatedOn = default, DateTimeOffset? statusUpdatedOn = default, bool? isWaitForReconciliation = default, string reconciliationWaitDuration = default, FluxComplianceState? complianceState = default, FluxConfigurationProvisioningState? provisioningState = default, string errorMessage = default)
         {
             return new FluxConfigurationData(
                 id,
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     bucket,
                     azureBlob,
                     ociRepository,
-                    kustomizations ?? new ChangeTrackingDictionary<string, FluxKustomization>(),
+                    kustomizations ?? new ChangeTrackingDictionary<string, Kustomization>(),
                     configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
                     (statuses ?? new ChangeTrackingList<FluxObjectStatus>()).ToList(),
                     repositoryPublicKey,
@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="repositoryRef"> The source reference for the GitRepository object. </param>
         /// <param name="sshKnownHosts"> Base64-encoded known_hosts value containing public SSH keys required to access private git repositories over SSH. </param>
         /// <param name="httpsUser"> Plaintext HTTPS username used to access private git repositories over HTTPS. </param>
-        /// <param name="httpsCaCertificate"> Base64-encoded HTTPS certificate authority contents used to access git private git repositories over HTTPS. </param>
+        /// <param name="httpsCACert"> Base64-encoded HTTPS certificate authority contents used to access git private git repositories over HTTPS. </param>
         /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
         /// <param name="provider"> Name of the provider used for authentication. </param>
         /// <returns> A new <see cref="Models.FluxGitRepository"/> instance for mocking. </returns>
-        public static FluxGitRepository FluxGitRepository(string uri = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, FluxRepositoryReference repositoryRef = default, string sshKnownHosts = default, string httpsUser = default, string httpsCaCertificate = default, string localAuthRef = default, FluxGitRepositoryProviderType? provider = default)
+        public static FluxGitRepository FluxGitRepository(string uri = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, FluxRepositoryReference repositoryRef = default, string sshKnownHosts = default, string httpsUser = default, string httpsCACert = default, string localAuthRef = default, FluxConfigurationProviderType? provider = default)
         {
             return new FluxGitRepository(
                 uri,
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 repositoryRef,
                 sshKnownHosts,
                 httpsUser,
-                httpsCaCertificate,
+                httpsCACert,
                 localAuthRef,
                 provider,
                 default);
@@ -139,10 +139,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="sasToken"> The Shared Access token to access the storage container. </param>
         /// <param name="managedIdentityClientId"> The client Id for authenticating a Managed Identity. </param>
         /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
-        /// <returns> A new <see cref="Models.FluxAzureBlob"/> instance for mocking. </returns>
-        public static FluxAzureBlob FluxAzureBlob(string uri = default, string containerName = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, FluxServicePrincipal servicePrincipal = default, string accountKey = default, string sasToken = default, string managedIdentityClientId = default, string localAuthRef = default)
+        /// <returns> A new <see cref="Models.AzureBlob"/> instance for mocking. </returns>
+        public static AzureBlob AzureBlob(string uri = default, string containerName = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, FluxServicePrincipal servicePrincipal = default, string accountKey = default, string sasToken = default, string managedIdentityClientId = default, string localAuthRef = default)
         {
-            return new FluxAzureBlob(
+            return new AzureBlob(
                 uri,
                 containerName,
                 timeoutInSeconds,
@@ -160,9 +160,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="clientSecret"> The client secret for authenticating a Service Principal. </param>
         /// <param name="clientCertificate"> Base64-encoded certificate used to authenticate a Service Principal. </param>
         /// <param name="clientCertificatePassword"> The password for the certificate used to authenticate a Service Principal. </param>
-        /// <param name="isClientCertificateChainIncluded"> Specifies whether to include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the Client Certificate. </param>
+        /// <param name="isClientCertificateSendChain"> Specifies whether to include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the Client Certificate. </param>
         /// <returns> A new <see cref="Models.FluxServicePrincipal"/> instance for mocking. </returns>
-        public static FluxServicePrincipal FluxServicePrincipal(string clientId = default, string tenantId = default, string clientSecret = default, string clientCertificate = default, string clientCertificatePassword = default, bool? isClientCertificateChainIncluded = default)
+        public static FluxServicePrincipal FluxServicePrincipal(string clientId = default, string tenantId = default, string clientSecret = default, string clientCertificate = default, string clientCertificatePassword = default, bool? isClientCertificateSendChain = default)
         {
             return new FluxServicePrincipal(
                 clientId,
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 clientSecret,
                 clientCertificate,
                 clientCertificatePassword,
-                isClientCertificateChainIncluded,
+                isClientCertificateSendChain,
                 default);
         }
 
@@ -185,10 +185,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="serviceAccountName"> The service account name to authenticate with the OCI repository. </param>
         /// <param name="tlsConfig"> Parameters to authenticate using TLS config for OCI repository. </param>
         /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
-        /// <returns> A new <see cref="Models.FluxOciRepository"/> instance for mocking. </returns>
-        public static FluxOciRepository FluxOciRepository(Uri uri = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, FluxOciRepositoryReference repositoryRef = default, FluxLayerSelector layerSelector = default, FluxOciRepositoryVerification verify = default, bool? isInsecure = default, bool? useWorkloadIdentity = default, string serviceAccountName = default, FluxTlsConfig tlsConfig = default, string localAuthRef = default)
+        /// <returns> A new <see cref="Models.OciRepository"/> instance for mocking. </returns>
+        public static OciRepository OciRepository(Uri uri = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, OciRepositoryRef repositoryRef = default, FluxLayerSelector layerSelector = default, OciRepositoryVerify verify = default, bool? isInsecure = default, bool? useWorkloadIdentity = default, string serviceAccountName = default, FluxTlsConfig tlsConfig = default, string localAuthRef = default)
         {
-            return new FluxOciRepository(
+            return new OciRepository(
                 uri,
                 timeoutInSeconds,
                 syncIntervalInSeconds,
@@ -206,16 +206,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="tag"> The OCI repository image tag name to pull. This defaults to 'latest'. </param>
         /// <param name="semver"> The semver range used to match against OCI repository tags. This takes precedence over tag. </param>
         /// <param name="digest"> The image digest to pull from OCI repository, the value should be in the format ‘sha256:’. This takes precedence over semver. </param>
-        /// <returns> A new <see cref="Models.FluxOciRepositoryReference"/> instance for mocking. </returns>
-        public static FluxOciRepositoryReference FluxOciRepositoryReference(string tag = default, string semver = default, string digest = default)
+        /// <returns> A new <see cref="Models.OciRepositoryRef"/> instance for mocking. </returns>
+        public static OciRepositoryRef OciRepositoryRef(string tag = default, string semver = default, string digest = default)
         {
-            return new FluxOciRepositoryReference(tag, semver, digest, default);
+            return new OciRepositoryRef(tag, semver, digest, default);
         }
 
         /// <param name="mediaType"> The first layer matching the specified media type will be used. </param>
         /// <param name="operation"> The operation to be performed on the selected layer. The default value is 'extract', but it can be set to 'copy'. </param>
         /// <returns> A new <see cref="Models.FluxLayerSelector"/> instance for mocking. </returns>
-        public static FluxLayerSelector FluxLayerSelector(string mediaType = default, FluxLayerOperationType? operation = default)
+        public static FluxLayerSelector FluxLayerSelector(string mediaType = default, FluxConfigurationOperationType? operation = default)
         {
             return new FluxLayerSelector(mediaType, operation, default);
         }
@@ -223,21 +223,21 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="provider"> Verification provider name. </param>
         /// <param name="verificationConfig"> An object containing trusted public keys of trusted authors. </param>
         /// <param name="matchOidcIdentity"> Array defining the criteria for matching the identity while verifying an OCI artifact. </param>
-        /// <returns> A new <see cref="Models.FluxOciRepositoryVerification"/> instance for mocking. </returns>
-        public static FluxOciRepositoryVerification FluxOciRepositoryVerification(string provider = default, IDictionary<string, string> verificationConfig = default, IEnumerable<FluxOciRepositoryMatchOidcIdentity> matchOidcIdentity = default)
+        /// <returns> A new <see cref="Models.OciRepositoryVerify"/> instance for mocking. </returns>
+        public static OciRepositoryVerify OciRepositoryVerify(string provider = default, IDictionary<string, string> verificationConfig = default, IEnumerable<MatchOidcIdentity> matchOidcIdentity = default)
         {
             verificationConfig ??= new ChangeTrackingDictionary<string, string>();
-            matchOidcIdentity ??= new ChangeTrackingList<FluxOciRepositoryMatchOidcIdentity>();
+            matchOidcIdentity ??= new ChangeTrackingList<MatchOidcIdentity>();
 
-            return new FluxOciRepositoryVerification(provider, verificationConfig ?? new ChangeTrackingDictionary<string, string>(), (matchOidcIdentity ?? new ChangeTrackingList<FluxOciRepositoryMatchOidcIdentity>()).ToList(), default);
+            return new OciRepositoryVerify(provider, verificationConfig ?? new ChangeTrackingDictionary<string, string>(), (matchOidcIdentity ?? new ChangeTrackingList<MatchOidcIdentity>()).ToList(), default);
         }
 
         /// <param name="issuer"> The regex pattern to match against to verify the OIDC issuer. </param>
         /// <param name="subject"> The regex pattern to match against to verify the identity subject. </param>
-        /// <returns> A new <see cref="Models.FluxOciRepositoryMatchOidcIdentity"/> instance for mocking. </returns>
-        public static FluxOciRepositoryMatchOidcIdentity FluxOciRepositoryMatchOidcIdentity(string issuer = default, string subject = default)
+        /// <returns> A new <see cref="Models.MatchOidcIdentity"/> instance for mocking. </returns>
+        public static MatchOidcIdentity MatchOidcIdentity(string issuer = default, string subject = default)
         {
-            return new FluxOciRepositoryMatchOidcIdentity(issuer, subject, default);
+            return new MatchOidcIdentity(issuer, subject, default);
         }
 
         /// <param name="clientCertificate"> Base64-encoded certificate used to authenticate a client with the OCI repository. </param>
@@ -255,25 +255,25 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the Kustomization on the cluster. </param>
         /// <param name="syncIntervalInSeconds"> The interval at which to re-reconcile the Kustomization on the cluster. </param>
         /// <param name="retryIntervalInSeconds"> The interval at which to re-reconcile the Kustomization on the cluster in the event of failure on reconciliation. </param>
-        /// <param name="isPruningEnabled"> Enable/disable garbage collections of Kubernetes objects created by this Kustomization. </param>
-        /// <param name="isForceEnabled"> Enable/disable re-creating Kubernetes resources on the cluster when patching fails due to an immutable field change. </param>
-        /// <param name="isHealthCheckEnabled"> Enable/disable health check for all Kubernetes objects created by this Kustomization. </param>
+        /// <param name="isPrune"> Enable/disable garbage collections of Kubernetes objects created by this Kustomization. </param>
+        /// <param name="isForce"> Enable/disable re-creating Kubernetes resources on the cluster when patching fails due to an immutable field change. </param>
+        /// <param name="isWait"> Enable/disable health check for all Kubernetes objects created by this Kustomization. </param>
         /// <param name="postBuild"> Used for variable substitution for this Kustomization after kustomize build. </param>
-        /// <returns> A new <see cref="Models.FluxKustomization"/> instance for mocking. </returns>
-        public static FluxKustomization FluxKustomization(string name = default, string path = default, IEnumerable<string> dependsOn = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, long? retryIntervalInSeconds = default, bool? isPruningEnabled = default, bool? isForceEnabled = default, bool? isHealthCheckEnabled = default, FluxPostBuild postBuild = default)
+        /// <returns> A new <see cref="Models.Kustomization"/> instance for mocking. </returns>
+        public static Kustomization Kustomization(string name = default, string path = default, IEnumerable<string> dependsOn = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, long? retryIntervalInSeconds = default, bool? isPrune = default, bool? isForce = default, bool? isWait = default, FluxPostBuild postBuild = default)
         {
             dependsOn ??= new ChangeTrackingList<string>();
 
-            return new FluxKustomization(
+            return new Kustomization(
                 name,
                 path,
                 (dependsOn ?? new ChangeTrackingList<string>()).ToList(),
                 timeoutInSeconds,
                 syncIntervalInSeconds,
                 retryIntervalInSeconds,
-                isPruningEnabled,
-                isForceEnabled,
-                isHealthCheckEnabled,
+                isPrune,
+                isForce,
+                isWait,
                 postBuild,
                 default);
         }
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="statusConditions"> List of Kubernetes object status conditions present on the cluster. </param>
         /// <param name="helmReleaseProperties"> Additional properties that are provided from objects of the HelmRelease kind. </param>
         /// <returns> A new <see cref="Models.FluxObjectStatus"/> instance for mocking. </returns>
-        public static FluxObjectStatus FluxObjectStatus(string name = default, string @namespace = default, string kind = default, FluxComplianceState? complianceState = default, FluxObjectReference appliedBy = default, IEnumerable<FluxObjectStatusCondition> statusConditions = default, FluxHelmReleaseProperties helmReleaseProperties = default)
+        public static FluxObjectStatus FluxObjectStatus(string name = default, string @namespace = default, string kind = default, FluxComplianceState? complianceState = default, FluxObjectReference appliedBy = default, IEnumerable<FluxObjectStatusCondition> statusConditions = default, HelmReleaseProperties helmReleaseProperties = default)
         {
             statusConditions ??= new ChangeTrackingList<FluxObjectStatusCondition>();
 
@@ -351,10 +351,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="failureCount"> Total number of times that the HelmRelease failed to install or upgrade. </param>
         /// <param name="installFailureCount"> Number of times that the HelmRelease failed to install. </param>
         /// <param name="upgradeFailureCount"> Number of times that the HelmRelease failed to upgrade. </param>
-        /// <returns> A new <see cref="Models.FluxHelmReleaseProperties"/> instance for mocking. </returns>
-        public static FluxHelmReleaseProperties FluxHelmReleaseProperties(long? lastRevisionApplied = default, FluxObjectReference helmChartRef = default, long? failureCount = default, long? installFailureCount = default, long? upgradeFailureCount = default)
+        /// <returns> A new <see cref="Models.HelmReleaseProperties"/> instance for mocking. </returns>
+        public static HelmReleaseProperties HelmReleaseProperties(long? lastRevisionApplied = default, FluxObjectReference helmChartRef = default, long? failureCount = default, long? installFailureCount = default, long? upgradeFailureCount = default)
         {
-            return new FluxHelmReleaseProperties(
+            return new HelmReleaseProperties(
                 lastRevisionApplied,
                 helmChartRef,
                 failureCount,
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="kustomizations"> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </param>
         /// <param name="configurationProtectedSettings"> Key-value pairs of protected configuration settings for the configuration. </param>
         /// <returns> A new <see cref="Models.FluxConfigurationPatch"/> instance for mocking. </returns>
-        public static FluxConfigurationPatch FluxConfigurationPatch(FluxConfigurationSourceKindType? sourceKind = default, bool? isSuspended = default, FluxGitRepositoryPatch gitRepository = default, FluxBucketPatch bucket = default, FluxAzureBlobPatch azureBlob = default, FluxOciRepositoryPatch ociRepository = default, IDictionary<string, FluxKustomizationPatch> kustomizations = default, IDictionary<string, string> configurationProtectedSettings = default)
+        public static FluxConfigurationPatch FluxConfigurationPatch(FluxConfigurationSourceKindType? sourceKind = default, bool? isSuspended = default, FluxGitRepositoryPatch gitRepository = default, FluxBucketPatch bucket = default, AzureBlobPatch azureBlob = default, OciRepositoryPatch ociRepository = default, IDictionary<string, KustomizationPatch> kustomizations = default, IDictionary<string, string> configurationProtectedSettings = default)
         {
             return new FluxConfigurationPatch(sourceKind is null && isSuspended is null && gitRepository is null && bucket is null && azureBlob is null && ociRepository is null && kustomizations is null && configurationProtectedSettings is null ? default : new FluxConfigurationPatchProperties(
                 sourceKind,
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 bucket,
                 azureBlob,
                 ociRepository,
-                kustomizations ?? new ChangeTrackingDictionary<string, FluxKustomizationPatch>(),
+                kustomizations ?? new ChangeTrackingDictionary<string, KustomizationPatch>(),
                 configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
                 default), default);
         }
@@ -392,11 +392,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="repositoryRef"> The source reference for the GitRepository object. </param>
         /// <param name="sshKnownHosts"> Base64-encoded known_hosts value containing public SSH keys required to access private git repositories over SSH. </param>
         /// <param name="httpsUser"> Plaintext HTTPS username used to access private git repositories over HTTPS. </param>
-        /// <param name="httpsCaCertificate"> Base64-encoded HTTPS certificate authority contents used to access git private git repositories over HTTPS. </param>
+        /// <param name="httpsCACert"> Base64-encoded HTTPS certificate authority contents used to access git private git repositories over HTTPS. </param>
         /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
         /// <param name="provider"> Name of the provider used for authentication. </param>
         /// <returns> A new <see cref="Models.FluxGitRepositoryPatch"/> instance for mocking. </returns>
-        public static FluxGitRepositoryPatch FluxGitRepositoryPatch(string uri = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, FluxRepositoryReference repositoryRef = default, string sshKnownHosts = default, string httpsUser = default, string httpsCaCertificate = default, string localAuthRef = default, FluxGitRepositoryProviderType? provider = default)
+        public static FluxGitRepositoryPatch FluxGitRepositoryPatch(string uri = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, FluxRepositoryReference repositoryRef = default, string sshKnownHosts = default, string httpsUser = default, string httpsCACert = default, string localAuthRef = default, FluxConfigurationProviderType? provider = default)
         {
             return new FluxGitRepositoryPatch(
                 uri,
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 repositoryRef,
                 sshKnownHosts,
                 httpsUser,
-                httpsCaCertificate,
+                httpsCACert,
                 localAuthRef,
                 provider,
                 default);
@@ -441,10 +441,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="sasToken"> The Shared Access token to access the storage container. </param>
         /// <param name="managedIdentityClientId"> The client Id for authenticating a Managed Identity. </param>
         /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
-        /// <returns> A new <see cref="Models.FluxAzureBlobPatch"/> instance for mocking. </returns>
-        public static FluxAzureBlobPatch FluxAzureBlobPatch(string uri = default, string containerName = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, FluxServicePrincipalPatch servicePrincipal = default, string accountKey = default, string sasToken = default, string managedIdentityClientId = default, string localAuthRef = default)
+        /// <returns> A new <see cref="Models.AzureBlobPatch"/> instance for mocking. </returns>
+        public static AzureBlobPatch AzureBlobPatch(string uri = default, string containerName = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, FluxServicePrincipalPatch servicePrincipal = default, string accountKey = default, string sasToken = default, string managedIdentityClientId = default, string localAuthRef = default)
         {
-            return new FluxAzureBlobPatch(
+            return new AzureBlobPatch(
                 uri,
                 containerName,
                 timeoutInSeconds,
@@ -462,9 +462,9 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="clientSecret"> The client secret for authenticating a Service Principal. </param>
         /// <param name="clientCertificate"> Base64-encoded certificate used to authenticate a Service Principal. </param>
         /// <param name="clientCertificatePassword"> The password for the certificate used to authenticate a Service Principal. </param>
-        /// <param name="isClientCertificateChainIncluded"> Specifies whether to include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the Client Certificate. </param>
+        /// <param name="isClientCertificateSendChain"> Specifies whether to include x5c header in client claims when acquiring a token to enable subject name / issuer based authentication for the Client Certificate. </param>
         /// <returns> A new <see cref="Models.FluxServicePrincipalPatch"/> instance for mocking. </returns>
-        public static FluxServicePrincipalPatch FluxServicePrincipalPatch(string clientId = default, string tenantId = default, string clientSecret = default, string clientCertificate = default, string clientCertificatePassword = default, bool? isClientCertificateChainIncluded = default)
+        public static FluxServicePrincipalPatch FluxServicePrincipalPatch(string clientId = default, string tenantId = default, string clientSecret = default, string clientCertificate = default, string clientCertificatePassword = default, bool? isClientCertificateSendChain = default)
         {
             return new FluxServicePrincipalPatch(
                 clientId,
@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 clientSecret,
                 clientCertificate,
                 clientCertificatePassword,
-                isClientCertificateChainIncluded,
+                isClientCertificateSendChain,
                 default);
         }
 
@@ -487,10 +487,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="serviceAccountName"> The service account name to authenticate with the OCI repository. </param>
         /// <param name="tlsConfig"> Parameters to authenticate using TLS config for OCI repository. </param>
         /// <param name="localAuthRef"> Name of a local secret on the Kubernetes cluster to use as the authentication secret rather than the managed or user-provided configuration secrets. </param>
-        /// <returns> A new <see cref="Models.FluxOciRepositoryPatch"/> instance for mocking. </returns>
-        public static FluxOciRepositoryPatch FluxOciRepositoryPatch(Uri uri = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, FluxOciRepositoryReferencePatch repositoryRef = default, FluxLayerSelectorPatch layerSelector = default, FluxOciRepositoryVerificationPatch verify = default, bool? isInsecure = default, bool? useWorkloadIdentity = default, string serviceAccountName = default, FluxTlsConfigPatch tlsConfig = default, string localAuthRef = default)
+        /// <returns> A new <see cref="Models.OciRepositoryPatch"/> instance for mocking. </returns>
+        public static OciRepositoryPatch OciRepositoryPatch(Uri uri = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, OciRepositoryRefPatch repositoryRef = default, FluxLayerSelectorPatch layerSelector = default, OciRepositoryVerifyPatch verify = default, bool? isInsecure = default, bool? useWorkloadIdentity = default, string serviceAccountName = default, FluxTlsConfigPatch tlsConfig = default, string localAuthRef = default)
         {
-            return new FluxOciRepositoryPatch(
+            return new OciRepositoryPatch(
                 uri,
                 timeoutInSeconds,
                 syncIntervalInSeconds,
@@ -508,16 +508,16 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="tag"> The OCI repository image tag name to pull. This defaults to 'latest'. </param>
         /// <param name="semver"> The semver range used to match against OCI repository tags. This takes precedence over tag. </param>
         /// <param name="digest"> The image digest to pull from OCI repository, the value should be in the format ‘sha256:’. This takes precedence over semver. </param>
-        /// <returns> A new <see cref="Models.FluxOciRepositoryReferencePatch"/> instance for mocking. </returns>
-        public static FluxOciRepositoryReferencePatch FluxOciRepositoryReferencePatch(string tag = default, string semver = default, string digest = default)
+        /// <returns> A new <see cref="Models.OciRepositoryRefPatch"/> instance for mocking. </returns>
+        public static OciRepositoryRefPatch OciRepositoryRefPatch(string tag = default, string semver = default, string digest = default)
         {
-            return new FluxOciRepositoryReferencePatch(tag, semver, digest, default);
+            return new OciRepositoryRefPatch(tag, semver, digest, default);
         }
 
         /// <param name="mediaType"> The first layer matching the specified media type will be used. </param>
         /// <param name="operation"> The operation to be performed on the selected layer. The default value is 'extract', but it can be set to 'copy'. </param>
         /// <returns> A new <see cref="Models.FluxLayerSelectorPatch"/> instance for mocking. </returns>
-        public static FluxLayerSelectorPatch FluxLayerSelectorPatch(string mediaType = default, FluxLayerOperationType? operation = default)
+        public static FluxLayerSelectorPatch FluxLayerSelectorPatch(string mediaType = default, FluxConfigurationOperationType? operation = default)
         {
             return new FluxLayerSelectorPatch(mediaType, operation, default);
         }
@@ -525,21 +525,21 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="provider"> Verification provider name. </param>
         /// <param name="verificationConfig"> An object containing trusted public keys of trusted authors. </param>
         /// <param name="matchOidcIdentity"> Array defining the criteria for matching the OIDC identity while verifying an OCI artifact. </param>
-        /// <returns> A new <see cref="Models.FluxOciRepositoryVerificationPatch"/> instance for mocking. </returns>
-        public static FluxOciRepositoryVerificationPatch FluxOciRepositoryVerificationPatch(string provider = default, IDictionary<string, string> verificationConfig = default, IEnumerable<FluxOciRepositoryMatchOidcIdentityPatch> matchOidcIdentity = default)
+        /// <returns> A new <see cref="Models.OciRepositoryVerifyPatch"/> instance for mocking. </returns>
+        public static OciRepositoryVerifyPatch OciRepositoryVerifyPatch(string provider = default, IDictionary<string, string> verificationConfig = default, IEnumerable<MatchOidcIdentityPatch> matchOidcIdentity = default)
         {
             verificationConfig ??= new ChangeTrackingDictionary<string, string>();
-            matchOidcIdentity ??= new ChangeTrackingList<FluxOciRepositoryMatchOidcIdentityPatch>();
+            matchOidcIdentity ??= new ChangeTrackingList<MatchOidcIdentityPatch>();
 
-            return new FluxOciRepositoryVerificationPatch(provider, verificationConfig ?? new ChangeTrackingDictionary<string, string>(), (matchOidcIdentity ?? new ChangeTrackingList<FluxOciRepositoryMatchOidcIdentityPatch>()).ToList(), default);
+            return new OciRepositoryVerifyPatch(provider, verificationConfig ?? new ChangeTrackingDictionary<string, string>(), (matchOidcIdentity ?? new ChangeTrackingList<MatchOidcIdentityPatch>()).ToList(), default);
         }
 
         /// <param name="issuer"> The regex pattern to match against to verify the OIDC issuer. </param>
         /// <param name="subject"> The regex pattern to match against to verify the identity subject. </param>
-        /// <returns> A new <see cref="Models.FluxOciRepositoryMatchOidcIdentityPatch"/> instance for mocking. </returns>
-        public static FluxOciRepositoryMatchOidcIdentityPatch FluxOciRepositoryMatchOidcIdentityPatch(string issuer = default, string subject = default)
+        /// <returns> A new <see cref="Models.MatchOidcIdentityPatch"/> instance for mocking. </returns>
+        public static MatchOidcIdentityPatch MatchOidcIdentityPatch(string issuer = default, string subject = default)
         {
-            return new FluxOciRepositoryMatchOidcIdentityPatch(issuer, subject, default);
+            return new MatchOidcIdentityPatch(issuer, subject, default);
         }
 
         /// <param name="clientCertificate"> Base64-encoded certificate used to authenticate a client with the OCI repository. </param>
@@ -556,24 +556,24 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="timeoutInSeconds"> The maximum time to attempt to reconcile the Kustomization on the cluster. </param>
         /// <param name="syncIntervalInSeconds"> The interval at which to re-reconcile the Kustomization on the cluster. </param>
         /// <param name="retryIntervalInSeconds"> The interval at which to re-reconcile the Kustomization on the cluster in the event of failure on reconciliation. </param>
-        /// <param name="isPruningEnabled"> Enable/disable garbage collections of Kubernetes objects created by this Kustomization. </param>
-        /// <param name="isForceEnabled"> Enable/disable re-creating Kubernetes resources on the cluster when patching fails due to an immutable field change. </param>
-        /// <param name="isHealthCheckEnabled"> Enable/disable health check for all Kubernetes objects created by this Kustomization. </param>
+        /// <param name="isPrune"> Enable/disable garbage collections of Kubernetes objects created by this Kustomization. </param>
+        /// <param name="isForce"> Enable/disable re-creating Kubernetes resources on the cluster when patching fails due to an immutable field change. </param>
+        /// <param name="isWait"> Enable/disable health check for all Kubernetes objects created by this Kustomization. </param>
         /// <param name="postBuild"> Used for variable substitution for this Kustomization after kustomize build. </param>
-        /// <returns> A new <see cref="Models.FluxKustomizationPatch"/> instance for mocking. </returns>
-        public static FluxKustomizationPatch FluxKustomizationPatch(string path = default, IEnumerable<string> dependsOn = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, long? retryIntervalInSeconds = default, bool? isPruningEnabled = default, bool? isForceEnabled = default, bool? isHealthCheckEnabled = default, FluxPostBuildPatch postBuild = default)
+        /// <returns> A new <see cref="Models.KustomizationPatch"/> instance for mocking. </returns>
+        public static KustomizationPatch KustomizationPatch(string path = default, IEnumerable<string> dependsOn = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, long? retryIntervalInSeconds = default, bool? isPrune = default, bool? isForce = default, bool? isWait = default, FluxPostBuildPatch postBuild = default)
         {
             dependsOn ??= new ChangeTrackingList<string>();
 
-            return new FluxKustomizationPatch(
+            return new KustomizationPatch(
                 path,
                 (dependsOn ?? new ChangeTrackingList<string>()).ToList(),
                 timeoutInSeconds,
                 syncIntervalInSeconds,
                 retryIntervalInSeconds,
-                isPruningEnabled,
-                isForceEnabled,
-                isHealthCheckEnabled,
+                isPrune,
+                isForce,
+                isWait,
                 postBuild,
                 default);
         }
