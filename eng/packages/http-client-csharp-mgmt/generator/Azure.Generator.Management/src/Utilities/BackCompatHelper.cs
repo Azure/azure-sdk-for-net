@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
-using Azure.Generator.Visitors;
 using Microsoft.TypeSpec.Generator;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
@@ -26,12 +25,16 @@ namespace Azure.Generator.Management.Utilities
         private const string CancellationTokenSuppressionJustification =
             "Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. " +
             "Making it optional would introduce an ambiguous call with the new method.";
+        private const string IfMatch = "If-Match";
+        private const string IfNoneMatch = "If-None-Match";
+        private const string IfModifiedSince = "If-Modified-Since";
+        private const string IfUnmodifiedSince = "If-Unmodified-Since";
         private static readonly Dictionary<string, string> ConditionalHeaderProperties = new(StringComparer.OrdinalIgnoreCase)
         {
-            [MatchConditionsHeadersVisitor.IfMatch.ToIdentifierName()] = nameof(RequestConditions.IfMatch),
-            [MatchConditionsHeadersVisitor.IfNoneMatch.ToIdentifierName()] = nameof(RequestConditions.IfNoneMatch),
-            [MatchConditionsHeadersVisitor.IfModifiedSince.ToIdentifierName()] = nameof(RequestConditions.IfModifiedSince),
-            [MatchConditionsHeadersVisitor.IfUnmodifiedSince.ToIdentifierName()] = nameof(RequestConditions.IfUnmodifiedSince)
+            [IfMatch.ToIdentifierName()] = nameof(RequestConditions.IfMatch),
+            [IfNoneMatch.ToIdentifierName()] = nameof(RequestConditions.IfNoneMatch),
+            [IfModifiedSince.ToIdentifierName()] = nameof(RequestConditions.IfModifiedSince),
+            [IfUnmodifiedSince.ToIdentifierName()] = nameof(RequestConditions.IfUnmodifiedSince)
         };
 
         private static void AddETagBackwardCompatibilityMethods(

@@ -8,7 +8,6 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using NUnit.Framework;
-using System.Reflection;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Mgmt.Tests.Utilities
@@ -451,10 +450,7 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             {
                 MethodsToBuild = previousMethods.ToArray()
             };
-            typeof(TypeProvider).GetField(
-                    "_lastContractView",
-                    BindingFlags.NonPublic | BindingFlags.Instance)!
-                .SetValue(enclosingType, new Lazy<TypeProvider?>(() => lastContractView));
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
 
             return BackCompatHelper.DecorateBackwardCompatibilityMethods(backCompatMethods, originalMethods);
         }

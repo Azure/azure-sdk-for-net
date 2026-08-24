@@ -13,13 +13,13 @@
     <PackageReference Include="Microsoft.TypeSpec.Generator.ClientModel" />
   </ItemGroup>
 
-  <Target Name="CheckEmitterBuild" BeforeTargets="Build" Condition="'$(SkipEmitterPackageBuild)' != 'true'">
+  <Target Name="CheckEmitterBuild" BeforeTargets="Build">
     <!-- Check if the folder does not exist -->
     <Error Condition="!Exists('..\..\..\node_modules\@typespec\http-client-csharp')" Text="Emitter has not been built please run `npm ci` from repo root folder, and followed by `npm run build` from ./eng/packages/http-client-csharp folder." />
   </Target>
 
   <!-- Copy output to package dist path for local execution -->
-  <Target Name="CopyForNpmPackage" AfterTargets="Build" Condition="'$(SkipEmitterPackageBuild)' != 'true'">
+  <Target Name="CopyForNpmPackage" AfterTargets="Build">
     <Message Text="Copying output to dist path" Importance="high" />
     <ItemGroup>
       <SourceDir Include="$(OutputPath)**\*.*" />

@@ -60,7 +60,7 @@ namespace Azure.Generator.Mgmt.Tests
                 ]);
             lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
 
-            SetLastContractView(modelFactory, lastContractView);
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
             modelFactory.Update(methods: [method]);
 
             var updateParameterNames = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
@@ -132,7 +132,7 @@ namespace Azure.Generator.Mgmt.Tests
                 $"A test model.",
                 [new ParameterProvider("value", $"Value description", typeof(string))]);
             lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
-            SetLastContractView(modelFactory, lastContractView);
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
             modelFactory.Update(methods: []);
 
             var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
@@ -174,7 +174,7 @@ namespace Azure.Generator.Mgmt.Tests
             lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
             var customCodeView = new TestModelFactoryView(modelFactory.Name);
             customCodeView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, customCodeView)];
-            SetLastContractView(modelFactory, lastContractView);
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
             ManagementMockHelpers.SetCustomCodeView(modelFactory, customCodeView);
             modelFactory.Update(methods: []);
 
@@ -366,14 +366,6 @@ namespace Azure.Generator.Mgmt.Tests
             var rendered = new TypeProviderWriter(modelFactory).Write().Content;
             Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(vmwareId, ((global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>)default));"));
             Assert.That(rendered, Does.Not.Contain("TestModel(vMwareId"));
-        }
-
-        private static void SetLastContractView(TypeProvider typeProvider, TypeProvider lastContractView)
-        {
-            typeof(TypeProvider).GetField(
-                    "_lastContractView",
-                    BindingFlags.NonPublic | BindingFlags.Instance)!
-                .SetValue(typeProvider, new Lazy<TypeProvider?>(() => lastContractView));
         }
 
         private class TestModelFactoryView : TypeProvider
