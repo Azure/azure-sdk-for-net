@@ -26,8 +26,8 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
             "Node|$projectB|net8.0|Azure.B|Different.Assembly|$packageB|true|||true"
             "Node|$testProject|net8.0|Azure.A.Tests|Azure.A.Tests|$testPackage|true||true|"
             "Node|$testProject|net9.0|Azure.A.Tests|Azure.A.Tests|$testPackage|true||true|"
-            "ProjectReference|$testProject|net8.0|$projectA||"
-            "ProjectReference|$testProject|net9.0|$projectA||"
+            "ProjectReference|$testProject|net8.0|$projectA||||||net8.0"
+            "ProjectReference|$testProject|net9.0|$projectA||||||net9.0"
             "PackageReference|$testProject|net9.0|Azure.External|||"
             "DeclaredProject|$projectA"
             "DeclaredProject|$projectB"
@@ -41,13 +41,19 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
 
     It "builds a versioned artifact that unions evaluated target frameworks" {
         $graph = Get-Content -Raw $graphPath | ConvertFrom-Json -Depth 100
-        $graph.schemaVersion | Should -Be 2
+        $graph.schemaVersion | Should -Be 3
         $graph.diagnostics.isComplete | Should -BeTrue
+        $graph.diagnostics.configurationCount | Should -Be 5
+        $graph.diagnostics.configurationGraph.isExact | Should -BeTrue
         $node = $graph.nodes | Where-Object packageId -eq "Azure.A" | Select-Object -First 1
         $node.targetFrameworks | Should -Be @("net8.0", "net9.0")
         $edge = $graph.edges | Where-Object { $_.kind -eq "PackageReference" -and $_.fromProject -like "*/A/src/A.csproj" }
         $edge.to | Should -Be "Azure.B"
         $edge.targetFrameworks | Should -Be @("net9.0")
+        $configurationEdge = $graph.configurationEdges | Where-Object {
+            $_.kind -eq "ProjectReference" -and $_.fromProject -like "*/A.Tests.csproj" -and $_.fromTargetFramework -eq "net9.0"
+        }
+        $configurationEdge.toTargetFramework | Should -Be "net9.0"
         $graph.diagnostics.unmappedRepositoryPackageReferences | Should -Contain "Azure.External"
         $graph.diagnostics.hasUnresolvedExternalPackageClosure | Should -BeTrue
     }
@@ -95,6 +101,38 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         Get-Content $outputPath | Should -Be '$(RepoRoot)sdk/example/A/tests/A.Tests.csproj'
     }
 
+    It "unions root configurations without combining dependency paths from different TFMs" {
+        $configurationRecordsPath = Join-Path $TestDrive "configuration.records"
+        $configurationPackageRecordsPath = Join-Path $TestDrive "configuration.packages.records"
+        $configurationGraphPath = Join-Path $TestDrive "configuration.json"
+        $configurationOutputPath = Join-Path $TestDrive "configuration-output.txt"
+        @(
+            "Node|$projectA|net8.0|Azure.A|Azure.A|$packageA|true|||true"
+            "Node|$projectA|net9.0|Azure.A|Azure.A|$packageA|true|||true"
+            "PackageReference|$projectA|net9.0|Azure.B||||1.0.0"
+            "Node|$projectB|net8.0|Azure.B|Different.Assembly|$packageB|true|||true"
+            "Node|$testProject|net8.0|Azure.A.Tests|Azure.A.Tests|$testPackage|true||true|"
+            "Node|$testProject|net9.0|Azure.A.Tests|Azure.A.Tests|$testPackage|true||true|"
+            "ProjectReference|$testProject|net8.0|$projectA||||||net8.0"
+            "DeclaredProject|$projectA"
+            "DeclaredProject|$projectB"
+            "DeclaredProject|$testProject"
+            "Root|$testProject"
+        ) | Set-Content $configurationRecordsPath
+        "PackageClosureSummary|1|1|0|0|0|0|0|0.001|nuget-restore-graph|false|true|1|1|1" |
+            Set-Content $configurationPackageRecordsPath
+
+        & $scriptPath -Operation Build -GraphPath $configurationGraphPath -RecordsPath $configurationRecordsPath -PackageRecordsPath $configurationPackageRecordsPath -RepoRoot $repoRoot
+        if ($LASTEXITCODE) { throw "Graph build failed with exit code $LASTEXITCODE" }
+        & $scriptPath -Operation Reverse -GraphPath $configurationGraphPath -Dependencies "Azure.B" -OutputPath $configurationOutputPath
+        if ($LASTEXITCODE) { throw "Reverse query failed with exit code $LASTEXITCODE" }
+        @(Get-Content $configurationOutputPath).Count | Should -Be 0
+
+        & $scriptPath -Operation Reverse -GraphPath $configurationGraphPath -Dependencies "Azure.A" -OutputPath $configurationOutputPath
+        if ($LASTEXITCODE) { throw "Reverse query failed with exit code $LASTEXITCODE" }
+        Get-Content $configurationOutputPath | Should -Be '$(RepoRoot)sdk/example/A/tests/A.Tests.csproj'
+    }
+
     It "returns the transitive project and optional input closure in the forward query" {
         $outputPath = Join-Path $TestDrive "forward.txt"
         & $scriptPath -Operation Forward -GraphPath $graphPath -RootProjects "sdk/example/A/tests/A.Tests.csproj" -ForwardOutputKind All -OutputPath $outputPath
@@ -107,13 +145,32 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
 
     It "validates known resolved assembly references against source reachability" {
         $oraclePath = Join-Path $TestDrive "oracle.txt"
+        $oraclePackageRecordsPath = Join-Path $TestDrive "oracle.packages.records"
+        $oracleGraphPath = Join-Path $TestDrive "oracle-graph.json"
+        $forwardOutputPath = Join-Path $TestDrive "oracle-forward.txt"
         $resultPath = Join-Path $TestDrive "oracle-result.json"
+        "PackageClosureSummary|0|0|0|0|0|0|0|0.001|nuget-restore-graph|false|true|0|0|0" |
+            Set-Content $oraclePackageRecordsPath
+        & $scriptPath -Operation Build -GraphPath $oracleGraphPath -RecordsPath $recordsPath -PackageRecordsPath $oraclePackageRecordsPath -RepoRoot $repoRoot
+        if ($LASTEXITCODE) { throw "Graph build failed with exit code $LASTEXITCODE" }
+
         "$testProject|net9.0|Different.Assembly" | Set-Content $oraclePath
-        & $scriptPath -Operation ValidateOracle -GraphPath $graphPath -OraclePath $oraclePath -OutputPath $resultPath
+        & $scriptPath -Operation ValidateOracle -GraphPath $oracleGraphPath -OraclePath $oraclePath -OutputPath $resultPath
         if ($LASTEXITCODE) { throw "Oracle validation failed with exit code $LASTEXITCODE" }
         $result = Get-Content -Raw $resultPath | ConvertFrom-Json
         $result.checkedResolvedRepositoryReferences | Should -Be 1
         $result.missingCount | Should -Be 0
+
+        & $scriptPath -Operation Forward -GraphPath $oracleGraphPath -RootProjects "sdk/example/A/tests/A.Tests.csproj" -OutputPath $forwardOutputPath
+        if ($LASTEXITCODE) { throw "Forward query failed with exit code $LASTEXITCODE" }
+        Get-Content $forwardOutputPath | Should -Contain "Project|sdk/example/B/src/B.csproj"
+
+        "$testProject|net8.0|Different.Assembly" | Set-Content $oraclePath
+        { & $scriptPath -Operation ValidateOracle -GraphPath $oracleGraphPath -OraclePath $oraclePath -OutputPath $resultPath } |
+            Should -Throw "*missed 1 resolved repository references*"
+        $result = Get-Content -Raw $resultPath | ConvertFrom-Json
+        $result.missingCount | Should -Be 1
+        $result.missing[0].targetFramework | Should -Be "net8.0"
     }
 
     It "marks missing repository project references in diagnostics" {
@@ -143,11 +200,11 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
     It "rejects unsupported graph schemas" {
         $unsupportedPath = Join-Path $TestDrive "unsupported.json"
         $graph = Get-Content -Raw $graphPath | ConvertFrom-Json -Depth 100
-        $graph.schemaVersion = 3
+        $graph.schemaVersion = 4
         $graph | ConvertTo-Json -Depth 100 | Set-Content $unsupportedPath
         $outputPath = Join-Path $TestDrive "unsupported.txt"
         { & $scriptPath -Operation Reverse -GraphPath $unsupportedPath -Dependencies "Azure.A" -OutputPath $outputPath } |
-            Should -Throw "*schema version '3'*"
+            Should -Throw "*schema version '4'*"
     }
 
     It "diagnoses unevaluated declarations and cross-TFM identity conflicts" {
@@ -237,7 +294,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
             "PackageReference|$testProject|net8.0|External.A||all||1.0.0"
             "PackageReference|$testProject|net8.0|External.C||all||1.0.0"
             "PackageReference|$testProject|net8.0|Local.Contributor||all||1.0.0"
-            "ProjectReference|$testProject|net8.0|$childProject|||||"
+            "ProjectReference|$testProject|net8.0|$childProject||||||net8.0"
             "PackageReference|$childProject|net8.0|Shared.Dependency||all||2.0.0"
         ) | Set-Content $inputRecordsPath
 
@@ -266,9 +323,10 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $closureRecords = Get-Content $closureRecordsPath
         $closureRecords | Should -Contain "TransitivePackageReference|$testProject|net8.0|Azure.B|External.A|1.0.0|External.A 1.0.0>Shared.Dependency 2.0.0>Azure.B 1.0.0"
         $closureRecords | Should -Contain "TransitivePackageReference|$testProject|net8.0|Azure.D|External.C|1.0.0|External.C 1.0.0>Other.Dependency 2.0.0>Azure.D 1.0.0"
+        $closureRecords | Should -Contain "TransitivePackageReference|$testProject|net8.0|Azure.D|Local.Contributor|1.0.0|Local.Contributor 1.0.0>Other.Dependency 2.0.0>Azure.D 1.0.0"
         $closureRecords | Should -Contain "TransitivePackageReference|$childProject|net8.0|Azure.B|Shared.Dependency|2.0.0|Shared.Dependency 2.0.0>Azure.B 1.0.0"
         $summary = ($closureRecords | Where-Object { $_ -like "PackageClosureSummary|*" }).Split('|')
-        $summary[1..4] | Should -Be @("3", "3", "3", "0")
+        $summary[1..4] | Should -Be @("4", "4", "4", "0")
         $summary[9..11] | Should -Be @("nuget-restore-graph", "False", "True")
         $summary[12..13] | Should -Be @("2", "2")
         [int]$summary[14] | Should -BeGreaterThan 0
@@ -279,6 +337,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $closureGraph.diagnostics.packageClosure.projectContextCount | Should -Be 2
         $closureGraph.diagnostics.packageClosure.restoreRequestCount | Should -Be 2
         $closureGraph.diagnostics.packageClosure.selectedPackageCount | Should -BeGreaterThan 0
+        $closureGraph.diagnostics.configurationGraph.isExact | Should -BeTrue
     }
 
     It "collects TFM-specific records with the strongly typed ProjectGraph task" {
@@ -308,7 +367,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         @'
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <TargetFrameworks>net8.0;netstandard2.0</TargetFrameworks>
     <PackageId>Azure.B</PackageId>
     <IsClientLibrary>true</IsClientLibrary>
     <IsShippingLibrary>true</IsShippingLibrary>
@@ -345,10 +404,16 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
 
         $taskGraph = Get-Content -Raw $taskGraphPath | ConvertFrom-Json -Depth 100
         $taskGraph.diagnostics.isComplete | Should -BeTrue
+        $taskGraph.diagnostics.configurationGraph.isExact | Should -BeTrue
         ($taskGraph.nodes | Where-Object packageId -eq "Azure.A.Tests").targetFrameworks | Should -Be @("net8.0", "net9.0")
         $taskPackageEdge = $taskGraph.edges | Where-Object { $_.kind -eq "PackageReference" -and $_.fromProject -like "*/A.Tests.csproj" }
         $taskPackageEdge.targetFrameworks | Should -Be @("net8.0")
         $taskPackageEdge.version | Should -Be "1.2.3"
         ($taskGraph.edges | Where-Object { $_.kind -eq "ProjectReference" -and $_.fromProject -like "*/A.Tests.csproj" }).targetFrameworks | Should -Be @("net9.0")
+        $taskProjectEdge = $taskGraph.configurationEdges | Where-Object {
+            $_.kind -eq "ProjectReference" -and $_.fromProject -like "*/A.Tests.csproj"
+        }
+        $taskProjectEdge.fromTargetFramework | Should -Be "net9.0"
+        $taskProjectEdge.toTargetFramework | Should -Be "net8.0"
     }
 }

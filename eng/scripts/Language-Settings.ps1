@@ -133,7 +133,7 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
   $projectGraphOutputFilePath = Join-Path $RepoRoot "_dependencylist.project-graph.txt"
 
   $projectGraphCommand = "dotnet msbuild /m /nr:false /t:QueryRepositoryProjectGraphReverseWithProjectGraph ./eng/service.proj /p:TestDependsOnDependency=`"$TestDependsOnDependency`" /p:TestDependsIncludePackageRootDirectoryOnly=true /p:IncludeSrc=false " +
-    "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false" +
+    "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false /p:RepositoryProjectGraphPackageResolutionMode=NuGetRestore" +
     " /p:OutputProjectFilePath=`"$projectGraphOutputFilePath`""
 
   Write-Host "Calculating dependencies using the MSBuild ProjectGraph reader."

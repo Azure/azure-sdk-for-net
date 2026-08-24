@@ -48,17 +48,17 @@ The implementation therefore asks the build system the broad question, “What e
 The experiment separates the calculation into three phases:
 
 1. **Evaluate the source graph once.** `RepositoryProjectGraphTask` constructs one in-process MSBuild `ProjectGraph` over the repository projects. It emits canonical inner configurations for each declared TFM and records evaluated `ProjectReference`, `PackageReference`, package version, package identity, and project metadata.
-2. **Complete package-only paths.** The default `ResolveExternalPackageClosureTask` follows external package dependencies that can lead back to a package produced by this repository. It reads package metadata from the NuGet global package folders first and then from configured feeds. An opt-in NuGet restore mode provides a more authoritative comparison, described below. Neither mode resolves physical compiler assemblies through RAR.
-3. **Build and query one artifact.** [`RepositoryProjectGraph.ps1`](../../scripts/RepositoryProjectGraph.ps1) writes a schema-versioned graph with diagnostics. The graph supports reverse queries for affected-test selection and forward queries for project or input reachability.
+2. **Complete package-only paths.** CI passes every compile-capable direct package root, including packages produced by this repository, through NuGet's restore engine with the complete evaluated P2P topology. The resulting lock-file targets are flattened to project/TFM-to-repository-package reachability records. A repository-owned metadata resolver remains available as a performance comparison. Neither mode resolves physical compiler assemblies through RAR.
+3. **Build and query one artifact.** [`RepositoryProjectGraph.ps1`](../../scripts/RepositoryProjectGraph.ps1) writes a schema-versioned graph with diagnostics. Schema 3 contains explicit `(project, TFM)` configuration edges. Queries traverse each root configuration independently and union the resulting physical package roots only after reachability is complete.
 
 ```text
 repository projects + declared TFMs
     -> one in-process MSBuild ProjectGraph
     -> evaluated project/package identity records
-    -> cache-first external package metadata closure
-    -> schema-versioned graph artifact + diagnostics
-       -> reverse affected-test query
-       -> forward project/input query
+    -> complete-topology NuGet restore graph
+    -> schema-v3 configuration graph + diagnostics
+       -> per-configuration reachability
+       -> union physical project/package roots
 ```
 
 There is no MSBuild process spawned per inner project. `ProjectGraph` still performs real MSBuild evaluation, including imports, properties, conditions, central package versions, and TFM-specific items; it is not a lightweight XML parser.
@@ -67,16 +67,16 @@ There is no MSBuild process spawned per inner project. `ProjectGraph` still perf
 
 `RepositoryProjectGraphPackageResolutionMode` selects the external package phase:
 
-- **`IsolatedMetadata` (default)** uses repository-owned, cache-first dependency metadata traversal. It is the performance baseline and resolves each root independently.
-- **`NuGetRestore` (experimental)** builds one shared `DependencyGraphSpec` containing a multi-targeted `PackageSpec` for every evaluated project. It preserves every actual `PackageReference`, including repository package IDs, and each TFM-specific P2P edge as a `ProjectRestoreReference`. NuGet's `DependencyGraphSpecRequestProvider` and `RestoreCommand` resolve rooted projects with a shared provider cache and bounded project-level concurrency. The task reads each in-memory `LockFile` and emits only compile-capable external paths back to repository package identities.
+- **`NuGetRestore` (the CI-selected mode)** builds one shared `DependencyGraphSpec` containing a multi-targeted `PackageSpec` for every evaluated project. It preserves every actual `PackageReference`, including repository package IDs, and each TFM-specific P2P edge as a `ProjectRestoreReference`. NuGet's `DependencyGraphSpecRequestProvider` and `RestoreCommand` resolve rooted projects with a shared provider cache and bounded project-level concurrency. The task reads each in-memory `LockFile`, follows local and external package paths, and emits compile-capable paths back to repository package identities.
+- **`IsolatedMetadata` (the MSBuild property fallback)** uses repository-owned, cache-first dependency metadata traversal. It is retained as a performance baseline and resolves each root independently. CI sets `NuGetRestore` explicitly rather than relying on this fallback.
 
-The NuGet mode deliberately reuses the versions, asset filters, target-framework fallbacks, runtime graph paths, and P2P references already produced by MSBuild evaluation instead of recreating central package management. It rejects `CentralPackageTransitivePinningEnabled=true`, which would require additional central-package semantics. Solver inputs are not filtered by repository ownership: local package roots and dependencies contributed by referenced projects remain available to NuGet's aggregate direct-dependency wins, shared transitive version selection, and framework asset choice. Repository ownership is applied only when filtering resolved paths for the graph artifact.
+The NuGet mode deliberately reuses the versions, asset filters, target-framework fallbacks, runtime graph paths, and P2P references already produced by MSBuild evaluation instead of recreating central package management. It rejects `CentralPackageTransitivePinningEnabled=true`, which would require additional central-package semantics. Solver inputs are not filtered by repository ownership: all compile-capable direct package roots and dependencies contributed by referenced projects remain available to NuGet's aggregate direct-dependency wins, shared transitive version selection, and framework asset choice. Traversal also continues through local packages, because a repository package can itself lead through packages back to another repository package. Repository ownership is applied only when filtering resolved paths for the graph artifact.
 
 The synthetic restore does not commit `project.assets.json`, dependency graph, or no-op cache files. It can reuse installed packages and HTTP metadata through NuGet's normal caches, but missing selected packages are still downloaded and extracted. Consequently it has no persisted no-op restore path yet.
 
 The NuGet mode is still marked `restoreEquivalent=false` until broader lock-file comparison validates the remaining project restore properties and intentionally OS-neutral target set. The artifact exposes project context count, restore request count, selected package count, unresolved roots, and the non-equivalence flag in diagnostics.
 
-Enable the comparison with:
+Select this mode explicitly with:
 
 ```text
 /p:RepositoryProjectGraphPackageResolutionMode=NuGetRestore
@@ -87,9 +87,9 @@ Enable the comparison with:
 - The output contract is limited to identities and reachability, avoiding physical reference and assembly-conflict resolution.
 - Each project configuration is represented in one graph construction rather than being orchestrated as a target over every candidate root.
 - Project and package identities are explicit rather than reconstructed from output filenames.
-- TFM-specific edges are preserved in the artifact and deliberately unioned by the current queries.
+- TFM-specific edges are preserved in the artifact. Queries traverse `(project, TFM)` configurations without combining paths from different TFMs, then deduplicate reached physical roots.
 - One artifact can support both forward and reverse analysis.
-- The schema and diagnostics make missing projects, duplicate package IDs, conflicting node metadata, and unresolved package metadata visible. Queries fail when the artifact is incomplete.
+- The schema and diagnostics make inferred or missing configuration edges, missing projects, duplicate package IDs, conflicting node metadata, and unresolved package metadata visible. NuGet-mode queries fail unless the configuration graph is exact and the artifact is complete.
 - External package metadata is deduplicated within the operation and can be served from the immutable global package cache.
 
 ### Costs and semantic differences
@@ -97,7 +97,7 @@ Enable the comparison with:
 - `ProjectGraph` evaluation has a substantial fixed CPU and memory cost. It evaluates the repository graph even when a particular changed-package query touches only a small subset.
 - The experiment adds repository-owned C#, PowerShell, a graph schema, diagnostics, tests, and NuGet protocol behavior that must be maintained as MSBuild, NuGet, and repository conventions evolve.
 - External metadata resolution is sensitive to the package cache and network. A cold cache can erase part of the source-graph performance advantage.
-- Package closure is explicitly marked `restoreEquivalent=false`. The default mode selects versions for isolated package paths; the NuGet mode preserves the complete evaluated package/P2P topology but has not yet reproduced and compared every normal restore property.
+- Package closure is explicitly marked `restoreEquivalent=false`. The isolated metadata fallback selects versions for isolated package paths; the NuGet mode preserves the complete evaluated package/P2P topology but has not yet reproduced and compared every normal restore property.
 - Direct `PackageReference` compile asset filters are applied in both modes. The default metadata mode does not consistently preserve transitive dependency asset filters and records `transitiveDependencyAssetFiltersApplied=false`; the NuGet mode consumes the lock file and records it as `true`.
 - The package-only phase does not reproduce all lock-file, RID-specific, conflict-resolution, source-mapping, or other restore behavior. These differences can produce false-positive or false-negative reachability if repository assumptions change.
 - The graph deliberately models the union of declared TFMs and does not add an OS-specific query dimension. Host-dependent MSBuild conditions remain an assumption of the repository analysis.
@@ -110,7 +110,7 @@ These results are end-to-end command timings, not isolated target timings:
 | Implementation | CI time | Notes |
 | --- | ---: | --- |
 | Current `ResolveReferences` | 3:57 | Same experimental CI run; `dotnet build` includes implicit restore |
-| ProjectGraph plus package closure | 1:29 | Same run; package cache had an exact-key miss |
+| ProjectGraph plus isolated metadata closure | 1:29 | Same run; this predates CI selecting NuGet restore |
 | Target-dispatched repository source graph | 1:10 | Same run; does not include external package closure |
 | ProjectGraph before package closure | 0:48 | Earlier CI run; not a same-run comparison |
 
@@ -126,6 +126,8 @@ After preserving all local package roots and P2P topology, full local commands t
 
 An interleaved default-mode run took 1:13.6 end to end, including 45.6 seconds for ProjectGraph construction and 7.4 seconds for isolated metadata closure. The complete-topology NuGet mode therefore added approximately 4–7 seconds in the package phase across these warm local measurements; end-to-end variance was dominated by ProjectGraph construction. Both modes produced byte-identical 465-line query outputs, and all 79 transitive records matched through project, TFM, repository package, external root, and selected root version; only dependency-path formatting differed.
 
+The schema-3, configuration-aware NuGet run took 1:29.8 locally. ProjectGraph construction evaluated 973 projects and 2,906 configurations in 38.9 seconds. NuGet resolved all 19,662 compile-capable direct package roots in 973 multi-target restore requests in 11.0 seconds, with zero unresolved roots. The graph contained 35,511 configuration edges, reported an exact and complete configuration graph, and selected 465 physical roots. The isolated generation process limited end-to-end peak RSS to approximately 2.25 GiB. For the same 22-package synthetic change, the selected roots exactly matched the target-dispatched source graph.
+
 These measurements do not yet attribute the legacy time among restore, project evaluation, `ResolveProjectReferences`, `ResolvePackageAssets`, and RAR. A binlog from both an end-to-end run and a warm `--no-restore` run is needed before assigning percentages or proposing a targeted optimization to the native targets.
 
 ## Design trade-off summary
@@ -134,9 +136,9 @@ These measurements do not yet attribute the legacy time among restore, project e
 | --- | --- | --- |
 | Primary contract | Exact compiler reference files | Project/package identity reachability |
 | Semantic authority | Build and restored assets | Evaluated MSBuild graph plus isolated metadata or shared-topology NuGet lock files |
-| TFM handling | Dispatch target to every inner build, then union | Preserve TFM-specific edges, then union at query time |
+| TFM handling | Dispatch target to every inner build, then union | Traverse explicit project/TFM configurations, then union physical roots |
 | Project references | Resolve/obtain referenced output paths | Read evaluated graph edges |
-| External packages | Consume NuGet's resolved assets | Traverse cache/feed metadata by default; optionally run NuGet over a shared package/P2P restore graph |
+| External packages | Consume NuGet's resolved assets | CI runs NuGet over the complete evaluated package/P2P topology; isolated metadata is a fallback |
 | Assembly resolution | Full RAR behavior | None |
 | Restore equivalence | Yes, when assets are current | No; explicitly diagnosed |
 | Work shape | Many project/TFM target invocations | One graph construction plus shared closure |

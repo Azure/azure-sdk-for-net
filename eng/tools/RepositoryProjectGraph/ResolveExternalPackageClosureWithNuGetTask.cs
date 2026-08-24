@@ -241,11 +241,11 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
         }
 
         ProjectDefinition[] restoreProjects = projects.Values
-            .Where(project => project.Frameworks.Values.Any(framework => framework.HasExternalRoots(localPackages)))
+            .Where(project => project.Frameworks.Values.Any(framework => framework.HasPackageRoots()))
             .OrderBy(project => project.ProjectPath, StringComparer.OrdinalIgnoreCase)
             .ToArray();
         int projectContextCount = restoreProjects.Sum(project =>
-            project.Frameworks.Values.Count(framework => framework.HasExternalRoots(localPackages)));
+            project.Frameworks.Values.Count(framework => framework.HasPackageRoots()));
         return new RestoreGraphInput(projects, restoreProjects, localPackages, projectContextCount);
     }
 
@@ -505,7 +505,7 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
         var frameworkResults = new List<FrameworkResult>();
         int selectedPackageCount = 0;
         foreach (FrameworkDefinition framework in project.Frameworks.Values.Where(candidate =>
-            candidate.HasExternalRoots(localPackages)))
+            candidate.HasPackageRoots()))
         {
             NuGetFramework nugetFramework = NuGetFramework.ParseFolder(framework.TargetFramework);
             LockFileTarget target = result.LockFile.Targets.SingleOrDefault(candidate =>
@@ -526,16 +526,34 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
             selectedPackageCount += target.Libraries.Count(library =>
                 library.Type.Equals("package", StringComparison.OrdinalIgnoreCase));
             var roots = new List<RootResult>();
-            foreach (DirectPackage root in framework.GetExternalRoots(localPackages))
+            foreach (DirectPackage root in framework.GetPackageRoots())
             {
-                if (!libraries.TryGetValue(root.Id, out LockFileTargetLibrary rootLibrary) ||
-                    !rootLibrary.Type.Equals("package", StringComparison.OrdinalIgnoreCase))
+                if (!libraries.TryGetValue(root.Id, out LockFileTargetLibrary rootLibrary))
                 {
                     roots.Add(new RootResult(
                         root,
                         string.Empty,
                         Array.Empty<ReachedPackage>(),
                         new[] { $"NuGet restore did not resolve direct package '{root.Id}' {root.VersionSpec}." }));
+                    continue;
+                }
+                if (rootLibrary.Type.Equals("project", StringComparison.OrdinalIgnoreCase) &&
+                    localPackages.Contains(root.Id))
+                {
+                    roots.Add(new RootResult(
+                        root,
+                        rootLibrary.Version.ToNormalizedString(),
+                        Array.Empty<ReachedPackage>(),
+                        Array.Empty<string>()));
+                    continue;
+                }
+                if (!rootLibrary.Type.Equals("package", StringComparison.OrdinalIgnoreCase))
+                {
+                    roots.Add(new RootResult(
+                        root,
+                        string.Empty,
+                        Array.Empty<ReachedPackage>(),
+                        new[] { $"NuGet resolved direct package '{root.Id}' {root.VersionSpec} as unexpected library type '{rootLibrary.Type}'." }));
                     continue;
                 }
 
@@ -556,7 +574,8 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
         var reached = new Dictionary<string, ReachedPackage>(StringComparer.OrdinalIgnoreCase);
         var visited = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var queue = new Queue<PackageVisit>();
-        queue.Enqueue(new PackageVisit(rootLibrary.Name, FormatIdentity(rootLibrary)));
+        string rootIdentity = FormatIdentity(rootLibrary);
+        queue.Enqueue(new PackageVisit(rootLibrary.Name, rootIdentity));
         while (queue.Count > 0)
         {
             PackageVisit visit = queue.Dequeue();
@@ -580,7 +599,6 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
                     {
                         reached.TryAdd(dependency.Id, new ReachedPackage(dependency.Id, path));
                     }
-                    continue;
                 }
                 queue.Enqueue(new PackageVisit(dependency.Id, path));
             }
@@ -599,7 +617,7 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
         string error) =>
         new(
             project.Frameworks.Values
-                .Where(framework => framework.HasExternalRoots(localPackages))
+                .Where(framework => framework.HasPackageRoots())
                 .Select(framework => CreateFailedFrameworkResult(framework, localPackages, error))
                 .ToArray(),
             0);
@@ -610,7 +628,7 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
         string error) =>
         new(
             framework,
-            framework.GetExternalRoots(localPackages)
+            framework.GetPackageRoots()
                 .Select(package => new RootResult(
                     package,
                     string.Empty,
@@ -804,15 +822,13 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
         public Dictionary<string, DirectProjectReference> ProjectReferences { get; } =
             new(StringComparer.OrdinalIgnoreCase);
 
-        public bool HasExternalRoots(IReadOnlySet<string> localPackages) =>
+        public bool HasPackageRoots() =>
             Packages.Values.Any(package =>
-                !localPackages.Contains(package.Id) &&
                 IncludesCompileAssets(package.IncludeAssets, package.ExcludeAssets));
 
-        public IEnumerable<DirectPackage> GetExternalRoots(IReadOnlySet<string> localPackages) =>
+        public IEnumerable<DirectPackage> GetPackageRoots() =>
             Packages.Values
                 .Where(package =>
-                    !localPackages.Contains(package.Id) &&
                     IncludesCompileAssets(package.IncludeAssets, package.ExcludeAssets))
                 .OrderBy(package => package.Id, StringComparer.OrdinalIgnoreCase);
     }

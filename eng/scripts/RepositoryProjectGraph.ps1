@@ -45,32 +45,43 @@ function Add-AdjacencyEdge($Table, [string] $From, [string] $To) {
   }
 }
 
-function Get-ProjectKey([string] $Path) { return "project:$Path" }
 function Get-PackageKey([string] $Id) { return "package:$Id" }
+function Get-ConfigurationKey([string] $Path, [string] $TargetFramework) { return "configuration:$Path|$TargetFramework" }
 
 function Read-Graph([string] $Path) {
   if (!(Test-Path $Path)) {
     throw "Repository project graph does not exist: $Path"
   }
   $graph = Get-Content -Raw $Path | ConvertFrom-Json -Depth 100
-  if ($graph.schemaVersion -ne 2) {
-    throw "Unsupported repository project graph schema version '$($graph.schemaVersion)'. Expected 2."
+  if ($graph.schemaVersion -ne 3) {
+    throw "Unsupported repository project graph schema version '$($graph.schemaVersion)'. Expected 3."
   }
   return $graph
 }
 
 function New-GraphIndexes($Graph) {
   $nodes = @{}
+  $configurationsByProject = @{}
   $forward = @{}
   $reverse = @{}
+  $packageClosureUsesNuGet = $null -ne $Graph.diagnostics.packageClosure -and
+    $Graph.diagnostics.packageClosure.resolutionMode -eq 'nuget-restore-graph'
 
   foreach ($node in $Graph.nodes) {
     $nodes[$node.projectPath] = $node
+    $configurationsByProject[$node.projectPath] = [System.Collections.Generic.List[string]]::new()
+    foreach ($targetFramework in $node.targetFrameworks) {
+      $configurationsByProject[$node.projectPath].Add((Get-ConfigurationKey $node.projectPath $targetFramework))
+    }
   }
 
-  foreach ($edge in $Graph.edges) {
-    $from = Get-ProjectKey $edge.fromProject
-    $to = if ($edge.kind -eq 'ProjectReference') { Get-ProjectKey $edge.to } else { Get-PackageKey $edge.to }
+  foreach ($edge in $Graph.configurationEdges) {
+    $from = Get-ConfigurationKey $edge.fromProject $edge.fromTargetFramework
+    $to = if ($edge.kind -eq 'ProjectReference') {
+      Get-ConfigurationKey $edge.to $edge.toTargetFramework
+    } else {
+      Get-PackageKey $edge.to
+    }
     Add-AdjacencyEdge $forward $from $to
     Add-AdjacencyEdge $reverse $to $from
   }
@@ -78,19 +89,36 @@ function New-GraphIndexes($Graph) {
   foreach ($node in $Graph.nodes) {
     if ($node.isShippingLibrary -and $node.packageId) {
       $package = Get-PackageKey $node.packageId
-      $project = Get-ProjectKey $node.projectPath
-      Add-AdjacencyEdge $forward $package $project
-      Add-AdjacencyEdge $reverse $project $package
-      Add-AdjacencyEdge $forward $project $package
-      Add-AdjacencyEdge $reverse $package $project
+      foreach ($configuration in $configurationsByProject[$node.projectPath]) {
+        Add-AdjacencyEdge $reverse $package $configuration
+        if (!$packageClosureUsesNuGet) {
+          Add-AdjacencyEdge $forward $package $configuration
+          Add-AdjacencyEdge $reverse $configuration $package
+          Add-AdjacencyEdge $forward $configuration $package
+        }
+      }
     }
   }
 
   return @{
     Nodes = $nodes
+    ConfigurationsByProject = $configurationsByProject
     Forward = $forward
     Reverse = $reverse
   }
+}
+
+function Test-ProjectReached($Indexes, $Reachable, [string] $ProjectPath) {
+  if (!$Indexes.ConfigurationsByProject.ContainsKey($ProjectPath)) { return $false }
+  foreach ($configuration in $Indexes.ConfigurationsByProject[$ProjectPath]) {
+    if ($Reachable.Contains($configuration)) { return $true }
+  }
+  return $false
+}
+
+function Test-ProjectOutputReached($Indexes, $Reachable, $Node) {
+  return (Test-ProjectReached $Indexes $Reachable $Node.projectPath) -or
+    ($Node.isShippingLibrary -and $Node.packageId -and $Reachable.Contains((Get-PackageKey $Node.packageId)))
 }
 
 function Get-Reachable($Adjacency, [string[]] $Seeds) {
@@ -131,11 +159,13 @@ function Build-Graph {
   $root = Normalize-AbsolutePath $RepoRoot
   $nodes = @{}
   $edges = @{}
+  $configurationEdges = @{}
   $inputs = @{}
   $declaredProjects = New-CaseInsensitiveSet
   $roots = [System.Collections.Generic.List[string]]::new()
   $rootSet = New-CaseInsensitiveSet
   $nodeMetadataConflicts = [System.Collections.Generic.List[object]]::new()
+  $inferredProjectReferenceConfigurations = [System.Collections.Generic.List[object]]::new()
   $unresolvedPackageClosure = [System.Collections.Generic.List[object]]::new()
   $packageClosureSummary = $null
   $packageClosureSummaryCount = 0
@@ -214,6 +244,26 @@ function Build-Graph {
           }
         }
         if ($parts[2]) { $null = $edges[$key].targetFrameworks.Add($parts[2]) }
+        $toTargetFramework = if ($parts.Length -ge 10) { $parts[9] } else { '' }
+        $configurationKey = "ProjectReference|$from|$($parts[2])|$to|$toTargetFramework|$($parts[4])|$($parts[5])"
+        if (!$configurationEdges.ContainsKey($configurationKey)) {
+          $configurationEdges[$configurationKey] = [pscustomobject][ordered]@{
+            kind = 'ProjectReference'
+            fromProject = $from
+            fromTargetFramework = $parts[2]
+            to = $to
+            toTargetFramework = $toTargetFramework
+            referenceOutputAssembly = $parts[4]
+            outputItemType = $parts[5]
+            privateAssets = if ($parts.Length -ge 7) { $parts[6] } else { '' }
+            includeAssets = if ($parts.Length -ge 8) { $parts[7] } else { '' }
+            excludeAssets = if ($parts.Length -ge 9) { $parts[8] } else { '' }
+            version = ''
+            viaPackage = ''
+            viaVersion = ''
+            dependencyPath = ''
+          }
+        }
       }
       'PackageReference' {
         if ($parts.Length -lt 7) { throw "Invalid package-reference record: $line" }
@@ -239,6 +289,25 @@ function Build-Graph {
           }
         }
         if ($parts[2]) { $null = $edges[$key].targetFrameworks.Add($parts[2]) }
+        $configurationKey = "PackageReference|$from|$($parts[2])|$($parts[3])|$($parts[4])|$($parts[5])|$($parts[6])|$version"
+        if (!$configurationEdges.ContainsKey($configurationKey)) {
+          $configurationEdges[$configurationKey] = [pscustomobject][ordered]@{
+            kind = 'PackageReference'
+            fromProject = $from
+            fromTargetFramework = $parts[2]
+            to = $parts[3]
+            toTargetFramework = ''
+            referenceOutputAssembly = ''
+            outputItemType = ''
+            privateAssets = $parts[4]
+            includeAssets = $parts[5]
+            excludeAssets = $parts[6]
+            version = $version
+            viaPackage = ''
+            viaVersion = ''
+            dependencyPath = ''
+          }
+        }
       }
       'TransitivePackageReference' {
         if ($parts.Length -lt 7) { throw "Invalid transitive package-reference record: $line" }
@@ -264,6 +333,25 @@ function Build-Graph {
           }
         }
         if ($parts[2]) { $null = $edges[$key].targetFrameworks.Add($parts[2]) }
+        $configurationKey = "TransitivePackageReference|$from|$($parts[2])|$($parts[3])|$($parts[4])|$($parts[5])|$($parts[6])"
+        if (!$configurationEdges.ContainsKey($configurationKey)) {
+          $configurationEdges[$configurationKey] = [pscustomobject][ordered]@{
+            kind = 'TransitivePackageReference'
+            fromProject = $from
+            fromTargetFramework = $parts[2]
+            to = $parts[3]
+            toTargetFramework = ''
+            referenceOutputAssembly = ''
+            outputItemType = ''
+            privateAssets = ''
+            includeAssets = ''
+            excludeAssets = ''
+            version = ''
+            viaPackage = $parts[4]
+            viaVersion = $parts[5]
+            dependencyPath = $parts[6]
+          }
+        }
       }
       'UnresolvedPackageClosure' {
         if ($parts.Length -lt 6) { throw "Invalid unresolved package-closure record: $line" }
@@ -326,6 +414,62 @@ function Build-Graph {
     }
   }
 
+  $unmappedConfigurationEdges = @($configurationEdges.GetEnumerator() | Where-Object {
+    $_.Value.kind -eq 'ProjectReference' -and !$_.Value.toTargetFramework
+  })
+  foreach ($entry in $unmappedConfigurationEdges) {
+    $edge = $entry.Value
+    $configurationEdges.Remove($entry.Key)
+    if (!$nodes.ContainsKey($edge.to) -or $nodes[$edge.to].targetFrameworks.Count -eq 0) {
+      $configurationEdges[$entry.Key] = $edge
+      continue
+    }
+
+    $inferredProjectReferenceConfigurations.Add([ordered]@{
+      fromProject = $edge.fromProject
+      fromTargetFramework = $edge.fromTargetFramework
+      toProject = $edge.to
+    })
+    foreach ($toTargetFramework in $nodes[$edge.to].targetFrameworks) {
+      $key = "$($entry.Key)|$toTargetFramework"
+      $configurationEdges[$key] = [pscustomobject][ordered]@{
+        kind = $edge.kind
+        fromProject = $edge.fromProject
+        fromTargetFramework = $edge.fromTargetFramework
+        to = $edge.to
+        toTargetFramework = $toTargetFramework
+        referenceOutputAssembly = $edge.referenceOutputAssembly
+        outputItemType = $edge.outputItemType
+        privateAssets = $edge.privateAssets
+        includeAssets = $edge.includeAssets
+        excludeAssets = $edge.excludeAssets
+        version = $edge.version
+        viaPackage = $edge.viaPackage
+        viaVersion = $edge.viaVersion
+        dependencyPath = $edge.dependencyPath
+      }
+    }
+  }
+
+  $configurationKeys = New-CaseInsensitiveSet
+  foreach ($node in $nodes.Values) {
+    foreach ($targetFramework in $node.targetFrameworks) {
+      $null = $configurationKeys.Add((Get-ConfigurationKey $node.projectPath $targetFramework))
+    }
+  }
+  $missingConfigurationReferences = @($configurationEdges.Values | Where-Object {
+    !$configurationKeys.Contains((Get-ConfigurationKey $_.fromProject $_.fromTargetFramework)) -or
+      ($_.kind -eq 'ProjectReference' -and !$configurationKeys.Contains((Get-ConfigurationKey $_.to $_.toTargetFramework)))
+  } | Sort-Object kind, fromProject, fromTargetFramework, to, toTargetFramework | ForEach-Object {
+    [ordered]@{
+      kind = $_.kind
+      fromProject = $_.fromProject
+      fromTargetFramework = $_.fromTargetFramework
+      to = $_.to
+      toTargetFramework = $_.toTargetFramework
+    }
+  })
+
   $packageProjects = @{}
   foreach ($node in $nodes.Values) {
     if (!$node.isShippingLibrary -or !$node.packageId) { continue }
@@ -364,9 +508,11 @@ function Build-Graph {
     $packageClosureHasUnresolved = !$packageClosureSummaryConsistent -or
       $packageClosureSummary.unresolvedRootCount -gt 0 -or $unresolvedPackageClosure.Count -gt 0
   }
+  $requiresExactConfigurationGraph = $packageClosureAttempted -and $null -ne $packageClosureSummary -and
+    $packageClosureSummary.resolutionMode -eq 'nuget-restore-graph'
 
   $graph = [ordered]@{
-    schemaVersion = 2
+    schemaVersion = 3
     repositoryRoot = $root.Replace('\', '/')
     nodes = @($nodes.Values | Sort-Object projectPath | ForEach-Object {
       $_.targetFrameworks = @($_.targetFrameworks | Sort-Object)
@@ -376,6 +522,7 @@ function Build-Graph {
       $_.targetFrameworks = @($_.targetFrameworks | Sort-Object)
       [pscustomobject]$_
     })
+    configurationEdges = @($configurationEdges.Values | Sort-Object kind, fromProject, fromTargetFramework, to, toTargetFramework, viaPackage)
     inputs = @($inputs.Values | Sort-Object projectPath, kind, path | ForEach-Object {
       $_.targetFrameworks = @($_.targetFrameworks | Sort-Object)
       [pscustomobject]$_
@@ -384,15 +531,24 @@ function Build-Graph {
     diagnostics = [ordered]@{
       isComplete = $duplicatePackageIds.Count -eq 0 -and $missingProjectReferences.Count -eq 0 -and
         $missingDeclaredProjects.Count -eq 0 -and $rootsWithoutNodes.Count -eq 0 -and $nodeMetadataConflicts.Count -eq 0 -and
+        $missingConfigurationReferences.Count -eq 0 -and
+        (!$requiresExactConfigurationGraph -or $inferredProjectReferenceConfigurations.Count -eq 0) -and
         $packageClosureSummaryConsistent -and (!$packageClosureAttempted -or !$packageClosureHasUnresolved)
       projectCount = $nodes.Count
+      configurationCount = $configurationKeys.Count
       edgeCount = $edges.Count
+      configurationEdgeCount = $configurationEdges.Count
       inputCount = $inputs.Count
       duplicatePackageIds = $duplicatePackageIds
       missingProjectReferences = $missingProjectReferences
       missingDeclaredProjects = $missingDeclaredProjects
       rootsWithoutNodes = $rootsWithoutNodes
       nodeMetadataConflicts = @($nodeMetadataConflicts)
+      configurationGraph = [ordered]@{
+        isExact = $inferredProjectReferenceConfigurations.Count -eq 0
+        inferredProjectReferences = @($inferredProjectReferenceConfigurations)
+        missingReferences = $missingConfigurationReferences
+      }
       unmappedRepositoryPackageReferences = $unmappedRepositoryPackages
       externalPackageReferences = $externalPackages
       packageClosureAttempted = $packageClosureAttempted
@@ -407,7 +563,7 @@ function Build-Graph {
   $parent = Split-Path -Parent $GraphPath
   if ($parent) { New-Item -ItemType Directory -Path $parent -Force | Out-Null }
   $graph | ConvertTo-Json -Depth 100 | Set-Content -Path $GraphPath -Encoding utf8
-  Write-Host "Repository project graph: $($nodes.Count) projects, $($edges.Count) edges, $($roots.Count) roots, complete=$($graph.diagnostics.isComplete)"
+  Write-Host "Repository project graph: $($nodes.Count) projects, $($configurationKeys.Count) configurations, $($configurationEdges.Count) configuration edges, $($roots.Count) roots, complete=$($graph.diagnostics.isComplete)"
 }
 
 function Invoke-ReverseQuery {
@@ -432,7 +588,7 @@ function Invoke-ReverseQuery {
   $seen = New-CaseInsensitiveSet
 
   foreach ($root in $graph.roots) {
-    if (!$reachable.Contains((Get-ProjectKey $root))) { continue }
+    if (!(Test-ProjectReached $indexes $reachable $root)) { continue }
     $node = $indexes.Nodes[$root]
     if (!$node.isClientLibrary -or $node.isGeneratorLibrary) { continue }
     $line = if ($PackageRootsOnly -eq 'true') {
@@ -477,19 +633,30 @@ function Invoke-ForwardQuery {
     throw "The repository project graph does not contain: $($unknownRoots -join ', ')"
   }
 
-  $seeds = @($requestedRoots | ForEach-Object { Get-ProjectKey $_ })
+  $seeds = @($requestedRoots | ForEach-Object { $indexes.ConfigurationsByProject[$_] })
   $reachable = Get-Reachable $indexes.Forward $seeds
   $lines = [System.Collections.Generic.List[string]]::new()
   if ($ForwardOutputKind -in @('Projects', 'All')) {
     foreach ($node in $graph.nodes) {
-      if ($reachable.Contains((Get-ProjectKey $node.projectPath))) {
+      if (Test-ProjectOutputReached $indexes $reachable $node) {
         $lines.Add("Project|$($node.projectPath)")
       }
     }
   }
   if ($ForwardOutputKind -in @('Inputs', 'All')) {
     foreach ($input in $graph.inputs) {
-      if ($reachable.Contains((Get-ProjectKey $input.projectPath))) {
+      $node = $indexes.Nodes[$input.projectPath]
+      $inputReached = $node.isShippingLibrary -and $node.packageId -and
+        $reachable.Contains((Get-PackageKey $node.packageId))
+      if (!$inputReached) {
+        foreach ($targetFramework in $input.targetFrameworks) {
+          if ($reachable.Contains((Get-ConfigurationKey $input.projectPath $targetFramework))) {
+            $inputReached = $true
+            break
+          }
+        }
+      }
+      if ($inputReached) {
         $lines.Add("Input|$($input.path)")
       }
     }
@@ -531,23 +698,36 @@ function Invoke-OracleValidation {
       $null = $expectedQueryRoots.Add($project)
     }
     if ($parts.Length -lt 3 -or !$knownAliases.ContainsKey($parts[2])) { continue }
-    if (!$closures.ContainsKey($project)) {
-      $closures[$project] = Get-Reachable $indexes.Forward @((Get-ProjectKey $project))
+    $targetFramework = $parts[1]
+    $configuration = Get-ConfigurationKey $project $targetFramework
+    if (!$indexes.ConfigurationsByProject.ContainsKey($project) -or
+        !$indexes.ConfigurationsByProject[$project].Contains($configuration)) {
+      $checked++
+      $missing.Add([ordered]@{
+        projectPath = $project
+        targetFramework = $targetFramework
+        resolvedAssembly = $parts[2]
+        packageId = $knownAliases[$parts[2]]
+      })
+      continue
+    }
+    if (!$closures.ContainsKey($configuration)) {
+      $closures[$configuration] = Get-Reachable $indexes.Forward @($configuration)
     }
     $packageId = $knownAliases[$parts[2]]
     $packageKey = Get-PackageKey $packageId
     $implementedProjectReached = $false
     foreach ($implementationProject in $implementationProjects[$packageId]) {
-      if ($closures[$project].Contains((Get-ProjectKey $implementationProject))) {
+      if (Test-ProjectReached $indexes $closures[$configuration] $implementationProject) {
         $implementedProjectReached = $true
         break
       }
     }
     $checked++
-    if (!$closures[$project].Contains($packageKey) -and !$implementedProjectReached) {
+    if (!$closures[$configuration].Contains($packageKey) -and !$implementedProjectReached) {
       $missing.Add([ordered]@{
         projectPath = $project
-        targetFramework = $parts[1]
+        targetFramework = $targetFramework
         resolvedAssembly = $parts[2]
         packageId = $packageId
       })
@@ -560,7 +740,7 @@ function Invoke-OracleValidation {
     $actualQueryRoots = New-CaseInsensitiveSet
     foreach ($root in $graph.roots) {
       $node = $indexes.Nodes[$root]
-      if ($reachable.Contains((Get-ProjectKey $root)) -and $node.isClientLibrary -and !$node.isGeneratorLibrary) {
+      if ((Test-ProjectReached $indexes $reachable $root) -and $node.isClientLibrary -and !$node.isGeneratorLibrary) {
         $null = $actualQueryRoots.Add($root)
       }
     }

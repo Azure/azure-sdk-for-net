@@ -10,6 +10,7 @@ using Microsoft.Build.Execution;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Graph;
 using Microsoft.Build.Utilities;
+using NuGet.Frameworks;
 
 namespace Azure.Sdk.Tools.RepositoryProjectGraph;
 
@@ -264,7 +265,7 @@ public sealed class RepositoryProjectGraphTask : Task
                     .OrderBy(node => GetProjectPath(node.ProjectInstance), StringComparer.OrdinalIgnoreCase)
                     .ThenBy(node => node.ProjectInstance.GetPropertyValue("TargetFramework"), StringComparer.OrdinalIgnoreCase))
                 {
-                    AddProjectRecords(writer, ref recordCount, node.ProjectInstance);
+                    AddProjectRecords(writer, ref recordCount, node);
                 }
             }
             File.Move(temporaryPath, fullRecordsPath, overwrite: true);
@@ -277,8 +278,9 @@ public sealed class RepositoryProjectGraphTask : Task
         return recordCount;
     }
 
-    private void AddProjectRecords(TextWriter writer, ref long recordCount, ProjectInstance project)
+    private void AddProjectRecords(TextWriter writer, ref long recordCount, ProjectGraphNode node)
     {
+        ProjectInstance project = node.ProjectInstance;
         string projectPath = GetProjectPath(project);
         string targetFramework = project.GetPropertyValue("TargetFramework");
         Dictionary<string, string> packageVersions = project.GetItems("PackageVersion")
@@ -324,20 +326,31 @@ public sealed class RepositoryProjectGraphTask : Task
         var projectReferenceRecords = new HashSet<string>(StringComparer.Ordinal);
         foreach (ProjectItemInstance reference in project.GetItems("ProjectReference"))
         {
-            string record = string.Join(
-                "|",
-                "ProjectReference",
-                projectPath,
-                targetFramework,
-                GetItemFullPath(project, reference),
-                reference.GetMetadataValue("ReferenceOutputAssembly"),
-                reference.GetMetadataValue("OutputItemType"),
-                NormalizeAssetMetadata(reference.GetMetadataValue("PrivateAssets")),
-                NormalizeAssetMetadata(reference.GetMetadataValue("IncludeAssets")),
-                NormalizeAssetMetadata(reference.GetMetadataValue("ExcludeAssets")));
-            if (projectReferenceRecords.Add(record))
+            string referencePath = GetItemFullPath(project, reference);
+            string[] referencedTargetFrameworks = GetReferencedTargetFrameworks(node, referencePath);
+            if (referencedTargetFrameworks.Length == 0)
             {
-                WriteRecord(writer, ref recordCount, record);
+                referencedTargetFrameworks = new[] { string.Empty };
+            }
+
+            foreach (string referencedTargetFramework in referencedTargetFrameworks)
+            {
+                string record = string.Join(
+                    "|",
+                    "ProjectReference",
+                    projectPath,
+                    targetFramework,
+                    referencePath,
+                    reference.GetMetadataValue("ReferenceOutputAssembly"),
+                    reference.GetMetadataValue("OutputItemType"),
+                    NormalizeAssetMetadata(reference.GetMetadataValue("PrivateAssets")),
+                    NormalizeAssetMetadata(reference.GetMetadataValue("IncludeAssets")),
+                    NormalizeAssetMetadata(reference.GetMetadataValue("ExcludeAssets")),
+                    referencedTargetFramework);
+                if (projectReferenceRecords.Add(record))
+                {
+                    WriteRecord(writer, ref recordCount, record);
+                }
             }
         }
 
@@ -359,6 +372,53 @@ public sealed class RepositoryProjectGraphTask : Task
         {
             AddInputRecords(writer, ref recordCount, project, projectPath, targetFramework);
         }
+    }
+
+    private static string[] GetReferencedTargetFrameworks(ProjectGraphNode sourceNode, string referencePath)
+    {
+        var result = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+        foreach (ProjectGraphNode referenceNode in sourceNode.ProjectReferences.Where(node =>
+            StringComparer.OrdinalIgnoreCase.Equals(GetProjectPath(node.ProjectInstance), referencePath)))
+        {
+            string targetFramework = referenceNode.ProjectInstance.GetPropertyValue("TargetFramework");
+            if (!string.IsNullOrEmpty(targetFramework))
+            {
+                result.Add(targetFramework);
+                continue;
+            }
+
+            foreach (ProjectGraphNode innerNode in referenceNode.ProjectReferences.Where(node =>
+                StringComparer.OrdinalIgnoreCase.Equals(GetProjectPath(node.ProjectInstance), referencePath)))
+            {
+                targetFramework = innerNode.ProjectInstance.GetPropertyValue("TargetFramework");
+                if (!string.IsNullOrEmpty(targetFramework))
+                {
+                    result.Add(targetFramework);
+                }
+            }
+        }
+
+        if (result.Count <= 1)
+        {
+            return result.ToArray();
+        }
+
+        NuGetFramework sourceFramework = NuGetFramework.ParseFolder(
+            sourceNode.ProjectInstance.GetPropertyValue("TargetFramework"));
+        var candidates = result
+            .Select(value => new { Value = value, Framework = NuGetFramework.ParseFolder(value) })
+            .Where(candidate => !candidate.Framework.IsUnsupported)
+            .ToArray();
+        NuGetFramework nearest = new FrameworkReducer().GetNearest(
+            sourceFramework,
+            candidates.Select(candidate => candidate.Framework));
+        return nearest is null
+            ? Array.Empty<string>()
+            : candidates
+                .Where(candidate => NuGetFramework.Comparer.Equals(candidate.Framework, nearest))
+                .Select(candidate => candidate.Value)
+                .Take(1)
+                .ToArray();
     }
 
     private static void AddInputRecords(
