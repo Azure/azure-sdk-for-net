@@ -137,7 +137,7 @@ namespace Azure.Provisioning.Enclave
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<VirtualEnclaveDedicatedHubProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<VirtualEnclaveCommunity>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<VirtualEnclaveCommunity>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
