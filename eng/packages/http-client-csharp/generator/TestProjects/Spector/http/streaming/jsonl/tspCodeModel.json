@@ -1,0 +1,561 @@
+{
+  "name": "Streaming.Jsonl",
+  "apiVersions": [],
+  "enums": [],
+  "constants": [
+    {
+      "$id": "1",
+      "kind": "constant",
+      "name": "SendRequestContentType",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/jsonl",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "3",
+      "kind": "constant",
+      "name": "JsonlStreamInfoContentType",
+      "namespace": "TypeSpec.Http.Streams",
+      "usage": "None",
+      "valueType": {
+        "$id": "4",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/jsonl",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "5",
+      "kind": "constant",
+      "name": "SendRequestContentType1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "6",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/jsonl",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "7",
+      "kind": "constant",
+      "name": "SendRequestContentType2",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "8",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/jsonl",
+      "decorators": [],
+      "isExactName": false
+    }
+  ],
+  "models": [
+    {
+      "$id": "9",
+      "kind": "model",
+      "name": "Info",
+      "namespace": "Streaming.Jsonl.Basic",
+      "crossLanguageDefinitionId": "Streaming.Jsonl.Basic.Info",
+      "usage": "Input,Output,Json",
+      "decorators": [],
+      "serializationOptions": {},
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "10",
+          "kind": "property",
+          "name": "desc",
+          "type": {
+            "$id": "11",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Streaming.Jsonl.Basic.Info.desc",
+          "serializationOptions": {},
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$id": "12",
+      "kind": "model",
+      "name": "JsonlStreamInfo",
+      "namespace": "TypeSpec.Http.Streams",
+      "crossLanguageDefinitionId": "TypeSpec.Http.Streams.JsonlStream",
+      "usage": "None",
+      "doc": "",
+      "decorators": [],
+      "serializationOptions": {},
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "13",
+          "kind": "property",
+          "name": "contentType",
+          "type": {
+            "$ref": "3"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "TypeSpec.Http.Streams.JsonlStream.contentType",
+          "serializationOptions": {},
+          "isHttpMetadata": true,
+          "isExactName": false
+        },
+        {
+          "$id": "14",
+          "kind": "property",
+          "name": "body",
+          "type": {
+            "$id": "15",
+            "kind": "bytes",
+            "name": "bytes",
+            "crossLanguageDefinitionId": "",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "TypeSpec.Http.Streams.JsonlStream.body",
+          "serializationOptions": {},
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "$id": "16",
+      "kind": "client",
+      "name": "JsonlClient",
+      "isExactName": false,
+      "namespace": "Streaming.Jsonl",
+      "doc": "Test of jsonl streaming.",
+      "methods": [],
+      "parameters": [
+        {
+          "$id": "17",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "18",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "19",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Streaming.Jsonl.endpoint",
+          "isExactName": false
+        }
+      ],
+      "initializedBy": 1,
+      "decorators": [],
+      "crossLanguageDefinitionId": "Streaming.Jsonl",
+      "apiVersions": [],
+      "children": [
+        {
+          "$id": "20",
+          "kind": "client",
+          "name": "Basic",
+          "isExactName": false,
+          "namespace": "Streaming.Jsonl.Basic",
+          "methods": [
+            {
+              "$id": "21",
+              "kind": "basic",
+              "name": "send",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "22",
+                "name": "send",
+                "isExactName": false,
+                "resourceName": "Basic",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "23",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "type": {
+                      "$ref": "1"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "TypeSpec.Http.Streams.JsonlStream.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "24",
+                        "kind": "method",
+                        "name": "stream",
+                        "serializedName": "stream",
+                        "type": {
+                          "$id": "25",
+                          "kind": "streaming",
+                          "name": "JsonlStreamInfo",
+                          "valueType": {
+                            "$ref": "9"
+                          },
+                          "streamKind": "jsonl",
+                          "contentTypes": [
+                            "application/jsonl"
+                          ],
+                          "crossLanguageDefinitionId": "TypeSpec.Http.Streams.JsonlStream"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Streaming.Jsonl.Basic.send.stream",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      },
+                      {
+                        "$id": "26",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "contentType",
+                        "type": {
+                          "$ref": "3"
+                        },
+                        "location": "",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "TypeSpec.Http.Streams.JsonlStream.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "27",
+                    "kind": "body",
+                    "name": "body",
+                    "serializedName": "body",
+                    "type": {
+                      "$id": "28",
+                      "kind": "streaming",
+                      "name": "JsonlStreamInfo",
+                      "valueType": {
+                        "$ref": "9"
+                      },
+                      "streamKind": "jsonl",
+                      "contentTypes": [
+                        "application/jsonl"
+                      ],
+                      "crossLanguageDefinitionId": "TypeSpec.Http.Streams.JsonlStream"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/jsonl"
+                    ],
+                    "defaultContentType": "application/jsonl",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "TypeSpec.Http.Streams.JsonlStream.body",
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "24"
+                      },
+                      {
+                        "$id": "29",
+                        "kind": "method",
+                        "name": "body",
+                        "serializedName": "body",
+                        "type": {
+                          "$ref": "15"
+                        },
+                        "location": "",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "TypeSpec.Http.Streams.JsonlStream.body",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "body"
+                      }
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
+                  }
+                ],
+                "httpMethod": "POST",
+                "uri": "{endpoint}",
+                "path": "/streaming/jsonl/basic/send",
+                "requestMediaTypes": [
+                  "application/jsonl"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Streaming.Jsonl.Basic.send",
+                "decorators": [],
+                "namespace": "Streaming.Jsonl.Basic"
+              },
+              "parameters": [
+                {
+                  "$ref": "24"
+                }
+              ],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Streaming.Jsonl.Basic.send"
+            },
+            {
+              "$id": "30",
+              "kind": "basic",
+              "name": "receive",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [],
+              "operation": {
+                "$id": "31",
+                "name": "receive",
+                "isExactName": false,
+                "resourceName": "Basic",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "32",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "5"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Streaming.Jsonl.Basic.receive.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "33",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "5"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Streaming.Jsonl.Basic.receive.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$id": "34",
+                      "kind": "streaming",
+                      "name": "JsonlStreamInfo",
+                      "valueType": {
+                        "$ref": "9"
+                      },
+                      "streamKind": "jsonl",
+                      "contentTypes": [
+                        "application/jsonl"
+                      ],
+                      "crossLanguageDefinitionId": "TypeSpec.Http.Streams.JsonlStream"
+                    },
+                    "headers": [
+                      {
+                        "name": "contentType",
+                        "nameInResponse": "content-type",
+                        "type": {
+                          "$ref": "7"
+                        }
+                      }
+                    ],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/jsonl"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/streaming/jsonl/basic/receive",
+                "bufferResponse": false,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Streaming.Jsonl.Basic.receive",
+                "decorators": [],
+                "namespace": "Streaming.Jsonl.Basic"
+              },
+              "parameters": [
+                {
+                  "$ref": "33"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$id": "35",
+                  "kind": "streaming",
+                  "name": "JsonlStreamInfo",
+                  "valueType": {
+                    "$ref": "9"
+                  },
+                  "streamKind": "jsonl",
+                  "contentTypes": [
+                    "application/jsonl"
+                  ],
+                  "crossLanguageDefinitionId": "TypeSpec.Http.Streams.JsonlStream"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Streaming.Jsonl.Basic.receive"
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "36",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "37",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "38",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "http://localhost:3000"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Streaming.Jsonl.Basic.endpoint",
+              "isExactName": false
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Streaming.Jsonl.Basic",
+          "apiVersions": [],
+          "parent": {
+            "$ref": "16"
+          },
+          "isMultiServiceClient": false
+        }
+      ],
+      "isMultiServiceClient": false
+    }
+  ]
+}

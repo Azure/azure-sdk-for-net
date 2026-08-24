@@ -374,6 +374,84 @@ namespace Azure.AI.Projects
         }
 
         /// <summary>
+        /// [Protocol Method] Returns the routines available in the current project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="limit"> The maximum number of routines to return. </param>
+        /// <param name="after"> An opaque continuation token identifying where to resume the list. Prefer following the `next_link` returned by the previous response, which embeds this value. </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual CollectionResult GetRoutines(string foundryFeatures, int? limit, string after, string order, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.GetRoutines");
+            scope.Start();
+            try
+            {
+                return new AIProjectRoutinesGetRoutinesCollectionResult(
+                    this,
+                    foundryFeatures,
+                    limit,
+                    after,
+                    order,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns the routines available in the current project.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="limit"> The maximum number of routines to return. </param>
+        /// <param name="after"> An opaque continuation token identifying where to resume the list. Prefer following the `next_link` returned by the previous response, which embeds this value. </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual AsyncCollectionResult GetRoutinesAsync(string foundryFeatures, int? limit, string after, string order, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.GetRoutines");
+            scope.Start();
+            try
+            {
+                return new AIProjectRoutinesGetRoutinesAsyncCollectionResult(
+                    this,
+                    foundryFeatures,
+                    limit,
+                    after,
+                    order,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// [Protocol Method] Deletes the specified routine.
         /// <list type="bullet">
         /// <item>
@@ -449,6 +527,92 @@ namespace Azure.AI.Projects
         internal virtual async Task<ClientResult> DeleteAsync(string routineName, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             return await DeleteAsync(routineName, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns prior runs recorded for the specified routine.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="routineName"> The unique name of the routine. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="filter"> An optional MLflow search-runs filter expression applied within the routine's experiment. </param>
+        /// <param name="limit"> The maximum number of runs to return. </param>
+        /// <param name="after"> An opaque continuation token identifying where to resume the list. Prefer following the `next_link` returned by the previous response, which embeds this value. </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual CollectionResult GetRoutineRuns(string routineName, string foundryFeatures, string filter, int? limit, string after, string order, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.GetRoutineRuns");
+            scope.Start();
+            try
+            {
+                return new AIProjectRoutinesGetRoutineRunsCollectionResult(
+                    this,
+                    routineName,
+                    foundryFeatures,
+                    filter,
+                    limit,
+                    after,
+                    order,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Returns prior runs recorded for the specified routine.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="routineName"> The unique name of the routine. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="filter"> An optional MLflow search-runs filter expression applied within the routine's experiment. </param>
+        /// <param name="limit"> The maximum number of runs to return. </param>
+        /// <param name="after"> An opaque continuation token identifying where to resume the list. Prefer following the `next_link` returned by the previous response, which embeds this value. </param>
+        /// <param name="order">
+        /// Sort order by the `created_at` timestamp of the objects. `asc` for ascending order and`desc`
+        /// for descending order.
+        /// </param>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual AsyncCollectionResult GetRoutineRunsAsync(string routineName, string foundryFeatures, string filter, int? limit, string after, string order, RequestOptions options)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AIProjectRoutines.GetRoutineRuns");
+            scope.Start();
+            try
+            {
+                return new AIProjectRoutinesGetRoutineRunsAsyncCollectionResult(
+                    this,
+                    routineName,
+                    foundryFeatures,
+                    filter,
+                    limit,
+                    after,
+                    order,
+                    options);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>

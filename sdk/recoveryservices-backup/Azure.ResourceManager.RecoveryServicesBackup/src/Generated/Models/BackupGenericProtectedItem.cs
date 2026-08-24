@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary>
     /// Base class for backup items.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileshareProtectedItem"/>, <see cref="IaasClassicComputeVmProtectedItem"/>, <see cref="IaasVmProtectedItem"/>, <see cref="IaasComputeVmProtectedItem"/>, <see cref="SqlProtectedItem"/>, <see cref="VmWorkloadProtectedItem"/>, <see cref="VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDBInstanceProtectedItem"/>, <see cref="VmWorkloadSqlDatabaseProtectedItem"/>, <see cref="VmWorkloadSqlInstanceProtectedItem"/>, <see cref="DpmProtectedItem"/>, <see cref="GenericProtectedItem"/>, and <see cref="MabFileFolderProtectedItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FileshareProtectedItem"/>, <see cref="IaasClassicComputeVmProtectedItem"/>, <see cref="IaasVmProtectedItem"/>, <see cref="IaasComputeVmProtectedItem"/>, <see cref="SqlProtectedItem"/>, <see cref="VmWorkloadProtectedItem"/>, <see cref="VmWorkloadSapAseDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDatabaseProtectedItem"/>, <see cref="VmWorkloadSapHanaDBInstanceProtectedItem"/>, <see cref="VmWorkloadSqlDatabaseProtectedItem"/>, <see cref="DpmProtectedItem"/>, <see cref="GenericProtectedItem"/>, and <see cref="MabFileFolderProtectedItem"/>.
     /// </summary>
     public abstract partial class BackupGenericProtectedItem
     {
@@ -48,10 +48,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="isArchiveEnabled"> Flag to identify whether datasource is protected in archive. </param>
         /// <param name="policyName"> Name of the policy used for protection. </param>
         /// <param name="softDeleteRetentionPeriodInDays"> Soft delete retention period in days. </param>
+        /// <param name="sourceLocation"> Source location of the protected item datasource. </param>
         /// <param name="vaultId"> ID of the vault which protects this item. </param>
         /// <param name="sourceSideScanInfo"> Source side threat information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupGenericProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriodInDays, string vaultId, BackupSourceSideScanInfo sourceSideScanInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupGenericProtectedItem(string protectedItemType, BackupManagementType? backupManagementType, BackupDataSourceType? workloadType, string containerName, ResourceIdentifier sourceResourceId, ResourceIdentifier policyId, DateTimeOffset? lastRecoverOn, string backupSetName, BackupCreateMode? createMode, DateTimeOffset? deferredDeletedOn, bool? isScheduledForDeferredDelete, string deferredDeleteTimeRemaining, bool? isDeferredDeleteScheduleUpcoming, bool? isRehydrate, IList<string> resourceGuardOperationRequests, bool? isArchiveEnabled, string policyName, int? softDeleteRetentionPeriodInDays, AzureLocation? sourceLocation, string vaultId, BackupSourceSideScanInfo sourceSideScanInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProtectedItemType = protectedItemType;
             BackupManagementType = backupManagementType;
@@ -71,6 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             IsArchiveEnabled = isArchiveEnabled;
             PolicyName = policyName;
             SoftDeleteRetentionPeriodInDays = softDeleteRetentionPeriodInDays;
+            SourceLocation = sourceLocation;
             VaultId = vaultId;
             SourceSideScanInfo = sourceSideScanInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -129,6 +131,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Soft delete retention period in days. </summary>
         public int? SoftDeleteRetentionPeriodInDays { get; set; }
+
+        /// <summary> Source location of the protected item datasource. </summary>
+        public AzureLocation? SourceLocation { get; }
 
         /// <summary> ID of the vault which protects this item. </summary>
         public string VaultId { get; }

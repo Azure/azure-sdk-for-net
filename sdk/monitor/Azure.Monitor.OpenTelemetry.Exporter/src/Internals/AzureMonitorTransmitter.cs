@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -12,6 +13,7 @@ using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.PersistentStorage;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.ShutdownPersistence;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 
@@ -26,6 +28,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
     /// </summary>
     internal class AzureMonitorTransmitter : ITransmitter
     {
+        private const long StorageMaxSizeBytes = 52428800;
+
         internal readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
         internal PersistentBlobProvider? _fileBlobProvider;
         internal readonly AzureMonitorStatsbeat? _statsbeat;
@@ -33,7 +37,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         internal readonly TransmissionStateManager _transmissionStateManager;
         internal readonly TransmitFromStorageHandler? _transmitFromStorageHandler;
         private readonly bool _isAadEnabled;
-        private bool _disposed;
+        private readonly string? _storageDirectory;
+        private readonly object _drainLock = new();
+        private int _referenceCount;
+        private int _persistOnlyScopeCount;
+        private Task? _inFlightDrain;
+        private Stopwatch? _drainStarted;
+        private int _drainWaitMilliseconds;
+        internal bool _disposed;
 
         public AzureMonitorTransmitter(AzureMonitorExporterOptions options, IPlatform platform)
         {
@@ -50,13 +61,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars, out _isAadEnabled);
 
-            _fileBlobProvider = InitializeOfflineStorage(platform, _connectionVars, options.DisableOfflineStorage, options.StorageDirectory);
+            _fileBlobProvider = InitializeOfflineStorage(platform, _connectionVars, options.DisableOfflineStorage, options.StorageDirectory, out var storageDirectory);
+
+            _storageDirectory = storageDirectory;
 
             _statsbeat = InitializeStatsbeat(options, _connectionVars, platform);
 
             if (_fileBlobProvider != null)
             {
-                _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager, _connectionVars, _isAadEnabled, _statsbeat?.NetworkSdkStatsManager);
+                _transmitFromStorageHandler = new TransmitFromStorageHandler(_applicationInsightsRestClient, _fileBlobProvider, _transmissionStateManager, _connectionVars, _isAadEnabled, _statsbeat?.NetworkSdkStatsManager, storageDirectory);
             }
         }
 
@@ -106,26 +119,29 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return new ApplicationInsightsRestClient(new ClientDiagnostics(options), pipeline, host: connectionVars.IngestionEndpoint);
         }
 
-        private static PersistentBlobProvider? InitializeOfflineStorage(IPlatform platform, ConnectionVars connectionVars, bool disableOfflineStorage, string? configuredStorageDirectory)
+        private static PersistentBlobProvider? InitializeOfflineStorage(IPlatform platform, ConnectionVars connectionVars, bool disableOfflineStorage, string? configuredStorageDirectory, out string? storageDirectory)
         {
+            storageDirectory = null;
+
             if (!disableOfflineStorage)
             {
                 try
                 {
-                    var storageDirectory = StorageHelper.GetStorageDirectory(
+                    storageDirectory = StorageHelper.GetStorageDirectory(
                         platform: platform,
                         configuredStorageDirectory: configuredStorageDirectory,
                         instrumentationKey: connectionVars.InstrumentationKey);
 
                     AzureMonitorExporterEventSource.Log.InitializedPersistentStorage(connectionVars.InstrumentationKey, storageDirectory);
 
-                    return new FileBlobProvider(storageDirectory);
+                    return new FileBlobProvider(storageDirectory, maxSizeInBytes: StorageMaxSizeBytes);
                 }
                 catch (Exception ex)
                 {
                     // TODO: Should we throw if customer has opted for storage?
                     AzureMonitorExporterEventSource.Log.FailedToInitializePersistentStorage(connectionVars.InstrumentationKey, ex);
 
+                    storageDirectory = null;
                     return null;
                 }
             }
@@ -168,12 +184,140 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public string InstrumentationKey => _connectionVars.InstrumentationKey;
 
+        internal bool IsPersistOnly => Volatile.Read(ref _persistOnlyScopeCount) > 0;
+
+        internal Task? InFlightDrain => _inFlightDrain;
+
+        public IDisposable BeginPersistOnlyScope() => new PersistOnlyScope(this);
+
+        /// <summary>
+        /// Records that another exporter shares this instance. Balanced by <see cref="Dispose()"/>.
+        /// </summary>
+        internal void AddReference() => Interlocked.Increment(ref _referenceCount);
+
+        public void DrainStorage(int waitMilliseconds)
+        {
+            var handler = _transmitFromStorageHandler;
+            if (handler == null)
+            {
+                return;
+            }
+
+            Task drain;
+
+            lock (_drainLock)
+            {
+                var existing = _inFlightDrain;
+                if (existing != null && !existing.IsCompleted)
+                {
+                    // Each signal shuts down separately but shares this transmitter. Replacing a
+                    // running drain with a fresh task would hand Dispose a no-op to wait on and let
+                    // teardown proceed underneath the real one.
+                    drain = existing;
+                    waitMilliseconds = GetRemainingDrainWait();
+                }
+                else
+                {
+                    _drainWaitMilliseconds = waitMilliseconds;
+                    _drainStarted = Stopwatch.StartNew();
+                    drain = handler.DrainAsync();
+                    _inFlightDrain = drain;
+                }
+            }
+
+            WaitForDrain(drain, waitMilliseconds);
+        }
+
+        /// <summary>
+        /// Whatever is left of the budget the caller already granted to <see cref="DrainStorage"/>,
+        /// so that shutdown never spends it twice.
+        /// </summary>
+        private int GetRemainingDrainWait()
+        {
+            if (_drainStarted == null)
+            {
+                return 0;
+            }
+
+            var elapsed = _drainStarted.ElapsedMilliseconds;
+
+            return elapsed >= _drainWaitMilliseconds ? 0 : (int)(_drainWaitMilliseconds - elapsed);
+        }
+
+        private static void WaitForDrain(Task drain, int waitMilliseconds)
+        {
+            if (waitMilliseconds <= 0)
+            {
+                return;
+            }
+
+            try
+            {
+                drain.Wait(waitMilliseconds);
+            }
+            catch (Exception)
+            {
+                // The drain reports its own failures, and anything it could not deliver is still
+                // on disk for the next attempt.
+            }
+        }
+
+        /// <summary>
+        /// Writes telemetry to persistent storage instead of transmitting it. Used on the shutdown
+        /// path, where an ingestion round trip would either block process exit or be killed by it.
+        /// </summary>
+        private ExportResult SaveForLaterTransmission(IEnumerable<TelemetryItem> telemetryItems, TelemetrySchemaTypeCounter telemetrySchemaTypeCounter, PersistentBlobProvider blobProvider)
+        {
+            try
+            {
+                var result = blobProvider.SaveTelemetryWithEviction(HttpPipelineHelper.GetSerializedContent(telemetryItems), _storageDirectory, StorageMaxSizeBytes);
+
+                if (result == ExportResult.Success)
+                {
+                    CustomerSdkStatsHelper.TrackRetry(telemetrySchemaTypeCounter, (int)DropCode.ShutdownPersisted, null);
+                }
+                else
+                {
+                    CustomerSdkStatsHelper.TrackDropped(telemetrySchemaTypeCounter, persistentBlobProviderExists: true);
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorExporterEventSource.Log.FailedToPersistOnShutdown(_connectionVars.InstrumentationKey, ex);
+                CustomerSdkStatsHelper.TrackDropped(telemetrySchemaTypeCounter, (int)DropCode.ClientException, CustomerSdkStatsHelper.GetDropReason(ex));
+
+                return ExportResult.Failure;
+            }
+        }
+
         public async ValueTask<ExportResult> TrackAsync(IEnumerable<TelemetryItem> telemetryItems, TelemetrySchemaTypeCounter telemetrySchemaTypeCounter, TelemetryItemOrigin origin, bool async, CancellationToken cancellationToken)
         {
             ExportResult result = ExportResult.Failure;
             if (cancellationToken.IsCancellationRequested)
             {
                 return result;
+            }
+
+            var blobProvider = _fileBlobProvider;
+            if (IsPersistOnly && blobProvider != null)
+            {
+                return SaveForLaterTransmission(telemetryItems, telemetrySchemaTypeCounter, blobProvider);
+            }
+
+            // Without persistent storage the request itself is the durability, so it gets its own
+            // budget rather than inheriting the pipeline's 100 second network timeout.
+            using CancellationTokenSource? fallbackBudget = IsPersistOnly
+                ? new CancellationTokenSource(PersistOnShutdownConfig.FallbackPostBudgetMilliseconds)
+                : null;
+            using CancellationTokenSource? linkedSource = fallbackBudget == null
+                ? null
+                : CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, fallbackBudget.Token);
+
+            if (linkedSource != null)
+            {
+                cancellationToken = linkedSource.Token;
             }
 
             var networkSdkStats = _statsbeat?.NetworkSdkStatsManager;
@@ -242,7 +386,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     byte[] requestContent = HttpPipelineHelper.GetSerializedContent(telemetryItems);
                     if (_fileBlobProvider != null)
                     {
-                        result = _fileBlobProvider.SaveTelemetry(requestContent);
+                        result = _fileBlobProvider.SaveTelemetryWithEviction(requestContent, _storageDirectory, StorageMaxSizeBytes);
                     }
 
                     if (result == ExportResult.Success)
@@ -272,6 +416,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 if (disposing)
                 {
                     AzureMonitorExporterEventSource.Log.DisposedObject(nameof(AzureMonitorTransmitter));
+
+                    // Give an in-flight drain whatever is left of the budget the caller allowed
+                    // before the HTTP pipeline goes away. Whatever it does not finish stays on disk.
+                    Task? drain;
+                    int remaining;
+                    lock (_drainLock)
+                    {
+                        drain = _inFlightDrain;
+                        remaining = GetRemainingDrainWait();
+                    }
+
+                    if (drain != null)
+                    {
+                        WaitForDrain(drain, remaining);
+                    }
+
+                    _transmitFromStorageHandler?.Dispose();
                     _statsbeat?.Dispose();
                     var fileBlobProvider = _fileBlobProvider as FileBlobProvider;
                     if (fileBlobProvider != null)
@@ -286,9 +447,36 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         public void Dispose()
         {
+            // Every exporter using the same connection string shares this instance, so tearing it
+            // down when the first of them is disposed would stop storage draining for the rest.
+            if (Interlocked.Decrement(ref _referenceCount) > 0)
+            {
+                return;
+            }
+
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+        }
+
+        private sealed class PersistOnlyScope : IDisposable
+        {
+            private AzureMonitorTransmitter? _owner;
+
+            internal PersistOnlyScope(AzureMonitorTransmitter owner)
+            {
+                _owner = owner;
+                Interlocked.Increment(ref owner._persistOnlyScopeCount);
+            }
+
+            public void Dispose()
+            {
+                var owner = Interlocked.Exchange(ref _owner, null);
+                if (owner != null)
+                {
+                    Interlocked.Decrement(ref owner._persistOnlyScopeCount);
+                }
+            }
         }
     }
 }

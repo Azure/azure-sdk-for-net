@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateGetVpnProfilePackageUrlRequest(Guid subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, RequestContext context)
+        internal HttpMessage CreateGetVpnProfilePackageUriRequest(Guid subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -476,6 +476,30 @@ namespace Azure.ResourceManager.Network
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             uri.AppendQuery("peer", peer, true);
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetEffectiveRoutesRequest(Guid subscriptionId, string resourceGroupName, string virtualNetworkGatewayName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Network/virtualNetworkGateways/", false);
+            uri.AppendPath(virtualNetworkGatewayName, true);
+            uri.AppendPath("/getEffectiveRoutes", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;
             request.Uri = uri;

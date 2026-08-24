@@ -1,0 +1,3038 @@
+{
+  "name": "Azure.ResourceManager.ServiceGroupExtension",
+  "apiVersions": [
+    "2023-12-01-preview"
+  ],
+  "enums": [
+    {
+      "$id": "1",
+      "kind": "enum",
+      "name": "ProvisioningState",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ProvisioningState",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "3",
+          "kind": "enumvalue",
+          "name": "Succeeded",
+          "value": "Succeeded",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "Resource has been created.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "4",
+          "kind": "enumvalue",
+          "name": "Failed",
+          "value": "Failed",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "Resource creation failed.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "5",
+          "kind": "enumvalue",
+          "name": "Canceled",
+          "value": "Canceled",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "Resource creation was canceled.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "6",
+          "kind": "enumvalue",
+          "name": "Provisioning",
+          "value": "Provisioning",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "7",
+          "kind": "enumvalue",
+          "name": "Updating",
+          "value": "Updating",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "8",
+          "kind": "enumvalue",
+          "name": "Deleting",
+          "value": "Deleting",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "9",
+          "kind": "enumvalue",
+          "name": "Accepted",
+          "value": "Accepted",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "decorators": [],
+          "isExactName": false
+        }
+      ],
+      "namespace": "Azure.ResourceManager.ServiceGroupExtension",
+      "isFixed": false,
+      "isFlags": false,
+      "usage": "Output,Json,LroInitial,LroFinalEnvelope",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "10",
+      "kind": "enum",
+      "name": "createdByType",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.createdByType",
+      "valueType": {
+        "$id": "11",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "12",
+          "kind": "enumvalue",
+          "name": "User",
+          "value": "User",
+          "valueType": {
+            "$ref": "11"
+          },
+          "enumType": {
+            "$ref": "10"
+          },
+          "doc": "The entity was created by a user.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "13",
+          "kind": "enumvalue",
+          "name": "Application",
+          "value": "Application",
+          "valueType": {
+            "$ref": "11"
+          },
+          "enumType": {
+            "$ref": "10"
+          },
+          "doc": "The entity was created by an application.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "14",
+          "kind": "enumvalue",
+          "name": "ManagedIdentity",
+          "value": "ManagedIdentity",
+          "valueType": {
+            "$ref": "11"
+          },
+          "enumType": {
+            "$ref": "10"
+          },
+          "doc": "The entity was created by a managed identity.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "15",
+          "kind": "enumvalue",
+          "name": "Key",
+          "value": "Key",
+          "valueType": {
+            "$ref": "11"
+          },
+          "enumType": {
+            "$ref": "10"
+          },
+          "doc": "The entity was created by a key.",
+          "decorators": [],
+          "isExactName": false
+        }
+      ],
+      "namespace": "Azure.ResourceManager.CommonTypes",
+      "doc": "The kind of entity that created the resource.",
+      "isFixed": false,
+      "isFlags": false,
+      "usage": "Output,Json,LroInitial,LroFinalEnvelope",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "16",
+      "kind": "enum",
+      "name": "ResourceProvisioningState",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceProvisioningState",
+      "valueType": {
+        "$id": "17",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "18",
+          "kind": "enumvalue",
+          "name": "Succeeded",
+          "value": "Succeeded",
+          "valueType": {
+            "$ref": "17"
+          },
+          "enumType": {
+            "$ref": "16"
+          },
+          "doc": "Resource has been created.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "19",
+          "kind": "enumvalue",
+          "name": "Failed",
+          "value": "Failed",
+          "valueType": {
+            "$ref": "17"
+          },
+          "enumType": {
+            "$ref": "16"
+          },
+          "doc": "Resource creation failed.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "20",
+          "kind": "enumvalue",
+          "name": "Canceled",
+          "value": "Canceled",
+          "valueType": {
+            "$ref": "17"
+          },
+          "enumType": {
+            "$ref": "16"
+          },
+          "doc": "Resource creation was canceled.",
+          "decorators": [],
+          "isExactName": false
+        }
+      ],
+      "namespace": "Azure.ResourceManager",
+      "doc": "The provisioning state of a resource type.",
+      "isFixed": false,
+      "isFlags": false,
+      "usage": "LroPolling",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "21",
+      "kind": "enum",
+      "name": "Versions",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.Versions",
+      "valueType": {
+        "$id": "22",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "23",
+          "kind": "enumvalue",
+          "name": "v2023_12_01_preview",
+          "value": "2023-12-01-preview",
+          "valueType": {
+            "$ref": "22"
+          },
+          "enumType": {
+            "$ref": "21"
+          },
+          "doc": "Preview API version 2023-12-01-preview.",
+          "decorators": [],
+          "isExactName": false
+        }
+      ],
+      "namespace": "Azure.ResourceManager.ServiceGroupExtension",
+      "doc": "Azure API versions.",
+      "isFixed": true,
+      "isFlags": false,
+      "usage": "ApiVersionEnum",
+      "decorators": [],
+      "isExactName": false
+    }
+  ],
+  "constants": [
+    {
+      "$id": "24",
+      "kind": "constant",
+      "name": "GetAccept",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "25",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "26",
+      "kind": "constant",
+      "name": "GetAccept1",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "27",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "28",
+      "kind": "constant",
+      "name": "GetAccept2",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "29",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "30",
+      "kind": "constant",
+      "name": "GetAccept3",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "31",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "32",
+      "kind": "constant",
+      "name": "GetAccept4",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "33",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "34",
+      "kind": "constant",
+      "name": "GetAccept5",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "35",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "36",
+      "kind": "constant",
+      "name": "GetAccept6",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "37",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "38",
+      "kind": "constant",
+      "name": "GetAccept7",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "39",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    }
+  ],
+  "models": [
+    {
+      "$id": "40",
+      "kind": "model",
+      "name": "ServiceGroupExtensionResource",
+      "namespace": "Azure.ResourceManager.ServiceGroupExtension",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResource",
+      "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
+      "doc": "Concrete extension resource types can be created by aliasing this type using a specific property type.",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ServiceGroupExtensionResource"
+        }
+      },
+      "isExactName": false,
+      "baseModel": {
+        "$id": "41",
+        "kind": "model",
+        "name": "ExtensionResource",
+        "namespace": "Azure.ResourceManager.CommonTypes",
+        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ExtensionResource",
+        "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
+        "doc": "The base extension resource.",
+        "decorators": [],
+        "serializationOptions": {
+          "json": {
+            "name": "ExtensionResource"
+          }
+        },
+        "isExactName": false,
+        "baseModel": {
+          "$id": "42",
+          "kind": "model",
+          "name": "Resource",
+          "namespace": "Azure.ResourceManager.CommonTypes",
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource",
+          "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
+          "doc": "Common fields that are returned in the response for all Azure Resource Manager resources",
+          "summary": "Resource",
+          "decorators": [],
+          "serializationOptions": {
+            "json": {
+              "name": "Resource"
+            }
+          },
+          "isExactName": false,
+          "properties": [
+            {
+              "$id": "43",
+              "kind": "property",
+              "name": "id",
+              "serializedName": "id",
+              "doc": "Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}",
+              "type": {
+                "$id": "44",
+                "kind": "string",
+                "name": "armResourceIdentifier",
+                "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier",
+                "baseType": {
+                  "$id": "45",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "decorators": []
+              },
+              "optional": true,
+              "readOnly": true,
+              "discriminator": false,
+              "flatten": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.id",
+              "serializationOptions": {
+                "json": {
+                  "name": "id"
+                }
+              },
+              "isHttpMetadata": false,
+              "isExactName": false
+            },
+            {
+              "$id": "46",
+              "kind": "property",
+              "name": "name",
+              "serializedName": "name",
+              "doc": "The name of the resource",
+              "type": {
+                "$id": "47",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+              },
+              "optional": true,
+              "readOnly": true,
+              "discriminator": false,
+              "flatten": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.name",
+              "serializationOptions": {
+                "json": {
+                  "name": "name"
+                }
+              },
+              "isHttpMetadata": false,
+              "isExactName": false
+            },
+            {
+              "$id": "48",
+              "kind": "property",
+              "name": "type",
+              "serializedName": "type",
+              "doc": "The type of the resource. E.g. \"Microsoft.Compute/virtualMachines\" or \"Microsoft.Storage/storageAccounts\"",
+              "type": {
+                "$id": "49",
+                "kind": "string",
+                "name": "armResourceType",
+                "crossLanguageDefinitionId": "Azure.Core.armResourceType",
+                "baseType": {
+                  "$id": "50",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "decorators": []
+              },
+              "optional": true,
+              "readOnly": true,
+              "discriminator": false,
+              "flatten": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.type",
+              "serializationOptions": {
+                "json": {
+                  "name": "type"
+                }
+              },
+              "isHttpMetadata": false,
+              "isExactName": false
+            },
+            {
+              "$id": "51",
+              "kind": "property",
+              "name": "systemData",
+              "serializedName": "systemData",
+              "doc": "Azure Resource Manager metadata containing createdBy and modifiedBy information.",
+              "type": {
+                "$id": "52",
+                "kind": "model",
+                "name": "SystemData",
+                "namespace": "Azure.ResourceManager.CommonTypes",
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData",
+                "usage": "Output,Json,LroInitial,LroFinalEnvelope",
+                "doc": "Metadata pertaining to creation and last modification of the resource.",
+                "decorators": [],
+                "serializationOptions": {
+                  "json": {
+                    "name": "SystemData"
+                  }
+                },
+                "isExactName": false,
+                "properties": [
+                  {
+                    "$id": "53",
+                    "kind": "property",
+                    "name": "createdBy",
+                    "serializedName": "createdBy",
+                    "doc": "The identity that created the resource.",
+                    "type": {
+                      "$id": "54",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdBy",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "createdBy"
+                      }
+                    },
+                    "isHttpMetadata": false,
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "55",
+                    "kind": "property",
+                    "name": "createdByType",
+                    "serializedName": "createdByType",
+                    "doc": "The type of identity that created the resource.",
+                    "type": {
+                      "$ref": "10"
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdByType",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "createdByType"
+                      }
+                    },
+                    "isHttpMetadata": false,
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "56",
+                    "kind": "property",
+                    "name": "createdAt",
+                    "serializedName": "createdAt",
+                    "doc": "The timestamp of resource creation (UTC).",
+                    "type": {
+                      "$id": "57",
+                      "kind": "utcDateTime",
+                      "name": "utcDateTime",
+                      "encode": "rfc3339",
+                      "wireType": {
+                        "$id": "58",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+                      "decorators": []
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdAt",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "createdAt"
+                      }
+                    },
+                    "isHttpMetadata": false,
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "59",
+                    "kind": "property",
+                    "name": "lastModifiedBy",
+                    "serializedName": "lastModifiedBy",
+                    "doc": "The identity that last modified the resource.",
+                    "type": {
+                      "$id": "60",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedBy",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "lastModifiedBy"
+                      }
+                    },
+                    "isHttpMetadata": false,
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "61",
+                    "kind": "property",
+                    "name": "lastModifiedByType",
+                    "serializedName": "lastModifiedByType",
+                    "doc": "The type of identity that last modified the resource.",
+                    "type": {
+                      "$ref": "10"
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedByType",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "lastModifiedByType"
+                      }
+                    },
+                    "isHttpMetadata": false,
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "62",
+                    "kind": "property",
+                    "name": "lastModifiedAt",
+                    "serializedName": "lastModifiedAt",
+                    "doc": "The timestamp of resource last modification (UTC)",
+                    "type": {
+                      "$id": "63",
+                      "kind": "utcDateTime",
+                      "name": "utcDateTime",
+                      "encode": "rfc3339",
+                      "wireType": {
+                        "$id": "64",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                      },
+                      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+                      "decorators": []
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedAt",
+                    "serializationOptions": {
+                      "json": {
+                        "name": "lastModifiedAt"
+                      }
+                    },
+                    "isHttpMetadata": false,
+                    "isExactName": false
+                  }
+                ]
+              },
+              "optional": true,
+              "readOnly": true,
+              "discriminator": false,
+              "flatten": false,
+              "decorators": [],
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.systemData",
+              "serializationOptions": {
+                "json": {
+                  "name": "systemData"
+                }
+              },
+              "isHttpMetadata": false,
+              "isExactName": false
+            }
+          ]
+        },
+        "properties": []
+      },
+      "properties": [
+        {
+          "$id": "65",
+          "kind": "property",
+          "name": "properties",
+          "serializedName": "properties",
+          "doc": "The resource-specific properties for this resource.",
+          "type": {
+            "$id": "66",
+            "kind": "model",
+            "name": "ServiceGroupExtensionResourceProperties",
+            "namespace": "Azure.ResourceManager.ServiceGroupExtension",
+            "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResourceProperties",
+            "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
+            "doc": "ServiceGroupExtensionResource properties",
+            "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "ServiceGroupExtensionResourceProperties"
+              }
+            },
+            "isExactName": false,
+            "properties": [
+              {
+                "$id": "67",
+                "kind": "property",
+                "name": "description",
+                "serializedName": "description",
+                "doc": "The description of the resource.",
+                "type": {
+                  "$id": "68",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResourceProperties.description",
+                "serializationOptions": {
+                  "json": {
+                    "name": "description"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "69",
+                "kind": "property",
+                "name": "provisioningState",
+                "serializedName": "provisioningState",
+                "doc": "The status of the last operation.",
+                "type": {
+                  "$ref": "1"
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResourceProperties.provisioningState",
+                "serializationOptions": {
+                  "json": {
+                    "name": "provisioningState"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              }
+            ]
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResource.properties",
+          "serializationOptions": {
+            "json": {
+              "name": "properties"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "70",
+          "kind": "property",
+          "name": "name",
+          "serializedName": "name",
+          "doc": "The name of the ServiceGroupExtensionResource",
+          "type": {
+            "$id": "71",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResource.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": true,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$ref": "66"
+    },
+    {
+      "$ref": "41"
+    },
+    {
+      "$ref": "42"
+    },
+    {
+      "$ref": "52"
+    },
+    {
+      "$id": "72",
+      "kind": "model",
+      "name": "ErrorResponse",
+      "namespace": "Azure.ResourceManager.CommonTypes",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse",
+      "usage": "Json,Exception",
+      "doc": "Common error response for all Azure Resource Manager APIs to return error details for failed operations.",
+      "summary": "Error response",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ErrorResponse"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "73",
+          "kind": "property",
+          "name": "error",
+          "serializedName": "error",
+          "doc": "The error object.",
+          "type": {
+            "$id": "74",
+            "kind": "model",
+            "name": "ErrorDetail",
+            "namespace": "Azure.ResourceManager.CommonTypes",
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail",
+            "usage": "Json,Exception,LroPolling",
+            "doc": "The error detail.",
+            "decorators": [],
+            "serializationOptions": {
+              "json": {
+                "name": "ErrorDetail"
+              }
+            },
+            "isExactName": false,
+            "properties": [
+              {
+                "$id": "75",
+                "kind": "property",
+                "name": "code",
+                "serializedName": "code",
+                "doc": "The error code.",
+                "type": {
+                  "$id": "76",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.code",
+                "serializationOptions": {
+                  "json": {
+                    "name": "code"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "77",
+                "kind": "property",
+                "name": "message",
+                "serializedName": "message",
+                "doc": "The error message.",
+                "type": {
+                  "$id": "78",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.message",
+                "serializationOptions": {
+                  "json": {
+                    "name": "message"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "79",
+                "kind": "property",
+                "name": "target",
+                "serializedName": "target",
+                "doc": "The error target.",
+                "type": {
+                  "$id": "80",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.target",
+                "serializationOptions": {
+                  "json": {
+                    "name": "target"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "81",
+                "kind": "property",
+                "name": "details",
+                "serializedName": "details",
+                "doc": "The error details.",
+                "type": {
+                  "$id": "82",
+                  "kind": "array",
+                  "name": "ArrayErrorDetail",
+                  "valueType": {
+                    "$ref": "74"
+                  },
+                  "crossLanguageDefinitionId": "TypeSpec.Array",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.details",
+                "serializationOptions": {
+                  "json": {
+                    "name": "details"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "83",
+                "kind": "property",
+                "name": "additionalInfo",
+                "serializedName": "additionalInfo",
+                "doc": "The error additional info.",
+                "type": {
+                  "$id": "84",
+                  "kind": "array",
+                  "name": "ArrayErrorAdditionalInfo",
+                  "valueType": {
+                    "$id": "85",
+                    "kind": "model",
+                    "name": "ErrorAdditionalInfo",
+                    "namespace": "Azure.ResourceManager.CommonTypes",
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo",
+                    "usage": "Json,Exception,LroPolling",
+                    "doc": "The resource management error additional info.",
+                    "decorators": [],
+                    "serializationOptions": {
+                      "json": {
+                        "name": "ErrorAdditionalInfo"
+                      }
+                    },
+                    "isExactName": false,
+                    "properties": [
+                      {
+                        "$id": "86",
+                        "kind": "property",
+                        "name": "type",
+                        "serializedName": "type",
+                        "doc": "The additional info type.",
+                        "type": {
+                          "$id": "87",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "optional": true,
+                        "readOnly": true,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo.type",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "type"
+                          }
+                        },
+                        "isHttpMetadata": false,
+                        "isExactName": false
+                      },
+                      {
+                        "$id": "88",
+                        "kind": "property",
+                        "name": "info",
+                        "serializedName": "info",
+                        "doc": "The additional info.",
+                        "type": {
+                          "$id": "89",
+                          "kind": "unknown",
+                          "name": "unknown",
+                          "crossLanguageDefinitionId": "",
+                          "decorators": []
+                        },
+                        "optional": true,
+                        "readOnly": true,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo.info",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "info"
+                          }
+                        },
+                        "isHttpMetadata": false,
+                        "isExactName": false
+                      }
+                    ]
+                  },
+                  "crossLanguageDefinitionId": "TypeSpec.Array",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.additionalInfo",
+                "serializationOptions": {
+                  "json": {
+                    "name": "additionalInfo"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              }
+            ]
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse.error",
+          "serializationOptions": {
+            "json": {
+              "name": "error"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$ref": "74"
+    },
+    {
+      "$ref": "85"
+    },
+    {
+      "$id": "90",
+      "kind": "model",
+      "name": "ArmOperationStatusResourceProvisioningState",
+      "namespace": "Azure.ResourceManager",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus",
+      "usage": "LroPolling",
+      "doc": "Standard Azure Resource Manager operation status response, used as the response\nbody for `GetResourceOperationStatus`.",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ArmOperationStatus"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "91",
+          "kind": "property",
+          "name": "status",
+          "serializedName": "status",
+          "doc": "The operation status",
+          "type": {
+            "$ref": "16"
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.status",
+          "serializationOptions": {
+            "json": {
+              "name": "status"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "92",
+          "kind": "property",
+          "name": "id",
+          "serializedName": "id",
+          "doc": "The unique identifier for the operationStatus resource",
+          "type": {
+            "$id": "93",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.id",
+          "serializationOptions": {
+            "json": {
+              "name": "id"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "94",
+          "kind": "property",
+          "name": "name",
+          "serializedName": "name",
+          "doc": "The name of the operationStatus resource",
+          "type": {
+            "$id": "95",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.name",
+          "serializationOptions": {
+            "json": {
+              "name": "name"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "96",
+          "kind": "property",
+          "name": "startTime",
+          "serializedName": "startTime",
+          "doc": "Operation start time",
+          "type": {
+            "$id": "97",
+            "kind": "utcDateTime",
+            "name": "utcDateTime",
+            "encode": "rfc3339",
+            "wireType": {
+              "$id": "98",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+            },
+            "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.startTime",
+          "serializationOptions": {
+            "json": {
+              "name": "startTime"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "99",
+          "kind": "property",
+          "name": "endTime",
+          "serializedName": "endTime",
+          "doc": "Operation complete time",
+          "type": {
+            "$id": "100",
+            "kind": "utcDateTime",
+            "name": "utcDateTime",
+            "encode": "rfc3339",
+            "wireType": {
+              "$id": "101",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+            },
+            "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.endTime",
+          "serializationOptions": {
+            "json": {
+              "name": "endTime"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "102",
+          "kind": "property",
+          "name": "percentComplete",
+          "serializedName": "percentComplete",
+          "doc": "The progress made toward completing the operation",
+          "type": {
+            "$id": "103",
+            "kind": "float64",
+            "name": "float64",
+            "crossLanguageDefinitionId": "TypeSpec.float64",
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.percentComplete",
+          "serializationOptions": {
+            "json": {
+              "name": "percentComplete"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "104",
+          "kind": "property",
+          "name": "error",
+          "serializedName": "error",
+          "doc": "Errors that occurred if the operation ended with Canceled or Failed status",
+          "type": {
+            "$ref": "74"
+          },
+          "optional": true,
+          "readOnly": true,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.error",
+          "serializationOptions": {
+            "json": {
+              "name": "error"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$id": "105",
+      "kind": "model",
+      "name": "ServiceGroupExtensionResourceListResult",
+      "namespace": "Azure.ResourceManager",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
+      "usage": "Output,Json",
+      "doc": "The response of a ServiceGroupExtensionResource list operation.",
+      "decorators": [],
+      "serializationOptions": {
+        "json": {
+          "name": "ResourceListResult"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "106",
+          "kind": "property",
+          "name": "value",
+          "serializedName": "value",
+          "doc": "The ServiceGroupExtensionResource items on this page",
+          "type": {
+            "$id": "107",
+            "kind": "array",
+            "name": "ArrayServiceGroupExtensionResource",
+            "valueType": {
+              "$ref": "40"
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult.value",
+          "serializationOptions": {
+            "json": {
+              "name": "value"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "108",
+          "kind": "property",
+          "name": "nextLink",
+          "serializedName": "nextLink",
+          "doc": "The link to the next page of items",
+          "type": {
+            "$id": "109",
+            "kind": "url",
+            "name": "ResourceLocation",
+            "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+            "baseType": {
+              "$id": "110",
+              "kind": "url",
+              "name": "url",
+              "crossLanguageDefinitionId": "TypeSpec.url",
+              "decorators": []
+            },
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult.nextLink",
+          "serializationOptions": {
+            "json": {
+              "name": "nextLink"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "$id": "111",
+      "kind": "client",
+      "name": "ServiceGroupExtensionClient",
+      "isExactName": false,
+      "namespace": "Azure.ResourceManager.ServiceGroupExtension",
+      "doc": "Arm Resource Provider service group API.",
+      "methods": [],
+      "parameters": [
+        {
+          "$id": "112",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "113",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "114",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "https://management.azure.com"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.endpoint",
+          "isExactName": false
+        },
+        {
+          "$id": "115",
+          "kind": "method",
+          "name": "apiVersion",
+          "serializedName": "apiVersion",
+          "doc": "The API version to use for this operation.",
+          "type": {
+            "$id": "116",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "location": "",
+          "isApiVersion": true,
+          "defaultValue": {
+            "type": {
+              "$id": "117",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "2023-12-01-preview"
+          },
+          "optional": true,
+          "scope": "Method",
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.get.apiVersion",
+          "readOnly": false,
+          "access": "public",
+          "decorators": [],
+          "isExactName": false
+        }
+      ],
+      "initializedBy": 1,
+      "decorators": [],
+      "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension",
+      "apiVersions": [
+        "2023-12-01-preview"
+      ],
+      "children": [
+        {
+          "$id": "118",
+          "kind": "client",
+          "name": "ServiceGroupExtensionResources",
+          "isExactName": false,
+          "namespace": "Azure.ResourceManager.ServiceGroupExtension",
+          "doc": "The interface of extension resources scoped to service groups",
+          "methods": [
+            {
+              "$id": "119",
+              "kind": "basic",
+              "name": "get",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2023-12-01-preview"
+              ],
+              "doc": "Get a ServiceGroupExtensionResource",
+              "operation": {
+                "$id": "120",
+                "name": "get",
+                "isExactName": false,
+                "resourceName": "ServiceGroupExtensionResource",
+                "doc": "Get a ServiceGroupExtensionResource",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "121",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "122",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "123",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2023-12-01-preview"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.get.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "115"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "124",
+                    "kind": "path",
+                    "name": "serviceGroupId",
+                    "serializedName": "serviceGroupId",
+                    "doc": "The service group name.",
+                    "type": {
+                      "$id": "125",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.get.serviceGroupId",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "126",
+                        "kind": "method",
+                        "name": "serviceGroupId",
+                        "serializedName": "serviceGroupId",
+                        "doc": "The service group name.",
+                        "type": {
+                          "$id": "127",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.get.serviceGroupId",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "128",
+                    "kind": "path",
+                    "name": "serviceGroupExtensionResourceName",
+                    "serializedName": "serviceGroupExtensionResourceName",
+                    "doc": "The name of the ServiceGroupExtensionResource",
+                    "type": {
+                      "$id": "129",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.get.serviceGroupExtensionResourceName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "130",
+                        "kind": "method",
+                        "name": "serviceGroupExtensionResourceName",
+                        "serializedName": "serviceGroupExtensionResourceName",
+                        "doc": "The name of the ServiceGroupExtensionResource",
+                        "type": {
+                          "$id": "131",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.get.serviceGroupExtensionResourceName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "132",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "24"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.get.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "133",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "24"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.get.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "40"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/providers/Microsoft.Management/serviceGroups/{serviceGroupId}/providers/Microsoft.ServiceGroupExtension/serviceGroupExtensionResources/{serviceGroupExtensionResourceName}",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.get",
+                "decorators": [],
+                "namespace": "Azure.ResourceManager.ServiceGroupExtension"
+              },
+              "parameters": [
+                {
+                  "$ref": "126"
+                },
+                {
+                  "$ref": "130"
+                },
+                {
+                  "$ref": "133"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "40"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.get"
+            },
+            {
+              "$id": "134",
+              "kind": "lro",
+              "name": "createOrUpdate",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2023-12-01-preview"
+              ],
+              "doc": "Create a ServiceGroupExtensionResource",
+              "operation": {
+                "$id": "135",
+                "name": "createOrUpdate",
+                "isExactName": false,
+                "resourceName": "ServiceGroupExtensionResource",
+                "doc": "Create a ServiceGroupExtensionResource",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "136",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "137",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "138",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2023-12-01-preview"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.createOrUpdate.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "115"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "139",
+                    "kind": "path",
+                    "name": "serviceGroupId",
+                    "serializedName": "serviceGroupId",
+                    "doc": "The service group name.",
+                    "type": {
+                      "$id": "140",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.createOrUpdate.serviceGroupId",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "141",
+                        "kind": "method",
+                        "name": "serviceGroupId",
+                        "serializedName": "serviceGroupId",
+                        "doc": "The service group name.",
+                        "type": {
+                          "$id": "142",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.createOrUpdate.serviceGroupId",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "143",
+                    "kind": "path",
+                    "name": "serviceGroupExtensionResourceName",
+                    "serializedName": "serviceGroupExtensionResourceName",
+                    "doc": "The name of the ServiceGroupExtensionResource",
+                    "type": {
+                      "$id": "144",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.createOrUpdate.serviceGroupExtensionResourceName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "145",
+                        "kind": "method",
+                        "name": "serviceGroupExtensionResourceName",
+                        "serializedName": "serviceGroupExtensionResourceName",
+                        "doc": "The name of the ServiceGroupExtensionResource",
+                        "type": {
+                          "$id": "146",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.createOrUpdate.serviceGroupExtensionResourceName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "147",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "26"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.createOrUpdate.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "148",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "26"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.createOrUpdate.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "149",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "30"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.createOrUpdate.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "150",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "32"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.createOrUpdate.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "151",
+                    "kind": "body",
+                    "name": "resource",
+                    "serializedName": "resource",
+                    "doc": "Resource create parameters.",
+                    "type": {
+                      "$ref": "40"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.createOrUpdate.resource",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "152",
+                        "kind": "method",
+                        "name": "resource",
+                        "serializedName": "resource",
+                        "doc": "Resource create parameters.",
+                        "type": {
+                          "$ref": "40"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.createOrUpdate.resource",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "resource"
+                      }
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "40"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  },
+                  {
+                    "statusCodes": [
+                      201
+                    ],
+                    "bodyType": {
+                      "$ref": "40"
+                    },
+                    "headers": [
+                      {
+                        "name": "azureAsyncOperation",
+                        "nameInResponse": "Azure-AsyncOperation",
+                        "doc": "A link to the status monitor",
+                        "type": {
+                          "$id": "153",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        }
+                      },
+                      {
+                        "name": "retryAfter",
+                        "nameInResponse": "Retry-After",
+                        "doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
+                        "type": {
+                          "$id": "154",
+                          "kind": "int32",
+                          "name": "int32",
+                          "crossLanguageDefinitionId": "TypeSpec.int32",
+                          "decorators": []
+                        }
+                      }
+                    ],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  }
+                ],
+                "httpMethod": "PUT",
+                "uri": "{endpoint}",
+                "path": "/providers/Microsoft.Management/serviceGroups/{serviceGroupId}/providers/Microsoft.ServiceGroupExtension/serviceGroupExtensionResources/{serviceGroupExtensionResourceName}",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.createOrUpdate",
+                "decorators": [],
+                "namespace": "Azure.ResourceManager.ServiceGroupExtension"
+              },
+              "parameters": [
+                {
+                  "$ref": "141"
+                },
+                {
+                  "$ref": "145"
+                },
+                {
+                  "$ref": "152"
+                },
+                {
+                  "$ref": "148"
+                },
+                {
+                  "$ref": "150"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "40"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.createOrUpdate",
+              "lroMetadata": {
+                "finalStateVia": 0,
+                "finalResponse": {
+                  "statusCodes": [
+                    200
+                  ],
+                  "bodyType": {
+                    "$ref": "40"
+                  }
+                }
+              }
+            },
+            {
+              "$id": "155",
+              "kind": "basic",
+              "name": "update",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2023-12-01-preview"
+              ],
+              "doc": "Update a ServiceGroupExtensionResource",
+              "operation": {
+                "$id": "156",
+                "name": "update",
+                "isExactName": false,
+                "resourceName": "ServiceGroupExtensionResource",
+                "doc": "Update a ServiceGroupExtensionResource",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "157",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "158",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "159",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2023-12-01-preview"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.update.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "115"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "160",
+                    "kind": "path",
+                    "name": "serviceGroupId",
+                    "serializedName": "serviceGroupId",
+                    "doc": "The service group name.",
+                    "type": {
+                      "$id": "161",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.update.serviceGroupId",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "162",
+                        "kind": "method",
+                        "name": "serviceGroupId",
+                        "serializedName": "serviceGroupId",
+                        "doc": "The service group name.",
+                        "type": {
+                          "$id": "163",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.update.serviceGroupId",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "164",
+                    "kind": "path",
+                    "name": "serviceGroupExtensionResourceName",
+                    "serializedName": "serviceGroupExtensionResourceName",
+                    "doc": "The name of the ServiceGroupExtensionResource",
+                    "type": {
+                      "$id": "165",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.update.serviceGroupExtensionResourceName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "166",
+                        "kind": "method",
+                        "name": "serviceGroupExtensionResourceName",
+                        "serializedName": "serviceGroupExtensionResourceName",
+                        "doc": "The name of the ServiceGroupExtensionResource",
+                        "type": {
+                          "$id": "167",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.update.serviceGroupExtensionResourceName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "168",
+                    "kind": "header",
+                    "name": "contentType",
+                    "serializedName": "Content-Type",
+                    "doc": "Body parameter's content type. Known values are application/json",
+                    "type": {
+                      "$ref": "34"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": true,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.update.contentType",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "169",
+                        "kind": "method",
+                        "name": "contentType",
+                        "serializedName": "Content-Type",
+                        "doc": "Body parameter's content type. Known values are application/json",
+                        "type": {
+                          "$ref": "34"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.update.contentType",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "170",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "36"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.update.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "171",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "36"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.update.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "172",
+                    "kind": "body",
+                    "name": "properties",
+                    "serializedName": "properties",
+                    "doc": "The resource properties to be updated.",
+                    "type": {
+                      "$ref": "40"
+                    },
+                    "isApiVersion": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "defaultContentType": "application/json",
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.update.properties",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "173",
+                        "kind": "method",
+                        "name": "properties",
+                        "serializedName": "properties",
+                        "doc": "The resource properties to be updated.",
+                        "type": {
+                          "$ref": "40"
+                        },
+                        "location": "Body",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.update.properties",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false,
+                    "serializationOptions": {
+                      "json": {
+                        "name": "properties"
+                      }
+                    }
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "40"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  }
+                ],
+                "httpMethod": "PATCH",
+                "uri": "{endpoint}",
+                "path": "/providers/Microsoft.Management/serviceGroups/{serviceGroupId}/providers/Microsoft.ServiceGroupExtension/serviceGroupExtensionResources/{serviceGroupExtensionResourceName}",
+                "requestMediaTypes": [
+                  "application/json"
+                ],
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": false,
+                "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.update",
+                "decorators": [],
+                "namespace": "Azure.ResourceManager.ServiceGroupExtension"
+              },
+              "parameters": [
+                {
+                  "$ref": "162"
+                },
+                {
+                  "$ref": "166"
+                },
+                {
+                  "$ref": "173"
+                },
+                {
+                  "$ref": "169"
+                },
+                {
+                  "$ref": "171"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "40"
+                }
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.update"
+            },
+            {
+              "$id": "174",
+              "kind": "basic",
+              "name": "delete",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2023-12-01-preview"
+              ],
+              "doc": "Delete a ServiceGroupExtensionResource",
+              "operation": {
+                "$id": "175",
+                "name": "delete",
+                "isExactName": false,
+                "resourceName": "ServiceGroupExtensionResource",
+                "doc": "Delete a ServiceGroupExtensionResource",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "176",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "177",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "178",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2023-12-01-preview"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.delete.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "115"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "179",
+                    "kind": "path",
+                    "name": "serviceGroupId",
+                    "serializedName": "serviceGroupId",
+                    "doc": "The service group name.",
+                    "type": {
+                      "$id": "180",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.delete.serviceGroupId",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "181",
+                        "kind": "method",
+                        "name": "serviceGroupId",
+                        "serializedName": "serviceGroupId",
+                        "doc": "The service group name.",
+                        "type": {
+                          "$id": "182",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.delete.serviceGroupId",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "183",
+                    "kind": "path",
+                    "name": "serviceGroupExtensionResourceName",
+                    "serializedName": "serviceGroupExtensionResourceName",
+                    "doc": "The name of the ServiceGroupExtensionResource",
+                    "type": {
+                      "$id": "184",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.delete.serviceGroupExtensionResourceName",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "185",
+                        "kind": "method",
+                        "name": "serviceGroupExtensionResourceName",
+                        "serializedName": "serviceGroupExtensionResourceName",
+                        "doc": "The name of the ServiceGroupExtensionResource",
+                        "type": {
+                          "$id": "186",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.delete.serviceGroupExtensionResourceName",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
+                  },
+                  {
+                    "statusCodes": [
+                      204
+                    ],
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "serializationOptions": {}
+                  }
+                ],
+                "httpMethod": "DELETE",
+                "uri": "{endpoint}",
+                "path": "/providers/Microsoft.Management/serviceGroups/{serviceGroupId}/providers/Microsoft.ServiceGroupExtension/serviceGroupExtensionResources/{serviceGroupExtensionResourceName}",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.delete",
+                "decorators": [],
+                "namespace": "Azure.ResourceManager.ServiceGroupExtension"
+              },
+              "parameters": [
+                {
+                  "$ref": "181"
+                },
+                {
+                  "$ref": "185"
+                }
+              ],
+              "response": {},
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.delete"
+            },
+            {
+              "$id": "187",
+              "kind": "paging",
+              "name": "listByServiceGroup",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2023-12-01-preview"
+              ],
+              "doc": "List ServiceGroupExtensionResource resources by scope",
+              "operation": {
+                "$id": "188",
+                "name": "listByServiceGroup",
+                "isExactName": false,
+                "resourceName": "ServiceGroupExtensionResource",
+                "doc": "List ServiceGroupExtensionResource resources by scope",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "189",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "190",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "191",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2023-12-01-preview"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.listByServiceGroup.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "115"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "192",
+                    "kind": "path",
+                    "name": "serviceGroupId",
+                    "serializedName": "serviceGroupId",
+                    "doc": "The service group name.",
+                    "type": {
+                      "$id": "193",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": false,
+                    "explode": false,
+                    "style": "simple",
+                    "allowReserved": false,
+                    "skipUrlEncoding": false,
+                    "optional": false,
+                    "scope": "Method",
+                    "decorators": [],
+                    "readOnly": false,
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.listByServiceGroup.serviceGroupId",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "194",
+                        "kind": "method",
+                        "name": "serviceGroupId",
+                        "serializedName": "serviceGroupId",
+                        "doc": "The service group name.",
+                        "type": {
+                          "$id": "195",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "location": "Path",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Method",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.listByServiceGroup.serviceGroupId",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "196",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "38"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.listByServiceGroup.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "197",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "38"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.listByServiceGroup.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "105"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/providers/Microsoft.Management/serviceGroups/{serviceGroupId}/providers/Microsoft.ServiceGroupExtension/serviceGroupExtensionResources",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.listByServiceGroup",
+                "decorators": [],
+                "namespace": "Azure.ResourceManager.ServiceGroupExtension"
+              },
+              "parameters": [
+                {
+                  "$ref": "194"
+                },
+                {
+                  "$ref": "197"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "107"
+                },
+                "resultSegments": [
+                  "value"
+                ]
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.listByServiceGroup",
+              "pagingMetadata": {
+                "itemPropertySegments": [
+                  "value"
+                ],
+                "nextLink": {
+                  "responseSegments": [
+                    "nextLink"
+                  ],
+                  "responseLocation": "Body"
+                },
+                "pageSizeParameterSegments": []
+              }
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "198",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "199",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "200",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "https://management.azure.com"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources.endpoint",
+              "isExactName": false
+            },
+            {
+              "$ref": "115"
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResources",
+          "apiVersions": [
+            "2023-12-01-preview"
+          ],
+          "parent": {
+            "$ref": "111"
+          },
+          "isMultiServiceClient": false
+        }
+      ],
+      "isMultiServiceClient": false
+    }
+  ],
+  "auth": {
+    "oAuth2": {
+      "flows": [
+        {
+          "scopes": [
+            "https://management.azure.com/.default"
+          ],
+          "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize"
+        }
+      ]
+    }
+  }
+}

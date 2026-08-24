@@ -41,6 +41,19 @@ safe-outputs:
     max: 1
     target: "*"
     state-reason: not_planned
+  # Direct Copilot assignment is best effort only and will usually skip on this
+  # repository. GitHub accepts only a user to server identity (a PAT, an OAuth app
+  # token, or a GitHub App user to server token) for Copilot coding agent
+  # assignment, and it rejects server to server tokens. The credential available
+  # to this job resolves through GH_AW_AGENT_TOKEN then GH_AW_GITHUB_TOKEN then the
+  # default Actions GITHUB_TOKEN, which is server to server, so the assignee check
+  # returns 404 and the step skips. Adding permission scopes such as pull-requests
+  # write does not change the token type and does not help. No user to server
+  # credential is available here without adding a secret, which is out of scope.
+  # This is kept with ignore-if-error true so it upgrades to a real assignment
+  # automatically if a user to server identity is ever wired into GH_AW_AGENT_TOKEN.
+  # Until then the workflow recommends Copilot in its comment and a maintainer
+  # performs the assignment.
   assign-to-agent:
     name: copilot
     allowed: [copilot]
@@ -51,6 +64,10 @@ safe-outputs:
     report-as-issue: false
 
 tools:
+  # With github.min-integrity none, strict mode requires bash to be explicit.
+  # These agents use only web-fetch and the github issues toolset, no shell.
+  bash: false
+  cli-proxy: false
   web-fetch:
   github:
     toolsets: [issues]
@@ -181,7 +198,7 @@ Reach this rule only when trusted service/package documentation together with th
 
 When either is true, add one comment using this style and close the issue as not planned:
 
-> Hi @<ISSUE AUTHOR>. Thank you for reaching out and we regret that you're experiencing difficulties. The behavior that you're inquiring about is part of the Azure service; the client library has no insight nor influence over <AREA OF INQUIRY>. As a result, the maintainers of the Azure SDK packages are unable to assist.
+> Hi <ISSUE AUTHOR>. Thank you for reaching out and we regret that you're experiencing difficulties. The behavior that you're inquiring about is part of the Azure service; the client library has no insight nor influence over <AREA OF INQUIRY>. As a result, the maintainers of the Azure SDK packages are unable to assist.
 >
 > Unfortunately, Azure does not offer service support through GitHub and service teams do not monitor issues here. To ensure that the right team has visibility and can help, your best path forward would be to open an Azure support request or inquire on the Microsoft Q&A site. For feature suggestions, you may also want to consider the Azure Feedback site.
 >
@@ -218,17 +235,122 @@ Do not assign Copilot, even if the above are met, when the issue requires any of
 
 If any exclusion applies, or the fix area cannot be stated specifically, do not assign Copilot — call `noop` or request the missing information instead.
 
-Before assigning Copilot, add one comment that names the concrete package/API, the specific suspected fix area (file or documentation location when known), and the expected test or documentation change, summarizing:
+Before assigning Copilot, add one comment that follows the Comment Format section, uses the `Recommended for Copilot automated fix` outcome line, and names the concrete package/API, the specific suspected fix area (file or documentation location when known), and the expected test or documentation change, summarizing:
 - Why the issue appears SDK-side.
+- A mitigation the author can use now while the fix is pending, drawn only from trusted evidence, or a plain statement that none is known.
 - The likely fix area.
 - Any constraints for the coding agent.
 
-Then call `assign_to_agent` for the issue number with agent `copilot`.
+Then call `assign_to_agent` for the issue number with agent `copilot`. This assignment is best effort. On this repository it usually skips because Copilot assignment requires a user to server identity and the available token is server to server. See the code comment on the `assign-to-agent` block in the frontmatter for the full reason. The comment therefore recommends Copilot rather than claiming assignment, and a maintainer completes the assignment when the skip occurs.
 
 ### No Action
 
 Call `noop` with a short reason when none of the rules above produced a user-visible action or assignment — for example, the issue already carries labels or routing that make further automated action unnecessary, or the situation requires a policy or product judgment call that these rules do not cover. Do not use this rule to skip a rule above that does match: check Version Currency, Duplicate, Insufficient Context, Working as Designed/Service-Side, and Actionable SDK Issue, in order, before falling back here.
 
+## Comment Format
+
+Every user-visible comment uses the structure below. Use real Markdown headers, not bold pseudo headers. This mirrors the issue-triage analysis comment.
+
+The comment always opens with this H2 title.
+
+```
+## 🔍 Agentic Issue Investigation
+```
+
+Directly under the title, an `### Outcome` header holds the verdict. The verdict text is chosen from this fixed set. Pick the one that matches the decision rule that fired.
+
+- `Recommended for Copilot automated fix`. The Actionable SDK Issue rule matched. Direct Copilot assignment is best effort and usually skips on this repository, so the verdict recommends rather than claims assignment. A maintainer performs the assignment.
+- `Requires a human. Analysis provided below`. SDK-side but an exclusion under Actionable SDK Issue applied, or ownership is SDK-side but the fix is not a bounded first pass.
+- `More information needed from the author`. The Insufficient Context rule matched.
+- `Closed as service side or working as designed`. The Working as Designed or Service-Side rule matched.
+- `Likely duplicate of #<N>`. The Duplicate rule matched.
+- `Reproduce on the latest version`. The Version Currency rule matched and asked the author to retest on latest.
+- `No automated action taken`. Used only when a comment is warranted but no other outcome applies. When there is no user-visible action at all, call `noop` and post no comment.
+
+After the outcome, a `### Summary` header holds a one or two sentence summary.
+
+```
+### Summary
+
+<one or two sentences describing the decision and the core issue>
+```
+
+After the summary, add the detail sections as `###` child headers that stay always visible. Do not wrap them in `<details>`. The header set depends on the outcome.
+
+For the `Recommended for Copilot automated fix` outcome use these headers in this order: `### 🩹 Mitigation`, `### 🧭 Root Cause`, `### 🛠️ Suggested Fix`, and `### ✅ Decision Basis`. This outcome names a bounded, testable fix, so a definite root cause and suggested fix are expected.
+
+For the `Requires a human. Analysis provided below` outcome use these headers in this order: `### 🩹 Mitigation`, `### 🧭 Analysis`, and `### ✅ Decision Basis`. This outcome fires because the fix is not a bounded first pass or an exclusion applied, so it does not assert a single suggested fix. The `### 🧭 Analysis` section holds the observations, suspected area, and any constraints for the human reviewer.
+
+The `### 🩹 Mitigation` section is required whenever a fix is pending. It tells the issue author what they can do to unblock themselves while they wait, using only steps supported by the issue evidence or trusted repository, package, or documentation context. Give concrete, verifiable actions such as a supported workaround, a configuration change, an alternate API, or a safe downgrade to a version known to lack the bug. If no real workaround is known from that evidence, say so plainly and do not invent one.
+
+For the service-side, insufficient-context, duplicate, and version-currency outcomes, the rule specific body from the matching decision rule follows the summary in place of the analysis sections. The service-side courtesy message keeps its wording from the Working as Designed or Service-Side rule.
+
+Do not use at mentions anywhere in the comment. Address the author by plain name with no at symbol, or omit the name. The issue author is a participant and is notified of the comment without a mention. This keeps safe outputs sanitization intact for the analysis body.
+
+Example, actionable path.
+
+```markdown
+## 🔍 Agentic Issue Investigation
+
+### Outcome
+
+Recommended for Copilot automated fix
+
+### Summary
+
+GetRevisionsAsync throws System.UriFormatException on the second page because CreateNextGetRevisionsRequest never assigns the built URI back to the request.
+
+### 🩹 Mitigation
+
+Until the fix ships, keep each revisions query small enough to return within a single page so paging never advances to the failing second page. Narrow the query with specific key and label filters, or a tighter accept-datetime window, so the revisions fit in one page. If you must read more revisions than fit in one page, call the App Configuration REST revisions endpoint directly and follow the Link header for paging, which bypasses the SDK next link builder.
+
+### 🧭 Root Cause
+
+In sdk/appconfiguration/Azure.Data.AppConfiguration/src/ConfigurationClient_private.cs, CreateNextGetRevisionsRequest builds a RawRequestUriBuilder and calls uri.AppendRawNextLink(nextLink, false) but never assigns it back to request.Uri. Sibling methods include request.Uri = uri. The bug is present in current code on the latest stable release 1.11.0.
+
+### 🛠️ Suggested Fix
+
+Add request.Uri = uri immediately after AppendRawNextLink in CreateNextGetRevisionsRequest. A regression test that pages through more than one page of revisions verifies the fix.
+
+### ✅ Decision Basis
+
+- Version currency. Reported version equals latest stable 1.11.0, so the support policy check passes.
+- Duplicate. No specific matching issue found.
+- Ownership. SDK side, confirmed by the source path above.
+- Scope. Bounded, testable, single line change with a small regression test.
+
+A maintainer can assign Copilot to proceed. Automated assignment is best effort on this repository and may not complete.
+```
+
+Example, human path.
+
+```markdown
+## 🔍 Agentic Issue Investigation
+
+### Outcome
+
+Requires a human. Analysis provided below
+
+### Summary
+
+<one or two sentences describing the issue and why automated handling is not appropriate>
+
+### 🩹 Mitigation
+
+Concrete steps the author can take now to unblock, drawn only from the issue evidence or trusted repository, package, or documentation context. If no workaround is known from that evidence, state that plainly.
+
+### 🧭 Analysis
+
+Observations, suspected area, and any constraints for the human reviewer.
+
+### ✅ Decision Basis
+
+- Version currency. current or the exact status
+- Duplicate. none found or issue number
+- Ownership. SDK side or service side with evidence
+- Why not Copilot. the specific exclusion that applied
+```
+
 ## Output Requirements
 
-Use at most one user-visible comment. Every user-visible comment must state the investigation decision and the next action; never post only a generic acknowledgement such as "thank you for reaching out." Do not add new state labels such as `auto-fix-candidate`, `auto-fix-attempted`, `auto-fix-skipped`, or `Service`. Do not use Azure OpenAI secrets or external LLM endpoints. If no action is needed, you MUST call `noop` with a message explaining why.
+Use at most one user-visible comment, and it MUST follow the Comment Format section above, including the H2 title and the required outcome line. Every user-visible comment must state the investigation decision and the next action; never post only a generic acknowledgement such as "thank you for reaching out." Do not use at mentions in the comment. Do not add new state labels such as `auto-fix-candidate`, `auto-fix-attempted`, `auto-fix-skipped`, or `Service`. Do not use Azure OpenAI secrets or external LLM endpoints. If no action is needed, you MUST call `noop` with a message explaining why.

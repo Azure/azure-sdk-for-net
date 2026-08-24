@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -15,9 +17,38 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class VMwareCbtEnableMigrationContent : EnableMigrationProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="VMwareCbtEnableMigrationContent"/>. </summary>
+        /// <param name="vmwareMachineId"> The ARM Id of the VM discovered in VMware. </param>
+        /// <param name="disksToInclude"> The disks to include list. </param>
+        /// <param name="dataMoverRunAsAccountId"> The data mover run as account Id. </param>
+        /// <param name="snapshotRunAsAccountId"> The snapshot run as account Id. </param>
+        /// <param name="targetResourceGroupId"> The target resource group ARM Id. </param>
+        /// <param name="targetNetworkId"> The target network ARM Id. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="vmwareMachineId"/>, <paramref name="disksToInclude"/>, <paramref name="dataMoverRunAsAccountId"/>, <paramref name="snapshotRunAsAccountId"/>, <paramref name="targetResourceGroupId"/> or <paramref name="targetNetworkId"/> is null. </exception>
+        public VMwareCbtEnableMigrationContent(ResourceIdentifier vmwareMachineId, IEnumerable<VMwareCbtDiskContent> disksToInclude, ResourceIdentifier dataMoverRunAsAccountId, ResourceIdentifier snapshotRunAsAccountId, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetNetworkId) : base("VMwareCbt")
+        {
+            Argument.AssertNotNull(vmwareMachineId, nameof(vmwareMachineId));
+            Argument.AssertNotNull(disksToInclude, nameof(disksToInclude));
+            Argument.AssertNotNull(dataMoverRunAsAccountId, nameof(dataMoverRunAsAccountId));
+            Argument.AssertNotNull(snapshotRunAsAccountId, nameof(snapshotRunAsAccountId));
+            Argument.AssertNotNull(targetResourceGroupId, nameof(targetResourceGroupId));
+            Argument.AssertNotNull(targetNetworkId, nameof(targetNetworkId));
+
+            VMwareMachineId = vmwareMachineId;
+            DisksToInclude = disksToInclude.ToList();
+            DataMoverRunAsAccountId = dataMoverRunAsAccountId;
+            SnapshotRunAsAccountId = snapshotRunAsAccountId;
+            TargetResourceGroupId = targetResourceGroupId;
+            TargetNetworkId = targetNetworkId;
+            TargetVmTags = new ChangeTrackingDictionary<string, string>();
+            SeedDiskTags = new ChangeTrackingDictionary<string, string>();
+            TargetDiskTags = new ChangeTrackingDictionary<string, string>();
+            TargetNicTags = new ChangeTrackingDictionary<string, string>();
+        }
+
+        /// <summary> Initializes a new instance of <see cref="VMwareCbtEnableMigrationContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="vMwareMachineId"> The ARM Id of the VM discovered in VMware. </param>
+        /// <param name="vmwareMachineId"> The ARM Id of the VM discovered in VMware. </param>
         /// <param name="disksToInclude"> The disks to include list. </param>
         /// <param name="licenseType"> License type. </param>
         /// <param name="sqlServerLicenseType"> The SQL Server license type. </param>
@@ -45,9 +76,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="targetNicTags"> The tags for the target NICs. </param>
         /// <param name="userSelectedOSName"> The OS name selected by user. </param>
         /// <param name="targetCapacityReservationGroupId"> The target capacity reservation group ARM Id. </param>
-        internal VMwareCbtEnableMigrationContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier vMwareMachineId, IList<VMwareCbtDiskContent> disksToInclude, SiteRecoveryLicenseType? licenseType, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, string performSqlBulkRegistration, ResourceIdentifier dataMoverRunAsAccountId, ResourceIdentifier snapshotRunAsAccountId, string targetVmName, string targetVmSize, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, string targetSubnetName, string testSubnetName, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier confidentialVmKeyVaultId, VMwareCbtSecurityProfileProperties targetVmSecurityProfile, ResourceIdentifier targetBootDiagnosticsStorageAccountId, string performAutoResync, IDictionary<string, string> targetVmTags, IDictionary<string, string> seedDiskTags, IDictionary<string, string> targetDiskTags, IDictionary<string, string> targetNicTags, string userSelectedOSName, string targetCapacityReservationGroupId) : base(instanceType, additionalBinaryDataProperties)
+        internal VMwareCbtEnableMigrationContent(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier vmwareMachineId, IList<VMwareCbtDiskContent> disksToInclude, SiteRecoveryLicenseType? licenseType, SiteRecoverySqlServerLicenseType? sqlServerLicenseType, RecoveryServicesSiteRecoveryLinuxLicenseType? linuxLicenseType, string performSqlBulkRegistration, ResourceIdentifier dataMoverRunAsAccountId, ResourceIdentifier snapshotRunAsAccountId, string targetVmName, string targetVmSize, ResourceIdentifier targetResourceGroupId, ResourceIdentifier targetNetworkId, ResourceIdentifier testNetworkId, string targetSubnetName, string testSubnetName, ResourceIdentifier targetAvailabilitySetId, string targetAvailabilityZone, ResourceIdentifier targetProximityPlacementGroupId, ResourceIdentifier confidentialVmKeyVaultId, VMwareCbtSecurityProfileProperties targetVmSecurityProfile, ResourceIdentifier targetBootDiagnosticsStorageAccountId, string performAutoResync, IDictionary<string, string> targetVmTags, IDictionary<string, string> seedDiskTags, IDictionary<string, string> targetDiskTags, IDictionary<string, string> targetNicTags, string userSelectedOSName, string targetCapacityReservationGroupId) : base(instanceType, additionalBinaryDataProperties)
         {
-            VMwareMachineId = vMwareMachineId;
+            VMwareMachineId = vmwareMachineId;
             DisksToInclude = disksToInclude;
             LicenseType = licenseType;
             SqlServerLicenseType = sqlServerLicenseType;
