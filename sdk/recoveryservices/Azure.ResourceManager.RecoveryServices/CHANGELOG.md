@@ -1,14 +1,11 @@
 # Release History
 
-## 1.4.0-beta.1 (Unreleased)
+## 1.4.0 (Unreleased)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded the service API version to `2026-07-01`.
+- Added `RegionOfChoiceStatus` to `RecoveryServicesVaultProperties`.
 
 ## 1.3.0 (2026-07-10)
 
