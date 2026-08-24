@@ -16,10 +16,10 @@
 
 ## Summary
 
-- Total libraries: 448
-- Management Plane (MPG): 262
+- Total libraries: 444
+- Management Plane (MPG): 260
   - Autorest/Swagger: 40
-  - New Emitter (TypeSpec): 222
+  - New Emitter (TypeSpec): 220
   - Old TypeSpec: 0
 - Data Plane (DPG): 124
   - Autorest/Swagger: 30
@@ -137,7 +137,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 30
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 222 / 222 (100%)
+**Migration Status**: 220 / 220 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -277,6 +277,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | manufacturingplatform | Azure.ResourceManager.ManufacturingPlatform | ✅ |
 | maps | Azure.ResourceManager.Maps | ✅ |
 | marketplace | Azure.ResourceManager.Marketplace | ✅ |
+| migrationdiscoverysap | Azure.ResourceManager.MigrationDiscoverySap | ✅ |
 | mongocluster | Azure.ResourceManager.MongoCluster | ✅ |
 | mongodbatlas | Azure.ResourceManager.MongoDBAtlas | ✅ |
 | monitor | Azure.ResourceManager.Monitor | ✅ |
@@ -397,7 +398,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 40
 | managementpartner | Azure.ResourceManager.ManagementPartner |
 | marketplaceordering | Azure.ResourceManager.MarketplaceOrdering |
 | migrationassessment | Azure.ResourceManager.Migration.Assessment |
-| migrationdiscoverysap | Azure.ResourceManager.MigrationDiscoverySap |
 | openenergyplatform | Azure.ResourceManager.EnergyServices |
 | orbital | Azure.ResourceManager.Orbital |
 | resourcemanager | Azure.ResourceManager |
