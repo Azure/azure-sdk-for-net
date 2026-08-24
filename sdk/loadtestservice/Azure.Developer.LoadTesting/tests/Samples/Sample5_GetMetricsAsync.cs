@@ -62,7 +62,7 @@ namespace Azure.Developer.LoadTesting.Tests.Samples
                         testRunId,
                         metricNamespaces.Value.First().Name,
                         metricDefinitions.Value.First().Name,
-                        testRun.StartDateTime.Value.ToString("o") + "/" + testRun.EndDateTime.Value.ToString("o")
+                        testRun.StartOn.Value.ToString("o") + "/" + testRun.EndOn.Value.ToString("o")
                     );
             }
             catch (Exception ex)
