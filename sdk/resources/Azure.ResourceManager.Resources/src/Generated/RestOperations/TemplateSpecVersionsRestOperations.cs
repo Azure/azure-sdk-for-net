@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionData data)
+        internal Core.HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionPatch patch)
+        internal Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion, TemplateSpecVersionPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion)
+        internal Core.HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion)
+        internal Core.HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string templateSpecName, string templateSpecVersion)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string templateSpecName)
+        internal Core.HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string templateSpecName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string templateSpecName)
+        internal Core.HttpMessage CreateListNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, string templateSpecName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

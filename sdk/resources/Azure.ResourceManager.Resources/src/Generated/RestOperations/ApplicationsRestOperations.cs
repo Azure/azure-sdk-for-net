@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string applicationName)
+        internal Core.HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string applicationName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string applicationName)
+        internal Core.HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string applicationName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string applicationName, ArmApplicationData data)
+        internal Core.HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string applicationName, ArmApplicationData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string applicationName, ArmApplicationPatch patch)
+        internal Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string applicationName, ArmApplicationPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
+        internal Core.HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
+        internal Core.HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -591,7 +591,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateRefreshPermissionsRequest(string subscriptionId, string resourceGroupName, string applicationName)
+        internal Core.HttpMessage CreateRefreshPermissionsRequest(string subscriptionId, string resourceGroupName, string applicationName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -668,7 +668,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
+        internal Core.HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
+        internal Core.HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

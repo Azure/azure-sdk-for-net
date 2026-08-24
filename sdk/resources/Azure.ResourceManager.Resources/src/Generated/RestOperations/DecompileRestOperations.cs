@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateBicepRequest(string subscriptionId, DecompileOperationContent content)
+        internal Core.HttpMessage CreateBicepRequest(string subscriptionId, DecompileOperationContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;

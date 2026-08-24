@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string templateSpecName, TemplateSpecData data)
+        internal Core.HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string templateSpecName, TemplateSpecData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string templateSpecName, TemplateSpecPatch patch)
+        internal Core.HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string templateSpecName, TemplateSpecPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string templateSpecName, TemplateSpecExpandKind? expand)
+        internal Core.HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string templateSpecName, TemplateSpecExpandKind? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string templateSpecName)
+        internal Core.HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string templateSpecName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId, TemplateSpecExpandKind? expand)
+        internal Core.HttpMessage CreateListBySubscriptionRequest(string subscriptionId, TemplateSpecExpandKind? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, TemplateSpecExpandKind? expand)
+        internal Core.HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName, TemplateSpecExpandKind? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -620,7 +620,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, TemplateSpecExpandKind? expand)
+        internal Core.HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId, TemplateSpecExpandKind? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.Resources
             return uri;
         }
 
-        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, TemplateSpecExpandKind? expand)
+        internal Core.HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName, TemplateSpecExpandKind? expand)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
