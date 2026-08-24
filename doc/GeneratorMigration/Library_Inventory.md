@@ -18,8 +18,8 @@
 
 - Total libraries: 444
 - Management Plane (MPG): 260
-  - Autorest/Swagger: 41
-  - New Emitter (TypeSpec): 219
+  - Autorest/Swagger: 40
+  - New Emitter (TypeSpec): 220
   - Old TypeSpec: 0
 - Data Plane (DPG): 124
   - Autorest/Swagger: 30
@@ -137,7 +137,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 30
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 219 / 219 (100%)
+**Migration Status**: 220 / 220 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -249,6 +249,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | healthcareapis | Azure.ResourceManager.HealthcareApis | ✅ |
 | healthdataaiservices | Azure.ResourceManager.HealthDataAIServices | ✅ |
 | horizondb | Azure.ResourceManager.HorizonDB | ✅ |
+| hybridaks | Azure.ResourceManager.HybridContainerService | ✅ |
 | hybridcompute | Azure.ResourceManager.HybridCompute | ✅ |
 | hybridconnectivity | Azure.ResourceManager.HybridConnectivity | ✅ |
 | hybridkubernetes | Azure.ResourceManager.Kubernetes | ✅ |
@@ -364,7 +365,7 @@ Libraries that provide resource management APIs for Azure services and have been
 
 ## Management Plane Libraries (MPG) - Still on Swagger
 
-Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 41
+Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 40
 
 | Service | Library |
 | ------- | ------- |
@@ -384,7 +385,6 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 41
 | digitaltwins | Azure.ResourceManager.DigitalTwins |
 | fluidrelay | Azure.ResourceManager.FluidRelay |
 | graphservices | Azure.ResourceManager.GraphServices |
-| hybridaks | Azure.ResourceManager.HybridContainerService |
 | iot | Azure.ResourceManager.IotFirmwareDefense |
 | iotcentral | Azure.ResourceManager.IotCentral |
 | labservices | Azure.ResourceManager.LabServices |
