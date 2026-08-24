@@ -181,6 +181,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("ddosSettings"u8);
                 writer.WriteObjectValue(DdosSettings, options);
             }
+            if (Optional.IsDefined(EnableConnectionTracking))
+            {
+                writer.WritePropertyName("enableConnectionTracking"u8);
+                writer.WriteBooleanValue(EnableConnectionTracking.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -236,6 +241,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSubResource gatewayLoadBalancer = default;
             NetworkProvisioningState? provisioningState = default;
             DdosFrontendIPConfigurationSettings ddosSettings = default;
+            bool? enableConnectionTracking = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -400,6 +406,15 @@ namespace Azure.ResourceManager.Network.Models
                     ddosSettings = DdosFrontendIPConfigurationSettings.DeserializeDdosFrontendIPConfigurationSettings(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("enableConnectionTracking"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    enableConnectionTracking = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -419,6 +434,7 @@ namespace Azure.ResourceManager.Network.Models
                 gatewayLoadBalancer,
                 provisioningState,
                 ddosSettings,
+                enableConnectionTracking,
                 additionalBinaryDataProperties);
         }
     }

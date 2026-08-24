@@ -169,13 +169,13 @@ Console.WriteLine($"Continuous Evaluation Rule created (id: {continuousEvalRule.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateConversation_EvaluationRules_Sync
-ProjectConversation conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
+ConversationResource conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
 ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CreateConversation_EvaluationRules_Async
-ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
 ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
 ```
 

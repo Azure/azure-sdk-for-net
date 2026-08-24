@@ -21,6 +21,6 @@ namespace Azure.ResourceManager.ServiceGroupExtension
 
         public static Resource Resource(ResourceIdentifier id = default, string name = default, string @type = default, SystemData systemData = default) => throw null;
 
-        public static SystemData SystemData(string createdBy = default, CreatedByType? createdByType = default, DateTimeOffset? createdAt = default, string lastModifiedBy = default, CreatedByType? lastModifiedByType = default, DateTimeOffset? lastModifiedAt = default) => throw null;
+        public static SystemData SystemData(string createdBy = default, CreatedByType? createdByType = default, DateTimeOffset? createdOn = default, string lastModifiedBy = default, CreatedByType? lastModifiedByType = default, DateTimeOffset? lastModifiedOn = default) => throw null;
     }
 }

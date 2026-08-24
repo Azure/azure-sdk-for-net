@@ -26,14 +26,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="resourceGuardOperationRequests"> ResourceGuard Operation Requests. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="workLoadType"> Type of workload for the backup management. </param>
-        /// <param name="vmWorkloadPolicyType"> Type of the protection policy. </param>
         /// <param name="settings"> Common settings for the backup management. </param>
         /// <param name="subProtectionPolicy"> List of sub-protection policies which includes schedule and retention. </param>
         /// <param name="doesMakePolicyConsistent"> Fix the policy inconsistency. </param>
-        internal VmWorkloadProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackupWorkloadType? workLoadType, VmWorkloadPolicyType? vmWorkloadPolicyType, BackupCommonSettings settings, IList<SubProtectionPolicy> subProtectionPolicy, bool? doesMakePolicyConsistent) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, additionalBinaryDataProperties)
+        internal VmWorkloadProtectionPolicy(int? protectedItemsCount, string backupManagementType, IList<string> resourceGuardOperationRequests, IDictionary<string, BinaryData> additionalBinaryDataProperties, BackupWorkloadType? workLoadType, BackupCommonSettings settings, IList<SubProtectionPolicy> subProtectionPolicy, bool? doesMakePolicyConsistent) : base(protectedItemsCount, backupManagementType, resourceGuardOperationRequests, additionalBinaryDataProperties)
         {
             WorkLoadType = workLoadType;
-            VmWorkloadPolicyType = vmWorkloadPolicyType;
             Settings = settings;
             SubProtectionPolicy = subProtectionPolicy;
             DoesMakePolicyConsistent = doesMakePolicyConsistent;
@@ -41,9 +39,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Type of workload for the backup management. </summary>
         public BackupWorkloadType? WorkLoadType { get; set; }
-
-        /// <summary> Type of the protection policy. </summary>
-        public VmWorkloadPolicyType? VmWorkloadPolicyType { get; set; }
 
         /// <summary> Common settings for the backup management. </summary>
         public BackupCommonSettings Settings { get; set; }

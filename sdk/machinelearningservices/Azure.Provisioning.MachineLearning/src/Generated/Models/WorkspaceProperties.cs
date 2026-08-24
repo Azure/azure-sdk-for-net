@@ -537,11 +537,11 @@ namespace Azure.Provisioning.MachineLearning
         }
 
         /// <summary> Gets or sets the CollectionsThroughput. </summary>
-        public BicepValue<int> ServiceManagedResourcesCosmosDbCollectionsThroughput
+        public BicepValue<int> ServiceManagedResourcesCosmosDBCollectionsThroughput
         {
             get
             {
-                return ServiceManagedResourcesSettings is null ? default : ServiceManagedResourcesSettings.CosmosDbCollectionsThroughput;
+                return ServiceManagedResourcesSettings is null ? default : ServiceManagedResourcesSettings.CosmosDBCollectionsThroughput;
             }
             set
             {
@@ -549,7 +549,7 @@ namespace Azure.Provisioning.MachineLearning
                 {
                     ServiceManagedResourcesSettings = new ServiceManagedResourcesSettings();
                 }
-                ServiceManagedResourcesSettings.CosmosDbCollectionsThroughput = value;
+                ServiceManagedResourcesSettings.CosmosDBCollectionsThroughput = value;
             }
         }
 
