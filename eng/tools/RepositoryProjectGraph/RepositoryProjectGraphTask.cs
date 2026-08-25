@@ -37,6 +37,8 @@ public sealed class RepositoryProjectGraphTask : Task
 
     public int DegreeOfParallelism { get; set; } = 1;
 
+    public string Configurations { get; set; } = string.Empty;
+
     public override bool Execute()
     {
         if (DegreeOfParallelism < 1)
@@ -66,9 +68,27 @@ public sealed class RepositoryProjectGraphTask : Task
             globalProperties["EnableDefaultItems"] = "false";
         }
 
+        string configurationsValue = string.IsNullOrWhiteSpace(Configurations)
+            ? globalProperties.GetValueOrDefault("Configuration", "Debug")
+            : Configurations;
+        string[] configurations = configurationsValue
+            .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .ToArray();
+        if (configurations.Length == 0)
+        {
+            throw new InvalidOperationException("At least one build configuration is required.");
+        }
         string[] projectPaths = GetFullPaths(Projects);
         ProjectGraphEntryPoint[] entryPoints = projectPaths
-            .Select(path => new ProjectGraphEntryPoint(path, globalProperties))
+            .SelectMany(path => configurations.Select(configuration =>
+            {
+                var properties = new Dictionary<string, string>(globalProperties, StringComparer.OrdinalIgnoreCase)
+                {
+                    ["Configuration"] = configuration,
+                };
+                return new ProjectGraphEntryPoint(path, properties);
+            }))
             .ToArray();
 
         EvaluateAndWriteRecords(entryPoints, projectPaths, GetFullPaths(RootProjects));
@@ -150,6 +170,9 @@ public sealed class RepositoryProjectGraphTask : Task
         result.Remove("TargetFrameworks");
         result.Remove("RuntimeIdentifier");
         result.Remove("RuntimeIdentifiers");
+        result.Remove("ServiceDirectory");
+        result.Remove("Project");
+        result.Remove("SkipServiceProjectImports");
         return result;
     }
 
@@ -445,6 +468,18 @@ public sealed class RepositoryProjectGraphTask : Task
                     writer,
                     ref recordCount,
                     $"Input|{projectPath}|{targetFramework}|{itemType}|{GetItemFullPath(project, item)}");
+            }
+        }
+
+        foreach (ProjectItemInstance reference in project.GetItems("Reference"))
+        {
+            string hintPath = reference.GetMetadataValue("HintPath");
+            if (!string.IsNullOrEmpty(hintPath))
+            {
+                WriteRecord(
+                    writer,
+                    ref recordCount,
+                    $"Input|{projectPath}|{targetFramework}|ReferenceHintPath|{Path.GetFullPath(Path.Combine(project.Directory, hintPath))}");
             }
         }
     }
