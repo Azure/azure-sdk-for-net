@@ -14,9 +14,10 @@ using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments.Models;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     /// <summary>
     /// A class representing a ArmDeployment along with the instance operations that can be performed on it.
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.Resources
         internal ArmDeploymentResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
             TryGetApiVersion(ResourceType, out string armDeploymentApiVersion);
-            _armDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources", ResourceType.Namespace, Diagnostics);
+            _armDeploymentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Deployments", ResourceType.Namespace, Diagnostics);
             _armDeploymentsRestClient = new ArmDeployments(_armDeploymentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, armDeploymentApiVersion ?? "2025-04-01");
             ValidateResourceId(id);
         }
@@ -222,7 +223,7 @@ namespace Azure.ResourceManager.Resources
                 };
                 Core.HttpMessage message = _armDeploymentsRestClient.CreateDeleteAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ResourcesArmOperation operation = new ResourcesArmOperation(_armDeploymentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                DeploymentsArmOperation operation = new DeploymentsArmOperation(_armDeploymentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -271,7 +272,7 @@ namespace Azure.ResourceManager.Resources
                 };
                 Core.HttpMessage message = _armDeploymentsRestClient.CreateDeleteAtScopeRequest(Id.Parent.ToString(), Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ResourcesArmOperation operation = new ResourcesArmOperation(_armDeploymentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                DeploymentsArmOperation operation = new DeploymentsArmOperation(_armDeploymentsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -690,7 +691,7 @@ namespace Azure.ResourceManager.Resources
                 };
                 Core.HttpMessage message = _armDeploymentsRestClient.CreateValidateRequest(Id.Parent.ToString(), Id.Name, ArmDeploymentContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ResourcesArmOperation<ArmDeploymentValidateResult> operation = new ResourcesArmOperation<ArmDeploymentValidateResult>(
+                DeploymentsArmOperation<ArmDeploymentValidateResult> operation = new DeploymentsArmOperation<ArmDeploymentValidateResult>(
                     new ArmDeploymentValidateResultOperationSource(),
                     _armDeploymentsClientDiagnostics,
                     Pipeline,
@@ -749,7 +750,7 @@ namespace Azure.ResourceManager.Resources
                 };
                 Core.HttpMessage message = _armDeploymentsRestClient.CreateValidateRequest(Id.Parent.ToString(), Id.Name, ArmDeploymentContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ResourcesArmOperation<ArmDeploymentValidateResult> operation = new ResourcesArmOperation<ArmDeploymentValidateResult>(
+                DeploymentsArmOperation<ArmDeploymentValidateResult> operation = new DeploymentsArmOperation<ArmDeploymentValidateResult>(
                     new ArmDeploymentValidateResultOperationSource(),
                     _armDeploymentsClientDiagnostics,
                     Pipeline,
@@ -808,7 +809,7 @@ namespace Azure.ResourceManager.Resources
                 };
                 Core.HttpMessage message = _armDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent.ToString(), Id.Name, ArmDeploymentContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                ResourcesArmOperation<ArmDeploymentResource> operation = new ResourcesArmOperation<ArmDeploymentResource>(
+                DeploymentsArmOperation<ArmDeploymentResource> operation = new DeploymentsArmOperation<ArmDeploymentResource>(
                     new ArmDeploymentResourceOperationSource(Client),
                     _armDeploymentsClientDiagnostics,
                     Pipeline,
@@ -867,7 +868,7 @@ namespace Azure.ResourceManager.Resources
                 };
                 Core.HttpMessage message = _armDeploymentsRestClient.CreateCreateOrUpdateAtScopeRequest(Id.Parent.ToString(), Id.Name, ArmDeploymentContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                ResourcesArmOperation<ArmDeploymentResource> operation = new ResourcesArmOperation<ArmDeploymentResource>(
+                DeploymentsArmOperation<ArmDeploymentResource> operation = new DeploymentsArmOperation<ArmDeploymentResource>(
                     new ArmDeploymentResourceOperationSource(Client),
                     _armDeploymentsClientDiagnostics,
                     Pipeline,
@@ -919,7 +920,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     ArmDeploymentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<ArmDeploymentResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ArmDeploymentResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -962,7 +963,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     ArmDeploymentData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation<ArmDeploymentResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<ArmDeploymentResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1004,7 +1005,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     ArmDeploymentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<ArmDeploymentResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ArmDeploymentResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1046,7 +1047,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     ArmDeploymentData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation<ArmDeploymentResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<ArmDeploymentResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1087,7 +1088,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     ArmDeploymentData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<ArmDeploymentResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<ArmDeploymentResource> result = await this.UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -1128,7 +1129,7 @@ namespace Azure.ResourceManager.Resources
                 {
                     ArmDeploymentData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation<ArmDeploymentResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<ArmDeploymentResource> result = this.Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

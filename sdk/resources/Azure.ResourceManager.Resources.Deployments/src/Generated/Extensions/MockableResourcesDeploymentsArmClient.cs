@@ -11,22 +11,22 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments;
 
-namespace Azure.ResourceManager.Resources.Mocking
+namespace Azure.ResourceManager.Resources.Deployments.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="ArmClient"/>. </summary>
-    public partial class MockableResourcesArmClient : ArmResource
+    public partial class MockableResourcesDeploymentsArmClient : ArmResource
     {
-        /// <summary> Initializes a new instance of MockableResourcesArmClient for mocking. </summary>
-        protected MockableResourcesArmClient()
+        /// <summary> Initializes a new instance of MockableResourcesDeploymentsArmClient for mocking. </summary>
+        protected MockableResourcesDeploymentsArmClient()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableResourcesArmClient"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableResourcesDeploymentsArmClient"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableResourcesArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableResourcesDeploymentsArmClient(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 

@@ -13,31 +13,32 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
-    internal partial class ResourcesArmOperation : ArmOperation
+    internal partial class DeploymentsArmOperation<T> : ArmOperation<T>
     {
-        private readonly OperationInternal _operation;
+        private readonly OperationInternal<T> _operation;
         private readonly RehydrationToken? _completeRehydrationToken;
         private readonly NextLinkOperationImplementation _nextLinkOperation;
         private readonly string _operationId;
 
-        /// <summary> Initializes a new instance of ResourcesArmOperation for mocking. </summary>
-        protected ResourcesArmOperation()
+        /// <summary> Initializes a new instance of DeploymentsArmOperation for mocking. </summary>
+        protected DeploymentsArmOperation()
         {
         }
 
         /// <summary></summary>
         /// <param name="response"> The operation response. </param>
         /// <param name="rehydrationToken"> The token to rehydrate the operation. </param>
-        internal ResourcesArmOperation(Response response, RehydrationToken? rehydrationToken = null)
+        internal DeploymentsArmOperation(Response<T> response, RehydrationToken? rehydrationToken = null)
         {
-            _operation = OperationInternal.Succeeded(response);
+            _operation = OperationInternal<T>.Succeeded(response.GetRawResponse(), response.Value);
             _completeRehydrationToken = rehydrationToken;
             _operationId = GetOperationId(rehydrationToken);
         }
 
         /// <summary></summary>
+        /// <param name="source"> The instance of <see cref="IOperationSource{T}"/>. </param>
         /// <param name="clientDiagnostics"> The instance of <see cref="ClientDiagnostics"/>. </param>
         /// <param name="pipeline"> The instance of <see cref="HttpPipeline"/>. </param>
         /// <param name="request"> The operation request. </param>
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="finalStateVia"> The finalStateVia of the operation. </param>
         /// <param name="skipApiVersionOverride"> If should skip Api version override. </param>
         /// <param name="apiVersionOverrideValue"> The Api version override value. </param>
-        internal ResourcesArmOperation(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
+        internal DeploymentsArmOperation(IOperationSource<T> source, ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, Request request, Response response, OperationFinalStateVia finalStateVia, bool skipApiVersionOverride = false, string apiVersionOverrideValue = null)
         {
             IOperation nextLinkOperation = NextLinkOperationImplementation.Create(pipeline, request.Method, request.Uri.ToUri(), response, finalStateVia, skipApiVersionOverride, apiVersionOverrideValue);
             if (nextLinkOperation is NextLinkOperationImplementation nextLinkOperationImplementation)
@@ -58,17 +59,23 @@ namespace Azure.ResourceManager.Resources
                 _completeRehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(request.Method, request.Uri.ToUri(), response, finalStateVia);
                 _operationId = GetOperationId(_completeRehydrationToken);
             }
-            _operation = new OperationInternal(
-                nextLinkOperation,
+            _operation = new OperationInternal<T>(
+                NextLinkOperationImplementation.Create(source, nextLinkOperation),
                 clientDiagnostics,
                 response,
-                "ResourcesArmOperation",
+                "DeploymentsArmOperation",
                 null,
                 new SequentialDelayStrategy());
         }
 
         /// <summary> Gets the Id. </summary>
         public override string Id => _operationId ?? NextLinkOperationImplementation.NotSet;
+
+        /// <summary> Gets the Value. </summary>
+        public override T Value => _operation.Value;
+
+        /// <summary> Gets the HasValue. </summary>
+        public override bool HasValue => _operation.HasValue;
 
         /// <summary> Gets the HasCompleted. </summary>
         public override bool HasCompleted => _operation.HasCompleted;
@@ -92,15 +99,15 @@ namespace Azure.ResourceManager.Resources
         public override ValueTask<Response> UpdateStatusAsync(CancellationToken cancellationToken = default) => _operation.UpdateStatusAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override Response WaitForCompletionResponse(CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponse(cancellationToken);
+        public override Response<T> WaitForCompletion(CancellationToken cancellationToken = default) => _operation.WaitForCompletion(cancellationToken);
 
         /// <inheritdoc/>
-        public override Response WaitForCompletionResponse(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponse(pollingInterval, cancellationToken);
+        public override Response<T> WaitForCompletion(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletion(pollingInterval, cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response> WaitForCompletionResponseAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(cancellationToken);
+        public override ValueTask<Response<T>> WaitForCompletionAsync(CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(cancellationToken);
 
         /// <inheritdoc/>
-        public override ValueTask<Response> WaitForCompletionResponseAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionResponseAsync(pollingInterval, cancellationToken);
+        public override ValueTask<Response<T>> WaitForCompletionAsync(TimeSpan pollingInterval, CancellationToken cancellationToken = default) => _operation.WaitForCompletionAsync(pollingInterval, cancellationToken);
     }
 }

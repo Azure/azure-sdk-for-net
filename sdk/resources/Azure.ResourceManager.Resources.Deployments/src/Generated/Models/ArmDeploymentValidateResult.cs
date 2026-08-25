@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.Deployments.Models
 {
     /// <summary> Information from validate template deployment response. </summary>
     public partial class ArmDeploymentValidateResult : ResourceData
@@ -33,12 +32,16 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="error"> The deployment validation error. </param>
         /// <param name="properties"> The template deployment properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentValidateResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ResponseError error, ArmDeploymentPropertiesExtended properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ArmDeploymentValidateResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ErrorResponse error, ArmDeploymentPropertiesExtended properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Error = error;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> The deployment validation error. </summary>
+        [WirePath("error")]
+        public ErrorResponse Error { get; }
 
         /// <summary> The template deployment properties. </summary>
         [WirePath("properties")]
