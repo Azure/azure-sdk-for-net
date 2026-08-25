@@ -307,11 +307,11 @@ namespace Azure.ResourceManager.StorageSync.Models
                 default);
         }
 
-        /// <param name="cloudEndpointUpdateChangeEnumerationIntervalDays"> The interval for enumerating changes on the cloud endpoint. </param>
+        /// <param name="changeEnumerationIntervalDays"> The interval for enumerating changes on the cloud endpoint. </param>
         /// <returns> A new <see cref="Models.CloudEndpointPatch"/> instance for mocking. </returns>
-        public static CloudEndpointPatch CloudEndpointPatch(int? cloudEndpointUpdateChangeEnumerationIntervalDays = default)
+        public static CloudEndpointPatch CloudEndpointPatch(int? changeEnumerationIntervalDays = default)
         {
-            return new CloudEndpointPatch(cloudEndpointUpdateChangeEnumerationIntervalDays is null ? default : new CloudEndpointUpdateProperties(cloudEndpointUpdateChangeEnumerationIntervalDays, default), default);
+            return new CloudEndpointPatch(changeEnumerationIntervalDays is null ? default : new CloudEndpointUpdateProperties(changeEnumerationIntervalDays, default), default);
         }
 
         /// <param name="azureFileShare"> Azure File Share. </param>

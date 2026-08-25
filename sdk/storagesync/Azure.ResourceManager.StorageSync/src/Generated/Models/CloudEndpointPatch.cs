@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         internal CloudEndpointUpdateProperties Properties { get; set; }
 
         /// <summary> The interval for enumerating changes on the cloud endpoint. </summary>
-        public int? CloudEndpointUpdateChangeEnumerationIntervalDays
+        public int? ChangeEnumerationIntervalDays
         {
             get
             {
