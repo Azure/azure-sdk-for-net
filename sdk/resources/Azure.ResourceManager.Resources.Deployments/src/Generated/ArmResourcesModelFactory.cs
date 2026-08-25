@@ -12,8 +12,9 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.Deployments.Models
 {
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmResourcesModelFactory
@@ -25,7 +26,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="properties"> Deployment properties. </param>
         /// <param name="location"> the location of the deployment. </param>
         /// <param name="tags"> Deployment tags. </param>
-        /// <returns> A new <see cref="Resources.ArmDeploymentData"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Deployments.ArmDeploymentData"/> instance for mocking. </returns>
         public static ArmDeploymentData ArmDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ArmDeploymentPropertiesExtended properties = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();

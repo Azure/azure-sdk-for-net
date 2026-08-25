@@ -7,33 +7,34 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.ResourceManager.ManagementGroups;
+using Azure.ResourceManager.Resources.Deployments.Mocking;
+using Azure.ResourceManager.Resources.Deployments.Models;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.Resources.Mocking;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 // NOTE: All the GetArmDeployments and GetArmDeployment operations are existed in the library before, but now can't be generated from TypeSpec because of the scope implementation change.
 // To avoid breaking customers who are using these operations, we use customization code to keep them, would like to be removed in the future when MPG can provide some better way to handle this kind of scenario.
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     [CodeGenSuppress("WhatIfAtSubscriptionScopeAsync", typeof(WaitUntil), typeof(string), typeof(ArmDeploymentWhatIfContent), typeof(CancellationToken))]   // The WhatIf operations are all moved to ArmDeploymentResource. Not scope out this operation from the client.tsp is intentional for genrating other related classes for the customized WhatIf operations.
     [CodeGenSuppress("WhatIfAtSubscriptionScope", typeof(WaitUntil), typeof(string), typeof(ArmDeploymentWhatIfContent), typeof(CancellationToken))]        // The WhatIf operations are all moved to ArmDeploymentResource. Not scope out this operation from the client.tsp is intentional for genrating other related classes for the customized WhatIf operations.
-    public static partial class ResourcesExtensions
+    public static partial class ResourcesDeploymentsExtensions
     {
-        private static MockableResourcesManagementGroupResource GetMockableResourcesManagementGroupResource(ArmResource resource)
+        private static MockableResourcesDeploymentsManagementGroupResource GetMockableResourcesDeploymentsManagementGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new MockableResourcesManagementGroupResource(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableResourcesDeploymentsManagementGroupResource(client, resource.Id));
         }
 
-        private static MockableResourcesResourceGroupResource GetMockableResourcesResourceGroupResource(ArmResource resource)
+        private static MockableResourcesDeploymentsResourceGroupResource GetMockableResourcesDeploymentsResourceGroupResource(ArmResource resource)
         {
-            return resource.GetCachedClient(client => new MockableResourcesResourceGroupResource(client, resource.Id));
+            return resource.GetCachedClient(client => new MockableResourcesDeploymentsResourceGroupResource(client, resource.Id));
         }
 
         /// <summary>
         /// Gets a collection of ArmDeploymentResources in the ManagementGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesManagementGroupResource.GetArmDeployments()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesDeploymentsManagementGroupResource.GetArmDeployments()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return GetMockableResourcesManagementGroupResource(managementGroupResource).GetArmDeployments();
+            return GetMockableResourcesDeploymentsManagementGroupResource(managementGroupResource).GetArmDeployments();
         }
 
         /// <summary>
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesManagementGroupResource.GetArmDeploymentAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesDeploymentsManagementGroupResource.GetArmDeploymentAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
@@ -77,7 +78,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return await GetMockableResourcesManagementGroupResource(managementGroupResource).GetArmDeploymentAsync(deploymentName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesDeploymentsManagementGroupResource(managementGroupResource).GetArmDeploymentAsync(deploymentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -98,7 +99,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesManagementGroupResource.GetArmDeployment(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesDeploymentsManagementGroupResource.GetArmDeployment(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="managementGroupResource"> The <see cref="ManagementGroupResource" /> instance the method will execute against. </param>
@@ -111,14 +112,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(managementGroupResource, nameof(managementGroupResource));
 
-            return GetMockableResourcesManagementGroupResource(managementGroupResource).GetArmDeployment(deploymentName, cancellationToken);
+            return GetMockableResourcesDeploymentsManagementGroupResource(managementGroupResource).GetArmDeployment(deploymentName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ArmDeploymentResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetArmDeployments()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesDeploymentsResourceGroupResource.GetArmDeployments()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -128,7 +129,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableResourcesResourceGroupResource(resourceGroupResource).GetArmDeployments();
+            return GetMockableResourcesDeploymentsResourceGroupResource(resourceGroupResource).GetArmDeployments();
         }
 
         /// <summary>
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetArmDeploymentAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesDeploymentsResourceGroupResource.GetArmDeploymentAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -162,7 +163,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableResourcesResourceGroupResource(resourceGroupResource).GetArmDeploymentAsync(deploymentName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesDeploymentsResourceGroupResource(resourceGroupResource).GetArmDeploymentAsync(deploymentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -183,7 +184,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesResourceGroupResource.GetArmDeployment(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesDeploymentsResourceGroupResource.GetArmDeployment(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -196,14 +197,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableResourcesResourceGroupResource(resourceGroupResource).GetArmDeployment(deploymentName, cancellationToken);
+            return GetMockableResourcesDeploymentsResourceGroupResource(resourceGroupResource).GetArmDeployment(deploymentName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ArmDeploymentResources in the SubscriptionResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesSubscriptionResource.GetArmDeployments()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesDeploymentsSubscriptionResource.GetArmDeployments()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -213,7 +214,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableResourcesSubscriptionResource(subscriptionResource).GetArmDeployments();
+            return GetMockableResourcesDeploymentsSubscriptionResource(subscriptionResource).GetArmDeployments();
         }
 
         /// <summary>
@@ -234,7 +235,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesSubscriptionResource.GetArmDeploymentAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesDeploymentsSubscriptionResource.GetArmDeploymentAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableResourcesSubscriptionResource(subscriptionResource).GetArmDeploymentAsync(deploymentName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesDeploymentsSubscriptionResource(subscriptionResource).GetArmDeploymentAsync(deploymentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -268,7 +269,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesSubscriptionResource.GetArmDeployment(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesDeploymentsSubscriptionResource.GetArmDeployment(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -281,14 +282,14 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableResourcesSubscriptionResource(subscriptionResource).GetArmDeployment(deploymentName, cancellationToken);
+            return GetMockableResourcesDeploymentsSubscriptionResource(subscriptionResource).GetArmDeployment(deploymentName, cancellationToken);
         }
 
         /// <summary>
         /// Gets a collection of ArmDeploymentResources in the TenantResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesTenantResource.GetArmDeployments()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesDeploymentsTenantResource.GetArmDeployments()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -298,7 +299,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableResourcesTenantResource(tenantResource).GetArmDeployments();
+            return GetMockableResourcesDeploymentsTenantResource(tenantResource).GetArmDeployments();
         }
 
         /// <summary>
@@ -319,7 +320,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesTenantResource.GetArmDeploymentAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesDeploymentsTenantResource.GetArmDeploymentAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -332,7 +333,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableResourcesTenantResource(tenantResource).GetArmDeploymentAsync(deploymentName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableResourcesDeploymentsTenantResource(tenantResource).GetArmDeploymentAsync(deploymentName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -353,7 +354,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableResourcesTenantResource.GetArmDeployment(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableResourcesDeploymentsTenantResource.GetArmDeployment(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -366,7 +367,7 @@ namespace Azure.ResourceManager.Resources
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableResourcesTenantResource(tenantResource).GetArmDeployment(deploymentName, cancellationToken);
+            return GetMockableResourcesDeploymentsTenantResource(tenantResource).GetArmDeployment(deploymentName, cancellationToken);
         }
     }
 }

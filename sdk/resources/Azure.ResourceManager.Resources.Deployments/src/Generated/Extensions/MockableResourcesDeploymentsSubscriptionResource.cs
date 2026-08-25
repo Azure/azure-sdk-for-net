@@ -9,28 +9,29 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments;
 
-namespace Azure.ResourceManager.Resources.Mocking
+namespace Azure.ResourceManager.Resources.Deployments.Mocking
 {
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
-    public partial class MockableResourcesSubscriptionResource : ArmResource
+    public partial class MockableResourcesDeploymentsSubscriptionResource : ArmResource
     {
         private ClientDiagnostics _deploymentExtendedSubscriptionGroupClientDiagnostics;
         private DeploymentExtendedSubscriptionGroup _deploymentExtendedSubscriptionGroupRestClient;
 
-        /// <summary> Initializes a new instance of MockableResourcesSubscriptionResource for mocking. </summary>
-        protected MockableResourcesSubscriptionResource()
+        /// <summary> Initializes a new instance of MockableResourcesDeploymentsSubscriptionResource for mocking. </summary>
+        protected MockableResourcesDeploymentsSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MockableResourcesSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableResourcesDeploymentsSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MockableResourcesSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MockableResourcesDeploymentsSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics DeploymentExtendedSubscriptionGroupClientDiagnostics => _deploymentExtendedSubscriptionGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+        private ClientDiagnostics DeploymentExtendedSubscriptionGroupClientDiagnostics => _deploymentExtendedSubscriptionGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Deployments.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
         private DeploymentExtendedSubscriptionGroup DeploymentExtendedSubscriptionGroupRestClient => _deploymentExtendedSubscriptionGroupRestClient ??= new DeploymentExtendedSubscriptionGroup(DeploymentExtendedSubscriptionGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-04-01");
     }
