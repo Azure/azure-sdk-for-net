@@ -45,6 +45,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             _additionalBinaryDataProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CosmosDBServiceProperties"/>. </summary>
+        public CosmosDBServiceProperties() : this(default)
+        {
+        }
+
         /// <summary> Time of the last state change (ISO-8601 format). </summary>
         [WirePath("creationTime")]
         public DateTimeOffset? CreatedOn { get; }

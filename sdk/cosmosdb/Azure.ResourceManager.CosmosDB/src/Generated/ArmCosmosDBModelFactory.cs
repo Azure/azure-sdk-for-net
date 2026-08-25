@@ -3938,6 +3938,49 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new CosmosDBFleetspaceAccountConfiguration(resourceId, armLocation, default);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.CassandraClusterDataCenterNodeItem"/>. </summary>
+        /// <param name="address"></param>
+        /// <param name="state"></param>
+        /// <param name="status"></param>
+        /// <param name="cassandraProcessStatus"></param>
+        /// <param name="load"></param>
+        /// <param name="tokens"></param>
+        /// <param name="size"></param>
+        /// <param name="hostId"></param>
+        /// <param name="rack"></param>
+        /// <param name="timestamp"></param>
+        /// <param name="diskUsedKB"></param>
+        /// <param name="diskFreeKB"></param>
+        /// <param name="memoryUsedKB"></param>
+        /// <param name="memoryBuffersAndCachedKB"></param>
+        /// <param name="memoryFreeKB"></param>
+        /// <param name="memoryTotalKB"></param>
+        /// <param name="cpuUsage"></param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static CassandraClusterDataCenterNodeItem CassandraClusterDataCenterNodeItem(string address, CassandraNodeState? state, string status, string cassandraProcessStatus, string load, IEnumerable<string> tokens, int? size, Guid? hostId, string rack, string timestamp, long? diskUsedKB, long? diskFreeKB, long? memoryUsedKB, long? memoryBuffersAndCachedKB, long? memoryFreeKB, long? memoryTotalKB, double? cpuUsage)
+        {
+            return new CassandraClusterDataCenterNodeItem(
+                address,
+                state,
+                status,
+                cassandraProcessStatus,
+                load,
+                (tokens ?? new ChangeTrackingList<string>()).ToList(),
+                size,
+                hostId,
+                rack,
+                timestamp,
+                diskUsedKB,
+                diskFreeKB,
+                memoryUsedKB,
+                memoryBuffersAndCachedKB,
+                memoryFreeKB,
+                memoryTotalKB,
+                cpuUsage,
+                default,
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
