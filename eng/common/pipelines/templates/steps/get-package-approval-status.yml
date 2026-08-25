@@ -15,10 +15,18 @@ steps:
   # Use install-azsdk-cli.yml or otherwise set $(AZSDK) to the azsdk executable path.
   - task: AzureCLI@2
     displayName: Check Package Approval Status
+    # Keep this predicate aligned with the release-stage inclusion condition in archetype-python-release.yml.
     condition: >-
       and(
         succeeded(),
-        eq(variables['SetAsReleaseBuild'], 'true'),
+        eq(variables['System.TeamProject'], 'internal'),
+        or(
+          in(variables['Build.Reason'], 'Manual', ''),
+          and(
+            eq(variables['Build.Reason'], 'IndividualCI'),
+            eq(variables['Build.SourceBranch'], 'refs/heads/main')
+          )
+        ),
         not(
           and(
             eq(variables['Skip.CheckPackageApproval'], 'true'),
