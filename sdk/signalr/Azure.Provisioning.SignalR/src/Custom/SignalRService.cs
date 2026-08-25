@@ -65,10 +65,18 @@ public partial class SignalRService
     }
 
     /// <summary> Gets or sets whether client certificate authentication is enabled. </summary>
+    [CodeGenMember("TlsIsClientCertEnabled")]
     public BicepValue<bool> IsClientCertEnabled
     {
-        get => TlsIsClientCertEnabled;
-        set => TlsIsClientCertEnabled = value;
+        get => Properties is null ? default! : Properties.TlsIsClientCertEnabled;
+        set
+        {
+            if (Properties is null)
+            {
+                Properties = new SignalRProperties();
+            }
+            Properties.TlsIsClientCertEnabled = value;
+        }
     }
 
     /// <summary> Gets the access keys for this SignalR service. </summary>

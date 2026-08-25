@@ -437,23 +437,6 @@ namespace Azure.Provisioning.SignalR
             }
         }
 
-        /// <summary> Gets or sets the IsClientCertEnabled. </summary>
-        public BicepValue<bool> TlsIsClientCertEnabled
-        {
-            get
-            {
-                return Properties is null ? default : Properties.TlsIsClientCertEnabled;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new SignalRProperties();
-                }
-                Properties.TlsIsClientCertEnabled = value;
-            }
-        }
-
         /// <summary> Gets or sets the Categories. </summary>
         public BicepList<SignalRResourceLogCategory> ResourceLogCategories
         {
