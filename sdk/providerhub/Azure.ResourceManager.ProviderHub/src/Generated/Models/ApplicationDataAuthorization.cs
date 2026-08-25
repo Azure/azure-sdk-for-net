@@ -28,11 +28,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <summary> Initializes a new instance of <see cref="ApplicationDataAuthorization"/>. </summary>
         /// <param name="role"> The ownership role the application has on the resource types. The service owner role gives the application owner permissions. The limited owner role gives elevated permissions but does not allow all the permissions of a service owner, such as read/write on internal metadata. </param>
         /// <param name="resourceTypes"> The resource types from the defined resource types in the provider namespace that the application can access. If no resource types are specified and the role is service owner, the default is * which is all resource types. </param>
+        /// <param name="excludeApplicationIdFromManifest"> Exclude application id from 'providerAuthorizations' section of manifest?. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationDataAuthorization(ApplicationOwnershipRole role, IList<string> resourceTypes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ApplicationDataAuthorization(ApplicationOwnershipRole role, IList<string> resourceTypes, bool? excludeApplicationIdFromManifest, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Role = role;
             ResourceTypes = resourceTypes;
+            ExcludeApplicationIdFromManifest = excludeApplicationIdFromManifest;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,5 +43,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> The resource types from the defined resource types in the provider namespace that the application can access. If no resource types are specified and the role is service owner, the default is * which is all resource types. </summary>
         public IList<string> ResourceTypes { get; }
+
+        /// <summary> Exclude application id from 'providerAuthorizations' section of manifest?. </summary>
+        public bool? ExcludeApplicationIdFromManifest { get; set; }
     }
 }

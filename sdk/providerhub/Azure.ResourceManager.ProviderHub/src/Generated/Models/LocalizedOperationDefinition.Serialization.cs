@@ -98,6 +98,18 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("actionType"u8);
                 writer.WriteStringValue(ActionType.Value.ToSerialString());
             }
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+#if NET6_0_OR_GREATER
+                writer.WriteRawValue(Properties);
+#else
+                using (JsonDocument document = JsonDocument.Parse(Properties))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -145,6 +157,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             OperationOrigins? origin = default;
             LocalizedOperationDisplayDefinition display = default;
             OperationActionType? actionType = default;
+            BinaryData properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -185,6 +198,15 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     actionType = prop.Value.GetString().ToOperationActionType();
                     continue;
                 }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = BinaryData.FromString(prop.Value.GetRawText());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -196,6 +218,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 origin,
                 display,
                 actionType,
+                properties,
                 additionalBinaryDataProperties);
         }
     }

@@ -33,8 +33,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="skipReleaseScopeValidation"> Whether release scope validation should be skipped. </param>
         /// <param name="providerRegistration"> The provider registration. </param>
         /// <param name="resourceTypeRegistrations"> The resource type registrations. </param>
+        /// <param name="rolloutId"> The rollout id. </param>
+        /// <param name="manifestCheckinSpecification"> The manifest checkin specification. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomRolloutSpecification(CustomRolloutAutoProvisionConfig autoProvisionConfig, TrafficRegions canary, IList<string> releaseScopes, bool? refreshSubscriptionRegistration, bool? skipReleaseScopeValidation, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomRolloutSpecification(CustomRolloutAutoProvisionConfig autoProvisionConfig, TrafficRegions canary, IList<string> releaseScopes, bool? refreshSubscriptionRegistration, bool? skipReleaseScopeValidation, ProviderRegistrationData providerRegistration, IList<ResourceTypeRegistrationData> resourceTypeRegistrations, string rolloutId, ManifestCheckinSpecification manifestCheckinSpecification, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AutoProvisionConfig = autoProvisionConfig;
             Canary = canary;
@@ -43,6 +45,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             SkipReleaseScopeValidation = skipReleaseScopeValidation;
             ProviderRegistration = providerRegistration;
             ResourceTypeRegistrations = resourceTypeRegistrations;
+            RolloutId = rolloutId;
+            ManifestCheckinSpecification = manifestCheckinSpecification;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -66,6 +70,12 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> The resource type registrations. </summary>
         public IList<ResourceTypeRegistrationData> ResourceTypeRegistrations { get; }
+
+        /// <summary> The rollout id. </summary>
+        public string RolloutId { get; set; }
+
+        /// <summary> The manifest checkin specification. </summary>
+        public ManifestCheckinSpecification ManifestCheckinSpecification { get; set; }
 
         /// <summary> Gets the Regions. </summary>
         public IList<AzureLocation> CanaryRegions

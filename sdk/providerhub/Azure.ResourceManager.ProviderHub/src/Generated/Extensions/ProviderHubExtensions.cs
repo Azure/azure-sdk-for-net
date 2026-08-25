@@ -38,6 +38,24 @@ namespace Azure.ResourceManager.ProviderHub
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="OperationsPutContentResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetOperationsPutContentResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="OperationsPutContentResource"/> object. </returns>
+        public static OperationsPutContentResource GetOperationsPutContentResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableProviderHubArmClient(client).GetOperationsPutContentResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="CustomRolloutResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -251,6 +269,24 @@ namespace Azure.ResourceManager.ProviderHub
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableProviderHubArmClient(client).GetProviderMonitorSettingResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ManifestInfoResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableProviderHubArmClient.GetManifestInfoResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ManifestInfoResource"/> object. </returns>
+        public static ManifestInfoResource GetManifestInfoResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableProviderHubArmClient(client).GetManifestInfoResource(id);
         }
 
         /// <summary>

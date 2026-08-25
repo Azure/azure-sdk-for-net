@@ -88,6 +88,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("interval"u8);
                 writer.WriteStringValue(Interval.Value, "P");
             }
+            if (Optional.IsDefined(BucketSize))
+            {
+                writer.WritePropertyName("bucketSize"u8);
+                writer.WriteStringValue(BucketSize);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -133,6 +138,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ThrottlingMetricType metricType = default;
             long limit = default;
             TimeSpan? interval = default;
+            string bucketSize = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,12 +161,17 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     interval = prop.Value.GetTimeSpan("P");
                     continue;
                 }
+                if (prop.NameEquals("bucketSize"u8))
+                {
+                    bucketSize = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ThrottlingMetric(metricType, limit, interval, additionalBinaryDataProperties);
+            return new ThrottlingMetric(metricType, limit, interval, bucketSize, additionalBinaryDataProperties);
         }
     }
 }

@@ -296,6 +296,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("resourceDeletionPolicy"u8);
                 writer.WriteStringValue(ResourceDeletionPolicy.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(ResourceDeletionPolicies))
+            {
+                writer.WritePropertyName("resourceDeletionPolicies"u8);
+                writer.WriteStartArray();
+                foreach (ResourceDeletionPolicyAndProperties item in ResourceDeletionPolicies)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(QuotaRule))
             {
                 writer.WritePropertyName("quotaRule"u8);
@@ -394,7 +404,8 @@ namespace Azure.ResourceManager.ProviderHub.Models
             TemplateDeploymentPolicy templateDeploymentPolicy = default;
             IReadOnlyList<ProviderHubExtendedLocationOptions> extendedLocations = default;
             IReadOnlyList<LinkedOperationRule> linkedOperationRules = default;
-            ManifestResourceDeletionPolicy? resourceDeletionPolicy = default;
+            Models.ManifestResourceDeletionPolicy? resourceDeletionPolicy = default;
+            IList<ResourceDeletionPolicyAndProperties> resourceDeletionPolicies = default;
             ProviderQuotaRule quotaRule = default;
             IReadOnlyList<ProviderNotification> notifications = default;
             IReadOnlyList<LinkedNotificationRule> linkedNotificationRules = default;
@@ -716,7 +727,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     {
                         continue;
                     }
-                    resourceDeletionPolicy = new ManifestResourceDeletionPolicy(prop.Value.GetString());
+                    resourceDeletionPolicy = new Models.ManifestResourceDeletionPolicy(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("resourceDeletionPolicies"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceDeletionPolicyAndProperties> array = new List<ResourceDeletionPolicyAndProperties>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ResourceDeletionPolicyAndProperties.DeserializeResourceDeletionPolicyAndProperties(item, options));
+                    }
+                    resourceDeletionPolicies = array;
                     continue;
                 }
                 if (prop.NameEquals("quotaRule"u8))
@@ -798,6 +823,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 extendedLocations ?? new ChangeTrackingList<ProviderHubExtendedLocationOptions>(),
                 linkedOperationRules ?? new ChangeTrackingList<LinkedOperationRule>(),
                 resourceDeletionPolicy,
+                resourceDeletionPolicies ?? new ChangeTrackingList<ResourceDeletionPolicyAndProperties>(),
                 quotaRule,
                 notifications ?? new ChangeTrackingList<ProviderNotification>(),
                 linkedNotificationRules ?? new ChangeTrackingList<LinkedNotificationRule>(),
