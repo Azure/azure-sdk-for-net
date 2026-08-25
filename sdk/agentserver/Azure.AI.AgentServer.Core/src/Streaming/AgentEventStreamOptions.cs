@@ -79,8 +79,11 @@ public sealed class AgentEventStreamOptions
     internal AgentEventStreamConfiguration Configuration => _configuration;
 
     /// <summary>Builds a backing instance for the given id, wiring its self-destroy callback.</summary>
-    internal AgentEventStream CreateStream(string id, Action onDestroy)
-        => _configuration.CreateStream(id, onDestroy);
+    internal AgentEventStream CreateStream(
+        string id,
+        Action onDestroy,
+        string? taskId = null)
+        => _configuration.CreateStream(id, onDestroy, taskId);
 }
 
 internal enum AgentEventStreamBackingKind
@@ -125,7 +128,10 @@ internal sealed class AgentEventStreamConfiguration : IEquatable<AgentEventStrea
             ttl,
             Path.TrimEndingDirectorySeparator(Path.GetFullPath(storageDirectory)));
 
-    public AgentEventStream CreateStream(string id, Action onDestroy)
+    public AgentEventStream CreateStream(
+        string id,
+        Action onDestroy,
+        string? taskId)
         => Backing switch
         {
             AgentEventStreamBackingKind.InMemoryLive => new BroadcastEventStream(id),
@@ -134,7 +140,8 @@ internal sealed class AgentEventStreamConfiguration : IEquatable<AgentEventStrea
                 id,
                 StorageDirectory!,
                 Ttl!.Value,
-                onDestroy),
+                onDestroy,
+                taskId),
             _ => throw new InvalidOperationException(
                 $"Unsupported AgentEventStream backing '{Backing}'."),
         };

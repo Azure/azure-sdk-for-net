@@ -245,6 +245,10 @@ await chat.DeleteAsync(chatId);
     durable input id matches the wire identity (an invocation id, or the Responses
     `response.id`; this is exactly what the Responses layer supplies per turn). Read the
     id assigned to a turn back from `TaskRun.InputId` / `TaskContext.InputId`.
+  - If the task-bound stream is used, an explicit input id cannot be reused by a different
+    `TaskId` while the stream is retained. The built-in file-backed registry persists this
+    ownership across restarts and rejects cross-task reuse instead of exposing another task's
+    replay history.
 
   `IfLastInputId` requires an explicit `InputId` to be set alongside it.
 

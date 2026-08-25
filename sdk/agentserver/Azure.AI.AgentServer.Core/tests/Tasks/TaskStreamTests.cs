@@ -416,6 +416,110 @@ public sealed class TaskStreamTests
         Assert.That(await first.Completion, Is.EqualTo("first"));
     }
 
+    [Test]
+    public async Task UnrelatedTasksCannotReuseExplicitInputId()
+    {
+        using TaskTestHost host = TaskTestHost.Create(
+            configureStreams: options => options.UseInMemoryReplay());
+        host.Builder.AddTask<string, string>(
+            "owner-a",
+            async (context, cancellationToken) =>
+            {
+                await context.Stream.EmitAsync(
+                    new SseItem<string>("owner-a", "owner") { EventId = "1" },
+                    cancellationToken);
+                return "done";
+            });
+        host.Builder.AddTask<string, string>(
+            "owner-b",
+            async (context, cancellationToken) =>
+            {
+                await context.Stream.EmitAsync(
+                    new SseItem<string>("owner-b", "owner") { EventId = "1" },
+                    cancellationToken);
+                return "done";
+            });
+
+        TaskRun<string> first = await host.Invoker.StartAsync<string, string>(
+            "owner-a",
+            "input",
+            new RunOptions { TaskId = "owner-a-task", InputId = "shared-input" });
+        Assert.That(await first.Completion, Is.EqualTo("done"));
+
+        TaskRun<string> second = await host.Invoker.StartAsync<string, string>(
+            "owner-b",
+            "input",
+            new RunOptions { TaskId = "owner-b-task", InputId = "shared-input" });
+        ResilientTaskException exception = Assert.ThrowsAsync<ResilientTaskException>(
+            async () => await second.Completion);
+        Assert.That(exception.ErrorCode, Is.EqualTo(ResilientTaskErrorCode.HandlerError));
+
+        Assert.That(
+            (await ReadAllAsync(first.Stream)).Select(item => item.Data),
+            Is.EqualTo(new[] { "owner-a" }));
+    }
+
+    [Test]
+    public async Task FileBackedOwnershipSurvivesRestart()
+    {
+        string streamDir =
+            Path.Combine(Path.GetTempPath(), "agentserver-owned-stream-" + Guid.NewGuid().ToString("N"));
+        try
+        {
+            using (TaskTestHost host1 = TaskTestHost.Create(
+                configureStreams: options => options.UseFileBackedReplay(streamDir)))
+            {
+                host1.Builder.AddTask<string, string>(
+                    "owner-a",
+                    async (context, cancellationToken) =>
+                    {
+                        await context.Stream.EmitAsync(
+                            new SseItem<string>("owner-a", "owner") { EventId = "1" },
+                            cancellationToken);
+                        return "done";
+                    });
+
+                TaskRun<string> first = await host1.Invoker.StartAsync<string, string>(
+                    "owner-a",
+                    "input",
+                    new RunOptions { TaskId = "owner-a-task", InputId = "persistent-input" });
+                Assert.That(await first.Completion, Is.EqualTo("done"));
+                AgentEventStream stream = await host1.Streams.GetAsync(first.InputId);
+                (stream as IDisposable)?.Dispose();
+            }
+
+            using TaskTestHost host2 = TaskTestHost.Create(
+                configureStreams: options => options.UseFileBackedReplay(streamDir));
+            host2.Builder.AddTask<string, string>(
+                "owner-b",
+                async (context, cancellationToken) =>
+                {
+                    await context.Stream.EmitAsync(
+                        new SseItem<string>("owner-b", "owner") { EventId = "1" },
+                        cancellationToken);
+                    return "done";
+                });
+
+            TaskRun<string> second = await host2.Invoker.StartAsync<string, string>(
+                "owner-b",
+                "input",
+                new RunOptions { TaskId = "owner-b-task", InputId = "persistent-input" });
+            ResilientTaskException exception = Assert.ThrowsAsync<ResilientTaskException>(
+                async () => await second.Completion);
+            Assert.That(exception.ErrorCode, Is.EqualTo(ResilientTaskErrorCode.HandlerError));
+        }
+        finally
+        {
+            try
+            {
+                Directory.Delete(streamDir, recursive: true);
+            }
+            catch (DirectoryNotFoundException)
+            {
+            }
+        }
+    }
+
     private static async Task<List<SseItem<string>>> ReadAllAsync(TaskStream stream)
     {
         var events = new List<SseItem<string>>();
