@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
             FluxBucket bucket = default;
             AzureBlob azureBlob = default;
             OciRepository ociRepository = default;
-            IDictionary<string, Kustomization> kustomizations = default;
+            IDictionary<string, FluxConfigurationsKustomization> kustomizations = default;
             IDictionary<string, string> configurationProtectedSettings = default;
             IReadOnlyList<FluxObjectStatus> statuses = default;
             string repositoryPublicKey = default;
@@ -335,10 +335,10 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     {
                         continue;
                     }
-                    Dictionary<string, Kustomization> dictionary = new Dictionary<string, Kustomization>();
+                    Dictionary<string, FluxConfigurationsKustomization> dictionary = new Dictionary<string, FluxConfigurationsKustomization>();
                     foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(prop0.Name, Kustomization.DeserializeKustomization(prop0.Value, options));
+                        dictionary.Add(prop0.Name, FluxConfigurationsKustomization.DeserializeFluxConfigurationsKustomization(prop0.Value, options));
                     }
                     kustomizations = dictionary;
                     continue;
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 bucket,
                 azureBlob,
                 ociRepository,
-                kustomizations ?? new ChangeTrackingDictionary<string, Kustomization>(),
+                kustomizations ?? new ChangeTrackingDictionary<string, FluxConfigurationsKustomization>(),
                 configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
                 statuses ?? new ChangeTrackingList<FluxObjectStatus>(),
                 repositoryPublicKey,
