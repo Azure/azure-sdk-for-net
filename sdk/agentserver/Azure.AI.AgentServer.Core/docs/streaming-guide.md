@@ -220,6 +220,8 @@ Core does not emit protocol terminal events. A protocol handler must emit its se
 terminal event before returning or throwing the terminal outcome. The advanced
 `AgentEventStreamRegistry` remains available for later GET replay, id-addressed deletion,
 custom backings, and standalone streams.
+Custom registry implementations are responsible for preventing cross-task reuse of a
+retained explicit `InputId`; the bundled registry enforces and persists this ownership.
 
 Task-bound handles do not change the in-memory live backing's timing semantics: events
 emitted before subscription are still not replayed. Use a replay backing when the caller
