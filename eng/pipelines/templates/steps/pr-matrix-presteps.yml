@@ -48,14 +48,31 @@ steps:
 
   - ${{ if parameters.EnableTestCheckoutNarrowing }}:
     - pwsh: |
+        $graphDirectory = "$(Build.ArtifactStagingDirectory)/RepositoryProjectGraph"
+        $graphPath = "$graphDirectory/repository-project-graph.json"
+        dotnet msbuild /m /nr:false /nologo /tl:off `
+          /t:GenerateRepositoryProjectGraphWithProjectGraph ./eng/service.proj `
+          /p:RepositoryProjectGraphReaderPath="$graphPath" `
+          /p:RepositoryProjectGraphReaderRecordsPath="$graphDirectory/project.records" `
+          /p:RepositoryProjectGraphPackageRecordsPath="$graphDirectory/package.records" `
+          /p:RepositoryProjectGraphNuGetRestoreDirectory="$graphDirectory/nuget-restore" `
+          /p:RepositoryProjectGraphPackageResolutionMode=NuGetRestore `
+          /p:RepositoryProjectGraphConfigurations=Debug%3BRelease `
+          /p:SkipServiceProjectImports=true `
+          /p:IncludeRepositoryProjectGraphInputs=true
+        if ($LASTEXITCODE -ne 0) {
+          throw "RepositoryProjectGraph generation failed with exit code $LASTEXITCODE."
+        }
+
         ./eng/scripts/Create-SparseCheckoutMap.ps1 `
           -PackageInfoDirectory "$(Build.ArtifactStagingDirectory)/PackageInfo" `
           -RepoRoot "$(Build.SourcesDirectory)" `
+          -GraphPath $graphPath `
           -OutputPath "$(Build.ArtifactStagingDirectory)/TestCheckoutMap/checkout-map.json"
 
         Copy-Item ./eng/scripts/Resolve-SparseCheckoutPaths.ps1 `
           "$(Build.ArtifactStagingDirectory)/TestCheckoutMap/Resolve-SparseCheckoutPaths.ps1"
-      displayName: Build MSBuild test checkout map
+      displayName: Build ProjectGraph test checkout map
 
     - ${{ if eq(parameters.PublishArtifact, true) }}:
       - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml

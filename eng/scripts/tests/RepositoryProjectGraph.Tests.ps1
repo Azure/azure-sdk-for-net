@@ -287,6 +287,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $testProject = Join-Path $fixtureRoot "sdk/example/A/tests/A.Tests.csproj"
         @(
             "Node|$testProject|net8.0|A.Tests|A.Tests|$(Split-Path (Split-Path $testProject -Parent) -Parent)|true|false|true|false|false"
+            "Node|$testProject|net8.0|A.Tests|A.Tests|$(Split-Path (Split-Path $testProject -Parent) -Parent)|true|false|true|false|false"
             "Node|$childProject|net8.0|Child|Child|$(Split-Path (Split-Path $childProject -Parent) -Parent)|true|false|false|false|false"
             "Node|$localProjectB|net8.0|Azure.B|Azure.B|$(Split-Path (Split-Path $localProjectB -Parent) -Parent)|true|false|false|true|false"
             "Node|$localProjectD|net8.0|Azure.D|Azure.D|$(Split-Path (Split-Path $localProjectD -Parent) -Parent)|true|false|false|true|false"
@@ -344,10 +345,12 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $fixtureRoot = Join-Path $TestDrive "task-fixture"
         $fixtureA = Join-Path $fixtureRoot "sdk/example/A/tests/A.Tests.csproj"
         $fixtureB = Join-Path $fixtureRoot "sdk/example/B/src/B.csproj"
+        $hintAssembly = Join-Path $fixtureRoot "sdk/shared/lib/Shared.dll"
         $driverPath = Join-Path $fixtureRoot "driver.proj"
         $taskRecordsPath = Join-Path $fixtureRoot "task.records"
         $taskGraphPath = Join-Path $fixtureRoot "task.json"
-        New-Item -ItemType Directory -Path (Split-Path $fixtureA -Parent), (Split-Path $fixtureB -Parent) -Force | Out-Null
+        New-Item -ItemType Directory -Path (Split-Path $fixtureA -Parent), (Split-Path $fixtureB -Parent), (Split-Path $hintAssembly -Parent) -Force | Out-Null
+        Set-Content $hintAssembly "fixture"
 
         @'
 <Project Sdk="Microsoft.NET.Sdk">
@@ -359,8 +362,11 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="Azure.B" Version="1.2.3" />
+    <PackageVersion Include="Azure.C" Version="2.0.0" />
     <PackageReference Include="Azure.B" Condition="'$(TargetFramework)' == 'net8.0'" />
+    <PackageReference Include="Azure.C" Condition="'$(Configuration)' == 'Release'" />
     <ProjectReference Include="../../B/src/B.csproj" Condition="'$(TargetFramework)' == 'net9.0'" />
+    <Reference Include="Shared" HintPath="../../../shared/lib/Shared.dll" />
   </ItemGroup>
 </Project>
 '@ | Set-Content $fixtureA
@@ -390,6 +396,8 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
     <RepositoryProjectGraphTask Projects="@(GraphProject)"
                                 RootProjects="@(GraphRoot)"
                                 RecordsPath="$taskRecordsPath"
+                                IncludeInputs="true"
+                                Configurations="Debug;Release"
                                 DegreeOfParallelism="2" />
   </Target>
 </Project>
@@ -406,14 +414,19 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $taskGraph.diagnostics.isComplete | Should -BeTrue
         $taskGraph.diagnostics.configurationGraph.isExact | Should -BeTrue
         ($taskGraph.nodes | Where-Object packageId -eq "Azure.A.Tests").targetFrameworks | Should -Be @("net8.0", "net9.0")
-        $taskPackageEdge = $taskGraph.edges | Where-Object { $_.kind -eq "PackageReference" -and $_.fromProject -like "*/A.Tests.csproj" }
+        $taskPackageEdge = $taskGraph.edges | Where-Object { $_.kind -eq "PackageReference" -and $_.to -eq "Azure.B" }
         $taskPackageEdge.targetFrameworks | Should -Be @("net8.0")
         $taskPackageEdge.version | Should -Be "1.2.3"
+        $releasePackageEdge = $taskGraph.edges | Where-Object { $_.kind -eq "PackageReference" -and $_.to -eq "Azure.C" }
+        $releasePackageEdge.targetFrameworks | Should -Be @("net8.0", "net9.0")
         ($taskGraph.edges | Where-Object { $_.kind -eq "ProjectReference" -and $_.fromProject -like "*/A.Tests.csproj" }).targetFrameworks | Should -Be @("net9.0")
         $taskProjectEdge = $taskGraph.configurationEdges | Where-Object {
             $_.kind -eq "ProjectReference" -and $_.fromProject -like "*/A.Tests.csproj"
         }
         $taskProjectEdge.fromTargetFramework | Should -Be "net9.0"
         $taskProjectEdge.toTargetFramework | Should -Be "net8.0"
+        $hintInput = $taskGraph.inputs | Where-Object kind -eq "ReferenceHintPath"
+        $hintInput.path | Should -Be "sdk/shared/lib/Shared.dll"
+        $hintInput.targetFrameworks | Should -Be @("net8.0", "net9.0")
     }
 }

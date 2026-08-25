@@ -178,10 +178,17 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
                 parts.Length >= 16 ? parts[15] : string.Empty,
                 parts.Length >= 17 ? parts[16] : string.Empty,
                 parts.Length >= 18 ? parts[17] : string.Empty);
-            if (!project.Frameworks.TryAdd(framework.TargetFramework, framework))
+            if (project.Frameworks.TryGetValue(framework.TargetFramework, out FrameworkDefinition existingFramework))
             {
-                throw new InvalidOperationException(
-                    $"Duplicate project configuration '{projectPath}' ({framework.TargetFramework}).");
+                if (!existingFramework.HasSameRestoreProperties(framework))
+                {
+                    throw new InvalidOperationException(
+                        $"Project configuration '{projectPath}' ({framework.TargetFramework}) has conflicting restore properties across build configurations.");
+                }
+            }
+            else
+            {
+                project.Frameworks.Add(framework.TargetFramework, framework);
             }
         }
 
@@ -821,6 +828,15 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
 
         public Dictionary<string, DirectProjectReference> ProjectReferences { get; } =
             new(StringComparer.OrdinalIgnoreCase);
+
+        public bool HasSameRestoreProperties(FrameworkDefinition other) =>
+            StringComparer.OrdinalIgnoreCase.Equals(AssetTargetFallback, other.AssetTargetFallback) &&
+            StringComparer.OrdinalIgnoreCase.Equals(PackageTargetFallback, other.PackageTargetFallback) &&
+            StringComparer.OrdinalIgnoreCase.Equals(RuntimeIdentifierGraphPath, other.RuntimeIdentifierGraphPath) &&
+            TreatWarningsAsErrors == other.TreatWarningsAsErrors &&
+            StringComparer.OrdinalIgnoreCase.Equals(WarningsAsErrors, other.WarningsAsErrors) &&
+            StringComparer.OrdinalIgnoreCase.Equals(NoWarn, other.NoWarn) &&
+            StringComparer.OrdinalIgnoreCase.Equals(WarningsNotAsErrors, other.WarningsNotAsErrors);
 
         public bool HasPackageRoots() =>
             Packages.Values.Any(package =>

@@ -20,6 +20,7 @@
     <RepositoryProjectGraphReaderRecordsPath Condition="'$(RepositoryProjectGraphReaderRecordsPath)' == ''">$(RepositoryProjectGraphReaderPath).records</RepositoryProjectGraphReaderRecordsPath>
     <RepositoryProjectGraphPackageRecordsPath Condition="'$(RepositoryProjectGraphPackageRecordsPath)' == ''">$(RepositoryProjectGraphReaderPath).packages.records</RepositoryProjectGraphPackageRecordsPath>
     <RepositoryProjectGraphReaderDegreeOfParallelism Condition="'$(RepositoryProjectGraphReaderDegreeOfParallelism)' == ''">$([System.Environment]::ProcessorCount)</RepositoryProjectGraphReaderDegreeOfParallelism>
+    <RepositoryProjectGraphConfigurations Condition="'$(RepositoryProjectGraphConfigurations)' == ''">$(Configuration)</RepositoryProjectGraphConfigurations>
     <RepositoryProjectGraphPackageDegreeOfParallelism Condition="'$(RepositoryProjectGraphPackageDegreeOfParallelism)' == ''">8</RepositoryProjectGraphPackageDegreeOfParallelism>
     <RepositoryProjectGraphPackageResolutionMode Condition="'$(RepositoryProjectGraphPackageResolutionMode)' == ''">IsolatedMetadata</RepositoryProjectGraphPackageResolutionMode>
     <RepositoryProjectGraphNuGetRestoreDirectory Condition="'$(RepositoryProjectGraphNuGetRestoreDirectory)' == ''">$(RepoRoot)artifacts/obj/RepositoryProjectGraph/nuget-restore</RepositoryProjectGraphNuGetRestoreDirectory>
@@ -84,7 +85,7 @@
     <ProjectReference Include="@(SourceGenerationProjects)" Exclude="@(MgmtExcludePaths)" Condition="'$(IncludeSourceGeneration)' == 'true'" />
   </ItemGroup>
 
-  <Import Project="..\sdk\$(ServiceDirectory)\*.projects" />
+  <Import Project="..\sdk\$(ServiceDirectory)\*.projects" Condition="'$(SkipServiceProjectImports)' != 'true'" />
   <Import Project="$(RepoRoot)$(ProjectListOverrideFile)" Condition="'$(ProjectListOverrideFile)' != '' " />
 
   <ItemGroup Condition="'$(ProjectListOverrideFile)' != '' and '$(EnableOverrideExclusions)' != ''">
@@ -253,9 +254,16 @@
       <Output TaskParameter="Filtered" ItemName="_DistinctRepositoryProjectGraphReaderProject" />
     </RemoveDuplicates>
     <RepositoryProjectGraphTask Projects="@(_DistinctRepositoryProjectGraphReaderProject)"
-                                RootProjects="@(ProjectReference)"
+                                RootProjects="@(ProjectReference)" Condition="'$(SkipServiceProjectImports)' != 'true'"
                                 RecordsPath="$(RepositoryProjectGraphReaderRecordsPath)"
                                 IncludeInputs="$(IncludeRepositoryProjectGraphInputs)"
+                                Configurations="$(RepositoryProjectGraphConfigurations)"
+                                DegreeOfParallelism="$(RepositoryProjectGraphReaderDegreeOfParallelism)" />
+    <RepositoryProjectGraphTask Projects="@(_DistinctRepositoryProjectGraphReaderProject)"
+                                Condition="'$(SkipServiceProjectImports)' == 'true'"
+                                RecordsPath="$(RepositoryProjectGraphReaderRecordsPath)"
+                                IncludeInputs="$(IncludeRepositoryProjectGraphInputs)"
+                                Configurations="$(RepositoryProjectGraphConfigurations)"
                                 DegreeOfParallelism="$(RepositoryProjectGraphReaderDegreeOfParallelism)" />
     <Error Condition="'$(RepositoryProjectGraphPackageResolutionMode)' != 'IsolatedMetadata' and '$(RepositoryProjectGraphPackageResolutionMode)' != 'NuGetRestore'"
            Text="RepositoryProjectGraphPackageResolutionMode must be IsolatedMetadata or NuGetRestore, but was '$(RepositoryProjectGraphPackageResolutionMode)'." />
