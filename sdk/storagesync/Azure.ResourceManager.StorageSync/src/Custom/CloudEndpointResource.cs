@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.StorageSync
 
             var patch = new CloudEndpointPatch
             {
-                CloudEndpointUpdateChangeEnumerationIntervalDays = content.ChangeEnumerationIntervalDays
+                ChangeEnumerationIntervalDays = content.ChangeEnumerationIntervalDays
             };
             return await UpdateAsync(waitUntil, patch, cancellationToken).ConfigureAwait(false);
         }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.StorageSync
 
             var patch = new CloudEndpointPatch
             {
-                CloudEndpointUpdateChangeEnumerationIntervalDays = content.ChangeEnumerationIntervalDays
+                ChangeEnumerationIntervalDays = content.ChangeEnumerationIntervalDays
             };
             return Update(waitUntil, patch, cancellationToken);
         }
