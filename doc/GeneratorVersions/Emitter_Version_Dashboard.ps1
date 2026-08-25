@@ -4,9 +4,10 @@
     Generates the emitter version dependency dashboard (doc/GeneratorVersions/Emitter_Version_Dashboard.md).
 
 .DESCRIPTION
-    Reads version information from the emitter package.json files and queries the npm
-    registry for the latest published versions, to produce a checked-in Markdown
-    dashboard showing the dependency chain across all C# TypeSpec emitters.
+    Validates management dependencies against the repository-approved Azure emitter
+    version, then reads version information from the emitter package.json files and
+    queries the npm registry for the latest published versions to produce a checked-in
+    Markdown dashboard showing the dependency chain across all C# TypeSpec emitters.
 
     Run this script whenever emitter dependency versions change to keep the dashboard
     up to date. Requires network access to query the npm registry.
@@ -17,7 +18,8 @@
 
 param(
     [string]$RepoRoot = (Resolve-Path (Join-Path $PSScriptRoot ".." "..")).Path,
-    [string]$OutputPath
+    [string]$OutputPath,
+    [switch]$ValidateOnly
 )
 
 if (-not $OutputPath) {
@@ -38,6 +40,25 @@ function Get-NpmDependencyVersion([string]$PackageJsonPath, [string]$PackageName
 function Get-PackageJsonVersion([string]$PackageJsonPath) {
     $json = Get-Content $PackageJsonPath -Raw | ConvertFrom-Json
     return $json.version
+}
+
+function Assert-VersionNotNewerThanApproved(
+    [string]$Name,
+    [string]$Version,
+    [string]$ApprovedVersion,
+    [string]$ApprovedVersionPath
+) {
+    try {
+        $current = [System.Management.Automation.SemanticVersion]::new($Version)
+        $approved = [System.Management.Automation.SemanticVersion]::new($ApprovedVersion)
+    }
+    catch {
+        throw "Unable to compare $Name version '$Version' with approved version '$ApprovedVersion': $($_.Exception.Message)"
+    }
+
+    if ($current.CompareTo($approved) -gt 0) {
+        throw "$Name version '$Version' is newer than the approved version '$ApprovedVersion' in '$ApprovedVersionPath'. Wait for the approved emitter package descriptor to be updated before advancing this dependency."
+    }
 }
 
 function Invoke-PublicNpmView([string]$PackageSpec, [string]$Field) {
@@ -116,6 +137,8 @@ function Get-ShortVersion([string]$Version) {
 $azureEmitterPkg   = Join-Path $RepoRoot "eng" "packages" "http-client-csharp" "package.json"
 $mgmtEmitterPkg    = Join-Path $RepoRoot "eng" "packages" "http-client-csharp-mgmt" "package.json"
 $provEmitterPkg    = Join-Path $RepoRoot "eng" "packages" "http-client-csharp-provisioning" "package.json"
+$approvedEmitterPkg = Join-Path $RepoRoot "eng" "azure-typespec-http-client-csharp-emitter-package.json"
+$generationPackagesProps = Join-Path $RepoRoot "eng" "centralpackagemanagement" "Directory.Generation.Packages.props"
 
 $azureEmitterVersion   = Get-PackageJsonVersion $azureEmitterPkg
 $mgmtEmitterVersion    = Get-PackageJsonVersion $mgmtEmitterPkg
@@ -124,6 +147,26 @@ $provEmitterVersion    = Get-PackageJsonVersion $provEmitterPkg
 $baseDep_azure   = Get-NpmDependencyVersion $azureEmitterPkg "@typespec/http-client-csharp"
 $azureDep_mgmt   = Get-NpmDependencyVersion $mgmtEmitterPkg "@azure-typespec/http-client-csharp"
 $mgmtDep_prov    = Get-NpmDependencyVersion $provEmitterPkg "@azure-typespec/http-client-csharp-mgmt"
+$approvedAzureVersion = Get-NpmDependencyVersion $approvedEmitterPkg "@azure-typespec/http-client-csharp"
+
+[xml]$generationPackages = Get-Content $generationPackagesProps -Raw
+$azureGeneratorVersion = [string]$generationPackages.Project.PropertyGroup.AzureGeneratorVersion
+
+Assert-VersionNotNewerThanApproved `
+    "Management emitter dependency" `
+    $azureDep_mgmt `
+    $approvedAzureVersion `
+    $approvedEmitterPkg
+Assert-VersionNotNewerThanApproved `
+    "Azure.Generator dependency" `
+    $azureGeneratorVersion `
+    $approvedAzureVersion `
+    $approvedEmitterPkg
+
+if ($ValidateOnly) {
+    Write-Host "Management emitter and generator versions do not exceed the approved Azure emitter version."
+    return
+}
 
 # --- Query npm registry for latest published versions ---
 
