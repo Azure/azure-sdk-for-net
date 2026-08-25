@@ -114,6 +114,23 @@ namespace Azure.Security.Attestation.Tests
         }
 
         [RecordedTest]
+        public async Task GetBodyOfEmptyBodiedTokenReturnsNull()
+        {
+            // The attestation service uses a token with an empty body to represent the absence of a value,
+            // for instance when an attestation type has no policy configured. Deserializing that body used to
+            // throw "The input does not contain any JSON tokens", which surfaced as a GetPolicy failure.
+            var token = new AttestationToken((AttestationTokenSigningKey)null);
+            var parsedToken = AttestationToken.Deserialize(token.Serialize());
+            await Task.Yield();
+
+            Assert.AreEqual(0, parsedToken.TokenBodyBytes.Length);
+            Assert.IsNull(parsedToken.GetBody<StoredAttestationPolicy>());
+
+            // The body is empty regardless of the type requested, so no cached deserialization can leak in.
+            Assert.IsNull(parsedToken.GetBody<TestBody>());
+        }
+
+        [RecordedTest]
         public async Task ValidateJustExpiredAttestationToken()
         {
             // Create a JWT whose body has just expired.
