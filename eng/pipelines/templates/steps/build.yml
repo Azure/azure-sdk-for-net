@@ -57,9 +57,6 @@ steps:
       ArtifactPath: '$(Build.ArtifactStagingDirectory)/PackageInfo'
       Artifacts: ${{ parameters.Artifacts }}
       EnablePrValidation: true
-      # Jesse Squire and his direct reports. Keep the email and alias lists in
-      # sync; emails apply to manually queued builds, aliases to pull request
-      # builds.
       AllowSkipEmails: >-
         jsquire@microsoft.com,
         josar@microsoft.com,
