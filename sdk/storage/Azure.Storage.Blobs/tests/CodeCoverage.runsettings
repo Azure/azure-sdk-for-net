@@ -1,0 +1,1 @@
+<ExcludeByFile>**/Generated/**/*.cs,**/Generated/*.cs</ExcludeByFile>
