@@ -42,7 +42,6 @@
     <PackageReference Include="Azure.ResourceManager.Logic" />
     <PackageReference Include="Azure.ResourceManager.Monitor" />
     <PackageReference Include="Azure.ResourceManager.Network" />
-    <PackageReference Include="Azure.ResourceManager.PostgreSql" />
     <PackageReference Include="Azure.ResourceManager.PrivateDns" />
     <PackageReference Include="Azure.ResourceManager.RedisEnterprise" />
     <PackageReference Include="Azure.ResourceManager.SignalR" />
