@@ -25,7 +25,8 @@ public partial class StorageActiveDirectoryProperties : ProvisionableConstruct
     }
     private BicepValue<Guid>? _domainGuid;
 
-    private partial void DefineAdditionalProperties()
+    // Preserve the shipped DomainGuid compatibility property alongside ActiveDirectoryDomainGuid.
+    partial void DefineAdditionalProperties()
     {
         _domainGuid = DefineProperty<Guid>("DomainGuid", ["domainGuid"]);
     }

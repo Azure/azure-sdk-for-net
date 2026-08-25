@@ -1,10 +1,9 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 namespace Azure.Provisioning.Storage;
 
-// Customize the generated StorageAccountManagementPolicy resource.
-public partial class StorageAccountManagementPolicy
+public partial class EncryptionScope
 {
     public static partial class ResourceVersions
     {
@@ -36,25 +35,5 @@ public partial class StorageAccountManagementPolicy
         public static readonly string V2021_01_01 = "2021-01-01";
         /// <summary>2019-06-01.</summary>
         public static readonly string V2019_06_01 = "2019-06-01";
-        /// <summary>2019-04-01.</summary>
-        public static readonly string V2019_04_01 = "2019-04-01";
-        /// <summary>2018-11-01.</summary>
-        public static readonly string V2018_11_01 = "2018-11-01";
-        /// <summary>2018-07-01.</summary>
-        public static readonly string V2018_07_01 = "2018-07-01";
-        /// <summary>2018-02-01.</summary>
-        public static readonly string V2018_02_01 = "2018-02-01";
-        /// <summary>2017-10-01.</summary>
-        public static readonly string V2017_10_01 = "2017-10-01";
-        /// <summary>2017-06-01.</summary>
-        public static readonly string V2017_06_01 = "2017-06-01";
-        /// <summary>2016-12-01.</summary>
-        public static readonly string V2016_12_01 = "2016-12-01";
-        /// <summary>2016-05-01.</summary>
-        public static readonly string V2016_05_01 = "2016-05-01";
-        /// <summary>2016-01-01.</summary>
-        public static readonly string V2016_01_01 = "2016-01-01";
-        /// <summary>2015-06-15.</summary>
-        public static readonly string V2015_06_15 = "2015-06-15";
     }
 }

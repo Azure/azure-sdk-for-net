@@ -25,7 +25,8 @@ public partial class ExecutionTrigger : ProvisionableConstruct
     }
     private BicepValue<ExecutionTriggerType>? _triggerType;
 
-    private partial void DefineAdditionalProperties()
+    // Preserve the shipped TriggerType property by adding its original "type" path to the generated construct.
+    partial void DefineAdditionalProperties()
     {
         _triggerType = DefineProperty<ExecutionTriggerType>("TriggerType", ["type"]);
     }

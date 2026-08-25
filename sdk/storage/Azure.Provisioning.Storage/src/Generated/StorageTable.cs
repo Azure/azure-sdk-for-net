@@ -14,7 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Storage
 {
     /// <summary> Properties of the table, including Id, resource name, resource type. </summary>
-    public partial class Table : ProvisionableResource
+    public partial class StorageTable : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -22,10 +22,10 @@ namespace Azure.Provisioning.Storage
         private TableProperties _tableProperties;
         private ResourceReference<TableService> _parent;
 
-        /// <summary> Creates a new Table. </summary>
+        /// <summary> Creates a new StorageTable. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public Table(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/tableServices/tables", resourceVersion ?? "2025-06-01")
+        public StorageTable(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Storage/storageAccounts/tableServices/tables", resourceVersion ?? "2025-06-01")
         {
         }
 
@@ -124,7 +124,7 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Define all the provisionable properties for Table. </summary>
+        /// <summary> Define all the provisionable properties for StorageTable. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -136,17 +136,17 @@ namespace Azure.Provisioning.Storage
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing Table. </summary>
+        /// <summary> Creates a reference to an existing StorageTable. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static Table FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static StorageTable FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            Table result = new Table(bicepIdentifier, resourceVersion);
+            StorageTable result = new StorageTable(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for Table that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for StorageTable that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary> Get the requirements for naming this resource. </summary>

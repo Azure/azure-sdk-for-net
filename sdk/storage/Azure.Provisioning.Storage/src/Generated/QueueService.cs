@@ -16,6 +16,7 @@ namespace Azure.Provisioning.Storage
     public partial class QueueService : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
+        private BicepValue<string> _name;
         private SystemData _systemData;
         private QueueServicePropertiesProperties _queueServiceProperties;
         private ResourceReference<StorageAccount> _parent;
@@ -34,6 +35,16 @@ namespace Azure.Provisioning.Storage
             {
                 Initialize();
                 return _id;
+            }
+        }
+
+        /// <summary> Gets the Name. </summary>
+        public BicepValue<string> Name
+        {
+            get
+            {
+                Initialize();
+                return _name;
             }
         }
 
@@ -99,6 +110,7 @@ namespace Azure.Provisioning.Storage
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "default");
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _queueServiceProperties = DefineModelProperty<QueueServicePropertiesProperties>(nameof(QueueServiceProperties), new string[] { "properties" });
             _parent = DefineResource<StorageAccount>(nameof(Parent), new string[] { "parent" }, isRequired: true);
