@@ -1,16 +1,10 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (2026-08-25)
 
 ### Features Added
 
-### Breaking Changes
-
-- Renamed the SDK root namespace from `Azure.ResourceManager.Resources` to `Azure.ResourceManager.Resources.Deployments` (and corresponding `Models`, `Mocking` sub-namespaces) to align with the package name.
-
-### Bugs Fixed
-
-### Other Changes
+This is the first stable release of ARM deployments library, api-version 2025-04-01.
 
 ## 1.0.0-beta.1 (2026-06-30)
 
