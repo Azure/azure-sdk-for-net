@@ -153,6 +153,12 @@ The session ID honours `FOUNDRY_AGENT_SESSION_ID` (matching the HTTP `POST /invo
 
 `VoiceHandler` layers immutable Voice Live Bridge Protocol 1.0 messages over the existing `/invocations_ws` transport. The application explicitly sends readiness, responses, output, completion, control, and error messages.
 
+The typed Voice relay is experimental and may change or be removed. To use any of its APIs, suppress the `AAAS001` warning:
+
+```C#
+#pragma warning disable AAAS001
+```
+
 ```C# Snippet:Invocations_ReadMe_VoiceHandler
 public class VoiceEchoHandler : VoiceHandler
 {

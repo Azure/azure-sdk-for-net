@@ -3,6 +3,7 @@
 
 using System.Buffers;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.WebSockets;
 using System.Text;
 using Azure.AI.AgentServer.Invocations.Internal;
@@ -15,6 +16,7 @@ namespace Azure.AI.AgentServer.Invocations.Voice;
 /// create, track, cancel, and observe their own tasks; the relay retains no application work
 /// or cross-message protocol state.
 /// </remarks>
+[Experimental("AAAS001")]
 public abstract class VoiceHandler : InvocationWebSocketHandler
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);

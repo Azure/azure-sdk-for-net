@@ -6,6 +6,8 @@ using System.Net.WebSockets;
 using Azure.AI.AgentServer.Invocations.Internal;
 using Microsoft.AspNetCore.Http;
 
+#pragma warning disable AAAS001 // Internal implementation of the experimental Voice relay.
+
 namespace Azure.AI.AgentServer.Invocations.Voice;
 
 internal sealed class VoiceWebSocketLifecycle : IInvocationsWebSocketEndpointLifecycle
@@ -99,3 +101,5 @@ internal sealed class VoiceWebSocketLifecycle : IInvocationsWebSocketEndpointLif
         _telemetry.EmitStructuredLog(() => emitCloseEvent(durationMs));
     }
 }
+
+#pragma warning restore AAAS001

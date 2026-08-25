@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Invocations.Internal;
 using Microsoft.Extensions.Primitives;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Primitives;
 namespace Azure.AI.AgentServer.Invocations.Voice;
 
 /// <summary>Send-only context for one accepted Voice WebSocket connection.</summary>
+[Experimental("AAAS001")]
 public class VoiceSession
 {
     private readonly InvocationsWebSocketConnection? _connection;

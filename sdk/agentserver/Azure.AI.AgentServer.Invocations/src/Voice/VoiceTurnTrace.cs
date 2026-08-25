@@ -2,10 +2,12 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.AgentServer.Invocations.Voice;
 
 /// <summary>Identifies the application-owned origin of a target-agent decision.</summary>
+[Experimental("AAAS001")]
 public enum VoiceTurnOrigin
 {
     /// <summary>A user input initiated the decision.</summary>
@@ -22,6 +24,7 @@ public enum VoiceTurnOrigin
 }
 
 /// <summary>Identifies the immutable terminal outcome of a target-agent decision.</summary>
+[Experimental("AAAS001")]
 public enum VoiceTurnOutcome
 {
     /// <summary>The application produced a response.</summary>
@@ -50,6 +53,7 @@ public enum VoiceTurnOutcome
 }
 
 /// <summary>Contains application-owned terminal facts for one target-agent decision.</summary>
+[Experimental("AAAS001")]
 public sealed class VoiceTurnResult
 {
     /// <summary>Initializes an immutable target-agent decision result.</summary>
@@ -110,6 +114,7 @@ public sealed class VoiceTurnResult
 /// The application owns this handle, activates it around model/tool work, and supplies one
 /// immutable terminal result. Voice transport termination does not complete the handle.
 /// </remarks>
+[Experimental("AAAS001")]
 public class VoiceTurnTrace : IDisposable
 {
     private const string OperationName = "invoke_agent";

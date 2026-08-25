@@ -24,6 +24,12 @@ bridgeProtocolVersion: "1.0"
 
 ## Implement the handler
 
+The typed Voice relay is experimental and may change or be removed. To use any of its APIs, suppress the `AAAS001` warning:
+
+```C#
+#pragma warning disable AAAS001
+```
+
 ```C# Snippet:Invocations_SampleVoice1_Handler
 public class VoiceSupportHandler : VoiceHandler
 {

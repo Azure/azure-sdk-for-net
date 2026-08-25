@@ -1,12 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Core;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Azure.AI.AgentServer.Invocations.Voice;
 
 /// <summary>Registration extensions for the typed Voice event relay.</summary>
+[Experimental("AAAS001")]
 public static class VoiceHostingExtensions
 {
     /// <summary>Registers one Voice handler in a manually composed service collection.</summary>
@@ -48,6 +50,7 @@ public static class VoiceHostingExtensions
 internal sealed class VoiceRegistrationMarker;
 
 /// <summary>One-line startup for a typed Voice relay.</summary>
+[Experimental("AAAS001")]
 public static class VoiceServer
 {
     /// <summary>Builds and runs a Voice-only AgentServer host.</summary>
