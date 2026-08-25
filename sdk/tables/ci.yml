@@ -21,3 +21,4 @@ extends:
     Artifacts:
     - name: Azure.Data.Tables
       safeName: AzureDataTables
+      skipCodeownersVerification: true

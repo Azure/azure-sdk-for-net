@@ -8,6 +8,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -513,5 +514,125 @@ namespace Azure.ResourceManager.Billing
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
+
+        /// <summary>
+        /// Gets a subscription by its ID. The operation is currently supported for billing accounts with agreement type Microsoft Customer Agreement, Microsoft Partner Agreement and Microsoft Online Services Program.
+        ///             Request Path/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}Operation IdBillingSubscriptions_GetDefault Api Version2024-04-01Resource<see cref="BillingSubscriptionResource"/>
+        /// </summary>
+        /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<Response<BillingSubscriptionResource>> GetAsync(string billingSubscriptionName, CancellationToken cancellationToken)
+        {
+            return GetAsync(billingSubscriptionName: billingSubscriptionName, expand: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Gets a subscription by its ID. The operation is currently supported for billing accounts with agreement type Microsoft Customer Agreement, Microsoft Partner Agreement and Microsoft Online Services Program.
+        ///             Request Path/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}Operation IdBillingSubscriptions_GetDefault Api Version2024-04-01Resource<see cref="BillingSubscriptionResource"/>
+        /// </summary>
+        /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<BillingSubscriptionResource> Get(string billingSubscriptionName, CancellationToken cancellationToken)
+        {
+            return Get(billingSubscriptionName: billingSubscriptionName, expand: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Lists the subscriptions for a billing account. The operation is currently supported for billing accounts with agreement type Microsoft Customer Agreement, Microsoft Partner Agreement and Microsoft Online Services Program.
+        ///             Request Path/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionsOperation IdBillingSubscriptions_ListByBillingAccountDefault Api Version2024-04-01Resource<see cref="BillingSubscriptionResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> An async collection of <see cref="BillingSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual AsyncPageable<BillingSubscriptionResource> GetAllAsync(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(includeDeleted: default, includeTenantSubscriptions: default, includeFailed: default, expand: default, filter: default, orderBy: default, maxCount: default, skip: default, count: default, search: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Lists the subscriptions for a billing account. The operation is currently supported for billing accounts with agreement type Microsoft Customer Agreement, Microsoft Partner Agreement and Microsoft Online Services Program.
+        ///             Request Path/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptionsOperation IdBillingSubscriptions_ListByBillingAccountDefault Api Version2024-04-01Resource<see cref="BillingSubscriptionResource"/>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="BillingSubscriptionResource"/> that may take multiple service requests to iterate over. </returns>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Pageable<BillingSubscriptionResource> GetAll(CancellationToken cancellationToken)
+        {
+            return GetAll(includeDeleted: default, includeTenantSubscriptions: default, includeFailed: default, expand: default, filter: default, orderBy: default, maxCount: default, skip: default, count: default, search: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        ///             Request Path/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}Operation IdBillingSubscriptions_GetDefault Api Version2024-04-01Resource<see cref="BillingSubscriptionResource"/>
+        /// </summary>
+        /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<Response<bool>> ExistsAsync(string billingSubscriptionName, CancellationToken cancellationToken)
+        {
+            return ExistsAsync(billingSubscriptionName: billingSubscriptionName, expand: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Checks to see if the resource exists in azure.
+        ///             Request Path/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}Operation IdBillingSubscriptions_GetDefault Api Version2024-04-01Resource<see cref="BillingSubscriptionResource"/>
+        /// </summary>
+        /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<bool> Exists(string billingSubscriptionName, CancellationToken cancellationToken)
+        {
+            return Exists(billingSubscriptionName: billingSubscriptionName, expand: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        ///             Request Path/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}Operation IdBillingSubscriptions_GetDefault Api Version2024-04-01Resource<see cref="BillingSubscriptionResource"/>
+        /// </summary>
+        /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<NullableResponse<BillingSubscriptionResource>> GetIfExistsAsync(string billingSubscriptionName, CancellationToken cancellationToken)
+        {
+            return GetIfExistsAsync(billingSubscriptionName: billingSubscriptionName, expand: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary>
+        /// Tries to get details for this resource from the service.
+        ///             Request Path/providers/Microsoft.Billing/billingAccounts/{billingAccountName}/billingSubscriptions/{billingSubscriptionName}Operation IdBillingSubscriptions_GetDefault Api Version2024-04-01Resource<see cref="BillingSubscriptionResource"/>
+        /// </summary>
+        /// <param name="billingSubscriptionName"> The ID that uniquely identifies a subscription. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual NullableResponse<BillingSubscriptionResource> GetIfExists(string billingSubscriptionName, CancellationToken cancellationToken)
+        {
+            return GetIfExists(billingSubscriptionName: billingSubscriptionName, expand: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }
