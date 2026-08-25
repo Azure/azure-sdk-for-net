@@ -51,6 +51,23 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         }
 
         [Test]
+        public void AddsStringOverloadWhenReturnTypeHashesDiffer()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [new ParameterProvider("ifMatch", $"The condition.", new CSharpType(typeof(ETag), isNullable: true), defaultValue: Default)]);
+            var previous = CreateMethod(
+                enclosingType,
+                [new ParameterProvider("ifMatch", $"The condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default)],
+                returnType: typeof(object));
+
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
+        [Test]
         public void PreservesDefaultsAfterFirstConditionalETagParameter()
         {
             var enclosingType = new TestTypeView("TestClient");
@@ -448,13 +465,16 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             Assert.That(BackCompatHelper.EndsWithRequiredCancellationToken(noParamsSignature), Is.False);
         }
 
-        private static MethodProvider CreateMethod(TypeProvider enclosingType, IReadOnlyList<ParameterProvider> parameters)
+        private static MethodProvider CreateMethod(
+            TypeProvider enclosingType,
+            IReadOnlyList<ParameterProvider> parameters,
+            CSharpType? returnType = null)
         {
             var signature = new MethodSignature(
                 "Get",
                 $"Gets something.",
                 MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
-                typeof(string),
+                returnType ?? typeof(string),
                 $"The result.",
                 parameters);
             return new MethodProvider(signature, Return(Literal("value")), enclosingType);

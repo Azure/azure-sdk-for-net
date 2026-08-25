@@ -40,16 +40,22 @@ namespace Azure.Generator.Management.Utilities
         private static void AddETagBackwardCompatibilityMethods(
             TypeProvider enclosingType,
             List<MethodProvider> methods,
-            HashSet<MethodSignature> existingSignatures,
+            Dictionary<string, List<MethodSignature>> existingSignatures,
             IEnumerable<MethodProvider> currentMethods,
             IReadOnlyList<MethodProvider> previousMethods)
         {
-            var candidates = new Dictionary<MethodSignature, MethodProvider>(MethodSignature.MethodSignatureComparer);
+            var candidates = new Dictionary<string, List<MethodProvider>>(StringComparer.Ordinal);
             foreach (var method in currentMethods.Concat(enclosingType.CustomCodeView?.Methods ?? []))
             {
                 if (IsPublicApi(method.Signature.Modifiers))
                 {
-                    candidates.TryAdd(method.Signature, method);
+                    if (!candidates.TryGetValue(method.Signature.Name, out var methodsWithName))
+                    {
+                        methodsWithName = [];
+                        candidates.Add(method.Signature.Name, methodsWithName);
+                    }
+
+                    methodsWithName.Add(method);
                 }
             }
 
@@ -61,7 +67,8 @@ namespace Azure.Generator.Management.Utilities
             foreach (var previousMethod in previousMethods)
             {
                 if (!IsPublicApi(previousMethod.Signature.Modifiers)
-                    || existingSignatures.Contains(previousMethod.Signature)
+                    || existingSignatures.TryGetValue(previousMethod.Signature.Name, out var existingMethods)
+                        && existingMethods.Any(signature => SignaturesMatch(previousMethod.Signature, signature))
                     || IsMethodRemovalAcceptedInBaseline(enclosingType, previousMethod.Signature))
                 {
                     continue;
@@ -70,10 +77,13 @@ namespace Azure.Generator.Management.Utilities
                 MethodProvider? currentMethod = null;
                 foreach (var transformedSignature in TransformConditionalHeaderParameters(previousMethod.Signature))
                 {
-                    if (candidates.TryGetValue(transformedSignature, out var candidate))
+                    if (candidates.TryGetValue(transformedSignature.Name, out var methodsWithName))
                     {
-                        currentMethod = candidate;
-                        break;
+                        currentMethod = methodsWithName.FirstOrDefault(method => SignaturesMatch(transformedSignature, method.Signature));
+                        if (currentMethod is not null)
+                        {
+                            break;
+                        }
                     }
                 }
 
@@ -84,7 +94,13 @@ namespace Azure.Generator.Management.Utilities
 
                 var overload = BuildStringToETagOverload(enclosingType, previousMethod, currentMethod);
                 methods.Add(overload);
-                existingSignatures.Add(overload.Signature);
+                if (!existingSignatures.TryGetValue(overload.Signature.Name, out existingMethods))
+                {
+                    existingMethods = [];
+                    existingSignatures.Add(overload.Signature.Name, existingMethods);
+                }
+
+                existingMethods.Add(overload.Signature);
             }
         }
 
@@ -105,14 +121,24 @@ namespace Azure.Generator.Management.Utilities
 
             var originalMethodSet = new HashSet<MethodProvider>(originalMethods, ReferenceEqualityComparer.Instance);
             var methods = new List<MethodProvider>(backCompatMethods);
-            var existingSignatures = new HashSet<MethodSignature>(
-                backCompatMethods.Select(method => method.Signature),
-                MethodSignature.MethodSignatureComparer);
+            var existingSignatures = backCompatMethods
+                .Select(method => method.Signature)
+                .GroupBy(signature => signature.Name)
+                .ToDictionary(group => group.Key, group => group.ToList(), StringComparer.Ordinal);
 
             var enclosingType = backCompatMethods[0].EnclosingType;
             if (enclosingType.CustomCodeView is { } customCodeView)
             {
-                existingSignatures.UnionWith(customCodeView.Methods.Select(method => method.Signature));
+                foreach (var signature in customCodeView.Methods.Select(method => method.Signature))
+                {
+                    if (!existingSignatures.TryGetValue(signature.Name, out var methodsWithName))
+                    {
+                        methodsWithName = [];
+                        existingSignatures.Add(signature.Name, methodsWithName);
+                    }
+
+                    methodsWithName.Add(signature);
+                }
             }
 
             if (enclosingType.LastContractView?.Methods is { Count: > 0 } previousMethods)
@@ -134,6 +160,31 @@ namespace Azure.Generator.Management.Utilities
             }
 
             return methods;
+        }
+
+        private static bool SignaturesMatch(MethodSignature left, MethodSignature right)
+        {
+            if (left.Name != right.Name || left.Parameters.Count != right.Parameters.Count)
+            {
+                return false;
+            }
+
+            for (var i = 0; i < left.Parameters.Count; i++)
+            {
+                var leftParameter = left.Parameters[i];
+                var rightParameter = right.Parameters[i];
+                if (leftParameter.Name != rightParameter.Name
+                    || !leftParameter.Type.Equals(rightParameter.Type)
+                    || leftParameter.IsRef != rightParameter.IsRef
+                    || leftParameter.IsOut != rightParameter.IsOut
+                    || leftParameter.IsIn != rightParameter.IsIn
+                    || leftParameter.IsParams != rightParameter.IsParams)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private static void DecorateBackwardCompatibilityMethod(MethodProvider method)
