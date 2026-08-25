@@ -1,0 +1,5 @@
+directory: specification/workloads/Workloads.SAPMonitor.Management
+commit: 69a1f78ae87fbad80fb3070bc03abf91d718bdd9
+repo: cxznmhdcxz/azure-rest-api-specs
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
