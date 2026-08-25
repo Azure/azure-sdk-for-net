@@ -1254,9 +1254,15 @@ namespace Azure.Provisioning.CosmosDB
     {
         public CosmosDBService(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        [System.ObsoleteAttribute("Use Properties.InstanceCount instead.")]
+        public Azure.Provisioning.BicepValue<int> InstanceCount { get { throw null; } set { } }
+        [System.ObsoleteAttribute("Use Properties.InstanceSize instead.")]
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.CosmosDBServiceSize> InstanceSize { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.CosmosDBAccount Parent { get { throw null; } set { } }
-        public Azure.Provisioning.CosmosDB.CosmosDBServiceProperties Properties { get { throw null; } }
+        public Azure.Provisioning.CosmosDB.CosmosDBServiceProperties Properties { get { throw null; } set { } }
+        [System.ObsoleteAttribute("Set Properties to the appropriate derived CosmosDBServiceProperties type instead.")]
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.CosmosDBServiceType> ServiceType { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.CosmosDB.CosmosDBService FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }

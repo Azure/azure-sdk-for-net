@@ -5,6 +5,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Provisioning;
 
 namespace Azure.Provisioning.CosmosDB;
 
@@ -13,15 +14,84 @@ namespace Azure.Provisioning.CosmosDB;
 /// </summary>
 public partial class CosmosDBService
 {
-    // CUSTOMIZATION: Preserve the legacy Properties member for API compatibility. The current
-    // generator flattens this response model and cannot implement the member without extensibility.
+    // CUSTOMIZATION: Preserve legacy flattened service properties as hidden aliases to the discriminated Properties model.
     /// <summary>
-    /// Services response resource.
+    /// Instance count for the service.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public CosmosDBServiceProperties Properties
+    [Obsolete("Use Properties.InstanceCount instead.")]
+    public BicepValue<int> InstanceCount
     {
-        get => throw new NotSupportedException("TODO: Needs to be implemented using extensibility API.");
+        get => Properties is null ? default! : Properties.InstanceCount;
+        set => GetOrCreateProperties().InstanceCount = value;
+    }
+
+    /// <summary>
+    /// Instance type for the service.
+    /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("Use Properties.InstanceSize instead.")]
+    public BicepValue<CosmosDBServiceSize> InstanceSize
+    {
+        get => Properties is null ? default! : Properties.InstanceSize;
+        set => GetOrCreateProperties().InstanceSize = value;
+    }
+
+    /// <summary>
+    /// ServiceType for the service.
+    /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("Set Properties to the appropriate derived CosmosDBServiceProperties type instead.")]
+    public BicepValue<CosmosDBServiceType> ServiceType
+    {
+        get => Properties switch
+        {
+            DataTransferServiceProperties => CosmosDBServiceType.DataTransfer,
+            GraphApiComputeServiceProperties => CosmosDBServiceType.GraphApiCompute,
+            MaterializedViewsBuilderServiceProperties => CosmosDBServiceType.MaterializedViewsBuilder,
+            SqlDedicatedGatewayServiceProperties => CosmosDBServiceType.SqlDedicatedGateway,
+            _ => default!
+        };
+        set
+        {
+            if (value is null || ((IBicepValue)value).Kind != BicepValueKind.Literal)
+            {
+                throw new InvalidOperationException("ServiceType must be a literal value. Set Properties to the appropriate derived CosmosDBServiceProperties type instead.");
+            }
+
+            CosmosDBServiceProperties replacement = value.Value switch
+            {
+                CosmosDBServiceType.DataTransfer => new DataTransferServiceProperties(),
+                CosmosDBServiceType.GraphApiCompute => new GraphApiComputeServiceProperties(),
+                CosmosDBServiceType.MaterializedViewsBuilder => new MaterializedViewsBuilderServiceProperties(),
+                CosmosDBServiceType.SqlDedicatedGateway => new SqlDedicatedGatewayServiceProperties(),
+                _ => throw new ArgumentOutOfRangeException(nameof(value))
+            };
+
+            CosmosDBServiceProperties? current = Properties;
+            if (current is not null)
+            {
+                if (!current.InstanceCount.IsEmpty)
+                {
+                    replacement.InstanceCount = current.InstanceCount;
+                }
+                if (!current.InstanceSize.IsEmpty)
+                {
+                    replacement.InstanceSize = current.InstanceSize;
+                }
+            }
+
+            Properties = replacement;
+        }
+    }
+
+    private CosmosDBServiceProperties GetOrCreateProperties()
+    {
+        if (Properties is null)
+        {
+            Properties = new CosmosDBServiceProperties();
+        }
+        return Properties;
     }
 
     public static partial class ResourceVersions
