@@ -1,6 +1,6 @@
 namespace Azure.AI.Translation.Text
 {
-    [System.ObsoleteAttribute("This class is deprecated. Use TranslationTextModelFactory instead.")]
+    [System.ObsoleteAttribute("This class is deprecated. Use TranslationTextModelFactory instead.", error: true)]
     public static partial class AITranslationTextModelFactory
     {
         public static Azure.AI.Translation.Text.BackTranslation BackTranslation(string normalizedText = null, string displayText = null, int examplesCount = 0, int frequencyCount = 0) { throw null; }
@@ -30,7 +30,7 @@ namespace Azure.AI.Translation.Text
         public static Azure.AI.Translation.Text.AzureAITranslationTextContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
-    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
+    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", error: true)]
     public partial class BackTranslation : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.BackTranslation>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.BackTranslation>
     {
         internal BackTranslation() { }
@@ -44,7 +44,7 @@ namespace Azure.AI.Translation.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.BackTranslation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.BackTranslation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
+    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", error: true)]
     public partial class BreakSentenceItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.BreakSentenceItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.BreakSentenceItem>
     {
         internal BreakSentenceItem() { }
@@ -59,7 +59,7 @@ namespace Azure.AI.Translation.Text
     public partial class DetectedLanguage : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DetectedLanguage>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DetectedLanguage>
     {
         internal DetectedLanguage() { }
-        [System.ObsoleteAttribute("Confidence is deprecated. Use Score instead.")]
+        [System.ObsoleteAttribute("Confidence is deprecated. Use Score instead.", error: true)]
         public float Confidence { get { throw null; } }
         public string Language { get { throw null; } }
         public float Score { get { throw null; } }
@@ -73,7 +73,7 @@ namespace Azure.AI.Translation.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DetectedLanguage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DetectedLanguage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
+    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", error: true)]
     public partial class DictionaryExample : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DictionaryExample>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryExample>
     {
         internal DictionaryExample() { }
@@ -89,7 +89,7 @@ namespace Azure.AI.Translation.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryExample>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryExample>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
+    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", error: true)]
     public partial class DictionaryExampleItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DictionaryExampleItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryExampleItem>
     {
         internal DictionaryExampleItem() { }
@@ -102,7 +102,7 @@ namespace Azure.AI.Translation.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryExampleItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryExampleItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
+    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", error: true)]
     public partial class DictionaryExampleTextItem : Azure.AI.Translation.Text.InputTextItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DictionaryExampleTextItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryExampleTextItem>
     {
         public DictionaryExampleTextItem(string text, string translation) : base (default(string)) { }
@@ -113,7 +113,7 @@ namespace Azure.AI.Translation.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryExampleTextItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryExampleTextItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
+    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", error: true)]
     public partial class DictionaryLookupItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DictionaryLookupItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryLookupItem>
     {
         internal DictionaryLookupItem() { }
@@ -126,7 +126,7 @@ namespace Azure.AI.Translation.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryLookupItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryLookupItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
+    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", error: true)]
     public partial class DictionaryTranslation : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.DictionaryTranslation>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.DictionaryTranslation>
     {
         internal DictionaryTranslation() { }
@@ -145,7 +145,7 @@ namespace Azure.AI.Translation.Text
     public partial class GetSupportedLanguagesResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.GetSupportedLanguagesResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.GetSupportedLanguagesResult>
     {
         internal GetSupportedLanguagesResult() { }
-        [System.ObsoleteAttribute("Dictionary is deprecated and will be removed in a future release.")]
+        [System.ObsoleteAttribute("Dictionary is deprecated and will be removed in a future release.", error: true)]
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.AI.Translation.Text.SourceDictionaryLanguage> Dictionary { get { throw null; } }
         public Azure.ETag Etag { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> Models { get { throw null; } }
@@ -177,7 +177,7 @@ namespace Azure.AI.Translation.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.InputTextItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.InputTextItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
+    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.", error: true)]
     public partial class InputTextWithTranslation : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.InputTextWithTranslation>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.InputTextWithTranslation>
     {
         public InputTextWithTranslation(string word, string translation) { }
@@ -237,7 +237,7 @@ namespace Azure.AI.Translation.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.ReferenceTextPair>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.ReferenceTextPair>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
+    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", error: true)]
     public partial class SentenceBoundaries : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.SentenceBoundaries>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.SentenceBoundaries>
     {
         internal SentenceBoundaries() { }
@@ -249,7 +249,7 @@ namespace Azure.AI.Translation.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.SentenceBoundaries>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.SentenceBoundaries>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
+    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", error: true)]
     public partial class SourceDictionaryLanguage : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.SourceDictionaryLanguage>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.SourceDictionaryLanguage>
     {
         internal SourceDictionaryLanguage() { }
@@ -263,7 +263,7 @@ namespace Azure.AI.Translation.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.SourceDictionaryLanguage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.SourceDictionaryLanguage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
+    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", error: true)]
     public partial class SourceText : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.SourceText>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.SourceText>
     {
         internal SourceText() { }
@@ -274,7 +274,7 @@ namespace Azure.AI.Translation.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.SourceText>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.SourceText>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
+    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", error: true)]
     public partial class TargetDictionaryLanguage : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TargetDictionaryLanguage>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TargetDictionaryLanguage>
     {
         internal TargetDictionaryLanguage() { }
@@ -301,58 +301,58 @@ namespace Azure.AI.Translation.Text
         public TextTranslationClient(System.Uri endpoint) { }
         public TextTranslationClient(System.Uri endpoint, Azure.AI.Translation.Text.TextTranslationClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.")]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", error: true)]
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.BreakSentenceItem>> FindSentenceBoundaries(System.Collections.Generic.IEnumerable<string> content, System.Guid clientTraceId = default(System.Guid), string language = null, string script = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.")]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", error: true)]
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.BreakSentenceItem>> FindSentenceBoundaries(string text, System.Guid clientTraceId = default(System.Guid), string language = null, string script = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.")]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", error: true)]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.BreakSentenceItem>>> FindSentenceBoundariesAsync(System.Collections.Generic.IEnumerable<string> content, System.Guid clientTraceId = default(System.Guid), string language = null, string script = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.")]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", error: true)]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.BreakSentenceItem>>> FindSentenceBoundariesAsync(string text, System.Guid clientTraceId = default(System.Guid), string language = null, string script = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetSupportedLanguages(string clientTraceId, string scope, string acceptLanguage, Azure.ETag? ifNoneMatch, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.AI.Translation.Text.GetSupportedLanguagesResult> GetSupportedLanguages(string clientTraceId = null, string scope = null, string acceptLanguage = null, Azure.ETag? ifNoneMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetSupportedLanguagesAsync(string clientTraceId, string scope, string acceptLanguage, Azure.ETag? ifNoneMatch, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Translation.Text.GetSupportedLanguagesResult>> GetSupportedLanguagesAsync(string clientTraceId = null, string scope = null, string acceptLanguage = null, Azure.ETag? ifNoneMatch = default(Azure.ETag?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.")]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", error: true)]
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.DictionaryLookupItem>> LookupDictionaryEntries(string from, string to, System.Collections.Generic.IEnumerable<string> words, System.Guid clientTraceId = default(System.Guid), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.")]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", error: true)]
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.DictionaryLookupItem>> LookupDictionaryEntries(string from, string to, string word, System.Guid clientTraceId = default(System.Guid), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.")]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", error: true)]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.DictionaryLookupItem>>> LookupDictionaryEntriesAsync(string from, string to, System.Collections.Generic.IEnumerable<string> words, System.Guid clientTraceId = default(System.Guid), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.")]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", error: true)]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.DictionaryLookupItem>>> LookupDictionaryEntriesAsync(string from, string to, string word, System.Guid clientTraceId = default(System.Guid), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.")]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", error: true)]
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.DictionaryExampleItem>> LookupDictionaryExamples(string from, string to, Azure.AI.Translation.Text.InputTextWithTranslation content, System.Guid clientTraceId = default(System.Guid), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.")]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", error: true)]
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.DictionaryExampleItem>> LookupDictionaryExamples(string from, string to, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.InputTextWithTranslation> content, System.Guid clientTraceId = default(System.Guid), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.")]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", error: true)]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.DictionaryExampleItem>>> LookupDictionaryExamplesAsync(string from, string to, Azure.AI.Translation.Text.InputTextWithTranslation content, System.Guid clientTraceId = default(System.Guid), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.")]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", error: true)]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.DictionaryExampleItem>>> LookupDictionaryExamplesAsync(string from, string to, System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.InputTextWithTranslation> content, System.Guid clientTraceId = default(System.Guid), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.")]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", error: true)]
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TranslatedTextItem>> Translate(Azure.AI.Translation.Text.TextTranslationTranslateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.AI.Translation.Text.TranslatedTextItem> Translate(Azure.AI.Translation.Text.TranslateInputItem input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Translate(Azure.Core.RequestContent content, string clientTraceId = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TranslatedTextItem>> Translate(System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.TranslateInputItem> inputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.")]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", error: true)]
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TranslatedTextItem>> Translate(System.Collections.Generic.IEnumerable<string> targetLanguages, System.Collections.Generic.IEnumerable<string> content, System.Guid clientTraceId = default(System.Guid), string sourceLanguage = null, Azure.AI.Translation.Text.TextType? textType = default(Azure.AI.Translation.Text.TextType?), string category = null, Azure.AI.Translation.Text.ProfanityAction? profanityAction = default(Azure.AI.Translation.Text.ProfanityAction?), Azure.AI.Translation.Text.ProfanityMarker? profanityMarker = default(Azure.AI.Translation.Text.ProfanityMarker?), bool? includeAlignment = default(bool?), bool? includeSentenceLength = default(bool?), string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TranslatedTextItem>> Translate(string targetLanguage, System.Collections.Generic.IEnumerable<string> content, string sourceLanguage = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TranslatedTextItem>> Translate(string targetLanguage, string text, string sourceLanguage = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.")]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", error: true)]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TranslatedTextItem>>> TranslateAsync(Azure.AI.Translation.Text.TextTranslationTranslateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.AI.Translation.Text.TranslatedTextItem>> TranslateAsync(Azure.AI.Translation.Text.TranslateInputItem input, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> TranslateAsync(Azure.Core.RequestContent content, string clientTraceId = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TranslatedTextItem>>> TranslateAsync(System.Collections.Generic.IEnumerable<Azure.AI.Translation.Text.TranslateInputItem> inputs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.")]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", error: true)]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TranslatedTextItem>>> TranslateAsync(System.Collections.Generic.IEnumerable<string> targetLanguages, System.Collections.Generic.IEnumerable<string> content, System.Guid clientTraceId = default(System.Guid), string sourceLanguage = null, Azure.AI.Translation.Text.TextType? textType = default(Azure.AI.Translation.Text.TextType?), string category = null, Azure.AI.Translation.Text.ProfanityAction? profanityAction = default(Azure.AI.Translation.Text.ProfanityAction?), Azure.AI.Translation.Text.ProfanityMarker? profanityMarker = default(Azure.AI.Translation.Text.ProfanityMarker?), bool? includeAlignment = default(bool?), bool? includeSentenceLength = default(bool?), string suggestedFrom = null, string fromScript = null, string toScript = null, bool? allowFallback = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TranslatedTextItem>>> TranslateAsync(string targetLanguage, System.Collections.Generic.IEnumerable<string> content, string sourceLanguage = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TranslatedTextItem>>> TranslateAsync(string targetLanguage, string text, string sourceLanguage = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.")]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", error: true)]
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TransliteratedText>> Transliterate(Azure.AI.Translation.Text.TextTranslationTransliterateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response Transliterate(string language, string fromScript, string toScript, Azure.Core.RequestContent content, string clientTraceId = null, Azure.RequestContext context = null) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TransliteratedText>> Transliterate(string language, string fromScript, string toScript, System.Collections.Generic.IEnumerable<string> content, System.Guid clientTraceId = default(System.Guid), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TransliteratedText>> Transliterate(string language, string fromScript, string toScript, string text, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.")]
+        [System.ObsoleteAttribute("This method is obsolete and will be removed in a future release.", error: true)]
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TransliteratedText>>> TransliterateAsync(Azure.AI.Translation.Text.TextTranslationTransliterateOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> TransliterateAsync(string language, string fromScript, string toScript, Azure.Core.RequestContent content, string clientTraceId = null, Azure.RequestContext context = null) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TransliteratedText>>> TransliterateAsync(string language, string fromScript, string toScript, System.Collections.Generic.IEnumerable<string> content, System.Guid clientTraceId = default(System.Guid), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -384,7 +384,7 @@ namespace Azure.AI.Translation.Text
         public string TokenScope { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
-    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
+    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.", error: true)]
     public partial class TextTranslationTranslateOptions
     {
         public TextTranslationTranslateOptions(System.Collections.Generic.IEnumerable<string> targetLanguages, System.Collections.Generic.IEnumerable<string> content) { }
@@ -405,7 +405,7 @@ namespace Azure.AI.Translation.Text
         public Azure.AI.Translation.Text.TextType? TextType { get { throw null; } set { } }
         public string ToScript { get { throw null; } set { } }
     }
-    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.")]
+    [System.ObsoleteAttribute("This class is deprecated and will be removed in a future release.", error: true)]
     public partial class TextTranslationTransliterateOptions
     {
         public TextTranslationTransliterateOptions(string language, string fromScript, string toScript, System.Collections.Generic.IEnumerable<string> content, System.Guid clientTraceId = default(System.Guid)) { }
@@ -433,7 +433,7 @@ namespace Azure.AI.Translation.Text
         public static bool operator !=(Azure.AI.Translation.Text.TextType left, Azure.AI.Translation.Text.TextType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.")]
+    [System.ObsoleteAttribute("This class is obsolete and will be removed in a future release.", error: true)]
     public partial class TranslatedTextAlignment : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TranslatedTextAlignment>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslatedTextAlignment>
     {
         internal TranslatedTextAlignment() { }
@@ -448,7 +448,7 @@ namespace Azure.AI.Translation.Text
     {
         internal TranslatedTextItem() { }
         public Azure.AI.Translation.Text.DetectedLanguage DetectedLanguage { get { throw null; } }
-        [System.ObsoleteAttribute("SourceText is deprecated and will be removed in a future release.")]
+        [System.ObsoleteAttribute("SourceText is deprecated and will be removed in a future release.", error: true)]
         public Azure.AI.Translation.Text.SourceText SourceText { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.TranslationText> Translations { get { throw null; } }
         protected virtual Azure.AI.Translation.Text.TranslatedTextItem JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -543,20 +543,20 @@ namespace Azure.AI.Translation.Text
     public partial class TranslationText : System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TranslationText>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TranslationText>
     {
         internal TranslationText() { }
-        [System.ObsoleteAttribute("Alignment is deprecated and will be removed in a future release.")]
+        [System.ObsoleteAttribute("Alignment is deprecated and will be removed in a future release.", error: true)]
         public Azure.AI.Translation.Text.TranslatedTextAlignment Alignment { get { throw null; } }
         public int? InstructionTokens { get { throw null; } }
         public string Language { get { throw null; } }
         public int? ResponseTokens { get { throw null; } }
-        [System.ObsoleteAttribute("SentenceBoundaries is deprecated and will be removed in a future release.")]
+        [System.ObsoleteAttribute("SentenceBoundaries is deprecated and will be removed in a future release.", error: true)]
         public Azure.AI.Translation.Text.SentenceBoundaries SentenceBoundaries { get { throw null; } }
         public int? SourceCharacters { get { throw null; } }
         public int? SourceTokens { get { throw null; } }
-        [System.ObsoleteAttribute("TargetLanguage is deprecated. Use Language instead.")]
+        [System.ObsoleteAttribute("TargetLanguage is deprecated. Use Language instead.", error: true)]
         public string TargetLanguage { get { throw null; } }
         public int? TargetTokens { get { throw null; } }
         public string Text { get { throw null; } }
-        [System.ObsoleteAttribute("Transliteration is deprecated and will be removed in a future release.")]
+        [System.ObsoleteAttribute("Transliteration is deprecated and will be removed in a future release.", error: true)]
         public Azure.AI.Translation.Text.TransliteratedText Transliteration { get { throw null; } }
         protected virtual Azure.AI.Translation.Text.TranslationText JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -605,7 +605,7 @@ namespace Azure.AI.Translation.Text
     public partial class TransliterableScript : Azure.AI.Translation.Text.LanguageScript, System.ClientModel.Primitives.IJsonModel<Azure.AI.Translation.Text.TransliterableScript>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Translation.Text.TransliterableScript>
     {
         internal TransliterableScript() { }
-        [System.ObsoleteAttribute("TransliterableScript is deprecated and will be removed in a future release. Please use ToScripts instead.")]
+        [System.ObsoleteAttribute("TransliterableScript is deprecated and will be removed in a future release. Please use ToScripts instead.", error: true)]
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Translation.Text.LanguageScript> TargetLanguageScripts { get { throw null; } }
         public System.Collections.Generic.IList<Azure.AI.Translation.Text.LanguageScript> ToScripts { get { throw null; } }
         protected override Azure.AI.Translation.Text.LanguageScript JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
