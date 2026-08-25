@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using Azure.Provisioning.Authorization;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Roles;
@@ -45,6 +46,8 @@ public partial class SignalRService
     }
 
     /// <summary> Gets the private endpoint connection data models. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is deprecated and it will be removed in a future version. Please use PrivateEndpointConnectionResources instead.")]
     public BicepList<SignalRPrivateEndpointConnectionData> PrivateEndpointConnections
     {
         get
@@ -55,6 +58,8 @@ public partial class SignalRService
     }
 
     /// <summary> Gets the shared private link resource data models. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is deprecated and it will be removed in a future version. Please use SharedPrivateLinkResourceItems instead.")]
     public BicepList<SignalRSharedPrivateLinkResourceData> SharedPrivateLinkResources
     {
         get
@@ -112,8 +117,10 @@ public partial class SignalRService
 
     partial void DefineAdditionalProperties()
     {
+#pragma warning disable CS0618 // These properties are intentionally preserved for compatibility.
         _privateEndpointConnections = DefineListProperty<SignalRPrivateEndpointConnectionData>(nameof(PrivateEndpointConnections), new string[] { "properties", "privateEndpointConnections" }, isOutput: true);
         _sharedPrivateLinkResources = DefineListProperty<SignalRSharedPrivateLinkResourceData>(nameof(SharedPrivateLinkResources), new string[] { "properties", "sharedPrivateLinkResources" }, isOutput: true);
+#pragma warning restore CS0618
     }
 
     public static partial class ResourceVersions

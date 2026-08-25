@@ -327,6 +327,7 @@ namespace Azure.Provisioning.SignalR
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.SignalR.SignalRNetworkAcls NetworkACLs { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.SignalR.SignalRPrivateEndpointConnection> PrivateEndpointConnectionResources { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use PrivateEndpointConnectionResources instead.")]
         public Azure.Provisioning.BicepList<Azure.Provisioning.SignalR.SignalRPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.SignalR.SignalRProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> PublicNetworkAccess { get { throw null; } set { } }
@@ -338,6 +339,7 @@ namespace Azure.Provisioning.SignalR
         public Azure.Provisioning.SignalR.SignalRServerlessSettings Serverless { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> ServerPort { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.SignalR.SignalRSharedPrivateLink> SharedPrivateLinkResourceItems { get { throw null; } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use SharedPrivateLinkResourceItems instead.")]
         public Azure.Provisioning.BicepList<Azure.Provisioning.SignalR.SignalRSharedPrivateLinkResourceData> SharedPrivateLinkResources { get { throw null; } }
         public Azure.Provisioning.SignalR.SignalRResourceSku Sku { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
