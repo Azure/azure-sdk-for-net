@@ -15,6 +15,7 @@ namespace Azure.Storage.Blobs
         private const string EventSourceName = "Azure-Storage-Blobs";
 
         private const int SessionAuthenticationDisabledEvent = 1;
+        private const int SessionAuthenticationCannotBeEnabledEvent = 2;
 
         private BlobsEventSource() : base(EventSourceName) { }
 
@@ -27,6 +28,15 @@ namespace Azure.Storage.Blobs
         public void SessionAuthenticationDisabledAccountNameUnavailable(string endpoint)
         {
             WriteEvent(SessionAuthenticationDisabledEvent, endpoint);
+        }
+
+        [Event(
+            SessionAuthenticationCannotBeEnabledEvent,
+            Level = EventLevel.Warning,
+            Message = "Session authentication cannot be enabled: the account name could not be determined from the URL: {0}. Set BlobClientOptions.SessionOptions.AccountName to use Sessions.")]
+        public void SessionAuthenticationCannotBeEnabledAccountNameUnavailable(string endpoint)
+        {
+            WriteEvent(SessionAuthenticationCannotBeEnabledEvent, endpoint);
         }
     }
 }

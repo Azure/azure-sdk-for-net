@@ -22,8 +22,10 @@ namespace Azure.Storage.Blobs.Models
         /// When not set, the account name is derived from the client endpoint. Set this
         /// explicitly when the endpoint is a custom URL from which the account name cannot
         /// be derived. If the account name can be determined from neither this property nor
-        /// the endpoint, session authentication is disabled for the client and all requests
-        /// use bearer token authentication instead.
+        /// the endpoint, client construction throws when <see cref="SessionMode"/> was
+        /// explicitly set to <see cref="Models.SessionMode.Enabled"/>; otherwise session
+        /// authentication is disabled for the client and all requests use bearer token
+        /// authentication instead.
         /// </remarks>
         public string AccountName { get; set; }
 
@@ -70,6 +72,9 @@ namespace Azure.Storage.Blobs.Models
         /// <summary>
         /// Opt in to session token authentication for all containers.
         /// Each container gets its own cached session token.
+        /// Requires a storage account name; client construction throws if one cannot be
+        /// determined from either <see cref="SessionOptions.AccountName"/> or the
+        /// client endpoint.
         /// </summary>
         Enabled = 2
     }

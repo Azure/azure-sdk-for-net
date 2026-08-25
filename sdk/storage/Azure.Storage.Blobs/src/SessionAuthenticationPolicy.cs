@@ -33,9 +33,7 @@ namespace Azure.Storage.Blobs
         /// <param name="endpoint">
         /// The endpoint of the client this policy is attached to. Used to resolve the
         /// account name required to sign session-authenticated requests when
-        /// <see cref="SessionOptions.AccountName"/> is not provided. When the account
-        /// name can be determined from neither source, session authentication is disabled
-        /// for this policy and all requests use <paramref name="fallbackAuthPolicy"/>.
+        /// <see cref="SessionOptions.AccountName"/> is not provided.
         /// </param>
         /// <param name="fallbackAuthPolicy">
         /// The bearer token policy used when session authentication is not applicable.
@@ -46,6 +44,13 @@ namespace Azure.Storage.Blobs
         /// <param name="sessionOptions">
         /// Options controlling session authentication behavior.
         /// </param>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown when <see cref="SessionOptions.SessionMode"/> is explicitly set to
+        /// <see cref="SessionMode.Enabled"/> and the account name can be determined from
+        /// neither <see cref="SessionOptions.AccountName"/> nor <paramref name="endpoint"/>.
+        /// When the mode was not explicitly enabled, session authentication is instead
+        /// disabled for this policy and all requests use <paramref name="fallbackAuthPolicy"/>.
+        /// </exception>
         public SessionAuthenticationPolicy(
             Uri endpoint,
             HttpPipelinePolicy fallbackAuthPolicy,
@@ -60,11 +65,20 @@ namespace Azure.Storage.Blobs
             if (string.IsNullOrEmpty(_accountName))
             {
                 _accountName = new BlobUriBuilder(endpoint).AccountName;
-                if (string.IsNullOrEmpty(_accountName) &&
-                    _sessionOptions.SessionMode.ResolveAuto() == SessionMode.Enabled)
+                if (string.IsNullOrEmpty(_accountName))
                 {
-                    BlobsEventSource.Singleton.SessionAuthenticationDisabledAccountNameUnavailable(
-                        endpoint.AbsoluteUri);
+                    if (_sessionOptions.SessionMode == SessionMode.Enabled)
+                    {
+                        BlobsEventSource.Singleton.SessionAuthenticationCannotBeEnabledAccountNameUnavailable(
+                            endpoint.GetLeftPart(UriPartial.Path));
+                        throw BlobErrors.AccountNameRequiredForSessionSigning(endpoint);
+                    }
+
+                    if (_sessionOptions.SessionMode.ResolveAuto() == SessionMode.Enabled)
+                    {
+                        BlobsEventSource.Singleton.SessionAuthenticationDisabledAccountNameUnavailable(
+                            endpoint.GetLeftPart(UriPartial.Path));
+                    }
                 }
             }
         }
