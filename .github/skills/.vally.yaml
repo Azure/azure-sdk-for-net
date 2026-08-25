@@ -3,9 +3,16 @@
 paths:
   skills: "."
   evals:
+    - auto-build-repair/evals/
+    - azsdk-common-apiview-feedback-resolution/evals/
+    - azsdk-common-generate-sdk-locally/evals/
+    - azsdk-common-pipeline-analysis/evals/
+    - azsdk-common-pipeline-fixer/evals/
+    - azsdk-common-prepare-release-plan/evals/
+    - azsdk-common-sdk-release/evals/
     - pre-commit-checks/evals/
   results: results/
-  evalFilenames: ["*.eval.yaml"]
+  evalFilenames: ["eval.yaml", "*.eval.yaml"]
 
 environments:
   azsdk-mcp-mock:

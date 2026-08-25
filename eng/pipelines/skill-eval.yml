@@ -25,5 +25,6 @@ extends:
     TestType: mock
     vallyRoot: .github/skills
     evalGlobs:
+      # Existing suites remain available under .github/skills; start with one deterministic smoke.
       - 'pre-commit-checks/evals/smoke.eval.yaml'
     failOnFailedTests: false
