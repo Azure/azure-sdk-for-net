@@ -7,22 +7,22 @@ using System.Text.Json.Serialization;
 
 namespace Microsoft.Azure.WebPubSub.Common
 {
-    internal class JoinedGroupEventRequestJsonConverter : JsonConverter<JoinedGroupEventRequest>
+    internal class GroupJoinedEventRequestJsonConverter : JsonConverter<GroupJoinedEventRequest>
     {
-        public override JoinedGroupEventRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override GroupJoinedEventRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             using var jsonDocument = JsonDocument.ParseValue(ref reader);
             var element = jsonDocument.RootElement;
 
-            return new JoinedGroupEventRequest(
+            return new GroupJoinedEventRequest(
                 null,
-                element.GetProperty(JoinedGroupEventRequest.GroupProperty).GetString());
+                element.GetProperty(GroupJoinedEventRequest.GroupProperty).GetString());
         }
 
-        public override void Write(Utf8JsonWriter writer, JoinedGroupEventRequest value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, GroupJoinedEventRequest value, JsonSerializerOptions options)
         {
             writer.WriteStartObject();
-            writer.WriteString(JoinedGroupEventRequest.GroupProperty, value.Group);
+            writer.WriteString(GroupJoinedEventRequest.GroupProperty, value.Group);
 
             if (value.ConnectionContext != null)
             {

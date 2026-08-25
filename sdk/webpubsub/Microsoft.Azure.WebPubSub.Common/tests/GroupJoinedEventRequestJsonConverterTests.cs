@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Microsoft.Azure.WebPubSub.Common.Tests
 {
     [TestFixture]
-    public class JoinedGroupEventRequestJsonConverterTests
+    public class GroupJoinedEventRequestJsonConverterTests
     {
         private static readonly JsonSerializerOptions JsonSerializationOptions = new(WebPubSubCommonJsonSerializerContext.Default.Options) { TypeInfoResolver = null };
 
@@ -16,13 +16,13 @@ namespace Microsoft.Azure.WebPubSub.Common.Tests
         {
             const string payload = "{\"group\":\"myGroup\"}";
 
-            JoinedGroupEventRequest request = JsonSerializer.Deserialize<JoinedGroupEventRequest>(payload, JsonSerializationOptions);
+            GroupJoinedEventRequest request = JsonSerializer.Deserialize<GroupJoinedEventRequest>(payload, JsonSerializationOptions);
 
             Assert.That(request, Is.Not.Null);
             Assert.That(request.Group, Is.EqualTo("myGroup"));
 
             string serialized = JsonSerializer.Serialize(request, JsonSerializationOptions);
-            JoinedGroupEventRequest converted = JsonSerializer.Deserialize<JoinedGroupEventRequest>(serialized, JsonSerializationOptions);
+            GroupJoinedEventRequest converted = JsonSerializer.Deserialize<GroupJoinedEventRequest>(serialized, JsonSerializationOptions);
 
             Assert.That(converted, Is.Not.Null);
             Assert.That(converted.Group, Is.EqualTo("myGroup"));

@@ -10,8 +10,8 @@ namespace Microsoft.Azure.WebPubSub.Common
     /// Group presence joined event request.
     /// </summary>
     [DataContract]
-    [JsonConverter(typeof(JoinedGroupEventRequestJsonConverter))]
-    public class JoinedGroupEventRequest : WebPubSubEventRequest
+    [JsonConverter(typeof(GroupJoinedEventRequestJsonConverter))]
+    public class GroupJoinedEventRequest : WebPubSubEventRequest
     {
         internal const string GroupProperty = "group";
 
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.WebPubSub.Common
         /// </summary>
         /// <param name="context">Connection context.</param>
         /// <param name="group">Group name.</param>
-        public JoinedGroupEventRequest(WebPubSubConnectionContext context, string group)
+        public GroupJoinedEventRequest(WebPubSubConnectionContext context, string group)
             : base(context)
         {
             Group = group;
