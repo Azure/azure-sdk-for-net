@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
@@ -24,8 +25,8 @@ public class BasicKubernetesConfigurationPrivateLinkScopesTests
                         Tags = { ["environment"] = "test" },
                         Properties = new KubernetesConfigurationPrivateLinkScopeProperties
                         {
-                            ClusterResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/example/providers/Microsoft.Kubernetes/connectedClusters/example",
-                            PublicNetworkAccess = PublicNetworkAccessType.Disabled,
+                            ClusterResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/example/providers/Microsoft.Kubernetes/connectedClusters/example"),
+                            PublicNetworkAccess = KubernetesConfigurationPrivateLinkScopePublicNetworkAccessType.Disabled,
                         },
                     };
                 infra.Add(scope);

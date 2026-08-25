@@ -1,5 +1,5 @@
 directory: specification/kubernetesconfiguration/resource-manager/Microsoft.KubernetesConfiguration/privateLinkScopes
-commit: 22c3849b91613266fd8a1158cb5d11f5813ed06f
-repo: Azure/azure-rest-api-specs
+commit: 2d850aa4b8696966b3be03d7a7e81a7a165a35a0
+repo: ArcturusZhang/azure-rest-api-specs
 additionalDirectories:
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json

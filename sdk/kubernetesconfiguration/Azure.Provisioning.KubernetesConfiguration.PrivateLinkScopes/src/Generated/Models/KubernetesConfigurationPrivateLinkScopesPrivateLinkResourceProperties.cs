@@ -8,7 +8,7 @@
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
-namespace Azure.Provisioning.KubernetesConfiguration._PrivateLinkScopes
+namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
 {
     /// <summary> Properties of a private link resource. </summary>
     internal partial class KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceProperties : ProvisionableConstruct

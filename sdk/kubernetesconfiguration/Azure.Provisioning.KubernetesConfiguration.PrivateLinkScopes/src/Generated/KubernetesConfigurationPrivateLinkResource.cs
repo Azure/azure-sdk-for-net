@@ -6,31 +6,31 @@
 #nullable disable
 
 using System.Diagnostics.CodeAnalysis;
+using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.KubernetesConfiguration._PrivateLinkScopes;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
 {
     /// <summary> A private link resource. </summary>
-    public partial class KubernetesConfigurationPrivateLinkScopesPrivateLinkResource : ProvisionableResource
+    public partial class KubernetesConfigurationPrivateLinkResource : ProvisionableResource
     {
-        private BicepValue<string> _id;
+        private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
         private KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceProperties _properties;
         private ResourceReference<KubernetesConfigurationPrivateLinkScope> _parent;
 
-        /// <summary> Creates a new KubernetesConfigurationPrivateLinkScopesPrivateLinkResource. </summary>
+        /// <summary> Creates a new KubernetesConfigurationPrivateLinkResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        internal KubernetesConfigurationPrivateLinkScopesPrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.KubernetesConfiguration/privateLinkScopes/privateLinkResources", resourceVersion ?? "2024-11-01-preview")
+        internal KubernetesConfigurationPrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.KubernetesConfiguration/privateLinkScopes/privateLinkResources", resourceVersion ?? "2024-11-01-preview")
         {
         }
 
         /// <summary> Gets the Id. </summary>
-        public BicepValue<string> Id
+        public BicepValue<ResourceIdentifier> Id
         {
             get
             {
@@ -116,29 +116,29 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
             }
         }
 
-        /// <summary> Define all the provisionable properties for PrivateLinkResource. </summary>
+        /// <summary> Define all the provisionable properties for KubernetesConfigurationPrivateLinkResource. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _id = DefineProperty<string>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<KubernetesConfigurationPrivateLinkScopesPrivateLinkResourceProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<KubernetesConfigurationPrivateLinkScope>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<KubernetesConfigurationPrivateLinkScope>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing PrivateLinkResource. </summary>
+        /// <summary> Creates a reference to an existing KubernetesConfigurationPrivateLinkResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static KubernetesConfigurationPrivateLinkScopesPrivateLinkResource FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static KubernetesConfigurationPrivateLinkResource FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            KubernetesConfigurationPrivateLinkScopesPrivateLinkResource result = new KubernetesConfigurationPrivateLinkScopesPrivateLinkResource(bicepIdentifier, resourceVersion);
+            KubernetesConfigurationPrivateLinkResource result = new KubernetesConfigurationPrivateLinkResource(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for PrivateLinkResource that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for KubernetesConfigurationPrivateLinkResource that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

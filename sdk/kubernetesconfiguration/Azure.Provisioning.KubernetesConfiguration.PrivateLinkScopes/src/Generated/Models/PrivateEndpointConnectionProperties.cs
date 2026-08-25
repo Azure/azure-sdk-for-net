@@ -5,11 +5,11 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes;
 using Azure.Provisioning.Primitives;
 
-namespace Azure.Provisioning.KubernetesConfiguration._PrivateLinkScopes
+namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
 {
     /// <summary> Properties of the private endpoint connection. </summary>
     internal partial class PrivateEndpointConnectionProperties : ProvisionableConstruct
@@ -64,7 +64,7 @@ namespace Azure.Provisioning.KubernetesConfiguration._PrivateLinkScopes
         }
 
         /// <summary> Gets the Id. </summary>
-        public BicepValue<string> PrivateEndpointId
+        public BicepValue<ResourceIdentifier> PrivateEndpointId
         {
             get
             {

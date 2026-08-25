@@ -16,7 +16,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
     /// <summary> An Azure Arc PrivateLinkScope definition. </summary>
     public partial class KubernetesConfigurationPrivateLinkScope : ProvisionableResource
     {
-        private BicepValue<string> _id;
+        private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
         private BicepDictionary<string> _tags;
@@ -31,7 +31,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
         }
 
         /// <summary> Gets the Id. </summary>
-        public BicepValue<string> Id
+        public BicepValue<ResourceIdentifier> Id
         {
             get
             {
@@ -114,7 +114,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _id = DefineProperty<string>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,11 +15,11 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
     /// <summary> Properties that define a Azure Arc PrivateLinkScope resource. </summary>
     public partial class KubernetesConfigurationPrivateLinkScopeProperties : ProvisionableConstruct
     {
-        private BicepValue<PublicNetworkAccessType> _publicNetworkAccess;
-        private BicepValue<ProvisioningState> _provisioningState;
-        private BicepValue<string> _clusterResourceId;
-        private BicepValue<string> _privateLinkScopeId;
-        private BicepList<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnection> _privateEndpointConnections;
+        private BicepValue<KubernetesConfigurationPrivateLinkScopePublicNetworkAccessType> _publicNetworkAccess;
+        private BicepValue<KubernetesConfigurationPrivateLinkScopeProvisioningState> _provisioningState;
+        private BicepValue<ResourceIdentifier> _clusterResourceId;
+        private BicepValue<Guid> _privateLinkScopeId;
+        private BicepList<KubernetesConfigurationPrivateEndpointConnection> _privateEndpointConnections;
 
         /// <summary> Creates a new KubernetesConfigurationPrivateLinkScopeProperties. </summary>
         public KubernetesConfigurationPrivateLinkScopeProperties()
@@ -25,7 +27,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
         }
 
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
-        public BicepValue<PublicNetworkAccessType> PublicNetworkAccess
+        public BicepValue<KubernetesConfigurationPrivateLinkScopePublicNetworkAccessType> PublicNetworkAccess
         {
             get
             {
@@ -40,7 +42,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<ProvisioningState> ProvisioningState
+        public BicepValue<KubernetesConfigurationPrivateLinkScopeProvisioningState> ProvisioningState
         {
             get
             {
@@ -50,7 +52,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
         }
 
         /// <summary> Gets or sets the ClusterResourceId. </summary>
-        public BicepValue<string> ClusterResourceId
+        public BicepValue<ResourceIdentifier> ClusterResourceId
         {
             get
             {
@@ -65,7 +67,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
         }
 
         /// <summary> Gets the PrivateLinkScopeId. </summary>
-        public BicepValue<string> PrivateLinkScopeId
+        public BicepValue<Guid> PrivateLinkScopeId
         {
             get
             {
@@ -75,7 +77,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<KubernetesConfigurationPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {
@@ -88,11 +90,11 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _publicNetworkAccess = DefineProperty<PublicNetworkAccessType>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
-            _provisioningState = DefineProperty<ProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _clusterResourceId = DefineProperty<string>(nameof(ClusterResourceId), new string[] { "clusterResourceId" }, isRequired: true);
-            _privateLinkScopeId = DefineProperty<string>(nameof(PrivateLinkScopeId), new string[] { "privateLinkScopeId" }, isOutput: true);
-            _privateEndpointConnections = DefineListProperty<KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _publicNetworkAccess = DefineProperty<KubernetesConfigurationPrivateLinkScopePublicNetworkAccessType>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
+            _provisioningState = DefineProperty<KubernetesConfigurationPrivateLinkScopeProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            _clusterResourceId = DefineProperty<ResourceIdentifier>(nameof(ClusterResourceId), new string[] { "clusterResourceId" }, isRequired: true);
+            _privateLinkScopeId = DefineProperty<Guid>(nameof(PrivateLinkScopeId), new string[] { "privateLinkScopeId" }, isOutput: true);
+            _privateEndpointConnections = DefineListProperty<KubernetesConfigurationPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

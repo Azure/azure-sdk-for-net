@@ -6,31 +6,31 @@
 #nullable disable
 
 using System.Diagnostics.CodeAnalysis;
+using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.KubernetesConfiguration._PrivateLinkScopes;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
 {
     /// <summary> The Private Endpoint Connection resource. </summary>
-    public partial class KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnection : ProvisionableResource
+    public partial class KubernetesConfigurationPrivateEndpointConnection : ProvisionableResource
     {
-        private BicepValue<string> _id;
+        private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
         private PrivateEndpointConnectionProperties _properties;
         private ResourceReference<KubernetesConfigurationPrivateLinkScope> _parent;
 
-        /// <summary> Creates a new KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnection. </summary>
+        /// <summary> Creates a new KubernetesConfigurationPrivateEndpointConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.KubernetesConfiguration/privateLinkScopes/privateEndpointConnections", resourceVersion ?? "2024-11-01-preview")
+        public KubernetesConfigurationPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.KubernetesConfiguration/privateLinkScopes/privateEndpointConnections", resourceVersion ?? "2024-11-01-preview")
         {
         }
 
         /// <summary> Gets the Id. </summary>
-        public BicepValue<string> Id
+        public BicepValue<ResourceIdentifier> Id
         {
             get
             {
@@ -125,7 +125,7 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
         }
 
         /// <summary> Gets the Id. </summary>
-        public BicepValue<string> PrivateEndpointId
+        public BicepValue<ResourceIdentifier> PrivateEndpointId
         {
             get
             {
@@ -137,29 +137,29 @@ namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
             }
         }
 
-        /// <summary> Define all the provisionable properties for PrivateEndpointConnection. </summary>
+        /// <summary> Define all the provisionable properties for KubernetesConfigurationPrivateEndpointConnection. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _id = DefineProperty<string>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<PrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<KubernetesConfigurationPrivateLinkScope>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<KubernetesConfigurationPrivateLinkScope>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing PrivateEndpointConnection. </summary>
+        /// <summary> Creates a reference to an existing KubernetesConfigurationPrivateEndpointConnection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static KubernetesConfigurationPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnection result = new KubernetesConfigurationPrivateLinkScopesPrivateEndpointConnection(bicepIdentifier, resourceVersion);
+            KubernetesConfigurationPrivateEndpointConnection result = new KubernetesConfigurationPrivateEndpointConnection(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for PrivateEndpointConnection that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for KubernetesConfigurationPrivateEndpointConnection that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

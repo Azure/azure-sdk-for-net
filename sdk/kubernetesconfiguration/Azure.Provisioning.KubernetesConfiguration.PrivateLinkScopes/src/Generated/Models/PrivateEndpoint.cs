@@ -5,15 +5,16 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
-namespace Azure.Provisioning.KubernetesConfiguration._PrivateLinkScopes
+namespace Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
 {
     /// <summary> The private endpoint resource. </summary>
     internal partial class PrivateEndpoint : ProvisionableConstruct
     {
-        private BicepValue<string> _id;
+        private BicepValue<ResourceIdentifier> _id;
 
         /// <summary> Creates a new PrivateEndpoint. </summary>
         public PrivateEndpoint()
@@ -21,7 +22,7 @@ namespace Azure.Provisioning.KubernetesConfiguration._PrivateLinkScopes
         }
 
         /// <summary> Gets the Id. </summary>
-        public BicepValue<string> Id
+        public BicepValue<ResourceIdentifier> Id
         {
             get
             {
@@ -34,7 +35,7 @@ namespace Azure.Provisioning.KubernetesConfiguration._PrivateLinkScopes
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _id = DefineProperty<string>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             DefineAdditionalProperties();
         }
 
