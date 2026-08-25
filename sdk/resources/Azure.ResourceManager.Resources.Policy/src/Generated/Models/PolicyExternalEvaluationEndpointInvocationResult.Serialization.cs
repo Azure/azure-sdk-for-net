@@ -140,6 +140,11 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 }
 #endif
             }
+            if (Optional.IsDefined(ComplianceState))
+            {
+                writer.WritePropertyName("complianceState"u8);
+                writer.WriteStringValue(ComplianceState.Value.ToString());
+            }
             if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiration"u8);
@@ -196,6 +201,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             PolicyAction? policyAction = default;
             BinaryData policyEvaluationDetails = default;
             BinaryData additionalInfo = default;
+            ComplianceState? complianceState = default;
             DateTimeOffset? expiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -273,6 +279,15 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     additionalInfo = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
+                if (prop.NameEquals("complianceState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    complianceState = new ComplianceState(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("expiration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -297,6 +312,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 policyAction,
                 policyEvaluationDetails,
                 additionalInfo,
+                complianceState,
                 expiresOn,
                 additionalBinaryDataProperties);
         }
