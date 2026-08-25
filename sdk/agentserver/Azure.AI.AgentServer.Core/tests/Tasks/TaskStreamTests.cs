@@ -520,6 +520,63 @@ public sealed class TaskStreamTests
         }
     }
 
+    [Test]
+    public async Task FileBackedOwnershipIsReleasedWhenStreamIsDeleted()
+    {
+        string streamDir =
+            Path.Combine(Path.GetTempPath(), "agentserver-reused-stream-" + Guid.NewGuid().ToString("N"));
+        try
+        {
+            using TaskTestHost host = TaskTestHost.Create(
+                configureStreams: options => options.UseFileBackedReplay(streamDir));
+            host.Builder.AddTask<string, string>(
+                "owner-a",
+                async (context, cancellationToken) =>
+                {
+                    await context.Stream.EmitAsync(
+                        new SseItem<string>("owner-a", "owner") { EventId = "1" },
+                        cancellationToken);
+                    return "done";
+                });
+            host.Builder.AddTask<string, string>(
+                "owner-b",
+                async (context, cancellationToken) =>
+                {
+                    await context.Stream.EmitAsync(
+                        new SseItem<string>("owner-b", "owner") { EventId = "1" },
+                        cancellationToken);
+                    return "done";
+                });
+
+            TaskRun<string> first = await host.Invoker.StartAsync<string, string>(
+                "owner-a",
+                "input",
+                new RunOptions { TaskId = "owner-a-task", InputId = "reused-input" });
+            Assert.That(await first.Completion, Is.EqualTo("done"));
+            await host.Streams.DeleteAsync(first.InputId);
+
+            TaskRun<string> second = await host.Invoker.StartAsync<string, string>(
+                "owner-b",
+                "input",
+                new RunOptions { TaskId = "owner-b-task", InputId = "reused-input" });
+            Assert.That(await second.Completion, Is.EqualTo("done"));
+            Assert.That(
+                (await ReadAllAsync(second.Stream)).Select(item => item.Data),
+                Is.EqualTo(new[] { "owner-b" }));
+            await host.Streams.DeleteAsync(second.InputId);
+        }
+        finally
+        {
+            try
+            {
+                Directory.Delete(streamDir, recursive: true);
+            }
+            catch (DirectoryNotFoundException)
+            {
+            }
+        }
+    }
+
     private static async Task<List<SseItem<string>>> ReadAllAsync(TaskStream stream)
     {
         var events = new List<SseItem<string>>();

@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Concurrent;
-using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Streaming;
@@ -12,10 +10,6 @@ namespace Azure.AI.AgentServer.Core.Tasks;
 
 internal sealed class TaskStreamState
 {
-    private static readonly ConditionalWeakTable<
-        AgentEventStreamRegistry,
-        ConcurrentDictionary<string, string>> s_owners = new();
-
     private readonly Lazy<Task<AgentEventStream>> _stream;
     private int _closed;
 
@@ -27,7 +21,6 @@ internal sealed class TaskStreamState
         _stream = new Lazy<Task<AgentEventStream>>(
             async () =>
             {
-                ClaimInputId(registry, taskId, inputId);
                 AgentEventStream stream = registry is ITaskEventStreamRegistry taskRegistry
                     ? await taskRegistry
                         .GetOrCreateTaskStreamAsync(taskId, inputId, CancellationToken.None)
@@ -45,25 +38,6 @@ internal sealed class TaskStreamState
             LazyThreadSafetyMode.ExecutionAndPublication);
         Reader = new TaskStream(this);
         Writer = new TaskStreamWriter(this);
-    }
-
-    private static void ClaimInputId(
-        AgentEventStreamRegistry registry,
-        string taskId,
-        string inputId)
-    {
-        ConcurrentDictionary<string, string> owners =
-            s_owners.GetValue(
-                registry,
-                _ => new ConcurrentDictionary<string, string>(StringComparer.Ordinal));
-        string owner = owners.GetOrAdd(inputId, taskId);
-        if (!string.Equals(owner, taskId, StringComparison.Ordinal))
-        {
-            throw new AgentEventStreamException(
-                $"Task stream input id '{inputId}' is already owned by task '{owner}' and " +
-                $"cannot be reused by task '{taskId}'. Explicit input ids used for " +
-                "task-bound streams must be unique across tasks.");
-        }
     }
 
     public TaskStream Reader { get; }
