@@ -248,6 +248,15 @@ namespace Azure.Storage.Blobs
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
+        /// <remarks>
+        /// Session authentication requires the storage account name, which is derived from
+        /// <paramref name="serviceUri"/> when possible. Set <see cref="Models.SessionOptions.AccountName"/>
+        /// when using a custom endpoint URL from which the account name cannot be derived.
+        /// If the account name cannot be determined, this constructor throws when
+        /// <see cref="Models.SessionOptions.SessionMode"/> was explicitly set to
+        /// <see cref="Models.SessionMode.Enabled"/>; otherwise session authentication is
+        /// disabled and bearer token authentication is used.
+        /// </remarks>
         public BlobServiceClient(Uri serviceUri, TokenCredential credential, BlobClientOptions options = default)
             : this(
                   serviceUri,
@@ -367,6 +376,7 @@ namespace Azure.Storage.Blobs
                 SessionProvider sessionProvider = options.SessionOptions?.SessionProvider
                     ?? new ContainerSessionProvider(serviceUri, tokenCredential, options);
                 authentication = new SessionAuthenticationPolicy(
+                    endpoint: serviceUri,
                     fallbackAuthPolicy: authentication,
                     sessionProvider: sessionProvider,
                     sessionOptions: options.SessionOptions);
@@ -573,11 +583,13 @@ namespace Azure.Storage.Blobs
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         protected static HttpPipelinePolicy CreateSessionAuthenticationPolicy(
+            Uri endpoint,
             HttpPipelinePolicy fallbackAuthPolicy,
             SessionProvider sessionProvider,
             SessionOptions sessionOptions)
         {
             return new SessionAuthenticationPolicy(
+                endpoint,
                 fallbackAuthPolicy,
                 sessionProvider,
                 sessionOptions);
