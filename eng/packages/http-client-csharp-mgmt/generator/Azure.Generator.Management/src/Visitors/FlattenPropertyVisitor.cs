@@ -118,6 +118,7 @@ namespace Azure.Generator.Management.Visitors
 
         private static bool IsFlattenableProperty(PropertyProvider property)
         {
+            // Infrastructure-only properties such as Patch have no wire representation and must not be flattened.
             return property.Modifiers.HasFlag(MethodSignatureModifiers.Public)
                 && property.WireInfo is not null
                 && !IsObsoleteProperty(property);
