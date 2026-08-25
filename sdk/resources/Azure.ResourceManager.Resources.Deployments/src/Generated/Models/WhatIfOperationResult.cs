@@ -7,10 +7,9 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.Deployments.Models
 {
     /// <summary> Result of the What-If operation. Contains a list of predicted changes and a URL link to get to the next set of results. </summary>
     public partial class WhatIfOperationResult
@@ -28,7 +27,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="properties"> What-If operation properties. </param>
         /// <param name="error"> Error when What-If operation fails. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WhatIfOperationResult(string status, WhatIfOperationProperties properties, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WhatIfOperationResult(string status, WhatIfOperationProperties properties, ErrorResponse error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Properties = properties;
@@ -43,6 +42,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> What-If operation properties. </summary>
         [WirePath("properties")]
         internal WhatIfOperationProperties Properties { get; }
+
+        /// <summary> Error when What-If operation fails. </summary>
+        [WirePath("error")]
+        public ErrorResponse Error { get; }
 
         /// <summary> List of resource changes predicted by What-If operation. </summary>
         [WirePath("properties.changes")]

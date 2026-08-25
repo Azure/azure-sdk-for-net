@@ -9,10 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.Deployments.Models
 {
     /// <summary> Deployment properties with additional details. </summary>
     public partial class ArmDeploymentPropertiesExtended : IJsonModel<ArmDeploymentPropertiesExtended>
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ArmDeploymentPropertiesExtended)} does not support writing '{options.Format}' format.");
             }
@@ -110,7 +109,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsCollectionDefined(Providers))
             {
                 writer.WritePropertyName("providers"u8);
-                SerializationProviders(writer, options);
+                writer.WriteStartArray();
+                foreach (Provider item in Providers)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Dependencies))
             {
@@ -197,7 +201,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                SerializationError(writer, options);
+                writer.WriteObjectValue(Error, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Diagnostics))
             {
@@ -261,7 +265,7 @@ namespace Azure.ResourceManager.Resources.Models
             DateTimeOffset? timestamp = default;
             TimeSpan? duration = default;
             BinaryData outputs = default;
-            IReadOnlyList<ResourceProviderData> providers = default;
+            IReadOnlyList<Provider> providers = default;
             IReadOnlyList<ArmDependency> dependencies = default;
             ArmDeploymentTemplateLink templateLink = default;
             BinaryData parameters = default;
@@ -273,7 +277,7 @@ namespace Azure.ResourceManager.Resources.Models
             string templateHash = default;
             IReadOnlyList<ArmResourceReference> outputResourceDetails = default;
             IReadOnlyList<ArmResourceReference> validatedResourceDetails = default;
-            ResponseError error = default;
+            ErrorResponse error = default;
             IReadOnlyList<DeploymentDiagnosticsDefinition> diagnostics = default;
             ValidationLevel? validationLevel = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -322,7 +326,16 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (prop.NameEquals("providers"u8))
                 {
-                    DeserializeProviders(prop, ref providers, options);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<Provider> array = new List<Provider>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(Provider.DeserializeProvider(item, options));
+                    }
+                    providers = array;
                     continue;
                 }
                 if (prop.NameEquals("dependencies"u8))
@@ -442,7 +455,11 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (prop.NameEquals("error"u8))
                 {
-                    DeserializeError(prop, ref error, options);
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    error = ErrorResponse.DeserializeErrorResponse(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("diagnostics"u8))
@@ -479,7 +496,7 @@ namespace Azure.ResourceManager.Resources.Models
                 timestamp,
                 duration,
                 outputs,
-                providers ?? new ChangeTrackingList<ResourceProviderData>(),
+                providers ?? new ChangeTrackingList<Provider>(),
                 dependencies ?? new ChangeTrackingList<ArmDependency>(),
                 templateLink,
                 parameters,

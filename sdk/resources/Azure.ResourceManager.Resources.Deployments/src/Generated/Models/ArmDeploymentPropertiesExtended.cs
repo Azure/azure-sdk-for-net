@@ -8,10 +8,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.Deployments.Models
 {
     /// <summary> Deployment properties with additional details. </summary>
     public partial class ArmDeploymentPropertiesExtended
@@ -22,7 +21,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> Initializes a new instance of <see cref="ArmDeploymentPropertiesExtended"/>. </summary>
         internal ArmDeploymentPropertiesExtended()
         {
-            Providers = new ChangeTrackingList<ResourceProviderData>();
+            Providers = new ChangeTrackingList<Provider>();
             Dependencies = new ChangeTrackingList<ArmDependency>();
             Extensions = new ChangeTrackingList<ArmDeploymentExtensionDefinition>();
             OutputResourceDetails = new ChangeTrackingList<ArmResourceReference>();
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="diagnostics"> Contains diagnostic information collected during validation process. </param>
         /// <param name="validationLevel"> The validation level of the deployment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, TimeSpan? duration, BinaryData outputs, IReadOnlyList<ResourceProviderData> providers, IReadOnlyList<ArmDependency> dependencies, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, IReadOnlyList<ArmDeploymentExtensionDefinition> extensions, ArmDeploymentMode? mode, DebugSetting debugSetting, ErrorDeploymentExtended errorDeployment, string templateHash, IReadOnlyList<ArmResourceReference> outputResourceDetails, IReadOnlyList<ArmResourceReference> validatedResourceDetails, ResponseError error, IReadOnlyList<DeploymentDiagnosticsDefinition> diagnostics, ValidationLevel? validationLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, TimeSpan? duration, BinaryData outputs, IReadOnlyList<Provider> providers, IReadOnlyList<ArmDependency> dependencies, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, IReadOnlyList<ArmDeploymentExtensionDefinition> extensions, ArmDeploymentMode? mode, DebugSetting debugSetting, ErrorDeploymentExtended errorDeployment, string templateHash, IReadOnlyList<ArmResourceReference> outputResourceDetails, IReadOnlyList<ArmResourceReference> validatedResourceDetails, ErrorResponse error, IReadOnlyList<DeploymentDiagnosticsDefinition> diagnostics, ValidationLevel? validationLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             CorrelationId = correlationId;
@@ -121,6 +120,10 @@ namespace Azure.ResourceManager.Resources.Models
         /// </summary>
         [WirePath("outputs")]
         public BinaryData Outputs { get; }
+
+        /// <summary> The list of resource providers needed for the deployment. </summary>
+        [WirePath("providers")]
+        public IReadOnlyList<Provider> Providers { get; }
 
         /// <summary> The list of deployment dependencies. </summary>
         [WirePath("dependencies")]
@@ -191,6 +194,10 @@ namespace Azure.ResourceManager.Resources.Models
         [WirePath("validatedResources")]
         public IReadOnlyList<ArmResourceReference> ValidatedResourceDetails { get; }
 
+        /// <summary> The deployment error. </summary>
+        [WirePath("error")]
+        public ErrorResponse Error { get; }
+
         /// <summary> Contains diagnostic information collected during validation process. </summary>
         [WirePath("diagnostics")]
         public IReadOnlyList<DeploymentDiagnosticsDefinition> Diagnostics { get; }
@@ -198,5 +205,15 @@ namespace Azure.ResourceManager.Resources.Models
         /// <summary> The validation level of the deployment. </summary>
         [WirePath("validationLevel")]
         public ValidationLevel? ValidationLevel { get; }
+
+        /// <summary> Specifies the type of information to log for debugging. The permitted values are none, requestContent, responseContent, or both requestContent and responseContent separated by a comma. The default is none. When setting this value, carefully consider the type of information you are passing in during deployment. By logging information about the request or response, you could potentially expose sensitive data that is retrieved through the deployment operations. </summary>
+        [WirePath("debugSetting.detailLevel")]
+        public string DebugSettingDetailLevel
+        {
+            get
+            {
+                return DebugSetting is null ? default : DebugSetting.DetailLevel;
+            }
+        }
     }
 }
