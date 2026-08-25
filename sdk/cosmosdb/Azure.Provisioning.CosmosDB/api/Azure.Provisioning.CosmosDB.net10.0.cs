@@ -1302,6 +1302,7 @@ namespace Azure.Provisioning.CosmosDB
     public partial class CosmosDBServiceProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public CosmosDBServiceProperties() { }
+        public Azure.Provisioning.BicepDictionary<System.BinaryData> AdditionalProperties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> InstanceCount { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.CosmosDBServiceSize> InstanceSize { get { throw null; } set { } }
