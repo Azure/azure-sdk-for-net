@@ -196,17 +196,6 @@ public static class ResponsesServerServiceCollectionExtensions
         // (→ HTTP 409 conversation_locked), which is exactly the concurrency protection a plain
         // conversation_id chain requires. Checkpoint/durable-stream backing stays resilient-only
         // (see the useDurableStreams gate above) — this registration does not change that.
-        // Core invokes a resilient-task body as (ctx, ct) and does not inject DI into it. Capture the
-        // root provider at host startup so the handler can open a per-turn scope — including on the
-        // recovery path, which runs under the Core recovery scan with no request scope. Registered
-        // before AddResilientTasks so the provider is captured ahead of the Core recovery engine.
-        var taskRootProvider = new ResponsesResilientTaskRootProvider();
-        services.AddHostedService(sp =>
-        {
-            taskRootProvider.Attach(sp);
-            return taskRootProvider;
-        });
-
         if (hostedStorage is not null)
         {
             // Flat AddResilientTask/AddResilientMultiTurnTask calls self-initialize the core
@@ -215,12 +204,16 @@ public static class ResponsesServerServiceCollectionExtensions
             services.AddResilientTasks(hostedStorage.Credential);
         }
 
-        services.AddResilientTask<ResponseTaskInput, ResponseTaskOutput>(
-            ResponsesResilientTaskHandler.OneShotTaskName,
-            (ctx, ct) => ResponsesResilientTaskHandler.RunTurnAsync(taskRootProvider.Require(), ctx, ct));
-        services.AddResilientMultiTurnTask<ResponseTaskInput, ResponseTaskOutput>(
+        services.AddResilientTask<
+            ResponseTaskInput,
+            ResponseTaskOutput,
+            ResponsesResilientTaskHandler>(
+            ResponsesResilientTaskHandler.OneShotTaskName);
+        services.AddResilientMultiTurnTask<
+            ResponseTaskInput,
+            ResponseTaskOutput,
+            ResponsesResilientTaskHandler>(
             ResponsesResilientTaskHandler.MultiTurnTaskName,
-            (ctx, ct) => ResponsesResilientTaskHandler.RunTurnAsync(taskRootProvider.Require(), ctx, ct),
             steerable: eagerOptions.SteerableConversations);
 
         services.AddScoped<ResponseOrchestrator>();
