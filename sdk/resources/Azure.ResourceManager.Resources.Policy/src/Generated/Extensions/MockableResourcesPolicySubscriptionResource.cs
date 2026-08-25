@@ -23,8 +23,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
     {
         private ClientDiagnostics _policyAssignmentsClientDiagnostics;
         private PolicyAssignments _policyAssignmentsRestClient;
-        private ClientDiagnostics _policyExemptionsClientDiagnostics;
-        private PolicyExemptions _policyExemptionsRestClient;
         private ClientDiagnostics _policyTokensClientDiagnostics;
         private PolicyTokens _policyTokensRestClient;
 
@@ -42,15 +40,11 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
 
         private ClientDiagnostics PolicyAssignmentsClientDiagnostics => _policyAssignmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Policy.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PolicyAssignments PolicyAssignmentsRestClient => _policyAssignmentsRestClient ??= new PolicyAssignments(PolicyAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
-
-        private ClientDiagnostics PolicyExemptionsClientDiagnostics => _policyExemptionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Policy.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private PolicyExemptions PolicyExemptionsRestClient => _policyExemptionsRestClient ??= new PolicyExemptions(PolicyExemptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
+        private PolicyAssignments PolicyAssignmentsRestClient => _policyAssignmentsRestClient ??= new PolicyAssignments(PolicyAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics PolicyTokensClientDiagnostics => _policyTokensClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Resources.Policy.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PolicyTokens PolicyTokensRestClient => _policyTokensRestClient ??= new PolicyTokens(PolicyTokensClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-12-01-preview");
+        private PolicyTokens PolicyTokensRestClient => _policyTokensRestClient ??= new PolicyTokens(PolicyTokensClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         /// <summary> Gets a collection of PolicyDefinitions in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of PolicyDefinitions and their operations over a PolicyDefinitionResource. </returns>
@@ -72,7 +66,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -101,7 +95,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -137,7 +131,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,7 +161,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,71 +178,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
             return GetPolicySetDefinitions().Get(policySetDefinitionName, expand, cancellationToken);
         }
 
-        /// <summary> Gets a collection of Variables in the <see cref="SubscriptionResource"/>. </summary>
-        /// <returns> An object representing collection of Variables and their operations over a VariableResource. </returns>
-        public virtual VariableCollection GetVariables()
-        {
-            return GetCachedClient(client => new VariableCollection(client, Id));
-        }
-
-        /// <summary>
-        /// This operation retrieves a single variable, given its name and the subscription it was created at.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/variables/{variableName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Variables_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="variableName"> The name of the variable to operate on. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="variableName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="variableName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<VariableResource>> GetVariableAsync(string variableName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(variableName, nameof(variableName));
-
-            return await GetVariables().GetAsync(variableName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// This operation retrieves a single variable, given its name and the subscription it was created at.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/variables/{variableName}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Variables_Get. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="variableName"> The name of the variable to operate on. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="variableName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="variableName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<VariableResource> GetVariable(string variableName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(variableName, nameof(variableName));
-
-            return GetVariables().Get(variableName, cancellationToken);
-        }
-
         /// <summary>
         /// This operation retrieves the list of all policy assignments associated with the given subscription that match the optional given $filter. Valid values for $filter are: 'atScope()', 'atExactScope()' or 'policyDefinitionId eq '{value}''. If $filter is not provided, the unfiltered list includes all policy assignments associated with the subscription, including those that apply directly or from management groups that contain the given subscription, as well as any applied to objects contained within the subscription. If $filter=atScope() is provided, the returned list includes all policy assignments that apply to the subscription, which is everything in the unfiltered list except those applied to objects contained within the subscription. If $filter=atExactScope() is provided, the returned list only includes all policy assignments that at the subscription. If $filter=policyDefinitionId eq '{value}' is provided, the returned list includes all policy assignments of the policy definition whose id is {value}.
         /// <list type="bullet">
@@ -262,7 +191,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -300,7 +229,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,64 +255,6 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         }
 
         /// <summary>
-        /// This operation retrieves the list of all policy exemptions associated with the given subscription that match the optional given $filter. Valid values for $filter are: 'atScope()', 'atExactScope()', 'excludeExpired()' or 'policyAssignmentId eq '{value}''. If $filter is not provided, the unfiltered list includes all policy exemptions associated with the subscription, including those that apply directly or from management groups that contain the given subscription, as well as any applied to objects contained within the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyExemptions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicyExemptions_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atScope()', 'atExactScope()', 'excludeExpired()' or 'policyAssignmentId eq '{value}''. If $filter is not provided, no filtering is performed. If $filter is not provided, the unfiltered list includes all policy exemptions associated with the scope, including those that apply directly or apply from containing scopes. If $filter=atScope() is provided, the returned list only includes all policy exemptions that apply to the scope, which is everything in the unfiltered list except those applied to sub scopes contained within the given scope. If $filter=atExactScope() is provided, the returned list only includes all policy exemptions that at the given scope. If $filter=excludeExpired() is provided, the returned list only includes all policy exemptions that either haven't expired or didn't set expiration date. If $filter=policyAssignmentId eq '{value}' is provided. the returned list only includes all policy exemptions that are associated with the give policyAssignmentId. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyExemptionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PolicyExemptionResource> GetPolicyExemptionsAsync(string filter = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<PolicyExemptionData, PolicyExemptionResource>(new PolicyExemptionsGetAllAsyncCollectionResultOfT(PolicyExemptionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableResourcesPolicySubscriptionResource.GetPolicyExemptions"), data => new PolicyExemptionResource(Client, data));
-        }
-
-        /// <summary>
-        /// This operation retrieves the list of all policy exemptions associated with the given subscription that match the optional given $filter. Valid values for $filter are: 'atScope()', 'atExactScope()', 'excludeExpired()' or 'policyAssignmentId eq '{value}''. If $filter is not provided, the unfiltered list includes all policy exemptions associated with the subscription, including those that apply directly or from management groups that contain the given subscription, as well as any applied to objects contained within the subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Authorization/policyExemptions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> PolicyExemptions_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="filter"> The filter to apply on the operation. Valid values for $filter are: 'atScope()', 'atExactScope()', 'excludeExpired()' or 'policyAssignmentId eq '{value}''. If $filter is not provided, no filtering is performed. If $filter is not provided, the unfiltered list includes all policy exemptions associated with the scope, including those that apply directly or apply from containing scopes. If $filter=atScope() is provided, the returned list only includes all policy exemptions that apply to the scope, which is everything in the unfiltered list except those applied to sub scopes contained within the given scope. If $filter=atExactScope() is provided, the returned list only includes all policy exemptions that at the given scope. If $filter=excludeExpired() is provided, the returned list only includes all policy exemptions that either haven't expired or didn't set expiration date. If $filter=policyAssignmentId eq '{value}' is provided. the returned list only includes all policy exemptions that are associated with the give policyAssignmentId. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PolicyExemptionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PolicyExemptionResource> GetPolicyExemptions(string filter = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<PolicyExemptionData, PolicyExemptionResource>(new PolicyExemptionsGetAllCollectionResultOfT(PolicyExemptionsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableResourcesPolicySubscriptionResource.GetPolicyExemptions"), data => new PolicyExemptionResource(Client, data));
-        }
-
-        /// <summary>
         /// This operation acquires a policy token in the given subscription for the given request body.
         /// <list type="bullet">
         /// <item>
@@ -396,7 +267,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -444,7 +315,7 @@ namespace Azure.ResourceManager.Resources.Policy.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
