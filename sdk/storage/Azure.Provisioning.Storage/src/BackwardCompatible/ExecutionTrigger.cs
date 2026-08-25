@@ -18,6 +18,7 @@ public partial class ExecutionTrigger : ProvisionableConstruct
     /// <see cref="ExecutionTrigger.TaskExecutionTriggerType"/> instead.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is obsoleted and will be removed in a future version. Please use TaskExecutionTriggerType with TaskExecutionTriggerType.RunOnce or TaskExecutionTriggerType.OnSchedule instead.")]
     public BicepValue<ExecutionTriggerType> TriggerType
     {
         get { Initialize(); return _triggerType!; }
