@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Storage
     public enum StoragePublicAccessType
     {
         /// <summary> Container. </summary>
-        Container = 0,
+        Container = 1,
         /// <summary> Blob. </summary>
-        Blob = 1,
+        Blob = 2,
         /// <summary> None. </summary>
-        None = 2
+        None = 0
     }
 }
