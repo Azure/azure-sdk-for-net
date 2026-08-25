@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MigrationDiscoverySap;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
-    public partial class ConfigurationDetail : IUtf8JsonSerializable, IJsonModel<ConfigurationDetail>
+    /// <summary> The SAP instance specific configuration data. </summary>
+    public partial class ConfigurationDetail : IJsonModel<ConfigurationDetail>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConfigurationDetail>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConfigurationDetail PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationDetail>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeConfigurationDetail(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ConfigurationDetail)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationDetail>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMigrationDiscoverySapContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ConfigurationDetail)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ConfigurationDetail>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConfigurationDetail IPersistableModel<ConfigurationDetail>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ConfigurationDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ConfigurationDetail>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfigurationDetail>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConfigurationDetail)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(Saps))
             {
                 writer.WritePropertyName("saps"u8);
@@ -89,15 +129,15 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 writer.WritePropertyName("targetHanaRamSizeGB"u8);
                 writer.WriteNumberValue(TargetHanaRamSizeGB.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -106,22 +146,27 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             }
         }
 
-        ConfigurationDetail IJsonModel<ConfigurationDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ConfigurationDetail IJsonModel<ConfigurationDetail>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ConfigurationDetail JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfigurationDetail>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfigurationDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ConfigurationDetail)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeConfigurationDetail(document.RootElement, options);
         }
 
-        internal static ConfigurationDetail DeserializeConfigurationDetail(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ConfigurationDetail DeserializeConfigurationDetail(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -137,103 +182,101 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             int? totalDiskIops = default;
             SapDiscoveryDatabaseType? databaseType = default;
             int? targetHanaRamSizeGB = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("saps"u8))
+                if (prop.NameEquals("saps"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    saps = property.Value.GetInt32();
+                    saps = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("cpu"u8))
+                if (prop.NameEquals("cpu"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cpu = property.Value.GetInt32();
+                    cpu = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("cpuType"u8))
+                if (prop.NameEquals("cpuType"u8))
                 {
-                    cpuType = property.Value.GetString();
+                    cpuType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("cpuInMhz"u8))
+                if (prop.NameEquals("cpuInMhz"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    cpuInMhz = property.Value.GetInt32();
+                    cpuInMhz = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("ram"u8))
+                if (prop.NameEquals("ram"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ram = property.Value.GetInt32();
+                    ram = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("hardwareManufacturer"u8))
+                if (prop.NameEquals("hardwareManufacturer"u8))
                 {
-                    hardwareManufacturer = property.Value.GetString();
+                    hardwareManufacturer = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("model"u8))
+                if (prop.NameEquals("model"u8))
                 {
-                    model = property.Value.GetString();
+                    model = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("totalDiskSizeGB"u8))
+                if (prop.NameEquals("totalDiskSizeGB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalDiskSizeGB = property.Value.GetInt32();
+                    totalDiskSizeGB = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("totalDiskIops"u8))
+                if (prop.NameEquals("totalDiskIops"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    totalDiskIops = property.Value.GetInt32();
+                    totalDiskIops = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("databaseType"u8))
+                if (prop.NameEquals("databaseType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    databaseType = new SapDiscoveryDatabaseType(property.Value.GetString());
+                    databaseType = new SapDiscoveryDatabaseType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("targetHanaRamSizeGB"u8))
+                if (prop.NameEquals("targetHanaRamSizeGB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    targetHanaRamSizeGB = property.Value.GetInt32();
+                    targetHanaRamSizeGB = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ConfigurationDetail(
                 saps,
                 cpu,
@@ -246,38 +289,7 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
                 totalDiskIops,
                 databaseType,
                 targetHanaRamSizeGB,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<ConfigurationDetail>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfigurationDetail>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMigrationDiscoverySapContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ConfigurationDetail)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ConfigurationDetail IPersistableModel<ConfigurationDetail>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ConfigurationDetail>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeConfigurationDetail(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ConfigurationDetail)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ConfigurationDetail>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

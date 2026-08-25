@@ -167,8 +167,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             NetworkDeviceInterfaceType? interfaceType = default;
             string description = default;
             string additionalDescription = default;
-            string iPv4Address = default;
-            string iPv6Address = default;
+            string ipv4Address = default;
+            string ipv6Address = default;
             string serialNumber = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -235,12 +235,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("ipv4Address"u8))
                 {
-                    iPv4Address = prop.Value.GetString();
+                    ipv4Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("ipv6Address"u8))
                 {
-                    iPv6Address = prop.Value.GetString();
+                    ipv6Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("serialNumber"u8))
@@ -264,8 +264,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 interfaceType,
                 description,
                 additionalDescription,
-                iPv4Address,
-                iPv6Address,
+                ipv4Address,
+                ipv6Address,
                 serialNumber);
         }
     }

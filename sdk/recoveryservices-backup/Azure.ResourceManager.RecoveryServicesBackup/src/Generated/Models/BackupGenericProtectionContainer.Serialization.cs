@@ -104,6 +104,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("protectableObjectType"u8);
                 writer.WriteStringValue(ProtectableObjectType);
             }
+            if (options.Format != "W" && Optional.IsDefined(SourceLocation))
+            {
+                writer.WritePropertyName("sourceLocation"u8);
+                writer.WriteStringValue(SourceLocation.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

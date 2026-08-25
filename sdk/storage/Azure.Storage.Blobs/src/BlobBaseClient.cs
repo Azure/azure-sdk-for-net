@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
-using Azure.Storage.Common;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Cryptography.Models;
 using Azure.Storage.Sas;
@@ -1530,11 +1529,12 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken)
         {
             HttpRange requestedRange = range;
+            long cseStartRegion = 0;
             if (UsingClientSideEncryption)
             {
                 if ((await GetPropertiesInternal(conditions, async, new RequestContext() { CancellationToken = cancellationToken }).ConfigureAwait(false)).Value.Metadata.TryGetValue(Constants.ClientSideEncryption.EncryptionDataKey, out string rawEncryptiondata))
                 {
-                    range = BlobClientSideDecryptor.GetEncryptedBlobRange(range, rawEncryptiondata);
+                    (range, cseStartRegion) = BlobClientSideDecryptor.GetEncryptedBlobRange(range, rawEncryptiondata);
                 }
             }
 
@@ -1550,6 +1550,7 @@ namespace Azure.Storage.Blobs.Specialized
                         response.Value.Details.Metadata,
                         requestedRange,
                         response.Value.Details.ContentRange,
+                        cseStartRegion,
                         async,
                         cancellationToken).ConfigureAwait(false);
             }
@@ -3051,13 +3052,7 @@ namespace Azure.Storage.Blobs.Specialized
             CancellationToken cancellationToken = default)
         {
             DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Download;
-
             PartitionedDownloader downloader = new PartitionedDownloader(this, transferOptions, validationOptions, progressHandler);
-
-            if (UsingClientSideEncryption)
-            {
-                ClientSideDecryptor.BeginContentEncryptionKeyCaching();
-            }
             return await downloader.DownloadToInternal(destination, conditions, async, cancellationToken).ConfigureAwait(false);
         }
         #endregion Parallel Download
@@ -3410,11 +3405,14 @@ namespace Azure.Storage.Blobs.Specialized
                     }
 
                     long blobContentLength = blobProperties.Value.ContentLength;
-                    ClientSideDecryptor.ContentEncryptionKeyCache contentEncryptionKeyCache = default;
                     EncryptionData encryptionData = null;
+                    BlobClientSideDecryptor decryptor = null;
+                    if (UsingClientSideEncryption)
+                    {
+                        decryptor = new(new(ClientSideEncryption));
+                    }
                     if (UsingClientSideEncryption && !allowModifications)
                     {
-                        contentEncryptionKeyCache = new();
                         encryptionData = BlobClientSideDecryptor.GetAndValidateEncryptionDataOrDefault(blobProperties?.Value?.Metadata);
                     }
 
@@ -3428,10 +3426,10 @@ namespace Azure.Storage.Blobs.Specialized
                         CancellationToken cancellationToken) =>
                         {
                             HttpRange requestedRange = range;
+                            long cseStartRegion = 0;
                             if (UsingClientSideEncryption)
                             {
-                                ClientSideDecryptor.BeginContentEncryptionKeyCaching(contentEncryptionKeyCache);
-                                range = rangeAdjustmentFunc(requestedRange);
+                                (range, cseStartRegion) = rangeAdjustmentFunc(requestedRange);
                             }
                             Response<BlobDownloadStreamingResult> response = await DownloadStreamingInternal(
                                 range,
@@ -3442,14 +3440,14 @@ namespace Azure.Storage.Blobs.Specialized
                                 async,
                                 cancellationToken).ConfigureAwait(false);
 
-                            if (UsingClientSideEncryption)
+                            if (decryptor != null)
                             {
-                                response.Value.Content = await new BlobClientSideDecryptor(
-                                    new ClientSideDecryptor(ClientSideEncryption)).DecryptInternal(
+                                response.Value.Content = await decryptor.DecryptInternal(
                                         response.Value.Content,
                                         response.Value.Details.Metadata,
                                         requestedRange,
                                         response.Value.Details.ContentRange,
+                                        cseStartRegion,
                                         async,
                                         cancellationToken).ConfigureAwait(false);
                             }
@@ -3914,7 +3912,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     if (async)
                     {
-                        response = await BlobRestClient.StartCopyFromUrlAsync(
+                        response = await BlobRestClient.StartCopyFromUriAsync(
                             copySource: source.AbsoluteUri,
                             metadata: metadata,
                             tier: accessTier,
@@ -3937,7 +3935,7 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        response = BlobRestClient.StartCopyFromUrl(
+                        response = BlobRestClient.StartCopyFromUri(
                             copySource: source.AbsoluteUri,
                             metadata: metadata,
                             tier: accessTier,
@@ -4127,7 +4125,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     if (async)
                     {
-                        response = await BlobRestClient.AbortCopyFromUrlAsync(
+                        response = await BlobRestClient.AbortCopyFromUriAsync(
                             copyId: copyId,
                             leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken)
@@ -4135,7 +4133,7 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        response = BlobRestClient.AbortCopyFromUrl(
+                        response = BlobRestClient.AbortCopyFromUri(
                             copyId: copyId,
                             leaseId: conditions?.LeaseId,
                             cancellationToken: cancellationToken);
@@ -4398,7 +4396,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     if (async)
                     {
-                        response = await BlobRestClient.CopyFromUrlAsync(
+                        response = await BlobRestClient.CopyFromUriAsync(
                             copySource: source.AbsoluteUri,
                             metadata: metadata,
                             tier: accessTier,
@@ -4422,7 +4420,7 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        response = BlobRestClient.CopyFromUrl(
+                        response = BlobRestClient.CopyFromUri(
                             copySource: source.AbsoluteUri,
                             metadata: metadata,
                             tier: accessTier,

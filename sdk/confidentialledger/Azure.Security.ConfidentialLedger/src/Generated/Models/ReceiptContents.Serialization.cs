@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.Security.ConfidentialLedger;
 
 namespace Azure.Security.ConfidentialLedger.Models
 {
-    public partial class ReceiptContents : IUtf8JsonSerializable, IJsonModel<ReceiptContents>
+    /// <summary> The contents of a receipt. </summary>
+    public partial class ReceiptContents : IJsonModel<ReceiptContents>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ReceiptContents>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="ReceiptContents"/> for deserialization. </summary>
+        internal ReceiptContents()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ReceiptContents PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ReceiptContents>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeReceiptContents(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ReceiptContents)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ReceiptContents>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureSecurityConfidentialLedgerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ReceiptContents)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ReceiptContents>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ReceiptContents IPersistableModel<ReceiptContents>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ReceiptContents>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ReceiptContents>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.Security.ConfidentialLedger.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReceiptContents>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReceiptContents>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReceiptContents)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(Cert))
             {
                 writer.WritePropertyName("cert"u8);
@@ -53,7 +98,7 @@ namespace Azure.Security.ConfidentialLedger.Models
             writer.WriteStringValue(NodeId);
             writer.WritePropertyName("proof"u8);
             writer.WriteStartArray();
-            foreach (var item in Proof)
+            foreach (ReceiptElement item in Proof)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -67,23 +112,28 @@ namespace Azure.Security.ConfidentialLedger.Models
             {
                 writer.WritePropertyName("serviceEndorsements"u8);
                 writer.WriteStartArray();
-                foreach (var item in ServiceEndorsements)
+                foreach (string item in ServiceEndorsements)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("signature"u8);
             writer.WriteStringValue(Signature);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -92,22 +142,27 @@ namespace Azure.Security.ConfidentialLedger.Models
             }
         }
 
-        ReceiptContents IJsonModel<ReceiptContents>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ReceiptContents IJsonModel<ReceiptContents>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ReceiptContents JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ReceiptContents>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ReceiptContents>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ReceiptContents)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeReceiptContents(document.RootElement, options);
         }
 
-        internal static ReceiptContents DeserializeReceiptContents(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ReceiptContents DeserializeReceiptContents(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -116,78 +171,83 @@ namespace Azure.Security.ConfidentialLedger.Models
             string leaf = default;
             ReceiptLeafComponents leafComponents = default;
             string nodeId = default;
-            IReadOnlyList<ReceiptElement> proof = default;
+            IList<ReceiptElement> proof = default;
             string root = default;
-            IReadOnlyList<string> serviceEndorsements = default;
+            IList<string> serviceEndorsements = default;
             string signature = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("cert"u8))
+                if (prop.NameEquals("cert"u8))
                 {
-                    cert = property.Value.GetString();
+                    cert = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("leaf"u8))
+                if (prop.NameEquals("leaf"u8))
                 {
-                    leaf = property.Value.GetString();
+                    leaf = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("leafComponents"u8))
+                if (prop.NameEquals("leafComponents"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    leafComponents = ReceiptLeafComponents.DeserializeReceiptLeafComponents(property.Value, options);
+                    leafComponents = ReceiptLeafComponents.DeserializeReceiptLeafComponents(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("nodeId"u8))
+                if (prop.NameEquals("nodeId"u8))
                 {
-                    nodeId = property.Value.GetString();
+                    nodeId = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("proof"u8))
+                if (prop.NameEquals("proof"u8))
                 {
                     List<ReceiptElement> array = new List<ReceiptElement>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(ReceiptElement.DeserializeReceiptElement(item, options));
                     }
                     proof = array;
                     continue;
                 }
-                if (property.NameEquals("root"u8))
+                if (prop.NameEquals("root"u8))
                 {
-                    root = property.Value.GetString();
+                    root = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("serviceEndorsements"u8))
+                if (prop.NameEquals("serviceEndorsements"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     serviceEndorsements = array;
                     continue;
                 }
-                if (property.NameEquals("signature"u8))
+                if (prop.NameEquals("signature"u8))
                 {
-                    signature = property.Value.GetString();
+                    signature = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ReceiptContents(
                 cert,
                 leaf,
@@ -197,54 +257,7 @@ namespace Azure.Security.ConfidentialLedger.Models
                 root,
                 serviceEndorsements ?? new ChangeTrackingList<string>(),
                 signature,
-                serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<ReceiptContents>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ReceiptContents>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureSecurityConfidentialLedgerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ReceiptContents)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ReceiptContents IPersistableModel<ReceiptContents>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ReceiptContents>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeReceiptContents(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ReceiptContents)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ReceiptContents>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ReceiptContents FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeReceiptContents(document.RootElement);
-        }
-
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
-        {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
-            return content;
+                additionalBinaryDataProperties);
         }
     }
 }

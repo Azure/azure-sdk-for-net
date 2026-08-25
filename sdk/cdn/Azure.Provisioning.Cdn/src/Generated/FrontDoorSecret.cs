@@ -93,6 +93,32 @@ namespace Azure.Provisioning.Cdn
             }
         }
 
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<FrontDoorProvisioningState> ProvisioningState
+        {
+            get
+            {
+                if (SecretProperties is null)
+                {
+                    SecretProperties = new CdnSecretProperties();
+                }
+                return SecretProperties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets the DeploymentStatus. </summary>
+        public BicepValue<FrontDoorDeploymentStatus> DeploymentStatus
+        {
+            get
+            {
+                if (SecretProperties is null)
+                {
+                    SecretProperties = new CdnSecretProperties();
+                }
+                return SecretProperties.DeploymentStatus;
+            }
+        }
+
         /// <summary> Gets the ProfileName. </summary>
         public BicepValue<string> ProfileName
         {
@@ -123,32 +149,6 @@ namespace Azure.Provisioning.Cdn
             }
         }
 
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<FrontDoorProvisioningState> ProvisioningState
-        {
-            get
-            {
-                if (SecretProperties is null)
-                {
-                    SecretProperties = new CdnSecretProperties();
-                }
-                return SecretProperties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Gets the DeploymentStatus. </summary>
-        public BicepValue<FrontDoorDeploymentStatus> DeploymentStatus
-        {
-            get
-            {
-                if (SecretProperties is null)
-                {
-                    SecretProperties = new CdnSecretProperties();
-                }
-                return SecretProperties.DeploymentStatus;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for FrontDoorSecret. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -157,7 +157,7 @@ namespace Azure.Provisioning.Cdn
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _secretProperties = DefineModelProperty<CdnSecretProperties>(nameof(SecretProperties), new string[] { "properties" });
-            _parent = DefineResource<CdnProfile>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<CdnProfile>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -18,7 +19,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     /// </summary>
     [ModelReaderWriterBuildable(typeof(BackupCommonSettings))]
     [ModelReaderWriterBuildable(typeof(BackupContent))]
-    [ModelReaderWriterBuildable(typeof(BackupDatabaseInRecoveryPoint))]
     [ModelReaderWriterBuildable(typeof(BackupDay))]
     [ModelReaderWriterBuildable(typeof(BackupEngineBaseResourceList))]
     [ModelReaderWriterBuildable(typeof(BackupEngineData))]
@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [ModelReaderWriterBuildable(typeof(BackupPrivateEndpointConnectionData))]
     [ModelReaderWriterBuildable(typeof(BackupPrivateEndpointConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(BackupPrivateEndpointConnectionResource))]
+    [ModelReaderWriterBuildable(typeof(BackupProtectedItemConfigureSourceScanContent))]
     [ModelReaderWriterBuildable(typeof(BackupProtectedItemData))]
     [ModelReaderWriterBuildable(typeof(BackupProtectedItemResource))]
     [ModelReaderWriterBuildable(typeof(BackupProtectionContainerData))]
@@ -52,7 +53,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [ModelReaderWriterBuildable(typeof(BackupProtectionPolicyData))]
     [ModelReaderWriterBuildable(typeof(BackupProtectionPolicyResource))]
     [ModelReaderWriterBuildable(typeof(BackupRecoveryPointData))]
-    [ModelReaderWriterBuildable(typeof(BackupRecoveryPointPatch))]
     [ModelReaderWriterBuildable(typeof(BackupRecoveryPointResource))]
     [ModelReaderWriterBuildable(typeof(BackupResourceConfigData))]
     [ModelReaderWriterBuildable(typeof(BackupResourceConfigProperties))]
@@ -81,6 +81,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [ModelReaderWriterBuildable(typeof(DailyRetentionFormat))]
     [ModelReaderWriterBuildable(typeof(DailyRetentionSchedule))]
     [ModelReaderWriterBuildable(typeof(DailySchedule))]
+    [ModelReaderWriterBuildable(typeof(DataDiskDetails))]
+    [ModelReaderWriterBuildable(typeof(DataDiskEncryptionSettings))]
+    [ModelReaderWriterBuildable(typeof(DiskDetails))]
     [ModelReaderWriterBuildable(typeof(DiskExclusionProperties))]
     [ModelReaderWriterBuildable(typeof(DiskInformation))]
     [ModelReaderWriterBuildable(typeof(DistributedNodesInfo))]
@@ -159,8 +162,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [ModelReaderWriterBuildable(typeof(MabProtectionPolicy))]
     [ModelReaderWriterBuildable(typeof(MonthlyRetentionSchedule))]
     [ModelReaderWriterBuildable(typeof(MoveRPAcrossTiersContent))]
-    [ModelReaderWriterBuildable(typeof(PatchRecoveryPointInput))]
-    [ModelReaderWriterBuildable(typeof(PatchRecoveryPointPropertiesInput))]
+    [ModelReaderWriterBuildable(typeof(PerDiskEncryptionSetId))]
     [ModelReaderWriterBuildable(typeof(PointInTimeRange))]
     [ModelReaderWriterBuildable(typeof(PreBackupValidation))]
     [ModelReaderWriterBuildable(typeof(PrepareDataMoveContent))]
@@ -176,6 +178,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [ModelReaderWriterBuildable(typeof(ProtectionPolicyResourceList))]
     [ModelReaderWriterBuildable(typeof(ProvisionIlrConnectionContent))]
     [ModelReaderWriterBuildable(typeof(RecoveryPointDiskConfiguration))]
+    [ModelReaderWriterBuildable(typeof(RecoveryPointImmutabilityProperties))]
     [ModelReaderWriterBuildable(typeof(RecoveryPointMoveReadinessInfo))]
     [ModelReaderWriterBuildable(typeof(RecoveryPointProperties))]
     [ModelReaderWriterBuildable(typeof(RecoveryPointRehydrationInfo))]
@@ -193,10 +196,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [ModelReaderWriterBuildable(typeof(ResourceHealthDetails))]
     [ModelReaderWriterBuildable(typeof(ResourceList))]
     [ModelReaderWriterBuildable(typeof(ResourceProtectionIntent))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestoreContent))]
     [ModelReaderWriterBuildable(typeof(RestoreFileSpecs))]
     [ModelReaderWriterBuildable(typeof(RetentionDuration))]
-    [ModelReaderWriterBuildable(typeof(SecuredVMDetails))]
+    [ModelReaderWriterBuildable(typeof(SecuredVmDetails))]
     [ModelReaderWriterBuildable(typeof(SecurityPinContent))]
     [ModelReaderWriterBuildable(typeof(SimpleRetentionPolicy))]
     [ModelReaderWriterBuildable(typeof(SimpleSchedulePolicy))]
@@ -294,7 +298,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [ModelReaderWriterBuildable(typeof(VmWorkloadSapHanaDBInstance))]
     [ModelReaderWriterBuildable(typeof(VmWorkloadSapHanaDBInstanceProtectedItem))]
     [ModelReaderWriterBuildable(typeof(VmWorkloadSapHanaHsrProtectableItem))]
-    [ModelReaderWriterBuildable(typeof(VmWorkloadSapHanaScaleoutProtectableItem))]
     [ModelReaderWriterBuildable(typeof(VmWorkloadSapHanaSystemProtectableItem))]
     [ModelReaderWriterBuildable(typeof(VmWorkloadSapHanaSystemWorkloadItem))]
     [ModelReaderWriterBuildable(typeof(VmWorkloadSqlAvailabilityGroupProtectableItem))]
@@ -302,7 +305,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [ModelReaderWriterBuildable(typeof(VmWorkloadSqlDatabaseProtectedItem))]
     [ModelReaderWriterBuildable(typeof(VmWorkloadSqlDatabaseWorkloadItem))]
     [ModelReaderWriterBuildable(typeof(VmWorkloadSqlInstanceProtectableItem))]
-    [ModelReaderWriterBuildable(typeof(VmWorkloadSqlInstanceProtectedItem))]
     [ModelReaderWriterBuildable(typeof(VmWorkloadSqlInstanceWorkloadItem))]
     [ModelReaderWriterBuildable(typeof(WeeklyRetentionFormat))]
     [ModelReaderWriterBuildable(typeof(WeeklyRetentionSchedule))]
@@ -345,6 +347,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
     [ModelReaderWriterBuildable(typeof(WorkloadSqlRecoveryPointExtendedInfo))]
     [ModelReaderWriterBuildable(typeof(WorkloadSqlRestoreContent))]
     [ModelReaderWriterBuildable(typeof(WorkloadSqlRestoreWithRehydrateContent))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     [ModelReaderWriterBuildable(typeof(YearlyRetentionSchedule))]
     public partial class AzureResourceManagerRecoveryServicesBackupContext : ModelReaderWriterContext
     {

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -194,3154 +193,6 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Per Asset statistics
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetAssetStatistics(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetAssetStatistics");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-                using HttpMessage message = CreateGetAssetStatisticsRequest(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Per Asset statistics
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAssetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetAssetStatistics");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-                using HttpMessage message = CreateGetAssetStatisticsRequest(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Per Asset statistics. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<AssetStatisticsResponse> GetAssetStatistics(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-            Response result = GetAssetStatistics(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext());
-            return Response.FromValue((AssetStatisticsResponse)result, result);
-        }
-
-        /// <summary> Per Asset statistics. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<AssetStatisticsResponse>> GetAssetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-            Response result = await GetAssetStatisticsAsync(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((AssetStatisticsResponse)result, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Return a list of supported assets.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetAvailableAssets(string collectionId, string itemId, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetAvailableAssets");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-                using HttpMessage message = CreateGetAvailableAssetsRequest(collectionId, itemId, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Return a list of supported assets.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAvailableAssetsAsync(string collectionId, string itemId, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetAvailableAssets");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-                using HttpMessage message = CreateGetAvailableAssetsRequest(collectionId, itemId, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Return all Bounds
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetBounds(string collectionId, string itemId, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetBounds");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-                using HttpMessage message = CreateGetBoundsRequest(collectionId, itemId, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Return all Bounds
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetBoundsAsync(string collectionId, string itemId, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetBounds");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-                using HttpMessage message = CreateGetBoundsRequest(collectionId, itemId, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Return all Bounds. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<StacItemBounds> GetBounds(string collectionId, string itemId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-            Response result = GetBounds(collectionId, itemId, cancellationToken.ToRequestContext());
-            return Response.FromValue((StacItemBounds)result, result);
-        }
-
-        /// <summary> Return all Bounds. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<StacItemBounds>> GetBoundsAsync(string collectionId, string itemId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-            Response result = await GetBoundsAsync(collectionId, itemId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((StacItemBounds)result, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create image from a geojson feature.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response CropGeoJson(string collectionId, string itemId, string format, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropGeoJson");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateCropGeoJsonRequest(collectionId, itemId, format, content, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, coordinateReferenceSystem, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create image from a geojson feature.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CropGeoJsonAsync(string collectionId, string itemId, string format, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropGeoJson");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateCropGeoJsonRequest(collectionId, itemId, format, content, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, coordinateReferenceSystem, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create image from a geojson feature. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="body"> Request GeoJson body. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> CropGeoJson(string collectionId, string itemId, string format, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Argument.AssertNotNull(body, nameof(body));
-
-            Response result = CropGeoJson(collectionId, itemId, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary> Create image from a geojson feature. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="body"> Request GeoJson body. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> CropGeoJsonAsync(string collectionId, string itemId, string format, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Argument.AssertNotNull(body, nameof(body));
-
-            Response result = await CropGeoJsonAsync(collectionId, itemId, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create image from a geojson feature.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response CropGeoJsonWithDimensions(string collectionId, string itemId, int width, int height, string format, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropGeoJsonWithDimensions");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateCropGeoJsonWithDimensionsRequest(collectionId, itemId, width, height, format, content, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, coordinateReferenceSystem, resampling, maxSize, rescale, colorMapName, colorMap, returnMask, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create image from a geojson feature.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CropGeoJsonWithDimensionsAsync(string collectionId, string itemId, int width, int height, string format, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, string colorMapName = default, string colorMap = default, bool? returnMask = default, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropGeoJsonWithDimensions");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateCropGeoJsonWithDimensionsRequest(collectionId, itemId, width, height, format, content, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, coordinateReferenceSystem, resampling, maxSize, rescale, colorMapName, colorMap, returnMask, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create image from a geojson feature. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="body"> Request GeoJson body. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> CropGeoJsonWithDimensions(string collectionId, string itemId, int width, int height, string format, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Argument.AssertNotNull(body, nameof(body));
-
-            Response result = CropGeoJsonWithDimensions(collectionId, itemId, width, height, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary> Create image from a geojson feature. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="body"> Request GeoJson body. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="format"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> CropGeoJsonWithDimensionsAsync(string collectionId, string itemId, int width, int height, string format, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
-            Argument.AssertNotNull(body, nameof(body));
-
-            Response result = await CropGeoJsonWithDimensionsAsync(collectionId, itemId, width, height, format, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get Statistics from a geojson feature.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetGeoJsonStatistics(string collectionId, string itemId, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetGeoJsonStatistics");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateGetGeoJsonStatisticsRequest(collectionId, itemId, content, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get Statistics from a geojson feature.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetGeoJsonStatisticsAsync(string collectionId, string itemId, RequestContent content, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, string resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetGeoJsonStatistics");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateGetGeoJsonStatisticsRequest(collectionId, itemId, content, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get Statistics from a geojson feature. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="body"> Request GeoJson body. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<StacItemStatisticsGeoJson> GetGeoJsonStatistics(string collectionId, string itemId, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            Response result = GetGeoJsonStatistics(collectionId, itemId, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext());
-            return Response.FromValue((StacItemStatisticsGeoJson)result, result);
-        }
-
-        /// <summary> Get Statistics from a geojson feature. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="body"> Request GeoJson body. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<StacItemStatisticsGeoJson>> GetGeoJsonStatisticsAsync(string collectionId, string itemId, GeoJsonFeature body, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            Response result = await GetGeoJsonStatisticsAsync(collectionId, itemId, body, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((StacItemStatisticsGeoJson)result, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Return Info Geojson
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetInfoGeoJson(string collectionId, string itemId, IEnumerable<string> assets, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetInfoGeoJson");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-                using HttpMessage message = CreateGetInfoGeoJsonRequest(collectionId, itemId, assets, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Return Info Geojson
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetInfoGeoJsonAsync(string collectionId, string itemId, IEnumerable<string> assets, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetInfoGeoJson");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-                using HttpMessage message = CreateGetInfoGeoJsonRequest(collectionId, itemId, assets, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Return Info Geojson. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TilerInfoGeoJsonFeature> GetInfoGeoJson(string collectionId, string itemId, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-            Response result = GetInfoGeoJson(collectionId, itemId, assets, cancellationToken.ToRequestContext());
-            return Response.FromValue((TilerInfoGeoJsonFeature)result, result);
-        }
-
-        /// <summary> Return Info Geojson. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TilerInfoGeoJsonFeature>> GetInfoGeoJsonAsync(string collectionId, string itemId, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-            Response result = await GetInfoGeoJsonAsync(collectionId, itemId, assets, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TilerInfoGeoJsonFeature)result, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Return dataset's basic info.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetItemAssetDetails(string collectionId, string itemId, IEnumerable<string> assets, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemAssetDetails");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-                using HttpMessage message = CreateGetItemAssetDetailsRequest(collectionId, itemId, assets, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Return dataset's basic info.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetItemAssetDetailsAsync(string collectionId, string itemId, IEnumerable<string> assets, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemAssetDetails");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-                using HttpMessage message = CreateGetItemAssetDetailsRequest(collectionId, itemId, assets, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Return dataset's basic info. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TilerInfoMapResponse> GetItemAssetDetails(string collectionId, string itemId, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-            Response result = GetItemAssetDetails(collectionId, itemId, assets, cancellationToken.ToRequestContext());
-            return Response.FromValue((TilerInfoMapResponse)result, result);
-        }
-
-        /// <summary> Return dataset's basic info. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TilerInfoMapResponse>> GetItemAssetDetailsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-            Response result = await GetItemAssetDetailsAsync(collectionId, itemId, assets, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TilerInfoMapResponse)result, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create image from part of a dataset.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="minx"> Bounding box min X. </param>
-        /// <param name="miny"> Bounding box min Y. </param>
-        /// <param name="maxx"> Bounding box max X. </param>
-        /// <param name="maxy"> Bounding box max Y. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetPart(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPart");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
-
-                using HttpMessage message = CreateGetPartRequest(collectionId, itemId, minx, miny, maxx, maxy, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create image from part of a dataset.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="minx"> Bounding box min X. </param>
-        /// <param name="miny"> Bounding box min Y. </param>
-        /// <param name="maxx"> Bounding box max X. </param>
-        /// <param name="maxy"> Bounding box max Y. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPartAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPart");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
-
-                using HttpMessage message = CreateGetPartRequest(collectionId, itemId, minx, miny, maxx, maxy, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create image from part of a dataset. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="minx"> Bounding box min X. </param>
-        /// <param name="miny"> Bounding box min Y. </param>
-        /// <param name="maxx"> Bounding box max X. </param>
-        /// <param name="maxy"> Bounding box max Y. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetPart(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
-
-            Response result = GetPart(collectionId, itemId, minx, miny, maxx, maxy, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary> Create image from part of a dataset. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="minx"> Bounding box min X. </param>
-        /// <param name="miny"> Bounding box min Y. </param>
-        /// <param name="maxx"> Bounding box max X. </param>
-        /// <param name="maxy"> Bounding box max Y. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetPartAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
-
-            Response result = await GetPartAsync(collectionId, itemId, minx, miny, maxx, maxy, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create image from part of a dataset.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="minx"> Bounding box min X. </param>
-        /// <param name="miny"> Bounding box min Y. </param>
-        /// <param name="maxx"> Bounding box max X. </param>
-        /// <param name="maxy"> Bounding box max Y. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetPartWithDimensions(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPartWithDimensions");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
-
-                using HttpMessage message = CreateGetPartWithDimensionsRequest(collectionId, itemId, minx, miny, maxx, maxy, width, height, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling, maxSize, rescale, colorMapName, colorMap, returnMask, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create image from part of a dataset.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="minx"> Bounding box min X. </param>
-        /// <param name="miny"> Bounding box min Y. </param>
-        /// <param name="maxx"> Bounding box max X. </param>
-        /// <param name="maxy"> Bounding box max Y. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPartWithDimensionsAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string coordinateReferenceSystem, string resampling, int? maxSize, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPartWithDimensions");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
-
-                using HttpMessage message = CreateGetPartWithDimensionsRequest(collectionId, itemId, minx, miny, maxx, maxy, width, height, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling, maxSize, rescale, colorMapName, colorMap, returnMask, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create image from part of a dataset. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="minx"> Bounding box min X. </param>
-        /// <param name="miny"> Bounding box min Y. </param>
-        /// <param name="maxx"> Bounding box max X. </param>
-        /// <param name="maxy"> Bounding box max Y. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetPartWithDimensions(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
-
-            Response result = GetPartWithDimensions(collectionId, itemId, minx, miny, maxx, maxy, width, height, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary> Create image from part of a dataset. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="minx"> Bounding box min X. </param>
-        /// <param name="miny"> Bounding box min Y. </param>
-        /// <param name="maxx"> Bounding box max X. </param>
-        /// <param name="maxy"> Bounding box max Y. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetPartWithDimensionsAsync(string collectionId, string itemId, float minx, float miny, float maxx, float maxy, int width, int height, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, int? maxSize = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
-
-            Response result = await GetPartWithDimensionsAsync(collectionId, itemId, minx, miny, maxx, maxy, width, height, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, coordinateReferenceSystem, resampling?.ToString(), maxSize, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get Point value for a dataset.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="longitude"> Longitude. </param>
-        /// <param name="latitude"> Latitude. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetPoint(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPoint");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-                using HttpMessage message = CreateGetPointRequest(collectionId, itemId, longitude, latitude, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get Point value for a dataset.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="longitude"> Longitude. </param>
-        /// <param name="latitude"> Latitude. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPointAsync(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string coordinateReferenceSystem, string resampling, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPoint");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-                using HttpMessage message = CreateGetPointRequest(collectionId, itemId, longitude, latitude, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get Point value for a dataset. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="longitude"> Longitude. </param>
-        /// <param name="latitude"> Latitude. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TilerCoreModelsResponsesPoint> GetPoint(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-            Response result = GetPoint(collectionId, itemId, longitude, latitude, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), cancellationToken.ToRequestContext());
-            return Response.FromValue((TilerCoreModelsResponsesPoint)result, result);
-        }
-
-        /// <summary> Get Point value for a dataset. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="longitude"> Longitude. </param>
-        /// <param name="latitude"> Latitude. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TilerCoreModelsResponsesPoint>> GetPointAsync(string collectionId, string itemId, float longitude, float latitude, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, string coordinateReferenceSystem = default, ResamplingMethod? resampling = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-            Response result = await GetPointAsync(collectionId, itemId, longitude, latitude, assets, expression, assetBandIndices, assetAsBand, noData, unscale, coordinateReferenceSystem, resampling?.ToString(), cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TilerCoreModelsResponsesPoint)result, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create preview of a dataset.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetPreview(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string format, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPreview");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-                using HttpMessage message = CreateGetPreviewRequest(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, format, colorFormula, dstCrs, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create preview of a dataset.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPreviewAsync(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string format, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPreview");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-                using HttpMessage message = CreateGetPreviewRequest(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, format, colorFormula, dstCrs, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create preview of a dataset. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetPreview(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? format = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-            Response result = GetPreview(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, format?.ToString(), colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary> Create preview of a dataset. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetPreviewAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? format = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-            Response result = await GetPreviewAsync(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, format?.ToString(), colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create preview of a dataset.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetPreviewWithFormat(string collectionId, string itemId, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPreviewWithFormat");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
-
-                using HttpMessage message = CreateGetPreviewWithFormatRequest(collectionId, itemId, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, dstCrs, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create preview of a dataset.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetPreviewWithFormatAsync(string collectionId, string itemId, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string colorFormula, string dstCrs, string resampling, int? maxSize, int? height, int? width, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetPreviewWithFormat");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
-
-                using HttpMessage message = CreateGetPreviewWithFormatRequest(collectionId, itemId, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, colorFormula, dstCrs, resampling, maxSize, height, width, rescale, colorMapName, colorMap, returnMask, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create preview of a dataset. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetPreviewWithFormat(string collectionId, string itemId, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
-
-            Response result = GetPreviewWithFormat(collectionId, itemId, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary> Create preview of a dataset. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="dstCrs"> Output Coordinate Reference System. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Image output size limit if width and height limits are not set. </param>
-        /// <param name="height"> Height in pixels for the output image. </param>
-        /// <param name="width"> Width in pixels for the output image. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetPreviewWithFormatAsync(string collectionId, string itemId, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string colorFormula = default, string dstCrs = default, ResamplingMethod? resampling = default, int? maxSize = default, int? height = default, int? width = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
-
-            Response result = await GetPreviewWithFormatAsync(collectionId, itemId, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, colorFormula, dstCrs, resampling?.ToString(), maxSize, height, width, rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create a new image export.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response CreateStaticImage(string collectionId, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CreateStaticImage");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateCreateStaticImageRequest(collectionId, content, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create a new image export.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateStaticImageAsync(string collectionId, RequestContent content, RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CreateStaticImage");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNull(content, nameof(content));
-
-                using HttpMessage message = CreateCreateStaticImageRequest(collectionId, content, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create a new image export. </summary>
-        /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="body"> Image request body. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ImageResponse> CreateStaticImage(string collectionId, ImageParameters body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            Response result = CreateStaticImage(collectionId, body, cancellationToken.ToRequestContext());
-            return Response.FromValue((ImageResponse)result, result);
-        }
-
-        /// <summary> Create a new image export. </summary>
-        /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="body"> Image request body. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ImageResponse>> CreateStaticImageAsync(string collectionId, ImageParameters body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNull(body, nameof(body));
-
-            Response result = await CreateStaticImageAsync(collectionId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ImageResponse)result, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Fetch an existing image export by ID
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="id"> Image export ID. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetStaticImage(string collectionId, string id, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetStaticImage");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-                using HttpMessage message = CreateGetStaticImageRequest(collectionId, id, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Fetch an existing image export by ID
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="id"> Image export ID. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetStaticImageAsync(string collectionId, string id, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetStaticImage");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-                using HttpMessage message = CreateGetStaticImageRequest(collectionId, id, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Fetch an existing image export by ID. </summary>
-        /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="id"> Image export ID. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetStaticImage(string collectionId, string id, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            Response result = GetStaticImage(collectionId, id, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary> Fetch an existing image export by ID. </summary>
-        /// <param name="collectionId"> STAC Collection ID. </param>
-        /// <param name="id"> Image export ID. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="id"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetStaticImageAsync(string collectionId, string id, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(id, nameof(id));
-
-            Response result = await GetStaticImageAsync(collectionId, id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Merged assets statistics.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetStatistics(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetStatistics");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-                using HttpMessage message = CreateGetStatisticsRequest(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Merged assets statistics.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string resampling, int? maxSize, bool? categorical, IEnumerable<string> categoriesPixels, IEnumerable<int> percentiles, string histogramBins, string histogramRange, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetStatistics");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-                using HttpMessage message = CreateGetStatisticsRequest(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling, maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Merged assets statistics. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TilerStacItemStatistics> GetStatistics(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-            Response result = GetStatistics(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext());
-            return Response.FromValue((TilerStacItemStatistics)result, result);
-        }
-
-        /// <summary> Merged assets statistics. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="maxSize"> Maximum dimension in pixels for the source data used to calculate statistics. </param>
-        /// <param name="categorical"> Return statistics for categorical dataset. </param>
-        /// <param name="categoriesPixels"> List of pixel categorical values for which to report counts. </param>
-        /// <param name="percentiles"> List of percentile values (default to [2, 98]). </param>
-        /// <param name="histogramBins">
-        /// Defines the number of equal-width bins in the given range (10, by default).
-        /// If bins is a sequence (comma `,` delimited values), it defines a monotonically
-        /// increasing array of bin edges, including the rightmost edge, allowing for
-        /// non-uniform bin widths.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="histogramRange">
-        /// Comma `,` delimited range of the bins.
-        /// The lower and upper range of the bins. If not provided, range is simply
-        /// (a.min(), a.max()).
-        /// Values outside the range are ignored. The first element of the range must be
-        /// less than or equal to the second.
-        /// range affects the automatic bin computation as well.
-        /// link: https://numpy.org/doc/stable/reference/generated/numpy.histogram.html
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TilerStacItemStatistics>> GetStatisticsAsync(string collectionId, string itemId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, ResamplingMethod? resampling = default, int? maxSize = default, bool? categorical = default, IEnumerable<string> categoriesPixels = default, IEnumerable<int> percentiles = default, string histogramBins = default, string histogramRange = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-            Response result = await GetStatisticsAsync(collectionId, itemId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, resampling?.ToString(), maxSize, categorical, categoriesPixels, percentiles, histogramBins, histogramRange, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TilerStacItemStatistics)result, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Return the TileJson Tilematrixsetid As a path
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetTileJson(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileJson");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
-                using HttpMessage message = CreateGetTileJsonRequest(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Return the TileJson Tilematrixsetid As a path
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTileJsonAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileJson");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
-                using HttpMessage message = CreateGetTileJsonRequest(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Return the TileJson Tilematrixsetid As a path. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TileJsonMetadata> GetTileJson(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
-            Response result = GetTileJson(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
-            return Response.FromValue((TileJsonMetadata)result, result);
-        }
-
-        /// <summary> Return the TileJson Tilematrixsetid As a path. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TileJsonMetadata>> GetTileJsonAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
-            Response result = await GetTileJsonAsync(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TileJsonMetadata)result, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create map tile from a dataset.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="z">
-        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
-        /// representing the scaleDenominator the tile.
-        /// </param>
-        /// <param name="x">
-        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixHeight-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="y">
-        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixWidth-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetTile(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<string> subdatasetBands, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTile");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
-
-                using HttpMessage message = CreateGetTileRequest(collectionId, itemId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, subdatasetName, subdatasetBands, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Create map tile from a dataset.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="z">
-        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
-        /// representing the scaleDenominator the tile.
-        /// </param>
-        /// <param name="x">
-        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixHeight-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="y">
-        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixWidth-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetTileAsync(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, string subdatasetName, IEnumerable<string> subdatasetBands, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTile");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
-
-                using HttpMessage message = CreateGetTileRequest(collectionId, itemId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, subdatasetName, subdatasetBands, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Create map tile from a dataset. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="z">
-        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
-        /// representing the scaleDenominator the tile.
-        /// </param>
-        /// <param name="x">
-        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixHeight-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="y">
-        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixWidth-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetTile(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, string subdatasetName = default, IEnumerable<string> subdatasetBands = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
-
-            Response result = GetTile(collectionId, itemId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, subdatasetName, subdatasetBands, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary> Create map tile from a dataset. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="z">
-        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
-        /// representing the scaleDenominator the tile.
-        /// </param>
-        /// <param name="x">
-        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixHeight-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="y">
-        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixWidth-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="subdatasetName"> The name of a subdataset within the asset. </param>
-        /// <param name="subdatasetBands"> The index of a subdataset band within the asset. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetTileAsync(string collectionId, string itemId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, string subdatasetName = default, IEnumerable<string> subdatasetBands = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
-
-            Response result = await GetTileAsync(collectionId, itemId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, subdatasetName, subdatasetBands, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] OGC WMTS endpoint.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileFormat"> Output image type. Default is png. </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetWmtsCapabilities(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetWmtsCapabilities");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
-                using HttpMessage message = CreateGetWmtsCapabilitiesRequest(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] OGC WMTS endpoint.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileFormat"> Output image type. Default is png. </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetWmtsCapabilitiesAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetWmtsCapabilities");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-                Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
-                using HttpMessage message = CreateGetWmtsCapabilitiesRequest(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> OGC WMTS endpoint. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileFormat"> Output image type. Default is png. </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetWmtsCapabilities(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
-            Response result = GetWmtsCapabilities(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary> OGC WMTS endpoint. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileFormat"> Output image type. Default is png. </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/>, <paramref name="itemId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetWmtsCapabilitiesAsync(string collectionId, string itemId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
-            Response result = await GetWmtsCapabilitiesAsync(collectionId, itemId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary>
         /// [Protocol Method] Generate values and color swatches mapping for a given classmap.
         /// <list type="bullet">
         /// <item>
@@ -3417,12 +268,12 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ClassMapLegendResponse> GetClassMapLegend(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
+        public virtual Response<ClassMapLegendResult> GetClassMapLegend(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
 
             Response result = GetClassMapLegend(classmapName, trimStart, trimEnd, cancellationToken.ToRequestContext());
-            return Response.FromValue((ClassMapLegendResponse)result, result);
+            return Response.FromValue((ClassMapLegendResult)result, result);
         }
 
         /// <summary> Generate values and color swatches mapping for a given classmap. </summary>
@@ -3433,33 +284,24 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <exception cref="ArgumentNullException"> <paramref name="classmapName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="classmapName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ClassMapLegendResponse>> GetClassMapLegendAsync(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ClassMapLegendResult>> GetClassMapLegendAsync(string classmapName, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(classmapName, nameof(classmapName));
 
             Response result = await GetClassMapLegendAsync(classmapName, trimStart, trimEnd, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ClassMapLegendResponse)result, result);
+            return Response.FromValue((ClassMapLegendResult)result, result);
         }
 
         /// <summary>
         /// [Protocol Method] Generate values and color swatches mapping for a given interval classmap.
-        /// Returns a color map for intervals, where each interval is defined by:
-        /// <list type="bullet"><item><description>A numeric range `[min, max]` representing the interval boundaries.</description></item><item><description>An RGBA color `[red, green, blue, alpha]` associated with the interval.</description></item></list>
+        /// Returns a color map for intervals, where each interval is defined by
+        /// a numeric range [min, max] representing the interval boundaries and
+        /// an RGBA color [red, green, blue, alpha] associated with the interval.
         /// The response is a 2D array of interval definitions, where each element is a pair:
-        /// <list type="bullet"><item><description>The first element is an array of two numbers `[min, max]` defining the interval.</description></item><item><description>The second element is an array of four numbers `[red, green, blue, alpha]` defining the RGBA color.</description></item></list>
-        /// Example:
-        /// ```json
-        /// [
-        ///   [
-        ///     [-2, 0], [0, 0, 0, 0]
-        ///   ],
-        ///   [
-        ///     [1, 32], [255, 255, 178, 255]
-        ///   ]
-        /// ]
-        /// ```
-        /// This example defines two intervals:
-        /// <list type="bullet"><item><description>The interval `[-2, 0]` is mapped to the color `[0, 0, 0, 0]` (transparent black).</description></item><item><description>The interval `[1, 32]` is mapped to the color `[255, 255, 178, 255]` (opaque yellow).</description></item></list>
+        /// the first element is an array of two numbers [min, max] defining the interval,
+        /// and the second element is an array of four numbers [red, green, blue, alpha] defining the RGBA color.
+        /// Example: [[ [-2, 0], [0, 0, 0, 0] ], [ [1, 32], [255, 255, 178, 255] ]].
+        /// This defines two intervals: [-2, 0] mapped to transparent black and [1, 32] mapped to opaque yellow.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -3494,23 +336,14 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// [Protocol Method] Generate values and color swatches mapping for a given interval classmap.
-        /// Returns a color map for intervals, where each interval is defined by:
-        /// <list type="bullet"><item><description>A numeric range `[min, max]` representing the interval boundaries.</description></item><item><description>An RGBA color `[red, green, blue, alpha]` associated with the interval.</description></item></list>
+        /// Returns a color map for intervals, where each interval is defined by
+        /// a numeric range [min, max] representing the interval boundaries and
+        /// an RGBA color [red, green, blue, alpha] associated with the interval.
         /// The response is a 2D array of interval definitions, where each element is a pair:
-        /// <list type="bullet"><item><description>The first element is an array of two numbers `[min, max]` defining the interval.</description></item><item><description>The second element is an array of four numbers `[red, green, blue, alpha]` defining the RGBA color.</description></item></list>
-        /// Example:
-        /// ```json
-        /// [
-        ///   [
-        ///     [-2, 0], [0, 0, 0, 0]
-        ///   ],
-        ///   [
-        ///     [1, 32], [255, 255, 178, 255]
-        ///   ]
-        /// ]
-        /// ```
-        /// This example defines two intervals:
-        /// <list type="bullet"><item><description>The interval `[-2, 0]` is mapped to the color `[0, 0, 0, 0]` (transparent black).</description></item><item><description>The interval `[1, 32]` is mapped to the color `[255, 255, 178, 255]` (opaque yellow).</description></item></list>
+        /// the first element is an array of two numbers [min, max] defining the interval,
+        /// and the second element is an array of four numbers [red, green, blue, alpha] defining the RGBA color.
+        /// Example: [[ [-2, 0], [0, 0, 0, 0] ], [ [1, 32], [255, 255, 178, 255] ]].
+        /// This defines two intervals: [-2, 0] mapped to transparent black and [1, 32] mapped to opaque yellow.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
@@ -3545,23 +378,14 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Generate values and color swatches mapping for a given interval classmap.
-        /// Returns a color map for intervals, where each interval is defined by:
-        /// <list type="bullet"><item><description>A numeric range `[min, max]` representing the interval boundaries.</description></item><item><description>An RGBA color `[red, green, blue, alpha]` associated with the interval.</description></item></list>
+        /// Returns a color map for intervals, where each interval is defined by
+        /// a numeric range [min, max] representing the interval boundaries and
+        /// an RGBA color [red, green, blue, alpha] associated with the interval.
         /// The response is a 2D array of interval definitions, where each element is a pair:
-        /// <list type="bullet"><item><description>The first element is an array of two numbers `[min, max]` defining the interval.</description></item><item><description>The second element is an array of four numbers `[red, green, blue, alpha]` defining the RGBA color.</description></item></list>
-        /// Example:
-        /// ```json
-        /// [
-        ///   [
-        ///     [-2, 0], [0, 0, 0, 0]
-        ///   ],
-        ///   [
-        ///     [1, 32], [255, 255, 178, 255]
-        ///   ]
-        /// ]
-        /// ```
-        /// This example defines two intervals:
-        /// <list type="bullet"><item><description>The interval `[-2, 0]` is mapped to the color `[0, 0, 0, 0]` (transparent black).</description></item><item><description>The interval `[1, 32]` is mapped to the color `[255, 255, 178, 255]` (opaque yellow).</description></item></list>
+        /// the first element is an array of two numbers [min, max] defining the interval,
+        /// and the second element is an array of four numbers [red, green, blue, alpha] defining the RGBA color.
+        /// Example: [[ [-2, 0], [0, 0, 0, 0] ], [ [1, 32], [255, 255, 178, 255] ]].
+        /// This defines two intervals: [-2, 0] mapped to transparent black and [1, 32] mapped to opaque yellow.
         /// </summary>
         /// <param name="classmapName"> classmap name. </param>
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
@@ -3582,23 +406,14 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary>
         /// Generate values and color swatches mapping for a given interval classmap.
-        /// Returns a color map for intervals, where each interval is defined by:
-        /// <list type="bullet"><item><description>A numeric range `[min, max]` representing the interval boundaries.</description></item><item><description>An RGBA color `[red, green, blue, alpha]` associated with the interval.</description></item></list>
+        /// Returns a color map for intervals, where each interval is defined by
+        /// a numeric range [min, max] representing the interval boundaries and
+        /// an RGBA color [red, green, blue, alpha] associated with the interval.
         /// The response is a 2D array of interval definitions, where each element is a pair:
-        /// <list type="bullet"><item><description>The first element is an array of two numbers `[min, max]` defining the interval.</description></item><item><description>The second element is an array of four numbers `[red, green, blue, alpha]` defining the RGBA color.</description></item></list>
-        /// Example:
-        /// ```json
-        /// [
-        ///   [
-        ///     [-2, 0], [0, 0, 0, 0]
-        ///   ],
-        ///   [
-        ///     [1, 32], [255, 255, 178, 255]
-        ///   ]
-        /// ]
-        /// ```
-        /// This example defines two intervals:
-        /// <list type="bullet"><item><description>The interval `[-2, 0]` is mapped to the color `[0, 0, 0, 0]` (transparent black).</description></item><item><description>The interval `[1, 32]` is mapped to the color `[255, 255, 178, 255]` (opaque yellow).</description></item></list>
+        /// the first element is an array of two numbers [min, max] defining the interval,
+        /// and the second element is an array of four numbers [red, green, blue, alpha] defining the RGBA color.
+        /// Example: [[ [-2, 0], [0, 0, 0, 0] ], [ [1, 32], [255, 255, 178, 255] ]].
+        /// This defines two intervals: [-2, 0] mapped to transparent black and [1, 32] mapped to opaque yellow.
         /// </summary>
         /// <param name="classmapName"> classmap name. </param>
         /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
@@ -3628,25 +443,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="colorMapName"> The name of the registered colormap to generate a legend for. </param>
-        /// <param name="height"> The output height of the legend image. </param>
-        /// <param name="width"> The output width of the legend image. </param>
-        /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
-        /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
+        /// <param name="options"> The options for the getLegend request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="colorMapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="colorMapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetLegend(string colorMapName, float? height, float? width, int? trimStart, int? trimEnd, RequestContext context)
+        public virtual Response GetLegend(GetLegendOptions options, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetLegend");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(colorMapName, nameof(colorMapName));
+                Argument.AssertNotNull(options, nameof(options));
 
-                using HttpMessage message = CreateGetLegendRequest(colorMapName, height, width, trimStart, trimEnd, context);
+                using HttpMessage message = CreateGetLegendRequest(options.ColorMapName, options.Height, options.Width, options.TrimStart, options.TrimEnd, context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -3667,25 +477,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="colorMapName"> The name of the registered colormap to generate a legend for. </param>
-        /// <param name="height"> The output height of the legend image. </param>
-        /// <param name="width"> The output width of the legend image. </param>
-        /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
-        /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
+        /// <param name="options"> The options for the getLegend request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="colorMapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="colorMapName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetLegendAsync(string colorMapName, float? height, float? width, int? trimStart, int? trimEnd, RequestContext context)
+        public virtual async Task<Response> GetLegendAsync(GetLegendOptions options, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetLegend");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(colorMapName, nameof(colorMapName));
+                Argument.AssertNotNull(options, nameof(options));
 
-                using HttpMessage message = CreateGetLegendRequest(colorMapName, height, width, trimStart, trimEnd, context);
+                using HttpMessage message = CreateGetLegendRequest(options.ColorMapName, options.Height, options.Width, options.TrimStart, options.TrimEnd, context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3693,496 +498,6 @@ namespace Azure.Analytics.PlanetaryComputer
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Generate a legend image for a given colormap.
-        /// If the colormap has non-contiguous values at the beginning or end,
-        /// which aren't desired in the output image, they can be trimmed by specifying
-        /// the number of values to trim.
-        /// </summary>
-        /// <param name="colorMapName"> The name of the registered colormap to generate a legend for. </param>
-        /// <param name="height"> The output height of the legend image. </param>
-        /// <param name="width"> The output width of the legend image. </param>
-        /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
-        /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="colorMapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="colorMapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetLegend(string colorMapName, float? height = default, float? width = default, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(colorMapName, nameof(colorMapName));
-
-            Response result = GetLegend(colorMapName, height, width, trimStart, trimEnd, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary>
-        /// Generate a legend image for a given colormap.
-        /// If the colormap has non-contiguous values at the beginning or end,
-        /// which aren't desired in the output image, they can be trimmed by specifying
-        /// the number of values to trim.
-        /// </summary>
-        /// <param name="colorMapName"> The name of the registered colormap to generate a legend for. </param>
-        /// <param name="height"> The output height of the legend image. </param>
-        /// <param name="width"> The output width of the legend image. </param>
-        /// <param name="trimStart"> Number of items to trim from the start of the cmap. </param>
-        /// <param name="trimEnd"> Number of items to trim from the end of the cmap. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="colorMapName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="colorMapName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetLegendAsync(string colorMapName, float? height = default, float? width = default, int? trimStart = default, int? trimEnd = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(colorMapName, nameof(colorMapName));
-
-            Response result = await GetLegendAsync(colorMapName, height, width, trimStart, trimEnd, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Return a list of assets for a given point.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="longitude"> Longitude. </param>
-        /// <param name="latitude"> Latitude. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetMosaicsAssetsForPoint(string searchId, float longitude, float latitude, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string coordinateReferenceSystem, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsAssetsForPoint");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-                using HttpMessage message = CreateGetMosaicsAssetsForPointRequest(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, coordinateReferenceSystem, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Return a list of assets for a given point.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="longitude"> Longitude. </param>
-        /// <param name="latitude"> Latitude. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMosaicsAssetsForPointAsync(string searchId, float longitude, float latitude, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string coordinateReferenceSystem, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsAssetsForPoint");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-                using HttpMessage message = CreateGetMosaicsAssetsForPointRequest(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, coordinateReferenceSystem, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Return a list of assets for a given point. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="longitude"> Longitude. </param>
-        /// <param name="latitude"> Latitude. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<StacItemPointAsset>> GetMosaicsAssetsForPoint(string searchId, float longitude, float latitude, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string coordinateReferenceSystem = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-            Response result = GetMosaicsAssetsForPoint(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, coordinateReferenceSystem, cancellationToken.ToRequestContext());
-            List<StacItemPointAsset> value = new List<StacItemPointAsset>();
-            BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                value.Add(StacItemPointAsset.DeserializeStacItemPointAsset(item, ModelSerializationExtensions.WireOptions));
-            }
-            return Response.FromValue((IReadOnlyList<StacItemPointAsset>)value, result);
-        }
-
-        /// <summary> Return a list of assets for a given point. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="longitude"> Longitude. </param>
-        /// <param name="latitude"> Latitude. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="coordinateReferenceSystem"> Coordinate Reference System of the input coords. Default to `epsg:4326`. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<StacItemPointAsset>>> GetMosaicsAssetsForPointAsync(string searchId, float longitude, float latitude, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, string coordinateReferenceSystem = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-            Response result = await GetMosaicsAssetsForPointAsync(searchId, longitude, latitude, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, coordinateReferenceSystem, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            List<StacItemPointAsset> value = new List<StacItemPointAsset>();
-            BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                value.Add(StacItemPointAsset.DeserializeStacItemPointAsset(item, ModelSerializationExtensions.WireOptions));
-            }
-            return Response.FromValue((IReadOnlyList<StacItemPointAsset>)value, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Return a list of assets which overlap a given tile
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="z">
-        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
-        /// representing the scaleDenominator the tile.
-        /// </param>
-        /// <param name="x">
-        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixHeight-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="y">
-        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixWidth-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetMosaicsAssetsForTile(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsAssetsForTile");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-                using HttpMessage message = CreateGetMosaicsAssetsForTileRequest(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Return a list of assets which overlap a given tile
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="z">
-        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
-        /// representing the scaleDenominator the tile.
-        /// </param>
-        /// <param name="x">
-        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixHeight-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="y">
-        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixWidth-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMosaicsAssetsForTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsAssetsForTile");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-                using HttpMessage message = CreateGetMosaicsAssetsForTileRequest(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Return a list of assets which overlap a given tile. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="z">
-        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
-        /// representing the scaleDenominator the tile.
-        /// </param>
-        /// <param name="x">
-        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixHeight-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="y">
-        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixWidth-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<TilerAssetGeoJson>> GetMosaicsAssetsForTile(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            Response result = GetMosaicsAssetsForTile(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, cancellationToken.ToRequestContext());
-            List<TilerAssetGeoJson> value = new List<TilerAssetGeoJson>();
-            BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                value.Add(TilerAssetGeoJson.DeserializeTilerAssetGeoJson(item, ModelSerializationExtensions.WireOptions));
-            }
-            return Response.FromValue((IReadOnlyList<TilerAssetGeoJson>)value, result);
-        }
-
-        /// <summary> Return a list of assets which overlap a given tile. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="z">
-        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
-        /// representing the scaleDenominator the tile.
-        /// </param>
-        /// <param name="x">
-        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixHeight-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="y">
-        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixWidth-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<TilerAssetGeoJson>>> GetMosaicsAssetsForTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, string collectionId, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-
-            Response result = await GetMosaicsAssetsForTileAsync(searchId, tileMatrixSetId, z, x, y, collectionId, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            List<TilerAssetGeoJson> value = new List<TilerAssetGeoJson>();
-            BinaryData data = result.Content;
-            using JsonDocument document = JsonDocument.Parse(data);
-            foreach (var item in document.RootElement.EnumerateArray())
-            {
-                value.Add(TilerAssetGeoJson.DeserializeTilerAssetGeoJson(item, ModelSerializationExtensions.WireOptions));
-            }
-            return Response.FromValue((IReadOnlyList<TilerAssetGeoJson>)value, result);
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get Search query metadata.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual Response GetMosaicsSearchInfo(string searchId, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsSearchInfo");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-                using HttpMessage message = CreateGetMosaicsSearchInfoRequest(searchId, context);
-                return Pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Get Search query metadata.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMosaicsSearchInfoAsync(string searchId, RequestContext context)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsSearchInfo");
-            scope.Start();
-            try
-            {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-                using HttpMessage message = CreateGetMosaicsSearchInfoRequest(searchId, context);
-                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary> Get Search query metadata. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TilerStacSearchRegistration> GetMosaicsSearchInfo(string searchId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-            Response result = GetMosaicsSearchInfo(searchId, cancellationToken.ToRequestContext());
-            return Response.FromValue((TilerStacSearchRegistration)result, result);
-        }
-
-        /// <summary> Get Search query metadata. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TilerStacSearchRegistration>> GetMosaicsSearchInfoAsync(string searchId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-
-            Response result = await GetMosaicsSearchInfoAsync(searchId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TilerStacSearchRegistration)result, result);
         }
 
         /// <summary>
@@ -4247,129 +562,25 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
-        /// <summary> Register a Search query. </summary>
-        /// <param name="collections"> List of STAC collection IDs to include in the mosaic. </param>
-        /// <param name="ids"> List of specific STAC item IDs to include in the mosaic. </param>
-        /// <param name="boundingBox"> Geographic bounding box to filter items [west, south, east, north]. </param>
-        /// <param name="intersects"> GeoJSON geometry to spatially filter items by intersection. </param>
-        /// <param name="query"> Query. </param>
-        /// <param name="filter"> Filter. </param>
-        /// <param name="datetime"> Temporal filter in RFC 3339 format or interval. </param>
-        /// <param name="sortBy"> Criteria for ordering items in the mosaic. </param>
-        /// <param name="filterLanguage"> Query language format used in the filter parameter. </param>
-        /// <param name="metadata"> Additional metadata to associate with the mosaic. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TilerMosaicSearchRegistrationResult> RegisterMosaicsSearch(IEnumerable<string> collections = default, IEnumerable<string> ids = default, IEnumerable<float> boundingBox = default, GeoJsonGeometry intersects = default, IDictionary<string, BinaryData> query = default, IDictionary<string, BinaryData> filter = default, string datetime = default, IEnumerable<StacSortExtension> sortBy = default, FilterLanguage? filterLanguage = default, MosaicMetadata metadata = default, CancellationToken cancellationToken = default)
-        {
-            RegisterMosaicsSearchRequest spreadModel = new RegisterMosaicsSearchRequest(
-                collections?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
-                ids?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
-                boundingBox?.ToList() as IList<float> ?? new ChangeTrackingList<float>(),
-                intersects,
-                query ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                filter ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                datetime,
-                sortBy?.ToList() as IList<StacSortExtension> ?? new ChangeTrackingList<StacSortExtension>(),
-                filterLanguage,
-                metadata,
-                default);
-            Response result = RegisterMosaicsSearch(spreadModel, cancellationToken.ToRequestContext());
-            return Response.FromValue((TilerMosaicSearchRegistrationResult)result, result);
-        }
-
-        /// <summary> Register a Search query. </summary>
-        /// <param name="collections"> List of STAC collection IDs to include in the mosaic. </param>
-        /// <param name="ids"> List of specific STAC item IDs to include in the mosaic. </param>
-        /// <param name="boundingBox"> Geographic bounding box to filter items [west, south, east, north]. </param>
-        /// <param name="intersects"> GeoJSON geometry to spatially filter items by intersection. </param>
-        /// <param name="query"> Query. </param>
-        /// <param name="filter"> Filter. </param>
-        /// <param name="datetime"> Temporal filter in RFC 3339 format or interval. </param>
-        /// <param name="sortBy"> Criteria for ordering items in the mosaic. </param>
-        /// <param name="filterLanguage"> Query language format used in the filter parameter. </param>
-        /// <param name="metadata"> Additional metadata to associate with the mosaic. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TilerMosaicSearchRegistrationResult>> RegisterMosaicsSearchAsync(IEnumerable<string> collections = default, IEnumerable<string> ids = default, IEnumerable<float> boundingBox = default, GeoJsonGeometry intersects = default, IDictionary<string, BinaryData> query = default, IDictionary<string, BinaryData> filter = default, string datetime = default, IEnumerable<StacSortExtension> sortBy = default, FilterLanguage? filterLanguage = default, MosaicMetadata metadata = default, CancellationToken cancellationToken = default)
-        {
-            RegisterMosaicsSearchRequest spreadModel = new RegisterMosaicsSearchRequest(
-                collections?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
-                ids?.ToList() as IList<string> ?? new ChangeTrackingList<string>(),
-                boundingBox?.ToList() as IList<float> ?? new ChangeTrackingList<float>(),
-                intersects,
-                query ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                filter ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                datetime,
-                sortBy?.ToList() as IList<StacSortExtension> ?? new ChangeTrackingList<StacSortExtension>(),
-                filterLanguage,
-                metadata,
-                default);
-            Response result = await RegisterMosaicsSearchAsync(spreadModel, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TilerMosaicSearchRegistrationResult)result, result);
-        }
-
         /// <summary>
-        /// [Protocol Method] Return TileJSON document for a searchId.
+        /// [Protocol Method] Return a list of available tilesets for a STAC item.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> The options for the item tilesets query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetMosaicsTileJson(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, int? minZoom, int? maxZoom, string tileFormat, int? tileScale, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        internal virtual Response GetTilesets(GetItemTilesetsOptions options, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsTileJson");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTilesets");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
-                using HttpMessage message = CreateGetMosaicsTileJsonRequest(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm, algorithmParams, minZoom, maxZoom, tileFormat, tileScale, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = CreateGetTilesetsRequest(options.CollectionId, options.ItemId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4380,66 +591,24 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Return TileJSON document for a searchId.
+        /// [Protocol Method] Return a list of available tilesets for a STAC item.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> The options for the item tilesets query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMosaicsTileJsonAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, int? minZoom, int? maxZoom, string tileFormat, int? tileScale, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        internal virtual async Task<Response> GetTilesetsAsync(GetItemTilesetsOptions options, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsTileJson");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTilesets");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
-                using HttpMessage message = CreateGetMosaicsTileJsonRequest(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm, algorithmParams, minZoom, maxZoom, tileFormat, tileScale, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = CreateGetTilesetsRequest(options.CollectionId, options.ItemId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4449,179 +618,51 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
-        /// <summary> Return TileJSON document for a searchId. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <summary> Return a list of available tilesets for a STAC item. </summary>
+        /// <param name="options"> The options for the item tilesets query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<TileJsonMetadata> GetMosaicsTileJson(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, int? minZoom = default, int? maxZoom = default, TilerImageFormat? tileFormat = default, int? tileScale = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<TileSetList> GetTilesets(GetItemTilesetsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetMosaicsTileJson(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, minZoom, maxZoom, tileFormat?.ToString(), tileScale, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
-            return Response.FromValue((TileJsonMetadata)result, result);
+            Response result = GetTilesets(options, cancellationToken.ToRequestContext());
+            return Response.FromValue((TileSetList)result, result);
         }
 
-        /// <summary> Return TileJSON document for a searchId. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="tileFormat">
-        /// Default will be automatically defined if the output image needs a mask (png) or
-        /// not (jpeg).
-        /// </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <summary> Return a list of available tilesets for a STAC item. </summary>
+        /// <param name="options"> The options for the item tilesets query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<TileJsonMetadata>> GetMosaicsTileJsonAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, int? minZoom = default, int? maxZoom = default, TilerImageFormat? tileFormat = default, int? tileScale = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TileSetList>> GetTilesetsAsync(GetItemTilesetsOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = await GetMosaicsTileJsonAsync(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, minZoom, maxZoom, tileFormat?.ToString(), tileScale, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((TileJsonMetadata)result, result);
+            Response result = await GetTilesetsAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TileSetList)result, result);
         }
 
         /// <summary>
-        /// [Protocol Method] Create map tile.
+        /// [Protocol Method] Return metadata for a specific tileset of a STAC item.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="z">
-        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
-        /// representing the scaleDenominator the tile.
-        /// </param>
-        /// <param name="x">
-        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixHeight-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="y">
-        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixWidth-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> The options for the item tileset metadata query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetMosaicsTile(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        internal virtual Response GetTilesetMetadata(GetItemTilesetMetadataOptions options, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsTile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTilesetMetadata");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
-
-                using HttpMessage message = CreateGetMosaicsTileRequest(searchId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm, algorithmParams, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = CreateGetTilesetMetadataRequest(options.CollectionId, options.ItemId, options.TileMatrixSetId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4632,74 +673,24 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary>
-        /// [Protocol Method] Create map tile.
+        /// [Protocol Method] Return metadata for a specific tileset of a STAC item.
         /// <list type="bullet">
         /// <item>
         /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="z">
-        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
-        /// representing the scaleDenominator the tile.
-        /// </param>
-        /// <param name="x">
-        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixHeight-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="y">
-        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixWidth-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> The options for the item tileset metadata query. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMosaicsTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, int? scanLimit, int? itemsLimit, int? timeLimit, bool? exitWhenFull, bool? skipCovered, string algorithm, string algorithmParams, string buffer, string colorFormula, string collection, string resampling, string pixelSelection, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        internal virtual async Task<Response> GetTilesetMetadataAsync(GetItemTilesetMetadataOptions options, RequestContext context)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsTile");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTilesetMetadata");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-                Argument.AssertNotNullOrEmpty(format, nameof(format));
-
-                using HttpMessage message = CreateGetMosaicsTileRequest(searchId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm, algorithmParams, buffer, colorFormula, collection, resampling, pixelSelection, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = CreateGetTilesetMetadataRequest(options.CollectionId, options.ItemId, options.TileMatrixSetId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4709,124 +700,5020 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
-        /// <summary> Create map tile. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="z">
-        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
-        /// representing the scaleDenominator the tile.
-        /// </param>
-        /// <param name="x">
-        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixHeight-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="y">
-        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixWidth-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <summary> Return metadata for a specific tileset of a STAC item. </summary>
+        /// <param name="options"> The options for the item tileset metadata query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetMosaicsTile(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual Response<TileSetMetadata> GetTilesetMetadata(GetItemTilesetMetadataOptions options, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
+            Argument.AssertNotNull(options, nameof(options));
 
-            Response result = GetMosaicsTile(searchId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            Response result = GetTilesetMetadata(options, cancellationToken.ToRequestContext());
+            return Response.FromValue((TileSetMetadata)result, result);
         }
 
-        /// <summary> Create map tile. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="z">
-        /// Identifier (Z) selecting one of the scales defined in the TileMatrixSet and
-        /// representing the scaleDenominator the tile.
-        /// </param>
-        /// <param name="x">
-        /// Column (X) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixHeight-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="y">
-        /// Row (Y) index of the tile on the selected TileMatrix. It cannot exceed the
-        /// MatrixWidth-1 for the selected TileMatrix.
-        /// </param>
-        /// <param name="scale"> Numeric scale factor for the tile. Higher values produce larger tiles. </param>
-        /// <param name="format"> Output format for the tile or image (e.g., png, jpeg, webp). </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="scanLimit"> Return as soon as we scan N items (defaults to 10000 in PgSTAC). </param>
-        /// <param name="itemsLimit"> Return as soon as we have N items per geometry (defaults to 100 in PgSTAC). </param>
-        /// <param name="timeLimit"> Return after N seconds to avoid long requests (defaults to 5 in PgSTAC). </param>
-        /// <param name="exitWhenFull"> Return as soon as the geometry is fully covered (defaults to True in PgSTAC). </param>
-        /// <param name="skipCovered">
-        /// Skip any items that would show up completely under the previous items (defaults
-        /// to True in PgSTAC).
-        /// </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="collection"> STAC Collection ID. </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="pixelSelection"> Pixel selection method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <summary> Return metadata for a specific tileset of a STAC item. </summary>
+        /// <param name="options"> The options for the item tileset metadata query. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/>, <paramref name="tileMatrixSetId"/> or <paramref name="format"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetMosaicsTileAsync(string searchId, string tileMatrixSetId, float z, float x, float y, float scale, string format, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, int? scanLimit = default, int? itemsLimit = default, int? timeLimit = default, bool? exitWhenFull = default, bool? skipCovered = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, string buffer = default, string colorFormula = default, string collection = default, ResamplingMethod? resampling = default, PixelSelection? pixelSelection = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<TileSetMetadata>> GetTilesetMetadataAsync(GetItemTilesetMetadataOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetTilesetMetadataAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TileSetMetadata)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile from a dataset (without scale or format in path).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getTile request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetTile(GetTileOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetTileRequest(options.CollectionId, options.ItemId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Format?.ToString(), options.Scale, options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile from a dataset (without scale or format in path).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getTile request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetTileAsync(GetTileOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetTileRequest(options.CollectionId, options.ItemId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Format?.ToString(), options.Scale, options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile from a dataset (with format in path, without scale).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getTileByFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetTileByFormat(GetTileByFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileByFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetTileByFormatRequest(options.CollectionId, options.ItemId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Scale, options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile from a dataset (with format in path, without scale).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getTileByFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetTileByFormatAsync(GetTileByFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileByFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetTileByFormatRequest(options.CollectionId, options.ItemId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Scale, options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile from a dataset (with scale in path, without format).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getTileByScale request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetTileByScale(GetTileByScaleOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileByScale");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetTileByScaleRequest(options.CollectionId, options.ItemId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Scale, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Format?.ToString(), options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile from a dataset (with scale in path, without format).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getTileByScale request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetTileByScaleAsync(GetTileByScaleOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileByScale");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetTileByScaleRequest(options.CollectionId, options.ItemId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Scale, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Format?.ToString(), options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile from a dataset (with TileMatrixSetId, scale, and format in path).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getTileByScaleAndFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetTileByScaleAndFormat(GetTileByScaleAndFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileByScaleAndFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetTileByScaleAndFormatRequest(options.CollectionId, options.ItemId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Scale, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile from a dataset (with TileMatrixSetId, scale, and format in path).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getTileByScaleAndFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetTileByScaleAndFormatAsync(GetTileByScaleAndFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileByScaleAndFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetTileByScaleAndFormatRequest(options.CollectionId, options.ItemId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Scale, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile from a dataset (without TileMatrixSetId, scale or format in path).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getTileNoTms request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetTileNoTms(GetTileNoTmsOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileNoTms");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetTileNoTmsRequest(options.CollectionId, options.ItemId, options.Z, options.X, options.Y, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Format?.ToString(), options.Scale, options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile from a dataset (without TileMatrixSetId, scale or format in path).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getTileNoTms request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetTileNoTmsAsync(GetTileNoTmsOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileNoTms");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetTileNoTmsRequest(options.CollectionId, options.ItemId, options.Z, options.X, options.Y, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Format?.ToString(), options.Scale, options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile from a dataset (with format in path, without TileMatrixSetId or scale).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getTileNoTmsByFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetTileNoTmsByFormat(GetTileNoTmsByFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileNoTmsByFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetTileNoTmsByFormatRequest(options.CollectionId, options.ItemId, options.Z, options.X, options.Y, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Scale, options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile from a dataset (with format in path, without TileMatrixSetId or scale).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getTileNoTmsByFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetTileNoTmsByFormatAsync(GetTileNoTmsByFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileNoTmsByFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetTileNoTmsByFormatRequest(options.CollectionId, options.ItemId, options.Z, options.X, options.Y, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Scale, options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile from a dataset (with scale in path, without TileMatrixSetId or format).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getTileNoTmsByScale request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetTileNoTmsByScale(GetTileNoTmsByScaleOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileNoTmsByScale");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetTileNoTmsByScaleRequest(options.CollectionId, options.ItemId, options.Z, options.X, options.Y, options.Scale, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Format?.ToString(), options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile from a dataset (with scale in path, without TileMatrixSetId or format).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getTileNoTmsByScale request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetTileNoTmsByScaleAsync(GetTileNoTmsByScaleOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileNoTmsByScale");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetTileNoTmsByScaleRequest(options.CollectionId, options.ItemId, options.Z, options.X, options.Y, options.Scale, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Format?.ToString(), options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile from a dataset (with scale and format in path, without TileMatrixSetId).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getTileNoTmsByScaleAndFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetTileNoTmsByScaleAndFormat(GetTileNoTmsByScaleAndFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileNoTmsByScaleAndFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetTileNoTmsByScaleAndFormatRequest(options.CollectionId, options.ItemId, options.Z, options.X, options.Y, options.Scale, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile from a dataset (with scale and format in path, without TileMatrixSetId).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getTileNoTmsByScaleAndFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetTileNoTmsByScaleAndFormatAsync(GetTileNoTmsByScaleAndFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetTileNoTmsByScaleAndFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetTileNoTmsByScaleAndFormatRequest(options.CollectionId, options.ItemId, options.Z, options.X, options.Y, options.Scale, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create image from a geojson feature (without format in path).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The options for the cropFeature request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CropFeature(RequestContent content, CropFeatureOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropFeature");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateCropFeatureRequest(options.CollectionId, options.ItemId, content, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.ColorFormula, options.CoordinateReferenceSystem, options.Resampling?.ToString(), options.MaxSize, options.Height, options.Width, options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.DestinationCrs, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Format?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create image from a geojson feature (without format in path).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The options for the cropFeature request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CropFeatureAsync(RequestContent content, CropFeatureOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropFeature");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateCropFeatureRequest(options.CollectionId, options.ItemId, content, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.ColorFormula, options.CoordinateReferenceSystem, options.Resampling?.ToString(), options.MaxSize, options.Height, options.Width, options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.DestinationCrs, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Format?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create image from a geojson feature with format.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The options for the cropFeatureByFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CropFeatureByFormat(RequestContent content, CropFeatureByFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropFeatureByFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateCropFeatureByFormatRequest(options.CollectionId, options.ItemId, options.Format, content, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.ColorFormula, options.CoordinateReferenceSystem, options.Resampling?.ToString(), options.MaxSize, options.Height, options.Width, options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.DestinationCrs, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create image from a geojson feature with format.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The options for the cropFeatureByFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CropFeatureByFormatAsync(RequestContent content, CropFeatureByFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropFeatureByFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateCropFeatureByFormatRequest(options.CollectionId, options.ItemId, options.Format, content, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.ColorFormula, options.CoordinateReferenceSystem, options.Resampling?.ToString(), options.MaxSize, options.Height, options.Width, options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.DestinationCrs, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create image from a geojson feature with dimensions.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The options for the cropFeatureWidthByHeight request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CropFeatureWidthByHeight(RequestContent content, CropFeatureWidthByHeightOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropFeatureWidthByHeight");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateCropFeatureWidthByHeightRequest(options.CollectionId, options.ItemId, options.Width, options.Height, options.Format, content, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.ColorFormula, options.CoordinateReferenceSystem, options.Resampling?.ToString(), options.MaxSize, options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.DestinationCrs, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create image from a geojson feature with dimensions.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The options for the cropFeatureWidthByHeight request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CropFeatureWidthByHeightAsync(RequestContent content, CropFeatureWidthByHeightOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropFeatureWidthByHeight");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateCropFeatureWidthByHeightRequest(options.CollectionId, options.ItemId, options.Width, options.Height, options.Format, content, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.ColorFormula, options.CoordinateReferenceSystem, options.Resampling?.ToString(), options.MaxSize, options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.DestinationCrs, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return the bounds for a STAC item.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the item bounds query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetItemBounds(GetItemTilesetsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemBounds");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetItemBoundsRequest(options.CollectionId, options.ItemId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return the bounds for a STAC item.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the item bounds query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetItemBoundsAsync(GetItemTilesetsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemBounds");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetItemBoundsRequest(options.CollectionId, options.ItemId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return the bounds for a STAC item. </summary>
+        /// <param name="options"> The options for the item bounds query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<StacItemBounds> GetItemBounds(GetItemTilesetsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetItemBounds(options, cancellationToken.ToRequestContext());
+            return Response.FromValue((StacItemBounds)result, result);
+        }
+
+        /// <summary> Return the bounds for a STAC item. </summary>
+        /// <param name="options"> The options for the item bounds query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<StacItemBounds>> GetItemBoundsAsync(GetItemTilesetsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetItemBoundsAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((StacItemBounds)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return dataset's basic info for a STAC item.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the item info query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetItemInfo(GetItemInfoOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemInfo");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetItemInfoRequest(options.CollectionId, options.ItemId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Assets, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return dataset's basic info for a STAC item.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the item info query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetItemInfoAsync(GetItemInfoOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemInfo");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetItemInfoRequest(options.CollectionId, options.ItemId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Assets, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return dataset's basic info for a STAC item. </summary>
+        /// <param name="options"> The options for the item info query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TilerInfoMapResult> GetItemInfo(GetItemInfoOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetItemInfo(options, cancellationToken.ToRequestContext());
+            return Response.FromValue((TilerInfoMapResult)result, result);
+        }
+
+        /// <summary> Return dataset's basic info for a STAC item. </summary>
+        /// <param name="options"> The options for the item info query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TilerInfoMapResult>> GetItemInfoAsync(GetItemInfoOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetItemInfoAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TilerInfoMapResult)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return info as GeoJSON for a STAC item.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the item info GeoJSON query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetItemInfoGeoJson(GetItemInfoOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemInfoGeoJson");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetItemInfoGeoJsonRequest(options.CollectionId, options.ItemId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Assets, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return info as GeoJSON for a STAC item.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the item info GeoJSON query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetItemInfoGeoJsonAsync(GetItemInfoOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemInfoGeoJson");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetItemInfoGeoJsonRequest(options.CollectionId, options.ItemId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Assets, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return info as GeoJSON for a STAC item. </summary>
+        /// <param name="options"> The options for the item info GeoJSON query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TilerInfoGeoJsonFeature> GetItemInfoGeoJson(GetItemInfoOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetItemInfoGeoJson(options, cancellationToken.ToRequestContext());
+            return Response.FromValue((TilerInfoGeoJsonFeature)result, result);
+        }
+
+        /// <summary> Return info as GeoJSON for a STAC item. </summary>
+        /// <param name="options"> The options for the item info GeoJSON query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TilerInfoGeoJsonFeature>> GetItemInfoGeoJsonAsync(GetItemInfoOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetItemInfoGeoJsonAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TilerInfoGeoJsonFeature)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return a list of supported assets for a STAC item.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getItemAvailableAssets request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetItemAvailableAssets(GetItemAvailableAssetsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemAvailableAssets");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetItemAvailableAssetsRequest(options.CollectionId, options.ItemId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return a list of supported assets for a STAC item.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getItemAvailableAssets request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetItemAvailableAssetsAsync(GetItemAvailableAssetsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemAvailableAssets");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetItemAvailableAssetsRequest(options.CollectionId, options.ItemId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return a list of supported assets for a STAC item. </summary>
+        /// <param name="options"> The options for the getItemAvailableAssets request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<string>> GetItemAvailableAssets(GetItemAvailableAssetsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetItemAvailableAssets(options, cancellationToken.ToRequestContext());
+            List<string> value = new List<string>();
+            BinaryData data = result.Content;
+            Utf8JsonReader jsonReader = new Utf8JsonReader(data.ToMemory().Span);
+            jsonReader.Read();
+            while (jsonReader.Read())
+            {
+                if (jsonReader.TokenType == JsonTokenType.EndArray)
+                {
+                    break;
+                }
+                value.Add(jsonReader.GetString());
+            }
+            return Response.FromValue((IReadOnlyList<string>)value, result);
+        }
+
+        /// <summary> Return a list of supported assets for a STAC item. </summary>
+        /// <param name="options"> The options for the getItemAvailableAssets request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<string>>> GetItemAvailableAssetsAsync(GetItemAvailableAssetsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetItemAvailableAssetsAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<string> value = new List<string>();
+            BinaryData data = result.Content;
+            Utf8JsonReader jsonReader = new Utf8JsonReader(data.ToMemory().Span);
+            jsonReader.Read();
+            while (jsonReader.Read())
+            {
+                if (jsonReader.TokenType == JsonTokenType.EndArray)
+                {
+                    break;
+                }
+                value.Add(jsonReader.GetString());
+            }
+            return Response.FromValue((IReadOnlyList<string>)value, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Per asset statistics for a STAC item.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the item asset statistics query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetItemAssetStatistics(GetItemAssetStatisticsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemAssetStatistics");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetItemAssetStatisticsRequest(options.CollectionId, options.ItemId, options.Bidx, options.Assets, options.AssetBandIndices, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Resampling?.ToString(), options.MaxSize, options.Categorical, options.CategoriesPixels, options.Percentiles, options.HistogramBins, options.HistogramRange, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.AssetExpression, options.Height, options.Width, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Per asset statistics for a STAC item.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the item asset statistics query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetItemAssetStatisticsAsync(GetItemAssetStatisticsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemAssetStatistics");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetItemAssetStatisticsRequest(options.CollectionId, options.ItemId, options.Bidx, options.Assets, options.AssetBandIndices, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Resampling?.ToString(), options.MaxSize, options.Categorical, options.CategoriesPixels, options.Percentiles, options.HistogramBins, options.HistogramRange, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.AssetExpression, options.Height, options.Width, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Per asset statistics for a STAC item. </summary>
+        /// <param name="options"> The options for the item asset statistics query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<AssetStatisticsResult> GetItemAssetStatistics(GetItemAssetStatisticsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetItemAssetStatistics(options, cancellationToken.ToRequestContext());
+            return Response.FromValue((AssetStatisticsResult)result, result);
+        }
+
+        /// <summary> Per asset statistics for a STAC item. </summary>
+        /// <param name="options"> The options for the item asset statistics query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<AssetStatisticsResult>> GetItemAssetStatisticsAsync(GetItemAssetStatisticsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetItemAssetStatisticsAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((AssetStatisticsResult)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Merged assets statistics for a STAC item.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the item statistics query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetItemStatistics(GetItemStatisticsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemStatistics");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetItemStatisticsRequest(options.CollectionId, options.ItemId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Resampling?.ToString(), options.MaxSize, options.Categorical, options.CategoriesPixels, options.Percentiles, options.HistogramBins, options.HistogramRange, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm, options.AlgorithmParams, options.Height, options.Width, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Merged assets statistics for a STAC item.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the item statistics query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetItemStatisticsAsync(GetItemStatisticsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemStatistics");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetItemStatisticsRequest(options.CollectionId, options.ItemId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Resampling?.ToString(), options.MaxSize, options.Categorical, options.CategoriesPixels, options.Percentiles, options.HistogramBins, options.HistogramRange, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm, options.AlgorithmParams, options.Height, options.Width, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Merged assets statistics for a STAC item. </summary>
+        /// <param name="options"> The options for the item statistics query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TilerStacItemStatistics> GetItemStatistics(GetItemStatisticsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetItemStatistics(options, cancellationToken.ToRequestContext());
+            return Response.FromValue((TilerStacItemStatistics)result, result);
+        }
+
+        /// <summary> Merged assets statistics for a STAC item. </summary>
+        /// <param name="options"> The options for the item statistics query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TilerStacItemStatistics>> GetItemStatisticsAsync(GetItemStatisticsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetItemStatisticsAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TilerStacItemStatistics)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get statistics from a GeoJSON feature for a STAC item.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The options for the item feature statistics query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetItemFeatureStatistics(RequestContent content, GetItemFeatureStatisticsOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemFeatureStatistics");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetItemFeatureStatisticsRequest(options.CollectionId, options.ItemId, content, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.CoordinateReferenceSystem, options.Resampling?.ToString(), options.MaxSize, options.Categorical, options.CategoriesPixels, options.Percentiles, options.HistogramBins, options.HistogramRange, options.DestinationCrs, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm, options.AlgorithmParams, options.Height, options.Width, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get statistics from a GeoJSON feature for a STAC item.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The options for the item feature statistics query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetItemFeatureStatisticsAsync(RequestContent content, GetItemFeatureStatisticsOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemFeatureStatistics");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetItemFeatureStatisticsRequest(options.CollectionId, options.ItemId, content, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.CoordinateReferenceSystem, options.Resampling?.ToString(), options.MaxSize, options.Categorical, options.CategoriesPixels, options.Percentiles, options.HistogramBins, options.HistogramRange, options.DestinationCrs, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm, options.AlgorithmParams, options.Height, options.Width, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get statistics from a GeoJSON feature for a STAC item. </summary>
+        /// <param name="body"> Request GeoJson body. </param>
+        /// <param name="options"> The options for the item feature statistics query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<StacItemStatisticsGeoJson> GetItemFeatureStatistics(GeoJsonFeature body, GetItemFeatureStatisticsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetItemFeatureStatistics(body, options, cancellationToken.ToRequestContext());
+            return Response.FromValue((StacItemStatisticsGeoJson)result, result);
+        }
+
+        /// <summary> Get statistics from a GeoJSON feature for a STAC item. </summary>
+        /// <param name="body"> Request GeoJson body. </param>
+        /// <param name="options"> The options for the item feature statistics query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<StacItemStatisticsGeoJson>> GetItemFeatureStatisticsAsync(GeoJsonFeature body, GetItemFeatureStatisticsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetItemFeatureStatisticsAsync(body, options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((StacItemStatisticsGeoJson)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return TileJSON document for a STAC item.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the item TileJSON query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetItemTileJson(GetItemTileJsonOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemTileJson");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetItemTileJsonRequest(options.CollectionId, options.ItemId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return TileJSON document for a STAC item.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the item TileJSON query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetItemTileJsonAsync(GetItemTileJsonOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemTileJson");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetItemTileJsonRequest(options.CollectionId, options.ItemId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return TileJSON document for a STAC item. </summary>
+        /// <param name="options"> The options for the item TileJSON query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TileJsonMetadata> GetItemTileJson(GetItemTileJsonOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetItemTileJson(options, cancellationToken.ToRequestContext());
+            return Response.FromValue((TileJsonMetadata)result, result);
+        }
+
+        /// <summary> Return TileJSON document for a STAC item. </summary>
+        /// <param name="options"> The options for the item TileJSON query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TileJsonMetadata>> GetItemTileJsonAsync(GetItemTileJsonOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetItemTileJsonAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TileJsonMetadata)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return TileJSON document for a STAC item with TileMatrixSetId as path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the item TileJSON by TMS query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetItemTileJsonByTms(GetItemTileJsonByTmsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemTileJsonByTms");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetItemTileJsonByTmsRequest(options.CollectionId, options.ItemId, options.TileMatrixSetId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return TileJSON document for a STAC item with TileMatrixSetId as path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the item TileJSON by TMS query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetItemTileJsonByTmsAsync(GetItemTileJsonByTmsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemTileJsonByTms");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetItemTileJsonByTmsRequest(options.CollectionId, options.ItemId, options.TileMatrixSetId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return TileJSON document for a STAC item with TileMatrixSetId as path. </summary>
+        /// <param name="options"> The options for the item TileJSON by TMS query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TileJsonMetadata> GetItemTileJsonByTms(GetItemTileJsonByTmsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetItemTileJsonByTms(options, cancellationToken.ToRequestContext());
+            return Response.FromValue((TileJsonMetadata)result, result);
+        }
+
+        /// <summary> Return TileJSON document for a STAC item with TileMatrixSetId as path. </summary>
+        /// <param name="options"> The options for the item TileJSON by TMS query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TileJsonMetadata>> GetItemTileJsonByTmsAsync(GetItemTileJsonByTmsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetItemTileJsonByTmsAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TileJsonMetadata)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] OGC WMTS endpoint for a STAC item.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getItemWmtsCapabilities request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetItemWmtsCapabilities(GetItemWmtsCapabilitiesOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemWmtsCapabilities");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetItemWmtsCapabilitiesRequest(options.CollectionId, options.ItemId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] OGC WMTS endpoint for a STAC item.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getItemWmtsCapabilities request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetItemWmtsCapabilitiesAsync(GetItemWmtsCapabilitiesOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemWmtsCapabilities");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetItemWmtsCapabilitiesRequest(options.CollectionId, options.ItemId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] OGC WMTS endpoint for a STAC item with TileMatrixSetId as path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getItemWmtsCapabilitiesByTms request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetItemWmtsCapabilitiesByTms(GetItemWmtsCapabilitiesByTmsOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemWmtsCapabilitiesByTms");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetItemWmtsCapabilitiesByTmsRequest(options.CollectionId, options.ItemId, options.TileMatrixSetId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] OGC WMTS endpoint for a STAC item with TileMatrixSetId as path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getItemWmtsCapabilitiesByTms request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetItemWmtsCapabilitiesByTmsAsync(GetItemWmtsCapabilitiesByTmsOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemWmtsCapabilitiesByTms");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetItemWmtsCapabilitiesByTmsRequest(options.CollectionId, options.ItemId, options.TileMatrixSetId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Buffer, options.ColorFormula, options.Resampling?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get point value for a STAC item dataset.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the item point query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetItemPoint(GetItemPointOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemPoint");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetItemPointRequest(options.CollectionId, options.ItemId, options.Longitude, options.Latitude, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.CoordinateReferenceSystem, options.Resampling?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get point value for a STAC item dataset.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the item point query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetItemPointAsync(GetItemPointOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemPoint");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetItemPointRequest(options.CollectionId, options.ItemId, options.Longitude, options.Latitude, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.CoordinateReferenceSystem, options.Resampling?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get point value for a STAC item dataset. </summary>
+        /// <param name="options"> The options for the item point query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TilerCoreModelsResponsesPoint> GetItemPoint(GetItemPointOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetItemPoint(options, cancellationToken.ToRequestContext());
+            return Response.FromValue((TilerCoreModelsResponsesPoint)result, result);
+        }
+
+        /// <summary> Get point value for a STAC item dataset. </summary>
+        /// <param name="options"> The options for the item point query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TilerCoreModelsResponsesPoint>> GetItemPointAsync(GetItemPointOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetItemPointAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TilerCoreModelsResponsesPoint)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create preview of a STAC item dataset.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getItemPreview request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetItemPreview(GetItemPreviewOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemPreview");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetItemPreviewRequest(options.CollectionId, options.ItemId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Format?.ToString(), options.ColorFormula, options.DstCrs, options.Resampling?.ToString(), options.MaxSize, options.Height, options.Width, options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create preview of a STAC item dataset.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getItemPreview request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetItemPreviewAsync(GetItemPreviewOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemPreview");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetItemPreviewRequest(options.CollectionId, options.ItemId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Format?.ToString(), options.ColorFormula, options.DstCrs, options.Resampling?.ToString(), options.MaxSize, options.Height, options.Width, options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create preview of a STAC item dataset with format.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getItemPreviewWithFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetItemPreviewWithFormat(GetItemPreviewWithFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemPreviewWithFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetItemPreviewWithFormatRequest(options.CollectionId, options.ItemId, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.ColorFormula, options.DstCrs, options.Resampling?.ToString(), options.MaxSize, options.Height, options.Width, options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create preview of a STAC item dataset with format.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getItemPreviewWithFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetItemPreviewWithFormatAsync(GetItemPreviewWithFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemPreviewWithFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetItemPreviewWithFormatRequest(options.CollectionId, options.ItemId, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.ColorFormula, options.DstCrs, options.Resampling?.ToString(), options.MaxSize, options.Height, options.Width, options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create an image from part of a STAC item dataset (bounding box crop).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getItemBboxCrop request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetItemBboxCrop(GetItemBboxCropOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemBboxCrop");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetItemBboxCropRequest(options.CollectionId, options.ItemId, options.MinX, options.MinY, options.MaxX, options.MaxY, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.ColorFormula, options.CoordinateReferenceSystem, options.DestinationCrs, options.Resampling?.ToString(), options.MaxSize, options.Height, options.Width, options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create an image from part of a STAC item dataset (bounding box crop).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getItemBboxCrop request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetItemBboxCropAsync(GetItemBboxCropOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemBboxCrop");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetItemBboxCropRequest(options.CollectionId, options.ItemId, options.MinX, options.MinY, options.MaxX, options.MaxY, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.ColorFormula, options.CoordinateReferenceSystem, options.DestinationCrs, options.Resampling?.ToString(), options.MaxSize, options.Height, options.Width, options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create an image from part of a STAC item dataset (bounding box crop with dimensions).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getItemBboxCropWithDimensions request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetItemBboxCropWithDimensions(GetItemBboxCropWithDimensionsOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemBboxCropWithDimensions");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetItemBboxCropWithDimensionsRequest(options.CollectionId, options.ItemId, options.MinX, options.MinY, options.MaxX, options.MaxY, options.Width, options.Height, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.ColorFormula, options.CoordinateReferenceSystem, options.DestinationCrs, options.Resampling?.ToString(), options.MaxSize, options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create an image from part of a STAC item dataset (bounding box crop with dimensions).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getItemBboxCropWithDimensions request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetItemBboxCropWithDimensionsAsync(GetItemBboxCropWithDimensionsOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetItemBboxCropWithDimensions");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetItemBboxCropWithDimensionsRequest(options.CollectionId, options.ItemId, options.MinX, options.MinY, options.MaxX, options.MaxY, options.Width, options.Height, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.ColorFormula, options.CoordinateReferenceSystem, options.DestinationCrs, options.Resampling?.ToString(), options.MaxSize, options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return a list of available tilesets for a STAC collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the collection tilesets query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetCollectionTilesets(GetCollectionTilesetsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTilesets");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetCollectionTilesetsRequest(options.CollectionId, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return a list of available tilesets for a STAC collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the collection tilesets query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetCollectionTilesetsAsync(GetCollectionTilesetsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTilesets");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetCollectionTilesetsRequest(options.CollectionId, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return a list of available tilesets for a STAC collection. </summary>
+        /// <param name="options"> The options for the collection tilesets query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TileSetList> GetCollectionTilesets(GetCollectionTilesetsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetCollectionTilesets(options, cancellationToken.ToRequestContext());
+            return Response.FromValue((TileSetList)result, result);
+        }
+
+        /// <summary> Return a list of available tilesets for a STAC collection. </summary>
+        /// <param name="options"> The options for the collection tilesets query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TileSetList>> GetCollectionTilesetsAsync(GetCollectionTilesetsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetCollectionTilesetsAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TileSetList)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return metadata for a specific tileset of a STAC collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the collection tileset metadata query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetCollectionTilesetMetadata(GetCollectionTilesetMetadataOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTilesetMetadata");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetCollectionTilesetMetadataRequest(options.CollectionId, options.TileMatrixSetId, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return metadata for a specific tileset of a STAC collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the collection tileset metadata query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetCollectionTilesetMetadataAsync(GetCollectionTilesetMetadataOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTilesetMetadata");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetCollectionTilesetMetadataRequest(options.CollectionId, options.TileMatrixSetId, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return metadata for a specific tileset of a STAC collection. </summary>
+        /// <param name="options"> The options for the collection tileset metadata query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TileSetMetadata> GetCollectionTilesetMetadata(GetCollectionTilesetMetadataOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetCollectionTilesetMetadata(options, cancellationToken.ToRequestContext());
+            return Response.FromValue((TileSetMetadata)result, result);
+        }
+
+        /// <summary> Return metadata for a specific tileset of a STAC collection. </summary>
+        /// <param name="options"> The options for the collection tileset metadata query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TileSetMetadata>> GetCollectionTilesetMetadataAsync(GetCollectionTilesetMetadataOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetCollectionTilesetMetadataAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TileSetMetadata)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile for a STAC collection (with TileMatrixSetId, scale, and format in path).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionTileByScaleAndFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetCollectionTileByScaleAndFormat(GetCollectionTileByScaleAndFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTileByScaleAndFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionTileByScaleAndFormatRequest(options.CollectionId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Scale, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile for a STAC collection (with TileMatrixSetId, scale, and format in path).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionTileByScaleAndFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCollectionTileByScaleAndFormatAsync(GetCollectionTileByScaleAndFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTileByScaleAndFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionTileByScaleAndFormatRequest(options.CollectionId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Scale, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile for a STAC collection (with TileMatrixSetId, without scale or format).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionTile request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetCollectionTile(GetCollectionTileOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionTileRequest(options.CollectionId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Format?.ToString(), options.Scale, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile for a STAC collection (with TileMatrixSetId, without scale or format).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionTile request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCollectionTileAsync(GetCollectionTileOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionTileRequest(options.CollectionId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Format?.ToString(), options.Scale, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile for a STAC collection (with TileMatrixSetId and format, without scale).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionTileByFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetCollectionTileByFormat(GetCollectionTileByFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTileByFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionTileByFormatRequest(options.CollectionId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Scale, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile for a STAC collection (with TileMatrixSetId and format, without scale).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionTileByFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCollectionTileByFormatAsync(GetCollectionTileByFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTileByFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionTileByFormatRequest(options.CollectionId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Scale, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile for a STAC collection (with TileMatrixSetId and scale, without format).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionTileByScale request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetCollectionTileByScale(GetCollectionTileByScaleOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTileByScale");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionTileByScaleRequest(options.CollectionId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Scale, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Format?.ToString(), options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile for a STAC collection (with TileMatrixSetId and scale, without format).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionTileByScale request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCollectionTileByScaleAsync(GetCollectionTileByScaleOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTileByScale");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionTileByScaleRequest(options.CollectionId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Scale, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Format?.ToString(), options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile for a STAC collection (without TileMatrixSetId, with scale and format).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionTileNoTmsByScaleAndFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetCollectionTileNoTmsByScaleAndFormat(GetCollectionTileNoTmsByScaleAndFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTileNoTmsByScaleAndFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionTileNoTmsByScaleAndFormatRequest(options.CollectionId, options.Z, options.X, options.Y, options.Scale, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile for a STAC collection (without TileMatrixSetId, with scale and format).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionTileNoTmsByScaleAndFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCollectionTileNoTmsByScaleAndFormatAsync(GetCollectionTileNoTmsByScaleAndFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTileNoTmsByScaleAndFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionTileNoTmsByScaleAndFormatRequest(options.CollectionId, options.Z, options.X, options.Y, options.Scale, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile for a STAC collection (without TileMatrixSetId, scale, or format).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionTileNoTms request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetCollectionTileNoTms(GetCollectionTileNoTmsOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTileNoTms");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionTileNoTmsRequest(options.CollectionId, options.Z, options.X, options.Y, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Format?.ToString(), options.Scale, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile for a STAC collection (without TileMatrixSetId, scale, or format).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionTileNoTms request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCollectionTileNoTmsAsync(GetCollectionTileNoTmsOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTileNoTms");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionTileNoTmsRequest(options.CollectionId, options.Z, options.X, options.Y, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Format?.ToString(), options.Scale, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile for a STAC collection (with format, without TileMatrixSetId or scale).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionTileNoTmsByFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetCollectionTileNoTmsByFormat(GetCollectionTileNoTmsByFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTileNoTmsByFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionTileNoTmsByFormatRequest(options.CollectionId, options.Z, options.X, options.Y, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Scale, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile for a STAC collection (with format, without TileMatrixSetId or scale).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionTileNoTmsByFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCollectionTileNoTmsByFormatAsync(GetCollectionTileNoTmsByFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTileNoTmsByFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionTileNoTmsByFormatRequest(options.CollectionId, options.Z, options.X, options.Y, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Scale, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile for a STAC collection (with scale, without TileMatrixSetId or format).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionTileNoTmsByScale request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetCollectionTileNoTmsByScale(GetCollectionTileNoTmsByScaleOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTileNoTmsByScale");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionTileNoTmsByScaleRequest(options.CollectionId, options.Z, options.X, options.Y, options.Scale, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Format?.ToString(), options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile for a STAC collection (with scale, without TileMatrixSetId or format).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionTileNoTmsByScale request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCollectionTileNoTmsByScaleAsync(GetCollectionTileNoTmsByScaleOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTileNoTmsByScale");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionTileNoTmsByScaleRequest(options.CollectionId, options.Z, options.X, options.Y, options.Scale, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Format?.ToString(), options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return TileJSON document for a STAC collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the collection TileJSON query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetCollectionTileJson(GetCollectionTileJsonOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTileJson");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetCollectionTileJsonRequest(options.CollectionId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return TileJSON document for a STAC collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the collection TileJSON query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetCollectionTileJsonAsync(GetCollectionTileJsonOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTileJson");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetCollectionTileJsonRequest(options.CollectionId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return TileJSON document for a STAC collection. </summary>
+        /// <param name="options"> The options for the collection TileJSON query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TileJsonMetadata> GetCollectionTileJson(GetCollectionTileJsonOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetCollectionTileJson(options, cancellationToken.ToRequestContext());
+            return Response.FromValue((TileJsonMetadata)result, result);
+        }
+
+        /// <summary> Return TileJSON document for a STAC collection. </summary>
+        /// <param name="options"> The options for the collection TileJSON query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TileJsonMetadata>> GetCollectionTileJsonAsync(GetCollectionTileJsonOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetCollectionTileJsonAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TileJsonMetadata)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return TileJSON document for a STAC collection with TileMatrixSetId as path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the collection TileJSON by TMS query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetCollectionTileJsonByTms(GetCollectionTileJsonByTmsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTileJsonByTms");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetCollectionTileJsonByTmsRequest(options.CollectionId, options.TileMatrixSetId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return TileJSON document for a STAC collection with TileMatrixSetId as path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the collection TileJSON by TMS query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetCollectionTileJsonByTmsAsync(GetCollectionTileJsonByTmsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionTileJsonByTms");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetCollectionTileJsonByTmsRequest(options.CollectionId, options.TileMatrixSetId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return TileJSON document for a STAC collection with TileMatrixSetId as path. </summary>
+        /// <param name="options"> The options for the collection TileJSON by TMS query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TileJsonMetadata> GetCollectionTileJsonByTms(GetCollectionTileJsonByTmsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetCollectionTileJsonByTms(options, cancellationToken.ToRequestContext());
+            return Response.FromValue((TileJsonMetadata)result, result);
+        }
+
+        /// <summary> Return TileJSON document for a STAC collection with TileMatrixSetId as path. </summary>
+        /// <param name="options"> The options for the collection TileJSON by TMS query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TileJsonMetadata>> GetCollectionTileJsonByTmsAsync(GetCollectionTileJsonByTmsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetCollectionTileJsonByTmsAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TileJsonMetadata)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] OGC WMTS endpoint for a STAC collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionWmtsCapabilities request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetCollectionWmtsCapabilities(GetCollectionWmtsCapabilitiesOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionWmtsCapabilities");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionWmtsCapabilitiesRequest(options.CollectionId, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.TileMatrixSetId?.ToString(), options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] OGC WMTS endpoint for a STAC collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionWmtsCapabilities request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCollectionWmtsCapabilitiesAsync(GetCollectionWmtsCapabilitiesOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionWmtsCapabilities");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionWmtsCapabilitiesRequest(options.CollectionId, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.TileMatrixSetId?.ToString(), options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] OGC WMTS endpoint for a STAC collection with TileMatrixSetId as path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionWmtsCapabilitiesByTms request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetCollectionWmtsCapabilitiesByTms(GetCollectionWmtsCapabilitiesByTmsOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionWmtsCapabilitiesByTms");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionWmtsCapabilitiesByTmsRequest(options.CollectionId, options.TileMatrixSetId, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] OGC WMTS endpoint for a STAC collection with TileMatrixSetId as path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionWmtsCapabilitiesByTms request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCollectionWmtsCapabilitiesByTmsAsync(GetCollectionWmtsCapabilitiesByTmsOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionWmtsCapabilitiesByTms");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionWmtsCapabilitiesByTmsRequest(options.CollectionId, options.TileMatrixSetId, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return assets overlapping a tile for a collection using the route with TileMatrixSetId in the path (/tiles/{tileMatrixSetId}/{z}/{x}/{y}/assets). Use this operation when you need an explicit tile matrix set in the URL.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionAssetsForTile request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetCollectionAssetsForTile(GetCollectionAssetsForTileOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionAssetsForTile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionAssetsForTileRequest(options.CollectionId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return assets overlapping a tile for a collection using the route with TileMatrixSetId in the path (/tiles/{tileMatrixSetId}/{z}/{x}/{y}/assets). Use this operation when you need an explicit tile matrix set in the URL.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionAssetsForTile request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCollectionAssetsForTileAsync(GetCollectionAssetsForTileOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionAssetsForTile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionAssetsForTileRequest(options.CollectionId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return assets overlapping a tile for a collection using the route with TileMatrixSetId in the path (/tiles/{tileMatrixSetId}/{z}/{x}/{y}/assets). Use this operation when you need an explicit tile matrix set in the URL. </summary>
+        /// <param name="options"> The options for the getCollectionAssetsForTile request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<TilerAssetGeoJson>> GetCollectionAssetsForTile(GetCollectionAssetsForTileOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetCollectionAssetsForTile(options, cancellationToken.ToRequestContext());
+            List<TilerAssetGeoJson> value = new List<TilerAssetGeoJson>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(TilerAssetGeoJson.DeserializeTilerAssetGeoJson(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<TilerAssetGeoJson>)value, result);
+        }
+
+        /// <summary> Return assets overlapping a tile for a collection using the route with TileMatrixSetId in the path (/tiles/{tileMatrixSetId}/{z}/{x}/{y}/assets). Use this operation when you need an explicit tile matrix set in the URL. </summary>
+        /// <param name="options"> The options for the getCollectionAssetsForTile request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<TilerAssetGeoJson>>> GetCollectionAssetsForTileAsync(GetCollectionAssetsForTileOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetCollectionAssetsForTileAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<TilerAssetGeoJson> value = new List<TilerAssetGeoJson>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(TilerAssetGeoJson.DeserializeTilerAssetGeoJson(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<TilerAssetGeoJson>)value, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return assets overlapping a tile for a collection using the route without TileMatrixSetId in the path (/tiles/{z}/{x}/{y}/assets). This operation uses the default tile matrix set when none is specified.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionAssetsForTileNoTms request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetCollectionAssetsForTileNoTms(GetCollectionAssetsForTileNoTmsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionAssetsForTileNoTms");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionAssetsForTileNoTmsRequest(options.CollectionId, options.Z, options.X, options.Y, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.TileMatrixSetId?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return assets overlapping a tile for a collection using the route without TileMatrixSetId in the path (/tiles/{z}/{x}/{y}/assets). This operation uses the default tile matrix set when none is specified.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionAssetsForTileNoTms request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCollectionAssetsForTileNoTmsAsync(GetCollectionAssetsForTileNoTmsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionAssetsForTileNoTms");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionAssetsForTileNoTmsRequest(options.CollectionId, options.Z, options.X, options.Y, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.TileMatrixSetId?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return assets overlapping a tile for a collection using the route without TileMatrixSetId in the path (/tiles/{z}/{x}/{y}/assets). This operation uses the default tile matrix set when none is specified. </summary>
+        /// <param name="options"> The options for the getCollectionAssetsForTileNoTms request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<BinaryData>> GetCollectionAssetsForTileNoTms(GetCollectionAssetsForTileNoTmsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetCollectionAssetsForTileNoTms(options, cancellationToken.ToRequestContext());
+            List<BinaryData> value = new List<BinaryData>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                if (item.ValueKind == JsonValueKind.Null)
+                {
+                    value.Add(null);
+                }
+                else
+                {
+                    value.Add(BinaryData.FromString(item.GetRawText()));
+                }
+            }
+            return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
+        }
+
+        /// <summary> Return assets overlapping a tile for a collection using the route without TileMatrixSetId in the path (/tiles/{z}/{x}/{y}/assets). This operation uses the default tile matrix set when none is specified. </summary>
+        /// <param name="options"> The options for the getCollectionAssetsForTileNoTms request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<BinaryData>>> GetCollectionAssetsForTileNoTmsAsync(GetCollectionAssetsForTileNoTmsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetCollectionAssetsForTileNoTmsAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<BinaryData> value = new List<BinaryData>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                if (item.ValueKind == JsonValueKind.Null)
+                {
+                    value.Add(null);
+                }
+                else
+                {
+                    value.Add(BinaryData.FromString(item.GetRawText()));
+                }
+            }
+            return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return a list of assets which overlap a given bounding box for a STAC collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionAssetsForBbox request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetCollectionAssetsForBbox(GetCollectionAssetsForBboxOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionAssetsForBbox");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionAssetsForBboxRequest(options.CollectionId, options.MinX, options.MinY, options.MaxX, options.MaxY, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.CoordinateReferenceSystem, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return a list of assets which overlap a given bounding box for a STAC collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionAssetsForBbox request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCollectionAssetsForBboxAsync(GetCollectionAssetsForBboxOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionAssetsForBbox");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionAssetsForBboxRequest(options.CollectionId, options.MinX, options.MinY, options.MaxX, options.MaxY, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.CoordinateReferenceSystem, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return a list of assets which overlap a given bounding box for a STAC collection. </summary>
+        /// <param name="options"> The options for the getCollectionAssetsForBbox request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<BinaryData>> GetCollectionAssetsForBbox(GetCollectionAssetsForBboxOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetCollectionAssetsForBbox(options, cancellationToken.ToRequestContext());
+            List<BinaryData> value = new List<BinaryData>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                if (item.ValueKind == JsonValueKind.Null)
+                {
+                    value.Add(null);
+                }
+                else
+                {
+                    value.Add(BinaryData.FromString(item.GetRawText()));
+                }
+            }
+            return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
+        }
+
+        /// <summary> Return a list of assets which overlap a given bounding box for a STAC collection. </summary>
+        /// <param name="options"> The options for the getCollectionAssetsForBbox request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<BinaryData>>> GetCollectionAssetsForBboxAsync(GetCollectionAssetsForBboxOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetCollectionAssetsForBboxAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<BinaryData> value = new List<BinaryData>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                if (item.ValueKind == JsonValueKind.Null)
+                {
+                    value.Add(null);
+                }
+                else
+                {
+                    value.Add(BinaryData.FromString(item.GetRawText()));
+                }
+            }
+            return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return search query info from a STAC collection identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> STAC Collection Identifier. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetCollectionInfo(string collectionId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionInfo");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetCollectionInfoRequest(collectionId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return search query info from a STAC collection identifier.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="collectionId"> STAC Collection Identifier. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCollectionInfoAsync(string collectionId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionInfo");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+                using HttpMessage message = CreateGetCollectionInfoRequest(collectionId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return search query info from a STAC collection identifier. </summary>
+        /// <param name="collectionId"> STAC Collection Identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TilerStacSearchRegistration> GetCollectionInfo(string collectionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+            Response result = GetCollectionInfo(collectionId, cancellationToken.ToRequestContext());
+            return Response.FromValue((TilerStacSearchRegistration)result, result);
+        }
+
+        /// <summary> Return search query info from a STAC collection identifier. </summary>
+        /// <param name="collectionId"> STAC Collection Identifier. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TilerStacSearchRegistration>> GetCollectionInfoAsync(string collectionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
+
+            Response result = await GetCollectionInfoAsync(collectionId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TilerStacSearchRegistration)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create an image from part of a STAC collection dataset (bounding box crop).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionBboxCrop request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetCollectionBboxCrop(GetCollectionBboxCropOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionBboxCrop");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionBboxCropRequest(options.CollectionId, options.MinX, options.MinY, options.MaxX, options.MaxY, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.CoordinateReferenceSystem, options.DestinationCrs, options.MaxSize, options.Height, options.Width, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create an image from part of a STAC collection dataset (bounding box crop).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionBboxCrop request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCollectionBboxCropAsync(GetCollectionBboxCropOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionBboxCrop");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionBboxCropRequest(options.CollectionId, options.MinX, options.MinY, options.MaxX, options.MaxY, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.CoordinateReferenceSystem, options.DestinationCrs, options.MaxSize, options.Height, options.Width, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create an image from part of a STAC collection dataset (bounding box crop with dimensions).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionBboxCropWithDimensions request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetCollectionBboxCropWithDimensions(GetCollectionBboxCropWithDimensionsOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionBboxCropWithDimensions");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionBboxCropWithDimensionsRequest(options.CollectionId, options.MinX, options.MinY, options.MaxX, options.MaxY, options.Width, options.Height, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.CoordinateReferenceSystem, options.DestinationCrs, options.MaxSize, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create an image from part of a STAC collection dataset (bounding box crop with dimensions).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionBboxCropWithDimensions request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCollectionBboxCropWithDimensionsAsync(GetCollectionBboxCropWithDimensionsOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionBboxCropWithDimensions");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionBboxCropWithDimensionsRequest(options.CollectionId, options.MinX, options.MinY, options.MaxX, options.MaxY, options.Width, options.Height, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.CoordinateReferenceSystem, options.DestinationCrs, options.MaxSize, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create image from a geojson feature (without format in path).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The options for the cropCollectionFeature request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CropCollectionFeature(RequestContent content, CropCollectionFeatureOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropCollectionFeature");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateCropCollectionFeatureRequest(options.CollectionId, content, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.CoordinateReferenceSystem, options.MaxSize, options.Height, options.Width, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.DestinationCrs, options.Format?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create image from a geojson feature (without format in path).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The options for the cropCollectionFeature request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CropCollectionFeatureAsync(RequestContent content, CropCollectionFeatureOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropCollectionFeature");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateCropCollectionFeatureRequest(options.CollectionId, content, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.CoordinateReferenceSystem, options.MaxSize, options.Height, options.Width, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.DestinationCrs, options.Format?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create image from a geojson feature with format.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The options for the cropCollectionFeatureByFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CropCollectionFeatureByFormat(RequestContent content, CropCollectionFeatureByFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropCollectionFeatureByFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateCropCollectionFeatureByFormatRequest(options.CollectionId, options.Format, content, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.CoordinateReferenceSystem, options.MaxSize, options.Height, options.Width, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.DestinationCrs, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create image from a geojson feature with format.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The options for the cropCollectionFeatureByFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CropCollectionFeatureByFormatAsync(RequestContent content, CropCollectionFeatureByFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropCollectionFeatureByFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateCropCollectionFeatureByFormatRequest(options.CollectionId, options.Format, content, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.CoordinateReferenceSystem, options.MaxSize, options.Height, options.Width, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.DestinationCrs, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create image from a geojson feature with dimensions.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The options for the cropCollectionFeatureWidthByHeight request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CropCollectionFeatureWidthByHeight(RequestContent content, CropCollectionFeatureWidthByHeightOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropCollectionFeatureWidthByHeight");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateCropCollectionFeatureWidthByHeightRequest(options.CollectionId, options.Width, options.Height, options.Format, content, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.CoordinateReferenceSystem, options.MaxSize, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.DestinationCrs, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create image from a geojson feature with dimensions.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The options for the cropCollectionFeatureWidthByHeight request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CropCollectionFeatureWidthByHeightAsync(RequestContent content, CropCollectionFeatureWidthByHeightOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropCollectionFeatureWidthByHeight");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateCropCollectionFeatureWidthByHeightRequest(options.CollectionId, options.Width, options.Height, options.Format, content, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.CoordinateReferenceSystem, options.MaxSize, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.DestinationCrs, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get Point value for a collection dataset.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the collection point query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetCollectionPoint(GetCollectionPointOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionPoint");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetCollectionPointRequest(options.CollectionId, options.Longitude, options.Latitude, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.CoordinateReferenceSystem, options.Resampling?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get Point value for a collection dataset.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the collection point query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetCollectionPointAsync(GetCollectionPointOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionPoint");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetCollectionPointRequest(options.CollectionId, options.Longitude, options.Latitude, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.CoordinateReferenceSystem, options.Resampling?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get Point value for a collection dataset. </summary>
+        /// <param name="options"> The options for the collection point query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TilerCoreModelsResponsesPoint> GetCollectionPoint(GetCollectionPointOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetCollectionPoint(options, cancellationToken.ToRequestContext());
+            return Response.FromValue((TilerCoreModelsResponsesPoint)result, result);
+        }
+
+        /// <summary> Get Point value for a collection dataset. </summary>
+        /// <param name="options"> The options for the collection point query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TilerCoreModelsResponsesPoint>> GetCollectionPointAsync(GetCollectionPointOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetCollectionPointAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TilerCoreModelsResponsesPoint)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return a list of assets for a given point in a collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionPointAssets request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetCollectionPointAssets(GetCollectionPointAssetsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionPointAssets");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionPointAssetsRequest(options.CollectionId, options.Longitude, options.Latitude, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.CoordinateReferenceSystem, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return a list of assets for a given point in a collection.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getCollectionPointAssets request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetCollectionPointAssetsAsync(GetCollectionPointAssetsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetCollectionPointAssets");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetCollectionPointAssetsRequest(options.CollectionId, options.Longitude, options.Latitude, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.Ids, options.Bbox, options.Query, options.SortBy, options.Datetime, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Sel, options.SelMethod?.ToString(), options.CoordinateReferenceSystem, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return a list of assets for a given point in a collection. </summary>
+        /// <param name="options"> The options for the getCollectionPointAssets request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<StacItemPointAsset>> GetCollectionPointAssets(GetCollectionPointAssetsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetCollectionPointAssets(options, cancellationToken.ToRequestContext());
+            List<StacItemPointAsset> value = new List<StacItemPointAsset>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(StacItemPointAsset.DeserializeStacItemPointAsset(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<StacItemPointAsset>)value, result);
+        }
+
+        /// <summary> Return a list of assets for a given point in a collection. </summary>
+        /// <param name="options"> The options for the getCollectionPointAssets request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<StacItemPointAsset>>> GetCollectionPointAssetsAsync(GetCollectionPointAssetsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetCollectionPointAssetsAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<StacItemPointAsset> value = new List<StacItemPointAsset>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(StacItemPointAsset.DeserializeStacItemPointAsset(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<StacItemPointAsset>)value, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return a list of available tilesets for a mosaic search.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the search tilesets query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetSearchTilesets(GetSearchTilesetsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTilesets");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSearchTilesetsRequest(options.SearchId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return a list of available tilesets for a mosaic search.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the search tilesets query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetSearchTilesetsAsync(GetSearchTilesetsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTilesets");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSearchTilesetsRequest(options.SearchId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return a list of available tilesets for a mosaic search. </summary>
+        /// <param name="options"> The options for the search tilesets query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TileSetList> GetSearchTilesets(GetSearchTilesetsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetSearchTilesets(options, cancellationToken.ToRequestContext());
+            return Response.FromValue((TileSetList)result, result);
+        }
+
+        /// <summary> Return a list of available tilesets for a mosaic search. </summary>
+        /// <param name="options"> The options for the search tilesets query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TileSetList>> GetSearchTilesetsAsync(GetSearchTilesetsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetSearchTilesetsAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TileSetList)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return metadata for a specific tileset of a mosaic search.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the search tileset metadata query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetSearchTilesetMetadata(GetSearchTilesetMetadataOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTilesetMetadata");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSearchTilesetMetadataRequest(options.SearchId, options.TileMatrixSetId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return metadata for a specific tileset of a mosaic search.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the search tileset metadata query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetSearchTilesetMetadataAsync(GetSearchTilesetMetadataOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTilesetMetadata");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSearchTilesetMetadataRequest(options.SearchId, options.TileMatrixSetId, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return metadata for a specific tileset of a mosaic search. </summary>
+        /// <param name="options"> The options for the search tileset metadata query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TileSetMetadata> GetSearchTilesetMetadata(GetSearchTilesetMetadataOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetSearchTilesetMetadata(options, cancellationToken.ToRequestContext());
+            return Response.FromValue((TileSetMetadata)result, result);
+        }
+
+        /// <summary> Return metadata for a specific tileset of a mosaic search. </summary>
+        /// <param name="options"> The options for the search tileset metadata query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TileSetMetadata>> GetSearchTilesetMetadataAsync(GetSearchTilesetMetadataOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetSearchTilesetMetadataAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TileSetMetadata)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile (with TileMatrixSetId, scale, and format in path).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchTileByScaleAndFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetSearchTileByScaleAndFormat(GetSearchTileByScaleAndFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTileByScaleAndFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchTileByScaleAndFormatRequest(options.SearchId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Scale, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile (with TileMatrixSetId, scale, and format in path).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchTileByScaleAndFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSearchTileByScaleAndFormatAsync(GetSearchTileByScaleAndFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTileByScaleAndFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchTileByScaleAndFormatRequest(options.SearchId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Scale, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile (with TileMatrixSetId, without scale or format).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchTile request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetSearchTile(GetSearchTileOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchTileRequest(options.SearchId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Format?.ToString(), options.Scale, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile (with TileMatrixSetId, without scale or format).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchTile request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSearchTileAsync(GetSearchTileOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchTileRequest(options.SearchId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Format?.ToString(), options.Scale, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile (with TileMatrixSetId and format, without scale).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchTileByFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetSearchTileByFormat(GetSearchTileByFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTileByFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchTileByFormatRequest(options.SearchId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Scale, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile (with TileMatrixSetId and format, without scale).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchTileByFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSearchTileByFormatAsync(GetSearchTileByFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTileByFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchTileByFormatRequest(options.SearchId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Scale, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile (with TileMatrixSetId and scale, without format).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchTileByScale request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetSearchTileByScale(GetSearchTileByScaleOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTileByScale");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchTileByScaleRequest(options.SearchId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Scale, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Format?.ToString(), options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create map tile (with TileMatrixSetId and scale, without format).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchTileByScale request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSearchTileByScaleAsync(GetSearchTileByScaleOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTileByScale");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchTileByScaleRequest(options.SearchId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.Scale, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Format?.ToString(), options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return a list of assets which overlap a given tile.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchAssetsForTile request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetSearchAssetsForTile(GetSearchAssetsForTileOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchAssetsForTile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchAssetsForTileRequest(options.SearchId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.CollectionId, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return a list of assets which overlap a given tile.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchAssetsForTile request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSearchAssetsForTileAsync(GetSearchAssetsForTileOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchAssetsForTile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchAssetsForTileRequest(options.SearchId, options.TileMatrixSetId, options.Z, options.X, options.Y, options.CollectionId, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return a list of assets which overlap a given tile. </summary>
+        /// <param name="options"> The options for the getSearchAssetsForTile request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<TilerAssetGeoJson>> GetSearchAssetsForTile(GetSearchAssetsForTileOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetSearchAssetsForTile(options, cancellationToken.ToRequestContext());
+            List<TilerAssetGeoJson> value = new List<TilerAssetGeoJson>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(TilerAssetGeoJson.DeserializeTilerAssetGeoJson(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<TilerAssetGeoJson>)value, result);
+        }
+
+        /// <summary> Return a list of assets which overlap a given tile. </summary>
+        /// <param name="options"> The options for the getSearchAssetsForTile request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<TilerAssetGeoJson>>> GetSearchAssetsForTileAsync(GetSearchAssetsForTileOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetSearchAssetsForTileAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<TilerAssetGeoJson> value = new List<TilerAssetGeoJson>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(TilerAssetGeoJson.DeserializeTilerAssetGeoJson(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<TilerAssetGeoJson>)value, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return TileJSON document for a search with TileMatrixSetId as path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the search TileJSON by TMS query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetSearchTileJsonByTms(GetSearchTileJsonByTmsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTileJsonByTms");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSearchTileJsonByTmsRequest(options.SearchId, options.TileMatrixSetId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.MinZoom, options.MaxZoom, options.TileFormat?.ToString(), options.TileScale, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return TileJSON document for a search with TileMatrixSetId as path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the search TileJSON by TMS query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetSearchTileJsonByTmsAsync(GetSearchTileJsonByTmsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTileJsonByTms");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSearchTileJsonByTmsRequest(options.SearchId, options.TileMatrixSetId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.MinZoom, options.MaxZoom, options.TileFormat?.ToString(), options.TileScale, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return TileJSON document for a search with TileMatrixSetId as path. </summary>
+        /// <param name="options"> The options for the search TileJSON by TMS query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TileJsonMetadata> GetSearchTileJsonByTms(GetSearchTileJsonByTmsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetSearchTileJsonByTms(options, cancellationToken.ToRequestContext());
+            return Response.FromValue((TileJsonMetadata)result, result);
+        }
+
+        /// <summary> Return TileJSON document for a search with TileMatrixSetId as path. </summary>
+        /// <param name="options"> The options for the search TileJSON by TMS query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TileJsonMetadata>> GetSearchTileJsonByTmsAsync(GetSearchTileJsonByTmsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetSearchTileJsonByTmsAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TileJsonMetadata)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] OGC WMTS endpoint with TileMatrixSetId as path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchWmtsCapabilitiesByTms request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetSearchWmtsCapabilitiesByTms(GetSearchWmtsCapabilitiesByTmsOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchWmtsCapabilitiesByTms");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchWmtsCapabilitiesByTmsRequest(options.SearchId, options.TileMatrixSetId, options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] OGC WMTS endpoint with TileMatrixSetId as path.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchWmtsCapabilitiesByTms request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSearchWmtsCapabilitiesByTmsAsync(GetSearchWmtsCapabilitiesByTmsOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchWmtsCapabilitiesByTms");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchWmtsCapabilitiesByTmsRequest(options.SearchId, options.TileMatrixSetId, options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get Search query metadata.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetSearchInfo(string searchId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchInfo");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+
+                using HttpMessage message = CreateGetSearchInfoRequest(searchId, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get Search query metadata.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSearchInfoAsync(string searchId, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchInfo");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+
+                using HttpMessage message = CreateGetSearchInfoRequest(searchId, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get Search query metadata. </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TilerStacSearchRegistration> GetSearchInfo(string searchId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-            Argument.AssertNotNullOrEmpty(format, nameof(format));
 
-            Response result = await GetMosaicsTileAsync(searchId, tileMatrixSetId, z, x, y, scale, format, assets, expression, assetBandIndices, assetAsBand, noData, unscale, scanLimit, itemsLimit, timeLimit, exitWhenFull, skipCovered, algorithm?.ToString(), algorithmParams, buffer, colorFormula, collection, resampling?.ToString(), pixelSelection?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+            Response result = GetSearchInfo(searchId, cancellationToken.ToRequestContext());
+            return Response.FromValue((TilerStacSearchRegistration)result, result);
+        }
+
+        /// <summary> Get Search query metadata. </summary>
+        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="searchId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TilerStacSearchRegistration>> GetSearchInfoAsync(string searchId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
+
+            Response result = await GetSearchInfoAsync(searchId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TilerStacSearchRegistration)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create an image from part of a dataset (bounding box crop).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchBboxCrop request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetSearchBboxCrop(GetSearchBboxCropOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchBboxCrop");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchBboxCropRequest(options.SearchId, options.MinX, options.MinY, options.MaxX, options.MaxY, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.CoordinateReferenceSystem, options.DestinationCrs, options.MaxSize, options.Height, options.Width, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create an image from part of a dataset (bounding box crop).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchBboxCrop request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSearchBboxCropAsync(GetSearchBboxCropOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchBboxCrop");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchBboxCropRequest(options.SearchId, options.MinX, options.MinY, options.MaxX, options.MaxY, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.CoordinateReferenceSystem, options.DestinationCrs, options.MaxSize, options.Height, options.Width, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create an image from part of a dataset (bounding box crop with dimensions).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchBboxCropWithDimensions request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetSearchBboxCropWithDimensions(GetSearchBboxCropWithDimensionsOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchBboxCropWithDimensions");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchBboxCropWithDimensionsRequest(options.SearchId, options.MinX, options.MinY, options.MaxX, options.MaxY, options.Width, options.Height, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.CoordinateReferenceSystem, options.DestinationCrs, options.MaxSize, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create an image from part of a dataset (bounding box crop with dimensions).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchBboxCropWithDimensions request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSearchBboxCropWithDimensionsAsync(GetSearchBboxCropWithDimensionsOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchBboxCropWithDimensions");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchBboxCropWithDimensionsRequest(options.SearchId, options.MinX, options.MinY, options.MaxX, options.MaxY, options.Width, options.Height, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.CoordinateReferenceSystem, options.DestinationCrs, options.MaxSize, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return a list of assets which overlap a given bounding box for a search.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchBboxAssets request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetSearchBboxAssets(GetSearchBboxAssetsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchBboxAssets");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchBboxAssetsRequest(options.SearchId, options.MinX, options.MinY, options.MaxX, options.MaxY, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.CoordinateReferenceSystem, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return a list of assets which overlap a given bounding box for a search.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchBboxAssets request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSearchBboxAssetsAsync(GetSearchBboxAssetsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchBboxAssets");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchBboxAssetsRequest(options.SearchId, options.MinX, options.MinY, options.MaxX, options.MaxY, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.CoordinateReferenceSystem, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return a list of assets which overlap a given bounding box for a search. </summary>
+        /// <param name="options"> The options for the getSearchBboxAssets request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<BinaryData>> GetSearchBboxAssets(GetSearchBboxAssetsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetSearchBboxAssets(options, cancellationToken.ToRequestContext());
+            List<BinaryData> value = new List<BinaryData>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                if (item.ValueKind == JsonValueKind.Null)
+                {
+                    value.Add(null);
+                }
+                else
+                {
+                    value.Add(BinaryData.FromString(item.GetRawText()));
+                }
+            }
+            return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
+        }
+
+        /// <summary> Return a list of assets which overlap a given bounding box for a search. </summary>
+        /// <param name="options"> The options for the getSearchBboxAssets request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<BinaryData>>> GetSearchBboxAssetsAsync(GetSearchBboxAssetsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetSearchBboxAssetsAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<BinaryData> value = new List<BinaryData>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                if (item.ValueKind == JsonValueKind.Null)
+                {
+                    value.Add(null);
+                }
+                else
+                {
+                    value.Add(BinaryData.FromString(item.GetRawText()));
+                }
+            }
+            return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create image from a geojson feature (without format in path).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The options for the cropSearchFeature request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CropSearchFeature(RequestContent content, CropSearchFeatureOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropSearchFeature");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateCropSearchFeatureRequest(options.SearchId, content, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.CoordinateReferenceSystem, options.MaxSize, options.Height, options.Width, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.DestinationCrs, options.Format?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create image from a geojson feature (without format in path).
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The options for the cropSearchFeature request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CropSearchFeatureAsync(RequestContent content, CropSearchFeatureOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropSearchFeature");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateCropSearchFeatureRequest(options.SearchId, content, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.CoordinateReferenceSystem, options.MaxSize, options.Height, options.Width, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.DestinationCrs, options.Format?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create image from a geojson feature with format.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The options for the cropSearchFeatureByFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CropSearchFeatureByFormat(RequestContent content, CropSearchFeatureByFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropSearchFeatureByFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateCropSearchFeatureByFormatRequest(options.SearchId, options.Format, content, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.CoordinateReferenceSystem, options.MaxSize, options.Height, options.Width, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.DestinationCrs, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create image from a geojson feature with format.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The options for the cropSearchFeatureByFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CropSearchFeatureByFormatAsync(RequestContent content, CropSearchFeatureByFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropSearchFeatureByFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateCropSearchFeatureByFormatRequest(options.SearchId, options.Format, content, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.CoordinateReferenceSystem, options.MaxSize, options.Height, options.Width, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.DestinationCrs, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create image from a geojson feature with dimensions.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The options for the cropSearchFeatureWidthByHeight request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response CropSearchFeatureWidthByHeight(RequestContent content, CropSearchFeatureWidthByHeightOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropSearchFeatureWidthByHeight");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateCropSearchFeatureWidthByHeightRequest(options.SearchId, options.Width, options.Height, options.Format, content, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.CoordinateReferenceSystem, options.MaxSize, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.DestinationCrs, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create image from a geojson feature with dimensions.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="options"> The options for the cropSearchFeatureWidthByHeight request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> or <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> CropSearchFeatureWidthByHeightAsync(RequestContent content, CropSearchFeatureWidthByHeightOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.CropSearchFeatureWidthByHeight");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(content, nameof(content));
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateCropSearchFeatureWidthByHeightRequest(options.SearchId, options.Width, options.Height, options.Format, content, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.CoordinateReferenceSystem, options.MaxSize, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.DestinationCrs, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
@@ -4837,46 +5724,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileFormat"> Output image type. Default is png. </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> The options for the getSearchWmtsCapabilities request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetMosaicsWmtsCapabilities(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual Response GetSearchWmtsCapabilities(GetSearchWmtsCapabilitiesOptions options, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsWmtsCapabilities");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchWmtsCapabilities");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+                Argument.AssertNotNull(options, nameof(options));
 
-                using HttpMessage message = CreateGetMosaicsWmtsCapabilitiesRequest(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = CreateGetSearchWmtsCapabilitiesRequest(options.SearchId, options.TileMatrixSetId?.ToString(), options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), context);
                 return Pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -4894,46 +5755,20 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileFormat"> Output image type. Default is png. </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
+        /// <param name="options"> The options for the getSearchWmtsCapabilities request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetMosaicsWmtsCapabilitiesAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets, string expression, string assetBandIndices, bool? assetAsBand, float? noData, bool? unscale, string algorithm, string algorithmParams, string tileFormat, int? tileScale, int? minZoom, int? maxZoom, string buffer, string colorFormula, string resampling, IEnumerable<string> rescale, string colorMapName, string colorMap, bool? returnMask, RequestContext context)
+        public virtual async Task<Response> GetSearchWmtsCapabilitiesAsync(GetSearchWmtsCapabilitiesOptions options, RequestContext context = null)
         {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetMosaicsWmtsCapabilities");
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchWmtsCapabilities");
             scope.Start();
             try
             {
-                Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-                Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+                Argument.AssertNotNull(options, nameof(options));
 
-                using HttpMessage message = CreateGetMosaicsWmtsCapabilitiesRequest(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm, algorithmParams, tileFormat, tileScale, minZoom, maxZoom, buffer, colorFormula, resampling, rescale, colorMapName, colorMap, returnMask, context);
+                using HttpMessage message = CreateGetSearchWmtsCapabilitiesRequest(options.SearchId, options.TileMatrixSetId?.ToString(), options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), context);
                 return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -4943,82 +5778,634 @@ namespace Azure.Analytics.PlanetaryComputer
             }
         }
 
-        /// <summary> OGC WMTS endpoint. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileFormat"> Output image type. Default is png. </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <summary>
+        /// [Protocol Method] Return TileJSON document for a search.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the search TileJSON query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetMosaicsWmtsCapabilities(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetSearchTileJson(GetSearchTileJsonOptions options, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
-
-            Response result = GetMosaicsWmtsCapabilities(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext());
-            return Response.FromValue(result.Content, result);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTileJson");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSearchTileJsonRequest(options.SearchId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.TileMatrixSetId?.ToString(), options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Padding, options.Buffer, options.ColorFormula, options.CollectionId, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Rescale, options.ColormapName?.ToString(), options.Colormap, options.ReturnMask, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
-        /// <summary> OGC WMTS endpoint. </summary>
-        /// <param name="searchId"> Search Id (pgSTAC Search Hash). </param>
-        /// <param name="tileMatrixSetId"> Identifier selecting one of the TileMatrixSetId supported. </param>
-        /// <param name="assets"> Asset's names. </param>
-        /// <param name="expression"> Band math expression between assets. </param>
-        /// <param name="assetBandIndices"> Per asset band indexes (coma separated indexes, e.g. "image|1,2,3" means use the bands 1, 2, and 3 from the asset named "image"). </param>
-        /// <param name="assetAsBand"> Asset as Band. </param>
-        /// <param name="noData"> Overwrite internal Nodata value. </param>
-        /// <param name="unscale"> Apply internal Scale or Offset. </param>
-        /// <param name="algorithm"> Terrain algorithm name. </param>
-        /// <param name="algorithmParams"> Terrain algorithm parameters. </param>
-        /// <param name="tileFormat"> Output image type. Default is png. </param>
-        /// <param name="tileScale"> Tile scale factor affecting output size. Values &gt; 1 produce larger tiles (e.g., 1=256x256, 2=512x512). </param>
-        /// <param name="minZoom"> Overwrite default minzoom. </param>
-        /// <param name="maxZoom"> Overwrite default maxzoom. </param>
-        /// <param name="buffer">
-        /// Buffer on each side of the given tile. It must be a multiple of `0.5`. Output
-        /// <b>tilesize</b> will be expanded to `tilesize + 2 * buffer` (e.g 0.5 = 257x257,
-        /// 1.0 = 258x258).
-        /// </param>
-        /// <param name="colorFormula"> rio-color formula (info: https://github.com/mapbox/rio-color). </param>
-        /// <param name="resampling"> Resampling method. </param>
-        /// <param name="rescale"> comma (',') delimited Min,Max range. Can set multiple time for multiple bands. </param>
-        /// <param name="colorMapName"> Colormap name. </param>
-        /// <param name="colorMap"> JSON encoded custom Colormap. </param>
-        /// <param name="returnMask"> Add mask to the output data. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="searchId"/> or <paramref name="tileMatrixSetId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <summary>
+        /// [Protocol Method] Return TileJSON document for a search.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the search TileJSON query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetMosaicsWmtsCapabilitiesAsync(string searchId, string tileMatrixSetId, IEnumerable<string> assets = default, string expression = default, string assetBandIndices = default, bool? assetAsBand = default, float? noData = default, bool? unscale = default, TerrainAlgorithm? algorithm = default, string algorithmParams = default, TilerImageFormat? tileFormat = default, int? tileScale = default, int? minZoom = default, int? maxZoom = default, string buffer = default, string colorFormula = default, ResamplingMethod? resampling = default, IEnumerable<string> rescale = default, ColorMapNames? colorMapName = default, string colorMap = default, bool? returnMask = default, CancellationToken cancellationToken = default)
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetSearchTileJsonAsync(GetSearchTileJsonOptions options, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(searchId, nameof(searchId));
-            Argument.AssertNotNullOrEmpty(tileMatrixSetId, nameof(tileMatrixSetId));
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTileJson");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSearchTileJsonRequest(options.SearchId, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.TileMatrixSetId?.ToString(), options.TileFormat?.ToString(), options.TileScale, options.MinZoom, options.MaxZoom, options.Padding, options.Buffer, options.ColorFormula, options.CollectionId, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.Rescale, options.ColormapName?.ToString(), options.Colormap, options.ReturnMask, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
 
-            Response result = await GetMosaicsWmtsCapabilitiesAsync(searchId, tileMatrixSetId, assets, expression, assetBandIndices, assetAsBand, noData, unscale, algorithm?.ToString(), algorithmParams, tileFormat?.ToString(), tileScale, minZoom, maxZoom, buffer, colorFormula, resampling?.ToString(), rescale, colorMapName?.ToString(), colorMap, returnMask, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(result.Content, result);
+        /// <summary> Return TileJSON document for a search. </summary>
+        /// <param name="options"> The options for the search TileJSON query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TileJsonMetadata> GetSearchTileJson(GetSearchTileJsonOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetSearchTileJson(options, cancellationToken.ToRequestContext());
+            return Response.FromValue((TileJsonMetadata)result, result);
+        }
+
+        /// <summary> Return TileJSON document for a search. </summary>
+        /// <param name="options"> The options for the search TileJSON query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TileJsonMetadata>> GetSearchTileJsonAsync(GetSearchTileJsonOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetSearchTileJsonAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TileJsonMetadata)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a map tile for a mosaic search.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchTileNoTms request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetSearchTileNoTms(GetSearchTileNoTmsOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTileNoTms");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchTileNoTmsRequest(options.SearchId, options.Z, options.X, options.Y, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Format?.ToString(), options.Scale, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a map tile for a mosaic search.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchTileNoTms request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSearchTileNoTmsAsync(GetSearchTileNoTmsOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTileNoTms");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchTileNoTmsRequest(options.SearchId, options.Z, options.X, options.Y, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Format?.ToString(), options.Scale, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a map tile for a mosaic search with specified format.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchTileNoTmsByFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetSearchTileNoTmsByFormat(GetSearchTileNoTmsByFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTileNoTmsByFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchTileNoTmsByFormatRequest(options.SearchId, options.Z, options.X, options.Y, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Scale, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a map tile for a mosaic search with specified format.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchTileNoTmsByFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSearchTileNoTmsByFormatAsync(GetSearchTileNoTmsByFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTileNoTmsByFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchTileNoTmsByFormatRequest(options.SearchId, options.Z, options.X, options.Y, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Scale, options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a map tile for a mosaic search with specified scale.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchTileNoTmsByScale request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetSearchTileNoTmsByScale(GetSearchTileNoTmsByScaleOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTileNoTmsByScale");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchTileNoTmsByScaleRequest(options.SearchId, options.Z, options.X, options.Y, options.Scale, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Format?.ToString(), options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a map tile for a mosaic search with specified scale.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchTileNoTmsByScale request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSearchTileNoTmsByScaleAsync(GetSearchTileNoTmsByScaleOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTileNoTmsByScale");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchTileNoTmsByScaleRequest(options.SearchId, options.Z, options.X, options.Y, options.Scale, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Format?.ToString(), options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a map tile for a mosaic search with specified scale and format.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchTileNoTmsByScaleAndFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetSearchTileNoTmsByScaleAndFormat(GetSearchTileNoTmsByScaleAndFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTileNoTmsByScaleAndFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchTileNoTmsByScaleAndFormatRequest(options.SearchId, options.Z, options.X, options.Y, options.Scale, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Create a map tile for a mosaic search with specified scale and format.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchTileNoTmsByScaleAndFormat request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSearchTileNoTmsByScaleAndFormatAsync(GetSearchTileNoTmsByScaleAndFormatOptions options, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchTileNoTmsByScaleAndFormat");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchTileNoTmsByScaleAndFormatRequest(options.SearchId, options.Z, options.X, options.Y, options.Scale, options.Format, options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Algorithm?.ToString(), options.AlgorithmParams, options.TileMatrixSetId?.ToString(), options.Buffer, options.ColorFormula, options.Collection, options.Resampling?.ToString(), options.PixelSelection?.ToString(), options.Rescale, options.ColorMapName?.ToString(), options.ColorMap, options.ReturnMask, options.Padding, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return a list of assets which overlap a given tile for a mosaic search.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchAssetsForTileNoTms request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetSearchAssetsForTileNoTms(GetSearchAssetsForTileNoTmsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchAssetsForTileNoTms");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchAssetsForTileNoTmsRequest(options.SearchId, options.Z, options.X, options.Y, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.TileMatrixSetId?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return a list of assets which overlap a given tile for a mosaic search.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchAssetsForTileNoTms request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSearchAssetsForTileNoTmsAsync(GetSearchAssetsForTileNoTmsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchAssetsForTileNoTms");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchAssetsForTileNoTmsRequest(options.SearchId, options.Z, options.X, options.Y, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.TileMatrixSetId?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return a list of assets which overlap a given tile for a mosaic search. </summary>
+        /// <param name="options"> The options for the getSearchAssetsForTileNoTms request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<BinaryData>> GetSearchAssetsForTileNoTms(GetSearchAssetsForTileNoTmsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetSearchAssetsForTileNoTms(options, cancellationToken.ToRequestContext());
+            List<BinaryData> value = new List<BinaryData>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                if (item.ValueKind == JsonValueKind.Null)
+                {
+                    value.Add(null);
+                }
+                else
+                {
+                    value.Add(BinaryData.FromString(item.GetRawText()));
+                }
+            }
+            return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
+        }
+
+        /// <summary> Return a list of assets which overlap a given tile for a mosaic search. </summary>
+        /// <param name="options"> The options for the getSearchAssetsForTileNoTms request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<BinaryData>>> GetSearchAssetsForTileNoTmsAsync(GetSearchAssetsForTileNoTmsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetSearchAssetsForTileNoTmsAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<BinaryData> value = new List<BinaryData>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                if (item.ValueKind == JsonValueKind.Null)
+                {
+                    value.Add(null);
+                }
+                else
+                {
+                    value.Add(BinaryData.FromString(item.GetRawText()));
+                }
+            }
+            return Response.FromValue((IReadOnlyList<BinaryData>)value, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get Point value for a search dataset.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the search point query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GetSearchPoint(GetSearchPointOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchPoint");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSearchPointRequest(options.SearchId, options.Longitude, options.Latitude, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.CoordinateReferenceSystem, options.Resampling?.ToString(), context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get Point value for a search dataset.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the search point query. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GetSearchPointAsync(GetSearchPointOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchPoint");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSearchPointRequest(options.SearchId, options.Longitude, options.Latitude, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.Bidx, options.Assets, options.Expression, options.AssetBandIndices, options.AssetAsBand, options.NoData, options.Unscale, options.Reproject?.ToString(), options.CoordinateReferenceSystem, options.Resampling?.ToString(), context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get Point value for a search dataset. </summary>
+        /// <param name="options"> The options for the search point query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TilerCoreModelsResponsesPoint> GetSearchPoint(GetSearchPointOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetSearchPoint(options, cancellationToken.ToRequestContext());
+            return Response.FromValue((TilerCoreModelsResponsesPoint)result, result);
+        }
+
+        /// <summary> Get Point value for a search dataset. </summary>
+        /// <param name="options"> The options for the search point query. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TilerCoreModelsResponsesPoint>> GetSearchPointAsync(GetSearchPointOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetSearchPointAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TilerCoreModelsResponsesPoint)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return a list of assets for a given point in a search.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchPointWithAssets request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetSearchPointWithAssets(GetSearchPointWithAssetsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchPointWithAssets");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchPointWithAssetsRequest(options.SearchId, options.Longitude, options.Latitude, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.CoordinateReferenceSystem, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Return a list of assets for a given point in a search.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The options for the getSearchPointWithAssets request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetSearchPointWithAssetsAsync(GetSearchPointWithAssetsOptions options, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataClient.GetSearchPointWithAssets");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNull(options, nameof(options));
+
+                using HttpMessage message = CreateGetSearchPointWithAssetsRequest(options.SearchId, options.Longitude, options.Latitude, options.ScanLimit, options.ItemsLimit, options.TimeLimit, options.ExitWhenFull, options.SkipCovered, options.SubdatasetName, options.SubdatasetBands, options.Crs, options.Datetime, options.Sel, options.SelMethod?.ToString(), options.CoordinateReferenceSystem, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Return a list of assets for a given point in a search. </summary>
+        /// <param name="options"> The options for the getSearchPointWithAssets request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<IReadOnlyList<StacItemPointAsset>> GetSearchPointWithAssets(GetSearchPointWithAssetsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = GetSearchPointWithAssets(options, cancellationToken.ToRequestContext());
+            List<StacItemPointAsset> value = new List<StacItemPointAsset>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(StacItemPointAsset.DeserializeStacItemPointAsset(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<StacItemPointAsset>)value, result);
+        }
+
+        /// <summary> Return a list of assets for a given point in a search. </summary>
+        /// <param name="options"> The options for the getSearchPointWithAssets request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<IReadOnlyList<StacItemPointAsset>>> GetSearchPointWithAssetsAsync(GetSearchPointWithAssetsOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            Response result = await GetSearchPointWithAssetsAsync(options, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            List<StacItemPointAsset> value = new List<StacItemPointAsset>();
+            BinaryData data = result.Content;
+            using JsonDocument document = JsonDocument.Parse(data);
+            foreach (var item in document.RootElement.EnumerateArray())
+            {
+                value.Add(StacItemPointAsset.DeserializeStacItemPointAsset(item, ModelSerializationExtensions.WireOptions));
+            }
+            return Response.FromValue((IReadOnlyList<StacItemPointAsset>)value, result);
         }
     }
 }

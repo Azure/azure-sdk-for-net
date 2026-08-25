@@ -85,8 +85,9 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="secureScore"> Secure Score of Recovery Services Vault. </param>
         /// <param name="bcdrSecurityLevel"> Security levels of Recovery Services Vault for business continuity and disaster recovery. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
+        /// <param name="regionOfChoiceStatus"> The status of region of choice settings - Enabled or Disabled. </param>
         /// <returns> A new <see cref="Models.RecoveryServicesVaultProperties"/> instance for mocking. </returns>
-        public static RecoveryServicesVaultProperties RecoveryServicesVaultProperties(string provisioningState = default, VaultUpgradeDetails upgradeDetails = default, IEnumerable<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections = default, VaultPrivateEndpointState? privateEndpointStateForBackup = default, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery = default, VaultPropertiesEncryption encryption = default, VaultPropertiesMoveDetails moveDetails = default, ResourceMoveState? moveState = default, BackupStorageVersion? backupStorageVersion = default, VaultPublicNetworkAccess? publicNetworkAccess = default, VaultMonitoringSettings monitoringSettings = default, GranularityLevel? costManagementGranularityLevel = default, CrossSubscriptionRestoreState? crossSubscriptionRestoreState = default, VaultPropertiesRedundancySettings redundancySettings = default, RecoveryServicesSecuritySettings securitySettings = default, SecureScoreLevel? secureScore = default, BcdrSecurityLevel? bcdrSecurityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default)
+        public static RecoveryServicesVaultProperties RecoveryServicesVaultProperties(string provisioningState = default, VaultUpgradeDetails upgradeDetails = default, IEnumerable<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections = default, VaultPrivateEndpointState? privateEndpointStateForBackup = default, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery = default, VaultPropertiesEncryption encryption = default, VaultPropertiesMoveDetails moveDetails = default, ResourceMoveState? moveState = default, BackupStorageVersion? backupStorageVersion = default, VaultPublicNetworkAccess? publicNetworkAccess = default, VaultMonitoringSettings monitoringSettings = default, GranularityLevel? costManagementGranularityLevel = default, CrossSubscriptionRestoreState? crossSubscriptionRestoreState = default, VaultPropertiesRedundancySettings redundancySettings = default, RecoveryServicesSecuritySettings securitySettings = default, SecureScoreLevel? secureScore = default, BcdrSecurityLevel? bcdrSecurityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default, RecoveryServicesSourceScanState? regionOfChoiceStatus = default)
         {
             privateEndpointConnections ??= new ChangeTrackingList<RecoveryServicesPrivateEndpointConnectionVaultProperties>();
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
@@ -110,6 +111,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 secureScore,
                 bcdrSecurityLevel,
                 (resourceGuardOperationRequests ?? new ChangeTrackingList<string>()).ToList(),
+                regionOfChoiceStatus is null ? default : new RegionOfChoiceSettings(regionOfChoiceStatus, default),
                 default);
         }
 
@@ -661,6 +663,51 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <param name="backupStorageVersion"> Backup storage version. </param>
         /// <param name="publicNetworkAccess"> property to enable or disable resource provider inbound network traffic from public clients. </param>
         /// <param name="monitoringSettings"> Monitoring Settings of the vault. </param>
+        /// <param name="costManagementGranularityLevel"> Settings for granularity level. </param>
+        /// <param name="crossSubscriptionRestoreState"> Gets or sets the CrossSubscriptionRestoreState. </param>
+        /// <param name="redundancySettings"> The redundancy Settings of a Vault. </param>
+        /// <param name="securitySettings"> Security Settings of the vault. </param>
+        /// <param name="secureScore"> Secure Score of Recovery Services Vault. </param>
+        /// <param name="bcdrSecurityLevel"> Security levels of Recovery Services Vault for business continuity and disaster recovery. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
+        /// <returns> A new <see cref="Models.RecoveryServicesVaultProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RecoveryServicesVaultProperties RecoveryServicesVaultProperties(string provisioningState = default, VaultUpgradeDetails upgradeDetails = default, IEnumerable<RecoveryServicesPrivateEndpointConnectionVaultProperties> privateEndpointConnections = default, VaultPrivateEndpointState? privateEndpointStateForBackup = default, VaultPrivateEndpointState? privateEndpointStateForSiteRecovery = default, VaultPropertiesEncryption encryption = default, VaultPropertiesMoveDetails moveDetails = default, ResourceMoveState? moveState = default, BackupStorageVersion? backupStorageVersion = default, VaultPublicNetworkAccess? publicNetworkAccess = default, VaultMonitoringSettings monitoringSettings = default, GranularityLevel? costManagementGranularityLevel = default, CrossSubscriptionRestoreState? crossSubscriptionRestoreState = default, VaultPropertiesRedundancySettings redundancySettings = default, RecoveryServicesSecuritySettings securitySettings = default, SecureScoreLevel? secureScore = default, BcdrSecurityLevel? bcdrSecurityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default)
+        {
+            return new RecoveryServicesVaultProperties(
+                provisioningState,
+                upgradeDetails,
+                (privateEndpointConnections ?? new ChangeTrackingList<RecoveryServicesPrivateEndpointConnectionVaultProperties>()).ToList(),
+                privateEndpointStateForBackup,
+                privateEndpointStateForSiteRecovery,
+                encryption,
+                moveDetails,
+                moveState,
+                backupStorageVersion,
+                publicNetworkAccess,
+                monitoringSettings,
+                costManagementGranularityLevel is null ? default : new CostManagementSettings(costManagementGranularityLevel, default),
+                crossSubscriptionRestoreState is null ? default : new RestoreSettings(new CrossSubscriptionRestoreSettings(crossSubscriptionRestoreState, default), default),
+                redundancySettings,
+                securitySettings,
+                secureScore,
+                bcdrSecurityLevel,
+                (resourceGuardOperationRequests ?? new ChangeTrackingList<string>()).ToList(),
+                default,
+                default);
+        }
+
+        /// <param name="provisioningState"> Provisioning State. </param>
+        /// <param name="upgradeDetails"> Details for upgrading vault. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connection. </param>
+        /// <param name="privateEndpointStateForBackup"> Private endpoint state for backup. </param>
+        /// <param name="privateEndpointStateForSiteRecovery"> Private endpoint state for site recovery. </param>
+        /// <param name="encryption"> Customer Managed Key details of the resource. </param>
+        /// <param name="moveDetails"> The details of the latest move operation performed on the Azure Resource. </param>
+        /// <param name="moveState"> The State of the Resource after the move operation. </param>
+        /// <param name="backupStorageVersion"> Backup storage version. </param>
+        /// <param name="publicNetworkAccess"> property to enable or disable resource provider inbound network traffic from public clients. </param>
+        /// <param name="monitoringSettings"> Monitoring Settings of the vault. </param>
         /// <param name="crossSubscriptionRestoreState"> Gets or sets the CrossSubscriptionRestoreState. </param>
         /// <param name="redundancySettings"> The redundancy Settings of a Vault. </param>
         /// <param name="securitySettings"> Security Settings of the vault. </param>
@@ -690,6 +737,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 secureScore,
                 bcdrSecurityLevel,
                 (resourceGuardOperationRequests ?? new ChangeTrackingList<string>()).ToList(),
+                default,
                 default);
         }
 
@@ -741,6 +789,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 redundancySettings,
                 securitySettings,
                 secureScore,
+                default,
                 default,
                 default,
                 default);

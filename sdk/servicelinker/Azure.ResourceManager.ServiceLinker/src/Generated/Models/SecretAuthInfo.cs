@@ -14,34 +14,26 @@ namespace Azure.ResourceManager.ServiceLinker.Models
     public partial class SecretAuthInfo : AuthBaseInfo
     {
         /// <summary> Initializes a new instance of <see cref="SecretAuthInfo"/>. </summary>
-        public SecretAuthInfo()
+        public SecretAuthInfo() : base(LinkerAuthType.Secret)
         {
-            AuthType = LinkerAuthType.Secret;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecretAuthInfo"/>. </summary>
         /// <param name="authType"> The authentication type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="authMode"> Optional. Indicates how to configure authentication. If optInAllAuth, service linker configures authentication such as enabling identity on source resource and granting RBAC roles. If optOutAllAuth, opt out authentication setup. Default is optInAllAuth. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Username or account name for secret auth. </param>
-        /// <param name="secretInfo">
-        /// Password or key vault secret for secret auth.
-        /// Please note <see cref="SecretBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KeyVaultSecretReferenceSecretInfo"/>, <see cref="KeyVaultSecretUriSecretInfo"/> and <see cref="RawValueSecretInfo"/>.
-        /// </param>
-        internal SecretAuthInfo(LinkerAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string name, SecretBaseInfo secretInfo) : base(authType, serializedAdditionalRawData)
+        /// <param name="secretInfo"> Password or key vault secret for secret auth. </param>
+        internal SecretAuthInfo(LinkerAuthType authType, LinkerAuthMode? authMode, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, SecretBaseInfo secretInfo) : base(authType, authMode, additionalBinaryDataProperties)
         {
             Name = name;
             SecretInfo = secretInfo;
-            AuthType = authType;
         }
 
         /// <summary> Username or account name for secret auth. </summary>
         public string Name { get; set; }
-        /// <summary>
-        /// Password or key vault secret for secret auth.
-        /// Please note <see cref="SecretBaseInfo"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="KeyVaultSecretReferenceSecretInfo"/>, <see cref="KeyVaultSecretUriSecretInfo"/> and <see cref="RawValueSecretInfo"/>.
-        /// </summary>
+
+        /// <summary> Password or key vault secret for secret auth. </summary>
         public SecretBaseInfo SecretInfo { get; set; }
     }
 }

@@ -92,6 +92,29 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 #endif
 
+        [Test]
+        public async Task LedgerEntryReads_WorkWithoutDirectLedgerFailoverDiscovery()
+        {
+            var transport = new MockTransport(req =>
+            {
+                var response = new MockResponse(200);
+                response.SetContent(req.Uri.Path.EndsWith("/current", StringComparison.Ordinal)
+                    ? "{\"contents\":\"current\"}"
+                    : "{\"state\":\"Ready\",\"entry\":{\"contents\":\"by-id\"}}");
+                return response;
+            });
+
+            ConfidentialLedgerClient client = CreateClient(transport);
+
+            Response byId = await client.GetLedgerEntryAsync(TransactionId, CollectionId, new RequestContext());
+            Response current = await client.GetCurrentLedgerEntryAsync(CollectionId, new RequestContext());
+
+            Assert.AreEqual(200, byId.Status);
+            Assert.AreEqual(200, current.Status);
+            Assert.AreEqual(2, transport.Requests.Count);
+            Assert.IsFalse(transport.Requests.Any(request => request.Uri.Path.StartsWith("/failover/", StringComparison.Ordinal)));
+        }
+
         // W4: 200 (synchronous commit) on POST yields an operation whose Id is the CCF transaction id;
         // polling uses /app/transactions/{txId}/status.
         [Test]
