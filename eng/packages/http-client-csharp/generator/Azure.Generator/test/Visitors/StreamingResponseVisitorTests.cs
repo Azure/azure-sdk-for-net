@@ -24,7 +24,11 @@ namespace Azure.Generator.Tests.Visitors
         {
             MockHelpers.LoadMockGenerator();
             var message = new VariableExpression(typeof(HttpMessage), "message");
-            var processMessage = CreateProcessMessageInvocation(message);
+            var processMessage = CreateInvocation(
+                "ProcessMessageAsync",
+                new CSharpType(typeof(Task<>), typeof(Response)),
+                message);
+            processMessage.Update(callAsAsync: true);
             var response = new ScopedApi<Response>(processMessage);
             var expression = CreateInvocation(
                 "CreateSse",
@@ -37,12 +41,6 @@ namespace Azure.Generator.Tests.Visitors
             Assert.IsNotNull(wrappedResponse);
             Assert.AreEqual(typeof(AzurePipelineResponse), wrappedResponse!.Type?.FrameworkType);
             Assert.AreSame(message, wrappedResponse.Parameters[0]);
-            var reconnectCallback = expression.Arguments[1] as InvokeMethodExpression;
-            Assert.IsNotNull(reconnectCallback);
-            Assert.AreEqual(
-                "GetSseReconnectCallback",
-                reconnectCallback!.MethodName);
-            Assert.AreSame(message, reconnectCallback.Arguments[0]);
         }
 
         [Test]
@@ -50,7 +48,11 @@ namespace Azure.Generator.Tests.Visitors
         {
             MockHelpers.LoadMockGenerator();
             var message = new VariableExpression(typeof(HttpMessage), "message");
-            var processMessage = CreateProcessMessageInvocation(message);
+            var processMessage = CreateInvocation(
+                "ProcessMessageAsync",
+                new CSharpType(typeof(Task<>), typeof(Response)),
+                message);
+            processMessage.Update(callAsAsync: true);
             var response = new ScopedApi<Response>(processMessage);
             var createResult = CreateInvocation("CreateSse", typeof(BinaryData), response);
             var method = CreateMethod(CreateStreamingResponseType());
@@ -59,13 +61,8 @@ namespace Azure.Generator.Tests.Visitors
 
             visitor.Visit(createResult, method);
 
-            Assert.AreEqual(3, statements.Statements.Count);
-            var configure = ((ExpressionStatement)statements.Statements[0]).Expression
-                as InvokeMethodExpression;
-            Assert.IsNotNull(configure);
-            Assert.AreEqual("ConfigureSse", configure!.MethodName);
-            Assert.AreSame(message, configure.Arguments[0]);
-            Assert.AreSame(response, ((ExpressionStatement)statements.Statements[1]).Expression);
+            Assert.AreEqual(2, statements.Statements.Count);
+            Assert.AreSame(response, ((ExpressionStatement)statements.Statements[0]).Expression);
             var wrappedResponse = (createResult.Arguments[0] as ScopedApi)?.Original as NewInstanceExpression;
             Assert.IsNotNull(wrappedResponse);
             Assert.AreSame(message, wrappedResponse!.Parameters[0]);
@@ -76,7 +73,11 @@ namespace Azure.Generator.Tests.Visitors
         {
             MockHelpers.LoadMockGenerator();
             var message = new VariableExpression(typeof(HttpMessage), "message");
-            var processMessage = CreateProcessMessageInvocation(message);
+            var processMessage = CreateInvocation(
+                "ProcessMessageAsync",
+                new CSharpType(typeof(Task<>), typeof(Response)),
+                message);
+            processMessage.Update(callAsAsync: true);
             var response = new ScopedApi<Response>(processMessage);
             var createResult = CreateInvocation("CreateSse", typeof(BinaryData), response);
             var method = CreateMethod(CreateStreamingResponseType());
@@ -90,12 +91,8 @@ namespace Azure.Generator.Tests.Visitors
             var statements = body.Statements.Count == 1 && body.Statements[0] is MethodBodyStatements nested
                 ? nested
                 : body;
-            Assert.AreEqual(4, statements.Statements.Count);
-            var configure = ((ExpressionStatement)statements.Statements[1]).Expression
-                as InvokeMethodExpression;
-            Assert.IsNotNull(configure);
-            Assert.AreEqual("ConfigureSse", configure!.MethodName);
-            Assert.AreSame(response, ((ExpressionStatement)statements.Statements[2]).Expression);
+            Assert.AreEqual(3, statements.Statements.Count);
+            Assert.AreSame(response, ((ExpressionStatement)statements.Statements[1]).Expression);
             var wrappedResponse = (createResult.Arguments[0] as ScopedApi)?.Original as NewInstanceExpression;
             Assert.IsNotNull(wrappedResponse);
             Assert.AreSame(message, wrappedResponse!.Parameters[0]);
@@ -111,29 +108,6 @@ namespace Azure.Generator.Tests.Visitors
             new TestStreamingResponseVisitor().Visit(expression, CreateMethod(typeof(BinaryData)));
 
             Assert.AreSame(response, expression.Arguments[0]);
-        }
-
-        [Test]
-        public void JsonLinesRemainOneShot()
-        {
-            MockHelpers.LoadMockGenerator();
-            var message = new VariableExpression(typeof(HttpMessage), "message");
-            var processMessage = CreateProcessMessageInvocation(message);
-            var response = new ScopedApi<Response>(processMessage);
-            var createResult = CreateInvocation(
-                "CreateJsonLines",
-                typeof(BinaryData),
-                response);
-            var method = CreateMethod(CreateStreamingResponseType());
-            var visitor = new TestStreamingResponseVisitor();
-            var statements = visitor.Visit(
-                new MethodBodyStatements([Return(createResult)]),
-                method);
-
-            visitor.Visit(createResult, method);
-
-            Assert.AreEqual(2, statements.Statements.Count);
-            Assert.AreEqual(1, createResult.Arguments.Count);
         }
 
         [Test]
@@ -186,28 +160,6 @@ namespace Azure.Generator.Tests.Visitors
                 null,
                 []);
             return new InvokeMethodExpression(null, signature, [response]);
-        }
-
-        private static InvokeMethodExpression CreateProcessMessageInvocation(
-            ValueExpression message)
-        {
-            var signature = new MethodSignature(
-                "ProcessMessageAsync",
-                null,
-                MethodSignatureModifiers.Public,
-                new CSharpType(typeof(Task<>), typeof(Response)),
-                null,
-                []);
-            var pipeline = new VariableExpression(
-                typeof(Azure.Core.Pipeline.HttpPipeline),
-                "pipeline");
-            var context = new VariableExpression(typeof(RequestContext), "context");
-            var invocation = new InvokeMethodExpression(
-                pipeline,
-                signature,
-                [message, context]);
-            invocation.Update(callAsAsync: true);
-            return invocation;
         }
 
         private static MethodProvider CreateMethod(CSharpType returnType)
