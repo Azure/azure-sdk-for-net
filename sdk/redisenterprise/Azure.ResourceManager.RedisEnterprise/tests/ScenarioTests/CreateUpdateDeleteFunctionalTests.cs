@@ -22,9 +22,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
 
         private RedisEnterpriseClusterCollection Collection { get; set; }
 
-        private async Task SetCollectionsAsync(AzureLocation? location = null)
+        private async Task SetCollectionsAsync()
         {
-            ResourceGroup = await CreateResourceGroupAsync(location);
+            ResourceGroup = await CreateResourceGroupAsync();
             Collection = ResourceGroup.GetRedisEnterpriseClusters();
         }
 
@@ -117,12 +117,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
         [TestCase(TestName = "CreateUpdateDeleteTest2")]
         public async Task CreateUpdateDeleteWithMaintenanceWindowsAndKeyspaceNotifications()
         {
-            AzureLocation location = AzureLocation.CentralIndia;
-            await SetCollectionsAsync(location);
+            await SetCollectionsAsync();
 
             string redisEnterpriseCacheName = Recording.GenerateAssetName("RedisEnterpriseBegin");
             var data = new RedisEnterpriseClusterData(
-                location,
+                DefaultLocation,
                 new RedisEnterpriseSku(RedisEnterpriseSkuName.BalancedB1)
                 {
                 })
@@ -148,7 +147,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             };
 
             var clusterResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName, data)).Value;
-            Assert.AreEqual(location, clusterResponse.Data.Location);
+            Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
             Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
             Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
             Assert.AreEqual(RedisEnterpriseHighAvailability.Disabled, clusterResponse.Data.HighAvailability);
@@ -158,7 +157,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             Assert.AreEqual(RedisEnterpriseMaintenanceDayOfWeek.Wednesday, clusterResponse.Data.MaintenanceWindows[2].ScheduleDayOfWeek);
 
             clusterResponse = await Collection.GetAsync(redisEnterpriseCacheName);
-            Assert.AreEqual(location, clusterResponse.Data.Location);
+            Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
             Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
             Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
             Assert.AreEqual(RedisEnterpriseHighAvailability.Disabled, clusterResponse.Data.HighAvailability);
@@ -218,7 +217,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 });
 
             clusterResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName, data)).Value;
-            Assert.AreEqual(location, clusterResponse.Data.Location);
+            Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
             Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
             Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
             Assert.AreEqual(RedisEnterpriseHighAvailability.Enabled, clusterResponse.Data.HighAvailability);
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             Assert.AreEqual(RedisEnterpriseMaintenanceDayOfWeek.Sunday, clusterResponse.Data.MaintenanceWindows[2].ScheduleDayOfWeek);
 
             clusterResponse = await Collection.GetAsync(redisEnterpriseCacheName);
-            Assert.AreEqual(location, clusterResponse.Data.Location);
+            Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
             Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
             Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
             Assert.AreEqual(RedisEnterpriseHighAvailability.Enabled, clusterResponse.Data.HighAvailability);

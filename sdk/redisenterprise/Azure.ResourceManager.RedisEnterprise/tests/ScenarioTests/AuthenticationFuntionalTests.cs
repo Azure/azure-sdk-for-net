@@ -23,9 +23,9 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
 
         private RedisEnterpriseClusterCollection Collection { get; set; }
 
-        private async Task SetCollectionsAsync(AzureLocation? location = null)
+        private async Task SetCollectionsAsync()
         {
-            ResourceGroup = await CreateResourceGroupAsync(location);
+            ResourceGroup = await CreateResourceGroupAsync();
             Collection = ResourceGroup.GetRedisEnterpriseClusters();
         }
 
@@ -33,12 +33,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
         // [Ignore("Tested in dog food environment and its working with record and playback mode. But disabling this for now as test framework does not seems to support dog food officialy. Will activate this test at the time of GA release.")]
         public async Task AuthenticationTestAccessPolicyAssingment()
         {
-            AzureLocation location = AzureLocation.CentralIndia;
-            await SetCollectionsAsync(location);
+            await SetCollectionsAsync();
 
             string redisEnterpriseCacheName = Recording.GenerateAssetName("RedisEnterpriseBegin");
             var data = new RedisEnterpriseClusterData(
-                location,
+                DefaultLocation,
                 new RedisEnterpriseSku(RedisEnterpriseSkuName.BalancedB1)
                 {
                 })
@@ -48,12 +47,12 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
             };
 
             var clusterResponse = (await Collection.CreateOrUpdateAsync(WaitUntil.Completed, redisEnterpriseCacheName, data)).Value;
-            Assert.AreEqual(location, clusterResponse.Data.Location);
+            Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
             Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
             Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
 
             clusterResponse = await Collection.GetAsync(redisEnterpriseCacheName);
-            Assert.AreEqual(location, clusterResponse.Data.Location);
+            Assert.AreEqual(DefaultLocation, clusterResponse.Data.Location);
             Assert.AreEqual(redisEnterpriseCacheName, clusterResponse.Data.Name);
             Assert.AreEqual(RedisEnterpriseSkuName.BalancedB1, clusterResponse.Data.Sku.Name);
 

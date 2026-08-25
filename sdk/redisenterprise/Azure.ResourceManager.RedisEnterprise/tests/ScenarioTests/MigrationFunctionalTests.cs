@@ -23,12 +23,11 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
         [Test]
         public async Task ValidateStartAndGetMigration()
         {
-            AzureLocation location = AzureLocation.CentralIndia;
-            ResourceGroupResource resourceGroup = await CreateResourceGroupAsync(location);
+            ResourceGroupResource resourceGroup = await CreateResourceGroupAsync();
 
             string sourceName = Recording.GenerateAssetName("RedisSource");
             RedisModels.RedisCreateOrUpdateContent sourceData = new(
-                location,
+                DefaultLocation,
                 new RedisModels.RedisSku(
                     RedisModels.RedisSkuName.Basic,
                     RedisModels.RedisSkuFamily.BasicOrStandard,
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
 
             string targetName = Recording.GenerateAssetName("RedisEnterpriseTarget");
             RedisEnterpriseClusterData targetData = new(
-                location,
+                DefaultLocation,
                 new RedisEnterpriseSku(RedisEnterpriseSkuName.BalancedB1))
             {
                 MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,

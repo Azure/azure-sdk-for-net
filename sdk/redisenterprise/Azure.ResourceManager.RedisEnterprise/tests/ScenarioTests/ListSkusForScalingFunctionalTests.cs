@@ -91,14 +91,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests.ScenarioTests
             Assert.IsTrue(skus.Any(s => s.Name == RedisEnterpriseSkuName.BalancedB50));
             Assert.IsTrue(skus.Any(s => s.SizeInGB == 24.0));
 
-            // Delete database and cluster
-            await databaseResponse.DeleteAsync(WaitUntil.Completed);
-            var falseResult = (await databaseCollection.ExistsAsync(databaseName)).Value;
-            Assert.IsFalse(falseResult);
-
-            await clusterResponse.DeleteAsync(WaitUntil.Completed);
-            falseResult = (await Collection.ExistsAsync(redisEnterpriseCacheName)).Value;
-            Assert.IsFalse(falseResult);
+            await ResourceGroup.DeleteAsync(WaitUntil.Completed);
         }
     }
 }
