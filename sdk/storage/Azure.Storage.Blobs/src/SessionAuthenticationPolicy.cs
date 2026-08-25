@@ -25,15 +25,62 @@ namespace Azure.Storage.Blobs
         private readonly HttpPipelinePolicy _fallbackAuthPolicy;
         private readonly SessionProvider _sessionProvider;
         private readonly SessionOptions _sessionOptions;
+        private readonly string _accountName;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SessionAuthenticationPolicy"/> class.
+        /// </summary>
+        /// <param name="endpoint">
+        /// The endpoint of the client this policy is attached to. Used to resolve the
+        /// account name required to sign session-authenticated requests when
+        /// <see cref="SessionOptions.AccountName"/> is not provided.
+        /// </param>
+        /// <param name="fallbackAuthPolicy">
+        /// The bearer token policy used when session authentication is not applicable.
+        /// </param>
+        /// <param name="sessionProvider">
+        /// The provider used to acquire and cache session tokens.
+        /// </param>
+        /// <param name="sessionOptions">
+        /// Options controlling session authentication behavior.
+        /// </param>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown when <see cref="SessionOptions.SessionMode"/> is explicitly set to
+        /// <see cref="SessionMode.Enabled"/> and the account name can be determined from
+        /// neither <see cref="SessionOptions.AccountName"/> nor <paramref name="endpoint"/>.
+        /// When the mode was not explicitly enabled, session authentication is instead
+        /// disabled for this policy and all requests use <paramref name="fallbackAuthPolicy"/>.
+        /// </exception>
         public SessionAuthenticationPolicy(
+            Uri endpoint,
             HttpPipelinePolicy fallbackAuthPolicy,
             SessionProvider sessionProvider,
             SessionOptions sessionOptions)
         {
+            _ = endpoint ?? throw Errors.ArgumentNull(nameof(endpoint));
             _fallbackAuthPolicy = fallbackAuthPolicy ?? throw Errors.ArgumentNull(nameof(fallbackAuthPolicy));
             _sessionProvider = sessionProvider ?? throw Errors.ArgumentNull(nameof(sessionProvider));
             _sessionOptions = sessionOptions?.Clone() ?? new SessionOptions();
+            _accountName = _sessionOptions.AccountName;
+            if (string.IsNullOrEmpty(_accountName))
+            {
+                _accountName = new BlobUriBuilder(endpoint).AccountName;
+                if (string.IsNullOrEmpty(_accountName))
+                {
+                    if (_sessionOptions.SessionMode == SessionMode.Enabled)
+                    {
+                        BlobsEventSource.Singleton.SessionAuthenticationCannotBeEnabledAccountNameUnavailable(
+                            endpoint.GetLeftPart(UriPartial.Path));
+                        throw BlobErrors.AccountNameRequiredForSessionSigning(endpoint);
+                    }
+
+                    if (_sessionOptions.SessionMode.ResolveAuto() == SessionMode.Enabled)
+                    {
+                        BlobsEventSource.Singleton.SessionAuthenticationDisabledAccountNameUnavailable(
+                            endpoint.GetLeftPart(UriPartial.Path));
+                    }
+                }
+            }
         }
 
         /// <inheritdoc />
@@ -78,7 +125,8 @@ namespace Azure.Storage.Blobs
 
         /// <summary>
         /// Analyzes the request to determine whether a session token or bearer token should be used.
-        /// When <see cref="SessionMode.Disabled"/>, all requests fall back to bearer token. Otherwise
+        /// When <see cref="SessionMode.Disabled"/>, or when the storage account name could not be
+        /// determined when this policy was created, all requests fall back to bearer token. Otherwise
         /// eligibility is delegated to <see cref="SessionProvider.IsRequestEligible"/>.
         /// </summary>
         /// <returns>
@@ -87,8 +135,9 @@ namespace Azure.Storage.Blobs
         /// </returns>
         private AuthState AnalyzeRequest(HttpMessage message)
         {
-            // Check if Sessions is disabled.
-            if (_sessionOptions.SessionMode.ResolveAuto() == SessionMode.Disabled)
+            // Check if Sessions is disabled or no captured account name.
+            if (string.IsNullOrEmpty(_accountName) ||
+                _sessionOptions.SessionMode.ResolveAuto() == SessionMode.Disabled)
             {
                 return AuthState.UseBearerToken;
             }
@@ -175,18 +224,7 @@ namespace Azure.Storage.Blobs
         /// </summary>
         private void SignRequestAndSetAuthHeader(HttpMessage message, SessionProvider.SessionTokenInfo sessionInfo)
         {
-            string accountName = _sessionOptions.AccountName;
-            if (string.IsNullOrEmpty(accountName))
-            {
-                // Fall back to deriving the account name from the request URL.
-                accountName = new BlobUriBuilder(message.Request.Uri.ToUri()).AccountName;
-                if (string.IsNullOrEmpty(accountName))
-                {
-                    throw BlobErrors.AccountNameRequiredForSessionSigning();
-                }
-            }
-
-            var credential = new StorageSharedKeyCredential(accountName, sessionInfo.SessionKey);
+            var credential = new StorageSharedKeyCredential(_accountName, sessionInfo.SessionKey);
             var sharedKeyPolicy = new StorageSharedKeyPipelinePolicy(credential);
 
             // Set x-ms-date header (same as StorageSharedKeyPipelinePolicy does).

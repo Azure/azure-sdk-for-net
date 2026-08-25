@@ -365,6 +365,15 @@ namespace Azure.Storage.Blobs
         /// policies for authentication, retries, etc., that are applied to
         /// every request.
         /// </param>
+        /// <remarks>
+        /// Session authentication requires the storage account name, which is derived from
+        /// <paramref name="blobContainerUri"/> when possible. Set <see cref="Models.SessionOptions.AccountName"/>
+        /// when using a custom endpoint URL from which the account name cannot be derived.
+        /// If the account name cannot be determined, this constructor throws when
+        /// <see cref="Models.SessionOptions.SessionMode"/> was explicitly set to
+        /// <see cref="Models.SessionMode.Enabled"/>; otherwise session authentication is
+        /// disabled and bearer token authentication is used.
+        /// </remarks>
         public BlobContainerClient(Uri blobContainerUri, TokenCredential credential, BlobClientOptions options = default)
         {
             Errors.VerifyHttpsTokenAuth(blobContainerUri);
@@ -376,6 +385,7 @@ namespace Azure.Storage.Blobs
             SessionProvider sessionProvider = options?.SessionOptions?.SessionProvider
                 ?? new ContainerSessionProvider(blobContainerUri, credential, options);
             _authenticationPolicy = new SessionAuthenticationPolicy(
+                endpoint: blobContainerUri,
                 fallbackAuthPolicy: credential.AsPolicy(audienceScope, options),
                 sessionProvider: sessionProvider,
                 sessionOptions: options?.SessionOptions);

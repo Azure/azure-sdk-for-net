@@ -379,6 +379,7 @@ namespace Azure.Storage.Blobs.Tests
         [TestCase("https://testaccount.blob.core.windows.net", false)]
         [TestCase("https://testaccount.blob.core.windows.net/mycontainer/myblob?comp=metadata", false)]
         [TestCase("https://testaccount.blob.core.windows.net/mycontainer/myblob?comp=tags", false)]
+        [TestCase("https://testaccount.blob.core.windows.net/mycontainer/myblob?restype=container", false)]
         [TestCase("https://testaccount.blob.core.windows.net/mycontainer/myblob?snapshot=2023-01-01T00:00:00.0000000Z", true)]
         public void IsRequestEligible_GetRequests(string uri, bool expected)
         {
@@ -397,6 +398,19 @@ namespace Azure.Storage.Blobs.Tests
 
             Assert.IsFalse(provider.IsRequestEligible(message),
                 "Only GET requests are eligible for session authentication.");
+        }
+
+        [Test]
+        public void IsRequestEligible_StructuredMessageRequest_IsFalse()
+        {
+            var (provider, _) = CreateProvider(ServiceUri);
+            HttpMessage message = CreateMessage(BlobUri);
+            message.Request.Headers.SetValue(
+                Constants.StructuredMessage.StructuredMessageHeader,
+                Constants.StructuredMessage.CrcStructuredMessage);
+
+            Assert.IsFalse(provider.IsRequestEligible(message),
+                "Structured message requests are not eligible for session authentication.");
         }
         #endregion
     }

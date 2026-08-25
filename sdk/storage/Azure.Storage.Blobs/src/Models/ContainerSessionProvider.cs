@@ -117,9 +117,19 @@ namespace Azure.Storage.Blobs.Models
                 return false;
             }
 
-            // Request with a "comp" query parameter.
-            if (!string.IsNullOrEmpty(uriBuilder.Query)
-                && new UriQueryParamsCollection(uriBuilder.Query).ContainsKey(Constants.UriQueryParameters.Comp))
+            // Request with a "comp" or "restype" query parameter.
+            if (!string.IsNullOrEmpty(uriBuilder.Query))
+            {
+                UriQueryParamsCollection query = new UriQueryParamsCollection(uriBuilder.Query);
+                if (query.ContainsKey(Constants.UriQueryParameters.Comp)
+                    || query.ContainsKey(Constants.UriQueryParameters.ResType))
+                {
+                    return false;
+                }
+            }
+
+            // Structured message requests.
+            if (message.Request.Headers.Contains(Constants.StructuredMessage.StructuredMessageHeader))
             {
                 return false;
             }
