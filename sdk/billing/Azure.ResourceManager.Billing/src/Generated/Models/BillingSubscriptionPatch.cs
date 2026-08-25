@@ -44,6 +44,10 @@ namespace Azure.ResourceManager.Billing.Models
         [WirePath("properties")]
         internal BillingSubscriptionProperties Properties { get; set; }
 
+        /// <summary> Dictionary of metadata associated with the resource. It may not be populated for all resource types. Maximum key/value length supported of 256 characters. Keys/value should not empty value nor null. Keys can not contain &lt; &gt; % &amp; \ ? /. </summary>
+        [WirePath("tags")]
+        public IDictionary<string, string> Tags { get; }
+
         /// <summary> Indicates whether auto renewal is turned on or off for a product. </summary>
         [WirePath("properties.autoRenew")]
         public BillingSubscriptionAutoRenewState? AutoRenew
