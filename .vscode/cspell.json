@@ -1173,6 +1173,13 @@
       ]
     },
     {
+      "filename": "**/sdk/redhatopenshifthcp/**/*.cs",
+      "words": [
+        "kubeconfig",
+        "SSDLRS"
+      ]
+    },
+    {
       "filename": "**/sdk/reservations/**/*.cs",
       "words": [
         "unprovisioning"
