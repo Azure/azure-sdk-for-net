@@ -24,13 +24,13 @@ namespace Azure.IoT.DeviceUpdate
         /// in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you
         /// create a deployment.
         /// </param>
-        /// <param name="startDateTime"> The deployment start datetime. </param>
+        /// <param name="startOn"> The deployment start datetime. </param>
         /// <param name="update"> Update information for the update in the deployment. </param>
         /// <param name="groupId"> The group identity for the devices the deployment is intended to update. </param>
-        internal Deployment(string deploymentId, DateTimeOffset startDateTime, UpdateInfo update, string groupId)
+        internal Deployment(string deploymentId, DateTimeOffset startOn, UpdateInfo update, string groupId)
         {
             DeploymentId = deploymentId;
-            StartDateTime = startDateTime;
+            StartOn = startOn;
             Update = update;
             GroupId = groupId;
             DeviceClassSubgroups = new ChangeTrackingList<string>();
@@ -44,7 +44,7 @@ namespace Azure.IoT.DeviceUpdate
         /// in the Azure Portal IoT Hub resource generates a GUID for deploymentId when you
         /// create a deployment.
         /// </param>
-        /// <param name="startDateTime"> The deployment start datetime. </param>
+        /// <param name="startOn"> The deployment start datetime. </param>
         /// <param name="update"> Update information for the update in the deployment. </param>
         /// <param name="groupId"> The group identity for the devices the deployment is intended to update. </param>
         /// <param name="deviceClassSubgroups">
@@ -61,10 +61,10 @@ namespace Azure.IoT.DeviceUpdate
         /// Defaults to "https".
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Deployment(string deploymentId, DateTimeOffset startDateTime, UpdateInfo update, string groupId, IList<string> deviceClassSubgroups, bool? isCanceled, bool? isRetried, CloudInitiatedRollbackPolicy rollbackPolicy, bool? isCloudInitiatedRollback, DownloadSecurity? downloadSecurity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal Deployment(string deploymentId, DateTimeOffset startOn, UpdateInfo update, string groupId, IList<string> deviceClassSubgroups, bool? isCanceled, bool? isRetried, CloudInitiatedRollbackPolicy rollbackPolicy, bool? isCloudInitiatedRollback, DownloadSecurity? downloadSecurity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeploymentId = deploymentId;
-            StartDateTime = startDateTime;
+            StartOn = startOn;
             Update = update;
             GroupId = groupId;
             DeviceClassSubgroups = deviceClassSubgroups;
@@ -86,7 +86,7 @@ namespace Azure.IoT.DeviceUpdate
         public string DeploymentId { get; }
 
         /// <summary> The deployment start datetime. </summary>
-        public DateTimeOffset StartDateTime { get; }
+        public DateTimeOffset StartOn { get; }
 
         /// <summary> Update information for the update in the deployment. </summary>
         public UpdateInfo Update { get; }

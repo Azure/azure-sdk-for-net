@@ -100,9 +100,9 @@ namespace Azure.AI.AnomalyDetector
                 writer.WriteStringValue(DataSchema.Value.ToString());
             }
             writer.WritePropertyName("startTime"u8);
-            writer.WriteStringValue(StartTime, "O");
+            writer.WriteStringValue(StartOn, "O");
             writer.WritePropertyName("endTime"u8);
-            writer.WriteStringValue(EndTime, "O");
+            writer.WriteStringValue(EndOn, "O");
             if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
@@ -182,8 +182,8 @@ namespace Azure.AI.AnomalyDetector
             }
             Uri dataSource = default;
             DataSchema? dataSchema = default;
-            DateTimeOffset startTime = default;
-            DateTimeOffset endTime = default;
+            DateTimeOffset startOn = default;
+            DateTimeOffset endOn = default;
             string displayName = default;
             int? slidingWindow = default;
             AlignPolicy alignPolicy = default;
@@ -209,12 +209,12 @@ namespace Azure.AI.AnomalyDetector
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startTime = prop.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
-                    endTime = prop.Value.GetDateTimeOffset("O");
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("displayName"u8))
@@ -280,8 +280,8 @@ namespace Azure.AI.AnomalyDetector
             return new ModelInfo(
                 dataSource,
                 dataSchema,
-                startTime,
-                endTime,
+                startOn,
+                endOn,
                 displayName,
                 slidingWindow,
                 alignPolicy,

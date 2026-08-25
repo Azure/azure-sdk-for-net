@@ -2701,18 +2701,18 @@ namespace Azure.Search.Documents.Models
         /// <param name="fileId"> The unique identifier for the file. </param>
         /// <param name="fileName"> The original file name. </param>
         /// <param name="fileSizeBytes"> The file size in bytes. </param>
-        /// <param name="createdAt"> The timestamp when the file was created. </param>
-        /// <param name="lastUpdatedAt"> The timestamp when the file was last updated. </param>
+        /// <param name="createdOn"> The timestamp when the file was created. </param>
+        /// <param name="lastUpdatedOn"> The timestamp when the file was last updated. </param>
         /// <param name="errorMessage"> The error message if file processing failed, null otherwise. </param>
         /// <returns> A new <see cref="Indexes.Models.KnowledgeSourceFile"/> instance for mocking. </returns>
-        public static KnowledgeSourceFile KnowledgeSourceFile(string fileId = default, string fileName = default, long? fileSizeBytes = default, DateTimeOffset? createdAt = default, DateTimeOffset? lastUpdatedAt = default, string errorMessage = default)
+        public static KnowledgeSourceFile KnowledgeSourceFile(string fileId = default, string fileName = default, long? fileSizeBytes = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastUpdatedOn = default, string errorMessage = default)
         {
             return new KnowledgeSourceFile(
                 fileId,
                 fileName,
                 fileSizeBytes,
-                createdAt,
-                lastUpdatedAt,
+                createdOn,
+                lastUpdatedOn,
                 errorMessage,
                 additionalBinaryDataProperties: null);
         }
@@ -2780,12 +2780,12 @@ namespace Azure.Search.Documents.Models
         /// <summary> Represents service-level indexer runtime counters. </summary>
         /// <param name="usedSeconds"> Cumulative runtime of all indexers in the service from the beginningTime to endingTime, in seconds. </param>
         /// <param name="remainingSeconds"> Cumulative runtime remaining for all indexers in the service from the beginningTime to endingTime, in seconds. </param>
-        /// <param name="beginningTime"> Beginning UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
-        /// <param name="endingTime"> End UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
+        /// <param name="beginningOn"> Beginning UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
+        /// <param name="endingOn"> End UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
         /// <returns> A new <see cref="Indexes.Models.ServiceIndexersRuntime"/> instance for mocking. </returns>
-        public static ServiceIndexersRuntime ServiceIndexersRuntime(long usedSeconds = default, long? remainingSeconds = default, DateTimeOffset beginningTime = default, DateTimeOffset endingTime = default)
+        public static ServiceIndexersRuntime ServiceIndexersRuntime(long usedSeconds = default, long? remainingSeconds = default, DateTimeOffset beginningOn = default, DateTimeOffset endingOn = default)
         {
-            return new ServiceIndexersRuntime(usedSeconds, remainingSeconds, beginningTime, endingTime, additionalBinaryDataProperties: null);
+            return new ServiceIndexersRuntime(usedSeconds, remainingSeconds, beginningOn, endingOn, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Statistics for a given index. Statistics are collected periodically and are not guaranteed to always be up-to-date. </summary>
@@ -3015,12 +3015,12 @@ namespace Azure.Search.Documents.Models
         /// <summary> Represents the indexer's cumulative runtime consumption in the service. </summary>
         /// <param name="usedSeconds"> Cumulative runtime of the indexer from the beginningTime to endingTime, in seconds. </param>
         /// <param name="remainingSeconds"> Cumulative runtime remaining for all indexers in the service from the beginningTime to endingTime, in seconds. </param>
-        /// <param name="beginningTime"> Beginning UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
-        /// <param name="endingTime"> End UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
+        /// <param name="beginningOn"> Beginning UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
+        /// <param name="endingOn"> End UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
         /// <returns> A new <see cref="Indexes.Models.IndexerRuntime"/> instance for mocking. </returns>
-        public static IndexerRuntime IndexerRuntime(long usedSeconds = default, long? remainingSeconds = default, DateTimeOffset beginningTime = default, DateTimeOffset endingTime = default)
+        public static IndexerRuntime IndexerRuntime(long usedSeconds = default, long? remainingSeconds = default, DateTimeOffset beginningOn = default, DateTimeOffset endingOn = default)
         {
-            return new IndexerRuntime(usedSeconds, remainingSeconds, beginningTime, endingTime, additionalBinaryDataProperties: null);
+            return new IndexerRuntime(usedSeconds, remainingSeconds, beginningOn, endingOn, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the result of an individual indexer execution. </summary>
@@ -4697,12 +4697,12 @@ namespace Azure.Search.Documents.Models
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="searchIndexArguments"> The search index arguments for the retrieval activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseSearchIndexActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseSearchIndexActivityRecord KnowledgeBaseSearchIndexActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseSearchIndexActivityArguments searchIndexArguments = default)
+        public static KnowledgeBaseSearchIndexActivityRecord KnowledgeBaseSearchIndexActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseSearchIndexActivityArguments searchIndexArguments = default)
         {
             return new KnowledgeBaseSearchIndexActivityRecord(
                 id,
@@ -4712,7 +4712,7 @@ namespace Azure.Search.Documents.Models
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
                 searchIndexArguments);
@@ -4756,12 +4756,12 @@ namespace Azure.Search.Documents.Models
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="azureBlobArguments"> The azure blob arguments for the retrieval activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAzureBlobActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseAzureBlobActivityRecord KnowledgeBaseAzureBlobActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseAzureBlobActivityArguments azureBlobArguments = default)
+        public static KnowledgeBaseAzureBlobActivityRecord KnowledgeBaseAzureBlobActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseAzureBlobActivityArguments azureBlobArguments = default)
         {
             return new KnowledgeBaseAzureBlobActivityRecord(
                 id,
@@ -4771,7 +4771,7 @@ namespace Azure.Search.Documents.Models
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
                 azureBlobArguments);
@@ -4791,12 +4791,12 @@ namespace Azure.Search.Documents.Models
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="indexedSharePointArguments"> The indexed SharePoint arguments for the retrieval activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSharePointActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseIndexedSharePointActivityRecord KnowledgeBaseIndexedSharePointActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseIndexedSharePointActivityArguments indexedSharePointArguments = default)
+        public static KnowledgeBaseIndexedSharePointActivityRecord KnowledgeBaseIndexedSharePointActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseIndexedSharePointActivityArguments indexedSharePointArguments = default)
         {
             return new KnowledgeBaseIndexedSharePointActivityRecord(
                 id,
@@ -4806,7 +4806,7 @@ namespace Azure.Search.Documents.Models
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
                 indexedSharePointArguments);
@@ -4826,12 +4826,12 @@ namespace Azure.Search.Documents.Models
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="indexedOneLakeArguments"> The indexed OneLake arguments for the retrieval activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseIndexedOneLakeActivityRecord KnowledgeBaseIndexedOneLakeActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseIndexedOneLakeActivityArguments indexedOneLakeArguments = default)
+        public static KnowledgeBaseIndexedOneLakeActivityRecord KnowledgeBaseIndexedOneLakeActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseIndexedOneLakeActivityArguments indexedOneLakeArguments = default)
         {
             return new KnowledgeBaseIndexedOneLakeActivityRecord(
                 id,
@@ -4841,7 +4841,7 @@ namespace Azure.Search.Documents.Models
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
                 indexedOneLakeArguments);
@@ -4861,12 +4861,12 @@ namespace Azure.Search.Documents.Models
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="webArguments"> The web arguments for the retrieval activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseWebActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseWebActivityRecord KnowledgeBaseWebActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseWebActivityArguments webArguments = default)
+        public static KnowledgeBaseWebActivityRecord KnowledgeBaseWebActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseWebActivityArguments webArguments = default)
         {
             return new KnowledgeBaseWebActivityRecord(
                 id,
@@ -4876,7 +4876,7 @@ namespace Azure.Search.Documents.Models
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
                 webArguments);
@@ -4906,12 +4906,12 @@ namespace Azure.Search.Documents.Models
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="remoteSharePointArguments"> The remote SharePoint arguments for the retrieval activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseRemoteSharePointActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseRemoteSharePointActivityRecord KnowledgeBaseRemoteSharePointActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseRemoteSharePointActivityArguments remoteSharePointArguments = default)
+        public static KnowledgeBaseRemoteSharePointActivityRecord KnowledgeBaseRemoteSharePointActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseRemoteSharePointActivityArguments remoteSharePointArguments = default)
         {
             return new KnowledgeBaseRemoteSharePointActivityRecord(
                 id,
@@ -4921,7 +4921,7 @@ namespace Azure.Search.Documents.Models
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
                 remoteSharePointArguments);
@@ -4942,12 +4942,12 @@ namespace Azure.Search.Documents.Models
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="workIQArguments"> The WorkIQ arguments for the retrieval activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseWorkIQActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseWorkIQActivityRecord KnowledgeBaseWorkIQActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseWorkIQActivityArguments workIQArguments = default)
+        public static KnowledgeBaseWorkIQActivityRecord KnowledgeBaseWorkIQActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseWorkIQActivityArguments workIQArguments = default)
         {
             return new KnowledgeBaseWorkIQActivityRecord(
                 id,
@@ -4957,7 +4957,7 @@ namespace Azure.Search.Documents.Models
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
                 workIQArguments);
@@ -4977,12 +4977,12 @@ namespace Azure.Search.Documents.Models
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="fabricDataAgentArguments"> The Fabric Data Agent arguments for the retrieval activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseFabricDataAgentActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseFabricDataAgentActivityRecord KnowledgeBaseFabricDataAgentActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseFabricDataAgentActivityArguments fabricDataAgentArguments = default)
+        public static KnowledgeBaseFabricDataAgentActivityRecord KnowledgeBaseFabricDataAgentActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseFabricDataAgentActivityArguments fabricDataAgentArguments = default)
         {
             return new KnowledgeBaseFabricDataAgentActivityRecord(
                 id,
@@ -4992,7 +4992,7 @@ namespace Azure.Search.Documents.Models
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
                 fabricDataAgentArguments);
@@ -5012,12 +5012,12 @@ namespace Azure.Search.Documents.Models
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="fabricOntologyArguments"> The Fabric Ontology arguments for the retrieval activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseFabricOntologyActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseFabricOntologyActivityRecord KnowledgeBaseFabricOntologyActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseFabricOntologyActivityArguments fabricOntologyArguments = default)
+        public static KnowledgeBaseFabricOntologyActivityRecord KnowledgeBaseFabricOntologyActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseFabricOntologyActivityArguments fabricOntologyArguments = default)
         {
             return new KnowledgeBaseFabricOntologyActivityRecord(
                 id,
@@ -5027,7 +5027,7 @@ namespace Azure.Search.Documents.Models
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
                 fabricOntologyArguments);
@@ -5047,12 +5047,12 @@ namespace Azure.Search.Documents.Models
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="mcpServerArguments"> The MCP server arguments for the retrieval activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseMcpServerActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseMcpServerActivityRecord KnowledgeBaseMcpServerActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseMcpServerActivityArguments mcpServerArguments = default)
+        public static KnowledgeBaseMcpServerActivityRecord KnowledgeBaseMcpServerActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseMcpServerActivityArguments mcpServerArguments = default)
         {
             return new KnowledgeBaseMcpServerActivityRecord(
                 id,
@@ -5062,7 +5062,7 @@ namespace Azure.Search.Documents.Models
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
                 mcpServerArguments);
@@ -5085,12 +5085,12 @@ namespace Azure.Search.Documents.Models
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="fileArguments"> The File arguments for the retrieval activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseFileActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseFileActivityRecord KnowledgeBaseFileActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseFileActivityArguments fileArguments = default)
+        public static KnowledgeBaseFileActivityRecord KnowledgeBaseFileActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseFileActivityArguments fileArguments = default)
         {
             return new KnowledgeBaseFileActivityRecord(
                 id,
@@ -5100,7 +5100,7 @@ namespace Azure.Search.Documents.Models
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
                 fileArguments);
@@ -5120,12 +5120,12 @@ namespace Azure.Search.Documents.Models
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="indexedSqlArguments"> The indexed SQL arguments for the retrieval activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSqlActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseIndexedSqlActivityRecord KnowledgeBaseIndexedSqlActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseIndexedSqlActivityArguments indexedSqlArguments = default)
+        public static KnowledgeBaseIndexedSqlActivityRecord KnowledgeBaseIndexedSqlActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseIndexedSqlActivityArguments indexedSqlArguments = default)
         {
             return new KnowledgeBaseIndexedSqlActivityRecord(
                 id,
@@ -5135,7 +5135,7 @@ namespace Azure.Search.Documents.Models
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
                 indexedSqlArguments);
