@@ -24,10 +24,11 @@ namespace Azure.Storage.Blobs
         public static RequestFailedException InvalidRangeWithNonEmptyBlob(RequestFailedException ex) =>
             new RequestFailedException("Invalid range exception during ranged download despite non-empty blob", ex);
 
-        public static InvalidOperationException AccountNameRequiredForSessionSigning()
-             => new InvalidOperationException(
-                    $"The storage account name could not be determined from the request URL. " +
-                    $"Set {nameof(SessionOptions)}.{nameof(SessionOptions.AccountName)} when using a custom endpoint URL.");
+        public static InvalidOperationException AccountNameRequiredForSessionSigning(Uri endpoint)
+            => new InvalidOperationException(
+                    $"{nameof(SessionMode)}.{nameof(SessionMode.Enabled)} requires the storage account name, " +
+                    $"which could not be determined from the URL: {endpoint.GetLeftPart(UriPartial.Path)}. " +
+                    $"Set BlobClientOptions.{nameof(SessionOptions)}.{nameof(SessionOptions.AccountName)} when using a custom endpoint URL.");
 
         internal static void VerifyHttpsCustomerProvidedKey(Uri uri, CustomerProvidedKey? customerProvidedKey)
         {
