@@ -170,9 +170,19 @@ namespace Azure.Generator.Management.Utilities
         private static bool SignaturesMatch(MethodSignature left, MethodSignature right)
         {
             if (left.Name != right.Name
-                || left.Parameters.Count != right.Parameters.Count
-                || (left.GenericArguments?.Count ?? 0) != (right.GenericArguments?.Count ?? 0)
-                || left.Modifiers.HasFlag(MethodSignatureModifiers.Static) != right.Modifiers.HasFlag(MethodSignatureModifiers.Static))
+                || left.Parameters.Count != right.Parameters.Count)
+            {
+                return false;
+            }
+
+            if (left.ReturnType is null || right.ReturnType is null)
+            {
+                if (left.ReturnType != right.ReturnType)
+                {
+                    return false;
+                }
+            }
+            else if (!left.ReturnType.AreNamesEqual(right.ReturnType))
             {
                 return false;
             }
@@ -182,9 +192,7 @@ namespace Azure.Generator.Management.Utilities
                 var leftParameter = left.Parameters[i];
                 var rightParameter = right.Parameters[i];
                 if (leftParameter.Name != rightParameter.Name
-                    || leftParameter.IsRef != rightParameter.IsRef
-                    || leftParameter.IsOut != rightParameter.IsOut
-                    || !leftParameter.Type.Equals(rightParameter.Type))
+                    || !leftParameter.Type.AreNamesEqual(rightParameter.Type))
                 {
                     return false;
                 }
@@ -366,12 +374,14 @@ namespace Azure.Generator.Management.Utilities
                 return null;
             }
 
-            var previousReturnsVoid = previousSignature.ReturnType is null
-                || (previousSignature.ReturnType is { IsFrameworkType: true, FrameworkType: { } previousReturnType } && previousReturnType == typeof(void));
-            var currentReturnsVoid = currentSignature.ReturnType is null
-                || (currentSignature.ReturnType is { IsFrameworkType: true, FrameworkType: { } currentReturnType } && currentReturnType == typeof(void));
-            if (previousReturnsVoid != currentReturnsVoid
-                || !previousReturnsVoid && !previousSignature.ReturnType!.AreNamesEqual(currentSignature.ReturnType!))
+            if (previousSignature.ReturnType is null || currentSignature.ReturnType is null)
+            {
+                if (previousSignature.ReturnType != currentSignature.ReturnType)
+                {
+                    return null;
+                }
+            }
+            else if (!previousSignature.ReturnType.AreNamesEqual(currentSignature.ReturnType))
             {
                 return null;
             }
@@ -387,12 +397,19 @@ namespace Azure.Generator.Management.Utilities
             }
 
             var removeLeadingDefaults = currentConditionalParameter.DefaultValue is not null;
-            var parameters = previousSignature.Parameters
-                .Select((parameter, index) => CloneParameter(parameter, removeDefault: removeLeadingDefaults && index <= firstConvertedParameter))
-                .ToArray();
-            var parameterIndexes = parameters
-                .Select((parameter, index) => (parameter.Name, index))
-                .ToDictionary(item => item.Name, item => item.index);
+            var parameters = new List<ParameterProvider>(previousSignature.Parameters.Count);
+            var parameterIndexes = new Dictionary<string, int>(StringComparer.Ordinal);
+            for (var i = 0; i < previousSignature.Parameters.Count; i++)
+            {
+                var parameter = CloneParameter(previousSignature.Parameters[i], removeDefault: removeLeadingDefaults && i <= firstConvertedParameter);
+                if (parameterIndexes.ContainsKey(parameter.Name))
+                {
+                    return null;
+                }
+
+                parameterIndexes.Add(parameter.Name, i);
+                parameters.Add(parameter);
+            }
             var arguments = new ValueExpression[currentSignature.Parameters.Count];
             for (var i = 0; i < currentSignature.Parameters.Count; i++)
             {
@@ -430,7 +447,7 @@ namespace Azure.Generator.Management.Utilities
                 ? Static(enclosingType.Type)
                 : This;
             var invocation = invocationTarget.Invoke(currentSignature.Name, arguments);
-            MethodBodyStatement body = previousReturnsVoid ? invocation.Terminate() : Return(invocation);
+            MethodBodyStatement body = previousSignature.ReturnType is null ? invocation.Terminate() : Return(invocation);
 
             var hasEditorBrowsable = previousSignature.Attributes.Any(attribute =>
                 attribute.Type is { IsFrameworkType: true } && attribute.Type.FrameworkType == typeof(EditorBrowsableAttribute));
