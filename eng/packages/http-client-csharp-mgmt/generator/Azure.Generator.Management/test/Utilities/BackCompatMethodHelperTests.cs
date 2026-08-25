@@ -7,7 +7,9 @@ using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.Statements;
 using NUnit.Framework;
+using System.ComponentModel;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Mgmt.Tests.Utilities
@@ -56,7 +58,8 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             var enclosingType = new TestTypeView("TestClient");
             var current = CreateMethod(
                 enclosingType,
-                [new ParameterProvider("ifMatch", $"The condition.", new CSharpType(typeof(ETag), isNullable: true), defaultValue: Default)]);
+                [new ParameterProvider("ifMatch", $"The condition.", new CSharpType(typeof(ETag), isNullable: true), defaultValue: Default)],
+                returnType: typeof(object));
             var previous = CreateMethod(
                 enclosingType,
                 [
@@ -293,6 +296,39 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         }
 
         [Test]
+        public void DoesNotAddStringOverloadWhenConditionalParameterTypeDiffers()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [new ParameterProvider("ifMatch", $"The condition.", new CSharpType(typeof(BinaryData), isNullable: true))]);
+            var previous = CreateMethod(
+                enclosingType,
+                [new ParameterProvider("ifMatch", $"The condition.", new CSharpType(typeof(string), isNullable: true))]);
+
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
+        [Test]
+        public void DoesNotDuplicateEditorBrowsableAttributeOnGeneratedOverload()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [new ParameterProvider("ifMatch", $"The condition.", new CSharpType(typeof(ETag), isNullable: true), defaultValue: Default)]);
+            var previous = CreateMethod(
+                enclosingType,
+                [new ParameterProvider("ifMatch", $"The condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default)],
+                attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), FrameworkEnumValue(EditorBrowsableState.Never))]);
+
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
+        [Test]
         public void AddsForwardsClientCallsToSynthesizedOverload()
         {
             var enclosingType = new TestTypeView("TestClient");
@@ -475,7 +511,8 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         private static MethodProvider CreateMethod(
             TypeProvider enclosingType,
             IReadOnlyList<ParameterProvider> parameters,
-            CSharpType? returnType = null)
+            CSharpType? returnType = null,
+            IReadOnlyList<AttributeStatement>? attributes = null)
         {
             var signature = new MethodSignature(
                 "Get",
@@ -483,7 +520,8 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                 MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
                 returnType ?? typeof(string),
                 $"The result.",
-                parameters);
+                parameters,
+                Attributes: attributes ?? []);
             return new MethodProvider(signature, Return(Literal("value")), enclosingType);
         }
 

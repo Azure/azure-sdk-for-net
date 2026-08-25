@@ -13,14 +13,14 @@ namespace Samples
 {
     public partial class TestClient
     {
-        public virtual object Get(global::Azure.ETag? ifMatch = default)
+        public virtual string Get(global::Azure.ETag? ifMatch = default)
         {
             return "value";
         }
 
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         [global::Azure.Core.ForwardsClientCallsAttribute]
-        public virtual object Get(string ifMatch)
+        public virtual string Get(string ifMatch)
         {
             return this.Get((ifMatch != null) ? new global::Azure.ETag(ifMatch) : ((global::Azure.ETag?)null));
         }

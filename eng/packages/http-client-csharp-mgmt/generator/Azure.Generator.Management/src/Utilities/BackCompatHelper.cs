@@ -93,6 +93,11 @@ namespace Azure.Generator.Management.Utilities
                 }
 
                 var overload = BuildStringToETagOverload(enclosingType, previousMethod, currentMethod);
+                if (overload is null)
+                {
+                    continue;
+                }
+
                 methods.Add(overload);
                 if (!existingSignatures.TryGetValue(overload.Signature.Name, out existingMethods))
                 {
@@ -164,14 +169,22 @@ namespace Azure.Generator.Management.Utilities
 
         private static bool SignaturesMatch(MethodSignature left, MethodSignature right)
         {
-            if (left.Name != right.Name || left.Parameters.Count != right.Parameters.Count)
+            if (left.Name != right.Name
+                || left.Parameters.Count != right.Parameters.Count
+                || (left.GenericArguments?.Count ?? 0) != (right.GenericArguments?.Count ?? 0)
+                || left.Modifiers.HasFlag(MethodSignatureModifiers.Static) != right.Modifiers.HasFlag(MethodSignatureModifiers.Static))
             {
                 return false;
             }
 
             for (var i = 0; i < left.Parameters.Count; i++)
             {
-                if (left.Parameters[i].Name != right.Parameters[i].Name)
+                var leftParameter = left.Parameters[i];
+                var rightParameter = right.Parameters[i];
+                if (leftParameter.Name != rightParameter.Name
+                    || leftParameter.IsRef != rightParameter.IsRef
+                    || leftParameter.IsOut != rightParameter.IsOut
+                    || !leftParameter.Type.Equals(rightParameter.Type))
                 {
                     return false;
                 }
@@ -332,15 +345,37 @@ namespace Azure.Generator.Management.Utilities
             return parameters;
         }
 
-        private static MethodProvider BuildStringToETagOverload(
+        private static MethodProvider? BuildStringToETagOverload(
             TypeProvider enclosingType,
             MethodProvider previousMethod,
             MethodProvider currentMethod)
         {
             var previousSignature = previousMethod.Signature;
             var currentSignature = currentMethod.Signature;
-            var currentConditionalParameter = currentSignature.Parameters.First(parameter =>
-                IsConditionsParameter(parameter) || IsETagParameter(parameter));
+            ParameterProvider? currentConditionalParameter = null;
+            foreach (var parameter in currentSignature.Parameters)
+            {
+                if (IsConditionsParameter(parameter) || IsETagParameter(parameter))
+                {
+                    currentConditionalParameter = parameter;
+                    break;
+                }
+            }
+            if (currentConditionalParameter is null)
+            {
+                return null;
+            }
+
+            var previousReturnsVoid = previousSignature.ReturnType is null
+                || (previousSignature.ReturnType is { IsFrameworkType: true, FrameworkType: { } previousReturnType } && previousReturnType == typeof(void));
+            var currentReturnsVoid = currentSignature.ReturnType is null
+                || (currentSignature.ReturnType is { IsFrameworkType: true, FrameworkType: { } currentReturnType } && currentReturnType == typeof(void));
+            if (previousReturnsVoid != currentReturnsVoid
+                || !previousReturnsVoid && !previousSignature.ReturnType!.Equals(currentSignature.ReturnType))
+            {
+                return null;
+            }
+
             var firstConvertedParameter = 0;
             for (var i = 0; i < previousSignature.Parameters.Count; i++)
             {
@@ -369,7 +404,12 @@ namespace Azure.Generator.Management.Utilities
                 }
                 else
                 {
-                    var parameter = parameters[parameterIndexes[currentParameter.Name]];
+                    if (!parameterIndexes.TryGetValue(currentParameter.Name, out var parameterIndex))
+                    {
+                        return null;
+                    }
+
+                    var parameter = parameters[parameterIndex];
                     value = parameter.Type.Equals(currentParameter.Type)
                         ? parameter
                         : new TernaryConditionalExpression(
@@ -390,9 +430,13 @@ namespace Azure.Generator.Management.Utilities
                 ? Static(enclosingType.Type)
                 : This;
             var invocation = invocationTarget.Invoke(currentSignature.Name, arguments);
-            var returnsVoid = currentSignature.ReturnType is null
-                || currentSignature.ReturnType is { IsFrameworkType: true, FrameworkType: { } returnType } && returnType == typeof(void);
-            MethodBodyStatement body = returnsVoid ? invocation.Terminate() : Return(invocation);
+            MethodBodyStatement body = previousReturnsVoid ? invocation.Terminate() : Return(invocation);
+
+            var hasEditorBrowsable = previousSignature.Attributes.Any(attribute =>
+                attribute.Type is { IsFrameworkType: true } && attribute.Type.FrameworkType == typeof(EditorBrowsableAttribute));
+            var attributes = hasEditorBrowsable
+                ? previousSignature.Attributes
+                : [.. previousSignature.Attributes, new AttributeStatement(typeof(EditorBrowsableAttribute), FrameworkEnumValue(EditorBrowsableState.Never))];
 
             var signature = new MethodSignature(
                 previousSignature.Name,
@@ -401,7 +445,7 @@ namespace Azure.Generator.Management.Utilities
                 previousSignature.ReturnType,
                 previousSignature.ReturnDescription,
                 parameters,
-                Attributes: [.. previousSignature.Attributes, new AttributeStatement(typeof(EditorBrowsableAttribute), FrameworkEnumValue(EditorBrowsableState.Never))],
+                Attributes: attributes,
                 GenericArguments: previousSignature.GenericArguments,
                 GenericParameterConstraints: previousSignature.GenericParameterConstraints,
                 ExplicitInterface: previousSignature.ExplicitInterface,
