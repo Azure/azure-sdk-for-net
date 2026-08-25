@@ -6,7 +6,7 @@
 
 ### Breaking Changes
 
-- Renamed `Kustomization` to `FluxConfigurationsKustomization`.
+- Renamed `Kustomization` and `KustomizationPatch` to `FluxConfigurationsKustomization` and `FluxConfigurationsKustomizationPatch`.
 
 ### Bugs Fixed
 

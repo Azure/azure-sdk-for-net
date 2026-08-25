@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="kustomizations"> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </param>
         /// <param name="configurationProtectedSettings"> Key-value pairs of protected configuration settings for the configuration. </param>
         /// <returns> A new <see cref="Models.FluxConfigurationPatch"/> instance for mocking. </returns>
-        public static FluxConfigurationPatch FluxConfigurationPatch(FluxConfigurationSourceKindType? sourceKind = default, bool? isSuspended = default, FluxGitRepositoryPatch gitRepository = default, FluxBucketPatch bucket = default, AzureBlobPatch azureBlob = default, OciRepositoryPatch ociRepository = default, IDictionary<string, KustomizationPatch> kustomizations = default, IDictionary<string, string> configurationProtectedSettings = default)
+        public static FluxConfigurationPatch FluxConfigurationPatch(FluxConfigurationSourceKindType? sourceKind = default, bool? isSuspended = default, FluxGitRepositoryPatch gitRepository = default, FluxBucketPatch bucket = default, AzureBlobPatch azureBlob = default, OciRepositoryPatch ociRepository = default, IDictionary<string, FluxConfigurationsKustomizationPatch> kustomizations = default, IDictionary<string, string> configurationProtectedSettings = default)
         {
             return new FluxConfigurationPatch(sourceKind is null && isSuspended is null && gitRepository is null && bucket is null && azureBlob is null && ociRepository is null && kustomizations is null && configurationProtectedSettings is null ? default : new FluxConfigurationPatchProperties(
                 sourceKind,
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 bucket,
                 azureBlob,
                 ociRepository,
-                kustomizations ?? new ChangeTrackingDictionary<string, KustomizationPatch>(),
+                kustomizations ?? new ChangeTrackingDictionary<string, FluxConfigurationsKustomizationPatch>(),
                 configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
                 default), default);
         }
@@ -560,12 +560,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="isForce"> Enable/disable re-creating Kubernetes resources on the cluster when patching fails due to an immutable field change. </param>
         /// <param name="isWait"> Enable/disable health check for all Kubernetes objects created by this Kustomization. </param>
         /// <param name="postBuild"> Used for variable substitution for this Kustomization after kustomize build. </param>
-        /// <returns> A new <see cref="Models.KustomizationPatch"/> instance for mocking. </returns>
-        public static KustomizationPatch KustomizationPatch(string path = default, IEnumerable<string> dependsOn = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, long? retryIntervalInSeconds = default, bool? isPrune = default, bool? isForce = default, bool? isWait = default, FluxPostBuildPatch postBuild = default)
+        /// <returns> A new <see cref="Models.FluxConfigurationsKustomizationPatch"/> instance for mocking. </returns>
+        public static FluxConfigurationsKustomizationPatch FluxConfigurationsKustomizationPatch(string path = default, IEnumerable<string> dependsOn = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, long? retryIntervalInSeconds = default, bool? isPrune = default, bool? isForce = default, bool? isWait = default, FluxPostBuildPatch postBuild = default)
         {
             dependsOn ??= new ChangeTrackingList<string>();
 
-            return new KustomizationPatch(
+            return new FluxConfigurationsKustomizationPatch(
                 path,
                 (dependsOn ?? new ChangeTrackingList<string>()).ToList(),
                 timeoutInSeconds,
