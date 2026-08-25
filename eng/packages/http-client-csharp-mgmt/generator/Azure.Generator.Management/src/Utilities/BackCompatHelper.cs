@@ -414,7 +414,14 @@ namespace Azure.Generator.Management.Utilities
                 ExplicitInterface: previousSignature.ExplicitInterface,
                 NonDocumentComment: previousSignature.NonDocumentComment);
 
-            return new MethodProvider(signature, body, enclosingType, previousMethod.XmlDocs);
+            var previousXmlDocs = previousMethod.XmlDocs;
+            var xmlDocs = new XmlDocProvider(
+                previousXmlDocs.Summary,
+                parameters.Select(parameter => new XmlDocParamStatement(parameter)).ToArray(),
+                previousXmlDocs.Exceptions,
+                previousXmlDocs.Returns,
+                previousXmlDocs.Inherit);
+            return new MethodProvider(signature, body, enclosingType, xmlDocs);
         }
 
         private static ValueExpression BuildConditionsArgument(
@@ -460,7 +467,15 @@ namespace Azure.Generator.Management.Utilities
             bool removeDefault = false,
             string? name = null,
             CSharpType? type = null)
-            => new(
+        {
+            if (name is null
+                && type is null
+                && !(removeDefault && parameter.DefaultValue is not null))
+            {
+                return parameter;
+            }
+
+            return new(
                 name ?? parameter.Name,
                 parameter.Description,
                 type ?? parameter.Type,
@@ -480,6 +495,7 @@ namespace Azure.Generator.Management.Utilities
             {
                 SpreadSource = parameter.SpreadSource
             };
+        }
 
         private static bool IsETagConditionalHeader(ParameterProvider parameter)
             => ConditionalHeaderProperties.TryGetValue(parameter.Name, out var propertyName)

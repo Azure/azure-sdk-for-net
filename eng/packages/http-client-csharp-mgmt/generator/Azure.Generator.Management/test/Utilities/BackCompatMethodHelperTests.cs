@@ -59,7 +59,14 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                 [new ParameterProvider("ifMatch", $"The condition.", new CSharpType(typeof(ETag), isNullable: true), defaultValue: Default)]);
             var previous = CreateMethod(
                 enclosingType,
-                [new ParameterProvider("ifMatch", $"The condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default)],
+                [
+                    new ParameterProvider(
+                        "ifMatch",
+                        $"The condition.",
+                        new CSharpType(typeof(string), isNullable: true),
+                        defaultValue: Default,
+                        inputParameter: InputFactory.MethodParameter("ifMatch", InputPrimitiveType.String))
+                ],
                 returnType: typeof(object));
 
             var result = DecorateWithLastContract(enclosingType, [current], [previous]);
