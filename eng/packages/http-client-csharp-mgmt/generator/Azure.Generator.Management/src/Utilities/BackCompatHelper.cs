@@ -68,7 +68,7 @@ namespace Azure.Generator.Management.Utilities
             {
                 if (!IsPublicApi(previousMethod.Signature.Modifiers)
                     || existingSignatures.TryGetValue(previousMethod.Signature.Name, out var existingMethods)
-                        && existingMethods.Any(signature => SignaturesMatch(previousMethod.Signature, signature))
+                        && existingMethods.Any(signature => MethodSignature.MethodSignatureComparer.Equals(previousMethod.Signature, signature))
                     || IsMethodRemovalAcceptedInBaseline(enclosingType, previousMethod.Signature))
                 {
                     continue;
@@ -171,14 +171,7 @@ namespace Azure.Generator.Management.Utilities
 
             for (var i = 0; i < left.Parameters.Count; i++)
             {
-                var leftParameter = left.Parameters[i];
-                var rightParameter = right.Parameters[i];
-                if (leftParameter.Name != rightParameter.Name
-                    || !leftParameter.Type.Equals(rightParameter.Type)
-                    || leftParameter.IsRef != rightParameter.IsRef
-                    || leftParameter.IsOut != rightParameter.IsOut
-                    || leftParameter.IsIn != rightParameter.IsIn
-                    || leftParameter.IsParams != rightParameter.IsParams)
+                if (left.Parameters[i].Name != right.Parameters[i].Name)
                 {
                     return false;
                 }

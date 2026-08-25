@@ -11,7 +11,7 @@ namespace Samples
 {
     public partial class TestClient
     {
-        public virtual string Get(int name, global::Azure.ETag? ifMatch)
+        public virtual string Get(string renamedName, global::Azure.ETag? ifMatch)
         {
             return "value";
         }

@@ -271,13 +271,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         }
 
         [Test]
-        public void DoesNotAddStringOverloadWhenAnotherParameterTypeChanged()
+        public void DoesNotAddStringOverloadWhenAnotherParameterNameChanged()
         {
             var enclosingType = new TestTypeView("TestClient");
             var current = CreateMethod(
                 enclosingType,
                 [
-                    new ParameterProvider("name", $"The name.", typeof(int)),
+                    new ParameterProvider("renamedName", $"The name.", typeof(string)),
                     new ParameterProvider("ifMatch", $"The condition.", new CSharpType(typeof(ETag), isNullable: true))
                 ]);
             var previous = CreateMethod(
