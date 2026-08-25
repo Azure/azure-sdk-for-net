@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             ArcDeploymentRuntime runtime = default;
             ArcDeploymentComputeType compute = default;
             string deploymentTemplate = default;
-            ArcDeploymentVllmParameters vllmParameters = default;
+            CognitiveServicesArcDeploymentVllmProperties vllmParameters = default;
             int replicas = default;
             ArcDeploymentKubernetesResources resources = default;
             IDictionary<string, string> nodeSelector = default;
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    vllmParameters = ArcDeploymentVllmParameters.DeserializeArcDeploymentVllmParameters(prop.Value, options);
+                    vllmParameters = CognitiveServicesArcDeploymentVllmProperties.DeserializeCognitiveServicesArcDeploymentVllmProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("replicas"u8))

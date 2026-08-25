@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="computeName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="computeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation> CreateOrUpdateAsync(WaitUntil waitUntil, string computeName, CognitiveServicesComputeData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CognitiveServicesComputeResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string computeName, CognitiveServicesComputeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(computeName, nameof(computeName));
             Argument.AssertNotNull(data, nameof(data));
@@ -92,10 +92,16 @@ namespace Azure.ResourceManager.CognitiveServices
                 };
                 HttpMessage message = _computesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, CognitiveServicesComputeData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_computesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                CognitiveServicesArmOperation<CognitiveServicesComputeResource> operation = new CognitiveServicesArmOperation<CognitiveServicesComputeResource>(
+                    new CognitiveServicesComputeResourceOperationSource(Client),
+                    _computesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -129,7 +135,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="computeName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="computeName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation CreateOrUpdate(WaitUntil waitUntil, string computeName, CognitiveServicesComputeData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CognitiveServicesComputeResource> CreateOrUpdate(WaitUntil waitUntil, string computeName, CognitiveServicesComputeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(computeName, nameof(computeName));
             Argument.AssertNotNull(data, nameof(data));
@@ -144,10 +150,16 @@ namespace Azure.ResourceManager.CognitiveServices
                 };
                 HttpMessage message = _computesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, computeName, CognitiveServicesComputeData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_computesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                CognitiveServicesArmOperation<CognitiveServicesComputeResource> operation = new CognitiveServicesArmOperation<CognitiveServicesComputeResource>(
+                    new CognitiveServicesComputeResourceOperationSource(Client),
+                    _computesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
             }

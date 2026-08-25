@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="inferenceEndpoint"> Read-only. Base URL for inference calls to this deployment on the Arc cluster. Populated when provisioningState is Succeeded. </param>
         /// <param name="capabilities"> Read-only. Deployment capabilities represented as key-value pairs. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArcDeploymentProperties(ArcDeploymentModel model, ResourceIdentifier extensionId, ArcDeploymentRuntime runtime, ArcDeploymentComputeType compute, string deploymentTemplate, ArcDeploymentVllmParameters vllmParameters, int replicas, ArcDeploymentKubernetesResources resources, IDictionary<string, string> nodeSelector, CognitiveServicesDeploymentState? deploymentState, string raiPolicyName, ServiceAccountProvisioningState? provisioningState, ArcDeploymentProvisioningDetails provisioningDetails, string inferenceEndpoint, IReadOnlyDictionary<string, string> capabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArcDeploymentProperties(ArcDeploymentModel model, ResourceIdentifier extensionId, ArcDeploymentRuntime runtime, ArcDeploymentComputeType compute, string deploymentTemplate, CognitiveServicesArcDeploymentVllmProperties vllmParameters, int replicas, ArcDeploymentKubernetesResources resources, IDictionary<string, string> nodeSelector, CognitiveServicesDeploymentState? deploymentState, string raiPolicyName, ServiceAccountProvisioningState? provisioningState, ArcDeploymentProvisioningDetails provisioningDetails, string inferenceEndpoint, IReadOnlyDictionary<string, string> capabilities, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Model = model;
             ExtensionId = extensionId;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Read-only. Effective vLLM runtime parameters resolved for the deployed model. Returned only when runtime is vllm. </summary>
         [WirePath("vllmParameters")]
-        public ArcDeploymentVllmParameters VllmParameters { get; }
+        public CognitiveServicesArcDeploymentVllmProperties VllmParameters { get; }
 
         /// <summary> Physical replica count on the Arc cluster. </summary>
         [WirePath("replicas")]

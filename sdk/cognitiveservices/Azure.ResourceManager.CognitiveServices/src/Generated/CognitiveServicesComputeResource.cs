@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="data"> The compute properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation> UpdateAsync(WaitUntil waitUntil, CognitiveServicesComputeData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CognitiveServicesComputeResource>> UpdateAsync(WaitUntil waitUntil, CognitiveServicesComputeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -632,10 +632,16 @@ namespace Azure.ResourceManager.CognitiveServices
                 };
                 HttpMessage message = _computesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesComputeData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_computesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                CognitiveServicesArmOperation<CognitiveServicesComputeResource> operation = new CognitiveServicesArmOperation<CognitiveServicesComputeResource>(
+                    new CognitiveServicesComputeResourceOperationSource(Client),
+                    _computesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 }
                 return operation;
             }
@@ -671,7 +677,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="data"> The compute properties. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation Update(WaitUntil waitUntil, CognitiveServicesComputeData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CognitiveServicesComputeResource> Update(WaitUntil waitUntil, CognitiveServicesComputeData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
@@ -685,10 +691,16 @@ namespace Azure.ResourceManager.CognitiveServices
                 };
                 HttpMessage message = _computesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, CognitiveServicesComputeData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                CognitiveServicesArmOperation operation = new CognitiveServicesArmOperation(_computesClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                CognitiveServicesArmOperation<CognitiveServicesComputeResource> operation = new CognitiveServicesArmOperation<CognitiveServicesComputeResource>(
+                    new CognitiveServicesComputeResourceOperationSource(Client),
+                    _computesClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
-                    operation.WaitForCompletionResponse(cancellationToken);
+                    operation.WaitForCompletion(cancellationToken);
                 }
                 return operation;
             }
@@ -731,7 +743,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CognitiveServicesComputeData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<CognitiveServicesComputeResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -774,7 +786,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CognitiveServicesComputeData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags[key] = value;
-                    ArmOperation result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<CognitiveServicesComputeResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -816,7 +828,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CognitiveServicesComputeData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<CognitiveServicesComputeResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -858,7 +870,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CognitiveServicesComputeData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.ReplaceWith(tags);
-                    ArmOperation result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<CognitiveServicesComputeResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -899,7 +911,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CognitiveServicesComputeData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<CognitiveServicesComputeResource> result = await UpdateAsync(WaitUntil.Completed, current, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -940,7 +952,7 @@ namespace Azure.ResourceManager.CognitiveServices
                 {
                     CognitiveServicesComputeData current = Get(cancellationToken: cancellationToken).Value.Data;
                     current.Tags.Remove(key);
-                    ArmOperation result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
+                    ArmOperation<CognitiveServicesComputeResource> result = Update(WaitUntil.Completed, current, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }

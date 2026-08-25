@@ -2749,7 +2749,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="inferenceEndpoint"> Read-only. Base URL for inference calls to this deployment on the Arc cluster. Populated when provisioningState is Succeeded. </param>
         /// <param name="capabilities"> Read-only. Deployment capabilities represented as key-value pairs. </param>
         /// <returns> A new <see cref="Models.ArcDeploymentProperties"/> instance for mocking. </returns>
-        public static ArcDeploymentProperties ArcDeploymentProperties(ArcDeploymentModel model = default, ResourceIdentifier extensionId = default, ArcDeploymentRuntime runtime = default, ArcDeploymentComputeType compute = default, string deploymentTemplate = default, ArcDeploymentVllmParameters vllmParameters = default, int replicas = default, ArcDeploymentKubernetesResources resources = default, IDictionary<string, string> nodeSelector = default, CognitiveServicesDeploymentState? deploymentState = default, string raiPolicyName = default, ServiceAccountProvisioningState? provisioningState = default, ArcDeploymentProvisioningDetails provisioningDetails = default, string inferenceEndpoint = default, IReadOnlyDictionary<string, string> capabilities = default)
+        public static ArcDeploymentProperties ArcDeploymentProperties(ArcDeploymentModel model = default, ResourceIdentifier extensionId = default, ArcDeploymentRuntime runtime = default, ArcDeploymentComputeType compute = default, string deploymentTemplate = default, CognitiveServicesArcDeploymentVllmProperties vllmParameters = default, int replicas = default, ArcDeploymentKubernetesResources resources = default, IDictionary<string, string> nodeSelector = default, CognitiveServicesDeploymentState? deploymentState = default, string raiPolicyName = default, ServiceAccountProvisioningState? provisioningState = default, ArcDeploymentProvisioningDetails provisioningDetails = default, string inferenceEndpoint = default, IReadOnlyDictionary<string, string> capabilities = default)
         {
             nodeSelector ??= new ChangeTrackingDictionary<string, string>();
             capabilities ??= new ChangeTrackingDictionary<string, string>();
@@ -2785,10 +2785,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="maxModelLen"> Maximum model context length. </param>
         /// <param name="gpuMemoryUtilization"> Fraction of GPU memory reserved for model execution. </param>
         /// <param name="enforceEager"> Whether eager execution is enforced for the vLLM runtime. </param>
-        /// <returns> A new <see cref="Models.ArcDeploymentVllmParameters"/> instance for mocking. </returns>
-        public static ArcDeploymentVllmParameters ArcDeploymentVllmParameters(int? tensorParallelSize = default, int? maxModelLen = default, float? gpuMemoryUtilization = default, bool? enforceEager = default)
+        /// <returns> A new <see cref="Models.CognitiveServicesArcDeploymentVllmProperties"/> instance for mocking. </returns>
+        public static CognitiveServicesArcDeploymentVllmProperties CognitiveServicesArcDeploymentVllmProperties(int? tensorParallelSize = default, int? maxModelLen = default, float? gpuMemoryUtilization = default, bool? enforceEager = default)
         {
-            return new ArcDeploymentVllmParameters(tensorParallelSize, maxModelLen, gpuMemoryUtilization, enforceEager, default);
+            return new CognitiveServicesArcDeploymentVllmProperties(tensorParallelSize, maxModelLen, gpuMemoryUtilization, enforceEager, default);
         }
 
         /// <param name="requests"> Kubernetes CPU and memory resource requests for each deployment replica. </param>
