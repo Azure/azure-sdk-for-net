@@ -337,7 +337,7 @@ namespace Azure.Provisioning.SignalR
         public Azure.Provisioning.SignalR.SignalRRouteSettings RouteSettings { get { throw null; } set { } }
         public Azure.Provisioning.SignalR.SignalRServerlessSettings Serverless { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> ServerPort { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.SignalR.SignalRSharedPrivateLink> SharedPrivateLinkResourceResources { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.SignalR.SignalRSharedPrivateLink> SharedPrivateLinkResourceItems { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.SignalR.SignalRSharedPrivateLinkResourceData> SharedPrivateLinkResources { get { throw null; } }
         public Azure.Provisioning.SignalR.SignalRResourceSku Sku { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }

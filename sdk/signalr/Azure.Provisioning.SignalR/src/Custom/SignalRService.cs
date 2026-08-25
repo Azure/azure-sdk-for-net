@@ -32,7 +32,7 @@ public partial class SignalRService
 
     /// <summary> Gets the shared private link resources. </summary>
     [CodeGenMember("SharedPrivateLinkResources")]
-    public BicepList<SignalRSharedPrivateLink> SharedPrivateLinkResourceResources
+    public BicepList<SignalRSharedPrivateLink> SharedPrivateLinkResourceItems
     {
         get
         {
