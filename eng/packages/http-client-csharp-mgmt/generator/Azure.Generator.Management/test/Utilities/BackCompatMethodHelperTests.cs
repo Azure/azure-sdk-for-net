@@ -312,6 +312,23 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         }
 
         [Test]
+        public void DoesNotAddStringOverloadWhenReturnTypeDiffers()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [new ParameterProvider("ifMatch", $"The condition.", new CSharpType(typeof(ETag), isNullable: true), defaultValue: Default)]);
+            var previous = CreateMethod(
+                enclosingType,
+                [new ParameterProvider("ifMatch", $"The condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default)],
+                returnType: typeof(object));
+
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
+        [Test]
         public void DoesNotDuplicateEditorBrowsableAttributeOnGeneratedOverload()
         {
             var enclosingType = new TestTypeView("TestClient");
@@ -322,6 +339,29 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                 enclosingType,
                 [new ParameterProvider("ifMatch", $"The condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default)],
                 attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), FrameworkEnumValue(EditorBrowsableState.Never))]);
+
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
+        [Test]
+        public void RequiredRequestConditionValueDoesNotUseNullShortcut()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("requestConditions", $"The request conditions.", new CSharpType(typeof(RequestConditions), isNullable: true)),
+                    OptionalCancellationToken()
+                ]);
+            var previous = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("ifModifiedSince", $"The modification condition.", new CSharpType(typeof(DateTimeOffset))),
+                    new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
 
             var result = DecorateWithLastContract(enclosingType, [current], [previous]);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));

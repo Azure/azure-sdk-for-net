@@ -371,7 +371,7 @@ namespace Azure.Generator.Management.Utilities
             var currentReturnsVoid = currentSignature.ReturnType is null
                 || (currentSignature.ReturnType is { IsFrameworkType: true, FrameworkType: { } currentReturnType } && currentReturnType == typeof(void));
             if (previousReturnsVoid != currentReturnsVoid
-                || !previousReturnsVoid && !previousSignature.ReturnType!.Equals(currentSignature.ReturnType))
+                || !previousReturnsVoid && !previousSignature.ReturnType!.AreNamesEqual(currentSignature.ReturnType!))
             {
                 return null;
             }
@@ -467,6 +467,7 @@ namespace Azure.Generator.Management.Utilities
         {
             var propertyInitializers = new Dictionary<ValueExpression, ValueExpression>();
             ScopedApi<bool>? allNull = null;
+            var hasRequiredCondition = false;
             foreach (var parameter in previousParameters)
             {
                 if (!ConditionalHeaderProperties.TryGetValue(parameter.Name, out var propertyName))
@@ -482,7 +483,11 @@ namespace Azure.Generator.Management.Utilities
                             New.Instance(typeof(ETag), parameter),
                             new CastExpression(Null, new CSharpType(typeof(ETag), isNullable: true)))
                         : parameter);
-                if (!parameter.Type.IsValueType || parameter.Type.IsNullable)
+                if (parameter.Type.IsValueType && !parameter.Type.IsNullable)
+                {
+                    hasRequiredCondition = true;
+                }
+                else
                 {
                     allNull = allNull is null
                         ? parameter.Is(Null)
@@ -491,7 +496,7 @@ namespace Azure.Generator.Management.Utilities
             }
 
             var conditions = New.Instance(currentParameter.Type, propertyInitializers);
-            return allNull is null
+            return hasRequiredCondition || allNull is null
                 ? conditions
                 : new TernaryConditionalExpression(
                     allNull,
