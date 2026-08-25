@@ -31,7 +31,6 @@ public sealed class AsyncStreamingClientResult<T> : IAsyncEnumerable<T>, IAsyncD
     private readonly PipelineResponse _response;
     private readonly Stream _contentStream;
     private readonly Func<Stream, CancellationToken, IAsyncEnumerable<T>> _producer;
-    private readonly Action? _disposeProducer;
     private readonly CancellationToken _operationCancellationToken;
     private readonly CancellationTokenSource _resultCancellationSource = new();
     private readonly object _sync = new();
@@ -43,7 +42,6 @@ public sealed class AsyncStreamingClientResult<T> : IAsyncEnumerable<T>, IAsyncD
     private bool _disposeStarted;
     private bool _consumptionCancellationRequested;
     private bool _contentStreamClosed;
-    private bool _producerDisposed;
     private bool _responseDisposed;
     private bool _disposeCoreRunning;
     private TaskCompletionSource<object?>? _resultDisposeCompletion;
@@ -57,18 +55,13 @@ public sealed class AsyncStreamingClientResult<T> : IAsyncEnumerable<T>, IAsyncD
     internal AsyncStreamingClientResult(
         PipelineResponse response,
         Func<Stream, CancellationToken, IAsyncEnumerable<T>> producer,
-        CancellationToken operationCancellationToken,
-        Action? disposeProducer = null,
-        bool allowMissingContentStream = false)
+        CancellationToken operationCancellationToken)
     {
         _response = response;
         _contentStream = response.ContentStream ??
-            (allowMissingContentStream
-                ? Stream.Null
-                : throw new InvalidOperationException(
-                    "An established streaming response must have a content stream."));
+            throw new InvalidOperationException(
+                "An established streaming response must have a content stream.");
         _producer = producer;
-        _disposeProducer = disposeProducer;
         _operationCancellationToken = operationCancellationToken;
     }
 
@@ -228,7 +221,6 @@ public sealed class AsyncStreamingClientResult<T> : IAsyncEnumerable<T>, IAsyncD
         {
             CancelConsumption();
             CloseContentStream();
-            DisposeProducer();
             await WaitForEnumeratorConstructionAsync().ConfigureAwait(false);
 
             if (!(await DisposeResultAsync().ConfigureAwait(false)))
@@ -387,21 +379,6 @@ public sealed class AsyncStreamingClientResult<T> : IAsyncEnumerable<T>, IAsyncD
         }
 
         _resultCancellationSource.Cancel();
-    }
-
-    private void DisposeProducer()
-    {
-        lock (_sync)
-        {
-            if (_producerDisposed)
-            {
-                return;
-            }
-
-            _producerDisposed = true;
-        }
-
-        _disposeProducer?.Invoke();
     }
 
     private void DisposeResponse()
