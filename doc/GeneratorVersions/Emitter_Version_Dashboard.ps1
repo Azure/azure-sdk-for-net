@@ -40,11 +40,40 @@ function Get-PackageJsonVersion([string]$PackageJsonPath) {
     return $json.version
 }
 
+function Invoke-PublicNpmView([string]$PackageSpec, [string]$Field) {
+    $registry = "https://packagefeedproxy.microsoft.io/npm/"
+    $arguments = @("view", $PackageSpec, $Field, "--registry=$registry")
+    $userConfig = $env:NPM_CONFIG_USERCONFIG
+    try {
+        # Scoped registries in a caller's project or user config override --registry.
+        # Run outside the repository with user configuration disabled so this query
+        # is always resolved from the public npm proxy.
+        $env:NPM_CONFIG_USERCONFIG = if ($IsWindows) { "NUL" } else { "/dev/null" }
+        Push-Location ([System.IO.Path]::GetTempPath())
+        $output = npm @arguments 2>&1
+        $exitCode = $LASTEXITCODE
+    }
+    finally {
+        Pop-Location
+        if ($null -eq $userConfig) {
+            Remove-Item Env:NPM_CONFIG_USERCONFIG -ErrorAction SilentlyContinue
+        }
+        else {
+            $env:NPM_CONFIG_USERCONFIG = $userConfig
+        }
+    }
+
+    return @{
+        ExitCode = $exitCode
+        Output = ($output | Out-String).Trim()
+    }
+}
+
 function Get-NpmLatestVersion([string]$PackageName) {
     try {
-        $result = npm view $PackageName dist-tags.latest 2>&1
-        if ($LASTEXITCODE -eq 0 -and $result) {
-            return ($result | Out-String).Trim()
+        $result = Invoke-PublicNpmView $PackageName "dist-tags.latest"
+        if ($result.ExitCode -eq 0 -and $result.Output) {
+            return $result.Output
         }
     } catch {}
     return "unavailable"
@@ -56,10 +85,8 @@ function Test-NpmVersionExists([string]$PackageName, [string]$Version) {
         return $false
     }
     try {
-        $global:LASTEXITCODE = $null
-        $result = npm view "$PackageName@$Version" version --registry=https://registry.npmjs.org/ 2>$null
-        $resolvedVersion = ($result | Out-String).Trim()
-        if ($LASTEXITCODE -eq 0 -and $resolvedVersion -eq $Version) {
+        $result = Invoke-PublicNpmView "$PackageName@$Version" "version"
+        if ($result.ExitCode -eq 0 -and $result.Output -eq $Version) {
             return $true
         }
     }
