@@ -2630,6 +2630,7 @@ namespace Azure.ResourceManager.Compute
         public double? BillingMaxPrice { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.BootDiagnostics BootDiagnostics { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.CapacityReservationProfile CapacityReservation { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CapacityReservationGroupId { get { throw null; } set { } }
         public string ETag { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineEvictionPolicyType? EvictionPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ExtendedLocation ExtendedLocation { get { throw null; } set { } }
@@ -11675,6 +11676,7 @@ namespace Azure.ResourceManager.Compute.Models
         public double? BillingMaxPrice { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.BootDiagnostics BootDiagnostics { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.CapacityReservationProfile CapacityReservation { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CapacityReservationGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineEvictionPolicyType? EvictionPolicy { get { throw null; } set { } }
         public string ExtensionsTimeBudget { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineGalleryApplication> GalleryApplications { get { throw null; } }
@@ -12781,6 +12783,7 @@ namespace Azure.ResourceManager.Compute.Models
         public Azure.ResourceManager.Compute.Models.BootDiagnostics BootDiagnostics { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetExtensionProfile ExtensionProfile { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetHardwareProfile HardwareProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachineSizeProperties HardwareVmSizeProperties { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier InterconnectBlockId { get { throw null; } set { } }
         public string LicenseType { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetUpdateNetworkProfile NetworkProfile { get { throw null; } set { } }
@@ -12943,10 +12946,12 @@ namespace Azure.ResourceManager.Compute.Models
         public double? BillingMaxPrice { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.BootDiagnostics BootDiagnostics { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.CapacityReservationProfile CapacityReservation { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier CapacityReservationGroupId { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineEvictionPolicyType? EvictionPolicy { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetExtensionProfile ExtensionProfile { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Compute.Models.VirtualMachineGalleryApplication> GalleryApplications { get { throw null; } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetHardwareProfile HardwareProfile { get { throw null; } set { } }
+        public Azure.ResourceManager.Compute.Models.VirtualMachineSizeProperties HardwareVmSizeProperties { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier InterconnectBlockId { get { throw null; } set { } }
         public string LicenseType { get { throw null; } set { } }
         public Azure.ResourceManager.Compute.Models.VirtualMachineScaleSetNetworkProfile NetworkProfile { get { throw null; } set { } }
