@@ -47,9 +47,26 @@ namespace Azure.Generator.Visitors
             var updatedStatements = new List<MethodBodyStatement>(statements.Statements.Count + 1);
             foreach (MethodBodyStatement statement in statements.Statements)
             {
-                if (TryGetStreamingResponse(statement, out ValueExpression? response)
+                if (TryGetStreamingResponse(
+                    statement,
+                    out ValueExpression? response,
+                    out bool isSse)
                     && _processedStreamingResponses.Add(response))
                 {
+                    if (isSse &&
+                        TryFindPipelineProcessing(
+                            response,
+                            out ValueExpression? message,
+                            out ValueExpression? pipeline,
+                            out ValueExpression? context))
+                    {
+                        updatedStatements.Add(
+                            Static(typeof(AzurePipelineResponse))
+                                .Invoke(
+                                    "ConfigureSse",
+                                    [message, pipeline, context])
+                                .Terminate());
+                    }
                     updatedStatements.Add(new ExpressionStatement(response));
                 }
                 updatedStatements.Add(statement);
@@ -65,6 +82,18 @@ namespace Azure.Generator.Visitors
             {
                 var arguments = expression.Arguments.ToList();
                 arguments[0] = New.Instance<AzurePipelineResponse>(message);
+                if (IsCreateSse(expression))
+                {
+                    arguments.Insert(
+                        1,
+                        Static(typeof(AzurePipelineResponse)).Invoke(
+                            "GetSseReconnectCallback",
+                            [message]));
+                    expression.Update(
+                        instanceReference: Static(typeof(AzurePipelineResponse)),
+                        arguments: arguments);
+                    return expression;
+                }
                 expression.Update(arguments: arguments);
                 return expression;
             }
@@ -74,7 +103,8 @@ namespace Azure.Generator.Visitors
 
         private static bool TryGetStreamingResponse(
             MethodBodyStatement statement,
-            [NotNullWhen(true)] out ValueExpression? response)
+            [NotNullWhen(true)] out ValueExpression? response,
+            out bool isSse)
         {
             if (statement is ExpressionStatement
                 {
@@ -88,12 +118,18 @@ namespace Azure.Generator.Visitors
                 && TryFindAzureResponseMessage(invocation.Arguments[0], out _))
             {
                 response = invocation.Arguments[0];
+                isSse = IsCreateSse(invocation);
                 return true;
             }
 
             response = null;
+            isSse = false;
             return false;
         }
+
+        private static bool IsCreateSse(InvokeMethodExpression invocation)
+            => invocation.MethodName == "CreateSse" ||
+                invocation.MethodSignature?.Name == "CreateSse";
 
 #pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         private static bool IsStreamingResponseType(CSharpType? type)
@@ -118,6 +154,40 @@ namespace Azure.Generator.Visitors
             }
 
             message = null;
+            return false;
+        }
+
+        private static bool TryFindPipelineProcessing(
+            ValueExpression expression,
+            [NotNullWhen(true)] out ValueExpression? message,
+            [NotNullWhen(true)] out ValueExpression? pipeline,
+            [NotNullWhen(true)] out ValueExpression? context)
+        {
+            if (expression is ScopedApi api)
+            {
+                return TryFindPipelineProcessing(
+                    api.Original,
+                    out message,
+                    out pipeline,
+                    out context);
+            }
+
+            if (expression is InvokeMethodExpression invocation &&
+                invocation.InstanceReference is not null &&
+                invocation.Arguments.Count > 1)
+            {
+                message = invocation.Arguments.FirstOrDefault(IsHttpMessage);
+                if (message is not null)
+                {
+                    pipeline = invocation.InstanceReference;
+                    context = invocation.Arguments[1];
+                    return true;
+                }
+            }
+
+            message = null;
+            pipeline = null;
+            context = null;
             return false;
         }
 

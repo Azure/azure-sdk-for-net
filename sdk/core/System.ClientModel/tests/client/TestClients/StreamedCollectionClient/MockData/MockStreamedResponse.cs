@@ -13,13 +13,21 @@ public class MockStreamedResponse : PipelineResponse
 {
     private Stream? _contentStream;
 
-    public MockStreamedResponse(string content)
+    public MockStreamedResponse(string content, int status = 200)
     {
+        Status = status;
         Content = BinaryData.FromString(content);
-        _contentStream = Content.ToStream();
+        _contentStream = status == 204 ? null : Content.ToStream();
     }
 
-    public override int Status => 200;
+    public MockStreamedResponse(Stream contentStream)
+    {
+        Status = 200;
+        Content = BinaryData.Empty;
+        _contentStream = contentStream;
+    }
+
+    public override int Status { get; }
 
     public override string ReasonPhrase => "OK";
 
