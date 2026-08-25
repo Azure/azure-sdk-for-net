@@ -1,0 +1,3 @@
+<Project>
+  <!-- This file exists only to prevent MSBuild from walking up to the repo-level Directory.Build.props -->
+</Project>
