@@ -67,13 +67,17 @@ Describe "Mark-PackageReleased.ps1" {
 
     It "fails without prompting when the azsdk executable is unavailable" {
         $missingExecutable = Join-Path $TestDrive "missing-azsdk.exe"
+        $caughtError = $null
 
         try {
             & $scriptPath -Language python -PackageInfoFiles $packageInfoPath -AzSdkExePath $missingExecutable
         }
         catch {
-            $_.Exception.Message | Should Match "azsdk CLI executable was not found"
+            $caughtError = $_
         }
+
+        $caughtError | Should Not BeNullOrEmpty
+        $caughtError.Exception.Message | Should Match "azsdk CLI executable was not found"
     }
 
     It "shows both backend results" {
@@ -88,25 +92,33 @@ Describe "Mark-PackageReleased.ps1" {
     It "surfaces partial backend failure details from azsdk" {
         $global:AzSdkExitCode = 1
         $global:AzSdkOutput = '{"operation_status":"Failed","api_review_hub":{"packageVersionId":"version123"},"api_view":null,"response_errors":["APIView: APIView failed"]}'
+        $caughtError = $null
 
         try {
             & $scriptPath -Language python -PackageInfoFiles $packageInfoPath
         }
         catch {
-            $_.Exception.Message | Should Match "APIView: APIView failed"
+            $caughtError = $_
         }
+
+        $caughtError | Should Not BeNullOrEmpty
+        $caughtError.Exception.Message | Should Match "APIView: APIView failed"
     }
 
     It "includes raw output when azsdk returns malformed output" {
         $global:AzSdkExitCode = 1
         $global:AzSdkOutput = "distinct raw command output"
+        $caughtError = $null
 
         try {
             & $scriptPath -Language python -PackageInfoFiles $packageInfoPath
         }
         catch {
-            $_.Exception.Message | Should Match "distinct raw command output"
+            $caughtError = $_
         }
+
+        $caughtError | Should Not BeNullOrEmpty
+        $caughtError.Exception.Message | Should Match "distinct raw command output"
     }
 
     It "accepts a successful response with a missing backend result" {

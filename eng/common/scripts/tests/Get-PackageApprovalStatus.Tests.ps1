@@ -59,25 +59,33 @@ Describe "Get-PackageApprovalStatus.ps1" {
 
     It "fails without prompting when the azsdk executable is unavailable" {
         $missingExecutable = Join-Path $TestDrive "missing-azsdk.exe"
+        $caughtError = $null
 
         try {
             & $scriptPath -Language python -PackageInfoFiles $packageInfoPath -AzSdkExePath $missingExecutable
         }
         catch {
-            $_.Exception.Message | Should Match "azsdk CLI executable was not found"
+            $caughtError = $_
         }
+
+        $caughtError | Should Not BeNullOrEmpty
+        $caughtError.Exception.Message | Should Match "azsdk CLI executable was not found"
     }
 
     It "fails when azsdk returns a nonzero exit code" {
         $global:AzSdkExitCode = 1
         $global:AzSdkOutput = '{"operation_status":"Failed","response_error":"distinct raw command output"}'
+        $caughtError = $null
 
         try {
             & $scriptPath -Language python -PackageInfoFiles $packageInfoPath
         }
         catch {
-            $_.Exception.Message | Should Match "distinct raw command output"
+            $caughtError = $_
         }
+
+        $caughtError | Should Not BeNullOrEmpty
+        $caughtError.Exception.Message | Should Match "distinct raw command output"
     }
 
     It "logs a reproducible command invocation" {
@@ -103,13 +111,17 @@ Describe "Get-PackageApprovalStatus.ps1" {
     It "includes raw output when azsdk returns malformed output" {
         $global:AzSdkExitCode = 1
         $global:AzSdkOutput = "distinct raw command output"
+        $caughtError = $null
 
         try {
             & $scriptPath -Language python -PackageInfoFiles $packageInfoPath
         }
         catch {
-            $_.Exception.Message | Should Match "distinct raw command output"
+            $caughtError = $_
         }
+
+        $caughtError | Should Not BeNullOrEmpty
+        $caughtError.Exception.Message | Should Match "distinct raw command output"
     }
 
     It "fails when the response is malformed" {
