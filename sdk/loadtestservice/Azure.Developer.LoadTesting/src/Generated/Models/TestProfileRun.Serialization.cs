@@ -127,15 +127,15 @@ namespace Azure.Developer.LoadTesting
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(StartDateTime))
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
-                writer.WriteStringValue(StartDateTime.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndDateTime))
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDateTime"u8);
-                writer.WriteStringValue(EndDateTime.Value, "O");
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(DurationInSeconds))
             {
@@ -163,20 +163,20 @@ namespace Azure.Developer.LoadTesting
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedDateTime))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDateTime"u8);
-                writer.WriteStringValue(CreatedDateTime.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedDateTime))
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedDateTime"u8);
-                writer.WriteStringValue(LastModifiedDateTime.Value, "O");
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
@@ -233,14 +233,14 @@ namespace Azure.Developer.LoadTesting
             TargetResourceConfigurations targetResourceConfigurations = default;
             TestProfileRunStatus? status = default;
             IReadOnlyList<ErrorDetails> errorDetails = default;
-            DateTimeOffset? startDateTime = default;
-            DateTimeOffset? endDateTime = default;
+            DateTimeOffset? startOn = default;
+            DateTimeOffset? endOn = default;
             long? durationInSeconds = default;
             IReadOnlyDictionary<string, TestRunDetail> testRunDetails = default;
             IReadOnlyList<TestProfileRunRecommendation> recommendations = default;
-            DateTimeOffset? createdDateTime = default;
+            DateTimeOffset? createdOn = default;
             string createdBy = default;
-            DateTimeOffset? lastModifiedDateTime = default;
+            DateTimeOffset? lastModifiedOn = default;
             string lastModifiedBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -312,7 +312,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    startDateTime = prop.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endDateTime"u8))
@@ -321,7 +321,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    endDateTime = prop.Value.GetDateTimeOffset("O");
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("durationInSeconds"u8))
@@ -367,7 +367,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    createdDateTime = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("createdBy"u8))
@@ -381,7 +381,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    lastModifiedDateTime = prop.Value.GetDateTimeOffset("O");
+                    lastModifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedBy"u8))
@@ -403,14 +403,14 @@ namespace Azure.Developer.LoadTesting
                 targetResourceConfigurations,
                 status,
                 errorDetails ?? new ChangeTrackingList<ErrorDetails>(),
-                startDateTime,
-                endDateTime,
+                startOn,
+                endOn,
                 durationInSeconds,
                 testRunDetails ?? new ChangeTrackingDictionary<string, TestRunDetail>(),
                 recommendations ?? new ChangeTrackingList<TestProfileRunRecommendation>(),
-                createdDateTime,
+                createdOn,
                 createdBy,
-                lastModifiedDateTime,
+                lastModifiedOn,
                 lastModifiedBy,
                 additionalBinaryDataProperties);
         }

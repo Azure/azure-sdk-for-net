@@ -19,8 +19,8 @@ namespace Azure.Developer.LoadTesting
         private readonly LoadTestAdministrationClient _client;
         private readonly string _testIds;
         private readonly string _states;
-        private readonly DateTimeOffset? _lastModifiedStartTime;
-        private readonly DateTimeOffset? _lastModifiedEndTime;
+        private readonly DateTimeOffset? _lastModifiedStartOn;
+        private readonly DateTimeOffset? _lastModifiedEndOn;
         private readonly int? _maxpagesize;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
@@ -29,18 +29,18 @@ namespace Azure.Developer.LoadTesting
         /// <param name="client"> The LoadTestAdministrationClient client used to send requests. </param>
         /// <param name="testIds"> Search based on triggers associated with the provided test ids. </param>
         /// <param name="states"> Filter triggers based on a comma separated list of states. </param>
-        /// <param name="lastModifiedStartTime"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
-        /// <param name="lastModifiedEndTime"> End DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
+        /// <param name="lastModifiedStartOn"> Start DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
+        /// <param name="lastModifiedEndOn"> End DateTime(RFC 3339 literal format) of the last updated time range to filter triggers. </param>
         /// <param name="maxpagesize"> Number of results in response. Default page size is 50. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public LoadTestAdministrationClientGetTriggersCollectionResult(LoadTestAdministrationClient client, string testIds, string states, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, int? maxpagesize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LoadTestAdministrationClientGetTriggersCollectionResult(LoadTestAdministrationClient client, string testIds, string states, DateTimeOffset? lastModifiedStartOn, DateTimeOffset? lastModifiedEndOn, int? maxpagesize, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _testIds = testIds;
             _states = states;
-            _lastModifiedStartTime = lastModifiedStartTime;
-            _lastModifiedEndTime = lastModifiedEndTime;
+            _lastModifiedStartOn = lastModifiedStartOn;
+            _lastModifiedEndOn = lastModifiedEndOn;
             _maxpagesize = maxpagesize;
             _context = context;
             _diagnosticScope = diagnosticScope;
@@ -80,7 +80,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetTriggersRequest(nextLink, _testIds, _states, _lastModifiedStartTime, _lastModifiedEndTime, _maxpagesize, _context) : _client.CreateGetTriggersRequest(_testIds, _states, _lastModifiedStartTime, _lastModifiedEndTime, _maxpagesize, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetTriggersRequest(nextLink, _testIds, _states, _lastModifiedStartOn, _lastModifiedEndOn, _maxpagesize, _context) : _client.CreateGetTriggersRequest(_testIds, _states, _lastModifiedStartOn, _lastModifiedEndOn, _maxpagesize, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
