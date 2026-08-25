@@ -13,10 +13,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary>
-    /// GA-compatibility model-factory overloads for the ProxyResource->flat shimmed types:
+    /// GA-compatibility model-factory overloads for legacy types that are no longer represented by the current TypeSpec model:
     /// AppServiceEnvironmentAddressResult, CsmDeploymentStatus, and
-    /// SiteAuthSettingsV2. These models are recreated in customization as
-    /// `ResourceData`-derived plain models, so their factory entries live here.
+    /// SiteAuthSettingsV2. The generator emits their current resource/data shapes rather than these handwritten compatibility types,
+    /// so their factory entries live here.
     /// </summary>
     public static partial class ArmAppServiceModelFactory
     {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppService.Models
             => AppServiceEnvironmentAddressResult(id, name, resourceType, systemData, kind, serviceIPAddress, internalIPAddress, outboundIPAddresses, virtualIPMappings);
 
         /// <summary> Initializes a new instance of CsmDeploymentStatus. </summary>
-        // TODO: Remove this compatibility parameter mapping after https://github.com/Azure/azure-sdk-for-net/issues/61815 is fixed.
+        // The current TypeSpec model produces CsmDeploymentStatusData, not this legacy compatibility type.
         public static CsmDeploymentStatus CsmDeploymentStatus(
             ResourceIdentifier id = null,
             string name = null,

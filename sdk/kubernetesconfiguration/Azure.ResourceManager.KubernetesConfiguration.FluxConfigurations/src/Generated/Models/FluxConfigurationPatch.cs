@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         }
 
         /// <summary> Parameters to reconcile to the GitRepository source kind type. </summary>
-        public GitRepositoryPatch GitRepository
+        public FluxGitRepositoryPatch GitRepository
         {
             get
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         }
 
         /// <summary> Parameters to reconcile to the Bucket source kind type. </summary>
-        public BucketPatch Bucket
+        public FluxBucketPatch Bucket
         {
             get
             {

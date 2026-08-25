@@ -157,15 +157,14 @@ public static class ResponsesServerServiceCollectionExtensions
         // which uses the core EventStream registry directly. The backing is chosen from the bound
         // configuration (ResponsesServerSettings): local + ResilientBackground uses a durable
         // file-backed replay so a reconnecting client can replay pre-restart SSE events after a
-        // single-sandbox recovery; otherwise an in-memory replay buffer is sufficient. Core's
-        // AddAgentEventStreams is first-wins (TryAddSingleton) and no longer throws on a repeated
-        // registration, so configuration — not registration order — decides the backing: this call
-        // is a harmless no-op when a consumer or another protocol SDK already selected a backing.
+        // otherwise an in-memory replay buffer is sufficient. Register this as a protocol default:
+        // an explicit application backing overrides it regardless of registration order, while
+        // conflicting protocol defaults fail when the registry is materialized.
         var eagerOptions = new ResponsesServerOptions();
         configure?.Invoke(eagerOptions);
         var useDurableStreams = eagerOptions.ResilientBackground && hostedStorage is null;
         var streamTtl = new InMemoryProviderOptions().EventStreamTtl;
-        services.AddAgentEventStreams(o =>
+        services.AddAgentEventStreamsDefault("ResponsesServer", o =>
         {
             if (useDurableStreams)
             {
@@ -208,13 +207,18 @@ public static class ResponsesServerServiceCollectionExtensions
             return taskRootProvider;
         });
 
-        ResilientTaskBuilder taskBuilder = hostedStorage is null
-            ? services.AddResilientTasks()
-            : services.AddResilientTasks(hostedStorage.Credential);
-        taskBuilder.AddTask<ResponseTaskInput, ResponseTaskOutput>(
+        if (hostedStorage is not null)
+        {
+            // Flat AddResilientTask/AddResilientMultiTurnTask calls self-initialize the core
+            // services on first use, but always with no credential — so when hosted storage
+            // needs one, it must be set explicitly before either flat call below.
+            services.AddResilientTasks(hostedStorage.Credential);
+        }
+
+        services.AddResilientTask<ResponseTaskInput, ResponseTaskOutput>(
             ResponsesResilientTaskHandler.OneShotTaskName,
             (ctx, ct) => ResponsesResilientTaskHandler.RunTurnAsync(taskRootProvider.Require(), ctx, ct));
-        taskBuilder.AddMultiTurnTask<ResponseTaskInput, ResponseTaskOutput>(
+        services.AddResilientMultiTurnTask<ResponseTaskInput, ResponseTaskOutput>(
             ResponsesResilientTaskHandler.MultiTurnTaskName,
             (ctx, ct) => ResponsesResilientTaskHandler.RunTurnAsync(taskRootProvider.Require(), ctx, ct),
             steerable: eagerOptions.SteerableConversations);

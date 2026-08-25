@@ -15,11 +15,13 @@ using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Streaming;
 using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Invocations.Tests.Snippets;
+using Azure.AI.AgentServer.Invocations.Voice;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging.Abstractions;
 using NUnit.Framework;
 using OpenAI;
 using OpenAI.Responses;
@@ -500,6 +502,299 @@ public class SampleEndToEndTests
         await SendJsonAsync(ws, new { type = "bye" });
     }
 
+    [Test]
+    public async Task ReadMe_VoiceEchoHandler_RejectsUnsupportedProtocolVersion()
+    {
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddAgentServerCore();
+        builder.Services.AddVoice<Snippets.ReadMeSnippets.VoiceEchoHandler>();
+        await using var app = builder.Build();
+        app.UseAgentServerCore();
+        app.MapInvocationsServer();
+        await app.StartAsync();
+        var wsClient = app.GetTestServer().CreateWebSocketClient();
+        using var ws = await wsClient.ConnectAsync(
+            new Uri(app.GetTestServer().BaseAddress, "invocations_ws"),
+            CancellationToken.None);
+
+        await SendJsonAsync(ws, new
+        {
+            type = "session.start",
+            id = "m_start",
+            ts = "2026-08-13T00:00:00.000Z",
+            protocol_version = "2.0",
+            reconnect = false,
+            response_timeouts = new
+            {
+                first_output_ms = 5000,
+                idle_ms = 8000,
+                max_duration_ms = 60000,
+            },
+        });
+        var rejected = await ReceiveJsonAsync(ws).WaitAsync(TimeSpan.FromSeconds(2));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(rejected.GetProperty("type").GetString(), Is.EqualTo("session.rejected"));
+            Assert.That(rejected.GetProperty("code").GetString(), Is.EqualTo("protocol_mismatch"));
+            Assert.That(rejected.GetProperty("retriable").GetBoolean(), Is.False);
+        });
+        await ws.CloseOutputAsync(
+            System.Net.WebSockets.WebSocketCloseStatus.NormalClosure,
+            "done",
+            CancellationToken.None);
+    }
+
+    [Test]
+    public async Task SampleVoice1_TypedRelay_ExplicitlyAcknowledgesAndReplies()
+    {
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddAgentServerCore();
+        builder.Services.AddVoice<Snippets.SampleVoice1Snippets.VoiceSupportHandler>();
+        await using var app = builder.Build();
+        app.UseAgentServerCore();
+        app.MapInvocationsServer();
+        await app.StartAsync();
+        var wsClient = app.GetTestServer().CreateWebSocketClient();
+        using var ws = await wsClient.ConnectAsync(
+            new Uri(app.GetTestServer().BaseAddress, "invocations_ws"),
+            CancellationToken.None);
+
+        await SendJsonAsync(ws, new
+        {
+            type = "session.start",
+            id = "m_start",
+            ts = "2026-08-13T00:00:00.000Z",
+            protocol_version = "1.0",
+            reconnect = false,
+            response_timeouts = new
+            {
+                first_output_ms = 5000,
+                idle_ms = 8000,
+                max_duration_ms = 60000,
+            },
+        });
+        var ready = await ReceiveJsonAsync(ws);
+        Assert.That(ready.GetProperty("type").GetString(), Is.EqualTo("session.ready"));
+
+        await SendJsonAsync(ws, new
+        {
+            type = "user.message",
+            id = "m_user",
+            ts = "2026-08-13T00:00:01.000Z",
+            item_id = "in_1",
+            content = new[] { new { type = "input_text", text = "hello" } },
+        });
+
+        var responseTypes = new List<string>();
+        string? outputText = null;
+        while (!responseTypes.Contains("response.done", StringComparer.Ordinal))
+        {
+            var frame = await ReceiveJsonAsync(ws);
+            var type = frame.GetProperty("type").GetString()!;
+            responseTypes.Add(type);
+            if (type == "response.output_text.done")
+            {
+                outputText = frame.GetProperty("text").GetString();
+            }
+        }
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(responseTypes, Is.EqualTo(new[]
+            {
+                "response.created",
+                "response.output_text.done",
+                "response.done",
+            }));
+            Assert.That(outputText, Is.EqualTo("You said: hello"));
+        });
+        await ws.CloseOutputAsync(
+            System.Net.WebSockets.WebSocketCloseStatus.NormalClosure,
+            "done",
+            CancellationToken.None);
+    }
+
+    [Test]
+    public async Task SampleVoice1_OpenResponseTimeoutCancelsApplicationGeneration()
+    {
+        DelayedVoiceSupportHandler.Reset();
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddAgentServerCore();
+        builder.Services.AddVoice<DelayedVoiceSupportHandler>();
+        await using var app = builder.Build();
+        app.UseAgentServerCore();
+        app.MapInvocationsServer();
+        await app.StartAsync();
+        var wsClient = app.GetTestServer().CreateWebSocketClient();
+        using var ws = await wsClient.ConnectAsync(
+            new Uri(app.GetTestServer().BaseAddress, "invocations_ws"),
+            CancellationToken.None);
+
+        await SendJsonAsync(ws, new
+        {
+            type = "session.start",
+            id = "m_start",
+            ts = "2026-08-13T00:00:00.000Z",
+            protocol_version = "1.0",
+            reconnect = false,
+            response_timeouts = new
+            {
+                first_output_ms = 5000,
+                idle_ms = 8000,
+                max_duration_ms = 60000,
+            },
+        });
+        _ = await ReceiveJsonAsync(ws);
+        await SendJsonAsync(ws, new
+        {
+            type = "user.message",
+            id = "m_user",
+            ts = "2026-08-13T00:00:01.000Z",
+            item_id = "in_1",
+            content = new[] { new { type = "input_text", text = "hello" } },
+        });
+        await DelayedVoiceSupportHandler.Started.Task.WaitAsync(TimeSpan.FromSeconds(2));
+        var created = await ReceiveJsonAsync(ws).WaitAsync(TimeSpan.FromSeconds(2));
+        Assert.That(created.GetProperty("type").GetString(), Is.EqualTo("response.created"));
+
+        try
+        {
+            await SendJsonAsync(ws, new
+            {
+                type = "response.timeout",
+                id = "m_timeout",
+                ts = "2026-08-13T00:00:02.000Z",
+                response_id = created.GetProperty("response_id").GetString(),
+                stage = "first_output",
+            });
+
+            await DelayedVoiceSupportHandler.Cancelled.Task.WaitAsync(TimeSpan.FromSeconds(2));
+        }
+        finally
+        {
+            await ws.CloseOutputAsync(
+                System.Net.WebSockets.WebSocketCloseStatus.NormalClosure,
+                "done",
+                CancellationToken.None);
+        }
+    }
+
+    [Test]
+    public async Task SampleVoice1_ResponseCreatedPreservesInputOrder()
+    {
+        OrderedVoiceSupportHandler.Reset();
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddAgentServerCore();
+        builder.Services.AddVoice<OrderedVoiceSupportHandler>();
+        await using var app = builder.Build();
+        app.UseAgentServerCore();
+        app.MapInvocationsServer();
+        await app.StartAsync();
+        var wsClient = app.GetTestServer().CreateWebSocketClient();
+        using var ws = await wsClient.ConnectAsync(
+            new Uri(app.GetTestServer().BaseAddress, "invocations_ws"),
+            CancellationToken.None);
+
+        await StartVoiceSessionAsync(ws);
+        await SendVoiceUserMessageAsync(ws, "m_first", "in_1", "first");
+        await OrderedVoiceSupportHandler.FirstStarted.Task.WaitAsync(TimeSpan.FromSeconds(2));
+        await SendVoiceUserMessageAsync(ws, "m_second", "in_2", "second");
+
+        try
+        {
+            var firstCreated = await ReceiveJsonAsync(ws).WaitAsync(TimeSpan.FromSeconds(2));
+            Assert.Multiple(() =>
+            {
+                Assert.That(firstCreated.GetProperty("type").GetString(), Is.EqualTo("response.created"));
+                Assert.That(
+                    firstCreated.GetProperty("in_reply_to")[0].GetString(),
+                    Is.EqualTo("in_1"));
+            });
+        }
+        finally
+        {
+            OrderedVoiceSupportHandler.ReleaseFirst.TrySetResult();
+            await ws.CloseOutputAsync(
+                System.Net.WebSockets.WebSocketCloseStatus.NormalClosure,
+                "done",
+                CancellationToken.None);
+        }
+    }
+
+    [Test]
+    public async Task SampleVoice1_GenerationFailureOpensResponseBeforeError()
+    {
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddAgentServerCore();
+        builder.Services.AddVoice<FailingVoiceSupportHandler>();
+        await using var app = builder.Build();
+        app.UseAgentServerCore();
+        app.MapInvocationsServer();
+        await app.StartAsync();
+        var wsClient = app.GetTestServer().CreateWebSocketClient();
+        using var ws = await wsClient.ConnectAsync(
+            new Uri(app.GetTestServer().BaseAddress, "invocations_ws"),
+            CancellationToken.None);
+
+        await StartVoiceSessionAsync(ws);
+        await SendVoiceUserMessageAsync(ws, "m_failure", "in_1", "fail");
+        var created = await ReceiveJsonAsync(ws).WaitAsync(TimeSpan.FromSeconds(2));
+        var error = await ReceiveJsonAsync(ws).WaitAsync(TimeSpan.FromSeconds(2));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(created.GetProperty("type").GetString(), Is.EqualTo("response.created"));
+            Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("error"));
+            Assert.That(
+                error.GetProperty("response_id").GetString(),
+                Is.EqualTo(created.GetProperty("response_id").GetString()));
+        });
+        await ws.CloseOutputAsync(
+            System.Net.WebSockets.WebSocketCloseStatus.NormalClosure,
+            "done",
+            CancellationToken.None);
+    }
+
+    private static async Task StartVoiceSessionAsync(System.Net.WebSockets.WebSocket ws)
+    {
+        await SendJsonAsync(ws, new
+        {
+            type = "session.start",
+            id = "m_start",
+            ts = "2026-08-13T00:00:00.000Z",
+            protocol_version = "1.0",
+            reconnect = false,
+            response_timeouts = new
+            {
+                first_output_ms = 5000,
+                idle_ms = 8000,
+                max_duration_ms = 60000,
+            },
+        });
+        var ready = await ReceiveJsonAsync(ws).WaitAsync(TimeSpan.FromSeconds(2));
+        Assert.That(ready.GetProperty("type").GetString(), Is.EqualTo("session.ready"));
+    }
+
+    private static Task SendVoiceUserMessageAsync(
+        System.Net.WebSockets.WebSocket ws,
+        string messageId,
+        string itemId,
+        string text) =>
+        SendJsonAsync(ws, new
+        {
+            type = "user.message",
+            id = messageId,
+            ts = "2026-08-13T00:00:01.000Z",
+            item_id = itemId,
+            content = new[] { new { type = "input_text", text } },
+        });
+
     private static async Task<JsonElement> ReceiveJsonAsync(System.Net.WebSockets.WebSocket ws)
     {
         var buffer = new byte[8192];
@@ -518,6 +813,88 @@ public class SampleEndToEndTests
             System.Net.WebSockets.WebSocketMessageType.Text,
             endOfMessage: true,
             CancellationToken.None);
+    }
+
+    private sealed class DelayedVoiceSupportHandler : Snippets.SampleVoice1Snippets.VoiceSupportHandler
+    {
+        public DelayedVoiceSupportHandler()
+            : base(NullLogger<Snippets.SampleVoice1Snippets.VoiceSupportHandler>.Instance)
+        {
+        }
+
+        public static TaskCompletionSource Started { get; private set; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public static TaskCompletionSource Cancelled { get; private set; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public static void Reset()
+        {
+            Started = new(TaskCreationOptions.RunContinuationsAsynchronously);
+            Cancelled = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        }
+
+        protected override async Task<string> GenerateAnswerAsync(
+            string input,
+            CancellationToken cancellationToken)
+        {
+            Started.TrySetResult();
+            try
+            {
+                await Task.Delay(Timeout.InfiniteTimeSpan, cancellationToken);
+                return input;
+            }
+            catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+            {
+                Cancelled.TrySetResult();
+                throw;
+            }
+        }
+    }
+
+    private sealed class OrderedVoiceSupportHandler : Snippets.SampleVoice1Snippets.VoiceSupportHandler
+    {
+        public OrderedVoiceSupportHandler()
+            : base(NullLogger<Snippets.SampleVoice1Snippets.VoiceSupportHandler>.Instance)
+        {
+        }
+
+        public static TaskCompletionSource FirstStarted { get; private set; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public static TaskCompletionSource ReleaseFirst { get; private set; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public static void Reset()
+        {
+            FirstStarted = new(TaskCreationOptions.RunContinuationsAsynchronously);
+            ReleaseFirst = new(TaskCreationOptions.RunContinuationsAsynchronously);
+        }
+
+        protected override async Task<string> GenerateAnswerAsync(
+            string input,
+            CancellationToken cancellationToken)
+        {
+            if (input == "first")
+            {
+                FirstStarted.TrySetResult();
+                await ReleaseFirst.Task.WaitAsync(cancellationToken);
+            }
+            return $"You said: {input}";
+        }
+    }
+
+    private sealed class FailingVoiceSupportHandler : Snippets.SampleVoice1Snippets.VoiceSupportHandler
+    {
+        public FailingVoiceSupportHandler()
+            : base(NullLogger<Snippets.SampleVoice1Snippets.VoiceSupportHandler>.Instance)
+        {
+        }
+
+        protected override Task<string> GenerateAnswerAsync(
+            string input,
+            CancellationToken cancellationToken) =>
+            Task.FromException<string>(new InvalidOperationException("generation failed"));
     }
 
     // ═══════════════════════════════════════════════════════════════════
@@ -668,6 +1045,69 @@ public class SampleEndToEndTests
             new StringContent("""{"Topic":"second turn"}""", Encoding.UTF8, "application/json"));
         Assert.That(second.StatusCode, Is.EqualTo(HttpStatusCode.Accepted),
             "A second turn on the same session must be accepted (steered/queued), not conflict.");
+    }
+
+    [Test]
+    public async Task ResilientResearch_ExplicitCancel_ClosesStreamWithTerminalEvent()
+    {
+        var backend = new BlockingStreamingBackendHandler();
+        await using var env = await CreateResilientResearchServerAsync(backend);
+        string invocationId = "research-cancel-" + Guid.NewGuid().ToString("N");
+
+        var start = new HttpRequestMessage(HttpMethod.Post, "/invocations")
+        {
+            Content = new StringContent(
+                """{"Topic":"cancel test"}""", Encoding.UTF8, "application/json"),
+        };
+        start.Headers.Add("x-agent-invocation-id", invocationId);
+
+        HttpResponseMessage startResponse = await env.Client.SendAsync(start);
+        Assert.That(startResponse.StatusCode, Is.EqualTo(HttpStatusCode.Accepted));
+        await backend.Started.WaitAsync(TimeSpan.FromSeconds(5));
+
+        HttpResponseMessage cancelResponse = await env.Client.PostAsync(
+            $"/invocations/{invocationId}/cancel",
+            content: null);
+        Assert.That(cancelResponse.StatusCode, Is.EqualTo(HttpStatusCode.Accepted));
+
+        string rawSse = await ReadResilientResearchStreamAsync(env.Client, invocationId)
+            .WaitAsync(TimeSpan.FromSeconds(5));
+        List<SseEvent> events = ParseSseEvents(rawSse);
+
+        Assert.That(events[^1].Type, Is.EqualTo("run_failed"));
+        Assert.That(events[^1].Content, Does.Contain("cancel").IgnoreCase);
+        Assert.That(rawSse, Does.Contain("event: done"),
+            "A terminal cancellation must close the stream so the SSE relay emits its done frame.");
+    }
+
+    [Test]
+    public async Task ResilientResearch_Timeout_ClosesStreamWithTerminalEvent()
+    {
+        var backend = new BlockingStreamingBackendHandler();
+        await using var env = await CreateResilientResearchServerAsync(
+            backend,
+            timeout: TimeSpan.FromMilliseconds(500));
+        string invocationId = "research-timeout-" + Guid.NewGuid().ToString("N");
+
+        var start = new HttpRequestMessage(HttpMethod.Post, "/invocations")
+        {
+            Content = new StringContent(
+                """{"Topic":"timeout test"}""", Encoding.UTF8, "application/json"),
+        };
+        start.Headers.Add("x-agent-invocation-id", invocationId);
+
+        HttpResponseMessage startResponse = await env.Client.SendAsync(start);
+        Assert.That(startResponse.StatusCode, Is.EqualTo(HttpStatusCode.Accepted));
+        await backend.Started.WaitAsync(TimeSpan.FromSeconds(5));
+
+        string rawSse = await ReadResilientResearchStreamAsync(env.Client, invocationId)
+            .WaitAsync(TimeSpan.FromSeconds(5));
+        List<SseEvent> events = ParseSseEvents(rawSse);
+
+        Assert.That(events[^1].Type, Is.EqualTo("run_failed"));
+        Assert.That(events[^1].Content, Does.Contain("timed out").IgnoreCase);
+        Assert.That(rawSse, Does.Contain("event: done"),
+            "A terminal timeout must close the stream so the SSE relay emits its done frame.");
     }
 
     // ═══════════════════════════════════════════════════════════════════
@@ -903,37 +1343,32 @@ public class SampleEndToEndTests
     /// backend that returns canned OpenAI Responses SSE — so the snippet code runs exactly
     /// as in production while staying deterministic and offline.
     /// </summary>
-    private static async Task<TestEnv> CreateResilientResearchServerAsync()
+    private static async Task<TestEnv> CreateResilientResearchServerAsync(
+        HttpMessageHandler? modelHandler = null,
+        TimeSpan? timeout = null)
     {
-        var model = CreateMockResponsesClient();
-
-        ResilientTaskBuilder? tasks = null;
+        var model = CreateMockResponsesClient(modelHandler);
 
         var env = await CreateTestServerAsync<Snippets.SampleResilientResearchSnippets.ResilientResearchHandler>(
             services =>
             {
+                services.AddSingleton(model);
+
                 // In-memory replay with a TTL so retained streams are reclaimed.
                 services.AddAgentEventStreams(o => o.UseInMemoryReplay(
                     ttl: TimeSpan.FromMinutes(5)));
 
-                tasks = services.AddResilientTasks();
-            },
-            configurePostBuild: app =>
-            {
-                // Provider-aware overloads were removed: resolve the singleton AgentEventStreamRegistry
-                // from the built container and capture it in the plain delegate (the registry is read
-                // lazily at invocation time, so registering post-build is fine).
-                AgentEventStreamRegistry streams = app.Services.GetRequiredService<AgentEventStreamRegistry>();
-                tasks!.AddMultiTurnTask<Snippets.SampleResilientResearchSnippets.ResearchRequest,
-                             Snippets.SampleResilientResearchSnippets.ResearchResult>(
-                        "research",
-                        (ctx, ct) => Snippets.SampleResilientResearchSnippets.RunResearchAsync(
-                            streams, model, "test-model", ctx,
-                            numPhases: 2, callsPerPhase: 2,
-                            interPhaseCooldown: TimeSpan.Zero,
-                            intraPhaseCooldown: TimeSpan.Zero,
-                            ct: ct),
-                        steerable: true);
+                // AddResilientMultiTurnTask self-initializes the resilient-tasks services and
+                // registers the returned TaskDefinition as a keyed singleton. The task engine
+                // constructs ResearchTask and its ResponsesClient dependency in a fresh scope for
+                // every attempt.
+                services.AddResilientMultiTurnTask<
+                    Snippets.SampleResilientResearchSnippets.ResearchRequest,
+                    Snippets.SampleResilientResearchSnippets.ResearchResult,
+                    Snippets.SampleResilientResearchSnippets.ResearchTask>(
+                    "research",
+                    steerable: true,
+                    configure: options => options.Timeout = timeout);
             });
 
         return env;
@@ -944,15 +1379,48 @@ public class SampleEndToEndTests
     /// in-process mock that emits canned OpenAI Responses SSE. The SDK genuinely parses the
     /// streaming protocol — only the network hop is replaced.
     /// </summary>
-    private static ResponsesClient CreateMockResponsesClient() =>
+    private static ResponsesClient CreateMockResponsesClient(HttpMessageHandler? handler = null) =>
         new ResponsesClient(
             new ApiKeyCredential("unused-key"),
             new ResponsesClientOptions
             {
                 Endpoint = new Uri("http://mock-openai-backend"),
                 Transport = new HttpClientPipelineTransport(
-                    new HttpClient(new MockStreamingBackendHandler())),
+                    new HttpClient(handler ?? new MockStreamingBackendHandler())),
             });
+
+    private static async Task<string> ReadResilientResearchStreamAsync(
+        HttpClient client,
+        string invocationId)
+    {
+        var request = new HttpRequestMessage(
+            HttpMethod.Get,
+            $"/invocations/{invocationId}");
+        request.Headers.TryAddWithoutValidation("Accept", "text/event-stream");
+
+        HttpResponseMessage response = await client.SendAsync(request);
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        return await response.Content.ReadAsStringAsync();
+    }
+
+    private sealed class BlockingStreamingBackendHandler : HttpMessageHandler
+    {
+        private readonly TaskCompletionSource _started =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+        private readonly TaskCompletionSource _release =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public Task Started => _started.Task;
+
+        protected override async Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request,
+            CancellationToken cancellationToken)
+        {
+            _started.TrySetResult();
+            await _release.Task.WaitAsync(cancellationToken);
+            throw new InvalidOperationException("The blocking test transport was released unexpectedly.");
+        }
+    }
 
     /// <summary>
     /// Mock backend returning a canned OpenAI Responses SSE stream with a short text delta,
@@ -1025,8 +1493,7 @@ public class SampleEndToEndTests
         return await CreateTestServerAsync<Snippets.SampleResilientMultiturnSnippets.ResilientMultiturnHandler>(
             services =>
             {
-                services.AddResilientTasks()
-                    .AddMultiTurnTask<Snippets.SampleResilientMultiturnSnippets.ConversationInput,
+                services.AddResilientMultiTurnTask<Snippets.SampleResilientMultiturnSnippets.ConversationInput,
                                       Snippets.SampleResilientMultiturnSnippets.ConversationOutput>(
                         "conversation",
                         (ctx, ct) => Snippets.SampleResilientMultiturnSnippets.RunConversationTurnAsync(

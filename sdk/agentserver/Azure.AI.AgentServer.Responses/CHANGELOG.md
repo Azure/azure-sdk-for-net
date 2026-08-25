@@ -27,6 +27,11 @@
   `IsClientCancelled` are now get-only virtual passthroughs over the `Shutdown` /
   `ClientCancellation` tokens; the settable `IsShutdownRequested` was removed.
 
+### Other Changes
+
+- Registered the Responses event-stream backing as a protocol default so an explicit
+  application selection takes precedence regardless of registration order.
+
 ## 1.0.0-beta.8 (2026-08-12)
 
 ### Features Added

@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Network
                 {
                     yield break;
                 }
-                IpGroupListResult result = IpGroupListResult.FromResponse(response);
+                IPGroupListResult result = IPGroupListResult.FromResponse(response);
                 nextPage = result.NextLink;
                 yield return Page<IPGroupData>.FromValues((IReadOnlyList<IPGroupData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

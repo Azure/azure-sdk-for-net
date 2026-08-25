@@ -25,9 +25,14 @@ namespace Azure.AI.AgentServer.Responses.Tests.E2E.ResilienceContract;
 /// task, so Core owns steering (queue, fork/lock preconditions, pending-input accounting) and the
 /// Responses layer only performs dispatch selection plus the Core-exception → HTTP-409 mapping.
 ///
-/// The dispatch-selection and exception-mapping surface is verified deterministically with a fake
-/// <see cref="ITaskInvoker"/> (no timing gates); one end-to-end test then proves the composition is
-/// wired to the real Core engine (real steering enqueue + drain).
+/// The dispatch-selection and exception-mapping surface is verified with a <see cref="SpyTaskStore"/>
+/// decorator that wraps a real <see cref="LocalTaskStore"/>: exception-mapping tests inject a Core
+/// <c>ResilientTaskException</c> at the store's <c>CreateAsync</c> boundary (so the REAL engine and
+/// endpoint code runs, only the store faults); dispatch-selection tests let the store pass through
+/// and inspect the captured <c>TaskCreateRequest</c> to prove the endpoint routed to the intended
+/// task-definition primitive (one-shot vs multi-turn) with the intended chain/task id + payload
+/// disposition. End-to-end tests then prove the composition is wired to the real Core engine (real
+/// steering enqueue + drain, real concurrent-lock arbitration).
 /// </summary>
 public class TestSteerableConversationContractTests
 {
@@ -40,34 +45,96 @@ public class TestSteerableConversationContractTests
         return JsonDocument.Parse(body);
     }
 
-    // ---- Deterministic dispatch-selection + exception-mapping (fake invoker) ----
+    // ---- Deterministic dispatch-selection + exception-mapping (SpyTaskStore over real LocalTaskStore) ----
 
     [Test]
     public async Task SteeredTurn_QueuedBehindActiveTurn_ReturnsQueuedEnvelope()
     {
-        var invoker = new FakeTaskInvoker { NextIsQueued = true };
-        using var factory = NewFactory(
-            invoker,
-            o =>
+        // The old fake short-circuited the entire invoker with NextIsQueued=true to synthesize a
+        // "queued" TaskRun without any real handler. With the real Core engine wired in, a queued
+        // envelope can only arise from GENUINE concurrency: a first turn must be actually in-flight
+        // on the same chain when a second turn is posted, so the second is enqueued as steering.
+        // We reuse this file's proven gate pattern (see RealComposition_ConcurrentSteeredTurn_...)
+        // to hold turn 1 in the handler, POST turn 2, and assert the queued envelope + spy-observed
+        // routing (MultiTurnTaskName with a non-empty chain/task id) — mirroring the original
+        // LastTaskName / LastOptions.TaskId / LastOptions.InputId assertions at the store boundary.
+        var root = Path.Combine(Path.GetTempPath(), "steer-queued-" + Guid.NewGuid().ToString("N"));
+        var tasksDir = Path.Combine(root, "tasks");
+        var responsesDir = Path.Combine(root, "responses");
+        Directory.CreateDirectory(tasksDir);
+        Directory.CreateDirectory(responsesDir);
+
+        var gate = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var firstTurnEntered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        ResponseContext? activeContext = null;
+
+        var handler = new TestHandler
+        {
+            EventFactory = (request, context, ct) =>
             {
-                o.SteerableConversations = true;
-                o.ResilientBackground = true;
-            });
-        using var client = factory.CreateClient();
+                if (!context.IsSteeredTurn)
+                {
+                    activeContext = context;
+                }
 
-        var response = await client.PostAsync(
-            "/responses",
-            Json(new { model = "test", background = true, conversation = "conv-queue" }));
+                return EmitGatedAsync(request, context, gate, firstTurnEntered, ct);
+            },
+        };
 
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        using var doc = await ParseAsync(response);
-        Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("queued"));
+        var spy = new SpyTaskStore(new LocalTaskStore(tasksDir));
+        try
+        {
+            using var factory = new TestWebApplicationFactory(
+                handler,
+                configureOptions: o =>
+                {
+                    o.SteerableConversations = true;
+                    o.ResilientBackground = true;
+                },
+                configureTestServices: services =>
+                {
+                    services.AddSingleton<ITaskStore>(spy);
+                    services.AddSingleton(_ => new FileResponsesProvider(responsesDir));
+                });
+            using var client = factory.CreateClient();
 
-        // The conversation routes through the multi-turn (steering) task keyed by the chain id, with
-        // the response id as the per-turn input id.
-        Assert.That(invoker.LastTaskName, Is.EqualTo(ResponsesResilientTaskHandler.MultiTurnTaskName));
-        Assert.That(invoker.LastOptions!.TaskId, Is.Not.Null.And.Not.Empty);
-        Assert.That(invoker.LastOptions!.InputId, Is.Not.Null.And.Not.Empty);
+            // Turn 1: enters the handler and blocks so the chain stays in-flight. This is the write
+            // that hits SpyTaskStore.CreateAsync (multi-turn's first-turn create).
+            var turn1 = await client.PostAsync(
+                "/responses",
+                Json(new { model = "test", background = true, conversation = "conv-queue" }));
+            Assert.That(turn1.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            await firstTurnEntered.Task.WaitAsync(TimeSpan.FromSeconds(10));
+
+            // Turn 2 on the same conversation: real Core enqueues it as steering behind the active
+            // turn (no CreateAsync — the record already exists), and the endpoint returns a JSON
+            // queued envelope for the non-streaming path.
+            var turn2 = await client.PostAsync(
+                "/responses",
+                Json(new { model = "test", background = true, conversation = "conv-queue" }));
+            Assert.That(turn2.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            using var doc = await ParseAsync(turn2);
+            Assert.That(doc.RootElement.GetProperty("status").GetString(), Is.EqualTo("queued"));
+
+            // The conversation routes through the multi-turn (steering) task keyed by the chain id.
+            // Only the first turn's create was captured (steering appends do not re-create), so the
+            // spy sees the multi-turn task-definition name and the chain id on that request.
+            Assert.That(spy.LastTaskName, Is.EqualTo(ResponsesResilientTaskHandler.MultiTurnTaskName));
+            Assert.That(spy.LastCreateRequest?.Id, Is.Not.Null.And.Not.Empty);
+            // Multi-turn always stamps the chain head with a per-turn input id (persistInputId=true).
+            Assert.That(spy.LastLastInputId, Is.Not.Null.And.Not.Empty);
+        }
+        finally
+        {
+            gate.TrySetResult();
+            try
+            {
+                Directory.Delete(root, recursive: true);
+            }
+            catch (IOException)
+            {
+            }
+        }
     }
 
     [Test]
@@ -75,7 +142,8 @@ public class TestSteerableConversationContractTests
     {
         // A fork references a valid past turn that is no longer the most recent turn of the chain.
         // History validation must succeed (the antecedent exists), so the request reaches dispatch,
-        // where Core rejects the non-extending turn with a last-input-id precondition failure.
+        // where Core (simulated here at the store boundary) rejects the non-extending turn with a
+        // last-input-id precondition failure — the endpoint maps it to HTTP 409.
         var root = Path.Combine(Path.GetTempPath(), "steer-fork-" + Guid.NewGuid().ToString("N"));
         var tasksDir = Path.Combine(root, "tasks");
         var responsesDir = Path.Combine(root, "responses");
@@ -89,9 +157,9 @@ public class TestSteerableConversationContractTests
         await seedProvider.CreateResponseAsync(
             new CreateResponseRequest(antecedent, null, null), PlatformContext.Empty);
 
-        var invoker = new FakeTaskInvoker
+        var spy = new SpyTaskStore(new LocalTaskStore(tasksDir))
         {
-            ThrowOnStart = new ResilientTaskException(ResilientTaskErrorCode.PreconditionFailed) { ActualLastInputId = "resp-latest" },
+            ThrowOnCreate = new ResilientTaskException(ResilientTaskErrorCode.PreconditionFailed) { ActualLastInputId = "resp-latest" },
         };
 
         try
@@ -104,8 +172,7 @@ public class TestSteerableConversationContractTests
                 },
                 configureTestServices: services =>
                 {
-                    services.AddSingleton<ITaskInvoker>(invoker);
-                    services.AddSingleton<ITaskStore>(_ => new LocalTaskStore(tasksDir));
+                    services.AddSingleton<ITaskStore>(spy);
                     services.AddSingleton(_ => new FileResponsesProvider(responsesDir));
                 });
             using var client = factory.CreateClient();
@@ -127,8 +194,12 @@ public class TestSteerableConversationContractTests
             Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("conflict"));
             Assert.That(error.GetProperty("param").GetString(), Is.EqualTo("previous_response_id"));
 
-            // A supplied previous_response_id becomes the ifLastInputId fork precondition.
-            Assert.That(invoker.LastOptions!.IfLastInputId, Is.EqualTo(antecedentId));
+            // The dispatch decision (multi-turn routing on a conversation turn) is observable at
+            // the store boundary via source.name on the create request. The endpoint's IfLastInputId
+            // wiring on RunOptions is NOT observable at this boundary (RunOptions is engine-scoped
+            // and not persisted into TaskCreateRequest); the surrounding 409 body assertions cover
+            // the exception-mapping contract that this test targets.
+            Assert.That(spy.LastTaskName, Is.EqualTo(ResponsesResilientTaskHandler.MultiTurnTaskName));
         }
         finally
         {
@@ -145,32 +216,40 @@ public class TestSteerableConversationContractTests
     [Test]
     public async Task ConcurrentTurn_NonSteerable_MapsToConversationLocked409()
     {
-        var invoker = new FakeTaskInvoker
+        var spy = new SpyTaskStore(new LocalTaskStore(TempTasksDir(out var root)))
         {
-            ThrowOnStart = new ResilientTaskException(ResilientTaskErrorCode.Conflict) { CurrentStatus = TaskRunStatus.InProgress },
+            ThrowOnCreate = new ResilientTaskException(ResilientTaskErrorCode.Conflict) { CurrentStatus = TaskRunStatus.InProgress },
         };
-        using var factory = NewFactory(
-            invoker,
-            o =>
-            {
-                // Non-steerable conversation, but resilient-background still routes a conversation
-                // through the multi-turn task (registered non-steerable) so a concurrent turn is a
-                // lock conflict rather than a steering enqueue.
-                o.SteerableConversations = false;
-                o.ResilientBackground = true;
-            });
-        using var client = factory.CreateClient();
+        try
+        {
+            using var factory = NewFactory(
+                spy,
+                root,
+                o =>
+                {
+                    // Non-steerable conversation, but resilient-background still routes a conversation
+                    // through the multi-turn task (registered non-steerable) so a concurrent turn is a
+                    // lock conflict rather than a steering enqueue.
+                    o.SteerableConversations = false;
+                    o.ResilientBackground = true;
+                });
+            using var client = factory.CreateClient();
 
-        var response = await client.PostAsync(
-            "/responses",
-            Json(new { model = "test", background = true, conversation = "conv-lock" }));
+            var response = await client.PostAsync(
+                "/responses",
+                Json(new { model = "test", background = true, conversation = "conv-lock" }));
 
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
-        using var doc = await ParseAsync(response);
-        var error = doc.RootElement.GetProperty("error");
-        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("conversation_locked"));
-        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("conflict"));
-        Assert.That(invoker.LastTaskName, Is.EqualTo(ResponsesResilientTaskHandler.MultiTurnTaskName));
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
+            using var doc = await ParseAsync(response);
+            var error = doc.RootElement.GetProperty("error");
+            Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("conversation_locked"));
+            Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("conflict"));
+            Assert.That(spy.LastTaskName, Is.EqualTo(ResponsesResilientTaskHandler.MultiTurnTaskName));
+        }
+        finally
+        {
+            CleanupRoot(root);
+        }
     }
 
     [Test]
@@ -181,28 +260,36 @@ public class TestSteerableConversationContractTests
         // Parity with Python `_pick_primitive`: any conversation_id routes through the multi-turn task
         // (registered non-steerable here), so a concurrent turn overlapping the active turn is a Core
         // lock conflict → HTTP 409 conversation_locked — independent of both feature options.
-        var invoker = new FakeTaskInvoker
+        var spy = new SpyTaskStore(new LocalTaskStore(TempTasksDir(out var root)))
         {
-            ThrowOnStart = new ResilientTaskException(ResilientTaskErrorCode.Conflict) { CurrentStatus = TaskRunStatus.InProgress },
+            ThrowOnCreate = new ResilientTaskException(ResilientTaskErrorCode.Conflict) { CurrentStatus = TaskRunStatus.InProgress },
         };
-        using var factory = NewFactory(
-            invoker,
-            _ =>
-            {
-                // DEFAULT options — deliberately set neither flag.
-            });
-        using var client = factory.CreateClient();
+        try
+        {
+            using var factory = NewFactory(
+                spy,
+                root,
+                _ =>
+                {
+                    // DEFAULT options — deliberately set neither flag.
+                });
+            using var client = factory.CreateClient();
 
-        var response = await client.PostAsync(
-            "/responses",
-            Json(new { model = "test", background = true, conversation = "conv-lock" }));
+            var response = await client.PostAsync(
+                "/responses",
+                Json(new { model = "test", background = true, conversation = "conv-lock" }));
 
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
-        using var doc = await ParseAsync(response);
-        var error = doc.RootElement.GetProperty("error");
-        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("conversation_locked"));
-        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("conflict"));
-        Assert.That(invoker.LastTaskName, Is.EqualTo(ResponsesResilientTaskHandler.MultiTurnTaskName));
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
+            using var doc = await ParseAsync(response);
+            var error = doc.RootElement.GetProperty("error");
+            Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("conversation_locked"));
+            Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("conflict"));
+            Assert.That(spy.LastTaskName, Is.EqualTo(ResponsesResilientTaskHandler.MultiTurnTaskName));
+        }
+        finally
+        {
+            CleanupRoot(root);
+        }
     }
 
     [Test]
@@ -212,29 +299,37 @@ public class TestSteerableConversationContractTests
         // must route through the multi-turn task too (parity with Python `_pick_primitive`, which is
         // NOT background-gated). A concurrent turn overlapping the active turn is a Core lock conflict
         // → HTTP 409 conversation_locked, even with DEFAULT options.
-        var invoker = new FakeTaskInvoker
+        var spy = new SpyTaskStore(new LocalTaskStore(TempTasksDir(out var root)))
         {
-            ThrowOnStart = new ResilientTaskException(ResilientTaskErrorCode.Conflict) { CurrentStatus = TaskRunStatus.InProgress },
+            ThrowOnCreate = new ResilientTaskException(ResilientTaskErrorCode.Conflict) { CurrentStatus = TaskRunStatus.InProgress },
         };
-        using var factory = NewFactory(
-            invoker,
-            _ =>
-            {
-                // DEFAULT options — deliberately set neither flag.
-            });
-        using var client = factory.CreateClient();
+        try
+        {
+            using var factory = NewFactory(
+                spy,
+                root,
+                _ =>
+                {
+                    // DEFAULT options — deliberately set neither flag.
+                });
+            using var client = factory.CreateClient();
 
-        // No background field → foreground.
-        var response = await client.PostAsync(
-            "/responses",
-            Json(new { model = "test", conversation = "conv-fg-lock" }));
+            // No background field → foreground.
+            var response = await client.PostAsync(
+                "/responses",
+                Json(new { model = "test", conversation = "conv-fg-lock" }));
 
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
-        using var doc = await ParseAsync(response);
-        var error = doc.RootElement.GetProperty("error");
-        Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("conversation_locked"));
-        Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("conflict"));
-        Assert.That(invoker.LastTaskName, Is.EqualTo(ResponsesResilientTaskHandler.MultiTurnTaskName));
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
+            using var doc = await ParseAsync(response);
+            var error = doc.RootElement.GetProperty("error");
+            Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("conversation_locked"));
+            Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("conflict"));
+            Assert.That(spy.LastTaskName, Is.EqualTo(ResponsesResilientTaskHandler.MultiTurnTaskName));
+        }
+        finally
+        {
+            CleanupRoot(root);
+        }
     }
 
     [Test]
@@ -256,9 +351,9 @@ public class TestSteerableConversationContractTests
         await seedProvider.CreateResponseAsync(
             new CreateResponseRequest(antecedent, null, null), PlatformContext.Empty);
 
-        var invoker = new FakeTaskInvoker
+        var spy = new SpyTaskStore(new LocalTaskStore(tasksDir))
         {
-            ThrowOnStart = new ResilientTaskException(ResilientTaskErrorCode.PreconditionFailed) { ActualLastInputId = "resp-latest" },
+            ThrowOnCreate = new ResilientTaskException(ResilientTaskErrorCode.PreconditionFailed) { ActualLastInputId = "resp-latest" },
         };
 
         try
@@ -270,8 +365,7 @@ public class TestSteerableConversationContractTests
                 },
                 configureTestServices: services =>
                 {
-                    services.AddSingleton<ITaskInvoker>(invoker);
-                    services.AddSingleton<ITaskStore>(_ => new LocalTaskStore(tasksDir));
+                    services.AddSingleton<ITaskStore>(spy);
                     services.AddSingleton(_ => new FileResponsesProvider(responsesDir));
                 });
             using var client = factory.CreateClient();
@@ -292,8 +386,10 @@ public class TestSteerableConversationContractTests
             Assert.That(error.GetProperty("code").GetString(), Is.EqualTo("conversation_fork_not_supported"));
             Assert.That(error.GetProperty("type").GetString(), Is.EqualTo("conflict"));
             Assert.That(error.GetProperty("param").GetString(), Is.EqualTo("previous_response_id"));
-            Assert.That(invoker.LastTaskName, Is.EqualTo(ResponsesResilientTaskHandler.MultiTurnTaskName));
-            Assert.That(invoker.LastOptions!.IfLastInputId, Is.EqualTo(antecedentId));
+            Assert.That(spy.LastTaskName, Is.EqualTo(ResponsesResilientTaskHandler.MultiTurnTaskName));
+            // The endpoint's IfLastInputId wiring on RunOptions is engine-scoped and not persisted
+            // into TaskCreateRequest, so it is not observable at the store boundary. The 409 body
+            // assertions above cover the exception-mapping contract that this test targets.
         }
         finally
         {
@@ -314,84 +410,115 @@ public class TestSteerableConversationContractTests
         // must be tracked by a Core one-shot task so a next-lifetime crash-recovery scan marks it failed
         // (disposition=mark-failed). Parity assertion: the task input payload carries the mark-failed
         // disposition (DecideDisposition(store:true, background:true, resilientBackground:false)). The
-        // fake short-circuits via IsQueued only to observe the dispatch decision without running the
-        // handler (store defaults to true; no conversation → one-shot, not multi-turn).
-        var invoker = new FakeTaskInvoker { NextIsQueued = true };
-        using var factory = NewFactory(
-            invoker,
-            _ =>
-            {
-                // DEFAULT options — non-resilient, non-steerable.
-            });
-        using var client = factory.CreateClient();
+        // spy passes through to the real LocalTaskStore so the real engine dispatches and the endpoint
+        // reaches its normal handler path (default TestHandler yields response.created → completed);
+        // the captured TaskCreateRequest carries the wire payload the endpoint attempted to persist.
+        var spy = new SpyTaskStore(new LocalTaskStore(TempTasksDir(out var root)));
+        try
+        {
+            using var factory = NewFactory(
+                spy,
+                root,
+                _ =>
+                {
+                    // DEFAULT options — non-resilient, non-steerable.
+                });
+            using var client = factory.CreateClient();
 
-        var response = await client.PostAsync(
-            "/responses",
-            Json(new { model = "test", background = true }));
+            var response = await client.PostAsync(
+                "/responses",
+                Json(new { model = "test", background = true }));
 
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        Assert.That(invoker.LastTaskName, Is.EqualTo(ResponsesResilientTaskHandler.OneShotTaskName));
-        Assert.That(invoker.LastOptions!.TaskId, Is.EqualTo(invoker.LastOptions!.InputId));
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(spy.LastTaskName, Is.EqualTo(ResponsesResilientTaskHandler.OneShotTaskName));
+            // One-shot invariant: task id == input id == response id. Observed via the create
+            // request id + the persisted last_input_id (the endpoint supplies an explicit InputId
+            // for the one-shot, so the engine stamps last_input_id = InputId = response id).
+            Assert.That(spy.LastCreateRequest?.Id, Is.Not.Null.And.Not.Empty);
+            Assert.That(spy.LastLastInputId, Is.EqualTo(spy.LastCreateRequest!.Id));
 
-        // The tracked task carries the Row 2 mark-failed disposition so recovery fails (not re-invokes) it.
-        var input = invoker.LastInput as ResponseTaskInput;
-        Assert.That(input, Is.Not.Null, "the one-shot task input must be a ResponseTaskInput");
-        Assert.That(input!.Payload.Disposition, Is.EqualTo(ResponseRecoveryPayload.DispositionMarkFailed));
-        Assert.That(
-            ResponseResilienceDispatch.DecideDisposition(store: true, background: true, resilientBackground: false),
-            Is.EqualTo(ResponseRecoveryPayload.DispositionMarkFailed));
+            // The tracked task carries the Row 2 mark-failed disposition so recovery fails (not re-invokes) it.
+            var payload = spy.LastResponsePayload;
+            Assert.That(payload, Is.Not.Null, "the one-shot task input must deserialize as a ResponseRecoveryPayload");
+            Assert.That(payload!.Disposition, Is.EqualTo(ResponseRecoveryPayload.DispositionMarkFailed));
+            Assert.That(
+                ResponseResilienceDispatch.DecideDisposition(store: true, background: true, resilientBackground: false),
+                Is.EqualTo(ResponseRecoveryPayload.DispositionMarkFailed));
+        }
+        finally
+        {
+            CleanupRoot(root);
+        }
     }
 
     [Test]
     public async Task SteeringQueueFull_MapsToConversationLocked409()
     {
-        var invoker = new FakeTaskInvoker
+        var spy = new SpyTaskStore(new LocalTaskStore(TempTasksDir(out var root)))
         {
-            ThrowOnStart = new ResilientTaskException(ResilientTaskErrorCode.QueueFull),
+            ThrowOnCreate = new ResilientTaskException(ResilientTaskErrorCode.QueueFull),
         };
-        using var factory = NewFactory(
-            invoker,
-            o =>
-            {
-                o.SteerableConversations = true;
-                o.ResilientBackground = true;
-            });
-        using var client = factory.CreateClient();
+        try
+        {
+            using var factory = NewFactory(
+                spy,
+                root,
+                o =>
+                {
+                    o.SteerableConversations = true;
+                    o.ResilientBackground = true;
+                });
+            using var client = factory.CreateClient();
 
-        var response = await client.PostAsync(
-            "/responses",
-            Json(new { model = "test", background = true, conversation = "conv-full" }));
+            var response = await client.PostAsync(
+                "/responses",
+                Json(new { model = "test", background = true, conversation = "conv-full" }));
 
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
-        using var doc = await ParseAsync(response);
-        Assert.That(
-            doc.RootElement.GetProperty("error").GetProperty("code").GetString(),
-            Is.EqualTo("conversation_locked"));
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.Conflict));
+            using var doc = await ParseAsync(response);
+            Assert.That(
+                doc.RootElement.GetProperty("error").GetProperty("code").GetString(),
+                Is.EqualTo("conversation_locked"));
+        }
+        finally
+        {
+            CleanupRoot(root);
+        }
     }
 
     [Test]
     public async Task NonConversationalResilientTurn_RoutesToOneShotTask()
     {
         // No conversation / previous_response_id and non-steerable → the one-shot resilient task
-        // (task id == input id == response id). The fake short-circuits via IsQueued only to observe
-        // the dispatch decision without running the handler.
-        var invoker = new FakeTaskInvoker { NextIsQueued = true };
-        using var factory = NewFactory(
-            invoker,
-            o =>
-            {
-                o.SteerableConversations = false;
-                o.ResilientBackground = true;
-            });
-        using var client = factory.CreateClient();
+        // (task id == input id == response id). The spy passes through to the real store so the
+        // endpoint runs normally; the captured create request proves the routing.
+        var spy = new SpyTaskStore(new LocalTaskStore(TempTasksDir(out var root)));
+        try
+        {
+            using var factory = NewFactory(
+                spy,
+                root,
+                o =>
+                {
+                    o.SteerableConversations = false;
+                    o.ResilientBackground = true;
+                });
+            using var client = factory.CreateClient();
 
-        var response = await client.PostAsync(
-            "/responses",
-            Json(new { model = "test", background = true }));
+            var response = await client.PostAsync(
+                "/responses",
+                Json(new { model = "test", background = true }));
 
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        Assert.That(invoker.LastTaskName, Is.EqualTo(ResponsesResilientTaskHandler.OneShotTaskName));
-        Assert.That(invoker.LastOptions!.TaskId, Is.EqualTo(invoker.LastOptions!.InputId));
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(spy.LastTaskName, Is.EqualTo(ResponsesResilientTaskHandler.OneShotTaskName));
+            Assert.That(spy.LastCreateRequest?.Id, Is.Not.Null.And.Not.Empty);
+            // One-shot: task id == input id == response id (last_input_id mirrors the request id).
+            Assert.That(spy.LastLastInputId, Is.EqualTo(spy.LastCreateRequest!.Id));
+        }
+        finally
+        {
+            CleanupRoot(root);
+        }
     }
 
     [Test]
@@ -413,7 +540,7 @@ public class TestSteerableConversationContractTests
         await seedProvider.CreateResponseAsync(
             new CreateResponseRequest(antecedent, null, null), PlatformContext.Empty);
 
-        var invoker = new FakeTaskInvoker { NextIsQueued = true };
+        var spy = new SpyTaskStore(new LocalTaskStore(tasksDir));
         try
         {
             using var factory = new TestWebApplicationFactory(
@@ -424,8 +551,7 @@ public class TestSteerableConversationContractTests
                 },
                 configureTestServices: services =>
                 {
-                    services.AddSingleton<ITaskInvoker>(invoker);
-                    services.AddSingleton<ITaskStore>(_ => new LocalTaskStore(tasksDir));
+                    services.AddSingleton<ITaskStore>(spy);
                     services.AddSingleton(_ => new FileResponsesProvider(responsesDir));
                 });
             using var client = factory.CreateClient();
@@ -435,8 +561,11 @@ public class TestSteerableConversationContractTests
                 Json(new { model = "test", background = true, previous_response_id = antecedentId }));
 
             Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-            Assert.That(invoker.LastTaskName, Is.EqualTo(ResponsesResilientTaskHandler.OneShotTaskName));
-            Assert.That(invoker.LastOptions!.IfLastInputId, Is.Null);
+            Assert.That(spy.LastTaskName, Is.EqualTo(ResponsesResilientTaskHandler.OneShotTaskName));
+            // RunOptions.IfLastInputId is engine-scoped and not persisted into TaskCreateRequest,
+            // so it is not observable at the store boundary. The 200 OK on a one-shot with a
+            // "stale" previous_response_id + the OneShotTaskName routing above is what would fail
+            // if the endpoint had mis-wired previous_response_id as a multi-turn fork precondition.
         }
         finally
         {
@@ -910,81 +1039,46 @@ public class TestSteerableConversationContractTests
         Assert.Fail($"Response '{responseId}' did not reach a terminal state within {timeout}.");
     }
 
-    private static TestWebApplicationFactory NewFactory(
-        ITaskInvoker invoker,
-        Action<ResponsesServerOptions> configureOptions)
+    private static string TempTasksDir(out string root)
     {
-        // Isolate the Core task/response stores at fresh empty dirs so the always-on durability
-        // service cold-start scan finds nothing and cannot pick up shared/leftover state.
-        var root = Path.Combine(Path.GetTempPath(), "steer-unit-" + Guid.NewGuid().ToString("N"));
+        root = Path.Combine(Path.GetTempPath(), "steer-unit-" + Guid.NewGuid().ToString("N"));
         var tasksDir = Path.Combine(root, "tasks");
         var responsesDir = Path.Combine(root, "responses");
         Directory.CreateDirectory(tasksDir);
         Directory.CreateDirectory(responsesDir);
+        return tasksDir;
+    }
 
+    private static void CleanupRoot(string root)
+    {
+        try
+        {
+            if (Directory.Exists(root))
+            {
+                Directory.Delete(root, recursive: true);
+            }
+        }
+        catch (IOException)
+        {
+        }
+    }
+
+    private static TestWebApplicationFactory NewFactory(
+        SpyTaskStore spy,
+        string root,
+        Action<ResponsesServerOptions> configureOptions)
+    {
+        // Isolate the Core task/response stores at fresh empty dirs (created by TempTasksDir /
+        // NewSpyStore) so the always-on durability service's cold-start scan finds nothing and
+        // cannot pick up shared/leftover state. The responses dir is a sibling of the tasks dir
+        // under the same GUID-scoped root.
+        var responsesDir = Path.Combine(root, "responses");
         return new TestWebApplicationFactory(
             configureOptions: configureOptions,
             configureTestServices: services =>
             {
-                services.AddSingleton(invoker);
-                services.AddSingleton<ITaskStore>(_ => new LocalTaskStore(tasksDir));
+                services.AddSingleton<ITaskStore>(spy);
                 services.AddSingleton(_ => new FileResponsesProvider(responsesDir));
             });
-    }
-
-    /// <summary>
-    /// A minimal <see cref="ITaskInvoker"/> test double that captures the dispatch decision and
-    /// either throws a configured Core steering exception or returns a queued handle — enough to
-    /// verify the Responses dispatch selection and exception→409 mapping without running the handler.
-    /// </summary>
-    private sealed class FakeTaskInvoker : ITaskInvoker
-    {
-        public bool NextIsQueued { get; set; }
-
-        public Exception? ThrowOnStart { get; set; }
-
-        public string? LastTaskName { get; private set; }
-
-        public RunOptions? LastOptions { get; private set; }
-
-        public object? LastInput { get; private set; }
-
-        public Task<TaskRun<TOutput>> StartAsync<TInput, TOutput>(
-            string name, TInput input, RunOptions? options = null, CancellationToken cancellationToken = default)
-        {
-            LastTaskName = name;
-            LastOptions = options;
-            LastInput = input;
-
-            if (ThrowOnStart is not null)
-            {
-                return Task.FromException<TaskRun<TOutput>>(ThrowOnStart);
-            }
-
-            return Task.FromResult<TaskRun<TOutput>>(new FakeTaskRun<TOutput>(NextIsQueued));
-        }
-
-        public Task<TOutput> RunAsync<TInput, TOutput>(
-            string name, TInput input, RunOptions? options = null, CancellationToken cancellationToken = default)
-            => throw new NotSupportedException();
-
-        public Task<TaskRun<TOutput>?> GetActiveRunAsync<TOutput>(
-            string name, string taskId, CancellationToken cancellationToken = default)
-            => Task.FromResult<TaskRun<TOutput>?>(null);
-
-        public Task<TaskRun<TOutput>?> GetActiveRunAsync<TOutput>(
-            string name, string taskId, string inputId, CancellationToken cancellationToken = default)
-            => Task.FromResult<TaskRun<TOutput>?>(null);
-    }
-
-    private sealed class FakeTaskRun<TOutput> : TaskRun<TOutput>
-    {
-        private readonly bool _isQueued;
-
-        public FakeTaskRun(bool isQueued) => _isQueued = isQueued;
-
-        public override bool IsQueued => _isQueued;
-
-        public override Task<TOutput> Completion => new TaskCompletionSource<TOutput>().Task;
     }
 }

@@ -2,11 +2,27 @@
 
 ## 1.0.0-beta.29 (Unreleased)
 
+### Features Added
+
+- Added constructor-injected resilient task handlers through
+  `IResilientTaskHandler<TInput, TOutput>` registration overloads. The task engine creates
+  and asynchronously disposes a fresh dependency-injection scope for every execution
+  attempt, including retries, steered turns, and recovered attempts.
+- Added deterministic event-stream backing composition and
+  `IHostApplicationBuilder.AddAgentEventStreams(sectionName)`. Explicit application
+  configuration now overrides protocol defaults regardless of registration order,
+  identical selections are idempotent, and conflicting same-precedence selections fail
+  with source diagnostics instead of silently discarding durability settings.
+- Added lazy task-bound stream capabilities: handlers emit through
+  `TaskContext<TInput>.Stream`, and callers subscribe through `TaskRun<TOutput>.Stream`.
+  Streams use the per-turn `InputId`, remain open across retry and recovery deferral, and
+  close only after the existing terminal task-store transition succeeds.
+
 ### Breaking Changes
-- `AddAgentEventStreams` no longer throws on a repeated configuring call. It is now plain
-  first-wins (`TryAddSingleton`), so a composition where more than one component (a protocol SDK
-  and a consumer, or two protocols) selects the event-stream backing is harmless regardless of
-  registration order — configuration/first-registration decides the backing rather than call order.
+
+### Bugs Fixed
+
+### Other Changes
 
 ## 1.0.0-beta.28 (2026-08-12)
 
@@ -16,8 +32,8 @@
   the ambient `FoundryAgentRequestContext.Current.CallId` by default. Resilient
   task handlers restore a top-level persisted `call_id` for every execution attempt.
 - Added resilient **task** and **streaming** primitives for building durable, long-running agents (`Azure.AI.AgentServer.Core.Tasks` and `Azure.AI.AgentServer.Core.Streaming`):
-  - Register one-shot and multi-turn tasks with `IServiceCollection.AddResilientTasks()` and the `ResilientTaskBuilder` (`AddTask` / `AddMultiTurnTask`), including overloads that accept a source-generated `JsonTypeInfo<TInput>` for Native-AOT / trimming-safe input serialization. The reflection-based overloads carry `[RequiresUnreferencedCode]` / `[RequiresDynamicCode]` so trimming/AOT builds get a compile-time warning steering them to the `JsonTypeInfo<TInput>` overloads.
-  - Run and resume tasks through `ITaskInvoker` (`RunAsync`, `StartAsync`, `GetActiveRunAsync`) with the `TaskRun<TOutput>` handle (await its `Completion` task, or `Completion.WaitAsync(token)` to cancel only your wait) and the `TaskContext<TInput>` handler surface (entry mode, retry attempt, cooperative cancellation, shutdown, and steering signals).
+  - Register one-shot and multi-turn tasks with the flat `IServiceCollection.AddResilientTask()` / `AddResilientMultiTurnTask()` extension methods, including overloads that accept a source-generated `JsonTypeInfo<TInput>` for Native-AOT / trimming-safe input serialization. The reflection-based overloads carry `[RequiresUnreferencedCode]` / `[RequiresDynamicCode]` so trimming/AOT builds get a compile-time warning steering them to the `JsonTypeInfo<TInput>` overloads. Each call self-initializes the resilient-tasks services on first use (`AddResilientTasks(credential)` remains available, and is only needed to supply a hosted-storage credential before any task is registered) and returns a typed `TaskDefinition<TInput, TOutput>` handle that binds the task name and its input/output types once, so invocation is strongly typed (a mismatched input or output is a compile error).
+  - Run and resume tasks through the `TaskDefinition<TInput, TOutput>` handle (`RunAsync`, `StartAsync`, `GetActiveRunAsync`) with the `TaskRun<TOutput>` handle (await its `Completion` task, or `Completion.WaitAsync(token)` to cancel only your wait) and the `TaskContext<TInput>` handler surface (entry mode, retry attempt, cooperative cancellation, shutdown, and steering signals). Each registered handle is also registered as a keyed singleton service (keyed by task name — resolution is never ambiguous even when multiple tasks share the same input/output types); resolve it in a request handler with `IServiceProvider.GetResilientTask<TInput, TOutput>(name)`.
   - Configure per-task durability with `TaskRegistrationOptions` (title, timeout, retry) and `TaskRetryPolicy` (attempt count + an `Azure.Core.DelayStrategy` for the backoff).
   - Resumable event streaming with `AgentEventStreamRegistry` / `AgentEventStream` and `AddAgentEventStreams()`, supporting in-memory live, in-memory replay, and file-backed replay backings via `AgentEventStreamOptions`. The event representation is `System.Net.ServerSentEvents.SseItem<string>`: the caller places the serialized event text in `SseItem<string>.Data` and an opaque `SseItem<string>.EventId` is the resume/reconnect token (`Subscribe(afterEventId)`, `GetLastEventIdAsync()`). Because the data is already a string, there is no payload codec — `SseFormatter` can frame a `Subscribe(...)` stream directly onto an HTTP response.
   - A single `ResilientTaskException` carrying an extensible `ResilientTaskErrorCode` (`HandlerError`, `ExhaustedRetries`, `Conflict`, `PreconditionFailed`, `QueueFull`) with code-specific data exposed as nullable properties (`CurrentStatus`, `ActualLastInputId`, `Failure`). Argument validation surfaces as `ArgumentException` and cancellation as `OperationCanceledException`; recovery deferral (`ExitForRecoveryAsync`) is an internal lifecycle handoff and never surfaces as an exception. The streaming layer keeps its `AgentEventStreamException` hierarchy.

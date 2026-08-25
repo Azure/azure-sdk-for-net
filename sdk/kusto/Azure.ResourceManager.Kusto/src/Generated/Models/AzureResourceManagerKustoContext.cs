@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.Kusto
     [ModelReaderWriterBuildable(typeof(ClusterPrincipalAssignmentListResult))]
     [ModelReaderWriterBuildable(typeof(ClusterPrincipalProperties))]
     [ModelReaderWriterBuildable(typeof(ClusterProperties))]
-    [ModelReaderWriterBuildable(typeof(CosmosDbDataConnectionProperties))]
+    [ModelReaderWriterBuildable(typeof(CosmosDBDataConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(DatabaseInviteFollowerContent))]
     [ModelReaderWriterBuildable(typeof(DatabaseInviteFollowerResult))]
     [ModelReaderWriterBuildable(typeof(DatabaseListResult))]

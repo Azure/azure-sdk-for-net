@@ -2,8 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
+using System.Globalization;
+using System.Linq;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
 
 namespace Azure.AI.AgentServer.Core.Streaming;
 
@@ -17,12 +22,37 @@ namespace Azure.AI.AgentServer.Core.Streaming;
 public static class AgentEventStreamServiceCollectionExtensions
 {
     /// <summary>
+    /// Adds the event-stream registry using a configuration section with <c>Backing</c>,
+    /// <c>StorageDirectory</c>, and <c>Ttl</c> values.
+    /// </summary>
+    /// <param name="builder">The host application builder.</param>
+    /// <param name="sectionName">The configuration section name.</param>
+    /// <returns>The same host application builder for chaining.</returns>
+    public static IHostApplicationBuilder AddAgentEventStreams(
+        this IHostApplicationBuilder builder,
+        string sectionName)
+    {
+        ArgumentNullException.ThrowIfNull(builder);
+        if (string.IsNullOrWhiteSpace(sectionName))
+        {
+            throw new ArgumentException(
+                "The event-stream configuration section name must be non-empty.",
+                nameof(sectionName));
+        }
+
+        AgentEventStreamRegistrationState state = GetOrCreateState(builder.Services);
+        state.Add(new AgentEventStreamRegistrationRequest(
+            $"configuration section '{sectionName}'",
+            AgentEventStreamRegistrationPriority.Application,
+            () => ReadConfiguration(builder.Configuration, sectionName)));
+
+        EnsureRegistry(builder.Services, state);
+        return builder;
+    }
+
+    /// <summary>
     /// Adds the event-stream registry, selecting and configuring the single backing
-    /// for the process. Safe to call more than once: the first registration wins
-    /// (<see cref="Microsoft.Extensions.DependencyInjection.Extensions.ServiceCollectionDescriptorExtensions.TryAddSingleton{TService}(IServiceCollection, System.Func{IServiceProvider, TService})"/>
-    /// semantics), so a composition where more than one component (e.g. a protocol SDK and a
-    /// consumer) registers the streams selects the backing by configuration/first-registration
-    /// rather than throwing on registration order.
+    /// for the process.
     /// </summary>
     /// <param name="services">The service collection.</param>
     /// <param name="configure">An optional configurator that selects the backing; defaults to in-memory live.</param>
@@ -33,13 +63,175 @@ public static class AgentEventStreamServiceCollectionExtensions
     {
         ArgumentNullException.ThrowIfNull(services);
 
-        // A single backing is selected once for the process. Registration is first-wins: a later
-        // call (from another protocol SDK or the consumer) is a harmless no-op rather than an
-        // order-dependent throw, so configuration decides the backing regardless of call order.
-        var options = new AgentEventStreamOptions();
-        configure?.Invoke(options);
+        AgentEventStreamRegistrationState state = GetOrCreateState(services);
+        if (configure is not null)
+        {
+            state.Add(CreateRequest(
+                "application configuration",
+                AgentEventStreamRegistrationPriority.Application,
+                configure));
+        }
 
-        services.TryAddSingleton<AgentEventStreamRegistry>(_ => new InMemoryEventStreamRegistry(options));
+        EnsureRegistry(services, state);
         return services;
     }
+
+    /// <summary>
+    /// Registers a protocol package's default stream backing. Application configuration registered
+    /// through <see cref="AddAgentEventStreams(IServiceCollection, Action{AgentEventStreamOptions}?)"/>
+    /// takes precedence regardless of registration order.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <param name="source">The protocol component requesting the default.</param>
+    /// <param name="configure">The default backing configuration.</param>
+    /// <returns>The same service collection for chaining.</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public static IServiceCollection AddAgentEventStreamsDefault(
+        this IServiceCollection services,
+        string source,
+        Action<AgentEventStreamOptions> configure)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+        if (string.IsNullOrWhiteSpace(source))
+        {
+            throw new ArgumentException(
+                "The protocol stream-default source must be non-empty.",
+                nameof(source));
+        }
+
+        ArgumentNullException.ThrowIfNull(configure);
+        AgentEventStreamRegistrationState state = GetOrCreateState(services);
+        state.Add(CreateRequest(
+            source,
+            AgentEventStreamRegistrationPriority.ProtocolDefault,
+            configure));
+        EnsureRegistry(services, state);
+        return services;
+    }
+
+    private static AgentEventStreamRegistrationRequest CreateRequest(
+        string source,
+        AgentEventStreamRegistrationPriority priority,
+        Action<AgentEventStreamOptions> configure)
+    {
+        var options = new AgentEventStreamOptions();
+        configure(options);
+        return new AgentEventStreamRegistrationRequest(
+            source,
+            priority,
+            () => options.Configuration);
+    }
+
+    private static AgentEventStreamConfiguration? ReadConfiguration(
+        IConfiguration configuration,
+        string sectionName)
+    {
+        IConfigurationSection section = configuration.GetSection(sectionName);
+        string? backing = section["Backing"];
+        string? storageDirectory = section["StorageDirectory"];
+        TimeSpan? ttl = ParseTtl(section["Ttl"], sectionName);
+
+        if (string.IsNullOrWhiteSpace(backing))
+        {
+            if (storageDirectory is not null || ttl is not null)
+            {
+                throw new InvalidOperationException(
+                    $"Configuration section '{sectionName}' must specify Backing when " +
+                    "StorageDirectory or Ttl is set.");
+            }
+
+            return null;
+        }
+
+        var options = new AgentEventStreamOptions();
+        ConfigureBacking(options, backing, storageDirectory, ttl, sectionName);
+        return options.Configuration;
+    }
+
+    private static void ConfigureBacking(
+        AgentEventStreamOptions options,
+        string backing,
+        string? storageDirectory,
+        TimeSpan? ttl,
+        string sectionName)
+    {
+        if (string.Equals(backing, "InMemoryLive", StringComparison.OrdinalIgnoreCase))
+        {
+            if (storageDirectory is not null || ttl is not null)
+            {
+                throw new InvalidOperationException(
+                    $"Configuration section '{sectionName}' cannot set StorageDirectory or Ttl " +
+                    "for the InMemoryLive backing.");
+            }
+
+            options.UseInMemoryLive();
+            return;
+        }
+
+        if (string.Equals(backing, "InMemoryReplay", StringComparison.OrdinalIgnoreCase))
+        {
+            if (storageDirectory is not null)
+            {
+                throw new InvalidOperationException(
+                    $"Configuration section '{sectionName}' cannot set StorageDirectory " +
+                    "for the InMemoryReplay backing.");
+            }
+
+            options.UseInMemoryReplay(ttl);
+            return;
+        }
+
+        if (string.Equals(backing, "FileBackedReplay", StringComparison.OrdinalIgnoreCase))
+        {
+            options.UseFileBackedReplay(storageDirectory, ttl);
+            return;
+        }
+
+        throw new InvalidOperationException(
+            $"Configuration section '{sectionName}' specifies unsupported AgentEventStream " +
+            $"backing '{backing}'. Expected InMemoryLive, InMemoryReplay, or FileBackedReplay.");
+    }
+
+    private static TimeSpan? ParseTtl(string? value, string sectionName)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return null;
+        }
+
+        if (!TimeSpan.TryParse(value, CultureInfo.InvariantCulture, out TimeSpan ttl) ||
+            ttl < TimeSpan.Zero)
+        {
+            throw new InvalidOperationException(
+                $"Configuration section '{sectionName}' has invalid non-negative Ttl '{value}'.");
+        }
+
+        return ttl;
+    }
+
+    private static AgentEventStreamRegistrationState GetOrCreateState(
+        IServiceCollection services)
+    {
+        AgentEventStreamRegistrationState? state = services
+            .Where(descriptor =>
+                descriptor.ServiceType == typeof(AgentEventStreamRegistrationState))
+            .Select(descriptor => descriptor.ImplementationInstance)
+            .OfType<AgentEventStreamRegistrationState>()
+            .FirstOrDefault();
+
+        if (state is not null)
+        {
+            return state;
+        }
+
+        state = new AgentEventStreamRegistrationState();
+        services.TryAddSingleton(state);
+        return state;
+    }
+
+    private static void EnsureRegistry(
+        IServiceCollection services,
+        AgentEventStreamRegistrationState state)
+        => services.TryAddSingleton<AgentEventStreamRegistry>(
+            _ => new InMemoryEventStreamRegistry(state.ResolveOptions()));
 }

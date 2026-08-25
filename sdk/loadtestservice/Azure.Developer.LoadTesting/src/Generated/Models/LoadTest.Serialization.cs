@@ -163,10 +163,10 @@ namespace Azure.Developer.LoadTesting
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind.Value.ToString());
             }
-            if (Optional.IsDefined(PublicIpDisabled))
+            if (Optional.IsDefined(PublicIPDisabled))
             {
                 writer.WritePropertyName("publicIPDisabled"u8);
-                writer.WriteBooleanValue(PublicIpDisabled.Value);
+                writer.WriteBooleanValue(PublicIPDisabled.Value);
             }
             if (Optional.IsDefined(KeyvaultReferenceIdentityType))
             {
@@ -293,7 +293,7 @@ namespace Azure.Developer.LoadTesting
             string displayName = default;
             string subnetId = default;
             LoadTestKind? kind = default;
-            bool? publicIpDisabled = default;
+            bool? publicIPDisabled = default;
             string keyvaultReferenceIdentityType = default;
             string keyvaultReferenceIdentityId = default;
             LoadTestingManagedIdentityType? metricsReferenceIdentityType = default;
@@ -429,7 +429,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    publicIpDisabled = prop.Value.GetBoolean();
+                    publicIPDisabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("keyvaultReferenceIdentityType"u8))
@@ -551,7 +551,7 @@ namespace Azure.Developer.LoadTesting
                 displayName,
                 subnetId,
                 kind,
-                publicIpDisabled,
+                publicIPDisabled,
                 keyvaultReferenceIdentityType,
                 keyvaultReferenceIdentityId,
                 metricsReferenceIdentityType,
