@@ -12,26 +12,26 @@ using Azure.ResourceManager.Commerce;
 namespace Azure.ResourceManager.Commerce.Models
 {
     /// <summary> Price and Metadata information for resources. </summary>
-    public partial class ResourceRateCardInfo
+    public partial class CommerceRateCardInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ResourceRateCardInfo"/>. </summary>
-        internal ResourceRateCardInfo()
+        /// <summary> Initializes a new instance of <see cref="CommerceRateCardInfo"/>. </summary>
+        internal CommerceRateCardInfo()
         {
-            OfferTerms = new ChangeTrackingList<OfferTermInfo>();
-            Meters = new ChangeTrackingList<MeterInfo>();
+            OfferTerms = new ChangeTrackingList<CommerceOfferTermInfo>();
+            Meters = new ChangeTrackingList<CommerceMeterInfo>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ResourceRateCardInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommerceRateCardInfo"/>. </summary>
         /// <param name="currency"> The currency in which the rates are provided. </param>
         /// <param name="locale"> The culture in which the resource information is localized. </param>
         /// <param name="isTaxIncluded"> All rates are pretax, so this will always be returned as 'false'. </param>
         /// <param name="offerTerms"> A list of offer terms. </param>
         /// <param name="meters"> A list of meters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceRateCardInfo(string currency, string locale, bool? isTaxIncluded, IList<OfferTermInfo> offerTerms, IList<MeterInfo> meters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommerceRateCardInfo(string currency, string locale, bool? isTaxIncluded, IList<CommerceOfferTermInfo> offerTerms, IList<CommerceMeterInfo> meters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Currency = currency;
             Locale = locale;
@@ -51,9 +51,9 @@ namespace Azure.ResourceManager.Commerce.Models
         public bool? IsTaxIncluded { get; }
 
         /// <summary> A list of offer terms. </summary>
-        public IList<OfferTermInfo> OfferTerms { get; }
+        public IList<CommerceOfferTermInfo> OfferTerms { get; }
 
         /// <summary> A list of meters. </summary>
-        public IList<MeterInfo> Meters { get; }
+        public IList<CommerceMeterInfo> Meters { get; }
     }
 }

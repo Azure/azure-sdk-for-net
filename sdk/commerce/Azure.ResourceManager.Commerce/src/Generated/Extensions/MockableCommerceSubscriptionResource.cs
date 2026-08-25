@@ -69,8 +69,8 @@ namespace Azure.ResourceManager.Commerce.Mocking
         /// <param name="aggregationGranularity"> `Daily` (default) returns the data in daily granularity, `Hourly` returns the data in hourly granularity. </param>
         /// <param name="continuationToken"> Used when a continuation token string is provided in the response body of the previous call, enabling paging through a large result set. If not present, the data is retrieved from the beginning of the day/hour (based on the granularity) passed in. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UsageAggregation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<UsageAggregation> GetUsageAggregatesAsync(DateTimeOffset reportedStartTime, DateTimeOffset reportedEndTime, bool? showDetails = default, AggregationGranularity? aggregationGranularity = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CommerceUsageAggregation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CommerceUsageAggregation> GetUsageAggregatesAsync(DateTimeOffset reportedStartTime, DateTimeOffset reportedEndTime, bool? showDetails = default, CommerceUsageAggregationGranularity? aggregationGranularity = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -111,8 +111,8 @@ namespace Azure.ResourceManager.Commerce.Mocking
         /// <param name="aggregationGranularity"> `Daily` (default) returns the data in daily granularity, `Hourly` returns the data in hourly granularity. </param>
         /// <param name="continuationToken"> Used when a continuation token string is provided in the response body of the previous call, enabling paging through a large result set. If not present, the data is retrieved from the beginning of the day/hour (based on the granularity) passed in. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="UsageAggregation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<UsageAggregation> GetUsageAggregates(DateTimeOffset reportedStartTime, DateTimeOffset reportedEndTime, bool? showDetails = default, AggregationGranularity? aggregationGranularity = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CommerceUsageAggregation"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CommerceUsageAggregation> GetUsageAggregates(DateTimeOffset reportedStartTime, DateTimeOffset reportedEndTime, bool? showDetails = default, CommerceUsageAggregationGranularity? aggregationGranularity = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Commerce.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ResourceRateCardInfo>> GetRateCardAsync(string filter, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CommerceRateCardInfo>> GetRateCardAsync(string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Commerce.Mocking
                 };
                 HttpMessage message = RateCardRestClient.CreateGetRateCardRequest(Id.SubscriptionId, filter, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ResourceRateCardInfo> response = Response.FromValue(ResourceRateCardInfo.FromResponse(result), result);
+                Response<CommerceRateCardInfo> response = Response.FromValue(CommerceRateCardInfo.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Commerce.Mocking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="filter"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="filter"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ResourceRateCardInfo> GetRateCard(string filter, CancellationToken cancellationToken = default)
+        public virtual Response<CommerceRateCardInfo> GetRateCard(string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(filter, nameof(filter));
 
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Commerce.Mocking
                 };
                 HttpMessage message = RateCardRestClient.CreateGetRateCardRequest(Id.SubscriptionId, filter, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ResourceRateCardInfo> response = Response.FromValue(ResourceRateCardInfo.FromResponse(result), result);
+                Response<CommerceRateCardInfo> response = Response.FromValue(CommerceRateCardInfo.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

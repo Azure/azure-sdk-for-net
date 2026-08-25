@@ -15,58 +15,58 @@ using Azure.ResourceManager.Commerce;
 namespace Azure.ResourceManager.Commerce.Models
 {
     /// <summary> Price and Metadata information for resources. </summary>
-    public partial class ResourceRateCardInfo : IJsonModel<ResourceRateCardInfo>
+    public partial class CommerceRateCardInfo : IJsonModel<CommerceRateCardInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceRateCardInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CommerceRateCardInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceRateCardInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommerceRateCardInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeResourceRateCardInfo(document.RootElement, options);
+                        return DeserializeCommerceRateCardInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceRateCardInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommerceRateCardInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceRateCardInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommerceRateCardInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCommerceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceRateCardInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommerceRateCardInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ResourceRateCardInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CommerceRateCardInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceRateCardInfo IPersistableModel<ResourceRateCardInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CommerceRateCardInfo IPersistableModel<CommerceRateCardInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ResourceRateCardInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CommerceRateCardInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ResourceRateCardInfo"/> from. </param>
-        internal static ResourceRateCardInfo FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CommerceRateCardInfo"/> from. </param>
+        internal static CommerceRateCardInfo FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeResourceRateCardInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeCommerceRateCardInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ResourceRateCardInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CommerceRateCardInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.Commerce.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceRateCardInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommerceRateCardInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceRateCardInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CommerceRateCardInfo)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Currency))
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Commerce.Models
             {
                 writer.WritePropertyName("OfferTerms"u8);
                 writer.WriteStartArray();
-                foreach (OfferTermInfo item in OfferTerms)
+                foreach (CommerceOfferTermInfo item in OfferTerms)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Commerce.Models
             {
                 writer.WritePropertyName("Meters"u8);
                 writer.WriteStartArray();
-                foreach (MeterInfo item in Meters)
+                foreach (CommerceMeterInfo item in Meters)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -136,24 +136,24 @@ namespace Azure.ResourceManager.Commerce.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ResourceRateCardInfo IJsonModel<ResourceRateCardInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CommerceRateCardInfo IJsonModel<CommerceRateCardInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ResourceRateCardInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CommerceRateCardInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ResourceRateCardInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommerceRateCardInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceRateCardInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CommerceRateCardInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeResourceRateCardInfo(document.RootElement, options);
+            return DeserializeCommerceRateCardInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ResourceRateCardInfo DeserializeResourceRateCardInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static CommerceRateCardInfo DeserializeCommerceRateCardInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -162,8 +162,8 @@ namespace Azure.ResourceManager.Commerce.Models
             string currency = default;
             string locale = default;
             bool? isTaxIncluded = default;
-            IList<OfferTermInfo> offerTerms = default;
-            IList<MeterInfo> meters = default;
+            IList<CommerceOfferTermInfo> offerTerms = default;
+            IList<CommerceMeterInfo> meters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -192,10 +192,10 @@ namespace Azure.ResourceManager.Commerce.Models
                     {
                         continue;
                     }
-                    List<OfferTermInfo> array = new List<OfferTermInfo>();
+                    List<CommerceOfferTermInfo> array = new List<CommerceOfferTermInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OfferTermInfo.DeserializeOfferTermInfo(item, options));
+                        array.Add(CommerceOfferTermInfo.DeserializeCommerceOfferTermInfo(item, options));
                     }
                     offerTerms = array;
                     continue;
@@ -206,10 +206,10 @@ namespace Azure.ResourceManager.Commerce.Models
                     {
                         continue;
                     }
-                    List<MeterInfo> array = new List<MeterInfo>();
+                    List<CommerceMeterInfo> array = new List<CommerceMeterInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(MeterInfo.DeserializeMeterInfo(item, options));
+                        array.Add(CommerceMeterInfo.DeserializeCommerceMeterInfo(item, options));
                     }
                     meters = array;
                     continue;
@@ -219,12 +219,12 @@ namespace Azure.ResourceManager.Commerce.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ResourceRateCardInfo(
+            return new CommerceRateCardInfo(
                 currency,
                 locale,
                 isTaxIncluded,
-                offerTerms ?? new ChangeTrackingList<OfferTermInfo>(),
-                meters ?? new ChangeTrackingList<MeterInfo>(),
+                offerTerms ?? new ChangeTrackingList<CommerceOfferTermInfo>(),
+                meters ?? new ChangeTrackingList<CommerceMeterInfo>(),
                 additionalBinaryDataProperties);
         }
     }

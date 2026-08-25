@@ -14,51 +14,51 @@ using Azure.ResourceManager.Commerce;
 namespace Azure.ResourceManager.Commerce.Models
 {
     /// <summary> Indicates that this is a monetary credit offer. </summary>
-    public partial class MonetaryCredit : OfferTermInfo, IJsonModel<MonetaryCredit>
+    public partial class CommerceMonetaryCredit : CommerceOfferTermInfo, IJsonModel<CommerceMonetaryCredit>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OfferTermInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CommerceOfferTermInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonetaryCredit>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommerceMonetaryCredit>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMonetaryCredit(document.RootElement, options);
+                        return DeserializeCommerceMonetaryCredit(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonetaryCredit)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommerceMonetaryCredit)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonetaryCredit>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommerceMonetaryCredit>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCommerceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MonetaryCredit)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommerceMonetaryCredit)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MonetaryCredit>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CommerceMonetaryCredit>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonetaryCredit IPersistableModel<MonetaryCredit>.Create(BinaryData data, ModelReaderWriterOptions options) => (MonetaryCredit)PersistableModelCreateCore(data, options);
+        CommerceMonetaryCredit IPersistableModel<CommerceMonetaryCredit>.Create(BinaryData data, ModelReaderWriterOptions options) => (CommerceMonetaryCredit)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MonetaryCredit>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CommerceMonetaryCredit>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MonetaryCredit>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CommerceMonetaryCredit>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.Commerce.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonetaryCredit>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommerceMonetaryCredit>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonetaryCredit)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CommerceMonetaryCredit)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Credit))
@@ -94,24 +94,24 @@ namespace Azure.ResourceManager.Commerce.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MonetaryCredit IJsonModel<MonetaryCredit>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (MonetaryCredit)JsonModelCreateCore(ref reader, options);
+        CommerceMonetaryCredit IJsonModel<CommerceMonetaryCredit>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CommerceMonetaryCredit)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OfferTermInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CommerceOfferTermInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MonetaryCredit>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommerceMonetaryCredit>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonetaryCredit)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CommerceMonetaryCredit)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMonetaryCredit(document.RootElement, options);
+            return DeserializeCommerceMonetaryCredit(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MonetaryCredit DeserializeMonetaryCredit(JsonElement element, ModelReaderWriterOptions options)
+        internal static CommerceMonetaryCredit DeserializeCommerceMonetaryCredit(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Commerce.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MonetaryCredit(name, effectiveOn, additionalBinaryDataProperties, credit, excludedMeterIds ?? new ChangeTrackingList<Guid>());
+            return new CommerceMonetaryCredit(name, effectiveOn, additionalBinaryDataProperties, credit, excludedMeterIds ?? new ChangeTrackingList<Guid>());
         }
     }
 }

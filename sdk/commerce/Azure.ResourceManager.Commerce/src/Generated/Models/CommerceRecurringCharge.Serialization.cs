@@ -13,59 +13,52 @@ using Azure.ResourceManager.Commerce;
 
 namespace Azure.ResourceManager.Commerce.Models
 {
-    internal partial class UnknownOfferTermInfo : OfferTermInfo, IJsonModel<OfferTermInfo>
+    /// <summary> Indicates a recurring charge is present for this offer. </summary>
+    public partial class CommerceRecurringCharge : CommerceOfferTermInfo, IJsonModel<CommerceRecurringCharge>
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownOfferTermInfo"/> for deserialization. </summary>
-        internal UnknownOfferTermInfo()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OfferTermInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override CommerceOfferTermInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OfferTermInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommerceRecurringCharge>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeOfferTermInfo(document.RootElement, options);
+                        return DeserializeCommerceRecurringCharge(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OfferTermInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommerceRecurringCharge)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OfferTermInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommerceRecurringCharge>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCommerceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(OfferTermInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommerceRecurringCharge)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<OfferTermInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CommerceRecurringCharge>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OfferTermInfo IPersistableModel<OfferTermInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            return PersistableModelCreateCore(data, options);
-        }
+        CommerceRecurringCharge IPersistableModel<CommerceRecurringCharge>.Create(BinaryData data, ModelReaderWriterOptions options) => (CommerceRecurringCharge)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<OfferTermInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CommerceRecurringCharge>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<OfferTermInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CommerceRecurringCharge>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -76,37 +69,39 @@ namespace Azure.ResourceManager.Commerce.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OfferTermInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommerceRecurringCharge>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OfferTermInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CommerceRecurringCharge)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Amount))
+            {
+                writer.WritePropertyName("RecurringCharge"u8);
+                writer.WriteNumberValue(Amount.Value);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        OfferTermInfo IJsonModel<OfferTermInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            return JsonModelCreateCore(ref reader, options);
-        }
+        CommerceRecurringCharge IJsonModel<CommerceRecurringCharge>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (CommerceRecurringCharge)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override OfferTermInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override CommerceOfferTermInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<OfferTermInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CommerceRecurringCharge>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OfferTermInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CommerceRecurringCharge)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeOfferTermInfo(document.RootElement, options);
+            return DeserializeCommerceRecurringCharge(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UnknownOfferTermInfo DeserializeUnknownOfferTermInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static CommerceRecurringCharge DeserializeCommerceRecurringCharge(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -115,6 +110,7 @@ namespace Azure.ResourceManager.Commerce.Models
             OfferTermInfoName name = default;
             DateTimeOffset? effectiveOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            int? amount = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("Name"u8))
@@ -131,12 +127,21 @@ namespace Azure.ResourceManager.Commerce.Models
                     effectiveOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (prop.NameEquals("RecurringCharge"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    amount = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UnknownOfferTermInfo(name, effectiveOn, additionalBinaryDataProperties);
+            return new CommerceRecurringCharge(name, effectiveOn, additionalBinaryDataProperties, amount);
         }
     }
 }

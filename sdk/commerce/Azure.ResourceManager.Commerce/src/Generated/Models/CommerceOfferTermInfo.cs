@@ -12,25 +12,25 @@ namespace Azure.ResourceManager.Commerce.Models
 {
     /// <summary>
     /// Describes the offer term.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MonetaryCredit"/>, <see cref="MonetaryCommitment"/>, and <see cref="RecurringCharge"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CommerceMonetaryCredit"/>, <see cref="CommerceMonetaryCommitment"/>, and <see cref="CommerceRecurringCharge"/>.
     /// </summary>
-    public abstract partial class OfferTermInfo
+    public abstract partial class CommerceOfferTermInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="OfferTermInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommerceOfferTermInfo"/>. </summary>
         /// <param name="name"> Name of the offer term. </param>
-        private protected OfferTermInfo(OfferTermInfoName name)
+        private protected CommerceOfferTermInfo(OfferTermInfoName name)
         {
             Name = name;
         }
 
-        /// <summary> Initializes a new instance of <see cref="OfferTermInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommerceOfferTermInfo"/>. </summary>
         /// <param name="name"> Name of the offer term. </param>
         /// <param name="effectiveOn"> Indicates the date from which the offer term is effective. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OfferTermInfo(OfferTermInfoName name, DateTimeOffset? effectiveOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommerceOfferTermInfo(OfferTermInfoName name, DateTimeOffset? effectiveOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             EffectiveOn = effectiveOn;

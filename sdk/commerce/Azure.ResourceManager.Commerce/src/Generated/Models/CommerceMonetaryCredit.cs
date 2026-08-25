@@ -12,21 +12,21 @@ using Azure.ResourceManager.Commerce;
 namespace Azure.ResourceManager.Commerce.Models
 {
     /// <summary> Indicates that this is a monetary credit offer. </summary>
-    public partial class MonetaryCredit : OfferTermInfo
+    public partial class CommerceMonetaryCredit : CommerceOfferTermInfo
     {
-        /// <summary> Initializes a new instance of <see cref="MonetaryCredit"/>. </summary>
-        internal MonetaryCredit() : base(OfferTermInfoName.MonetaryCredit)
+        /// <summary> Initializes a new instance of <see cref="CommerceMonetaryCredit"/>. </summary>
+        internal CommerceMonetaryCredit() : base(OfferTermInfoName.MonetaryCredit)
         {
             ExcludedMeterIds = new ChangeTrackingList<Guid>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MonetaryCredit"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommerceMonetaryCredit"/>. </summary>
         /// <param name="name"> Name of the offer term. </param>
         /// <param name="effectiveOn"> Indicates the date from which the offer term is effective. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="credit"> The amount of credit provided under the terms of the given offer level. </param>
         /// <param name="excludedMeterIds"> An array of meter ids that are excluded from the given offer terms. </param>
-        internal MonetaryCredit(OfferTermInfoName name, DateTimeOffset? effectiveOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, decimal? credit, IList<Guid> excludedMeterIds) : base(name, effectiveOn, additionalBinaryDataProperties)
+        internal CommerceMonetaryCredit(OfferTermInfoName name, DateTimeOffset? effectiveOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, decimal? credit, IList<Guid> excludedMeterIds) : base(name, effectiveOn, additionalBinaryDataProperties)
         {
             Credit = credit;
             ExcludedMeterIds = excludedMeterIds;

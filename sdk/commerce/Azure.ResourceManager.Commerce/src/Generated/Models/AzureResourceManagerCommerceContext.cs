@@ -14,14 +14,14 @@ namespace Azure.ResourceManager.Commerce
     /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
-    [ModelReaderWriterBuildable(typeof(MeterInfo))]
-    [ModelReaderWriterBuildable(typeof(MonetaryCommitment))]
-    [ModelReaderWriterBuildable(typeof(MonetaryCredit))]
-    [ModelReaderWriterBuildable(typeof(OfferTermInfo))]
-    [ModelReaderWriterBuildable(typeof(RecurringCharge))]
-    [ModelReaderWriterBuildable(typeof(ResourceRateCardInfo))]
-    [ModelReaderWriterBuildable(typeof(UnknownOfferTermInfo))]
-    [ModelReaderWriterBuildable(typeof(UsageAggregation))]
+    [ModelReaderWriterBuildable(typeof(CommerceMeterInfo))]
+    [ModelReaderWriterBuildable(typeof(CommerceMonetaryCommitment))]
+    [ModelReaderWriterBuildable(typeof(CommerceMonetaryCredit))]
+    [ModelReaderWriterBuildable(typeof(CommerceOfferTermInfo))]
+    [ModelReaderWriterBuildable(typeof(CommerceRateCardInfo))]
+    [ModelReaderWriterBuildable(typeof(CommerceRecurringCharge))]
+    [ModelReaderWriterBuildable(typeof(CommerceUsageAggregation))]
+    [ModelReaderWriterBuildable(typeof(UnknownCommerceOfferTermInfo))]
     [ModelReaderWriterBuildable(typeof(UsageAggregationListResult))]
     [ModelReaderWriterBuildable(typeof(UsageSample))]
     public partial class AzureResourceManagerCommerceContext : ModelReaderWriterContext

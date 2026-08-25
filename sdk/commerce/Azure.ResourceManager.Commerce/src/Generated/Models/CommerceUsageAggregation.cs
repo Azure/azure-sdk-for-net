@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Commerce.Models
 {
     /// <summary> Describes the usageAggregation. </summary>
-    public partial class UsageAggregation
+    public partial class CommerceUsageAggregation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UsageAggregation"/>. </summary>
-        internal UsageAggregation()
+        /// <summary> Initializes a new instance of <see cref="CommerceUsageAggregation"/>. </summary>
+        internal CommerceUsageAggregation()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UsageAggregation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommerceUsageAggregation"/>. </summary>
         /// <param name="id"> Unique Id for the usage aggregate. </param>
         /// <param name="name"> Name of the usage aggregate. </param>
         /// <param name="type"> Type of the resource being returned. </param>
         /// <param name="properties"> Usage data. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UsageAggregation(string id, string name, string @type, UsageSample properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommerceUsageAggregation(string id, string name, string @type, UsageSample properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;

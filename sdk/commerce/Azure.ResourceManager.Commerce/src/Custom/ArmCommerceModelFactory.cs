@@ -13,10 +13,10 @@ namespace Azure.ResourceManager.Commerce.Models
     {
         /// <param name="name"> Name of the offer term. </param>
         /// <param name="effectiveOn"> Indicates the date from which the offer term is effective. </param>
-        /// <returns> A new <see cref="Models.OfferTermInfo"/> instance for mocking. </returns>
-        public static OfferTermInfo OfferTermInfo(string name = default, DateTimeOffset? effectiveOn = default)
+        /// <returns> A new <see cref="Models.CommerceOfferTermInfo"/> instance for mocking. </returns>
+        public static CommerceOfferTermInfo CommerceOfferTermInfo(string name = default, DateTimeOffset? effectiveOn = default)
         {
-            return new UnknownOfferTermInfo(name is null ? default : new OfferTermInfoName(name), effectiveOn, default);
+            return new UnknownCommerceOfferTermInfo(name is null ? default : new OfferTermInfoName(name), effectiveOn, default);
         }
     }
 }

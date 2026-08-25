@@ -14,7 +14,7 @@ using Azure.ResourceManager.Commerce.Models;
 
 namespace Azure.ResourceManager.Commerce
 {
-    internal partial class UsageAggregatesGetUsageAggregatesCollectionResultOfT : Pageable<UsageAggregation>
+    internal partial class UsageAggregatesGetUsageAggregatesCollectionResultOfT : Pageable<CommerceUsageAggregation>
     {
         private readonly UsageAggregates _client;
         private readonly string _subscriptionId;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Commerce
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of UsageAggregatesGetUsageAggregatesCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<UsageAggregation>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<CommerceUsageAggregation>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Commerce
                 }
                 UsageAggregationListResult result = UsageAggregationListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<UsageAggregation>.FromValues((IReadOnlyList<UsageAggregation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<CommerceUsageAggregation>.FromValues((IReadOnlyList<CommerceUsageAggregation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Commerce.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (UsageAggregation item in Value)
+            foreach (CommerceUsageAggregation item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Commerce.Models
             {
                 return null;
             }
-            IList<UsageAggregation> value = default;
+            IList<CommerceUsageAggregation> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<UsageAggregation> array = new List<UsageAggregation>();
+                    List<CommerceUsageAggregation> array = new List<CommerceUsageAggregation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(UsageAggregation.DeserializeUsageAggregation(item, options));
+                        array.Add(CommerceUsageAggregation.DeserializeCommerceUsageAggregation(item, options));
                     }
                     value = array;
                     continue;

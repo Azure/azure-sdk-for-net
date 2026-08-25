@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.Commerce.Models
 {
     /// <summary></summary>
-    public enum AggregationGranularity
+    public enum CommerceUsageAggregationGranularity
     {
         /// <summary> Daily. </summary>
         Daily,

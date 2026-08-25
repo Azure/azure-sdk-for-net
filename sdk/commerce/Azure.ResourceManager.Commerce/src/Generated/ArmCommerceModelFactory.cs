@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.Commerce.Models
         /// <param name="meterRegion"> Region of the meterId used for billing purposes. </param>
         /// <param name="infoFields"> Key-value pairs of instance details (legacy format). </param>
         /// <param name="instanceData"> Key-value pairs of instance details represented as a string. </param>
-        /// <returns> A new <see cref="Models.UsageAggregation"/> instance for mocking. </returns>
-        public static UsageAggregation UsageAggregation(string id = default, string name = default, string @type = default, Guid? subscriptionId = default, string meterId = default, DateTimeOffset? usageStartOn = default, DateTimeOffset? usageEndOn = default, float? quantity = default, string unit = default, string meterName = default, string meterCategory = default, string meterSubCategory = default, string meterRegion = default, BinaryData infoFields = default, string instanceData = default)
+        /// <returns> A new <see cref="Models.CommerceUsageAggregation"/> instance for mocking. </returns>
+        public static CommerceUsageAggregation CommerceUsageAggregation(string id = default, string name = default, string @type = default, Guid? subscriptionId = default, string meterId = default, DateTimeOffset? usageStartOn = default, DateTimeOffset? usageEndOn = default, float? quantity = default, string unit = default, string meterName = default, string meterCategory = default, string meterSubCategory = default, string meterRegion = default, BinaryData infoFields = default, string instanceData = default)
         {
-            return new UsageAggregation(id, name, @type, subscriptionId is null && meterId is null && usageStartOn is null && usageEndOn is null && quantity is null && unit is null && meterName is null && meterCategory is null && meterSubCategory is null && meterRegion is null && infoFields is null && instanceData is null ? default : new UsageSample(
+            return new CommerceUsageAggregation(id, name, @type, subscriptionId is null && meterId is null && usageStartOn is null && usageEndOn is null && quantity is null && unit is null && meterName is null && meterCategory is null && meterSubCategory is null && meterRegion is null && infoFields is null && instanceData is null ? default : new UsageSample(
                 subscriptionId,
                 meterId,
                 usageStartOn,
@@ -55,50 +55,50 @@ namespace Azure.ResourceManager.Commerce.Models
         /// <param name="isTaxIncluded"> All rates are pretax, so this will always be returned as 'false'. </param>
         /// <param name="offerTerms"> A list of offer terms. </param>
         /// <param name="meters"> A list of meters. </param>
-        /// <returns> A new <see cref="Models.ResourceRateCardInfo"/> instance for mocking. </returns>
-        public static ResourceRateCardInfo ResourceRateCardInfo(string currency = default, string locale = default, bool? isTaxIncluded = default, IEnumerable<OfferTermInfo> offerTerms = default, IEnumerable<MeterInfo> meters = default)
+        /// <returns> A new <see cref="Models.CommerceRateCardInfo"/> instance for mocking. </returns>
+        public static CommerceRateCardInfo CommerceRateCardInfo(string currency = default, string locale = default, bool? isTaxIncluded = default, IEnumerable<CommerceOfferTermInfo> offerTerms = default, IEnumerable<CommerceMeterInfo> meters = default)
         {
-            offerTerms ??= new ChangeTrackingList<OfferTermInfo>();
-            meters ??= new ChangeTrackingList<MeterInfo>();
+            offerTerms ??= new ChangeTrackingList<CommerceOfferTermInfo>();
+            meters ??= new ChangeTrackingList<CommerceMeterInfo>();
 
-            return new ResourceRateCardInfo(
+            return new CommerceRateCardInfo(
                 currency,
                 locale,
                 isTaxIncluded,
-                (offerTerms ?? new ChangeTrackingList<OfferTermInfo>()).ToList(),
-                (meters ?? new ChangeTrackingList<MeterInfo>()).ToList(),
+                (offerTerms ?? new ChangeTrackingList<CommerceOfferTermInfo>()).ToList(),
+                (meters ?? new ChangeTrackingList<CommerceMeterInfo>()).ToList(),
                 default);
         }
 
         /// <param name="effectiveOn"> Indicates the date from which the offer term is effective. </param>
         /// <param name="credit"> The amount of credit provided under the terms of the given offer level. </param>
         /// <param name="excludedMeterIds"> An array of meter ids that are excluded from the given offer terms. </param>
-        /// <returns> A new <see cref="Models.MonetaryCredit"/> instance for mocking. </returns>
-        public static MonetaryCredit MonetaryCredit(DateTimeOffset? effectiveOn = default, decimal? credit = default, IEnumerable<Guid> excludedMeterIds = default)
+        /// <returns> A new <see cref="Models.CommerceMonetaryCredit"/> instance for mocking. </returns>
+        public static CommerceMonetaryCredit CommerceMonetaryCredit(DateTimeOffset? effectiveOn = default, decimal? credit = default, IEnumerable<Guid> excludedMeterIds = default)
         {
             excludedMeterIds ??= new ChangeTrackingList<Guid>();
 
-            return new MonetaryCredit(default, effectiveOn, default, credit, (excludedMeterIds ?? new ChangeTrackingList<Guid>()).ToList());
+            return new CommerceMonetaryCredit(default, effectiveOn, default, credit, (excludedMeterIds ?? new ChangeTrackingList<Guid>()).ToList());
         }
 
         /// <param name="effectiveOn"> Indicates the date from which the offer term is effective. </param>
         /// <param name="tieredDiscount"> The list of key/value pairs for the tiered meter rates, in the format 'key':'value' where key = price, and value = the corresponding discount percentage. This field is used only by offer terms of type 'Monetary Commitment'. </param>
         /// <param name="excludedMeterIds"> An array of meter ids that are excluded from the given offer terms. </param>
-        /// <returns> A new <see cref="Models.MonetaryCommitment"/> instance for mocking. </returns>
-        public static MonetaryCommitment MonetaryCommitment(DateTimeOffset? effectiveOn = default, IDictionary<string, decimal> tieredDiscount = default, IEnumerable<Guid> excludedMeterIds = default)
+        /// <returns> A new <see cref="Models.CommerceMonetaryCommitment"/> instance for mocking. </returns>
+        public static CommerceMonetaryCommitment CommerceMonetaryCommitment(DateTimeOffset? effectiveOn = default, IDictionary<string, decimal> tieredDiscount = default, IEnumerable<Guid> excludedMeterIds = default)
         {
             tieredDiscount ??= new ChangeTrackingDictionary<string, decimal>();
             excludedMeterIds ??= new ChangeTrackingList<Guid>();
 
-            return new MonetaryCommitment(default, effectiveOn, default, tieredDiscount ?? new ChangeTrackingDictionary<string, decimal>(), (excludedMeterIds ?? new ChangeTrackingList<Guid>()).ToList());
+            return new CommerceMonetaryCommitment(default, effectiveOn, default, tieredDiscount ?? new ChangeTrackingDictionary<string, decimal>(), (excludedMeterIds ?? new ChangeTrackingList<Guid>()).ToList());
         }
 
         /// <param name="effectiveOn"> Indicates the date from which the offer term is effective. </param>
         /// <param name="amount"> The amount of recurring charge as per the offer term. </param>
-        /// <returns> A new <see cref="Models.RecurringCharge"/> instance for mocking. </returns>
-        public static RecurringCharge RecurringCharge(DateTimeOffset? effectiveOn = default, int? amount = default)
+        /// <returns> A new <see cref="Models.CommerceRecurringCharge"/> instance for mocking. </returns>
+        public static CommerceRecurringCharge CommerceRecurringCharge(DateTimeOffset? effectiveOn = default, int? amount = default)
         {
-            return new RecurringCharge(default, effectiveOn, default, amount);
+            return new CommerceRecurringCharge(default, effectiveOn, default, amount);
         }
 
         /// <param name="meterId"> The unique identifier of the resource. </param>
@@ -111,13 +111,13 @@ namespace Azure.ResourceManager.Commerce.Models
         /// <param name="meterRates"> The list of key/value pairs for the meter rates, in the format 'key':'value' where key = the meter quantity, and value = the corresponding price. </param>
         /// <param name="effectiveOn"> Indicates the date from which the meter rate is effective. </param>
         /// <param name="includedQuantity"> The resource quantity that is included in the offer at no cost. Consumption beyond this quantity will be charged. </param>
-        /// <returns> A new <see cref="Models.MeterInfo"/> instance for mocking. </returns>
-        public static MeterInfo MeterInfo(Guid? meterId = default, string meterName = default, string meterCategory = default, string meterSubCategory = default, string unit = default, IEnumerable<string> meterTags = default, string meterRegion = default, IDictionary<string, float> meterRates = default, DateTimeOffset? effectiveOn = default, float? includedQuantity = default)
+        /// <returns> A new <see cref="Models.CommerceMeterInfo"/> instance for mocking. </returns>
+        public static CommerceMeterInfo CommerceMeterInfo(Guid? meterId = default, string meterName = default, string meterCategory = default, string meterSubCategory = default, string unit = default, IEnumerable<string> meterTags = default, string meterRegion = default, IDictionary<string, float> meterRates = default, DateTimeOffset? effectiveOn = default, float? includedQuantity = default)
         {
             meterTags ??= new ChangeTrackingList<string>();
             meterRates ??= new ChangeTrackingDictionary<string, float>();
 
-            return new MeterInfo(
+            return new CommerceMeterInfo(
                 meterId,
                 meterName,
                 meterCategory,

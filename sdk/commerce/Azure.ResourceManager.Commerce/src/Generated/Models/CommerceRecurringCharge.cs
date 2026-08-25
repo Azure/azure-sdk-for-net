@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Commerce.Models
 {
     /// <summary> Indicates a recurring charge is present for this offer. </summary>
-    public partial class RecurringCharge : OfferTermInfo
+    public partial class CommerceRecurringCharge : CommerceOfferTermInfo
     {
-        /// <summary> Initializes a new instance of <see cref="RecurringCharge"/>. </summary>
-        internal RecurringCharge() : base(OfferTermInfoName.RecurringCharge)
+        /// <summary> Initializes a new instance of <see cref="CommerceRecurringCharge"/>. </summary>
+        internal CommerceRecurringCharge() : base(OfferTermInfoName.RecurringCharge)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RecurringCharge"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommerceRecurringCharge"/>. </summary>
         /// <param name="name"> Name of the offer term. </param>
         /// <param name="effectiveOn"> Indicates the date from which the offer term is effective. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="amount"> The amount of recurring charge as per the offer term. </param>
-        internal RecurringCharge(OfferTermInfoName name, DateTimeOffset? effectiveOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? amount) : base(name, effectiveOn, additionalBinaryDataProperties)
+        internal CommerceRecurringCharge(OfferTermInfoName name, DateTimeOffset? effectiveOn, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? amount) : base(name, effectiveOn, additionalBinaryDataProperties)
         {
             Amount = amount;
         }

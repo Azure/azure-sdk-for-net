@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Commerce
         /// Query aggregated Azure subscription consumption data for a date range.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCommerceSubscriptionResource.GetUsageAggregatesAsync(DateTimeOffset, DateTimeOffset, bool?, AggregationGranularity?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCommerceSubscriptionResource.GetUsageAggregatesAsync(DateTimeOffset, DateTimeOffset, bool?, CommerceUsageAggregationGranularity?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -39,8 +39,8 @@ namespace Azure.ResourceManager.Commerce
         /// <param name="continuationToken"> Used when a continuation token string is provided in the response body of the previous call, enabling paging through a large result set. If not present, the data is retrieved from the beginning of the day/hour (based on the granularity) passed in. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="UsageAggregation"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<UsageAggregation> GetUsageAggregatesAsync(this SubscriptionResource subscriptionResource, DateTimeOffset reportedStartTime, DateTimeOffset reportedEndTime, bool? showDetails = default, AggregationGranularity? aggregationGranularity = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CommerceUsageAggregation"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<CommerceUsageAggregation> GetUsageAggregatesAsync(this SubscriptionResource subscriptionResource, DateTimeOffset reportedStartTime, DateTimeOffset reportedEndTime, bool? showDetails = default, CommerceUsageAggregationGranularity? aggregationGranularity = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Commerce
         /// Query aggregated Azure subscription consumption data for a date range.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableCommerceSubscriptionResource.GetUsageAggregates(DateTimeOffset, DateTimeOffset, bool?, AggregationGranularity?, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableCommerceSubscriptionResource.GetUsageAggregates(DateTimeOffset, DateTimeOffset, bool?, CommerceUsageAggregationGranularity?, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.Commerce
         /// <param name="continuationToken"> Used when a continuation token string is provided in the response body of the previous call, enabling paging through a large result set. If not present, the data is retrieved from the beginning of the day/hour (based on the granularity) passed in. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="UsageAggregation"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<UsageAggregation> GetUsageAggregates(this SubscriptionResource subscriptionResource, DateTimeOffset reportedStartTime, DateTimeOffset reportedEndTime, bool? showDetails = default, AggregationGranularity? aggregationGranularity = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CommerceUsageAggregation"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<CommerceUsageAggregation> GetUsageAggregates(this SubscriptionResource subscriptionResource, DateTimeOffset reportedStartTime, DateTimeOffset reportedEndTime, bool? showDetails = default, CommerceUsageAggregationGranularity? aggregationGranularity = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Commerce
         /// <param name="filter"> The filter to apply on the operation. It ONLY supports the 'eq' and 'and' logical operators at this time. All the 4 query parameters 'OfferDurableId',  'Currency', 'Locale', 'Region' are required to be a part of the $filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static async Task<Response<ResourceRateCardInfo>> GetRateCardAsync(this SubscriptionResource subscriptionResource, string filter, CancellationToken cancellationToken = default)
+        public static async Task<Response<CommerceRateCardInfo>> GetRateCardAsync(this SubscriptionResource subscriptionResource, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Commerce
         /// <param name="filter"> The filter to apply on the operation. It ONLY supports the 'eq' and 'and' logical operators at this time. All the 4 query parameters 'OfferDurableId',  'Currency', 'Locale', 'Region' are required to be a part of the $filter. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        public static Response<ResourceRateCardInfo> GetRateCard(this SubscriptionResource subscriptionResource, string filter, CancellationToken cancellationToken = default)
+        public static Response<CommerceRateCardInfo> GetRateCard(this SubscriptionResource subscriptionResource, string filter, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 

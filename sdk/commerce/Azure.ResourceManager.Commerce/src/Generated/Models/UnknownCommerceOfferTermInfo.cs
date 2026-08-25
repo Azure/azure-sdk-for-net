@@ -10,13 +10,13 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Commerce.Models
 {
-    internal partial class UnknownOfferTermInfo : OfferTermInfo
+    internal partial class UnknownCommerceOfferTermInfo : CommerceOfferTermInfo
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownOfferTermInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownCommerceOfferTermInfo"/>. </summary>
         /// <param name="name"> Name of the offer term. </param>
         /// <param name="effectiveOn"> Indicates the date from which the offer term is effective. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownOfferTermInfo(OfferTermInfoName name, DateTimeOffset? effectiveOn, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name != default ? name : "unknown", effectiveOn, additionalBinaryDataProperties)
+        internal UnknownCommerceOfferTermInfo(OfferTermInfoName name, DateTimeOffset? effectiveOn, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(name != default ? name : "unknown", effectiveOn, additionalBinaryDataProperties)
         {
         }
     }

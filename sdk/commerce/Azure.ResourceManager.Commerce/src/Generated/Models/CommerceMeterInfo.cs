@@ -12,19 +12,19 @@ using Azure.ResourceManager.Commerce;
 namespace Azure.ResourceManager.Commerce.Models
 {
     /// <summary> Detailed information about the meter. </summary>
-    public partial class MeterInfo
+    public partial class CommerceMeterInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MeterInfo"/>. </summary>
-        internal MeterInfo()
+        /// <summary> Initializes a new instance of <see cref="CommerceMeterInfo"/>. </summary>
+        internal CommerceMeterInfo()
         {
             MeterTags = new ChangeTrackingList<string>();
             MeterRates = new ChangeTrackingDictionary<string, float>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="MeterInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CommerceMeterInfo"/>. </summary>
         /// <param name="meterId"> The unique identifier of the resource. </param>
         /// <param name="meterName"> The name of the meter, within the given meter category. </param>
         /// <param name="meterCategory"> The category of the meter, e.g., 'Cloud services', 'Networking', etc.. </param>
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Commerce.Models
         /// <param name="effectiveOn"> Indicates the date from which the meter rate is effective. </param>
         /// <param name="includedQuantity"> The resource quantity that is included in the offer at no cost. Consumption beyond this quantity will be charged. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MeterInfo(Guid? meterId, string meterName, string meterCategory, string meterSubCategory, string unit, IList<string> meterTags, string meterRegion, IDictionary<string, float> meterRates, DateTimeOffset? effectiveOn, float? includedQuantity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CommerceMeterInfo(Guid? meterId, string meterName, string meterCategory, string meterSubCategory, string unit, IList<string> meterTags, string meterRegion, IDictionary<string, float> meterRates, DateTimeOffset? effectiveOn, float? includedQuantity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MeterId = meterId;
             MeterName = meterName;
