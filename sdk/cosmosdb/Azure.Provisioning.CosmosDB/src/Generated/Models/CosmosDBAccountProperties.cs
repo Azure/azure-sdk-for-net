@@ -12,7 +12,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
 {
-    /// <summary> Properties for the database account. </summary>
     internal partial class CosmosDBAccountProperties : ProvisionableConstruct
     {
         private BicepValue<string> _provisioningState;
@@ -28,7 +27,6 @@ namespace Azure.Provisioning.CosmosDB
         private BicepList<CosmosDBAccountLocation> _locations;
         private BicepList<CosmosDBFailoverPolicy> _failoverPolicies;
         private BicepList<CosmosDBVirtualNetworkRule> _virtualNetworkRules;
-        private BicepList<CosmosDBPrivateEndpointConnection> _privateEndpointConnections;
         private BicepValue<bool> _enableMultipleWriteLocations;
         private BicepValue<bool> _enableCassandraConnector;
         private BicepValue<ConnectorOffer> _connectorOffer;
@@ -222,16 +220,6 @@ namespace Azure.Provisioning.CosmosDB
             {
                 Initialize();
                 _virtualNetworkRules.Assign(value);
-            }
-        }
-
-        /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<CosmosDBPrivateEndpointConnection> PrivateEndpointConnections
-        {
-            get
-            {
-                Initialize();
-                return _privateEndpointConnections;
             }
         }
 
@@ -755,7 +743,6 @@ namespace Azure.Provisioning.CosmosDB
             _locations = DefineListProperty<CosmosDBAccountLocation>(nameof(Locations), new string[] { "locations" }, isOutput: true);
             _failoverPolicies = DefineListProperty<CosmosDBFailoverPolicy>(nameof(FailoverPolicies), new string[] { "failoverPolicies" }, isOutput: true);
             _virtualNetworkRules = DefineListProperty<CosmosDBVirtualNetworkRule>(nameof(VirtualNetworkRules), new string[] { "virtualNetworkRules" });
-            _privateEndpointConnections = DefineListProperty<CosmosDBPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _enableMultipleWriteLocations = DefineProperty<bool>(nameof(EnableMultipleWriteLocations), new string[] { "enableMultipleWriteLocations" });
             _enableCassandraConnector = DefineProperty<bool>(nameof(EnableCassandraConnector), new string[] { "enableCassandraConnector" });
             _connectorOffer = DefineProperty<ConnectorOffer>(nameof(ConnectorOffer), new string[] { "connectorOffer" });

@@ -717,7 +717,9 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.NetworkAclBypass> NetworkAclBypass { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Core.ResourceIdentifier> NetworkAclBypassResourceIds { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.CosmosDB.CosmosDBPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.CosmosDB.CosmosDBPrivateEndpointConnection> PrivateEndpointConnectionResources { get { throw null; } }
+        [System.ObsoleteAttribute("Use PrivateEndpointConnectionResources instead.")]
+        public Azure.Provisioning.BicepList<Azure.Provisioning.CosmosDB.CosmosDBPrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.CosmosDBPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CosmosDB.CosmosDBAccountLocation> ReadLocations { get { throw null; } }
@@ -1184,6 +1186,19 @@ namespace Azure.Provisioning.CosmosDB
             public static readonly string V2025_04_15;
             public static readonly string V2026_03_15;
         }
+    }
+    [System.ObsoleteAttribute("Use CosmosDBPrivateEndpointConnection instead.")]
+    public partial class CosmosDBPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CosmosDBPrivateEndpointConnectionData() { }
+        public Azure.Provisioning.CosmosDB.CosmosDBPrivateLinkServiceConnectionStateProperty ConnectionState { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> GroupId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class CosmosDBPrivateLinkResource : Azure.Provisioning.Primitives.ProvisionableResource
     {

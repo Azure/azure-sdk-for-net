@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ComponentModel;
+using Azure.Provisioning;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 
@@ -8,6 +11,21 @@ namespace Azure.Provisioning.CosmosDB;
 
 public partial class CosmosDBAccount
 {
+    /// <summary> Gets the private endpoint connections. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("Use PrivateEndpointConnectionResources instead.")]
+    public BicepList<CosmosDBPrivateEndpointConnectionData> PrivateEndpointConnections
+    {
+        get
+        {
+            if (Properties is null)
+            {
+                Properties = new CosmosDBAccountProperties();
+            }
+            return Properties.PrivateEndpointConnections;
+        }
+    }
+
     // CUSTOMIZATION: Preserve the legacy listKeys convenience API, which is not projected by the
     // current provisioning generator.
     /// <summary>

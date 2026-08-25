@@ -14,6 +14,7 @@ using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Roles;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.CosmosDB
 {
@@ -336,19 +337,6 @@ namespace Azure.Provisioning.CosmosDB
                     Properties = new CosmosDBAccountProperties();
                 }
                 Properties.VirtualNetworkRules = value;
-            }
-        }
-
-        /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<CosmosDBPrivateEndpointConnection> PrivateEndpointConnections
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                return Properties.PrivateEndpointConnections;
             }
         }
 
@@ -843,6 +831,16 @@ namespace Azure.Provisioning.CosmosDB
                     Properties = new CosmosDBAccountProperties();
                 }
                 Properties.CapacityTotalThroughputLimit = value;
+            }
+        }
+
+        /// <summary> Gets the PrivateEndpointConnectionResources. </summary>
+        [CodeGenMember("PrivateEndpointConnections")]
+        public BicepList<CosmosDBPrivateEndpointConnection> PrivateEndpointConnectionResources
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateEndpointConnectionResources;
             }
         }
 
