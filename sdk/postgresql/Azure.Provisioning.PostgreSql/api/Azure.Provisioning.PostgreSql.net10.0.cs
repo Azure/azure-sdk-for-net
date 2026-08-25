@@ -54,58 +54,69 @@ namespace Azure.Provisioning.PostgreSql
         Migrate = 1,
         ValidateAndMigrate = 2,
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServerMicrosoftEntraAdministrator.PrincipalType with PostgreSqlFlexibleServerPrincipalType instead.")]
     public enum PostgreSqlAdministratorType
     {
         ActiveDirectory = 0,
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServerConfiguration instead.")]
     public partial class PostgreSqlConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PostgreSqlConfiguration(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public PostgreSqlConfiguration(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AllowedValues { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> DataType { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> DefaultValue { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.PostgreSql.PostgreSqlServer? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlServer Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Source { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.PostgreSql.PostgreSqlConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.PostgreSql.PostgreSqlConfiguration FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2017_12_01;
         }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServerDatabase instead.")]
     public partial class PostgreSqlDatabase : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PostgreSqlDatabase(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public PostgreSqlDatabase(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Charset { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Collation { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.PostgreSql.PostgreSqlServer? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlServer Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.PostgreSql.PostgreSqlDatabase FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.PostgreSql.PostgreSqlDatabase FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2017_12_01;
         }
     }
+    public enum PostgreSqlExecutionStatus
+    {
+        Running = 0,
+        Cancelled = 1,
+        Failed = 2,
+        Succeeded = 3,
+    }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServerFirewallRule instead.")]
     public partial class PostgreSqlFirewallRule : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PostgreSqlFirewallRule(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public PostgreSqlFirewallRule(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.Net.IPAddress> EndIPAddress { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.PostgreSql.PostgreSqlServer? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlServer Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Net.IPAddress> StartIPAddress { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.PostgreSql.PostgreSqlFirewallRule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.PostgreSql.PostgreSqlFirewallRule FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -114,7 +125,7 @@ namespace Azure.Provisioning.PostgreSql
     }
     public partial class PostgreSqlFlexibleServer : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PostgreSqlFlexibleServer(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public PostgreSqlFlexibleServer(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AdministratorLogin { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> AdministratorLoginPassword { get { throw null; } set { } }
         public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerAuthConfig AuthConfig { get { throw null; } set { } }
@@ -147,7 +158,7 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerVersion> Version { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -157,19 +168,20 @@ namespace Azure.Provisioning.PostgreSql
             public static readonly string V2025_08_01;
         }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServerMicrosoftEntraAdministrator instead.")]
     public partial class PostgreSqlFlexibleServerActiveDirectoryAdministrator : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PostgreSqlFlexibleServerActiveDirectoryAdministrator(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public PostgreSqlFlexibleServerActiveDirectoryAdministrator(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ObjectId { get { throw null; } }
-        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PrincipalName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerPrincipalType> PrincipalType { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerActiveDirectoryAdministrator FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerActiveDirectoryAdministrator FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_06_01;
@@ -193,16 +205,17 @@ namespace Azure.Provisioning.PostgreSql
     }
     public partial class PostgreSqlFlexibleServerBackup : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PostgreSqlFlexibleServerBackup(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerBackupOrigin> BackupType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CompletedOn { get { throw null; } }
+        public PostgreSqlFlexibleServerBackup(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerBackupOrigin> BackupType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CompletedOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer? Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Source { get { throw null; } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Source { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerBackup FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerBackup FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_06_01;
@@ -234,7 +247,7 @@ namespace Azure.Provisioning.PostgreSql
     }
     public partial class PostgreSqlFlexibleServerConfiguration : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PostgreSqlFlexibleServerConfiguration(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public PostgreSqlFlexibleServerConfiguration(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AllowedValues { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerConfigurationDataType> DataType { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> DefaultValue { get { throw null; } }
@@ -245,13 +258,14 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<bool> IsDynamicConfig { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsReadOnly { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Source { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Unit { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Value { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerConfiguration FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerConfiguration FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_06_01;
@@ -281,15 +295,16 @@ namespace Azure.Provisioning.PostgreSql
     }
     public partial class PostgreSqlFlexibleServerDatabase : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PostgreSqlFlexibleServerDatabase(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public PostgreSqlFlexibleServerDatabase(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> Charset { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Collation { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerDatabase FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerDatabase FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_06_01;
@@ -312,15 +327,16 @@ namespace Azure.Provisioning.PostgreSql
     }
     public partial class PostgreSqlFlexibleServerFirewallRule : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PostgreSqlFlexibleServerFirewallRule(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public PostgreSqlFlexibleServerFirewallRule(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.Net.IPAddress> EndIPAddress { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Net.IPAddress> StartIPAddress { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerFirewallRule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerFirewallRule FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_06_01;
@@ -342,6 +358,8 @@ namespace Azure.Provisioning.PostgreSql
         FailingOver = 3,
         Healthy = 4,
         RemovingStandby = 5,
+        RecreatingStandby = 6,
+        ComputeUpdatingByFailover = 7,
     }
     public partial class PostgreSqlFlexibleServerHighAvailability : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -382,22 +400,19 @@ namespace Azure.Provisioning.PostgreSql
     }
     public partial class PostgreSqlFlexibleServerMicrosoftEntraAdministrator : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PostgreSqlFlexibleServerMicrosoftEntraAdministrator(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public PostgreSqlFlexibleServerMicrosoftEntraAdministrator(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.Guid> ObjectId { get { throw null; } }
-        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Guid> ObjectId { get { throw null; } set { } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> PrincipalName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerPrincipalType> PrincipalType { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerMicrosoftEntraAdministrator FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerMicrosoftEntraAdministrator FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2021_06_01;
-            public static readonly string V2022_12_01;
-            public static readonly string V2024_08_01;
             public static readonly string V2025_08_01;
         }
     }
@@ -452,17 +467,17 @@ namespace Azure.Provisioning.PostgreSql
     }
     public partial class PostgreSqlFlexibleServersPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PostgreSqlFlexibleServersPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public PostgreSqlFlexibleServersPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServersPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> GroupIds { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServersPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServersPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_06_01;
@@ -496,6 +511,24 @@ namespace Azure.Provisioning.PostgreSql
         Pending = 0,
         Approved = 1,
         Rejected = 2,
+    }
+    public partial class PostgreSqlFlexibleServersPrivateLinkResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal PostgreSqlFlexibleServersPrivateLinkResource() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> GroupId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<string> RequiredMembers { get { throw null; } }
+        public Azure.Provisioning.BicepList<string> RequiredZoneNames { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServersPrivateLinkResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_08_01;
+        }
     }
     public partial class PostgreSqlFlexibleServersPrivateLinkServiceConnectionState : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -638,6 +671,21 @@ namespace Azure.Provisioning.PostgreSql
         Succeeded = 1,
         Warning = 2,
     }
+    public partial class PostgreSqlFlexibleServerTuningOption : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal PostgreSqlFlexibleServerTuningOption() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> TuningOptionsState { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServerTuningOption FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_08_01;
+        }
+    }
     public partial class PostgreSqlFlexibleServerUserAssignedIdentity : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PostgreSqlFlexibleServerUserAssignedIdentity() { }
@@ -666,11 +714,13 @@ namespace Azure.Provisioning.PostgreSql
         [System.Runtime.Serialization.DataMemberAttribute(Name="17")]
         Seventeen = 7,
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer.Backup with PostgreSqlFlexibleServerGeoRedundantBackupEnum instead.")]
     public enum PostgreSqlGeoRedundantBackup
     {
         Enabled = 0,
         Disabled = 1,
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use the PostgreSqlFlexibleServer.DataEncryption property for flexible-server encryption settings instead.")]
     public enum PostgreSqlInfrastructureEncryption
     {
         Enabled = 0,
@@ -680,6 +730,31 @@ namespace Azure.Provisioning.PostgreSql
     {
         Valid = 0,
         Invalid = 1,
+    }
+    public partial class PostgreSqlLtrServerBackupOperation : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        internal PostgreSqlLtrServerBackupOperation() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<string> BackupMetadata { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> BackupName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<long> DatasourceSizeInBytes { get { throw null; } }
+        public Azure.Provisioning.BicepValue<long> DataTransferredInBytes { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ErrorCode { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> ErrorMessage { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<double> PercentComplete { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlExecutionStatus> Status { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.PostgreSql.PostgreSqlLtrServerBackupOperation FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_08_01;
+        }
     }
     public enum PostgreSqlManagedDiskPerformanceTier
     {
@@ -700,7 +775,7 @@ namespace Azure.Provisioning.PostgreSql
     }
     public partial class PostgreSqlMigration : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PostgreSqlMigration(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public PostgreSqlMigration(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlMigrationCancel> Cancel { get { throw null; } set { } }
         public Azure.Provisioning.PostgreSql.PostgreSqlMigrationStatus CurrentStatus { get { throw null; } }
         public Azure.Provisioning.BicepList<string> DbsToCancelMigrationOn { get { throw null; } set { } }
@@ -717,7 +792,7 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> MigrationWindowStartTimeInUtc { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlMigrationOverwriteDbsInTarget> OverwriteDbsInTarget { get { throw null; } set { } }
-        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer Parent { get { throw null; } set { } }
         public Azure.Provisioning.PostgreSql.PostgreSqlMigrationSecretParameters SecretParameters { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlMigrationLogicalReplicationOnSourceDb> SetupLogicalReplicationOnSourceDbIfNeeded { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SourceDbServerFullyQualifiedDomainName { get { throw null; } set { } }
@@ -733,7 +808,8 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetDbServerResourceId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlMigrationTriggerCutover> TriggerCutover { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.PostgreSql.PostgreSqlMigration FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.PostgreSql.PostgreSqlMigration FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_06_01;
@@ -829,6 +905,7 @@ namespace Azure.Provisioning.PostgreSql
         True = 0,
         False = 1,
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServerConfiguration for the ssl_min_protocol_version server parameter instead.")]
     public enum PostgreSqlMinimalTlsVersionEnum
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS1_0")]
@@ -839,23 +916,25 @@ namespace Azure.Provisioning.PostgreSql
         Tls1_2 = 2,
         TLSEnforcementDisabled = 3,
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServersPrivateEndpointConnection instead.")]
     public partial class PostgreSqlPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PostgreSqlPrivateEndpointConnection(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public PostgreSqlPrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.PostgreSql.PostgreSqlPrivateLinkServiceConnectionStateProperty ConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.PostgreSql.PostgreSqlServer? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlServer Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> PrivateEndpointId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.PostgreSql.PostgreSqlPrivateEndpointConnection FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.PostgreSql.PostgreSqlPrivateEndpointConnection FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2018_06_01;
         }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServersPrivateEndpointConnectionProvisioningState instead.")]
     public enum PostgreSqlPrivateEndpointProvisioningState
     {
         Approving = 0,
@@ -864,6 +943,7 @@ namespace Azure.Provisioning.PostgreSql
         Failed = 3,
         Rejecting = 4,
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServersPrivateLinkServiceConnectionState instead.")]
     public partial class PostgreSqlPrivateLinkServiceConnectionStateProperty : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PostgreSqlPrivateLinkServiceConnectionStateProperty() { }
@@ -872,10 +952,12 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<string> Status { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use the PostgreSqlFlexibleServersPrivateLinkServiceConnectionState.ActionsRequired property instead.")]
     public enum PostgreSqlPrivateLinkServiceConnectionStateRequiredAction
     {
         None = 0,
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServersPrivateEndpointServiceConnectionStatus instead.")]
     public enum PostgreSqlPrivateLinkServiceConnectionStateStatus
     {
         Approved = 0,
@@ -883,6 +965,7 @@ namespace Azure.Provisioning.PostgreSql
         Rejected = 2,
         Disconnected = 3,
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer.Network with PostgreSqlFlexibleServerPublicNetworkAccessState instead.")]
     public enum PostgreSqlPublicNetworkAccessEnum
     {
         Enabled = 0,
@@ -892,9 +975,10 @@ namespace Azure.Provisioning.PostgreSql
     {
         Default = 0,
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer instead.")]
     public partial class PostgreSqlServer : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PostgreSqlServer(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public PostgreSqlServer(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AdministratorLogin { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ByokEnforcement { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> EarliestRestoreOn { get { throw null; } }
@@ -919,49 +1003,52 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlServerState> UserVisibleState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlServerVersion> Version { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.PostgreSql.PostgreSqlServer FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.PostgreSql.PostgreSqlServer FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2017_12_01;
         }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServerMicrosoftEntraAdministrator instead.")]
     public partial class PostgreSqlServerAdministrator : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PostgreSqlServerAdministrator(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public PostgreSqlServerAdministrator(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlAdministratorType> AdministratorType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> LoginAccountName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.PostgreSql.PostgreSqlServer? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlServer Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Guid> SecureId { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.PostgreSql.PostgreSqlServerAdministrator FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.PostgreSql.PostgreSqlServerAdministrator FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2017_12_01;
         }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use the PostgreSqlFlexibleServer.DataEncryption property instead.")]
     public partial class PostgreSqlServerKey : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PostgreSqlServerKey(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public PostgreSqlServerKey(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.PostgreSql.PostgreSqlServer? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlServer Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlServerKeyType> ServerKeyType { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.Uri> Uri { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.PostgreSql.PostgreSqlServerKey FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.PostgreSql.PostgreSqlServerKey FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2020_01_01;
         }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer.DataEncryption with PostgreSqlFlexibleServerKeyType instead.")]
     public enum PostgreSqlServerKeyType
     {
         AzureKeyVault = 0,
@@ -976,6 +1063,7 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<string> Version { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use the PostgreSqlFlexibleServer.PrivateEndpointConnectionResources property instead.")]
     public partial class PostgreSqlServerPrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PostgreSqlServerPrivateEndpointConnection() { }
@@ -983,6 +1071,7 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.PostgreSql.PostgreSqlServerPrivateEndpointConnectionProperties Properties { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use the PostgreSqlFlexibleServer.PrivateEndpointConnectionResources property instead.")]
     public partial class PostgreSqlServerPrivateEndpointConnectionProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PostgreSqlServerPrivateEndpointConnectionProperties() { }
@@ -991,6 +1080,7 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlPrivateEndpointProvisioningState> ProvisioningState { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServersPrivateLinkServiceConnectionState instead.")]
     public partial class PostgreSqlServerPrivateLinkServiceConnectionStateProperty : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PostgreSqlServerPrivateLinkServiceConnectionStateProperty() { }
@@ -999,6 +1089,7 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlPrivateLinkServiceConnectionStateStatus> Status { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer and its creation properties instead.")]
     public partial class PostgreSqlServerPropertiesForCreate : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PostgreSqlServerPropertiesForCreate() { }
@@ -1010,6 +1101,7 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlServerVersion> Version { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer with AdministratorLogin and AdministratorLoginPassword instead.")]
     public partial class PostgreSqlServerPropertiesForDefaultCreate : Azure.Provisioning.PostgreSql.PostgreSqlServerPropertiesForCreate
     {
         public PostgreSqlServerPropertiesForDefaultCreate() { }
@@ -1017,18 +1109,21 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<string> AdministratorLoginPassword { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer with CreateMode and SourceServerResourceId for geo-restore scenarios instead.")]
     public partial class PostgreSqlServerPropertiesForGeoRestore : Azure.Provisioning.PostgreSql.PostgreSqlServerPropertiesForCreate
     {
         public PostgreSqlServerPropertiesForGeoRestore() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SourceServerId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer with CreateMode and SourceServerResourceId for replica scenarios instead.")]
     public partial class PostgreSqlServerPropertiesForReplica : Azure.Provisioning.PostgreSql.PostgreSqlServerPropertiesForCreate
     {
         public PostgreSqlServerPropertiesForReplica() { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SourceServerId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer with CreateMode, SourceServerResourceId, and PointInTimeUtc for restore scenarios instead.")]
     public partial class PostgreSqlServerPropertiesForRestore : Azure.Provisioning.PostgreSql.PostgreSqlServerPropertiesForCreate
     {
         public PostgreSqlServerPropertiesForRestore() { }
@@ -1036,14 +1131,15 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SourceServerId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use ServerThreatProtectionSettingsModel instead.")]
     public partial class PostgreSqlServerSecurityAlertPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PostgreSqlServerSecurityAlertPolicy(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public PostgreSqlServerSecurityAlertPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepList<string> DisabledAlerts { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> EmailAddresses { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.PostgreSql.PostgreSqlServer? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlServer Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> RetentionDays { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> SendToEmailAccountAdmins { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlServerSecurityAlertPolicyState> State { get { throw null; } set { } }
@@ -1051,17 +1147,19 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<string> StorageEndpoint { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.PostgreSql.PostgreSqlServerSecurityAlertPolicy FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.PostgreSql.PostgreSqlServerSecurityAlertPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2017_12_01;
         }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use ServerThreatProtectionSettingsModel.State with ThreatProtectionState instead.")]
     public enum PostgreSqlServerSecurityAlertPolicyState
     {
         Enabled = 0,
         Disabled = 1,
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer.State with PostgreSqlFlexibleServerState instead.")]
     public enum PostgreSqlServerState
     {
         Ready = 0,
@@ -1069,6 +1167,7 @@ namespace Azure.Provisioning.PostgreSql
         Disabled = 2,
         Inaccessible = 3,
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer.Version with PostgreSqlFlexibleServerVersion instead.")]
     public enum PostgreSqlServerVersion
     {
         [System.Runtime.Serialization.DataMemberAttribute(Name="9.5")]
@@ -1084,6 +1183,7 @@ namespace Azure.Provisioning.PostgreSql
         [System.Runtime.Serialization.DataMemberAttribute(Name="11")]
         Ver11 = 5,
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer.Sku with PostgreSqlFlexibleServerSku instead.")]
     public partial class PostgreSqlSku : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PostgreSqlSku() { }
@@ -1094,22 +1194,26 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlSkuTier> Tier { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServerSku.Tier with PostgreSqlFlexibleServerSkuTier instead.")]
     public enum PostgreSqlSkuTier
     {
         Basic = 0,
         GeneralPurpose = 1,
         MemoryOptimized = 2,
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServerConfiguration for the require_secure_transport server parameter instead.")]
     public enum PostgreSqlSslEnforcementEnum
     {
         Enabled = 0,
         Disabled = 1,
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer.Storage with StorageAutoGrow instead.")]
     public enum PostgreSqlStorageAutogrow
     {
         Enabled = 0,
         Disabled = 1,
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer.Storage and PostgreSqlFlexibleServer.Backup instead.")]
     public partial class PostgreSqlStorageProfile : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PostgreSqlStorageProfile() { }
@@ -1119,24 +1223,26 @@ namespace Azure.Provisioning.PostgreSql
         public Azure.Provisioning.BicepValue<int> StorageInMB { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer.Network with DelegatedSubnetResourceId for flexible-server networking instead.")]
     public partial class PostgreSqlVirtualNetworkRule : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PostgreSqlVirtualNetworkRule(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public PostgreSqlVirtualNetworkRule(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IgnoreMissingVnetServiceEndpoint { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.PostgreSql.PostgreSqlServer? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlServer Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.PostgreSqlVirtualNetworkRuleState> State { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VirtualNetworkSubnetId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.PostgreSql.PostgreSqlVirtualNetworkRule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.PostgreSql.PostgreSqlVirtualNetworkRule FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2017_12_01;
         }
     }
+    [System.ObsoleteAttribute("This type is obsoleted and will be removed in a future version. Please use PostgreSqlFlexibleServer.Network with DelegatedSubnetResourceId for flexible-server networking instead.")]
     public enum PostgreSqlVirtualNetworkRuleState
     {
         Initializing = 0,
@@ -1163,17 +1269,17 @@ namespace Azure.Provisioning.PostgreSql
     }
     public partial class ServerThreatProtectionSettingsModel : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public ServerThreatProtectionSettingsModel(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public ServerThreatProtectionSettingsModel(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
-        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.ThreatProtectionState> State { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         [System.ObsoleteAttribute("Use Name instead.", false)]
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.ThreatProtectionName> ThreatProtectionName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.PostgreSql.ServerThreatProtectionSettingsModel FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.PostgreSql.ServerThreatProtectionSettingsModel FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_06_01;
@@ -1206,16 +1312,17 @@ namespace Azure.Provisioning.PostgreSql
     }
     public partial class VirtualEndpoint : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public VirtualEndpoint(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public VirtualEndpoint(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.PostgreSql.VirtualEndpointType> EndpointType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepList<string> Members { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepList<string> VirtualEndpoints { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.PostgreSql.VirtualEndpoint FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.PostgreSql.VirtualEndpoint FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_06_01;
