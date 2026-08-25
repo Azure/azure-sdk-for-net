@@ -78,10 +78,10 @@ namespace Azure.Developer.LoadTesting
                 writer.WritePropertyName("numberOfOccurrences"u8);
                 writer.WriteNumberValue(NumberOfOccurrences.Value);
             }
-            if (Optional.IsDefined(EndDateTime))
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDateTime"u8);
-                writer.WriteStringValue(EndDateTime.Value, "O");
+                writer.WriteStringValue(EndOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,7 +126,7 @@ namespace Azure.Developer.LoadTesting
                 return null;
             }
             int? numberOfOccurrences = default;
-            DateTimeOffset? endDateTime = default;
+            DateTimeOffset? endOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -145,7 +145,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    endDateTime = prop.Value.GetDateTimeOffset("O");
+                    endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -153,7 +153,7 @@ namespace Azure.Developer.LoadTesting
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RecurrenceEnd(numberOfOccurrences, endDateTime, additionalBinaryDataProperties);
+            return new RecurrenceEnd(numberOfOccurrences, endOn, additionalBinaryDataProperties);
         }
     }
 }

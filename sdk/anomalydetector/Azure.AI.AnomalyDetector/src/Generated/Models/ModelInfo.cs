@@ -25,22 +25,22 @@ namespace Azure.AI.AnomalyDetector
         /// It either points to an Azure Blob Storage folder or points to a CSV file in
         /// Azure Blob Storage, based on your data schema selection.
         /// </param>
-        /// <param name="startTime">
+        /// <param name="startOn">
         /// Start date/time of training data, which should be
         /// in ISO 8601 format.
         /// </param>
-        /// <param name="endTime">
+        /// <param name="endOn">
         /// End date/time of training data, which should be
         /// in ISO 8601 format.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
-        public ModelInfo(Uri dataSource, DateTimeOffset startTime, DateTimeOffset endTime)
+        public ModelInfo(Uri dataSource, DateTimeOffset startOn, DateTimeOffset endOn)
         {
             Argument.AssertNotNull(dataSource, nameof(dataSource));
 
             DataSource = dataSource;
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             Errors = new ChangeTrackingList<ErrorResponse>();
         }
 
@@ -54,11 +54,11 @@ namespace Azure.AI.AnomalyDetector
         /// Data schema of the input data source. The default
         /// is OneTable.
         /// </param>
-        /// <param name="startTime">
+        /// <param name="startOn">
         /// Start date/time of training data, which should be
         /// in ISO 8601 format.
         /// </param>
-        /// <param name="endTime">
+        /// <param name="endOn">
         /// End date/time of training data, which should be
         /// in ISO 8601 format.
         /// </param>
@@ -75,12 +75,12 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="errors"> Error messages after failure to create a model. </param>
         /// <param name="diagnosticsInfo"> Diagnostics information to help inspect the states of a model or variable. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModelInfo(Uri dataSource, DataSchema? dataSchema, DateTimeOffset startTime, DateTimeOffset endTime, string displayName, int? slidingWindow, AlignPolicy alignPolicy, ModelStatus? status, IReadOnlyList<ErrorResponse> errors, DiagnosticsInfo diagnosticsInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModelInfo(Uri dataSource, DataSchema? dataSchema, DateTimeOffset startOn, DateTimeOffset endOn, string displayName, int? slidingWindow, AlignPolicy alignPolicy, ModelStatus? status, IReadOnlyList<ErrorResponse> errors, DiagnosticsInfo diagnosticsInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataSource = dataSource;
             DataSchema = dataSchema;
-            StartTime = startTime;
-            EndTime = endTime;
+            StartOn = startOn;
+            EndOn = endOn;
             DisplayName = displayName;
             SlidingWindow = slidingWindow;
             AlignPolicy = alignPolicy;
@@ -107,13 +107,13 @@ namespace Azure.AI.AnomalyDetector
         /// Start date/time of training data, which should be
         /// in ISO 8601 format.
         /// </summary>
-        public DateTimeOffset StartTime { get; set; }
+        public DateTimeOffset StartOn { get; set; }
 
         /// <summary>
         /// End date/time of training data, which should be
         /// in ISO 8601 format.
         /// </summary>
-        public DateTimeOffset EndTime { get; set; }
+        public DateTimeOffset EndOn { get; set; }
 
         /// <summary>
         /// Display name of the model. Maximum length is 24

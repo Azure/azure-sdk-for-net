@@ -34,20 +34,20 @@ namespace Azure.Developer.LoadTesting
         /// <param name="targetResourceConfigurations"> Configurations of the target resource on which the test profile ran. </param>
         /// <param name="status"> The test profile run status. </param>
         /// <param name="errorDetails"> Error details if there is any failure in test profile run. These errors are specific to the Test Profile Run. </param>
-        /// <param name="startDateTime"> The test profile run start DateTime(RFC 3339 literal format). </param>
-        /// <param name="endDateTime"> The test profile run end DateTime(RFC 3339 literal format). </param>
+        /// <param name="startOn"> The test profile run start DateTime(RFC 3339 literal format). </param>
+        /// <param name="endOn"> The test profile run end DateTime(RFC 3339 literal format). </param>
         /// <param name="durationInSeconds"> Test profile run duration in seconds. </param>
         /// <param name="testRunDetails">
         /// Details of the test runs ran as part of the test profile run.
         /// Key is the testRunId of the corresponding testRun.
         /// </param>
         /// <param name="recommendations"> Recommendations provided based on a successful test profile run. </param>
-        /// <param name="createdDateTime"> The creation datetime(RFC 3339 literal format). </param>
+        /// <param name="createdOn"> The creation datetime(RFC 3339 literal format). </param>
         /// <param name="createdBy"> The user that created. </param>
-        /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
+        /// <param name="lastModifiedOn"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TestProfileRun(string testProfileRunId, string displayName, string description, string testProfileId, ResourceIdentifier targetResourceId, TargetResourceConfigurations targetResourceConfigurations, TestProfileRunStatus? status, IReadOnlyList<ErrorDetails> errorDetails, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, long? durationInSeconds, IReadOnlyDictionary<string, TestRunDetail> testRunDetails, IReadOnlyList<TestProfileRunRecommendation> recommendations, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TestProfileRun(string testProfileRunId, string displayName, string description, string testProfileId, ResourceIdentifier targetResourceId, TargetResourceConfigurations targetResourceConfigurations, TestProfileRunStatus? status, IReadOnlyList<ErrorDetails> errorDetails, DateTimeOffset? startOn, DateTimeOffset? endOn, long? durationInSeconds, IReadOnlyDictionary<string, TestRunDetail> testRunDetails, IReadOnlyList<TestProfileRunRecommendation> recommendations, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TestProfileRunId = testProfileRunId;
             DisplayName = displayName;
@@ -57,14 +57,14 @@ namespace Azure.Developer.LoadTesting
             TargetResourceConfigurations = targetResourceConfigurations;
             Status = status;
             ErrorDetails = errorDetails;
-            StartDateTime = startDateTime;
-            EndDateTime = endDateTime;
+            StartOn = startOn;
+            EndOn = endOn;
             DurationInSeconds = durationInSeconds;
             TestRunDetails = testRunDetails;
             Recommendations = recommendations;
-            CreatedDateTime = createdDateTime;
+            CreatedOn = createdOn;
             CreatedBy = createdBy;
-            LastModifiedDateTime = lastModifiedDateTime;
+            LastModifiedOn = lastModifiedOn;
             LastModifiedBy = lastModifiedBy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -94,10 +94,10 @@ namespace Azure.Developer.LoadTesting
         public IReadOnlyList<ErrorDetails> ErrorDetails { get; }
 
         /// <summary> The test profile run start DateTime(RFC 3339 literal format). </summary>
-        public DateTimeOffset? StartDateTime { get; }
+        public DateTimeOffset? StartOn { get; }
 
         /// <summary> The test profile run end DateTime(RFC 3339 literal format). </summary>
-        public DateTimeOffset? EndDateTime { get; }
+        public DateTimeOffset? EndOn { get; }
 
         /// <summary> Test profile run duration in seconds. </summary>
         public long? DurationInSeconds { get; }
@@ -112,13 +112,13 @@ namespace Azure.Developer.LoadTesting
         public IReadOnlyList<TestProfileRunRecommendation> Recommendations { get; }
 
         /// <summary> The creation datetime(RFC 3339 literal format). </summary>
-        public DateTimeOffset? CreatedDateTime { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The user that created. </summary>
         public string CreatedBy { get; }
 
         /// <summary> The last Modified datetime(RFC 3339 literal format). </summary>
-        public DateTimeOffset? LastModifiedDateTime { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
 
         /// <summary> The user that last modified. </summary>
         public string LastModifiedBy { get; }
