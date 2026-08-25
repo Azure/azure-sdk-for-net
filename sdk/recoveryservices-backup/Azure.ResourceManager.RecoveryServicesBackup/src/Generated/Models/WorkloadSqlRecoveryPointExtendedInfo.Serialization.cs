@@ -89,16 +89,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IncludedDatabases))
-            {
-                writer.WritePropertyName("includedDatabases"u8);
-                writer.WriteStartArray();
-                foreach (BackupDatabaseInRecoveryPoint item in IncludedDatabases)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -143,7 +133,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             }
             DateTimeOffset? dataDirectoryInfoCapturedOn = default;
             IList<SqlDataDirectory> dataDirectoryPaths = default;
-            IList<BackupDatabaseInRecoveryPoint> includedDatabases = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -170,26 +159,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     dataDirectoryPaths = array;
                     continue;
                 }
-                if (prop.NameEquals("includedDatabases"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<BackupDatabaseInRecoveryPoint> array = new List<BackupDatabaseInRecoveryPoint>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(BackupDatabaseInRecoveryPoint.DeserializeBackupDatabaseInRecoveryPoint(item, options));
-                    }
-                    includedDatabases = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkloadSqlRecoveryPointExtendedInfo(dataDirectoryInfoCapturedOn, dataDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectory>(), includedDatabases ?? new ChangeTrackingList<BackupDatabaseInRecoveryPoint>(), additionalBinaryDataProperties);
+            return new WorkloadSqlRecoveryPointExtendedInfo(dataDirectoryInfoCapturedOn, dataDirectoryPaths ?? new ChangeTrackingList<SqlDataDirectory>(), additionalBinaryDataProperties);
         }
     }
 }

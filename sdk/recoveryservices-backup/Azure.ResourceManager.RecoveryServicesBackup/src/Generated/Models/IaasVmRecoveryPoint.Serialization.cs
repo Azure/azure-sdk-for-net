@@ -193,6 +193,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("extendedLocation"u8);
                 ((IJsonModel<ExtendedLocation>)ExtendedLocation).Write(writer, options);
             }
+            if (Optional.IsDefined(DataDiskMetadata))
+            {
+                writer.WritePropertyName("dataDiskMetadata"u8);
+                writer.WriteObjectValue(DataDiskMetadata, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -243,6 +248,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             RecoveryPointProperties recoveryPointProperties = default;
             bool? isPrivateAccessEnabledOnAnyDisk = default;
             ExtendedLocation extendedLocation = default;
+            DataDiskDetails dataDiskMetadata = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("objectType"u8))
@@ -442,6 +448,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     extendedLocation = ModelReaderWriter.Read<ExtendedLocation>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerRecoveryServicesBackupContext.Default);
                     continue;
                 }
+                if (prop.NameEquals("dataDiskMetadata"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataDiskMetadata = DataDiskDetails.DeserializeDataDiskDetails(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -470,7 +485,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 securityType,
                 recoveryPointProperties,
                 isPrivateAccessEnabledOnAnyDisk,
-                extendedLocation);
+                extendedLocation,
+                dataDiskMetadata);
         }
     }
 }

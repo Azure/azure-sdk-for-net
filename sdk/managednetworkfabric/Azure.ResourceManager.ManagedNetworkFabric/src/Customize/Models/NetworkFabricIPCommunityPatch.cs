@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> IP Community patchable properties. </param>
-        internal NetworkFabricIPCommunityPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, IpCommunityPatchableProperties properties) : base(tags, additionalBinaryDataProperties)
+        internal NetworkFabricIPCommunityPatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties, IPCommunityPatchableProperties properties) : base(tags, additionalBinaryDataProperties)
         {
             Properties = properties;
         }
 
         /// <summary> IP Community patchable properties. </summary>
-        internal IpCommunityPatchableProperties Properties { get; set; }
+        internal IPCommunityPatchableProperties Properties { get; set; }
 
         /// <summary> List of IP Community Rules. </summary>
         public IList<IPCommunityRule> IPCommunityRules
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 if (Properties is null)
                 {
-                    Properties = new IpCommunityPatchableProperties();
+                    Properties = new IPCommunityPatchableProperties();
                 }
                 return Properties.IPCommunityRules;
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IpCommunityPatchableProperties properties = default;
+            IPCommunityPatchableProperties properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("tags"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    properties = IpCommunityPatchableProperties.DeserializeIpCommunityPatchableProperties(prop.Value, options);
+                    properties = IPCommunityPatchableProperties.DeserializeIPCommunityPatchableProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

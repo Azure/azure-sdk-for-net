@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> State of the last job associated to this assignment. </summary>
         [WirePath("properties.lastJobProvisioningState")]
-        public TriggeredAnalyticsRuleRunProvisioningState? LastJobProvisioningState
+        public JobProvisioningState? LastJobProvisioningState
         {
             get
             {

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Authorization
     internal partial class AccessReviewHistoryDefinitionsGetAllAsyncCollectionResultOfT : AsyncPageable<AccessReviewHistoryDefinitionData>
     {
         private readonly AccessReviewHistoryDefinitions _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _filter;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="filter"> The filter to apply on the operation. Only standard filters on definition name and created date are supported. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public AccessReviewHistoryDefinitionsGetAllAsyncCollectionResultOfT(AccessReviewHistoryDefinitions client, string subscriptionId, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public AccessReviewHistoryDefinitionsGetAllAsyncCollectionResultOfT(AccessReviewHistoryDefinitions client, Guid subscriptionId, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

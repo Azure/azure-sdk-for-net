@@ -101,7 +101,7 @@ namespace Azure.Provisioning.CognitiveServices
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<CognitiveServicesAgenticApplicationProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _parent = DefineResource<CognitiveServicesProject>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<CognitiveServicesProject>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
