@@ -8,9 +8,10 @@ using Azure.Provisioning;
 namespace Azure.Provisioning.CosmosDB;
 
 // CUSTOMIZATION: Restore the legacy additional-properties dictionary for API compatibility.
+// Tracking issue: https://github.com/Azure/azure-sdk-for-net/issues/60666
 public partial class CosmosDBServiceProperties
 {
-    private BicepDictionary<BinaryData> _additionalProperties;
+    private BicepDictionary<BinaryData> _additionalProperties = new();
 
     /// <summary>
     /// Gets or sets additional service properties.
@@ -32,10 +33,5 @@ public partial class CosmosDBServiceProperties
             Initialize();
             _additionalProperties.Assign(value);
         }
-    }
-
-    partial void DefineAdditionalProperties()
-    {
-        _additionalProperties = DefineDictionaryProperty<BinaryData>(nameof(AdditionalProperties), new string[] { "AdditionalProperties" });
     }
 }
