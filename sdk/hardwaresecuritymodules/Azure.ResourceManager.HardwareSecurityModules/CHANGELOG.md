@@ -9,11 +9,7 @@
 - Added `PaymentHsmClusterPrivateEndpointConnectionResource` and `PaymentHsmClusterPrivateEndpointConnectionCollection`.
 - Added `PaymentHsmProperties`, `PaymentHsmClusterSku`, `PaymentHsmClusterSkuName`, `PaymentHsmClusterSkuFamily`, and `PaymentHsmClusterProperties` models.
 - Added `HardwareSecurityModuleState` model.
-- Updated `CloudHsmClusterSkuName` to support additional SKU values.
-
-### Breaking Changes
-
-- `CloudHsmClusterSkuName` changed from `enum` to an extensible struct (`readonly partial struct`). Existing switch statements and enum comparisons need to be updated.
+- Added additional values to `CloudHsmClusterSkuName`.
 
 ## 1.0.1 (2026-04-24)
 
