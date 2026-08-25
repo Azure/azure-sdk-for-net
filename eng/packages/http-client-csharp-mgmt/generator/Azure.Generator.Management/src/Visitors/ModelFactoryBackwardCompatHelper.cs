@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Visitors
@@ -244,11 +245,16 @@ namespace Azure.Generator.Management.Visitors
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
             var arguments = new List<ValueExpression>(constructorParameters.Count);
+            var parameterDescriptions = new Dictionary<string, FormattableString>(StringComparer.Ordinal);
             foreach (var constructorParameter in constructorParameters)
             {
                 if (TryBuildCompatibilityArgument(method, constructorParameter, directParameterNames, out var argument))
                 {
                     arguments.Add(argument.Argument);
+                    foreach (var parameterDocumentation in argument.ParameterDocumentation)
+                    {
+                        parameterDescriptions.TryAdd(parameterDocumentation.Parameter.Name, parameterDocumentation.Description);
+                    }
                 }
                 else
                 {
@@ -256,11 +262,63 @@ namespace Azure.Generator.Management.Visitors
                 }
             }
 
+            var signature = CreateBackwardCompatSignature(method.Signature);
             updatedMethod = new MethodProvider(
-                CreateBackwardCompatSignature(method.Signature),
+                signature,
                 Return(New.Instance(method.Signature.ReturnType, arguments)),
-                enclosingType);
+                enclosingType,
+                CreateModelFactoryXmlDocs(signature, modelProvider, parameterDescriptions));
             return true;
+        }
+
+        private static XmlDocProvider CreateModelFactoryXmlDocs(
+            MethodSignature signature,
+            ModelProvider modelProvider,
+            IReadOnlyDictionary<string, FormattableString> parameterDescriptions)
+        {
+            var parameters = new List<XmlDocParamStatement>(signature.Parameters.Count);
+            foreach (var parameter in signature.Parameters)
+            {
+                var description = parameterDescriptions.TryGetValue(parameter.Name, out var currentDescription)
+                    ? currentDescription
+                    : RemoveCommonContinuationIndentation(parameter.Description);
+                var documentedParameter = new ParameterProvider(parameter.Name, description, parameter.Type);
+                parameters.Add(new XmlDocParamStatement(documentedParameter));
+            }
+
+            return new XmlDocProvider(
+                modelProvider.XmlDocs.Summary,
+                parameters,
+                returns: new XmlDocReturnsStatement($"A new {signature.ReturnType:C} instance for mocking."));
+        }
+
+        private static FormattableString RemoveCommonContinuationIndentation(FormattableString description)
+        {
+            var lines = description.Format.ReplaceLineEndings("\n").Split('\n');
+            if (lines.Length < 2)
+            {
+                return description;
+            }
+
+            var commonIndentation = lines
+                .Skip(1)
+                .Where(line => line.Length > 0)
+                .Select(line => line.Length - line.TrimStart().Length)
+                .DefaultIfEmpty(0)
+                .Min();
+            if (commonIndentation == 0)
+            {
+                return description;
+            }
+
+            for (int i = 1; i < lines.Length; i++)
+            {
+                lines[i] = lines[i].Length >= commonIndentation
+                    ? lines[i][commonIndentation..]
+                    : string.Empty;
+            }
+
+            return FormattableStringFactory.Create(string.Join("\n", lines), description.GetArguments());
         }
 
         private static MethodSignature CreateBackwardCompatSignature(MethodSignature signature)
@@ -632,7 +690,10 @@ namespace Azure.Generator.Management.Visitors
             // resolution uses combined/contextual names to avoid stealing outer parameters with the same name.
             if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, constructorParameter.Property, out var directParameter))
             {
-                argument = new CompatibilityArgument(BuildParameterArgument(directParameter, constructorParameter.Type), [directParameter]);
+                argument = new CompatibilityArgument(
+                    BuildParameterArgument(directParameter, constructorParameter.Type),
+                    [directParameter],
+                    [new ParameterDocumentation(directParameter, constructorParameter.Description)]);
                 return true;
             }
 
@@ -681,12 +742,14 @@ namespace Azure.Generator.Management.Visitors
             var nestedConstructorParameters = nestedModel.FullConstructor.Signature.Parameters;
             var nestedArguments = new List<ValueExpression>(nestedConstructorParameters.Count);
             var matchedParameters = new List<ParameterProvider>();
+            var parameterDocumentation = new List<ParameterDocumentation>();
             foreach (var nestedParameter in nestedConstructorParameters)
             {
                 if (TryGetNestedCompatibilityArgument(method, constructorParameter.Property, constructorParameter.Name, nestedParameter, visitedTypes, unavailableDirectParameterNames, out var nestedArgument))
                 {
                     nestedArguments.Add(nestedArgument.Argument);
                     matchedParameters.AddRange(nestedArgument.MatchedParameters);
+                    parameterDocumentation.AddRange(nestedArgument.ParameterDocumentation);
                 }
                 else
                 {
@@ -708,7 +771,7 @@ namespace Azure.Generator.Management.Visitors
             var expression = condition is null
                 ? newInstance
                 : new TernaryConditionalExpression(condition, Default, newInstance);
-            argument = new CompatibilityArgument(expression, matchedParameters);
+            argument = new CompatibilityArgument(expression, matchedParameters, parameterDocumentation);
             visitedTypes.Remove(constructorParameter.Type);
             return true;
         }
@@ -734,7 +797,10 @@ namespace Azure.Generator.Management.Visitors
                 var combinedName = PropertyHelpers.GetCombinedPropertyName(nestedParameter.Property, parentProperty).ToVariableName();
                 if (TryGetMethodParameter(method, combinedName, nestedParameter.Type, nestedParameter.Property, out var combinedParameter))
                 {
-                    argument = new CompatibilityArgument(BuildParameterArgument(combinedParameter, nestedParameter.Type), [combinedParameter]);
+                    argument = new CompatibilityArgument(
+                        BuildParameterArgument(combinedParameter, nestedParameter.Type),
+                        [combinedParameter],
+                        [new ParameterDocumentation(combinedParameter, nestedParameter.Description)]);
                     return true;
                 }
             }
@@ -746,7 +812,10 @@ namespace Azure.Generator.Management.Visitors
                 && nestedParameter.Property is not null
                 && TryGetContextualMethodParameter(method, parentName, nestedParameter, out var contextualParameter))
             {
-                argument = new CompatibilityArgument(BuildParameterArgument(contextualParameter, nestedParameter.Type), [contextualParameter]);
+                argument = new CompatibilityArgument(
+                    BuildParameterArgument(contextualParameter, nestedParameter.Type),
+                    [contextualParameter],
+                    [new ParameterDocumentation(contextualParameter, nestedParameter.Description)]);
                 return true;
             }
 
@@ -756,7 +825,10 @@ namespace Azure.Generator.Management.Visitors
             if (TryGetMethodParameter(method, nestedParameter.Name, nestedParameter.Type, nestedParameter.Property, out var directParameter)
                 && !unavailableDirectParameterNames.Contains(directParameter.Name))
             {
-                argument = new CompatibilityArgument(BuildParameterArgument(directParameter, nestedParameter.Type), [directParameter]);
+                argument = new CompatibilityArgument(
+                    BuildParameterArgument(directParameter, nestedParameter.Type),
+                    [directParameter],
+                    [new ParameterDocumentation(directParameter, nestedParameter.Description)]);
                 return true;
             }
 
@@ -930,6 +1002,11 @@ namespace Azure.Generator.Management.Visitors
             return false;
         }
 
-        private record CompatibilityArgument(ValueExpression Argument, IReadOnlyList<ParameterProvider> MatchedParameters);
+        private record ParameterDocumentation(ParameterProvider Parameter, FormattableString Description);
+
+        private record CompatibilityArgument(
+            ValueExpression Argument,
+            IReadOnlyList<ParameterProvider> MatchedParameters,
+            IReadOnlyList<ParameterDocumentation> ParameterDocumentation);
     }
 }

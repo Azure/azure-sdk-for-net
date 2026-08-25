@@ -12,6 +12,7 @@ using Microsoft.TypeSpec.Generator.Statements;
 using NUnit.Framework;
 using System;
 using System.Reflection;
+using System.Text;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Mgmt.Tests
@@ -149,6 +150,63 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(rendered, Does.Contain("EditorBrowsable"));
             Assert.That(rendered, Does.Contain("EditorBrowsableState.Never"));
             Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel"));
+        }
+
+        [Test]
+        public void RestoredFactoryMethodRegeneratesDocumentationFromCurrentModel()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            model.FullConstructor.Signature.Parameters.Single(parameter => parameter.Name == "value")
+                .Update(description: $"Current parameter summary.\nCurrent parameter details.");
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var previousMethod = CreatePreviousFactoryMethod(
+                modelFactory,
+                model.Type,
+                "value",
+                $"Previous parameter summary.\n            Previous parameter details.");
+
+            Assert.That(
+                Management.Visitors.ModelFactoryBackwardCompatHelper.TryCreateBackwardCompatMethod(
+                    previousMethod,
+                    modelFactory,
+                    out var restoredMethod),
+                Is.True);
+
+            var docs = DescribeDocs(restoredMethod!);
+
+            Assert.That(docs, Does.Contain("TestModel description"));
+            Assert.That(docs, Does.Contain("Current parameter summary."));
+            Assert.That(docs, Does.Contain("Current parameter details."));
+            Assert.That(docs, Does.Not.Contain("Previous model summary."));
+            Assert.That(docs, Does.Not.Contain("Previous parameter summary."));
+            Assert.That(docs, Does.Not.Contain("Previous parameter details."));
+            Assert.That(restoredMethod!.XmlDocs.Returns, Is.Not.Null);
+        }
+
+        [Test]
+        public void RestoredFactoryMethodNormalizesUnmatchedLastContractDocumentation()
+        {
+            var docs = DescribeDocs(BuildRestoredMethodWithUnmatchedParameter(
+                $"Legacy parameter summary.\n            \n             - First item.\n            Legacy parameter details."));
+
+            Assert.That(docs, Does.Contain("Legacy parameter summary.\n\n - First item.\nLegacy parameter details."));
+        }
+
+        [Test]
+        public void RestoredFactoryMethodDocumentationIsIndependentOfLastContractIndentation()
+        {
+            var firstDocs = DescribeDocs(BuildRestoredMethodWithUnmatchedParameter(
+                $"Legacy parameter summary.\n             - First item.\n            Legacy parameter details."));
+            var secondDocs = DescribeDocs(BuildRestoredMethodWithUnmatchedParameter(
+                $"Legacy parameter summary.\n                         - First item.\n                        Legacy parameter details."));
+
+            Assert.That(secondDocs, Is.EqualTo(firstDocs));
         }
 
         [Test]
@@ -366,6 +424,76 @@ namespace Azure.Generator.Mgmt.Tests
             var rendered = new TypeProviderWriter(modelFactory).Write().Content;
             Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(vmwareId, ((global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>)default));"));
             Assert.That(rendered, Does.Not.Contain("TestModel(vMwareId"));
+        }
+
+        private static MethodProvider CreatePreviousFactoryMethod(
+            TypeProvider modelFactory,
+            CSharpType returnType,
+            string parameterName,
+            FormattableString parameterDescription)
+        {
+            var previousSignature = new MethodSignature(
+                "TestModel",
+                $"Previous model summary.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                returnType,
+                $"Previous return summary.",
+                [new ParameterProvider(parameterName, parameterDescription, typeof(string))]);
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            return new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView);
+        }
+
+        private static MethodProvider BuildRestoredMethodWithUnmatchedParameter(FormattableString parameterDescription)
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var previousMethod = CreatePreviousFactoryMethod(
+                modelFactory,
+                model.Type,
+                "legacyValue",
+                parameterDescription);
+
+            Assert.That(
+                Management.Visitors.ModelFactoryBackwardCompatHelper.TryCreateBackwardCompatMethod(
+                    previousMethod,
+                    modelFactory,
+                    out var restoredMethod),
+                Is.True);
+
+            return restoredMethod!;
+        }
+
+        private static string DescribeDocs(MethodProvider method)
+        {
+            var builder = new StringBuilder();
+            builder.AppendLine("<summary>");
+            foreach (var line in method.XmlDocs.Summary?.Lines ?? [])
+            {
+                builder.AppendLine(line.ToString());
+            }
+
+            foreach (var parameter in method.XmlDocs.Parameters)
+            {
+                builder.AppendLine($"<param name=\"{parameter.Parameter.Name}\">");
+                foreach (var line in parameter.Lines)
+                {
+                    builder.AppendLine(line.ToString());
+                }
+            }
+
+            foreach (var line in method.XmlDocs.Returns?.Lines ?? [])
+            {
+                builder.AppendLine("<returns>");
+                builder.AppendLine(line.ToString());
+            }
+
+            return builder.ToString().Replace("\r\n", "\n");
         }
 
         private static void SetLastContractView(TypeProvider typeProvider, TypeProvider lastContractView)
