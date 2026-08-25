@@ -235,9 +235,20 @@ public sealed partial class ClientPipeline
     {
         Argument.AssertNotNull(message, nameof(message));
 
+        SsePipelineResponseHandler? sse =
+            SsePipelineResponseHandler.TryCreate(this, message);
         IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
 
-        policies[0].Process(message, policies, 0);
+        try
+        {
+            policies[0].Process(message, policies, 0);
+            sse?.WrapResponse(message);
+        }
+        catch
+        {
+            sse?.Dispose();
+            throw;
+        }
     }
 
     /// <summary>
@@ -257,9 +268,27 @@ public sealed partial class ClientPipeline
     {
         Argument.AssertNotNull(message, nameof(message));
 
+        SsePipelineResponseHandler? sse =
+            SsePipelineResponseHandler.TryCreate(this, message);
         IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
 
-        await policies[0].ProcessAsync(message, policies, 0).ConfigureAwait(false);
+        try
+        {
+            await policies[0].ProcessAsync(
+                message,
+                policies,
+                0).ConfigureAwait(false);
+            if (sse is not null)
+            {
+                await sse.WrapResponseAsync(
+                    message).ConfigureAwait(false);
+            }
+        }
+        catch
+        {
+            sse?.Dispose();
+            throw;
+        }
     }
 
     private IReadOnlyList<PipelinePolicy> GetProcessor(PipelineMessage message)

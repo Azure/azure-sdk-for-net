@@ -1,0 +1,636 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+
+using System.ClientModel.Internal;
+using System.Collections.Generic;
+using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace System.ClientModel.Primitives;
+
+internal sealed class SsePipelineResponseHandler : IDisposable
+{
+    private const int MaxRedirects = 50;
+    private readonly ClientPipeline _pipeline;
+    private readonly PipelineMessage _templateMessage;
+    private readonly PipelineMessageClassifier _classifier;
+    private readonly Uri _allowedAuthority;
+    private readonly List<KeyValuePair<string, string>> _headers = [];
+    private readonly CancellationToken _operationCancellationToken;
+    private readonly object _sync = new();
+    private readonly string? _initialLastEventId;
+    private Uri _uri;
+    private string _method;
+    private BinaryData? _content;
+    private bool _disposed;
+
+    private SsePipelineResponseHandler(
+        ClientPipeline pipeline,
+        PipelineMessage message)
+    {
+        _pipeline = pipeline;
+        _classifier = message.ResponseClassifier;
+        _operationCancellationToken = message.CancellationToken;
+        _uri = message.Request.Uri ??
+            throw new InvalidOperationException(
+                "An SSE request must have a URI.");
+        _allowedAuthority = _uri;
+        _method = message.Request.Method;
+        message.Request.Headers.TryGetValue(
+            "Last-Event-ID",
+            out _initialLastEventId);
+        foreach (KeyValuePair<string, string> header in message.Request.Headers)
+        {
+            if (!header.Key.Equals(
+                "Last-Event-ID",
+                StringComparison.OrdinalIgnoreCase))
+            {
+                _headers.Add(header);
+            }
+        }
+
+        if (message.Request.Content is BinaryContent content)
+        {
+            using var stream = new MemoryStream();
+            content.WriteTo(stream, message.CancellationToken);
+            _content = BinaryData.FromBytes(stream.ToArray());
+            content.Dispose();
+            message.Request.Content = BinaryContent.Create(_content);
+        }
+
+        _templateMessage = pipeline.CreateMessage();
+        message.CopyPipelineStateTo(_templateMessage);
+        message.ResponseClassifier =
+            new SseMessageClassifier(_classifier);
+    }
+
+    internal static SsePipelineResponseHandler? TryCreate(
+        ClientPipeline pipeline,
+        PipelineMessage message)
+    {
+        if (message.TryGetProperty(
+            typeof(SseReconnectRequest),
+            out object? value) &&
+            value is true)
+        {
+            return null;
+        }
+        if (message.BufferResponse ||
+            !message.Request.Headers.TryGetValue(
+                "Accept",
+                out string? accept) ||
+            !ContainsEventStream(accept))
+        {
+            return new SsePipelineResponseHandler(pipeline, message);
+        }
+
+        return null;
+    }
+
+    internal void WrapResponse(PipelineMessage message)
+    {
+        PipelineResponse response = message.Response ??
+            throw new InvalidOperationException(
+                "The SSE request did not produce a response.");
+        if (IsRedirectStatus(response.Status))
+        {
+            response = FollowInitialRedirects(response);
+            message.Response = response;
+        }
+
+        message.ResponseClassifier = _classifier;
+        WrapEstablishedResponse(response);
+    }
+
+    internal async ValueTask WrapResponseAsync(PipelineMessage message)
+    {
+        PipelineResponse response = message.Response ??
+            throw new InvalidOperationException(
+                "The SSE request did not produce a response.");
+        if (IsRedirectStatus(response.Status))
+        {
+            response = await FollowInitialRedirectsAsync(
+                response).ConfigureAwait(false);
+            message.Response = response;
+        }
+
+        message.ResponseClassifier = _classifier;
+        WrapEstablishedResponse(response);
+    }
+
+    private void WrapEstablishedResponse(PipelineResponse response)
+    {
+        if (response.Status == 204)
+        {
+            response.ContentStream?.Dispose();
+            response.ContentStream = Stream.Null;
+            Dispose();
+            return;
+        }
+        if (response.Status != 200)
+        {
+            Dispose();
+            return;
+        }
+
+        Stream initialStream = response.ContentStream ??
+            throw new InvalidOperationException(
+                "An established SSE response must have a content stream.");
+
+        response.ContentStream = new SseReconnectingStream(
+            initialStream,
+            ReconnectAsync,
+            _operationCancellationToken,
+            reconnectOwner: this,
+            initialLastEventId: _initialLastEventId);
+    }
+
+    private async ValueTask<SseReconnectResult?> ReconnectAsync(
+        string? lastEventId,
+        CancellationToken cancellationToken)
+    {
+        Uri requestUri = _uri;
+        string method = _method;
+        BinaryData? content = _content;
+        bool dropContentHeaders = false;
+
+        for (int redirectCount = 0; ; redirectCount++)
+        {
+            if (redirectCount >= MaxRedirects)
+            {
+                throw new InvalidOperationException(
+                    $"The SSE request exceeded the maximum of {MaxRedirects} redirects.");
+            }
+            EnsureSameAuthority(requestUri);
+
+            using PipelineMessage message = CreateReconnectMessage(
+                requestUri,
+                method,
+                content,
+                dropContentHeaders,
+                lastEventId,
+                cancellationToken);
+
+            try
+            {
+                await _pipeline.SendAsync(message).ConfigureAwait(false);
+            }
+            catch (Exception exception)
+                when (!cancellationToken.IsCancellationRequested &&
+                    IsRetriable(message, exception))
+            {
+                throw new IOException(
+                    "The SSE reconnect attempt failed.",
+                    exception);
+            }
+
+            PipelineResponse response = message.ExtractResponse() ??
+                throw new InvalidOperationException(
+                    "The SSE reconnect attempt did not produce a response.");
+            if (TryGetRedirect(
+                response,
+                requestUri,
+                method,
+                out SseRedirect redirect))
+            {
+                response.Dispose();
+                ApplyRedirect(
+                    redirect,
+                    ref requestUri,
+                    ref method,
+                    ref content,
+                    ref dropContentHeaders);
+                continue;
+            }
+            if (response.Status == 204)
+            {
+                response.Dispose();
+                return null;
+            }
+            if (IsRetriableResponse(message, response))
+            {
+                int status = response.Status;
+                response.Dispose();
+                throw new IOException(
+                    $"The SSE connection failed with status {status}.");
+            }
+            if (response.Status != 200)
+            {
+                int status = response.Status;
+                response.Dispose();
+                throw new InvalidOperationException(
+                    $"An SSE response must have status code 200 or 204, but received {status}.");
+            }
+
+            Stream stream = response.ContentStream ??
+                throw DisposeAndCreateInvalidResponseException(response);
+            return new SseReconnectResult(stream, response);
+        }
+    }
+
+    private PipelineResponse FollowInitialRedirects(
+        PipelineResponse response)
+    {
+        Uri requestUri = _uri;
+        string method = _method;
+        BinaryData? content = _content;
+        bool dropContentHeaders = false;
+        PipelineResponse current = response;
+
+        for (int redirectCount = 0; ;)
+        {
+            if (redirectCount >= MaxRedirects)
+            {
+                current.Dispose();
+                throw new InvalidOperationException(
+                    $"The SSE request exceeded the maximum of {MaxRedirects} redirects.");
+            }
+            if (!TryGetRedirect(
+                current,
+                requestUri,
+                method,
+                out SseRedirect redirect))
+            {
+                current.Dispose();
+                throw new InvalidOperationException(
+                    "The SSE redirect response did not contain a valid Location header.");
+            }
+
+            current.Dispose();
+            ApplyRedirect(
+                redirect,
+                ref requestUri,
+                ref method,
+                ref content,
+                ref dropContentHeaders);
+            using PipelineMessage redirectMessage =
+                CreateReconnectMessage(
+                    requestUri,
+                    method,
+                    content,
+                    dropContentHeaders,
+                    _initialLastEventId,
+                    _operationCancellationToken);
+            _pipeline.Send(redirectMessage);
+            current = redirectMessage.ExtractResponse() ??
+                throw new InvalidOperationException(
+                    "The SSE redirect request did not produce a response.");
+            if (!IsRedirectStatus(current.Status))
+            {
+                return current;
+            }
+            redirectCount++;
+        }
+    }
+
+    private async ValueTask<PipelineResponse>
+        FollowInitialRedirectsAsync(PipelineResponse response)
+    {
+        Uri requestUri = _uri;
+        string method = _method;
+        BinaryData? content = _content;
+        bool dropContentHeaders = false;
+        PipelineResponse current = response;
+
+        for (int redirectCount = 0; ;)
+        {
+            if (redirectCount >= MaxRedirects)
+            {
+                current.Dispose();
+                throw new InvalidOperationException(
+                    $"The SSE request exceeded the maximum of {MaxRedirects} redirects.");
+            }
+            if (!TryGetRedirect(
+                current,
+                requestUri,
+                method,
+                out SseRedirect redirect))
+            {
+                current.Dispose();
+                throw new InvalidOperationException(
+                    "The SSE redirect response did not contain a valid Location header.");
+            }
+
+            current.Dispose();
+            ApplyRedirect(
+                redirect,
+                ref requestUri,
+                ref method,
+                ref content,
+                ref dropContentHeaders);
+            using PipelineMessage redirectMessage =
+                CreateReconnectMessage(
+                    requestUri,
+                    method,
+                    content,
+                    dropContentHeaders,
+                    _initialLastEventId,
+                    _operationCancellationToken);
+            await _pipeline.SendAsync(
+                redirectMessage).ConfigureAwait(false);
+            current = redirectMessage.ExtractResponse() ??
+                throw new InvalidOperationException(
+                    "The SSE redirect request did not produce a response.");
+            if (!IsRedirectStatus(current.Status))
+            {
+                return current;
+            }
+            redirectCount++;
+        }
+    }
+
+    private PipelineMessage CreateReconnectMessage(
+        Uri requestUri,
+        string method,
+        BinaryData? content,
+        bool dropContentHeaders,
+        string? lastEventId,
+        CancellationToken cancellationToken)
+    {
+        PipelineMessage message = _pipeline.CreateMessage();
+        lock (_sync)
+        {
+            if (_disposed)
+            {
+                message.Dispose();
+                throw new ObjectDisposedException(
+                    GetType().FullName);
+            }
+            _templateMessage.CopyPipelineStateTo(message);
+        }
+        message.SetProperty(typeof(SseReconnectRequest), true);
+        message.BufferResponse = false;
+        message.CancellationToken = cancellationToken;
+        message.ResponseClassifier =
+            new SseMessageClassifier(_classifier);
+        message.Request.Uri = requestUri;
+        message.Request.Method = method;
+        foreach (KeyValuePair<string, string> header in _headers)
+        {
+            if (!dropContentHeaders ||
+                !IsContentHeader(header.Key))
+            {
+                message.Request.Headers.Add(
+                    header.Key,
+                    header.Value);
+            }
+        }
+        if (content is not null)
+        {
+            message.Request.Content = BinaryContent.Create(content);
+        }
+        if (!string.IsNullOrEmpty(lastEventId))
+        {
+            message.Request.Headers.Set(
+                "Last-Event-ID",
+                lastEventId!);
+        }
+
+        return message;
+    }
+
+    private void ApplyRedirect(
+        SseRedirect redirect,
+        ref Uri requestUri,
+        ref string method,
+        ref BinaryData? content,
+        ref bool dropContentHeaders)
+    {
+        EnsureSameAuthority(redirect.Uri);
+        requestUri = redirect.Uri;
+        if (redirect.ForceGet)
+        {
+            method = "GET";
+            content = null;
+            dropContentHeaders = true;
+        }
+        if (redirect.Permanent)
+        {
+            _uri = requestUri;
+            _method = method;
+            _content = content;
+            if (dropContentHeaders)
+            {
+                _headers.RemoveAll(
+                    static header => IsContentHeader(header.Key));
+            }
+        }
+    }
+
+    private bool IsRetriable(
+        PipelineMessage message,
+        Exception exception)
+    {
+        if (exception is AggregateException aggregate)
+        {
+            if (aggregate.InnerExceptions.Count == 0)
+            {
+                return false;
+            }
+            foreach (Exception innerException in aggregate.InnerExceptions)
+            {
+                if (!IsRetriable(message, innerException))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        return (_classifier.TryClassify(
+                message,
+                exception,
+                out bool isRetriable) ||
+            PipelineMessageClassifier.Default.TryClassify(
+                message,
+                exception,
+                out isRetriable)) &&
+            isRetriable;
+    }
+
+    private bool IsRetriableResponse(
+        PipelineMessage message,
+        PipelineResponse response)
+    {
+        message.Response = response;
+        bool classified =
+            _classifier.TryClassify(
+                message,
+                exception: null,
+                out bool isRetriable) ||
+            PipelineMessageClassifier.Default.TryClassify(
+                message,
+                exception: null,
+                out isRetriable);
+        message.Response = null;
+        return classified && isRetriable;
+    }
+
+    private static bool TryGetRedirect(
+        PipelineResponse response,
+        Uri requestUri,
+        string requestMethod,
+        out SseRedirect redirect)
+    {
+        int status = response.Status;
+        if (!IsRedirectStatus(status) ||
+            !response.Headers.TryGetValue(
+                "Location",
+                out string? locationValue) ||
+            !Uri.TryCreate(
+                locationValue,
+                UriKind.RelativeOrAbsolute,
+                out Uri? location))
+        {
+            redirect = null!;
+            return false;
+        }
+
+        Uri redirectUri;
+        if (location.IsAbsoluteUri)
+        {
+            redirectUri = location;
+        }
+        else if (!Uri.TryCreate(
+            requestUri,
+            location,
+            out Uri? resolvedUri))
+        {
+            redirect = null!;
+            return false;
+        }
+        else
+        {
+            redirectUri = resolvedUri;
+        }
+
+        bool forceGet = status switch
+        {
+            300 or 301 or 302 =>
+                requestMethod.Equals(
+                    "POST",
+                    StringComparison.OrdinalIgnoreCase),
+            303 => !requestMethod.Equals(
+                    "GET",
+                    StringComparison.OrdinalIgnoreCase) &&
+                !requestMethod.Equals(
+                    "HEAD",
+                    StringComparison.OrdinalIgnoreCase),
+            _ => false
+        };
+        redirect = new SseRedirect(
+            redirectUri,
+            status is 301 or 308,
+            forceGet);
+        return true;
+    }
+
+    private void EnsureSameAuthority(Uri uri)
+    {
+        if (Uri.Compare(
+            _allowedAuthority,
+            uri,
+            UriComponents.SchemeAndServer,
+            UriFormat.SafeUnescaped,
+            StringComparison.OrdinalIgnoreCase) != 0)
+        {
+            throw new InvalidOperationException(
+                "SSE redirects to a different authority are not allowed.");
+        }
+    }
+
+    private static bool IsRedirectStatus(int status)
+        => status is 300 or 301 or 302 or 303 or 307 or 308;
+
+    private static bool IsContentHeader(string name)
+            => name.StartsWith(
+                "Content-",
+                StringComparison.OrdinalIgnoreCase) ||
+            name.Equals(
+                "Transfer-Encoding",
+                StringComparison.OrdinalIgnoreCase);
+
+    private static bool ContainsEventStream(string? accept)
+    {
+        if (accept is null)
+        {
+            return false;
+        }
+
+        foreach (string value in accept.Split(','))
+        {
+            string mediaType = value.Split(';')[0].Trim();
+            if (string.Equals(
+                mediaType,
+                "text/event-stream",
+                StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static InvalidOperationException
+        DisposeAndCreateInvalidResponseException(PipelineResponse response)
+    {
+        response.Dispose();
+        return new InvalidOperationException(
+            "An established SSE response must have a content stream.");
+    }
+
+    public void Dispose()
+    {
+        lock (_sync)
+        {
+            if (!_disposed)
+            {
+                _disposed = true;
+                _templateMessage.Dispose();
+            }
+        }
+    }
+
+    private sealed class SseMessageClassifier(
+        PipelineMessageClassifier inner) : PipelineMessageClassifier
+    {
+        public override bool TryClassify(
+            PipelineMessage message,
+            out bool isError)
+        {
+            if (message.Response?.Status == 204 ||
+                IsRedirectStatus(message.Response?.Status ?? 0))
+            {
+                isError = false;
+                return true;
+            }
+
+            return inner.TryClassify(message, out isError);
+        }
+
+        public override bool TryClassify(
+            PipelineMessage message,
+            Exception? exception,
+            out bool isRetriable)
+            => inner.TryClassify(
+                message,
+                exception,
+                out isRetriable);
+    }
+
+    private sealed class SseRedirect(
+        Uri uri,
+        bool permanent,
+        bool forceGet)
+    {
+        internal Uri Uri { get; } = uri;
+        internal bool Permanent { get; } = permanent;
+        internal bool ForceGet { get; } = forceGet;
+    }
+
+    private sealed class SseReconnectRequest
+    {
+    }
+}

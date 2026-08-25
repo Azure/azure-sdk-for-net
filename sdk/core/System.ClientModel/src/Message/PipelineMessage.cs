@@ -151,6 +151,20 @@ public class PipelineMessage : IDisposable
     public void SetProperty(Type key, object? value) =>
         _propertyBag.Set((ulong)key.TypeHandle.Value, value);
 
+    internal void CopyPipelineStateTo(PipelineMessage message)
+    {
+        for (int i = 0; i < _propertyBag.Count; i++)
+        {
+            _propertyBag.GetAt(i, out ulong key, out object? value);
+            message._propertyBag.Set(key, value);
+        }
+
+        message.NetworkTimeout = NetworkTimeout;
+        message.PerCallPolicies = PerCallPolicies;
+        message.PerTryPolicies = PerTryPolicies;
+        message.BeforeTransportPolicies = BeforeTransportPolicies;
+    }
+
     #endregion
 
     #region Meta-data for pipeline processing

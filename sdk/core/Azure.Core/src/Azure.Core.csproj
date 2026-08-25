@@ -50,6 +50,8 @@
 
   <ItemGroup>
     <Compile Remove="Shared\**\*.cs" />
+    <Compile Include="..\..\System.ClientModel\src\Internal\SseReconnectingStream.cs"
+             Link="Internal\SseReconnectingStream.cs" />
     <Compile Include="Shared\AppContextSwitchHelper.cs" />
     <Compile Include="Shared\ArrayBufferWriter.cs" />
     <Compile Include="Shared\AsyncLockWithValue.cs" />
