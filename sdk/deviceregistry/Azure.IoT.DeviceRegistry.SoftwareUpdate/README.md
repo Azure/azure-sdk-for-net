@@ -16,7 +16,7 @@ dotnet add package Azure.Identity
 ### Prerequisites
 
 - You must have a [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
-- You need the endpoint for your Software Update for Device Registry service.
+- You need the endpoint for your Software Update for Device Registry service, such as `https://contoso.api.adu.microsoft.com`.
 - Your Microsoft Entra identity must have permission to access the service.
 
 ### Authenticate the client
