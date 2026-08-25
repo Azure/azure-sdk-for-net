@@ -3,6 +3,7 @@
 
 #nullable enable
 
+using System;
 using System.ComponentModel;
 using Azure.Provisioning.Primitives;
 
@@ -62,23 +63,33 @@ public partial class StorageAccount : ProvisionableResource
         public static readonly string V2015_06_15 = "2015-06-15";
     }
 
-    /// <summary>
-    /// List of private endpoint connection associated with the specified
-    /// storage account.
-    ///
-    /// This property is obsoleted and will be removed in future versions. Please use
-    /// <see cref="StorageAccount.PrivateEndpointConnectionResources"/> instead.
-    /// </summary>
+    // TypeSpec names the flattened resource list PrivateEndpointConnections, while the shipped new API uses PrivateEndpointConnectionResources.
+    /// <summary> Gets the private endpoint connection resources associated with the storage account. </summary>
+    public BicepList<StoragePrivateEndpointConnection> PrivateEndpointConnectionResources
+    {
+        get
+        {
+            if (Properties is null)
+            {
+                Properties = new StorageAccountProperties();
+            }
+            return Properties.PrivateEndpointConnectionResources;
+        }
+    }
+
+    // Preserve the shipped old data-model list separately from the generated resource-list type.
+    /// <summary> Gets the private endpoint connections associated with the storage account. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is obsoleted and will be removed in a future version. Please use PrivateEndpointConnectionResources instead.")]
     public BicepList<StoragePrivateEndpointConnectionData> PrivateEndpointConnections
     {
-        get { Initialize(); return _privateEndpointConnections!; }
-    }
-    private BicepList<StoragePrivateEndpointConnectionData>? _privateEndpointConnections;
-
-    // Preserve the shipped PrivateEndpointConnections output at its original generated path.
-    partial void DefineAdditionalProperties()
-    {
-        _privateEndpointConnections = DefineListProperty<StoragePrivateEndpointConnectionData>("PrivateEndpointConnections", ["properties", "privateEndpointConnections"], isOutput: true);
+        get
+        {
+            if (Properties is null)
+            {
+                Properties = new StorageAccountProperties();
+            }
+            return Properties.PrivateEndpointConnections;
+        }
     }
 }

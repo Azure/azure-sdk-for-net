@@ -12,7 +12,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Storage
 {
-    /// <summary> Properties of the storage account. </summary>
     internal partial class StorageAccountProperties : ProvisionableConstruct
     {
         private BicepValue<StorageAccountProvisioningState> _provisioningState;
@@ -40,7 +39,6 @@ namespace Azure.Provisioning.Storage
         private GeoReplicationStatistics _geoReplicationStats;
         private BicepValue<bool> _isFailoverInProgress;
         private BicepValue<LargeFileSharesState> _largeFileSharesState;
-        private BicepList<StoragePrivateEndpointConnection> _privateEndpointConnections;
         private StorageRoutingPreference _routingPreference;
         private DualStackEndpointPreference _dualStackEndpointPreference;
         private BlobRestoreStatus _blobRestoreStatus;
@@ -346,16 +344,6 @@ namespace Azure.Provisioning.Storage
             {
                 Initialize();
                 _largeFileSharesState.Assign(value);
-            }
-        }
-
-        /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<StoragePrivateEndpointConnection> PrivateEndpointConnections
-        {
-            get
-            {
-                Initialize();
-                return _privateEndpointConnections;
             }
         }
 
@@ -671,7 +659,6 @@ namespace Azure.Provisioning.Storage
             _geoReplicationStats = DefineModelProperty<GeoReplicationStatistics>(nameof(GeoReplicationStats), new string[] { "geoReplicationStats" }, isOutput: true);
             _isFailoverInProgress = DefineProperty<bool>(nameof(IsFailoverInProgress), new string[] { "failoverInProgress" }, isOutput: true);
             _largeFileSharesState = DefineProperty<LargeFileSharesState>(nameof(LargeFileSharesState), new string[] { "largeFileSharesState" });
-            _privateEndpointConnections = DefineListProperty<StoragePrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _routingPreference = DefineModelProperty<StorageRoutingPreference>(nameof(RoutingPreference), new string[] { "routingPreference" });
             _dualStackEndpointPreference = DefineModelProperty<DualStackEndpointPreference>(nameof(DualStackEndpointPreference), new string[] { "dualStackEndpointPreference" });
             _blobRestoreStatus = DefineModelProperty<BlobRestoreStatus>(nameof(BlobRestoreStatus), new string[] { "blobRestoreStatus" }, isOutput: true);
