@@ -35,6 +35,11 @@ namespace Azure.AI.Agents.Persistent
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RunStepCodeInterpreterToolCallOutput"/>. </summary>
+        protected RunStepCodeInterpreterToolCallOutput() : this(default)
+        {
+        }
+
         /// <summary> The object type. </summary>
         internal string Type { get; set; }
     }

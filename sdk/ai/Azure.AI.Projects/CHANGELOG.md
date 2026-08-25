@@ -1,6 +1,6 @@
 # Release History
 
-## 3.0.0-beta.1 (Unreleased)
+## 3.0.0-beta.1 (2026-08-24)
 
 ### Features Added
 - Enabled the Model weights subclient.
@@ -13,8 +13,6 @@
 
 ### Bugs Fixed
 - Fix the Foundry-Features header, resulting in 400 error during Agent optimization jobs submission.
-
-### Other Changes
 
 ### Sample Updates
 - Added sample for Model weights.
