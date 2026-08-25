@@ -172,6 +172,8 @@ are no longer needed.
 Every resilient task input has a lazy event stream keyed by its final `InputId`.
 Handlers receive producer-only access through `TaskContext<TInput>.Stream`; callers
 receive consumer-only access through `TaskRun<TOutput>.Stream`.
+The same explicit `InputId` cannot be reused by an unrelated `TaskId` while the stream is
+retained; this prevents cross-task replay leakage and closed-stream poisoning.
 
 ```C# Snippet:StreamingGuide_TaskBoundStreams
 public static ValueTask EmitTaskProgress(

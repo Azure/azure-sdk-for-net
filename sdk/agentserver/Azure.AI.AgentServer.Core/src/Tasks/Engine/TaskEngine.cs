@@ -181,7 +181,7 @@ internal sealed partial class TaskEngine : IDisposable
             taskId,
             inputId,
             isQueued,
-            new TaskStreamState(_streams, inputId));
+            new TaskStreamState(_streams, taskId, inputId));
 
     private async Task<TaskRun<TOutput>> StartOneShotAsync<TInput, TOutput>(
         TaskRegistration registration, string name, string taskId, string inputId, bool persistInputId, TInput input,

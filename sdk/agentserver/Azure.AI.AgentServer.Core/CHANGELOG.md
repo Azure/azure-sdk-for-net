@@ -22,6 +22,10 @@
 
 ### Bugs Fixed
 
+- Task-bound streams now record their owning task and reject cross-task reuse of an
+  explicit input id. File-backed replay persists the ownership beside the stream log so
+  isolation is enforced after process restart.
+
 ### Other Changes
 
 ## 1.0.0-beta.28 (2026-08-12)
