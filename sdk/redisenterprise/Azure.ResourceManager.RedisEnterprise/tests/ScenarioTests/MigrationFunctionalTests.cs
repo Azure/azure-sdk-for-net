@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
             ResourceGroupResource resourceGroup = await CreateResourceGroupAsync();
 
             string sourceName = Recording.GenerateAssetName("RedisSource");
+            string targetName = Recording.GenerateAssetName("RedisEnterpriseTarget");
             RedisModels.RedisCreateOrUpdateContent sourceData = new(
                 DefaultLocation,
                 new RedisModels.RedisSku(
@@ -41,7 +42,6 @@ namespace Azure.ResourceManager.RedisEnterprise.Tests
                 sourceName,
                 sourceData)).Value;
 
-            string targetName = Recording.GenerateAssetName("RedisEnterpriseTarget");
             RedisEnterpriseClusterData targetData = new(
                 DefaultLocation,
                 new RedisEnterpriseSku(RedisEnterpriseSkuName.BalancedB1))

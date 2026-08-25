@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\src\Azure.ResourceManager.RedisEnterprise.csproj" />
-    <ProjectReference Include="..\..\..\redis\Azure.ResourceManager.Redis\src\Azure.ResourceManager.Redis.csproj" />
+    <PackageReference Include="Azure.ResourceManager.Redis" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="$(TestFrameworkSupportFiles)" LinkBase="Shared\TestFramework" />
