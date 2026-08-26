@@ -12,28 +12,28 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> A recurring weekly maintenance window in UTC. </summary>
-    public partial class MaintenanceWindow
+    public partial class EventHubsMaintenanceWindow
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceWindow"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsMaintenanceWindow"/>. </summary>
         /// <param name="dayOfWeek"> The UTC day of the week on which the maintenance window starts. </param>
         /// <param name="startTimeOfDay"> The UTC time of day at which the maintenance window starts, represented as an ISO 8601 duration since midnight. </param>
         /// <param name="durationMinutes"> The maintenance window duration in minutes. The value must be between 480 and 1440 in 60-minute increments. </param>
-        public MaintenanceWindow(UpgradePreferenceDayOfWeek dayOfWeek, TimeSpan startTimeOfDay, int durationMinutes)
+        public EventHubsMaintenanceWindow(EventHubsUpgradePreferenceDayOfWeek dayOfWeek, TimeSpan startTimeOfDay, int durationMinutes)
         {
             DayOfWeek = dayOfWeek;
             StartTimeOfDay = startTimeOfDay;
             DurationMinutes = durationMinutes;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaintenanceWindow"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsMaintenanceWindow"/>. </summary>
         /// <param name="dayOfWeek"> The UTC day of the week on which the maintenance window starts. </param>
         /// <param name="startTimeOfDay"> The UTC time of day at which the maintenance window starts, represented as an ISO 8601 duration since midnight. </param>
         /// <param name="durationMinutes"> The maintenance window duration in minutes. The value must be between 480 and 1440 in 60-minute increments. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceWindow(UpgradePreferenceDayOfWeek dayOfWeek, TimeSpan startTimeOfDay, int durationMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventHubsMaintenanceWindow(EventHubsUpgradePreferenceDayOfWeek dayOfWeek, TimeSpan startTimeOfDay, int durationMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DayOfWeek = dayOfWeek;
             StartTimeOfDay = startTimeOfDay;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> The UTC day of the week on which the maintenance window starts. </summary>
         [WirePath("dayOfWeek")]
-        public UpgradePreferenceDayOfWeek DayOfWeek { get; set; }
+        public EventHubsUpgradePreferenceDayOfWeek DayOfWeek { get; set; }
 
         /// <summary> The UTC time of day at which the maintenance window starts, represented as an ISO 8601 duration since midnight. </summary>
         [WirePath("startTimeOfDay")]

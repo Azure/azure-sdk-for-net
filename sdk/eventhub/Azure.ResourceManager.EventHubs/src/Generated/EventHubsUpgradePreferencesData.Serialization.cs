@@ -18,68 +18,68 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> Upgrade preferences for an Event Hubs Dedicated cluster. </summary>
-    public partial class UpgradePreferencesData : ResourceData, IJsonModel<UpgradePreferencesData>
+    public partial class EventHubsUpgradePreferencesData : ResourceData, IJsonModel<EventHubsUpgradePreferencesData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpgradePreferencesData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsUpgradePreferencesData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeUpgradePreferencesData(document.RootElement, options);
+                        return DeserializeEventHubsUpgradePreferencesData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpgradePreferencesData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsUpgradePreferencesData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpgradePreferencesData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsUpgradePreferencesData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEventHubsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(UpgradePreferencesData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsUpgradePreferencesData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<UpgradePreferencesData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EventHubsUpgradePreferencesData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UpgradePreferencesData IPersistableModel<UpgradePreferencesData>.Create(BinaryData data, ModelReaderWriterOptions options) => (UpgradePreferencesData)PersistableModelCreateCore(data, options);
+        EventHubsUpgradePreferencesData IPersistableModel<EventHubsUpgradePreferencesData>.Create(BinaryData data, ModelReaderWriterOptions options) => (EventHubsUpgradePreferencesData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<UpgradePreferencesData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EventHubsUpgradePreferencesData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="upgradePreferencesData"> The <see cref="UpgradePreferencesData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(UpgradePreferencesData upgradePreferencesData)
+        /// <param name="eventHubsUpgradePreferencesData"> The <see cref="EventHubsUpgradePreferencesData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(EventHubsUpgradePreferencesData eventHubsUpgradePreferencesData)
         {
-            if (upgradePreferencesData == null)
+            if (eventHubsUpgradePreferencesData == null)
             {
                 return null;
             }
-            return RequestContent.Create(upgradePreferencesData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(eventHubsUpgradePreferencesData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="UpgradePreferencesData"/> from. </param>
-        internal static UpgradePreferencesData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="EventHubsUpgradePreferencesData"/> from. </param>
+        internal static EventHubsUpgradePreferencesData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeUpgradePreferencesData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeEventHubsUpgradePreferencesData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<UpgradePreferencesData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EventHubsUpgradePreferencesData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpgradePreferencesData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsUpgradePreferencesData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpgradePreferencesData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsUpgradePreferencesData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -120,24 +120,24 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        UpgradePreferencesData IJsonModel<UpgradePreferencesData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (UpgradePreferencesData)JsonModelCreateCore(ref reader, options);
+        EventHubsUpgradePreferencesData IJsonModel<EventHubsUpgradePreferencesData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (EventHubsUpgradePreferencesData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<UpgradePreferencesData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsUpgradePreferencesData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpgradePreferencesData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsUpgradePreferencesData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeUpgradePreferencesData(document.RootElement, options);
+            return DeserializeEventHubsUpgradePreferencesData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static UpgradePreferencesData DeserializeUpgradePreferencesData(JsonElement element, ModelReaderWriterOptions options)
+        internal static EventHubsUpgradePreferencesData DeserializeEventHubsUpgradePreferencesData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.EventHubs
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            UpgradePreferencesProperties properties = default;
+            EventHubsUpgradePreferencesProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.EventHubs
                     {
                         continue;
                     }
-                    properties = UpgradePreferencesProperties.DeserializeUpgradePreferencesProperties(prop.Value, options);
+                    properties = EventHubsUpgradePreferencesProperties.DeserializeEventHubsUpgradePreferencesProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.EventHubs
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UpgradePreferencesData(
+            return new EventHubsUpgradePreferencesData(
                 id,
                 name,
                 resourceType,

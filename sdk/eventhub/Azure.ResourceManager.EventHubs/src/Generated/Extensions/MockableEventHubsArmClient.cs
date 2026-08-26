@@ -107,22 +107,22 @@ namespace Azure.ResourceManager.EventHubs.Mocking
             return new EventHubsConsumerGroupResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="FabricShortcutResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="EventHubsFabricShortcutResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="FabricShortcutResource"/> object. </returns>
-        public virtual FabricShortcutResource GetFabricShortcutResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventHubsFabricShortcutResource"/> object. </returns>
+        public virtual EventHubsFabricShortcutResource GetEventHubsFabricShortcutResource(ResourceIdentifier id)
         {
-            FabricShortcutResource.ValidateResourceId(id);
-            return new FabricShortcutResource(Client, id);
+            EventHubsFabricShortcutResource.ValidateResourceId(id);
+            return new EventHubsFabricShortcutResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="UpgradePreferencesResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="EventHubsUpgradePreferencesResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="UpgradePreferencesResource"/> object. </returns>
-        public virtual UpgradePreferencesResource GetUpgradePreferencesResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="EventHubsUpgradePreferencesResource"/> object. </returns>
+        public virtual EventHubsUpgradePreferencesResource GetEventHubsUpgradePreferencesResource(ResourceIdentifier id)
         {
-            UpgradePreferencesResource.ValidateResourceId(id);
-            return new UpgradePreferencesResource(Client, id);
+            EventHubsUpgradePreferencesResource.ValidateResourceId(id);
+            return new EventHubsUpgradePreferencesResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="EventHubsNamespaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>

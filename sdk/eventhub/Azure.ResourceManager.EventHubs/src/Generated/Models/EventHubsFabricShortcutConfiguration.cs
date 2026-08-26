@@ -13,23 +13,23 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Microsoft Fabric workspace and artifact configuration. </summary>
-    public partial class FabricShortcutConfiguration
+    public partial class EventHubsFabricShortcutConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FabricShortcutConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsFabricShortcutConfiguration"/>. </summary>
         /// <param name="tenantId"> The Microsoft Fabric tenant ID. </param>
         /// <param name="workspaceId"> The Microsoft Fabric workspace ID. </param>
         /// <param name="artifactId"> The Microsoft Fabric artifact ID. </param>
-        public FabricShortcutConfiguration(Guid tenantId, Guid workspaceId, Guid artifactId)
+        public EventHubsFabricShortcutConfiguration(Guid tenantId, Guid workspaceId, Guid artifactId)
         {
             TenantId = tenantId;
             WorkspaceId = workspaceId;
             ArtifactId = artifactId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FabricShortcutConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsFabricShortcutConfiguration"/>. </summary>
         /// <param name="tenantId"> The Microsoft Fabric tenant ID. </param>
         /// <param name="workspaceId"> The Microsoft Fabric workspace ID. </param>
         /// <param name="artifactId"> The Microsoft Fabric artifact ID. </param>
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="workspaceName"> The Microsoft Fabric workspace name. </param>
         /// <param name="artifactName"> The Microsoft Fabric artifact name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FabricShortcutConfiguration(Guid tenantId, Guid workspaceId, Guid artifactId, string premiumCapacityId, ResourceIdentifier logAnalyticsResourceId, string workspaceName, string artifactName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventHubsFabricShortcutConfiguration(Guid tenantId, Guid workspaceId, Guid artifactId, string premiumCapacityId, ResourceIdentifier logAnalyticsResourceId, string workspaceName, string artifactName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TenantId = tenantId;
             WorkspaceId = workspaceId;

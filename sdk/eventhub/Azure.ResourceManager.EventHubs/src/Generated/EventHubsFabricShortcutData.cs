@@ -14,17 +14,17 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> A Microsoft Fabric shortcut attached to an Event Hub. </summary>
-    public partial class FabricShortcutData : ResourceData
+    public partial class EventHubsFabricShortcutData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FabricShortcutData"/>. </summary>
-        public FabricShortcutData()
+        /// <summary> Initializes a new instance of <see cref="EventHubsFabricShortcutData"/>. </summary>
+        public EventHubsFabricShortcutData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FabricShortcutData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsFabricShortcutData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="properties"> Properties of the Microsoft Fabric shortcut. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FabricShortcutData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, FabricShortcutProperties properties, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal EventHubsFabricShortcutData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventHubsFabricShortcutProperties properties, string location, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Location = location;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Properties of the Microsoft Fabric shortcut. </summary>
         [WirePath("properties")]
-        public FabricShortcutProperties Properties { get; set; }
+        public EventHubsFabricShortcutProperties Properties { get; set; }
 
         /// <summary> The geo-location where the resource lives. </summary>
         [WirePath("location")]

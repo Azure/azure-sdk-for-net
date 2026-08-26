@@ -467,11 +467,11 @@ namespace Azure.ResourceManager.EventHubs
             return GetEventHubsConsumerGroups().Get(consumerGroupName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of FabricShortcuts in the <see cref="EventHubResource"/>. </summary>
-        /// <returns> An object representing collection of FabricShortcuts and their operations over a FabricShortcutResource. </returns>
-        public virtual FabricShortcutCollection GetFabricShortcuts()
+        /// <summary> Gets a collection of EventHubsFabricShortcuts in the <see cref="EventHubResource"/>. </summary>
+        /// <returns> An object representing collection of EventHubsFabricShortcuts and their operations over a EventHubsFabricShortcutResource. </returns>
+        public virtual EventHubsFabricShortcutCollection GetEventHubsFabricShortcuts()
         {
-            return GetCachedClient(client => new FabricShortcutCollection(client, Id));
+            return GetCachedClient(client => new EventHubsFabricShortcutCollection(client, Id));
         }
 
         /// <summary> Gets a Microsoft Fabric shortcut. </summary>
@@ -480,11 +480,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="fabricShortcutName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fabricShortcutName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<FabricShortcutResource>> GetFabricShortcutAsync(string fabricShortcutName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubsFabricShortcutResource>> GetEventHubsFabricShortcutAsync(string fabricShortcutName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fabricShortcutName, nameof(fabricShortcutName));
 
-            return await GetFabricShortcuts().GetAsync(fabricShortcutName, cancellationToken).ConfigureAwait(false);
+            return await GetEventHubsFabricShortcuts().GetAsync(fabricShortcutName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets a Microsoft Fabric shortcut. </summary>
@@ -493,11 +493,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="fabricShortcutName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="fabricShortcutName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<FabricShortcutResource> GetFabricShortcut(string fabricShortcutName, CancellationToken cancellationToken = default)
+        public virtual Response<EventHubsFabricShortcutResource> GetEventHubsFabricShortcut(string fabricShortcutName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(fabricShortcutName, nameof(fabricShortcutName));
 
-            return GetFabricShortcuts().Get(fabricShortcutName, cancellationToken);
+            return GetEventHubsFabricShortcuts().Get(fabricShortcutName, cancellationToken);
         }
     }
 }

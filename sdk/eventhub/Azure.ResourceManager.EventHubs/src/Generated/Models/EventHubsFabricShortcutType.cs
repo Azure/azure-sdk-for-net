@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The type of Microsoft Fabric shortcut. </summary>
-    public enum FabricShortcutType
+    public enum EventHubsFabricShortcutType
     {
         /// <summary> An entity shortcut. </summary>
         Entity,

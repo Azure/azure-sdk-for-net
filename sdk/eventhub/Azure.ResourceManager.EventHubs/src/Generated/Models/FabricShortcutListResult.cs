@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Initializes a new instance of <see cref="FabricShortcutListResult"/>. </summary>
         /// <param name="value"> The FabricShortcut items on this page. </param>
-        internal FabricShortcutListResult(IEnumerable<FabricShortcutData> value)
+        internal FabricShortcutListResult(IEnumerable<EventHubsFabricShortcutData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="value"> The FabricShortcut items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FabricShortcutListResult(IList<FabricShortcutData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FabricShortcutListResult(IList<EventHubsFabricShortcutData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> The FabricShortcut items on this page. </summary>
         [WirePath("value")]
-        public IList<FabricShortcutData> Value { get; }
+        public IList<EventHubsFabricShortcutData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

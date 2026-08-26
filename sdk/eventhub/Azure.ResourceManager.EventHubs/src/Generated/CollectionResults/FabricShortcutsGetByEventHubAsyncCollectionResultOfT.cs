@@ -15,7 +15,7 @@ using Azure.ResourceManager.EventHubs.Models;
 
 namespace Azure.ResourceManager.EventHubs
 {
-    internal partial class FabricShortcutsGetByEventHubAsyncCollectionResultOfT : AsyncPageable<FabricShortcutData>
+    internal partial class FabricShortcutsGetByEventHubAsyncCollectionResultOfT : AsyncPageable<EventHubsFabricShortcutData>
     {
         private readonly FabricShortcuts _client;
         private readonly string _subscriptionId;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of FabricShortcutsGetByEventHubAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<FabricShortcutData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<EventHubsFabricShortcutData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventHubs
                 }
                 FabricShortcutListResult result = FabricShortcutListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<FabricShortcutData>.FromValues((IReadOnlyList<FabricShortcutData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<EventHubsFabricShortcutData>.FromValues((IReadOnlyList<EventHubsFabricShortcutData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

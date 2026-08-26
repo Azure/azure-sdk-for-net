@@ -960,11 +960,11 @@ namespace Azure.ResourceManager.EventHubs
             }
         }
 
-        /// <summary> Gets an object representing a <see cref="UpgradePreferencesResource"/> along with the instance operations that can be performed on it in the <see cref="EventHubsClusterResource"/>. </summary>
-        /// <returns> Returns a <see cref="UpgradePreferencesResource"/> object. </returns>
-        public virtual UpgradePreferencesResource GetUpgradePreferences()
+        /// <summary> Gets an object representing a <see cref="EventHubsUpgradePreferencesResource"/> along with the instance operations that can be performed on it in the <see cref="EventHubsClusterResource"/>. </summary>
+        /// <returns> Returns a <see cref="EventHubsUpgradePreferencesResource"/> object. </returns>
+        public virtual EventHubsUpgradePreferencesResource GetEventHubsUpgradePreferences()
         {
-            return new UpgradePreferencesResource(Client, Id.AppendChildResource("upgradePreferences", "default"));
+            return new EventHubsUpgradePreferencesResource(Client, Id.AppendChildResource("upgradePreferences", "default"));
         }
     }
 }

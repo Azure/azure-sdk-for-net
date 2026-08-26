@@ -13,57 +13,57 @@ using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary> A recurring weekly maintenance window in UTC. </summary>
-    public partial class MaintenanceWindow : IJsonModel<MaintenanceWindow>
+    /// <summary> The current upgrade orchestration state for the cluster. </summary>
+    public partial class EventHubsUpgradeStatus : IJsonModel<EventHubsUpgradeStatus>
     {
-        /// <summary> Initializes a new instance of <see cref="MaintenanceWindow"/> for deserialization. </summary>
-        internal MaintenanceWindow()
+        /// <summary> Initializes a new instance of <see cref="EventHubsUpgradeStatus"/> for deserialization. </summary>
+        internal EventHubsUpgradeStatus()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MaintenanceWindow PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EventHubsUpgradeStatus PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsUpgradeStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMaintenanceWindow(document.RootElement, options);
+                        return DeserializeEventHubsUpgradeStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceWindow)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsUpgradeStatus)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsUpgradeStatus>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEventHubsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceWindow)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsUpgradeStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MaintenanceWindow>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EventHubsUpgradeStatus>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MaintenanceWindow IPersistableModel<MaintenanceWindow>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EventHubsUpgradeStatus IPersistableModel<EventHubsUpgradeStatus>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MaintenanceWindow>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EventHubsUpgradeStatus>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MaintenanceWindow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EventHubsUpgradeStatus>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,17 +74,20 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsUpgradeStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceWindow)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsUpgradeStatus)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("dayOfWeek"u8);
-            writer.WriteStringValue(DayOfWeek.ToSerialString());
-            writer.WritePropertyName("startTimeOfDay"u8);
-            writer.WriteStringValue(StartTimeOfDay, "P");
-            writer.WritePropertyName("durationMinutes"u8);
-            writer.WriteNumberValue(DurationMinutes);
+            writer.WritePropertyName("pendingUpgrade"u8);
+            writer.WriteBooleanValue(PendingUpgrade);
+            writer.WritePropertyName("inProgress"u8);
+            writer.WriteBooleanValue(InProgress);
+            if (Optional.IsDefined(CompletesOn))
+            {
+                writer.WritePropertyName("completesAt"u8);
+                writer.WriteStringValue(CompletesOn.Value, "O");
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -104,48 +107,52 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MaintenanceWindow IJsonModel<MaintenanceWindow>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EventHubsUpgradeStatus IJsonModel<EventHubsUpgradeStatus>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MaintenanceWindow JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EventHubsUpgradeStatus JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsUpgradeStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceWindow)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsUpgradeStatus)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMaintenanceWindow(document.RootElement, options);
+            return DeserializeEventHubsUpgradeStatus(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MaintenanceWindow DeserializeMaintenanceWindow(JsonElement element, ModelReaderWriterOptions options)
+        internal static EventHubsUpgradeStatus DeserializeEventHubsUpgradeStatus(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            UpgradePreferenceDayOfWeek dayOfWeek = default;
-            TimeSpan startTimeOfDay = default;
-            int durationMinutes = default;
+            bool pendingUpgrade = default;
+            bool inProgress = default;
+            DateTimeOffset? completesOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("dayOfWeek"u8))
+                if (prop.NameEquals("pendingUpgrade"u8))
                 {
-                    dayOfWeek = prop.Value.GetString().ToUpgradePreferenceDayOfWeek();
+                    pendingUpgrade = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("startTimeOfDay"u8))
+                if (prop.NameEquals("inProgress"u8))
                 {
-                    startTimeOfDay = prop.Value.GetTimeSpan("P");
+                    inProgress = prop.Value.GetBoolean();
                     continue;
                 }
-                if (prop.NameEquals("durationMinutes"u8))
+                if (prop.NameEquals("completesAt"u8))
                 {
-                    durationMinutes = prop.Value.GetInt32();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    completesOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -153,7 +160,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MaintenanceWindow(dayOfWeek, startTimeOfDay, durationMinutes, additionalBinaryDataProperties);
+            return new EventHubsUpgradeStatus(pendingUpgrade, inProgress, completesOn, additionalBinaryDataProperties);
         }
     }
 }

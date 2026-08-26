@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
-    /// A class representing a FabricShortcut along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="FabricShortcutResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventHubResource"/> using the GetFabricShortcuts method.
+    /// A class representing a EventHubsFabricShortcut along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="EventHubsFabricShortcutResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventHubResource"/> using the GetEventHubsFabricShortcuts method.
     /// </summary>
-    public partial class FabricShortcutResource : ArmResource
+    public partial class EventHubsFabricShortcutResource : ArmResource
     {
         private readonly ClientDiagnostics _fabricShortcutsClientDiagnostics;
         private readonly FabricShortcuts _fabricShortcutsRestClient;
-        private readonly FabricShortcutData _data;
+        private readonly EventHubsFabricShortcutData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.EventHub/namespaces/eventhubs/fabricShortcuts";
 
-        /// <summary> Initializes a new instance of FabricShortcutResource for mocking. </summary>
-        protected FabricShortcutResource()
+        /// <summary> Initializes a new instance of EventHubsFabricShortcutResource for mocking. </summary>
+        protected EventHubsFabricShortcutResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FabricShortcutResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsFabricShortcutResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal FabricShortcutResource(ArmClient client, FabricShortcutData data) : this(client, data.Id)
+        internal EventHubsFabricShortcutResource(ArmClient client, EventHubsFabricShortcutData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FabricShortcutResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsFabricShortcutResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal FabricShortcutResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal EventHubsFabricShortcutResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string fabricShortcutApiVersion);
+            TryGetApiVersion(ResourceType, out string eventHubsFabricShortcutApiVersion);
             _fabricShortcutsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
-            _fabricShortcutsRestClient = new FabricShortcuts(_fabricShortcutsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fabricShortcutApiVersion ?? "2026-07-01-preview");
+            _fabricShortcutsRestClient = new FabricShortcuts(_fabricShortcutsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubsFabricShortcutApiVersion ?? "2026-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventHubs
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual FabricShortcutData Data
+        public virtual EventHubsFabricShortcutData Data
         {
             get
             {
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FabricShortcutResource"/>. </description>
+        /// <description> <see cref="EventHubsFabricShortcutResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FabricShortcutResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubsFabricShortcutResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fabricShortcutsClientDiagnostics.CreateScope("FabricShortcutResource.Get");
+            using DiagnosticScope scope = _fabricShortcutsClientDiagnostics.CreateScope("EventHubsFabricShortcutResource.Get");
             scope.Start();
             try
             {
@@ -126,12 +126,12 @@ namespace Azure.ResourceManager.EventHubs
                 };
                 HttpMessage message = _fabricShortcutsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FabricShortcutData> response = Response.FromValue(FabricShortcutData.FromResponse(result), result);
+                Response<EventHubsFabricShortcutData> response = Response.FromValue(EventHubsFabricShortcutData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new FabricShortcutResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubsFabricShortcutResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -157,14 +157,14 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FabricShortcutResource"/>. </description>
+        /// <description> <see cref="EventHubsFabricShortcutResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FabricShortcutResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<EventHubsFabricShortcutResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fabricShortcutsClientDiagnostics.CreateScope("FabricShortcutResource.Get");
+            using DiagnosticScope scope = _fabricShortcutsClientDiagnostics.CreateScope("EventHubsFabricShortcutResource.Get");
             scope.Start();
             try
             {
@@ -174,12 +174,12 @@ namespace Azure.ResourceManager.EventHubs
                 };
                 HttpMessage message = _fabricShortcutsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<FabricShortcutData> response = Response.FromValue(FabricShortcutData.FromResponse(result), result);
+                Response<EventHubsFabricShortcutData> response = Response.FromValue(EventHubsFabricShortcutData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new FabricShortcutResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubsFabricShortcutResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FabricShortcutResource"/>. </description>
+        /// <description> <see cref="EventHubsFabricShortcutResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fabricShortcutsClientDiagnostics.CreateScope("FabricShortcutResource.Delete");
+            using DiagnosticScope scope = _fabricShortcutsClientDiagnostics.CreateScope("EventHubsFabricShortcutResource.Delete");
             scope.Start();
             try
             {
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FabricShortcutResource"/>. </description>
+        /// <description> <see cref="EventHubsFabricShortcutResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fabricShortcutsClientDiagnostics.CreateScope("FabricShortcutResource.Delete");
+            using DiagnosticScope scope = _fabricShortcutsClientDiagnostics.CreateScope("EventHubsFabricShortcutResource.Delete");
             scope.Start();
             try
             {
@@ -307,14 +307,14 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FabricShortcutResource"/>. </description>
+        /// <description> <see cref="EventHubsFabricShortcutResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FabricShortcutResource>> ApproveAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubsFabricShortcutResource>> ApproveAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fabricShortcutsClientDiagnostics.CreateScope("FabricShortcutResource.Approve");
+            using DiagnosticScope scope = _fabricShortcutsClientDiagnostics.CreateScope("EventHubsFabricShortcutResource.Approve");
             scope.Start();
             try
             {
@@ -324,12 +324,12 @@ namespace Azure.ResourceManager.EventHubs
                 };
                 HttpMessage message = _fabricShortcutsRestClient.CreateApproveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FabricShortcutData> response = Response.FromValue(FabricShortcutData.FromResponse(result), result);
+                Response<EventHubsFabricShortcutData> response = Response.FromValue(EventHubsFabricShortcutData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new FabricShortcutResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubsFabricShortcutResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -355,14 +355,14 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FabricShortcutResource"/>. </description>
+        /// <description> <see cref="EventHubsFabricShortcutResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FabricShortcutResource> Approve(CancellationToken cancellationToken = default)
+        public virtual Response<EventHubsFabricShortcutResource> Approve(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fabricShortcutsClientDiagnostics.CreateScope("FabricShortcutResource.Approve");
+            using DiagnosticScope scope = _fabricShortcutsClientDiagnostics.CreateScope("EventHubsFabricShortcutResource.Approve");
             scope.Start();
             try
             {
@@ -372,12 +372,12 @@ namespace Azure.ResourceManager.EventHubs
                 };
                 HttpMessage message = _fabricShortcutsRestClient.CreateApproveRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<FabricShortcutData> response = Response.FromValue(FabricShortcutData.FromResponse(result), result);
+                Response<EventHubsFabricShortcutData> response = Response.FromValue(EventHubsFabricShortcutData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new FabricShortcutResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubsFabricShortcutResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -403,14 +403,14 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FabricShortcutResource"/>. </description>
+        /// <description> <see cref="EventHubsFabricShortcutResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<FabricShortcutResource>> RejectAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubsFabricShortcutResource>> RejectAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fabricShortcutsClientDiagnostics.CreateScope("FabricShortcutResource.Reject");
+            using DiagnosticScope scope = _fabricShortcutsClientDiagnostics.CreateScope("EventHubsFabricShortcutResource.Reject");
             scope.Start();
             try
             {
@@ -420,12 +420,12 @@ namespace Azure.ResourceManager.EventHubs
                 };
                 HttpMessage message = _fabricShortcutsRestClient.CreateRejectRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FabricShortcutData> response = Response.FromValue(FabricShortcutData.FromResponse(result), result);
+                Response<EventHubsFabricShortcutData> response = Response.FromValue(EventHubsFabricShortcutData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new FabricShortcutResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubsFabricShortcutResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -451,14 +451,14 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FabricShortcutResource"/>. </description>
+        /// <description> <see cref="EventHubsFabricShortcutResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<FabricShortcutResource> Reject(CancellationToken cancellationToken = default)
+        public virtual Response<EventHubsFabricShortcutResource> Reject(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _fabricShortcutsClientDiagnostics.CreateScope("FabricShortcutResource.Reject");
+            using DiagnosticScope scope = _fabricShortcutsClientDiagnostics.CreateScope("EventHubsFabricShortcutResource.Reject");
             scope.Start();
             try
             {
@@ -468,12 +468,12 @@ namespace Azure.ResourceManager.EventHubs
                 };
                 HttpMessage message = _fabricShortcutsRestClient.CreateRejectRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<FabricShortcutData> response = Response.FromValue(FabricShortcutData.FromResponse(result), result);
+                Response<EventHubsFabricShortcutData> response = Response.FromValue(EventHubsFabricShortcutData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new FabricShortcutResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubsFabricShortcutResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
-        /// Update a FabricShortcut.
+        /// Update a EventHubsFabricShortcut.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FabricShortcutResource"/>. </description>
+        /// <description> <see cref="EventHubsFabricShortcutResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -507,11 +507,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="data"> The Microsoft Fabric shortcut. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<FabricShortcutResource>> UpdateAsync(WaitUntil waitUntil, FabricShortcutData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EventHubsFabricShortcutResource>> UpdateAsync(WaitUntil waitUntil, EventHubsFabricShortcutData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _fabricShortcutsClientDiagnostics.CreateScope("FabricShortcutResource.Update");
+            using DiagnosticScope scope = _fabricShortcutsClientDiagnostics.CreateScope("EventHubsFabricShortcutResource.Update");
             scope.Start();
             try
             {
@@ -519,12 +519,12 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fabricShortcutsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, FabricShortcutData.ToRequestContent(data), context);
+                HttpMessage message = _fabricShortcutsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, EventHubsFabricShortcutData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<FabricShortcutData> response = Response.FromValue(FabricShortcutData.FromResponse(result), result);
+                Response<EventHubsFabricShortcutData> response = Response.FromValue(EventHubsFabricShortcutData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                EventHubsArmOperation<FabricShortcutResource> operation = new EventHubsArmOperation<FabricShortcutResource>(Response.FromValue(new FabricShortcutResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                EventHubsArmOperation<EventHubsFabricShortcutResource> operation = new EventHubsArmOperation<EventHubsFabricShortcutResource>(Response.FromValue(new EventHubsFabricShortcutResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.EventHubs
         }
 
         /// <summary>
-        /// Update a FabricShortcut.
+        /// Update a EventHubsFabricShortcut.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="FabricShortcutResource"/>. </description>
+        /// <description> <see cref="EventHubsFabricShortcutResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -563,11 +563,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="data"> The Microsoft Fabric shortcut. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<FabricShortcutResource> Update(WaitUntil waitUntil, FabricShortcutData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EventHubsFabricShortcutResource> Update(WaitUntil waitUntil, EventHubsFabricShortcutData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _fabricShortcutsClientDiagnostics.CreateScope("FabricShortcutResource.Update");
+            using DiagnosticScope scope = _fabricShortcutsClientDiagnostics.CreateScope("EventHubsFabricShortcutResource.Update");
             scope.Start();
             try
             {
@@ -575,12 +575,12 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _fabricShortcutsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, FabricShortcutData.ToRequestContent(data), context);
+                HttpMessage message = _fabricShortcutsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, EventHubsFabricShortcutData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<FabricShortcutData> response = Response.FromValue(FabricShortcutData.FromResponse(result), result);
+                Response<EventHubsFabricShortcutData> response = Response.FromValue(EventHubsFabricShortcutData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                EventHubsArmOperation<FabricShortcutResource> operation = new EventHubsArmOperation<FabricShortcutResource>(Response.FromValue(new FabricShortcutResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                EventHubsArmOperation<EventHubsFabricShortcutResource> operation = new EventHubsArmOperation<EventHubsFabricShortcutResource>(Response.FromValue(new EventHubsFabricShortcutResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);

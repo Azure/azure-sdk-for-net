@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary>
-    /// A class representing a UpgradePreferences along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="UpgradePreferencesResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="EventHubsClusterResource"/> using the GetUpgradePreferences method.
+    /// A class representing a EventHubsUpgradePreferences along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="EventHubsUpgradePreferencesResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="EventHubsClusterResource"/> using the GetEventHubsUpgradePreferences method.
     /// </summary>
-    public partial class UpgradePreferencesResource : ArmResource
+    public partial class EventHubsUpgradePreferencesResource : ArmResource
     {
         private readonly ClientDiagnostics _upgradePreferencesOperationsClientDiagnostics;
         private readonly UpgradePreferencesOperations _upgradePreferencesOperationsRestClient;
-        private readonly UpgradePreferencesData _data;
+        private readonly EventHubsUpgradePreferencesData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.EventHub/clusters/upgradePreferences";
 
-        /// <summary> Initializes a new instance of UpgradePreferencesResource for mocking. </summary>
-        protected UpgradePreferencesResource()
+        /// <summary> Initializes a new instance of EventHubsUpgradePreferencesResource for mocking. </summary>
+        protected EventHubsUpgradePreferencesResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpgradePreferencesResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsUpgradePreferencesResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal UpgradePreferencesResource(ArmClient client, UpgradePreferencesData data) : this(client, data.Id)
+        internal EventHubsUpgradePreferencesResource(ArmClient client, EventHubsUpgradePreferencesData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpgradePreferencesResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsUpgradePreferencesResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal UpgradePreferencesResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal EventHubsUpgradePreferencesResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string upgradePreferencesApiVersion);
+            TryGetApiVersion(ResourceType, out string eventHubsUpgradePreferencesApiVersion);
             _upgradePreferencesOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EventHubs", ResourceType.Namespace, Diagnostics);
-            _upgradePreferencesOperationsRestClient = new UpgradePreferencesOperations(_upgradePreferencesOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, upgradePreferencesApiVersion ?? "2026-07-01-preview");
+            _upgradePreferencesOperationsRestClient = new UpgradePreferencesOperations(_upgradePreferencesOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, eventHubsUpgradePreferencesApiVersion ?? "2026-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.EventHubs
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual UpgradePreferencesData Data
+        public virtual EventHubsUpgradePreferencesData Data
         {
             get
             {
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="UpgradePreferencesResource"/>. </description>
+        /// <description> <see cref="EventHubsUpgradePreferencesResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="data"> The upgrade preferences. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<UpgradePreferencesResource>> CreateOrUpdateAsync(WaitUntil waitUntil, UpgradePreferencesData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<EventHubsUpgradePreferencesResource>> CreateOrUpdateAsync(WaitUntil waitUntil, EventHubsUpgradePreferencesData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _upgradePreferencesOperationsClientDiagnostics.CreateScope("UpgradePreferencesResource.CreateOrUpdate");
+            using DiagnosticScope scope = _upgradePreferencesOperationsClientDiagnostics.CreateScope("EventHubsUpgradePreferencesResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -127,12 +127,12 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _upgradePreferencesOperationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, UpgradePreferencesData.ToRequestContent(data), context);
+                HttpMessage message = _upgradePreferencesOperationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, EventHubsUpgradePreferencesData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<UpgradePreferencesData> response = Response.FromValue(UpgradePreferencesData.FromResponse(result), result);
+                Response<EventHubsUpgradePreferencesData> response = Response.FromValue(EventHubsUpgradePreferencesData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                EventHubsArmOperation<UpgradePreferencesResource> operation = new EventHubsArmOperation<UpgradePreferencesResource>(Response.FromValue(new UpgradePreferencesResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                EventHubsArmOperation<EventHubsUpgradePreferencesResource> operation = new EventHubsArmOperation<EventHubsUpgradePreferencesResource>(Response.FromValue(new EventHubsUpgradePreferencesResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="UpgradePreferencesResource"/>. </description>
+        /// <description> <see cref="EventHubsUpgradePreferencesResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -171,11 +171,11 @@ namespace Azure.ResourceManager.EventHubs
         /// <param name="data"> The upgrade preferences. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<UpgradePreferencesResource> CreateOrUpdate(WaitUntil waitUntil, UpgradePreferencesData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<EventHubsUpgradePreferencesResource> CreateOrUpdate(WaitUntil waitUntil, EventHubsUpgradePreferencesData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _upgradePreferencesOperationsClientDiagnostics.CreateScope("UpgradePreferencesResource.CreateOrUpdate");
+            using DiagnosticScope scope = _upgradePreferencesOperationsClientDiagnostics.CreateScope("EventHubsUpgradePreferencesResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -183,12 +183,12 @@ namespace Azure.ResourceManager.EventHubs
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _upgradePreferencesOperationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, UpgradePreferencesData.ToRequestContent(data), context);
+                HttpMessage message = _upgradePreferencesOperationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, EventHubsUpgradePreferencesData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<UpgradePreferencesData> response = Response.FromValue(UpgradePreferencesData.FromResponse(result), result);
+                Response<EventHubsUpgradePreferencesData> response = Response.FromValue(EventHubsUpgradePreferencesData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                EventHubsArmOperation<UpgradePreferencesResource> operation = new EventHubsArmOperation<UpgradePreferencesResource>(Response.FromValue(new UpgradePreferencesResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                EventHubsArmOperation<EventHubsUpgradePreferencesResource> operation = new EventHubsArmOperation<EventHubsUpgradePreferencesResource>(Response.FromValue(new EventHubsUpgradePreferencesResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -219,14 +219,14 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="UpgradePreferencesResource"/>. </description>
+        /// <description> <see cref="EventHubsUpgradePreferencesResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<UpgradePreferencesResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubsUpgradePreferencesResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _upgradePreferencesOperationsClientDiagnostics.CreateScope("UpgradePreferencesResource.Get");
+            using DiagnosticScope scope = _upgradePreferencesOperationsClientDiagnostics.CreateScope("EventHubsUpgradePreferencesResource.Get");
             scope.Start();
             try
             {
@@ -236,12 +236,12 @@ namespace Azure.ResourceManager.EventHubs
                 };
                 HttpMessage message = _upgradePreferencesOperationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<UpgradePreferencesData> response = Response.FromValue(UpgradePreferencesData.FromResponse(result), result);
+                Response<EventHubsUpgradePreferencesData> response = Response.FromValue(EventHubsUpgradePreferencesData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new UpgradePreferencesResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubsUpgradePreferencesResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -267,14 +267,14 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="UpgradePreferencesResource"/>. </description>
+        /// <description> <see cref="EventHubsUpgradePreferencesResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<UpgradePreferencesResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<EventHubsUpgradePreferencesResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _upgradePreferencesOperationsClientDiagnostics.CreateScope("UpgradePreferencesResource.Get");
+            using DiagnosticScope scope = _upgradePreferencesOperationsClientDiagnostics.CreateScope("EventHubsUpgradePreferencesResource.Get");
             scope.Start();
             try
             {
@@ -284,12 +284,12 @@ namespace Azure.ResourceManager.EventHubs
                 };
                 HttpMessage message = _upgradePreferencesOperationsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<UpgradePreferencesData> response = Response.FromValue(UpgradePreferencesData.FromResponse(result), result);
+                Response<EventHubsUpgradePreferencesData> response = Response.FromValue(EventHubsUpgradePreferencesData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new UpgradePreferencesResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubsUpgradePreferencesResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -315,14 +315,14 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="UpgradePreferencesResource"/>. </description>
+        /// <description> <see cref="EventHubsUpgradePreferencesResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<UpgradePreferencesResource>> UpgradeNowAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<EventHubsUpgradePreferencesResource>> UpgradeNowAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _upgradePreferencesOperationsClientDiagnostics.CreateScope("UpgradePreferencesResource.UpgradeNow");
+            using DiagnosticScope scope = _upgradePreferencesOperationsClientDiagnostics.CreateScope("EventHubsUpgradePreferencesResource.UpgradeNow");
             scope.Start();
             try
             {
@@ -332,12 +332,12 @@ namespace Azure.ResourceManager.EventHubs
                 };
                 HttpMessage message = _upgradePreferencesOperationsRestClient.CreateUpgradeNowRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<UpgradePreferencesData> response = Response.FromValue(UpgradePreferencesData.FromResponse(result), result);
+                Response<EventHubsUpgradePreferencesData> response = Response.FromValue(EventHubsUpgradePreferencesData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new UpgradePreferencesResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubsUpgradePreferencesResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -363,14 +363,14 @@ namespace Azure.ResourceManager.EventHubs
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="UpgradePreferencesResource"/>. </description>
+        /// <description> <see cref="EventHubsUpgradePreferencesResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<UpgradePreferencesResource> UpgradeNow(CancellationToken cancellationToken = default)
+        public virtual Response<EventHubsUpgradePreferencesResource> UpgradeNow(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _upgradePreferencesOperationsClientDiagnostics.CreateScope("UpgradePreferencesResource.UpgradeNow");
+            using DiagnosticScope scope = _upgradePreferencesOperationsClientDiagnostics.CreateScope("EventHubsUpgradePreferencesResource.UpgradeNow");
             scope.Start();
             try
             {
@@ -380,12 +380,12 @@ namespace Azure.ResourceManager.EventHubs
                 };
                 HttpMessage message = _upgradePreferencesOperationsRestClient.CreateUpgradeNowRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<UpgradePreferencesData> response = Response.FromValue(UpgradePreferencesData.FromResponse(result), result);
+                Response<EventHubsUpgradePreferencesData> response = Response.FromValue(EventHubsUpgradePreferencesData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new UpgradePreferencesResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new EventHubsUpgradePreferencesResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

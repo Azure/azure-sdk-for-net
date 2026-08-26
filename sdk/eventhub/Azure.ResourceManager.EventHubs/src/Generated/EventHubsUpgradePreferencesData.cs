@@ -14,24 +14,24 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.EventHubs
 {
     /// <summary> Upgrade preferences for an Event Hubs Dedicated cluster. </summary>
-    public partial class UpgradePreferencesData : ResourceData
+    public partial class EventHubsUpgradePreferencesData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UpgradePreferencesData"/>. </summary>
-        public UpgradePreferencesData()
+        /// <summary> Initializes a new instance of <see cref="EventHubsUpgradePreferencesData"/>. </summary>
+        public EventHubsUpgradePreferencesData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpgradePreferencesData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsUpgradePreferencesData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Upgrade preference properties for the Event Hubs Dedicated cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpgradePreferencesData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, UpgradePreferencesProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal EventHubsUpgradePreferencesData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, EventHubsUpgradePreferencesProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.EventHubs
 
         /// <summary> Upgrade preference properties for the Event Hubs Dedicated cluster. </summary>
         [WirePath("properties")]
-        public UpgradePreferencesProperties Properties { get; set; }
+        public EventHubsUpgradePreferencesProperties Properties { get; set; }
     }
 }

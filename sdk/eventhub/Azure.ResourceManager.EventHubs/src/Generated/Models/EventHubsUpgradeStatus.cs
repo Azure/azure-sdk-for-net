@@ -12,26 +12,26 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The current upgrade orchestration state for the cluster. </summary>
-    public partial class UpgradeStatus
+    public partial class EventHubsUpgradeStatus
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="UpgradeStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsUpgradeStatus"/>. </summary>
         /// <param name="pendingUpgrade"> Whether at least one deferred upgrade is waiting for the cluster. </param>
         /// <param name="inProgress"> Whether an upgrade-now override is currently active. </param>
-        internal UpgradeStatus(bool pendingUpgrade, bool inProgress)
+        internal EventHubsUpgradeStatus(bool pendingUpgrade, bool inProgress)
         {
             PendingUpgrade = pendingUpgrade;
             InProgress = inProgress;
         }
 
-        /// <summary> Initializes a new instance of <see cref="UpgradeStatus"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsUpgradeStatus"/>. </summary>
         /// <param name="pendingUpgrade"> Whether at least one deferred upgrade is waiting for the cluster. </param>
         /// <param name="inProgress"> Whether an upgrade-now override is currently active. </param>
         /// <param name="completesOn"> The estimated UTC time when the current upgrade will complete. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpgradeStatus(bool pendingUpgrade, bool inProgress, DateTimeOffset? completesOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventHubsUpgradeStatus(bool pendingUpgrade, bool inProgress, DateTimeOffset? completesOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PendingUpgrade = pendingUpgrade;
             InProgress = inProgress;

@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> A day of the week. </summary>
-    public enum UpgradePreferenceDayOfWeek
+    public enum EventHubsUpgradePreferenceDayOfWeek
     {
         /// <summary> The maintenance window occurs on Sunday. </summary>
         Sunday,

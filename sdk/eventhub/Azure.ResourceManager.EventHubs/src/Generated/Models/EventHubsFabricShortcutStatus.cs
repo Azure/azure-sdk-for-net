@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The status of a Microsoft Fabric shortcut. </summary>
-    public enum FabricShortcutStatus
+    public enum EventHubsFabricShortcutStatus
     {
         /// <summary> The shortcut is awaiting approval. </summary>
         Pending,

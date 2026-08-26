@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (FabricShortcutData item in Value)
+            foreach (EventHubsFabricShortcutData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            IList<FabricShortcutData> value = default;
+            IList<EventHubsFabricShortcutData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<FabricShortcutData> array = new List<FabricShortcutData>();
+                    List<EventHubsFabricShortcutData> array = new List<EventHubsFabricShortcutData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(FabricShortcutData.DeserializeFabricShortcutData(item, options));
+                        array.Add(EventHubsFabricShortcutData.DeserializeEventHubsFabricShortcutData(item, options));
                     }
                     value = array;
                     continue;

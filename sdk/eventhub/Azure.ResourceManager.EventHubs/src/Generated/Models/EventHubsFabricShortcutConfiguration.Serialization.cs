@@ -15,56 +15,56 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Microsoft Fabric workspace and artifact configuration. </summary>
-    public partial class FabricShortcutConfiguration : IJsonModel<FabricShortcutConfiguration>
+    public partial class EventHubsFabricShortcutConfiguration : IJsonModel<EventHubsFabricShortcutConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="FabricShortcutConfiguration"/> for deserialization. </summary>
-        internal FabricShortcutConfiguration()
+        /// <summary> Initializes a new instance of <see cref="EventHubsFabricShortcutConfiguration"/> for deserialization. </summary>
+        internal EventHubsFabricShortcutConfiguration()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FabricShortcutConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EventHubsFabricShortcutConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricShortcutConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsFabricShortcutConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFabricShortcutConfiguration(document.RootElement, options);
+                        return DeserializeEventHubsFabricShortcutConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FabricShortcutConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsFabricShortcutConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricShortcutConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsFabricShortcutConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEventHubsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FabricShortcutConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsFabricShortcutConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FabricShortcutConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EventHubsFabricShortcutConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FabricShortcutConfiguration IPersistableModel<FabricShortcutConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EventHubsFabricShortcutConfiguration IPersistableModel<EventHubsFabricShortcutConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FabricShortcutConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EventHubsFabricShortcutConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FabricShortcutConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EventHubsFabricShortcutConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricShortcutConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsFabricShortcutConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FabricShortcutConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsFabricShortcutConfiguration)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("tenantId"u8);
             writer.WriteStringValue(TenantId);
@@ -125,24 +125,24 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FabricShortcutConfiguration IJsonModel<FabricShortcutConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EventHubsFabricShortcutConfiguration IJsonModel<EventHubsFabricShortcutConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FabricShortcutConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EventHubsFabricShortcutConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FabricShortcutConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsFabricShortcutConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FabricShortcutConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsFabricShortcutConfiguration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFabricShortcutConfiguration(document.RootElement, options);
+            return DeserializeEventHubsFabricShortcutConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FabricShortcutConfiguration DeserializeFabricShortcutConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static EventHubsFabricShortcutConfiguration DeserializeEventHubsFabricShortcutConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FabricShortcutConfiguration(
+            return new EventHubsFabricShortcutConfiguration(
                 tenantId,
                 workspaceId,
                 artifactId,

@@ -13,57 +13,57 @@ using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
-    /// <summary> A date-specific exception to the recurring maintenance windows. </summary>
-    public partial class ExceptionWindow : IJsonModel<ExceptionWindow>
+    /// <summary> A recurring weekly maintenance window in UTC. </summary>
+    public partial class EventHubsMaintenanceWindow : IJsonModel<EventHubsMaintenanceWindow>
     {
-        /// <summary> Initializes a new instance of <see cref="ExceptionWindow"/> for deserialization. </summary>
-        internal ExceptionWindow()
+        /// <summary> Initializes a new instance of <see cref="EventHubsMaintenanceWindow"/> for deserialization. </summary>
+        internal EventHubsMaintenanceWindow()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExceptionWindow PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual EventHubsMaintenanceWindow PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExceptionWindow>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsMaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeExceptionWindow(document.RootElement, options);
+                        return DeserializeEventHubsMaintenanceWindow(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExceptionWindow)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsMaintenanceWindow)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExceptionWindow>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsMaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerEventHubsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ExceptionWindow)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsMaintenanceWindow)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ExceptionWindow>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<EventHubsMaintenanceWindow>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExceptionWindow IPersistableModel<ExceptionWindow>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        EventHubsMaintenanceWindow IPersistableModel<EventHubsMaintenanceWindow>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ExceptionWindow>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EventHubsMaintenanceWindow>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ExceptionWindow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EventHubsMaintenanceWindow>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,15 +74,13 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExceptionWindow>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsMaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExceptionWindow)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsMaintenanceWindow)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("date"u8);
-            writer.WriteStringValue(Date, "D");
-            writer.WritePropertyName("action"u8);
-            writer.WriteStringValue(Action.ToSerialString());
+            writer.WritePropertyName("dayOfWeek"u8);
+            writer.WriteStringValue(DayOfWeek.ToSerialString());
             writer.WritePropertyName("startTimeOfDay"u8);
             writer.WriteStringValue(StartTimeOfDay, "P");
             writer.WritePropertyName("durationMinutes"u8);
@@ -106,44 +104,38 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ExceptionWindow IJsonModel<ExceptionWindow>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        EventHubsMaintenanceWindow IJsonModel<EventHubsMaintenanceWindow>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ExceptionWindow JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual EventHubsMaintenanceWindow JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ExceptionWindow>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<EventHubsMaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExceptionWindow)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsMaintenanceWindow)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExceptionWindow(document.RootElement, options);
+            return DeserializeEventHubsMaintenanceWindow(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ExceptionWindow DeserializeExceptionWindow(JsonElement element, ModelReaderWriterOptions options)
+        internal static EventHubsMaintenanceWindow DeserializeEventHubsMaintenanceWindow(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DateTimeOffset date = default;
-            ExceptionWindowAction action = default;
+            EventHubsUpgradePreferenceDayOfWeek dayOfWeek = default;
             TimeSpan startTimeOfDay = default;
             int durationMinutes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("date"u8))
+                if (prop.NameEquals("dayOfWeek"u8))
                 {
-                    date = prop.Value.GetDateTimeOffset("D");
-                    continue;
-                }
-                if (prop.NameEquals("action"u8))
-                {
-                    action = prop.Value.GetString().ToExceptionWindowAction();
+                    dayOfWeek = prop.Value.GetString().ToEventHubsUpgradePreferenceDayOfWeek();
                     continue;
                 }
                 if (prop.NameEquals("startTimeOfDay"u8))
@@ -161,7 +153,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ExceptionWindow(date, action, startTimeOfDay, durationMinutes, additionalBinaryDataProperties);
+            return new EventHubsMaintenanceWindow(dayOfWeek, startTimeOfDay, durationMinutes, additionalBinaryDataProperties);
         }
     }
 }

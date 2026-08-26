@@ -12,22 +12,22 @@ using Azure.ResourceManager.EventHubs;
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> Properties of a Microsoft Fabric shortcut. </summary>
-    public partial class FabricShortcutProperties
+    public partial class EventHubsFabricShortcutProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="FabricShortcutProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsFabricShortcutProperties"/>. </summary>
         /// <param name="configuration"> Microsoft Fabric workspace and artifact configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configuration"/> is null. </exception>
-        public FabricShortcutProperties(FabricShortcutConfiguration configuration)
+        public EventHubsFabricShortcutProperties(EventHubsFabricShortcutConfiguration configuration)
         {
             Argument.AssertNotNull(configuration, nameof(configuration));
 
             Configuration = configuration;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FabricShortcutProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="EventHubsFabricShortcutProperties"/>. </summary>
         /// <param name="configuration"> Microsoft Fabric workspace and artifact configuration. </param>
         /// <param name="shortcutType"> The type of the shortcut. </param>
         /// <param name="shortcutStatus"> The current shortcut status. Only Pending can be supplied on create or update. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="createdOn"> The UTC time when the shortcut was created. </param>
         /// <param name="modifiedOn"> The UTC time when the shortcut was last modified. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FabricShortcutProperties(FabricShortcutConfiguration configuration, FabricShortcutType? shortcutType, FabricShortcutStatus? shortcutStatus, string statusDescription, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventHubsFabricShortcutProperties(EventHubsFabricShortcutConfiguration configuration, EventHubsFabricShortcutType? shortcutType, EventHubsFabricShortcutStatus? shortcutStatus, string statusDescription, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Configuration = configuration;
             ShortcutType = shortcutType;
@@ -48,15 +48,15 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> Microsoft Fabric workspace and artifact configuration. </summary>
         [WirePath("configuration")]
-        public FabricShortcutConfiguration Configuration { get; set; }
+        public EventHubsFabricShortcutConfiguration Configuration { get; set; }
 
         /// <summary> The type of the shortcut. </summary>
         [WirePath("shortcutType")]
-        public FabricShortcutType? ShortcutType { get; set; }
+        public EventHubsFabricShortcutType? ShortcutType { get; set; }
 
         /// <summary> The current shortcut status. Only Pending can be supplied on create or update. </summary>
         [WirePath("shortcutStatus")]
-        public FabricShortcutStatus? ShortcutStatus { get; set; }
+        public EventHubsFabricShortcutStatus? ShortcutStatus { get; set; }
 
         /// <summary> A description of the current shortcut status. </summary>
         [WirePath("statusDescription")]

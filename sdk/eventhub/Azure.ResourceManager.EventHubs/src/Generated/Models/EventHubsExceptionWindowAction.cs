@@ -8,7 +8,7 @@
 namespace Azure.ResourceManager.EventHubs.Models
 {
     /// <summary> The action performed by an exception window. </summary>
-    public enum ExceptionWindowAction
+    public enum EventHubsExceptionWindowAction
     {
         /// <summary> Prevent upgrades during the exception window. </summary>
         Block,
