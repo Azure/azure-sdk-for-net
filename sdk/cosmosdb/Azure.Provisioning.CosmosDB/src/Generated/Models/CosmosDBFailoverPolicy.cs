@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -15,8 +14,6 @@ namespace Azure.Provisioning.CosmosDB
     public partial class CosmosDBFailoverPolicy : ProvisionableConstruct
     {
         private BicepValue<string> _id;
-        private BicepValue<AzureLocation> _locationName;
-        private BicepValue<int> _failoverPriority;
 
         /// <summary> Creates a new CosmosDBFailoverPolicy. </summary>
         public CosmosDBFailoverPolicy()
@@ -33,33 +30,11 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets the LocationName. </summary>
-        public BicepValue<AzureLocation> LocationName
-        {
-            get
-            {
-                Initialize();
-                return _locationName;
-            }
-        }
-
-        /// <summary> Gets the FailoverPriority. </summary>
-        public BicepValue<int> FailoverPriority
-        {
-            get
-            {
-                Initialize();
-                return _failoverPriority;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for CosmosDBFailoverPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<string>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _locationName = DefineProperty<AzureLocation>(nameof(LocationName), new string[] { "locationName" });
-            _failoverPriority = DefineProperty<int>(nameof(FailoverPriority), new string[] { "failoverPriority" });
             DefineAdditionalProperties();
         }
 

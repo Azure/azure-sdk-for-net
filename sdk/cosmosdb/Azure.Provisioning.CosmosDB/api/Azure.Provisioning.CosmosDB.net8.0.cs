@@ -948,9 +948,9 @@ namespace Azure.Provisioning.CosmosDB
     public partial class CosmosDBFailoverPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public CosmosDBFailoverPolicy() { }
-        public Azure.Provisioning.BicepValue<int> FailoverPriority { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> FailoverPriority { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> LocationName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> LocationName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class CosmosDBFirewallRule : Azure.Provisioning.Primitives.ProvisionableResource
