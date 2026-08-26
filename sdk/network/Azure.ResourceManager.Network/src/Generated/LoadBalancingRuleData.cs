@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Defines whether connections between 2 communicating endpoints can be tracked and associated to the same backend VM over its lifetime when using UDP protocol. </summary>
+        /// <summary> Enables UDP flow tracking for the load balancing rule. This property is retained for rule-level configuration compatibility. When enableConnectionTracking is specified on the associated frontend IP configuration, the frontend setting takes precedence. </summary>
         [WirePath("properties.enableConnectionTracking")]
         public bool? EnableConnectionTracking
         {

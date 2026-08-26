@@ -20,25 +20,25 @@ namespace Azure.AI.Language.Conversations.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeConversationOperationResult"/>. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="kind"> discriminator kind. </param>
-        private protected AnalyzeConversationOperationResult(DateTimeOffset lastUpdateDateTime, ConversationActionState status, AnalyzeConversationOperationResultsKind kind)
+        private protected AnalyzeConversationOperationResult(DateTimeOffset lastUpdateOn, ConversationActionState status, AnalyzeConversationOperationResultsKind kind)
         {
-            LastUpdateDateTime = lastUpdateDateTime;
+            LastUpdateOn = lastUpdateOn;
             Status = status;
             Kind = kind;
         }
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeConversationOperationResult"/>. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="name"> task name. </param>
         /// <param name="kind"> discriminator kind. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeConversationOperationResult(DateTimeOffset lastUpdateDateTime, ConversationActionState status, string name, AnalyzeConversationOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeConversationOperationResult(DateTimeOffset lastUpdateOn, ConversationActionState status, string name, AnalyzeConversationOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            LastUpdateDateTime = lastUpdateDateTime;
+            LastUpdateOn = lastUpdateOn;
             Status = status;
             Name = name;
             Kind = kind;
@@ -46,7 +46,7 @@ namespace Azure.AI.Language.Conversations.Models
         }
 
         /// <summary> The last updated time in UTC for the task. </summary>
-        public DateTimeOffset LastUpdateDateTime { get; }
+        public DateTimeOffset LastUpdateOn { get; }
 
         /// <summary> The status of the task at the mentioned last update time. </summary>
         public ConversationActionState Status { get; }

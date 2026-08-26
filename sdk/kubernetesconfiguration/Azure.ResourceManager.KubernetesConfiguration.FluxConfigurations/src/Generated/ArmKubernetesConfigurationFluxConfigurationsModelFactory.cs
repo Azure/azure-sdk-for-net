@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="provisioningState"> Status of the creation of the fluxConfiguration. </param>
         /// <param name="errorMessage"> Error message returned to the user in the case of provisioning failure. </param>
         /// <returns> A new <see cref="FluxConfigurations.FluxConfigurationData"/> instance for mocking. </returns>
-        public static FluxConfigurationData FluxConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FluxConfigurationScopeType? scope = default, string @namespace = default, FluxConfigurationSourceKindType? sourceKind = default, bool? isSuspended = default, FluxGitRepository gitRepository = default, FluxBucket bucket = default, AzureBlob azureBlob = default, OciRepository ociRepository = default, IDictionary<string, Kustomization> kustomizations = default, IDictionary<string, string> configurationProtectedSettings = default, IEnumerable<FluxObjectStatus> statuses = default, string repositoryPublicKey = default, string sourceSyncedCommitId = default, DateTimeOffset? sourceUpdatedOn = default, DateTimeOffset? statusUpdatedOn = default, bool? isWaitForReconciliation = default, string reconciliationWaitDuration = default, FluxComplianceState? complianceState = default, FluxConfigurationProvisioningState? provisioningState = default, string errorMessage = default)
+        public static FluxConfigurationData FluxConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, FluxConfigurationScopeType? scope = default, string @namespace = default, FluxConfigurationSourceKindType? sourceKind = default, bool? isSuspended = default, FluxGitRepository gitRepository = default, FluxBucket bucket = default, AzureBlob azureBlob = default, OciRepository ociRepository = default, IDictionary<string, FluxConfigurationsKustomization> kustomizations = default, IDictionary<string, string> configurationProtectedSettings = default, IEnumerable<FluxObjectStatus> statuses = default, string repositoryPublicKey = default, string sourceSyncedCommitId = default, DateTimeOffset? sourceUpdatedOn = default, DateTimeOffset? statusUpdatedOn = default, bool? isWaitForReconciliation = default, string reconciliationWaitDuration = default, FluxComplianceState? complianceState = default, FluxConfigurationProvisioningState? provisioningState = default, string errorMessage = default)
         {
             return new FluxConfigurationData(
                 id,
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                     bucket,
                     azureBlob,
                     ociRepository,
-                    kustomizations ?? new ChangeTrackingDictionary<string, Kustomization>(),
+                    kustomizations ?? new ChangeTrackingDictionary<string, FluxConfigurationsKustomization>(),
                     configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
                     (statuses ?? new ChangeTrackingList<FluxObjectStatus>()).ToList(),
                     repositoryPublicKey,
@@ -259,12 +259,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="isForce"> Enable/disable re-creating Kubernetes resources on the cluster when patching fails due to an immutable field change. </param>
         /// <param name="isWait"> Enable/disable health check for all Kubernetes objects created by this Kustomization. </param>
         /// <param name="postBuild"> Used for variable substitution for this Kustomization after kustomize build. </param>
-        /// <returns> A new <see cref="Models.Kustomization"/> instance for mocking. </returns>
-        public static Kustomization Kustomization(string name = default, string path = default, IEnumerable<string> dependsOn = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, long? retryIntervalInSeconds = default, bool? isPrune = default, bool? isForce = default, bool? isWait = default, FluxPostBuild postBuild = default)
+        /// <returns> A new <see cref="Models.FluxConfigurationsKustomization"/> instance for mocking. </returns>
+        public static FluxConfigurationsKustomization FluxConfigurationsKustomization(string name = default, string path = default, IEnumerable<string> dependsOn = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, long? retryIntervalInSeconds = default, bool? isPrune = default, bool? isForce = default, bool? isWait = default, FluxPostBuild postBuild = default)
         {
             dependsOn ??= new ChangeTrackingList<string>();
 
-            return new Kustomization(
+            return new FluxConfigurationsKustomization(
                 name,
                 path,
                 (dependsOn ?? new ChangeTrackingList<string>()).ToList(),
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="kustomizations"> Array of kustomizations used to reconcile the artifact pulled by the source type on the cluster. </param>
         /// <param name="configurationProtectedSettings"> Key-value pairs of protected configuration settings for the configuration. </param>
         /// <returns> A new <see cref="Models.FluxConfigurationPatch"/> instance for mocking. </returns>
-        public static FluxConfigurationPatch FluxConfigurationPatch(FluxConfigurationSourceKindType? sourceKind = default, bool? isSuspended = default, FluxGitRepositoryPatch gitRepository = default, FluxBucketPatch bucket = default, AzureBlobPatch azureBlob = default, OciRepositoryPatch ociRepository = default, IDictionary<string, KustomizationPatch> kustomizations = default, IDictionary<string, string> configurationProtectedSettings = default)
+        public static FluxConfigurationPatch FluxConfigurationPatch(FluxConfigurationSourceKindType? sourceKind = default, bool? isSuspended = default, FluxGitRepositoryPatch gitRepository = default, FluxBucketPatch bucket = default, AzureBlobPatch azureBlob = default, OciRepositoryPatch ociRepository = default, IDictionary<string, FluxConfigurationsKustomizationPatch> kustomizations = default, IDictionary<string, string> configurationProtectedSettings = default)
         {
             return new FluxConfigurationPatch(sourceKind is null && isSuspended is null && gitRepository is null && bucket is null && azureBlob is null && ociRepository is null && kustomizations is null && configurationProtectedSettings is null ? default : new FluxConfigurationPatchProperties(
                 sourceKind,
@@ -381,7 +381,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
                 bucket,
                 azureBlob,
                 ociRepository,
-                kustomizations ?? new ChangeTrackingDictionary<string, KustomizationPatch>(),
+                kustomizations ?? new ChangeTrackingDictionary<string, FluxConfigurationsKustomizationPatch>(),
                 configurationProtectedSettings ?? new ChangeTrackingDictionary<string, string>(),
                 default), default);
         }
@@ -560,12 +560,12 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="isForce"> Enable/disable re-creating Kubernetes resources on the cluster when patching fails due to an immutable field change. </param>
         /// <param name="isWait"> Enable/disable health check for all Kubernetes objects created by this Kustomization. </param>
         /// <param name="postBuild"> Used for variable substitution for this Kustomization after kustomize build. </param>
-        /// <returns> A new <see cref="Models.KustomizationPatch"/> instance for mocking. </returns>
-        public static KustomizationPatch KustomizationPatch(string path = default, IEnumerable<string> dependsOn = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, long? retryIntervalInSeconds = default, bool? isPrune = default, bool? isForce = default, bool? isWait = default, FluxPostBuildPatch postBuild = default)
+        /// <returns> A new <see cref="Models.FluxConfigurationsKustomizationPatch"/> instance for mocking. </returns>
+        public static FluxConfigurationsKustomizationPatch FluxConfigurationsKustomizationPatch(string path = default, IEnumerable<string> dependsOn = default, long? timeoutInSeconds = default, long? syncIntervalInSeconds = default, long? retryIntervalInSeconds = default, bool? isPrune = default, bool? isForce = default, bool? isWait = default, FluxPostBuildPatch postBuild = default)
         {
             dependsOn ??= new ChangeTrackingList<string>();
 
-            return new KustomizationPatch(
+            return new FluxConfigurationsKustomizationPatch(
                 path,
                 (dependsOn ?? new ChangeTrackingList<string>()).ToList(),
                 timeoutInSeconds,
