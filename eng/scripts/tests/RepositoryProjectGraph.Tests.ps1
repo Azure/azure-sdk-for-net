@@ -285,9 +285,11 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $localContributor = Join-Path $fixtureRoot "sdk/example/Contributor/src/Local.Contributor.csproj"
         $childProject = Join-Path $fixtureRoot "sdk/example/Child/src/Child.csproj"
         $testProject = Join-Path $fixtureRoot "sdk/example/A/tests/A.Tests.csproj"
+        $nonAssemblyTestProject = Join-Path $fixtureRoot "sdk/example/Excluded/tests/Excluded.Tests.csproj"
         @(
             "Node|$testProject|net8.0|A.Tests|A.Tests|$(Split-Path (Split-Path $testProject -Parent) -Parent)|true|false|true|false|false"
             "Node|$testProject|net8.0|A.Tests|A.Tests|$(Split-Path (Split-Path $testProject -Parent) -Parent)|true|false|true|false|false"
+            "Node|$nonAssemblyTestProject|net8.0|Excluded.Tests|Excluded.Tests|$(Split-Path (Split-Path $nonAssemblyTestProject -Parent) -Parent)|true|false|true|false|false"
             "Node|$childProject|net8.0|Child|Child|$(Split-Path (Split-Path $childProject -Parent) -Parent)|true|false|false|false|false"
             "Node|$localProjectB|net8.0|Azure.B|Azure.B|$(Split-Path (Split-Path $localProjectB -Parent) -Parent)|true|false|false|true|false"
             "Node|$localProjectD|net8.0|Azure.D|Azure.D|$(Split-Path (Split-Path $localProjectD -Parent) -Parent)|true|false|false|true|false"
@@ -296,6 +298,8 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
             "PackageReference|$testProject|net8.0|External.C||all||1.0.0"
             "PackageReference|$testProject|net8.0|Local.Contributor||all||1.0.0"
             "ProjectReference|$testProject|net8.0|$childProject||||||net8.0"
+            "PackageReference|$nonAssemblyTestProject|net8.0|External.A||all||1.0.0"
+            "ProjectReference|$nonAssemblyTestProject|net8.0|$childProject|false|||||net8.0"
             "PackageReference|$childProject|net8.0|Shared.Dependency||all||2.0.0"
         ) | Set-Content $inputRecordsPath
 
@@ -326,17 +330,18 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $closureRecords | Should -Contain "TransitivePackageReference|$testProject|net8.0|Azure.D|External.C|1.0.0|External.C 1.0.0>Other.Dependency 2.0.0>Azure.D 1.0.0"
         $closureRecords | Should -Contain "TransitivePackageReference|$testProject|net8.0|Azure.D|Local.Contributor|1.0.0|Local.Contributor 1.0.0>Other.Dependency 2.0.0>Azure.D 1.0.0"
         $closureRecords | Should -Contain "TransitivePackageReference|$childProject|net8.0|Azure.B|Shared.Dependency|2.0.0|Shared.Dependency 2.0.0>Azure.B 1.0.0"
+        $closureRecords | Should -Not -Contain "TransitivePackageReference|$nonAssemblyTestProject|net8.0|Azure.B|External.A|1.0.0|External.A 1.0.0>Shared.Dependency 2.0.0>Azure.B 1.0.0"
         $summary = ($closureRecords | Where-Object { $_ -like "PackageClosureSummary|*" }).Split('|')
-        $summary[1..4] | Should -Be @("4", "4", "4", "0")
+        $summary[1..4] | Should -Be @("5", "5", "4", "0")
         $summary[9..11] | Should -Be @("nuget-restore-graph", "False", "True")
-        $summary[12..13] | Should -Be @("2", "2")
+        $summary[12..13] | Should -Be @("3", "3")
         [int]$summary[14] | Should -BeGreaterThan 0
 
         & $scriptPath -Operation Build -GraphPath $closureGraphPath -RecordsPath $inputRecordsPath -PackageRecordsPath $closureRecordsPath -RepoRoot $fixtureRoot
         if ($LASTEXITCODE) { throw "Graph build failed with exit code $LASTEXITCODE" }
         $closureGraph = Get-Content -Raw $closureGraphPath | ConvertFrom-Json -Depth 100
-        $closureGraph.diagnostics.packageClosure.projectContextCount | Should -Be 2
-        $closureGraph.diagnostics.packageClosure.restoreRequestCount | Should -Be 2
+        $closureGraph.diagnostics.packageClosure.projectContextCount | Should -Be 3
+        $closureGraph.diagnostics.packageClosure.restoreRequestCount | Should -Be 3
         $closureGraph.diagnostics.packageClosure.selectedPackageCount | Should -BeGreaterThan 0
         $closureGraph.diagnostics.configurationGraph.isExact | Should -BeTrue
     }
@@ -364,8 +369,8 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
     <PackageVersion Include="Azure.B" Version="1.2.3" />
     <PackageVersion Include="Azure.C" Version="2.0.0" />
     <PackageReference Include="Azure.B" Condition="'$(TargetFramework)' == 'net8.0'" />
-    <PackageReference Include="Azure.C" Condition="'$(Configuration)' == 'Release'" />
-    <ProjectReference Include="../../B/src/B.csproj" Condition="'$(TargetFramework)' == 'net9.0'" />
+    <PackageReference Include="Azure.C" />
+    <ProjectReference Include="../../B/src/B.csproj" ReferenceOutputAssembly="false" Condition="'$(TargetFramework)' == 'net9.0'" />
     <Reference Include="Shared" HintPath="../../../shared/lib/Shared.dll" />
   </ItemGroup>
 </Project>
@@ -425,8 +430,102 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         }
         $taskProjectEdge.fromTargetFramework | Should -Be "net9.0"
         $taskProjectEdge.toTargetFramework | Should -Be "net8.0"
+        Get-Content $taskRecordsPath | Should -Contain "ProjectReference|$fixtureA|net9.0|$fixtureB|false|||||net8.0"
         $hintInput = $taskGraph.inputs | Where-Object kind -eq "ReferenceHintPath"
         $hintInput.path | Should -Be "sdk/shared/lib/Shared.dll"
         $hintInput.targetFrameworks | Should -Be @("net8.0", "net9.0")
+    }
+
+    It "fails closed when build configurations have different dependency topology" {
+        $fixtureRoot = Join-Path $TestDrive "configuration-conflict-fixture"
+        $project = Join-Path $fixtureRoot "Conflict.csproj"
+        $driverPath = Join-Path $fixtureRoot "driver.proj"
+        $recordsPath = Join-Path $fixtureRoot "task.records"
+        New-Item -ItemType Directory -Path $fixtureRoot -Force | Out-Null
+
+        @'
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Conditional.Dependency" Version="1.0.0" Condition="'$(Configuration)' == 'Release'" />
+  </ItemGroup>
+</Project>
+'@ | Set-Content $project
+
+        $repositoryRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
+        $taskProject = Join-Path $repositoryRoot "eng/tools/RepositoryProjectGraph/RepositoryProjectGraph.csproj"
+        $taskAssembly = Join-Path $repositoryRoot "artifacts/bin/RepositoryProjectGraph/Debug/net10.0/RepositoryProjectGraph.dll"
+        @"
+<Project>
+  <UsingTask TaskName="Azure.Sdk.Tools.RepositoryProjectGraph.RepositoryProjectGraphTask"
+             AssemblyFile="$taskAssembly" />
+  <Target Name="BuildGraph">
+    <RepositoryProjectGraphTask Projects="$project"
+                                RecordsPath="$recordsPath"
+                                Configurations="Debug;Release" />
+  </Target>
+</Project>
+"@ | Set-Content $driverPath
+
+        & dotnet build $taskProject --no-restore -v:minimal
+        $LASTEXITCODE | Should -Be 0
+        $output = & dotnet msbuild -nologo -v:minimal -t:BuildGraph $driverPath 2>&1
+        $LASTEXITCODE | Should -Not -Be 0
+        $output | Out-String | Should -Match "conflicting dependency-bearing records across build configurations"
+        Test-Path $recordsPath | Should -BeFalse
+    }
+
+    It "fails closed when references create dependency-only global-property configurations" {
+        $fixtureRoot = Join-Path $TestDrive "dependency-only-fixture"
+        $projectA = Join-Path $fixtureRoot "A/A.csproj"
+        $projectB = Join-Path $fixtureRoot "B/B.csproj"
+        $driverPath = Join-Path $fixtureRoot "driver.proj"
+        $recordsPath = Join-Path $fixtureRoot "task.records"
+        New-Item -ItemType Directory -Path (Split-Path $projectA -Parent), (Split-Path $projectB -Parent) -Force | Out-Null
+
+        @'
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../B/B.csproj" AdditionalProperties="GraphFlavor=Referenced" />
+  </ItemGroup>
+</Project>
+'@ | Set-Content $projectA
+        @'
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+</Project>
+'@ | Set-Content $projectB
+
+        $repositoryRoot = Resolve-Path (Join-Path $PSScriptRoot ".." ".." "..")
+        $taskProject = Join-Path $repositoryRoot "eng/tools/RepositoryProjectGraph/RepositoryProjectGraph.csproj"
+        $taskAssembly = Join-Path $repositoryRoot "artifacts/bin/RepositoryProjectGraph/Debug/net10.0/RepositoryProjectGraph.dll"
+        @"
+<Project>
+  <UsingTask TaskName="Azure.Sdk.Tools.RepositoryProjectGraph.RepositoryProjectGraphTask"
+             AssemblyFile="$taskAssembly" />
+  <Target Name="BuildGraph">
+    <ItemGroup>
+      <GraphProject Include="$projectA;$projectB" />
+    </ItemGroup>
+    <RepositoryProjectGraphTask Projects="@(GraphProject)"
+                                RecordsPath="$recordsPath"
+                                Configurations="Debug" />
+  </Target>
+</Project>
+"@ | Set-Content $driverPath
+
+        & dotnet build $taskProject --no-restore -v:minimal
+        $LASTEXITCODE | Should -Be 0
+        $output = & dotnet msbuild -nologo -v:minimal -t:BuildGraph $driverPath 2>&1
+        $LASTEXITCODE | Should -Not -Be 0
+        $output | Out-String | Should -Match "dependency-only configurations that schema 3 cannot represent"
+        Test-Path $recordsPath | Should -BeFalse
     }
 }

@@ -216,6 +216,13 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
             else if (parts.Length >= 6 && parts[0] == "ProjectReference" &&
                 !string.IsNullOrEmpty(parts[1]) && !string.IsNullOrEmpty(parts[2]) && !string.IsNullOrEmpty(parts[3]))
             {
+                // NuGet's restore targets omit non-assembly project references from ProjectRestoreMetadata.
+                // Keep those records in the source graph, but do not let analyzer/tooling projects affect package resolution.
+                if (parts[4].Equals("false", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
                 FrameworkDefinition framework = GetFramework(projects, parts[1], parts[2]);
                 var reference = new DirectProjectReference(
                     Path.GetFullPath(parts[3]),
