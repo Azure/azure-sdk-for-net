@@ -78,7 +78,14 @@ namespace Azure.Core.Pipeline
                 originalContent.WriteTo(
                     buffer,
                     message.CancellationToken);
-                content = BinaryData.FromBytes(buffer.ToArray());
+                // The buffer is not shared, so the replay copy can wrap its
+                // backing array directly instead of duplicating the body a
+                // second time via ToArray.
+                content = BinaryData.FromBytes(
+                    new ReadOnlyMemory<byte>(
+                        buffer.GetBuffer(),
+                        0,
+                        (int)buffer.Length));
                 message.Request.Content =
                     RequestContent.Create(content);
                 originalContent.Dispose();
@@ -230,6 +237,16 @@ namespace Azure.Core.Pipeline
                 return response;
             }
 
+            // Accept only states a preference. If the service or an
+            // intermediary answered with a different media type, parsing it
+            // as an event stream would hand the caller an empty stream and
+            // silently discard the body, so leave the response untouched.
+            if (!IsEventStreamResponse(response))
+            {
+                Dispose();
+                return response;
+            }
+
             Stream initialStream = response.ContentStream ??
                 throw DisposeAndCreateInvalidResponseException(response);
             response.ContentStream = new SseReconnectingStream(
@@ -349,6 +366,15 @@ namespace Azure.Core.Pipeline
                     response.Dispose();
                     throw new InvalidOperationException(
                         $"An SSE response must have status code 200 or 204, but received {status}.");
+                }
+
+                // A successful response that is not an event stream cannot be
+                // spliced onto the events already delivered, so end the
+                // stream rather than surface unrelated bytes as events.
+                if (!IsEventStreamResponse(response))
+                {
+                    response.Dispose();
+                    return null;
                 }
 
                 Stream stream = response.ContentStream ??
@@ -484,7 +510,60 @@ namespace Azure.Core.Pipeline
             Exception exception,
             CancellationToken cancellationToken)
             => !cancellationToken.IsCancellationRequested &&
-                _classifier.IsRetriable(message, exception);
+                IsRetriableException(message, exception);
+
+        // A retry policy reports an exhausted retry cycle as an
+        // AggregateException holding one failure per attempt, and response
+        // classifiers only recognize the individual transport exceptions.
+        // Classifying the wrapper would therefore end the stream on the
+        // first exhausted cycle, which is the outage reconnection exists to
+        // survive, so classify the inner exceptions instead.
+        private bool IsRetriableException(
+            HttpMessage message,
+            Exception exception)
+        {
+            if (exception is AggregateException aggregate)
+            {
+                if (aggregate.InnerExceptions.Count == 0)
+                {
+                    return false;
+                }
+
+                foreach (Exception innerException in aggregate.InnerExceptions)
+                {
+                    if (!IsRetriableException(message, innerException))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            return _classifier.IsRetriable(message, exception);
+        }
+
+        private static bool IsEventStreamResponse(Response response)
+            => response.Headers.TryGetValue(
+                    "Content-Type",
+                    out string? contentType) &&
+                IsEventStreamMediaType(contentType);
+
+        private static bool IsEventStreamMediaType(string? contentType)
+        {
+            if (string.IsNullOrEmpty(contentType))
+            {
+                return false;
+            }
+
+            int separator = contentType!.IndexOf(';');
+            string mediaType = separator < 0
+                ? contentType
+                : contentType.Substring(0, separator);
+            return mediaType.Trim().Equals(
+                "text/event-stream",
+                StringComparison.OrdinalIgnoreCase);
+        }
 
         private static bool TryGetRedirect(
             Response response,

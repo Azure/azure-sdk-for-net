@@ -256,7 +256,7 @@ namespace Azure.Core.Tests
             var transport = new MockTransport(_ =>
             {
                 requestCount++;
-                return new MockResponse(200).SetContent(
+                return CreateSseResponse(
                     "retry: 0\nid: first\ndata: one\n\ndata: two\n\n");
             });
             HttpPipeline pipeline = new(transport);
@@ -280,7 +280,7 @@ namespace Azure.Core.Tests
         public void SyncGracefulEndOfStreamDoesNotReconnect()
         {
             var transport = new SyncOnlyTransport(_ =>
-                new MockResponse(200).SetContent(
+                CreateSseResponse(
                     "retry: 0\ndata: one\n\n"));
             HttpPipeline pipeline = new(transport);
             using HttpMessage message = CreateMessage(
@@ -403,7 +403,7 @@ namespace Azure.Core.Tests
                     ? new MockResponse(307).AddHeader(
                         "Location",
                         "https://example.test/redirected")
-                    : new MockResponse(200).SetContent(
+                    : CreateSseResponse(
                         "data: one\n\n");
             });
             HttpPipeline pipeline = new(transport);
@@ -626,6 +626,192 @@ namespace Azure.Core.Tests
             Assert.AreEqual(3, requestCount);
         }
 
+        [Test]
+        public async Task NonEventStreamContentTypeIsNotWrapped()
+        {
+            int requestCount = 0;
+            var transport = new MockTransport(_ =>
+            {
+                requestCount++;
+                return new MockResponse(200)
+                    .AddHeader("Content-Type", "application/json")
+                    .SetContent("{\"value\":1}");
+            });
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"));
+
+            await pipeline.SendAsync(message, CancellationToken.None);
+            string content = await ReadToEndAsync(
+                message.Response.ContentStream!);
+
+            Assert.AreEqual(
+                "{\"value\":1}",
+                content,
+                "A body that is not an event stream must be delivered unchanged instead of being parsed as events.");
+            Assert.AreEqual(1, requestCount);
+        }
+
+        [Test]
+        public void SyncNonEventStreamContentTypeIsNotWrapped()
+        {
+            var transport = new SyncOnlyTransport(_ =>
+                new MockResponse(200)
+                    .AddHeader("Content-Type", "application/json")
+                    .SetContent("{\"value\":1}"));
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"));
+
+            pipeline.Send(message, CancellationToken.None);
+            string content = ReadToEnd(
+                message.Response.ContentStream!);
+
+            Assert.AreEqual("{\"value\":1}", content);
+        }
+
+        [Test]
+        public async Task MissingContentTypeIsNotWrapped()
+        {
+            var transport = new MockTransport(_ =>
+                new MockResponse(200).SetContent("data: one\n"));
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"));
+
+            await pipeline.SendAsync(message, CancellationToken.None);
+            string content = await ReadToEndAsync(
+                message.Response.ContentStream!);
+
+            Assert.AreEqual(
+                "data: one\n",
+                content,
+                "Without a text/event-stream content type the response must pass through untouched.");
+        }
+
+        [Test]
+        public async Task EventStreamContentTypeWithParametersReconnects()
+        {
+            int requestCount = 0;
+            var transport = new MockTransport(_ =>
+            {
+                requestCount++;
+                if (requestCount > 1)
+                {
+                    return new MockResponse(204);
+                }
+
+                var dropped = new MockResponse(200)
+                {
+                    ContentStream = new ThrowAtEndStream(
+                        "retry: 0\ndata: one\n\n")
+                };
+                dropped.AddHeader(
+                    "Content-Type",
+                    "text/event-stream; charset=utf-8");
+                return dropped;
+            });
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"));
+
+            await pipeline.SendAsync(message, CancellationToken.None);
+            string content = await ReadToEndAsync(
+                message.Response.ContentStream!);
+
+            StringAssert.Contains("data: one", content);
+            Assert.AreEqual(
+                2,
+                requestCount,
+                "A media type parameter must not disable reconnection.");
+        }
+
+        [Test]
+        public async Task ReconnectWithNonEventStreamContentTypeEndsStream()
+        {
+            int requestCount = 0;
+            var transport = new MockTransport(_ =>
+            {
+                requestCount++;
+                return requestCount == 1
+                    ? CreateDroppedResponse(
+                        "retry: 0\ndata: one\n\n")
+                    : new MockResponse(200)
+                        .AddHeader("Content-Type", "application/json")
+                        .SetContent("{\"error\":\"gateway\"}\n\n");
+            });
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"));
+
+            await pipeline.SendAsync(message, CancellationToken.None);
+            string content = await ReadToEndAsync(
+                message.Response.ContentStream!);
+
+            StringAssert.Contains("data: one", content);
+            StringAssert.DoesNotContain(
+                "gateway",
+                content,
+                "A reconnect that is not an event stream must not be spliced onto the delivered events.");
+            Assert.AreEqual(
+                2,
+                requestCount,
+                "A reconnect that is not an event stream must end the stream.");
+        }
+
+        [Test]
+        public async Task ExhaustedRetryCycleReconnects()
+        {
+            int requestCount = 0;
+            var transport = new MockTransport(_ =>
+            {
+                requestCount++;
+                if (requestCount == 1)
+                {
+                    return CreateDroppedResponse(
+                        "retry: 0\ndata: one\n\n");
+                }
+
+                // Both attempts of the first reconnect fail, so the retry
+                // policy reports an AggregateException rather than the
+                // individual IOExceptions.
+                if (requestCount <= 3)
+                {
+                    throw new IOException("The connection was reset.");
+                }
+
+                return new MockResponse(204);
+            });
+            HttpPipeline pipeline = new(
+                transport,
+                new HttpPipelinePolicy[]
+                {
+                    new RetryPolicy(
+                        maxRetries: 1,
+                        DelayStrategy.CreateFixedDelayStrategy(
+                            TimeSpan.Zero))
+                },
+                responseClassifier: null);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"));
+
+            await pipeline.SendAsync(message, CancellationToken.None);
+            string content = await ReadToEndAsync(
+                message.Response.ContentStream!);
+
+            StringAssert.Contains("data: one", content);
+            Assert.AreEqual(
+                4,
+                requestCount,
+                "An exhausted retry cycle must not end the stream.");
+        }
+
         private static HttpMessage CreateMessage(
             HttpPipeline pipeline,
             Uri uri,
@@ -678,12 +864,21 @@ namespace Azure.Core.Tests
             return reader.ReadToEnd();
         }
 
+        private static MockResponse CreateSseResponse(string content)
+            => new MockResponse(200)
+                .AddHeader("Content-Type", "text/event-stream")
+                .SetContent(content);
+
         private static MockResponse CreateDroppedResponse(
             string content)
-            => new(200)
+        {
+            var response = new MockResponse(200)
             {
                 ContentStream = new ThrowAtEndStream(content)
             };
+            response.AddHeader("Content-Type", "text/event-stream");
+            return response;
+        }
 
         private sealed class ThrowAtEndStream : MemoryStream
         {

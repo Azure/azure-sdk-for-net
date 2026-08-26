@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Net.ServerSentEvents;
 using System.Text;
 using System.Threading;
@@ -275,12 +276,8 @@ public class SsePipelineResponseHandlerTests
     {
         var handler = new SyncTrackingHandler(requestCount =>
             requestCount == 1
-                ? new HttpResponseMessage(HttpStatusCode.OK)
-                {
-                    Content = new StreamContent(
-                        new ThrowAtEndStream(
-                            "retry: 0\ndata: one\n\n"))
-                }
+                ? CreateDroppedResponse(
+                    "retry: 0\ndata: one\n\n")
                 : new HttpResponseMessage(HttpStatusCode.NoContent));
         ClientPipeline pipeline = CreatePipeline(handler);
         using PipelineResponse response = SendResponse(
@@ -451,14 +448,8 @@ public class SsePipelineResponseHandlerTests
             requestCount++;
             if (requestCount == 1)
             {
-                var response =
-                    new HttpResponseMessage(HttpStatusCode.OK)
-                    {
-                        Content = new StreamContent(
-                            new ThrowAtEndStream(
-                                "retry: 0\ndata: one\n\n"))
-                    };
-                return Task.FromResult(response);
+                return Task.FromResult(
+                    CreateDroppedResponse("retry: 0\ndata: one\n\n"));
             }
 
             return Task.FromResult(
@@ -718,14 +709,234 @@ public class SsePipelineResponseHandlerTests
         }
     }
 
+    [Test]
+    public async Task NonEventStreamContentTypeIsNotWrapped()
+    {
+        int requestCount = 0;
+        var handler = new MockHttpClientHandler(_ =>
+        {
+            requestCount++;
+            return Task.FromResult(
+                CreateJsonResponse("{\"value\":1}"));
+        });
+        ClientPipeline pipeline = CreatePipeline(handler);
+        using PipelineResponse response = await SendResponseAsync(
+            pipeline,
+            new Uri("https://example.test/events"));
+
+        string content = await ReadToEndAsync(response.ContentStream!);
+
+        Assert.AreEqual(
+            "{\"value\":1}",
+            content,
+            "A body that is not an event stream must be delivered unchanged instead of being parsed as events.");
+        Assert.AreEqual(1, requestCount);
+    }
+
+    [Test]
+    public void SyncNonEventStreamContentTypeIsNotWrapped()
+    {
+        var handler = new SyncTrackingHandler(_ =>
+            CreateJsonResponse("{\"value\":1}"));
+        ClientPipeline pipeline = CreatePipeline(handler);
+        using PipelineResponse response = SendResponse(
+            pipeline,
+            new Uri("https://example.test/events"));
+
+        string content = ReadToEnd(response.ContentStream!);
+
+        Assert.AreEqual("{\"value\":1}", content);
+    }
+
+    [Test]
+    public async Task MissingContentTypeIsNotWrapped()
+    {
+        var handler = new MockHttpClientHandler(_ =>
+            Task.FromResult(
+                new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StreamContent(
+                        new MemoryStream(
+                            Encoding.UTF8.GetBytes("data: one\n")))
+                }));
+        ClientPipeline pipeline = CreatePipeline(handler);
+        using PipelineResponse response = await SendResponseAsync(
+            pipeline,
+            new Uri("https://example.test/events"));
+
+        string content = await ReadToEndAsync(response.ContentStream!);
+
+        Assert.AreEqual(
+            "data: one\n",
+            content,
+            "Without a text/event-stream content type the response must pass through untouched.");
+    }
+
+    [Test]
+    public async Task EventStreamContentTypeWithParametersReconnects()
+    {
+        int requestCount = 0;
+        var handler = new MockHttpClientHandler(_ =>
+        {
+            requestCount++;
+            if (requestCount > 1)
+            {
+                return Task.FromResult(
+                    new HttpResponseMessage(HttpStatusCode.NoContent));
+            }
+
+            var dropped = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StreamContent(
+                    new ThrowAtEndStream("retry: 0\ndata: one\n\n"))
+            };
+            dropped.Content.Headers.ContentType =
+                new MediaTypeHeaderValue("text/event-stream")
+                {
+                    CharSet = "utf-8"
+                };
+            return Task.FromResult(dropped);
+        });
+        ClientPipeline pipeline = CreatePipeline(handler);
+        AsyncStreamingClientResult<SseItem<BinaryData>> result =
+            await CreateResultAsync(
+                pipeline,
+                new Uri("https://example.test/events"));
+        var values = new List<string>();
+
+        await foreach (SseItem<BinaryData> item in result)
+        {
+            values.Add(item.Data.ToString());
+        }
+
+        CollectionAssert.AreEqual(new[] { "one" }, values);
+        Assert.AreEqual(
+            2,
+            requestCount,
+            "A media type parameter must not disable reconnection.");
+    }
+
+    [Test]
+    public async Task ReconnectWithNonEventStreamContentTypeEndsStream()
+    {
+        int requestCount = 0;
+        var handler = new MockHttpClientHandler(_ =>
+        {
+            requestCount++;
+            return Task.FromResult(
+                requestCount == 1
+                    ? CreateDroppedResponse(
+                        "retry: 0\ndata: one\n\n")
+                    : CreateJsonResponse("{\"error\":\"gateway\"}\n\n"));
+        });
+        ClientPipeline pipeline = CreatePipeline(handler);
+        AsyncStreamingClientResult<SseItem<BinaryData>> result =
+            await CreateResultAsync(
+                pipeline,
+                new Uri("https://example.test/events"));
+        var values = new List<string>();
+
+        await foreach (SseItem<BinaryData> item in result)
+        {
+            values.Add(item.Data.ToString());
+        }
+
+        CollectionAssert.AreEqual(
+            new[] { "one" },
+            values,
+            "A reconnect that is not an event stream must not be spliced onto the delivered events.");
+        Assert.AreEqual(
+            2,
+            requestCount,
+            "A reconnect that is not an event stream must end the stream.");
+    }
+
+    [Test]
+    public async Task ExhaustedRetryCycleReconnects()
+    {
+        int requestCount = 0;
+        var handler = new MockHttpClientHandler(_ =>
+        {
+            requestCount++;
+            if (requestCount == 1)
+            {
+                return Task.FromResult(
+                    CreateDroppedResponse("retry: 0\ndata: one\n\n"));
+            }
+
+            // Both attempts of the first reconnect fail, so the retry
+            // policy reports an AggregateException rather than the
+            // individual transport exceptions.
+            if (requestCount <= 3)
+            {
+                throw new IOException("The connection was reset.");
+            }
+
+            return Task.FromResult(
+                new HttpResponseMessage(HttpStatusCode.NoContent));
+        });
+        ClientPipeline pipeline = CreatePipeline(
+            handler,
+            new ImmediateRetryPolicy(maxRetries: 1));
+        AsyncStreamingClientResult<SseItem<BinaryData>> result =
+            await CreateResultAsync(
+                pipeline,
+                new Uri("https://example.test/events"));
+        var values = new List<string>();
+
+        await foreach (SseItem<BinaryData> item in result)
+        {
+            values.Add(item.Data.ToString());
+        }
+
+        CollectionAssert.AreEqual(new[] { "one" }, values);
+        Assert.AreEqual(
+            4,
+            requestCount,
+            "An exhausted retry cycle must not end the stream.");
+    }
+
+    private sealed class ImmediateRetryPolicy : ClientRetryPolicy
+    {
+        internal ImmediateRetryPolicy(int maxRetries)
+            : base(maxRetries)
+        {
+        }
+
+        protected override TimeSpan GetNextDelay(
+            PipelineMessage message,
+            int tryCount) => TimeSpan.Zero;
+    }
+
+    private static HttpResponseMessage CreateJsonResponse(string content)
+    {
+        var response = new HttpResponseMessage(HttpStatusCode.OK)
+        {
+            Content = new StringContent(content)
+        };
+        response.Content.Headers.ContentType =
+            new MediaTypeHeaderValue("application/json");
+        return response;
+    }
+
     private static ClientPipeline CreatePipeline(
         HttpMessageHandler handler)
+        => CreatePipeline(handler, retryPolicy: null);
+
+    private static ClientPipeline CreatePipeline(
+        HttpMessageHandler handler,
+        PipelinePolicy? retryPolicy)
     {
         var options = new ClientPipelineOptions
         {
             Transport = new HttpClientPipelineTransport(
                 new HttpClient(handler))
         };
+        if (retryPolicy is not null)
+        {
+            options.RetryPolicy = retryPolicy;
+        }
+
         return ClientPipeline.Create(options);
     }
 
@@ -803,18 +1014,28 @@ public class SsePipelineResponseHandlerTests
     private static HttpResponseMessage CreateResponse(
         HttpStatusCode status,
         string content)
-        => new(status)
+    {
+        var response = new HttpResponseMessage(status)
         {
             Content = new StringContent(content)
         };
+        response.Content.Headers.ContentType =
+            new MediaTypeHeaderValue("text/event-stream");
+        return response;
+    }
 
     private static HttpResponseMessage CreateDroppedResponse(
         string content)
-        => new(HttpStatusCode.OK)
+    {
+        var response = new HttpResponseMessage(HttpStatusCode.OK)
         {
             Content = new StreamContent(
                 new ThrowAtEndStream(content))
         };
+        response.Content.Headers.ContentType =
+            new MediaTypeHeaderValue("text/event-stream");
+        return response;
+    }
 
     private static HttpResponseMessage CreateRedirect(
         HttpStatusCode status,

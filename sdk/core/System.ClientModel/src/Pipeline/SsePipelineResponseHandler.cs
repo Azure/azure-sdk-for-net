@@ -55,7 +55,14 @@ internal sealed class SsePipelineResponseHandler : IDisposable
         {
             using var stream = new MemoryStream();
             content.WriteTo(stream, message.CancellationToken);
-            _content = BinaryData.FromBytes(stream.ToArray());
+            // The buffer is not shared, so the replay copy can wrap its
+            // backing array directly instead of duplicating the body a
+            // second time via ToArray.
+            _content = BinaryData.FromBytes(
+                new ReadOnlyMemory<byte>(
+                    stream.GetBuffer(),
+                    0,
+                    (int)stream.Length));
             content.Dispose();
             message.Request.Content = BinaryContent.Create(_content);
         }
@@ -132,6 +139,16 @@ internal sealed class SsePipelineResponseHandler : IDisposable
             return;
         }
         if (response.Status != 200)
+        {
+            Dispose();
+            return;
+        }
+
+        // Accept only states a preference. If the service or an intermediary
+        // answered with a different media type, parsing it as an event stream
+        // would hand the caller an empty stream and silently discard the
+        // body, so leave the response untouched.
+        if (!IsEventStreamResponse(response))
         {
             Dispose();
             return;
@@ -266,6 +283,15 @@ internal sealed class SsePipelineResponseHandler : IDisposable
                 response.Dispose();
                 throw new InvalidOperationException(
                     $"An SSE response must have status code 200 or 204, but received {status}.");
+            }
+
+            // A successful response that is not an event stream cannot be
+            // spliced onto the events already delivered, so end the stream
+            // rather than surface unrelated bytes as events.
+            if (!IsEventStreamResponse(response))
+            {
+                response.Dispose();
+                return null;
             }
 
             Stream stream = response.ContentStream ??
@@ -492,6 +518,28 @@ internal sealed class SsePipelineResponseHandler : IDisposable
                 exception,
                 out isRetriable)) &&
             isRetriable;
+    }
+
+    private static bool IsEventStreamResponse(PipelineResponse response)
+        => response.Headers.TryGetValue(
+                "Content-Type",
+                out string? contentType) &&
+            IsEventStreamMediaType(contentType);
+
+    private static bool IsEventStreamMediaType(string? contentType)
+    {
+        if (string.IsNullOrEmpty(contentType))
+        {
+            return false;
+        }
+
+        int separator = contentType!.IndexOf(';');
+        string mediaType = separator < 0
+            ? contentType
+            : contentType.Substring(0, separator);
+        return mediaType.Trim().Equals(
+            "text/event-stream",
+            StringComparison.OrdinalIgnoreCase);
     }
 
     private bool IsRetriableResponse(
