@@ -67,7 +67,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="barcodes"> Extracted barcodes from the page. </param>
         /// <param name="formulas"> Extracted formulas from the page. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentPage"/> instance for mocking. </returns>
-        public static DocumentPage DocumentPage(int pageNumber = default, float? angle = default, float? width = default, float? height = default, LengthUnit? unit = default, IEnumerable<DocumentSpan> spans = default, IEnumerable<DocumentWord> words = default, IEnumerable<DocumentSelectionMark> selectionMarks = default, IEnumerable<DocumentLine> lines = default, IEnumerable<DocumentBarcode> barcodes = default, IEnumerable<DocumentFormula> formulas = default)
+        public static DocumentPage DocumentPage(int pageNumber = 0, float? angle = default, float? width = default, float? height = default, LengthUnit? unit = default, IEnumerable<DocumentSpan> spans = default, IEnumerable<DocumentWord> words = default, IEnumerable<DocumentSelectionMark> selectionMarks = default, IEnumerable<DocumentLine> lines = default, IEnumerable<DocumentBarcode> barcodes = default, IEnumerable<DocumentFormula> formulas = default)
         {
             spans ??= new ChangeTrackingList<DocumentSpan>();
             words ??= new ChangeTrackingList<DocumentWord>();
@@ -98,7 +98,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="offset"> Zero-based index of the content represented by the span. </param>
         /// <param name="length"> Number of characters in the content represented by the span. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentSpan"/> instance for mocking. </returns>
-        public static DocumentSpan DocumentSpan(int offset = default, int length = default)
+        public static DocumentSpan DocumentSpan(int offset = 0, int length = 0)
         {
             return new DocumentSpan(offset, length, additionalBinaryDataProperties: null);
         }
@@ -118,7 +118,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="span"> Location of the word in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the word. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentWord"/> instance for mocking. </returns>
-        public static DocumentWord DocumentWord(string content = default, IEnumerable<float> polygon = default, DocumentSpan span = default, float confidence = default)
+        public static DocumentWord DocumentWord(string content = default, IEnumerable<float> polygon = default, DocumentSpan span = default, float confidence = 0F)
         {
             polygon ??= new ChangeTrackingList<float>();
 
@@ -139,7 +139,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="span"> Location of the selection mark in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the selection mark. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentSelectionMark"/> instance for mocking. </returns>
-        public static DocumentSelectionMark DocumentSelectionMark(DocumentSelectionMarkState state = default, IEnumerable<float> polygon = default, DocumentSpan span = default, float confidence = default)
+        public static DocumentSelectionMark DocumentSelectionMark(DocumentSelectionMarkState state = default, IEnumerable<float> polygon = default, DocumentSpan span = default, float confidence = 0F)
         {
             polygon ??= new ChangeTrackingList<float>();
 
@@ -179,7 +179,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="span"> Location of the barcode in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the barcode. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentBarcode"/> instance for mocking. </returns>
-        public static DocumentBarcode DocumentBarcode(DocumentBarcodeKind kind = default, string value = default, IEnumerable<float> polygon = default, DocumentSpan span = default, float confidence = default)
+        public static DocumentBarcode DocumentBarcode(DocumentBarcodeKind kind = default, string value = default, IEnumerable<float> polygon = default, DocumentSpan span = default, float confidence = 0F)
         {
             polygon ??= new ChangeTrackingList<float>();
 
@@ -204,7 +204,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="span"> Location of the formula in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the formula. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentFormula"/> instance for mocking. </returns>
-        public static DocumentFormula DocumentFormula(DocumentFormulaKind kind = default, string value = default, IEnumerable<float> polygon = default, DocumentSpan span = default, float confidence = default)
+        public static DocumentFormula DocumentFormula(DocumentFormulaKind kind = default, string value = default, IEnumerable<float> polygon = default, DocumentSpan span = default, float confidence = 0F)
         {
             polygon ??= new ChangeTrackingList<float>();
 
@@ -243,7 +243,7 @@ namespace Azure.AI.DocumentIntelligence
         /// (-180 degrees inclusive) relative to the element orientation.
         /// </param>
         /// <returns> A new <see cref="DocumentIntelligence.BoundingRegion"/> instance for mocking. </returns>
-        public static BoundingRegion BoundingRegion(int pageNumber = default, IEnumerable<float> polygon = default)
+        public static BoundingRegion BoundingRegion(int pageNumber = 0, IEnumerable<float> polygon = default)
         {
             polygon ??= new ChangeTrackingList<float>();
 
@@ -259,7 +259,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="caption"> Caption associated with the table. </param>
         /// <param name="footnotes"> List of footnotes associated with the table. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentTable"/> instance for mocking. </returns>
-        public static DocumentTable DocumentTable(int rowCount = default, int columnCount = default, IEnumerable<DocumentTableCell> cells = default, IEnumerable<BoundingRegion> boundingRegions = default, IEnumerable<DocumentSpan> spans = default, DocumentCaption caption = default, IEnumerable<DocumentFootnote> footnotes = default)
+        public static DocumentTable DocumentTable(int rowCount = 0, int columnCount = 0, IEnumerable<DocumentTableCell> cells = default, IEnumerable<BoundingRegion> boundingRegions = default, IEnumerable<DocumentSpan> spans = default, DocumentCaption caption = default, IEnumerable<DocumentFootnote> footnotes = default)
         {
             cells ??= new ChangeTrackingList<DocumentTableCell>();
             boundingRegions ??= new ChangeTrackingList<BoundingRegion>();
@@ -288,7 +288,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the table cell in the reading order concatenated content. </param>
         /// <param name="elements"> Child elements of the table cell. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentTableCell"/> instance for mocking. </returns>
-        public static DocumentTableCell DocumentTableCell(DocumentTableCellKind? kind = default, int rowIndex = default, int columnIndex = default, int? rowSpan = default, int? columnSpan = default, string content = default, IEnumerable<BoundingRegion> boundingRegions = default, IEnumerable<DocumentSpan> spans = default, IEnumerable<string> elements = default)
+        public static DocumentTableCell DocumentTableCell(DocumentTableCellKind? kind = default, int rowIndex = 0, int columnIndex = 0, int? rowSpan = default, int? columnSpan = default, string content = default, IEnumerable<BoundingRegion> boundingRegions = default, IEnumerable<DocumentSpan> spans = default, IEnumerable<string> elements = default)
         {
             boundingRegions ??= new ChangeTrackingList<BoundingRegion>();
             spans ??= new ChangeTrackingList<DocumentSpan>();
@@ -382,7 +382,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="value"> Field value of the key-value pair. </param>
         /// <param name="confidence"> Confidence of correctly extracting the key-value pair. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentKeyValuePair"/> instance for mocking. </returns>
-        public static DocumentKeyValuePair DocumentKeyValuePair(DocumentKeyValueElement key = default, DocumentKeyValueElement value = default, float confidence = default)
+        public static DocumentKeyValuePair DocumentKeyValuePair(DocumentKeyValueElement key = default, DocumentKeyValueElement value = default, float confidence = 0F)
         {
             return new DocumentKeyValuePair(key, value, confidence, additionalBinaryDataProperties: null);
         }
@@ -413,7 +413,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the text elements in the concatenated content the style applies to. </param>
         /// <param name="confidence"> Confidence of correctly identifying the style. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentStyle"/> instance for mocking. </returns>
-        public static DocumentStyle DocumentStyle(bool? isHandwritten = default, string similarFontFamily = default, DocumentFontStyle? fontStyle = default, DocumentFontWeight? fontWeight = default, string color = default, string backgroundColor = default, IEnumerable<DocumentSpan> spans = default, float confidence = default)
+        public static DocumentStyle DocumentStyle(bool? isHandwritten = default, string similarFontFamily = default, DocumentFontStyle? fontStyle = default, DocumentFontWeight? fontWeight = default, string color = default, string backgroundColor = default, IEnumerable<DocumentSpan> spans = default, float confidence = 0F)
         {
             spans ??= new ChangeTrackingList<DocumentSpan>();
 
@@ -440,7 +440,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </param>
         /// <param name="confidence"> Confidence of correctly identifying the language. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentLanguage"/> instance for mocking. </returns>
-        public static DocumentLanguage DocumentLanguage(string locale = default, IEnumerable<DocumentSpan> spans = default, float confidence = default)
+        public static DocumentLanguage DocumentLanguage(string locale = default, IEnumerable<DocumentSpan> spans = default, float confidence = 0F)
         {
             spans ??= new ChangeTrackingList<DocumentSpan>();
 
@@ -454,7 +454,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="fieldsPrivate"> Dictionary of named field values. </param>
         /// <param name="confidence"> Confidence of correctly extracting the document. </param>
         /// <returns> A new <see cref="DocumentIntelligence.AnalyzedDocument"/> instance for mocking. </returns>
-        public static AnalyzedDocument AnalyzedDocument(string documentType = default, IEnumerable<BoundingRegion> boundingRegions = default, IEnumerable<DocumentSpan> spans = default, IReadOnlyDictionary<string, DocumentField> fieldsPrivate = default, float confidence = default)
+        public static AnalyzedDocument AnalyzedDocument(string documentType, IEnumerable<BoundingRegion> boundingRegions, IEnumerable<DocumentSpan> spans, IReadOnlyDictionary<string, DocumentField> fieldsPrivate, float confidence)
         {
             boundingRegions ??= new ChangeTrackingList<BoundingRegion>();
             spans ??= new ChangeTrackingList<DocumentSpan>();
@@ -491,7 +491,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="spans"> Location of the field in the reading order concatenated content. </param>
         /// <param name="confidence"> Confidence of correctly extracting the field. </param>
         /// <returns> A new <see cref="DocumentIntelligence.DocumentField"/> instance for mocking. </returns>
-        public static DocumentField DocumentField(DocumentFieldType fieldType = default, string valueString = default, DateTimeOffset? valueDate = default, TimeSpan? valueTime = default, string valuePhoneNumber = default, double? valueDouble = default, long? valueInt64 = default, DocumentSelectionMarkState? valueSelectionMark = default, DocumentSignatureType? valueSignature = default, string valueCountryRegion = default, IEnumerable<DocumentField> valueList = default, IReadOnlyDictionary<string, DocumentField> valueObject = default, CurrencyValue valueCurrency = default, AddressValue valueAddress = default, bool? valueBoolean = default, IEnumerable<string> valueSelectionGroup = default, string content = default, IEnumerable<BoundingRegion> boundingRegions = default, IEnumerable<DocumentSpan> spans = default, float? confidence = default)
+        public static DocumentField DocumentField(DocumentFieldType fieldType, string valueString, DateTimeOffset? valueDate, TimeSpan? valueTime, string valuePhoneNumber, double? valueDouble, long? valueInt64, DocumentSelectionMarkState? valueSelectionMark, DocumentSignatureType? valueSignature, string valueCountryRegion, IEnumerable<DocumentField> valueList, IReadOnlyDictionary<string, DocumentField> valueObject, CurrencyValue valueCurrency, AddressValue valueAddress, bool? valueBoolean, IEnumerable<string> valueSelectionGroup, string content, IEnumerable<BoundingRegion> boundingRegions, IEnumerable<DocumentSpan> spans, float? confidence)
         {
             valueList ??= new ChangeTrackingList<DocumentField>();
             valueObject ??= new ChangeTrackingDictionary<string, DocumentField>();
@@ -528,7 +528,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="currencySymbol"> Currency symbol label, if any. </param>
         /// <param name="currencyCode"> Resolved currency code (ISO 4217), if any. </param>
         /// <returns> A new <see cref="DocumentIntelligence.CurrencyValue"/> instance for mocking. </returns>
-        public static CurrencyValue CurrencyValue(double amount = default, string currencySymbol = default, string currencyCode = default)
+        public static CurrencyValue CurrencyValue(double amount = 0, string currencySymbol = default, string currencyCode = default)
         {
             return new CurrencyValue(amount, currencySymbol, currencyCode, additionalBinaryDataProperties: null);
         }
@@ -630,7 +630,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="skippedCount"> Number of documents that completed with status skipped. </param>
         /// <param name="details"> Operation detail for each document in the batch. </param>
         /// <returns> A new <see cref="DocumentIntelligence.AnalyzeBatchResult"/> instance for mocking. </returns>
-        public static AnalyzeBatchResult AnalyzeBatchResult(int succeededCount = default, int failedCount = default, int skippedCount = default, IEnumerable<AnalyzeBatchResultDetails> details = default)
+        public static AnalyzeBatchResult AnalyzeBatchResult(int succeededCount = 0, int failedCount = 0, int skippedCount = 0, IEnumerable<AnalyzeBatchResultDetails> details = default)
         {
             details ??= new ChangeTrackingList<AnalyzeBatchResultDetails>();
 
@@ -1091,7 +1091,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="count"> Number of custom document models in the current resource. </param>
         /// <param name="limit"> Maximum number of custom document models supported in the current resource. </param>
         /// <returns> A new <see cref="DocumentIntelligence.CustomDocumentModelsDetails"/> instance for mocking. </returns>
-        public static CustomDocumentModelsDetails CustomDocumentModelsDetails(int count = default, int limit = default)
+        public static CustomDocumentModelsDetails CustomDocumentModelsDetails(int count = 0, int limit = 0)
         {
             return new CustomDocumentModelsDetails(count, limit, additionalBinaryDataProperties: null);
         }

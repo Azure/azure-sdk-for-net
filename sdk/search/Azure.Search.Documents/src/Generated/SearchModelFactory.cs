@@ -126,7 +126,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="filterMode"> Determines whether or not filters are applied before or after the vector search is performed. Default is 'preFilter' for new indexes. </param>
         /// <param name="hybridSearch"> The query parameters to configure hybrid search behaviors. </param>
         /// <returns> A new <see cref="Documents.SearchOptions"/> instance for mocking. </returns>
-        public static SearchOptions SearchOptions(bool? includeTotalCount = default, IEnumerable<string> facets = default, string filter = default, string highlightFieldsRaw = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, string orderByRaw = default, SearchQueryType? queryType = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, QueryDebugMode? debug = default, string searchText = default, string searchFieldsRaw = default, SearchMode? searchMode = default, QueryLanguage? queryLanguage = default, QuerySpellerType? querySpeller = default, string selectRaw = default, int? skip = default, int? size = default, string semanticConfigurationName = default, SemanticErrorMode? semanticErrorMode = default, int? semanticMaxWaitInMilliseconds = default, string semanticQuery = default, string queryAnswerRaw = default, string queryCaptionRaw = default, string queryRewritesRaw = default, IEnumerable<string> semanticFields = default, IEnumerable<VectorQuery> vectorQueries = default, VectorFilterMode? filterMode = default, HybridSearch hybridSearch = default)
+        public static SearchOptions SearchOptions(bool? includeTotalCount, IEnumerable<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IEnumerable<string> scoringParameters, string scoringProfile, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, QueryLanguage? queryLanguage, QuerySpellerType? querySpeller, string selectRaw, int? skip, int? size, string semanticConfigurationName, SemanticErrorMode? semanticErrorMode, int? semanticMaxWaitInMilliseconds, string semanticQuery, string queryAnswerRaw, string queryCaptionRaw, string queryRewritesRaw, IEnumerable<string> semanticFields = default, IEnumerable<VectorQuery> vectorQueries = default, VectorFilterMode? filterMode = default, HybridSearch hybridSearch = default)
         {
             facets ??= new ChangeTrackingList<string>();
             scoringParameters ??= new ChangeTrackingList<string>();
@@ -184,7 +184,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="perDocumentVectorLimit"> Controls how many vectors can be matched from each document in a vector search query. Setting it to 1 ensures at most one vector per document is matched, guaranteeing results come from distinct documents. Setting it to 0 (unlimited) allows multiple relevant vectors from the same document to be matched. Default is 0. </param>
         /// <param name="kind"> Type of query. </param>
         /// <returns> A new <see cref="Models.VectorQuery"/> instance for mocking. </returns>
-        public static VectorQuery VectorQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, VectorThreshold threshold = default, string filterOverride = default, int? perDocumentVectorLimit = default, string kind = default)
+        public static VectorQuery VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit = default, string kind = default)
         {
             return new UnknownVectorQuery(
                 kNearestNeighborsCount,
@@ -237,7 +237,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="perDocumentVectorLimit"> Controls how many vectors can be matched from each document in a vector search query. Setting it to 1 ensures at most one vector per document is matched, guaranteeing results come from distinct documents. Setting it to 0 (unlimited) allows multiple relevant vectors from the same document to be matched. Default is 0. </param>
         /// <param name="vector"> The vector representation of a search query. </param>
         /// <returns> A new <see cref="Models.VectorizedQuery"/> instance for mocking. </returns>
-        public static VectorizedQuery VectorizedQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, VectorThreshold threshold = default, string filterOverride = default, int? perDocumentVectorLimit = default, ReadOnlyMemory<float> vector = default)
+        public static VectorizedQuery VectorizedQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride = default, int? perDocumentVectorLimit = default, ReadOnlyMemory<float> vector = default)
         {
             return new VectorizedQuery(
                 kNearestNeighborsCount,
@@ -265,7 +265,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="text"> The text to be vectorized to perform a vector search query. </param>
         /// <param name="queryRewritesRaw"> Can be configured to let a generative model rewrite the query before sending it to be vectorized. </param>
         /// <returns> A new <see cref="Models.VectorizableTextQuery"/> instance for mocking. </returns>
-        public static VectorizableTextQuery VectorizableTextQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, VectorThreshold threshold = default, string filterOverride = default, int? perDocumentVectorLimit = default, string text = default, string queryRewritesRaw = default)
+        public static VectorizableTextQuery VectorizableTextQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit = default, string text = default, string queryRewritesRaw = default)
         {
             return new VectorizableTextQuery(
                 kNearestNeighborsCount,
@@ -293,7 +293,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="perDocumentVectorLimit"> Controls how many vectors can be matched from each document in a vector search query. Setting it to 1 ensures at most one vector per document is matched, guaranteeing results come from distinct documents. Setting it to 0 (unlimited) allows multiple relevant vectors from the same document to be matched. Default is 0. </param>
         /// <param name="url"> The URL of an image to be vectorized to perform a vector search query. </param>
         /// <returns> A new <see cref="Models.VectorizableImageUrlQuery"/> instance for mocking. </returns>
-        public static VectorizableImageUrlQuery VectorizableImageUrlQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, VectorThreshold threshold = default, string filterOverride = default, int? perDocumentVectorLimit = default, Uri url = default)
+        public static VectorizableImageUrlQuery VectorizableImageUrlQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit = default, Uri url = default)
         {
             return new VectorizableImageUrlQuery(
                 kNearestNeighborsCount,
@@ -320,7 +320,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="perDocumentVectorLimit"> Controls how many vectors can be matched from each document in a vector search query. Setting it to 1 ensures at most one vector per document is matched, guaranteeing results come from distinct documents. Setting it to 0 (unlimited) allows multiple relevant vectors from the same document to be matched. Default is 0. </param>
         /// <param name="base64Image"> The base 64 encoded binary of an image to be vectorized to perform a vector search query. </param>
         /// <returns> A new <see cref="Models.VectorizableImageBinaryQuery"/> instance for mocking. </returns>
-        public static VectorizableImageBinaryQuery VectorizableImageBinaryQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, VectorThreshold threshold = default, string filterOverride = default, int? perDocumentVectorLimit = default, string base64Image = default)
+        public static VectorizableImageBinaryQuery VectorizableImageBinaryQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, VectorThreshold threshold, string filterOverride, int? perDocumentVectorLimit = default, string base64Image = default)
         {
             return new VectorizableImageBinaryQuery(
                 kNearestNeighborsCount,
@@ -362,7 +362,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="vectors"> Contains debugging information specific to vector and hybrid search. </param>
         /// <param name="innerHits"> Contains debugging information specific to vectors matched within a collection of complex types. </param>
         /// <returns> A new <see cref="Models.DocumentDebugInfo"/> instance for mocking. </returns>
-        public static DocumentDebugInfo DocumentDebugInfo(SemanticDebugInfo semantic = default, VectorsDebugInfo vectors = default, IReadOnlyDictionary<string, IList<QueryResultDocumentInnerHit>> innerHits = default)
+        public static DocumentDebugInfo DocumentDebugInfo(SemanticDebugInfo semantic, VectorsDebugInfo vectors, IReadOnlyDictionary<string, IList<QueryResultDocumentInnerHit>> innerHits = default)
         {
             innerHits ??= new ChangeTrackingDictionary<string, IList<QueryResultDocumentInnerHit>>();
 
@@ -560,7 +560,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="resourceId"> The fully qualified Azure resource Id of a user assigned managed identity typically in the form "/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId" that should have been assigned to the search service. </param>
         /// <param name="federatedIdentityClientId"> Multi-tenant User-Assigned Managed Identity Support: The client id of the multi-tentant App that has been configured to federate with the user-assigned managed identity. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexerDataUserAssignedIdentity"/> instance for mocking. </returns>
-        public static SearchIndexerDataUserAssignedIdentity SearchIndexerDataUserAssignedIdentity(string resourceId = default, string federatedIdentityClientId = default)
+        public static SearchIndexerDataUserAssignedIdentity SearchIndexerDataUserAssignedIdentity(string resourceId, string federatedIdentityClientId)
         {
             return new SearchIndexerDataUserAssignedIdentity("#Microsoft.Azure.Search.DataUserAssignedIdentity", additionalBinaryDataProperties: null, resourceId, federatedIdentityClientId);
         }
@@ -587,7 +587,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="fields"> The fields of the index. </param>
         /// <param name="etag"> The ETag of the index. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndex"/> instance for mocking. </returns>
-        public static SearchIndex SearchIndex(string name = default, string description = default, IEnumerable<ScoringProfile> scoringProfiles = default, string defaultScoringProfile = default, CorsOptions corsOptions = default, IEnumerable<SearchSuggester> suggesters = default, IEnumerable<LexicalAnalyzer> analyzers = default, IEnumerable<LexicalTokenizer> tokenizers = default, IEnumerable<TokenFilter> tokenFilters = default, IEnumerable<CharFilter> charFilters = default, IEnumerable<LexicalNormalizer> normalizers = default, SearchResourceEncryptionKey encryptionKey = default, SimilarityAlgorithm similarity = default, SemanticSearch semanticSearch = default, VectorSearch vectorSearch = default, SearchIndexPermissionFilterOption? permissionFilterOption = default, bool? purviewEnabled = default, SharePointConnectorAppRegistration sharePointConnectorAppRegistration = default, IEnumerable<SearchField> fields = default, string etag = default)
+        public static SearchIndex SearchIndex(string name, string description, IEnumerable<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IEnumerable<SearchSuggester> suggesters, IEnumerable<LexicalAnalyzer> analyzers, IEnumerable<LexicalTokenizer> tokenizers, IEnumerable<TokenFilter> tokenFilters, IEnumerable<CharFilter> charFilters, IEnumerable<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, SearchIndexPermissionFilterOption? permissionFilterOption, bool? purviewEnabled, SharePointConnectorAppRegistration sharePointConnectorAppRegistration, IEnumerable<SearchField> fields, string etag = default)
         {
             scoringProfiles ??= new ChangeTrackingList<ScoringProfile>();
             suggesters ??= new ChangeTrackingList<SearchSuggester>();
@@ -647,7 +647,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="synonymMapNames"> A list of the names of synonym maps to associate with this field. This option can be used only with searchable fields. Currently only one synonym map per field is supported. Assigning a synonym map to a field ensures that query terms targeting that field are expanded at query-time using the rules in the synonym map. This attribute can be changed on existing fields. Must be null or an empty collection for complex fields. </param>
         /// <param name="fields"> A list of sub-fields if this is a field of type Edm.ComplexType or Collection(Edm.ComplexType). Must be null or empty for simple fields. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchField"/> instance for mocking. </returns>
-        public static SearchField SearchField(string name = default, SearchFieldDataType @type = default, bool? isKey = default, bool? isRetrievable = default, bool? isStored = default, bool? isSearchable = default, bool? isFilterable = default, bool? isSortable = default, bool? isFacetable = default, PermissionFilter? permissionFilter = default, bool? sensitivityLabelId = default, bool? sensitivityLabelName = default, bool? sourceDocumentId = default, bool? sharepointSiteUrl = default, LexicalAnalyzerName? analyzerName = default, LexicalAnalyzerName? searchAnalyzerName = default, LexicalAnalyzerName? indexAnalyzerName = default, LexicalNormalizerName? normalizerName = default, int? vectorSearchDimensions = default, string vectorSearchProfileName = default, VectorEncodingFormat? vectorEncodingFormat = default, IEnumerable<string> synonymMapNames = default, IEnumerable<SearchField> fields = default)
+        public static SearchField SearchField(string name, SearchFieldDataType @type, bool? isKey, bool? isRetrievable, bool? isStored, bool? isSearchable, bool? isFilterable, bool? isSortable, bool? isFacetable, PermissionFilter? permissionFilter, bool? sensitivityLabelId, bool? sensitivityLabelName, bool? sourceDocumentId, bool? sharepointSiteUrl, LexicalAnalyzerName? analyzerName, LexicalAnalyzerName? searchAnalyzerName, LexicalAnalyzerName? indexAnalyzerName, LexicalNormalizerName? normalizerName, int? vectorSearchDimensions, string vectorSearchProfileName = default, VectorEncodingFormat? vectorEncodingFormat = default, IEnumerable<string> synonymMapNames = default, IEnumerable<SearchField> fields = default)
         {
             synonymMapNames ??= new ChangeTrackingList<string>();
             fields ??= new ChangeTrackingList<SearchField>();
@@ -711,7 +711,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to "Linear". </param>
         /// <param name="type"> Type of ScoringFunction. </param>
         /// <returns> A new <see cref="Indexes.Models.ScoringFunction"/> instance for mocking. </returns>
-        public static ScoringFunction ScoringFunction(string fieldName = default, double boost = default, ScoringFunctionInterpolation? interpolation = default, string @type = default)
+        public static ScoringFunction ScoringFunction(string fieldName = default, double boost = 0, ScoringFunctionInterpolation? interpolation = default, string @type = default)
         {
             return new ScoringFunction(fieldName, boost, interpolation, @type, additionalBinaryDataProperties: null);
         }
@@ -722,7 +722,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to "Linear". </param>
         /// <param name="parameters"> Parameter values for the distance scoring function. </param>
         /// <returns> A new <see cref="Indexes.Models.DistanceScoringFunction"/> instance for mocking. </returns>
-        public static DistanceScoringFunction DistanceScoringFunction(string fieldName = default, double boost = default, ScoringFunctionInterpolation? interpolation = default, DistanceScoringParameters parameters = default)
+        public static DistanceScoringFunction DistanceScoringFunction(string fieldName = default, double boost = 0, ScoringFunctionInterpolation? interpolation = default, DistanceScoringParameters parameters = default)
         {
             return new DistanceScoringFunction(
                 fieldName,
@@ -737,7 +737,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="referencePointParameter"> The name of the parameter passed in search queries to specify the reference location. </param>
         /// <param name="boostingDistance"> The distance in kilometers from the reference location where the boosting range ends. </param>
         /// <returns> A new <see cref="Indexes.Models.DistanceScoringParameters"/> instance for mocking. </returns>
-        public static DistanceScoringParameters DistanceScoringParameters(string referencePointParameter = default, double boostingDistance = default)
+        public static DistanceScoringParameters DistanceScoringParameters(string referencePointParameter = default, double boostingDistance = 0)
         {
             return new DistanceScoringParameters(referencePointParameter, boostingDistance, additionalBinaryDataProperties: null);
         }
@@ -748,7 +748,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to "Linear". </param>
         /// <param name="parameters"> Parameter values for the freshness scoring function. </param>
         /// <returns> A new <see cref="Indexes.Models.FreshnessScoringFunction"/> instance for mocking. </returns>
-        public static FreshnessScoringFunction FreshnessScoringFunction(string fieldName = default, double boost = default, ScoringFunctionInterpolation? interpolation = default, FreshnessScoringParameters parameters = default)
+        public static FreshnessScoringFunction FreshnessScoringFunction(string fieldName = default, double boost = 0, ScoringFunctionInterpolation? interpolation = default, FreshnessScoringParameters parameters = default)
         {
             return new FreshnessScoringFunction(
                 fieldName,
@@ -773,7 +773,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to "Linear". </param>
         /// <param name="parameters"> Parameter values for the magnitude scoring function. </param>
         /// <returns> A new <see cref="Indexes.Models.MagnitudeScoringFunction"/> instance for mocking. </returns>
-        public static MagnitudeScoringFunction MagnitudeScoringFunction(string fieldName = default, double boost = default, ScoringFunctionInterpolation? interpolation = default, MagnitudeScoringParameters parameters = default)
+        public static MagnitudeScoringFunction MagnitudeScoringFunction(string fieldName = default, double boost = 0, ScoringFunctionInterpolation? interpolation = default, MagnitudeScoringParameters parameters = default)
         {
             return new MagnitudeScoringFunction(
                 fieldName,
@@ -789,7 +789,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="boostingRangeEnd"> The field value at which boosting ends. </param>
         /// <param name="shouldBoostBeyondRangeByConstant"> A value indicating whether to apply a constant boost for field values beyond the range end value; default is false. </param>
         /// <returns> A new <see cref="Indexes.Models.MagnitudeScoringParameters"/> instance for mocking. </returns>
-        public static MagnitudeScoringParameters MagnitudeScoringParameters(double boostingRangeStart = default, double boostingRangeEnd = default, bool? shouldBoostBeyondRangeByConstant = default)
+        public static MagnitudeScoringParameters MagnitudeScoringParameters(double boostingRangeStart = 0, double boostingRangeEnd = 0, bool? shouldBoostBeyondRangeByConstant = default)
         {
             return new MagnitudeScoringParameters(boostingRangeStart, boostingRangeEnd, shouldBoostBeyondRangeByConstant, additionalBinaryDataProperties: null);
         }
@@ -800,7 +800,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to "Linear". </param>
         /// <param name="parameters"> Parameter values for the tag scoring function. </param>
         /// <returns> A new <see cref="Indexes.Models.TagScoringFunction"/> instance for mocking. </returns>
-        public static TagScoringFunction TagScoringFunction(string fieldName = default, double boost = default, ScoringFunctionInterpolation? interpolation = default, TagScoringParameters parameters = default)
+        public static TagScoringFunction TagScoringFunction(string fieldName = default, double boost = 0, ScoringFunctionInterpolation? interpolation = default, TagScoringParameters parameters = default)
         {
             return new TagScoringFunction(
                 fieldName,
@@ -1238,7 +1238,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="language"> The language to use. </param>
         /// <returns> A new <see cref="Indexes.Models.SnowballTokenFilter"/> instance for mocking. </returns>
-        public static SnowballTokenFilter SnowballTokenFilter(string name = default, SnowballTokenFilterLanguage language = default)
+        public static SnowballTokenFilter SnowballTokenFilter(string name = default, SnowballTokenFilterLanguage language = 0)
         {
             return new SnowballTokenFilter("#Microsoft.Azure.Search.SnowballTokenFilter", name, additionalBinaryDataProperties: null, language);
         }
@@ -1247,7 +1247,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="name"> The name of the token filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <param name="language"> The language to use. </param>
         /// <returns> A new <see cref="Indexes.Models.StemmerTokenFilter"/> instance for mocking. </returns>
-        public static StemmerTokenFilter StemmerTokenFilter(string name = default, StemmerTokenFilterLanguage language = default)
+        public static StemmerTokenFilter StemmerTokenFilter(string name = default, StemmerTokenFilterLanguage language = 0)
         {
             return new StemmerTokenFilter("#Microsoft.Azure.Search.StemmerTokenFilter", name, additionalBinaryDataProperties: null, language);
         }
@@ -1433,7 +1433,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="rankingOrder"> Specifies the score type to be used for the sort order of the search results. </param>
         /// <param name="flightingOptIn"> Determines which semantic or query rewrite models to use during model flighting/upgrades. </param>
         /// <returns> A new <see cref="Indexes.Models.SemanticConfiguration"/> instance for mocking. </returns>
-        public static SemanticConfiguration SemanticConfiguration(string name = default, SemanticPrioritizedFields prioritizedFields = default, RankingOrder? rankingOrder = default, bool? flightingOptIn = default)
+        public static SemanticConfiguration SemanticConfiguration(string name, SemanticPrioritizedFields prioritizedFields, RankingOrder? rankingOrder, bool? flightingOptIn)
         {
             return new SemanticConfiguration(name, prioritizedFields, rankingOrder, flightingOptIn, additionalBinaryDataProperties: null);
         }
@@ -1744,7 +1744,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="purviewEnabled"> A value indicating whether Purview is enabled for the index. </param>
         /// <param name="eTag"> The ETag of the index. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexResponse"/> instance for mocking. </returns>
-        public static SearchIndexResponse SearchIndexResponse(string name = default, string description = default, IEnumerable<SearchField> fields = default, IEnumerable<ScoringProfile> scoringProfiles = default, string defaultScoringProfile = default, CorsOptions corsOptions = default, IEnumerable<SearchSuggester> suggesters = default, IEnumerable<LexicalAnalyzer> analyzers = default, IEnumerable<LexicalTokenizer> tokenizers = default, IEnumerable<TokenFilter> tokenFilters = default, IEnumerable<CharFilter> charFilters = default, IEnumerable<LexicalNormalizer> normalizers = default, SearchResourceEncryptionKey encryptionKey = default, SimilarityAlgorithm similarity = default, SemanticSearch semanticSearch = default, VectorSearch vectorSearch = default, SearchIndexPermissionFilterOption? permissionFilterOption = default, bool? purviewEnabled = default, ETag? eTag = default)
+        public static SearchIndexResponse SearchIndexResponse(string name, string description, IEnumerable<SearchField> fields, IEnumerable<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IEnumerable<SearchSuggester> suggesters, IEnumerable<LexicalAnalyzer> analyzers, IEnumerable<LexicalTokenizer> tokenizers, IEnumerable<TokenFilter> tokenFilters, IEnumerable<CharFilter> charFilters, IEnumerable<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, SearchIndexPermissionFilterOption? permissionFilterOption, bool? purviewEnabled, ETag? eTag = default)
         {
             fields ??= new ChangeTrackingList<SearchField>();
             scoringProfiles ??= new ChangeTrackingList<ScoringProfile>();
@@ -1783,7 +1783,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="storageSize"> The amount of storage in bytes consumed by the index. </param>
         /// <param name="vectorIndexSize"> The amount of memory in bytes consumed by vectors in the index. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexStatistics"/> instance for mocking. </returns>
-        public static SearchIndexStatistics SearchIndexStatistics(long documentCount = default, long storageSize = default, long vectorIndexSize = default)
+        public static SearchIndexStatistics SearchIndexStatistics(long documentCount = 0L, long storageSize = 0L, long vectorIndexSize = 0L)
         {
             return new SearchIndexStatistics(documentCount, storageSize, vectorIndexSize, additionalBinaryDataProperties: null);
         }
@@ -1836,7 +1836,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="answerInstructions"> Instructions considered by the knowledge base when generating answers. </param>
         /// <param name="corsOptions"> Options to control Cross-Origin Resource Sharing (CORS) for the knowledge base. </param>
         /// <returns> A new <see cref="Indexes.Models.KnowledgeBase"/> instance for mocking. </returns>
-        public static KnowledgeBase KnowledgeBase(string name = default, IEnumerable<KnowledgeSourceReference> knowledgeSources = default, IEnumerable<KnowledgeBaseModel> models = default, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default, KnowledgeRetrievalOutputMode? outputMode = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, string description = default, string retrievalInstructions = default, string answerInstructions = default, CorsOptions corsOptions = default)
+        public static KnowledgeBase KnowledgeBase(string name, IEnumerable<KnowledgeSourceReference> knowledgeSources, IEnumerable<KnowledgeBaseModel> models, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, KnowledgeRetrievalOutputMode? outputMode, ETag? eTag, SearchResourceEncryptionKey encryptionKey, string description = default, string retrievalInstructions = default, string answerInstructions = default, CorsOptions corsOptions = default)
         {
             knowledgeSources ??= new ChangeTrackingList<KnowledgeSourceReference>();
             models ??= new ChangeTrackingList<KnowledgeBaseModel>();
@@ -1861,7 +1861,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source. When true, images extracted during ingestion are delivered to downstream models at query time. </param>
         /// <param name="enableFreshness"> Indicates whether freshness-aware retrieval should be enabled for this knowledge source. When true, a freshness scoring profile is applied during retrieval to bias results toward newer documents. </param>
         /// <returns> A new <see cref="Indexes.Models.KnowledgeSourceReference"/> instance for mocking. </returns>
-        public static KnowledgeSourceReference KnowledgeSourceReference(string name = default, bool? enableImageServing = default, bool? enableFreshness = default)
+        public static KnowledgeSourceReference KnowledgeSourceReference(string name, bool? enableImageServing, bool? enableFreshness = default)
         {
             return new KnowledgeSourceReference(name, enableImageServing, enableFreshness, additionalBinaryDataProperties: null);
         }
@@ -1964,7 +1964,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="semanticConfigurationName"> Used to specify a different semantic configuration on the target search index other than the default one. </param>
         /// <param name="baseFilter"> A default filter condition applied to the index at retrieval time (e.g., 'State eq VA'). Can be overridden at query time via knowledge source runtime parameters. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexKnowledgeSourceParameters"/> instance for mocking. </returns>
-        public static SearchIndexKnowledgeSourceParameters SearchIndexKnowledgeSourceParameters(string searchIndexName = default, IEnumerable<SearchIndexFieldReference> sourceDataFields = default, IEnumerable<SearchIndexFieldReference> searchFields = default, string semanticConfigurationName = default, string baseFilter = default)
+        public static SearchIndexKnowledgeSourceParameters SearchIndexKnowledgeSourceParameters(string searchIndexName, IEnumerable<SearchIndexFieldReference> sourceDataFields, IEnumerable<SearchIndexFieldReference> searchFields, string semanticConfigurationName, string baseFilter)
         {
             sourceDataFields ??= new ChangeTrackingList<SearchIndexFieldReference>();
             searchFields ??= new ChangeTrackingList<SearchIndexFieldReference>();
@@ -2037,7 +2037,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="assetStore"> Optional asset store configuration for storing extracted assets such as images. </param>
         /// <param name="freshnessPolicy"> Optional freshness policy for biasing retrieval toward newer documents. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeSourceIngestionParameters"/> instance for mocking. </returns>
-        public static KnowledgeSourceIngestionParameters KnowledgeSourceIngestionParameters(SearchIndexerDataIdentity identity = default, KnowledgeSourceVectorizer embeddingModel = default, KnowledgeBaseModel chatCompletionModel = default, bool? disableImageVerbalization = default, IndexingSchedule ingestionSchedule = default, IEnumerable<KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions = default, KnowledgeSourceContentExtractionMode? contentExtractionMode = default, AIServices aiServices = default, AssetStore assetStore = default, FreshnessPolicy freshnessPolicy = default)
+        public static KnowledgeSourceIngestionParameters KnowledgeSourceIngestionParameters(SearchIndexerDataIdentity identity, KnowledgeSourceVectorizer embeddingModel, KnowledgeBaseModel chatCompletionModel, bool? disableImageVerbalization, IndexingSchedule ingestionSchedule, IEnumerable<KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions, KnowledgeSourceContentExtractionMode? contentExtractionMode, AIServices aiServices, AssetStore assetStore = default, FreshnessPolicy freshnessPolicy = default)
         {
             ingestionPermissionOptions ??= new ChangeTrackingList<KnowledgeSourceIngestionPermissionOption>();
 
@@ -2310,7 +2310,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="count"> The default number of web results to return. Can be overridden at query time via knowledge source runtime parameters. </param>
         /// <param name="freshness"> The default freshness filter for web results. Can be overridden at query time via knowledge source runtime parameters. </param>
         /// <returns> A new <see cref="Indexes.Models.WebKnowledgeSourceParameters"/> instance for mocking. </returns>
-        public static WebKnowledgeSourceParameters WebKnowledgeSourceParameters(WebKnowledgeSourceDomains domains = default, string language = default, string market = default, int? count = default, string freshness = default)
+        public static WebKnowledgeSourceParameters WebKnowledgeSourceParameters(WebKnowledgeSourceDomains domains, string language, string market = default, int? count = default, string freshness = default)
         {
             return new WebKnowledgeSourceParameters(
                 domains,
@@ -2636,7 +2636,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="itemsSkipped"> The number of items skipped in the current synchronization. </param>
         /// <param name="errors"> Collection of document-level indexing errors encountered during the current synchronization run. Returned only when errors are present. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.SynchronizationState"/> instance for mocking. </returns>
-        public static SynchronizationState SynchronizationState(DateTimeOffset startTime = default, int itemsUpdatesProcessed = default, int itemsUpdatesFailed = default, int itemsSkipped = default, IEnumerable<KnowledgeSourceSynchronizationError> errors = default)
+        public static SynchronizationState SynchronizationState(DateTimeOffset startTime = default, int itemsUpdatesProcessed = 0, int itemsUpdatesFailed = 0, int itemsSkipped = 0, IEnumerable<KnowledgeSourceSynchronizationError> errors = default)
         {
             errors ??= new ChangeTrackingList<KnowledgeSourceSynchronizationError>();
 
@@ -2676,7 +2676,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="itemsUpdatesFailed"> The number of item updates that failed in the last synchronization. </param>
         /// <param name="itemsSkipped"> The number of items skipped in the last synchronization. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.CompletedSynchronizationState"/> instance for mocking. </returns>
-        public static CompletedSynchronizationState CompletedSynchronizationState(DateTimeOffset startTime = default, DateTimeOffset endTime = default, int itemsUpdatesProcessed = default, int itemsUpdatesFailed = default, int itemsSkipped = default)
+        public static CompletedSynchronizationState CompletedSynchronizationState(DateTimeOffset startTime = default, DateTimeOffset endTime = default, int itemsUpdatesProcessed = 0, int itemsUpdatesFailed = 0, int itemsSkipped = 0)
         {
             return new CompletedSynchronizationState(
                 startTime,
@@ -2692,7 +2692,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="averageSynchronizationDuration"> Average synchronization duration in HH:MM:SS format. </param>
         /// <param name="averageItemsProcessedPerSynchronization"> Average items processed per synchronization. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeSourceStatistics"/> instance for mocking. </returns>
-        public static KnowledgeSourceStatistics KnowledgeSourceStatistics(int totalSynchronization = default, string averageSynchronizationDuration = default, int averageItemsProcessedPerSynchronization = default)
+        public static KnowledgeSourceStatistics KnowledgeSourceStatistics(int totalSynchronization = 0, string averageSynchronizationDuration = default, int averageItemsProcessedPerSynchronization = 0)
         {
             return new KnowledgeSourceStatistics(totalSynchronization, averageSynchronizationDuration, averageItemsProcessedPerSynchronization, additionalBinaryDataProperties: null);
         }
@@ -2722,7 +2722,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="limits"> Service level general limits. </param>
         /// <param name="indexersRuntime"> Service level indexer runtime consumption. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchServiceStatistics"/> instance for mocking. </returns>
-        public static SearchServiceStatistics SearchServiceStatistics(SearchServiceCounters counters = default, SearchServiceLimits limits = default, ServiceIndexersRuntime indexersRuntime = default)
+        public static SearchServiceStatistics SearchServiceStatistics(SearchServiceCounters counters, SearchServiceLimits limits, ServiceIndexersRuntime indexersRuntime)
         {
             return new SearchServiceStatistics(counters, limits, indexersRuntime, additionalBinaryDataProperties: null);
         }
@@ -2740,7 +2740,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="knowledgeBaseCounter"> Total number of knowledge bases. </param>
         /// <param name="knowledgeSourceCounter"> Total number of knowledge sources. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchServiceCounters"/> instance for mocking. </returns>
-        public static SearchServiceCounters SearchServiceCounters(SearchResourceCounter aliasCounter = default, SearchResourceCounter documentCounter = default, SearchResourceCounter indexCounter = default, SearchResourceCounter indexerCounter = default, SearchResourceCounter dataSourceCounter = default, SearchResourceCounter storageSizeCounter = default, SearchResourceCounter synonymMapCounter = default, SearchResourceCounter skillsetCounter = default, SearchResourceCounter vectorIndexSizeCounter = default, SearchResourceCounter knowledgeBaseCounter = default, SearchResourceCounter knowledgeSourceCounter = default)
+        public static SearchServiceCounters SearchServiceCounters(SearchResourceCounter aliasCounter, SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter, SearchResourceCounter vectorIndexSizeCounter, SearchResourceCounter knowledgeBaseCounter, SearchResourceCounter knowledgeSourceCounter = default)
         {
             return new SearchServiceCounters(
                 aliasCounter,
@@ -2876,7 +2876,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your indexer definition (as well as indexer execution status) when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your indexer definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your indexer definition (and indexer execution status) will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="cache"> Adds caching to an enrichment pipeline to allow for incremental modification steps without having to rebuild the index every time. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexer"/> instance for mocking. </returns>
-        public static SearchIndexer SearchIndexer(string name = default, string description = default, string dataSourceName = default, string skillsetName = default, string targetIndexName = default, IndexingSchedule schedule = default, IndexingParameters parameters = default, IEnumerable<FieldMapping> fieldMappings = default, IEnumerable<FieldMapping> outputFieldMappings = default, bool? isDisabled = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, SearchIndexerCache cache = default)
+        public static SearchIndexer SearchIndexer(string name, string description, string dataSourceName, string skillsetName, string targetIndexName, IndexingSchedule schedule, IndexingParameters parameters, IEnumerable<FieldMapping> fieldMappings, IEnumerable<FieldMapping> outputFieldMappings, bool? isDisabled, ETag? eTag, SearchResourceEncryptionKey encryptionKey, SearchIndexerCache cache)
         {
             fieldMappings ??= new ChangeTrackingList<FieldMapping>();
             outputFieldMappings ??= new ChangeTrackingList<FieldMapping>();
@@ -2997,7 +2997,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="limits"> The execution limits for the indexer. </param>
         /// <param name="currentState"> All of the state that defines and dictates the indexer's current execution. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexerStatus"/> instance for mocking. </returns>
-        public static SearchIndexerStatus SearchIndexerStatus(string name = default, IndexerStatus status = default, IndexerRuntime runtime = default, IndexerExecutionResult lastResult = default, IEnumerable<IndexerExecutionResult> executionHistory = default, SearchIndexerLimits limits = default, IndexerState currentState = default)
+        public static SearchIndexerStatus SearchIndexerStatus(string name, IndexerStatus status, IndexerRuntime runtime, IndexerExecutionResult lastResult, IEnumerable<IndexerExecutionResult> executionHistory, SearchIndexerLimits limits, IndexerState currentState = default)
         {
             executionHistory ??= new ChangeTrackingList<IndexerExecutionResult>();
 
@@ -3037,7 +3037,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="initialTrackingState"> Change tracking state with which an indexer execution started. </param>
         /// <param name="finalTrackingState"> Change tracking state with which an indexer execution finished. </param>
         /// <returns> A new <see cref="Indexes.Models.IndexerExecutionResult"/> instance for mocking. </returns>
-        public static IndexerExecutionResult IndexerExecutionResult(IndexerExecutionStatus status = default, IndexerExecutionStatusDetail? statusDetail = default, IndexingMode? mode = default, string errorMessage = default, DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, IEnumerable<SearchIndexerError> errors = default, IEnumerable<SearchIndexerWarning> warnings = default, int itemCount = default, int failedItemCount = default, string initialTrackingState = default, string finalTrackingState = default)
+        public static IndexerExecutionResult IndexerExecutionResult(IndexerExecutionStatus status, IndexerExecutionStatusDetail? statusDetail, IndexingMode? mode, string errorMessage, DateTimeOffset? startTime, DateTimeOffset? endTime, IEnumerable<SearchIndexerError> errors, IEnumerable<SearchIndexerWarning> warnings = default, int itemCount = default, int failedItemCount = default, string initialTrackingState = default, string finalTrackingState = default)
         {
             errors ??= new ChangeTrackingList<SearchIndexerError>();
             warnings ??= new ChangeTrackingList<SearchIndexerWarning>();
@@ -3481,7 +3481,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="unit"> Only applies if textSplitMode is set to pages. There are two possible values. The choice of the values will decide the length (maximumPageLength and pageOverlapLength) measurement. The default is 'characters', which means the length will be measured by character. </param>
         /// <param name="azureOpenAITokenizerParameters"> Only applies if the unit is set to azureOpenAITokens. If specified, the splitSkill will use these parameters when performing the tokenization. The parameters are a valid 'encoderModelName' and an optional 'allowedSpecialTokens' property. </param>
         /// <returns> A new <see cref="Indexes.Models.SplitSkill"/> instance for mocking. </returns>
-        public static SplitSkill SplitSkill(string name = default, string description = default, string context = default, IEnumerable<InputFieldMappingEntry> inputs = default, IEnumerable<OutputFieldMappingEntry> outputs = default, SplitSkillLanguage? defaultLanguageCode = default, TextSplitMode? textSplitMode = default, int? maximumPageLength = default, int? pageOverlapLength = default, int? maximumPagesToTake = default, SplitSkillUnit? unit = default, AzureOpenAITokenizerParameters azureOpenAITokenizerParameters = default)
+        public static SplitSkill SplitSkill(string name, string description, string context, IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, SplitSkillLanguage? defaultLanguageCode, TextSplitMode? textSplitMode, int? maximumPageLength, int? pageOverlapLength, int? maximumPagesToTake, SplitSkillUnit? unit, AzureOpenAITokenizerParameters azureOpenAITokenizerParameters = default)
         {
             inputs ??= new ChangeTrackingList<InputFieldMappingEntry>();
             outputs ??= new ChangeTrackingList<OutputFieldMappingEntry>();
@@ -3858,7 +3858,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="maximumLength"> The maximum chunk length in characters. Default is 500. </param>
         /// <param name="overlapLength"> The length of overlap provided between two text chunks. Default is 0. </param>
         /// <returns> A new <see cref="Indexes.Models.ContentUnderstandingSkillChunkingProperties"/> instance for mocking. </returns>
-        public static ContentUnderstandingSkillChunkingProperties ContentUnderstandingSkillChunkingProperties(ContentUnderstandingSkillChunkingMethod? @method = default, ContentUnderstandingSkillChunkingUnit? unit = default, int? maximumLength = default, int? overlapLength = default)
+        public static ContentUnderstandingSkillChunkingProperties ContentUnderstandingSkillChunkingProperties(ContentUnderstandingSkillChunkingMethod? @method, ContentUnderstandingSkillChunkingUnit? unit, int? maximumLength, int? overlapLength)
         {
             return new ContentUnderstandingSkillChunkingProperties(@method, unit, maximumLength, overlapLength, additionalBinaryDataProperties: null);
         }
@@ -4000,7 +4000,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="identity"> The user-assigned managed identity used for connections to Azure Storage when writing knowledge store projections. If the connection string indicates an identity (ResourceId) and it's not specified, the system-assigned managed identity is used. On updates to the indexer, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared. </param>
         /// <param name="parameters"> A dictionary of knowledge store-specific configuration properties. Each name is the name of a specific property. Each value must be of a primitive type. </param>
         /// <returns> A new <see cref="Indexes.Models.KnowledgeStore"/> instance for mocking. </returns>
-        public static KnowledgeStore KnowledgeStore(string storageConnectionString = default, IEnumerable<KnowledgeStoreProjection> projections = default, SearchIndexerDataIdentity identity = default, SearchIndexerKnowledgeStoreParameters parameters = default)
+        public static KnowledgeStore KnowledgeStore(string storageConnectionString, IEnumerable<KnowledgeStoreProjection> projections, SearchIndexerDataIdentity identity, SearchIndexerKnowledgeStoreParameters parameters)
         {
             projections ??= new ChangeTrackingList<KnowledgeStoreProjection>();
 
@@ -4197,7 +4197,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="outputMode"> The output configuration for this retrieval. </param>
         /// <param name="knowledgeSourceParams"> A list of runtime parameters for the knowledge sources. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseRetrievalRequest"/> instance for mocking. </returns>
-        public static KnowledgeBaseRetrievalRequest KnowledgeBaseRetrievalRequest(IEnumerable<KnowledgeBaseMessage> messages = default, IEnumerable<KnowledgeRetrievalIntent> intents = default, int? maxRuntimeInSeconds = default, int? maxOutputSize = default, int? maxOutputDocuments = default, int? maxOutputSizeInTokens = default, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default, bool? includeActivity = default, KnowledgeRetrievalOutputMode? outputMode = default, IEnumerable<KnowledgeSourceParams> knowledgeSourceParams = default)
+        public static KnowledgeBaseRetrievalRequest KnowledgeBaseRetrievalRequest(IEnumerable<KnowledgeBaseMessage> messages, IEnumerable<KnowledgeRetrievalIntent> intents, int? maxRuntimeInSeconds, int? maxOutputSize, int? maxOutputDocuments, int? maxOutputSizeInTokens, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default, bool? includeActivity = default, KnowledgeRetrievalOutputMode? outputMode = default, IEnumerable<KnowledgeSourceParams> knowledgeSourceParams = default)
         {
             messages ??= new ChangeTrackingList<KnowledgeBaseMessage>();
             intents ??= new ChangeTrackingList<KnowledgeRetrievalIntent>();
@@ -4322,7 +4322,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
         /// <param name="filterAddOn"> A filter condition applied to the index (e.g., 'State eq VA'). </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.SearchIndexKnowledgeSourceParams"/> instance for mocking. </returns>
-        public static SearchIndexKnowledgeSourceParams SearchIndexKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, int? maxOutputDocuments = default, bool? enableImageServing = default, string filterAddOn = default)
+        public static SearchIndexKnowledgeSourceParams SearchIndexKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, bool? failOnError, float? rerankerThreshold, int? maxOutputDocuments = default, bool? enableImageServing = default, string filterAddOn = default)
         {
             return new SearchIndexKnowledgeSourceParams(
                 knowledgeSourceName,
@@ -4348,7 +4348,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="maxOutputDocuments"> Limits the maximum number of documents returned from this knowledge source. </param>
         /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.AzureBlobKnowledgeSourceParams"/> instance for mocking. </returns>
-        public static AzureBlobKnowledgeSourceParams AzureBlobKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, int? maxOutputDocuments = default, bool? enableImageServing = default)
+        public static AzureBlobKnowledgeSourceParams AzureBlobKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, bool? failOnError, float? rerankerThreshold = default, int? maxOutputDocuments = default, bool? enableImageServing = default)
         {
             return new AzureBlobKnowledgeSourceParams(
                 knowledgeSourceName,
@@ -4398,7 +4398,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="maxOutputDocuments"> Limits the maximum number of documents returned from this knowledge source. </param>
         /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.IndexedOneLakeKnowledgeSourceParams"/> instance for mocking. </returns>
-        public static IndexedOneLakeKnowledgeSourceParams IndexedOneLakeKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, int? maxOutputDocuments = default, bool? enableImageServing = default)
+        public static IndexedOneLakeKnowledgeSourceParams IndexedOneLakeKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, bool? failOnError, float? rerankerThreshold = default, int? maxOutputDocuments = default, bool? enableImageServing = default)
         {
             return new IndexedOneLakeKnowledgeSourceParams(
                 knowledgeSourceName,
@@ -4427,7 +4427,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="count"> The number of web results to return. </param>
         /// <param name="freshness"> The freshness of web results. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.WebKnowledgeSourceParams"/> instance for mocking. </returns>
-        public static WebKnowledgeSourceParams WebKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, int? maxOutputDocuments = default, bool? enableImageServing = default, string language = default, string market = default, int? count = default, string freshness = default)
+        public static WebKnowledgeSourceParams WebKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, bool? alwaysQuerySource, bool? failOnError, float? rerankerThreshold, int? maxOutputDocuments, bool? enableImageServing, string language, string market = default, int? count = default, string freshness = default)
         {
             return new WebKnowledgeSourceParams(
                 knowledgeSourceName,
@@ -4629,7 +4629,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="references"> The references for the retrieval data used in the response. </param>
         /// <param name="responseSensitivityLabelInfo"> The sensitivity label information for the overall response. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseRetrievalResponse"/> instance for mocking. </returns>
-        public static KnowledgeBaseRetrievalResponse KnowledgeBaseRetrievalResponse(IEnumerable<KnowledgeBaseMessage> response = default, IEnumerable<KnowledgeBaseActivityRecord> activity = default, IEnumerable<KnowledgeBaseReference> references = default, PurviewSensitivityLabelInfo responseSensitivityLabelInfo = default)
+        public static KnowledgeBaseRetrievalResponse KnowledgeBaseRetrievalResponse(IEnumerable<KnowledgeBaseMessage> response, IEnumerable<KnowledgeBaseActivityRecord> activity, IEnumerable<KnowledgeBaseReference> references, PurviewSensitivityLabelInfo responseSensitivityLabelInfo)
         {
             response ??= new ChangeTrackingList<KnowledgeBaseMessage>();
             activity ??= new ChangeTrackingList<KnowledgeBaseActivityRecord>();
@@ -5204,7 +5204,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="outputTokensCount"> The number of output tokens for the LLM web summarization activity. </param>
         /// <param name="modelName"> The name of the model used for the LLM web summarization activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseModelWebSummarizationActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseModelWebSummarizationActivityRecord KnowledgeBaseModelWebSummarizationActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, int? inputTokensCount = default, int? outputTokensCount = default, string modelName = default)
+        public static KnowledgeBaseModelWebSummarizationActivityRecord KnowledgeBaseModelWebSummarizationActivityRecord(int id, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, int? inputTokensCount, int? outputTokensCount, string modelName = default)
         {
             return new KnowledgeBaseModelWebSummarizationActivityRecord(
                 id,
@@ -5226,7 +5226,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="reasoningTokens"> The number of input tokens for agentic reasoning. </param>
         /// <param name="retrievalReasoningEffort"> The retrieval reasoning effort configuration. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, int? reasoningTokens = default, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default)
+        public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, int? reasoningTokens, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort)
         {
             return new KnowledgeBaseAgenticReasoningActivityRecord(
                 id,
@@ -5249,7 +5249,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="sourceData"> The source data for the reference. </param>
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseReference"/> instance for mocking. </returns>
-        public static KnowledgeBaseReference KnowledgeBaseReference(string @type = default, string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default)
+        public static KnowledgeBaseReference KnowledgeBaseReference(string @type = default, string id = default, int activitySource = 0, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default)
         {
             sourceData ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -5270,7 +5270,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="docKey"> The document key for the reference. </param>
         /// <param name="searchSensitivityLabelInfo"> The sensitivity label information for the reference. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseSearchIndexReference"/> instance for mocking. </returns>
-        public static KnowledgeBaseSearchIndexReference KnowledgeBaseSearchIndexReference(string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, string docKey = default, PurviewSensitivityLabelInfo searchSensitivityLabelInfo = default)
+        public static KnowledgeBaseSearchIndexReference KnowledgeBaseSearchIndexReference(string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, string docKey, PurviewSensitivityLabelInfo searchSensitivityLabelInfo)
         {
             sourceData ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -5313,7 +5313,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="blobUrl"> The blob URL for the reference. </param>
         /// <param name="searchSensitivityLabelInfo"> The sensitivity label information for the reference. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAzureBlobReference"/> instance for mocking. </returns>
-        public static KnowledgeBaseAzureBlobReference KnowledgeBaseAzureBlobReference(string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, Uri blobUrl = default, PurviewSensitivityLabelInfo searchSensitivityLabelInfo = default)
+        public static KnowledgeBaseAzureBlobReference KnowledgeBaseAzureBlobReference(string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, Uri blobUrl, PurviewSensitivityLabelInfo searchSensitivityLabelInfo)
         {
             sourceData ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -5359,7 +5359,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="docUrl"> The document URL for the reference. </param>
         /// <param name="searchSensitivityLabelInfo"> The sensitivity label information for the reference. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeReference"/> instance for mocking. </returns>
-        public static KnowledgeBaseIndexedOneLakeReference KnowledgeBaseIndexedOneLakeReference(string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, Uri docUrl = default, PurviewSensitivityLabelInfo searchSensitivityLabelInfo = default)
+        public static KnowledgeBaseIndexedOneLakeReference KnowledgeBaseIndexedOneLakeReference(string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, Uri docUrl, PurviewSensitivityLabelInfo searchSensitivityLabelInfo)
         {
             sourceData ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -5382,7 +5382,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="url"> The url the reference data originated from. </param>
         /// <param name="title"> The title of the web document. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseWebReference"/> instance for mocking. </returns>
-        public static KnowledgeBaseWebReference KnowledgeBaseWebReference(string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, Uri url = default, string title = default)
+        public static KnowledgeBaseWebReference KnowledgeBaseWebReference(string id = default, int activitySource = 0, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, Uri url = default, string title = default)
         {
             sourceData ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -5592,7 +5592,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="filterMode"> Determines whether or not filters are applied before or after the vector search is performed. Default is 'preFilter' for new indexes. </param>
         /// <returns> A new <see cref="Documents.SearchOptions"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchOptions SearchOptions(bool? includeTotalCount, IEnumerable<string> facets, string filter, string highlightFieldsRaw, string highlightPostTag, string highlightPreTag, double? minimumCoverage, string orderByRaw, SearchQueryType? queryType, ScoringStatistics? scoringStatistics, string sessionId, IEnumerable<string> scoringParameters, string scoringProfile, QueryDebugMode? debug, string searchText, string searchFieldsRaw, SearchMode? searchMode, string selectRaw, int? skip, int? size, string semanticConfigurationName, SemanticErrorMode? semanticErrorMode, int? semanticMaxWaitInMilliseconds, string semanticQuery, string queryAnswerRaw, string queryCaptionRaw, IEnumerable<VectorQuery> vectorQueries, VectorFilterMode? filterMode)
+        public static SearchOptions SearchOptions(bool? includeTotalCount = default, IEnumerable<string> facets = default, string filter = default, string highlightFieldsRaw = default, string highlightPostTag = default, string highlightPreTag = default, double? minimumCoverage = default, string orderByRaw = default, SearchQueryType? queryType = default, ScoringStatistics? scoringStatistics = default, string sessionId = default, IEnumerable<string> scoringParameters = default, string scoringProfile = default, QueryDebugMode? debug = default, string searchText = default, string searchFieldsRaw = default, SearchMode? searchMode = default, string selectRaw = default, int? skip = default, int? size = default, string semanticConfigurationName = default, SemanticErrorMode? semanticErrorMode = default, int? semanticMaxWaitInMilliseconds = default, string semanticQuery = default, string queryAnswerRaw = default, string queryCaptionRaw = default, IEnumerable<VectorQuery> vectorQueries = default, VectorFilterMode? filterMode = default)
         {
             return SearchOptions(includeTotalCount: includeTotalCount, facets: facets, filter: filter, highlightFieldsRaw: highlightFieldsRaw, highlightPostTag: highlightPostTag, highlightPreTag: highlightPreTag, minimumCoverage: minimumCoverage, orderByRaw: orderByRaw, queryType: queryType, scoringStatistics: scoringStatistics, sessionId: sessionId, scoringParameters: scoringParameters, scoringProfile: scoringProfile, debug: debug, searchText: searchText, searchFieldsRaw: searchFieldsRaw, searchMode: searchMode, queryLanguage: default, querySpeller: default, selectRaw: selectRaw, skip: skip, size: size, semanticConfigurationName: semanticConfigurationName, semanticErrorMode: semanticErrorMode, semanticMaxWaitInMilliseconds: semanticMaxWaitInMilliseconds, semanticQuery: semanticQuery, queryAnswerRaw: queryAnswerRaw, queryCaptionRaw: queryCaptionRaw, queryRewritesRaw: default, semanticFields: default, vectorQueries: vectorQueries, filterMode: filterMode, hybridSearch: default);
         }
@@ -5609,7 +5609,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="kind"> Type of query. </param>
         /// <returns> A new <see cref="Models.VectorQuery"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VectorQuery VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, string kind)
+        public static VectorQuery VectorQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, string kind = default)
         {
             return VectorQuery(kNearestNeighborsCount: kNearestNeighborsCount, fieldsRaw: fieldsRaw, exhaustive: exhaustive, oversampling: oversampling, weight: weight, threshold: default, filterOverride: default, perDocumentVectorLimit: default, kind: kind);
         }
@@ -5623,7 +5623,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="vector"> The vector representation of a search query. </param>
         /// <returns> A new <see cref="Models.VectorizedQuery"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VectorizedQuery VectorizedQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, ReadOnlyMemory<float> vector)
+        public static VectorizedQuery VectorizedQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, ReadOnlyMemory<float> vector = default)
         {
             return VectorizedQuery(kNearestNeighborsCount: kNearestNeighborsCount, fieldsRaw: fieldsRaw, exhaustive: exhaustive, oversampling: oversampling, weight: weight, threshold: default, filterOverride: default, perDocumentVectorLimit: default, vector: vector);
         }
@@ -5637,7 +5637,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="text"> The text to be vectorized to perform a vector search query. </param>
         /// <returns> A new <see cref="Models.VectorizableTextQuery"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VectorizableTextQuery VectorizableTextQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, string text)
+        public static VectorizableTextQuery VectorizableTextQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, string text = default)
         {
             return VectorizableTextQuery(kNearestNeighborsCount: kNearestNeighborsCount, fieldsRaw: fieldsRaw, exhaustive: exhaustive, oversampling: oversampling, weight: weight, threshold: default, filterOverride: default, perDocumentVectorLimit: default, text: text, queryRewritesRaw: default);
         }
@@ -5651,7 +5651,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="url"> The URL of an image to be vectorized to perform a vector search query. </param>
         /// <returns> A new <see cref="Models.VectorizableImageUrlQuery"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VectorizableImageUrlQuery VectorizableImageUrlQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, Uri url)
+        public static VectorizableImageUrlQuery VectorizableImageUrlQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, Uri url = default)
         {
             return VectorizableImageUrlQuery(kNearestNeighborsCount: kNearestNeighborsCount, fieldsRaw: fieldsRaw, exhaustive: exhaustive, oversampling: oversampling, weight: weight, threshold: default, filterOverride: default, perDocumentVectorLimit: default, url: url);
         }
@@ -5665,7 +5665,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="base64Image"> The base 64 encoded binary of an image to be vectorized to perform a vector search query. </param>
         /// <returns> A new <see cref="Models.VectorizableImageBinaryQuery"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VectorizableImageBinaryQuery VectorizableImageBinaryQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, string base64Image)
+        public static VectorizableImageBinaryQuery VectorizableImageBinaryQuery(int? kNearestNeighborsCount = default, string fieldsRaw = default, bool? exhaustive = default, double? oversampling = default, float? weight = default, string base64Image = default)
         {
             return VectorizableImageBinaryQuery(kNearestNeighborsCount: kNearestNeighborsCount, fieldsRaw: fieldsRaw, exhaustive: exhaustive, oversampling: oversampling, weight: weight, threshold: default, filterOverride: default, perDocumentVectorLimit: default, base64Image: base64Image);
         }
@@ -5674,7 +5674,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="resourceId"> The fully qualified Azure resource Id of a user assigned managed identity typically in the form "/subscriptions/12345678-1234-1234-1234-1234567890ab/resourceGroups/rg/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myId" that should have been assigned to the search service. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexerDataUserAssignedIdentity"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchIndexerDataUserAssignedIdentity SearchIndexerDataUserAssignedIdentity(string resourceId)
+        public static SearchIndexerDataUserAssignedIdentity SearchIndexerDataUserAssignedIdentity(string resourceId = default)
         {
             return SearchIndexerDataUserAssignedIdentity(resourceId: resourceId, federatedIdentityClientId: default);
         }
@@ -5725,7 +5725,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="fields"> A list of sub-fields if this is a field of type Edm.ComplexType or Collection(Edm.ComplexType). Must be null or empty for simple fields. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchField"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchField SearchField(string name, SearchFieldDataType @type, bool? isKey, bool? isRetrievable, bool? isStored, bool? isSearchable, bool? isFilterable, bool? isSortable, bool? isFacetable, LexicalAnalyzerName? analyzerName, LexicalAnalyzerName? searchAnalyzerName, LexicalAnalyzerName? indexAnalyzerName, LexicalNormalizerName? normalizerName, int? vectorSearchDimensions, string vectorSearchProfileName, VectorEncodingFormat? vectorEncodingFormat, IEnumerable<string> synonymMapNames, IEnumerable<SearchField> fields)
+        public static SearchField SearchField(string name = default, SearchFieldDataType @type = default, bool? isKey = default, bool? isRetrievable = default, bool? isStored = default, bool? isSearchable = default, bool? isFilterable = default, bool? isSortable = default, bool? isFacetable = default, LexicalAnalyzerName? analyzerName = default, LexicalAnalyzerName? searchAnalyzerName = default, LexicalAnalyzerName? indexAnalyzerName = default, LexicalNormalizerName? normalizerName = default, int? vectorSearchDimensions = default, string vectorSearchProfileName = default, VectorEncodingFormat? vectorEncodingFormat = default, IEnumerable<string> synonymMapNames = default, IEnumerable<SearchField> fields = default)
         {
             return SearchField(name: name, @type: @type, isKey: isKey, isRetrievable: isRetrievable, isStored: isStored, isSearchable: isSearchable, isFilterable: isFilterable, isSortable: isSortable, isFacetable: isFacetable, permissionFilter: default, sensitivityLabelId: default, sensitivityLabelName: default, sourceDocumentId: default, sharepointSiteUrl: default, analyzerName: analyzerName, searchAnalyzerName: searchAnalyzerName, indexAnalyzerName: indexAnalyzerName, normalizerName: normalizerName, vectorSearchDimensions: vectorSearchDimensions, vectorSearchProfileName: vectorSearchProfileName, vectorEncodingFormat: vectorEncodingFormat, synonymMapNames: synonymMapNames, fields: fields);
         }
@@ -5736,7 +5736,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="rankingOrder"> Specifies the score type to be used for the sort order of the search results. </param>
         /// <returns> A new <see cref="Indexes.Models.SemanticConfiguration"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SemanticConfiguration SemanticConfiguration(string name, SemanticPrioritizedFields prioritizedFields, RankingOrder? rankingOrder)
+        public static SemanticConfiguration SemanticConfiguration(string name = default, SemanticPrioritizedFields prioritizedFields = default, RankingOrder? rankingOrder = default)
         {
             return SemanticConfiguration(name: name, prioritizedFields: prioritizedFields, rankingOrder: rankingOrder, flightingOptIn: default);
         }
@@ -5761,7 +5761,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="eTag"> The ETag of the index. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexResponse"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchIndexResponse SearchIndexResponse(string name, string description, IEnumerable<SearchField> fields, IEnumerable<ScoringProfile> scoringProfiles, string defaultScoringProfile, CorsOptions corsOptions, IEnumerable<SearchSuggester> suggesters, IEnumerable<LexicalAnalyzer> analyzers, IEnumerable<LexicalTokenizer> tokenizers, IEnumerable<TokenFilter> tokenFilters, IEnumerable<CharFilter> charFilters, IEnumerable<LexicalNormalizer> normalizers, SearchResourceEncryptionKey encryptionKey, SimilarityAlgorithm similarity, SemanticSearch semanticSearch, VectorSearch vectorSearch, ETag? eTag)
+        public static SearchIndexResponse SearchIndexResponse(string name = default, string description = default, IEnumerable<SearchField> fields = default, IEnumerable<ScoringProfile> scoringProfiles = default, string defaultScoringProfile = default, CorsOptions corsOptions = default, IEnumerable<SearchSuggester> suggesters = default, IEnumerable<LexicalAnalyzer> analyzers = default, IEnumerable<LexicalTokenizer> tokenizers = default, IEnumerable<TokenFilter> tokenFilters = default, IEnumerable<CharFilter> charFilters = default, IEnumerable<LexicalNormalizer> normalizers = default, SearchResourceEncryptionKey encryptionKey = default, SimilarityAlgorithm similarity = default, SemanticSearch semanticSearch = default, VectorSearch vectorSearch = default, ETag? eTag = default)
         {
             return SearchIndexResponse(name: name, description: description, fields: fields, scoringProfiles: scoringProfiles, defaultScoringProfile: defaultScoringProfile, corsOptions: corsOptions, suggesters: suggesters, analyzers: analyzers, tokenizers: tokenizers, tokenFilters: tokenFilters, charFilters: charFilters, normalizers: normalizers, encryptionKey: encryptionKey, similarity: similarity, semanticSearch: semanticSearch, vectorSearch: vectorSearch, permissionFilterOption: default, purviewEnabled: default, eTag: eTag);
         }
@@ -5775,7 +5775,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="description"> The description of the knowledge base. </param>
         /// <returns> A new <see cref="Indexes.Models.KnowledgeBase"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KnowledgeBase KnowledgeBase(string name, IEnumerable<KnowledgeSourceReference> knowledgeSources, IEnumerable<KnowledgeBaseModel> models, ETag? eTag, SearchResourceEncryptionKey encryptionKey, string description)
+        public static KnowledgeBase KnowledgeBase(string name = default, IEnumerable<KnowledgeSourceReference> knowledgeSources = default, IEnumerable<KnowledgeBaseModel> models = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, string description = default)
         {
             return KnowledgeBase(name: name, knowledgeSources: knowledgeSources, models: models, retrievalReasoningEffort: default, outputMode: default, eTag: eTag, encryptionKey: encryptionKey, description: description, retrievalInstructions: default, answerInstructions: default, corsOptions: default);
         }
@@ -5784,7 +5784,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="name"> The name of the knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.KnowledgeSourceReference"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KnowledgeSourceReference KnowledgeSourceReference(string name)
+        public static KnowledgeSourceReference KnowledgeSourceReference(string name = default)
         {
             return KnowledgeSourceReference(name: name, enableImageServing: default, enableFreshness: default);
         }
@@ -5796,7 +5796,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="semanticConfigurationName"> Used to specify a different semantic configuration on the target search index other than the default one. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexKnowledgeSourceParameters"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchIndexKnowledgeSourceParameters SearchIndexKnowledgeSourceParameters(string searchIndexName, IEnumerable<SearchIndexFieldReference> sourceDataFields, IEnumerable<SearchIndexFieldReference> searchFields, string semanticConfigurationName)
+        public static SearchIndexKnowledgeSourceParameters SearchIndexKnowledgeSourceParameters(string searchIndexName = default, IEnumerable<SearchIndexFieldReference> sourceDataFields = default, IEnumerable<SearchIndexFieldReference> searchFields = default, string semanticConfigurationName = default)
         {
             return SearchIndexKnowledgeSourceParameters(searchIndexName: searchIndexName, sourceDataFields: sourceDataFields, searchFields: searchFields, semanticConfigurationName: semanticConfigurationName, baseFilter: default);
         }
@@ -5811,7 +5811,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="aiServices"> Optional AI Services configuration for content processing. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeSourceIngestionParameters"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KnowledgeSourceIngestionParameters KnowledgeSourceIngestionParameters(SearchIndexerDataIdentity identity, KnowledgeSourceVectorizer embeddingModel, KnowledgeBaseModel chatCompletionModel, bool? disableImageVerbalization, IndexingSchedule ingestionSchedule, KnowledgeSourceContentExtractionMode? contentExtractionMode, AIServices aiServices)
+        public static KnowledgeSourceIngestionParameters KnowledgeSourceIngestionParameters(SearchIndexerDataIdentity identity = default, KnowledgeSourceVectorizer embeddingModel = default, KnowledgeBaseModel chatCompletionModel = default, bool? disableImageVerbalization = default, IndexingSchedule ingestionSchedule = default, KnowledgeSourceContentExtractionMode? contentExtractionMode = default, AIServices aiServices = default)
         {
             return KnowledgeSourceIngestionParameters(identity: identity, embeddingModel: embeddingModel, chatCompletionModel: chatCompletionModel, disableImageVerbalization: disableImageVerbalization, ingestionSchedule: ingestionSchedule, ingestionPermissionOptions: default, contentExtractionMode: contentExtractionMode, aiServices: aiServices, assetStore: default, freshnessPolicy: default);
         }
@@ -5820,7 +5820,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="domains"> Domain allow/block configuration for web results. </param>
         /// <returns> A new <see cref="Indexes.Models.WebKnowledgeSourceParameters"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static WebKnowledgeSourceParameters WebKnowledgeSourceParameters(WebKnowledgeSourceDomains domains)
+        public static WebKnowledgeSourceParameters WebKnowledgeSourceParameters(WebKnowledgeSourceDomains domains = default)
         {
             return WebKnowledgeSourceParameters(domains: domains, language: default, market: default, count: default, freshness: default);
         }
@@ -5875,7 +5875,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="maximumPagesToTake"> Only applicable when textSplitMode is set to 'pages'. If specified, the SplitSkill will discontinue splitting after processing the first 'maximumPagesToTake' pages, in order to improve performance when only a few initial pages are needed from each document. </param>
         /// <returns> A new <see cref="Indexes.Models.SplitSkill"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SplitSkill SplitSkill(string name, string description, string context, IEnumerable<InputFieldMappingEntry> inputs, IEnumerable<OutputFieldMappingEntry> outputs, SplitSkillLanguage? defaultLanguageCode, TextSplitMode? textSplitMode, int? maximumPageLength, int? pageOverlapLength, int? maximumPagesToTake)
+        public static SplitSkill SplitSkill(string name = default, string description = default, string context = default, IEnumerable<InputFieldMappingEntry> inputs = default, IEnumerable<OutputFieldMappingEntry> outputs = default, SplitSkillLanguage? defaultLanguageCode = default, TextSplitMode? textSplitMode = default, int? maximumPageLength = default, int? pageOverlapLength = default, int? maximumPagesToTake = default)
         {
             return SplitSkill(name: name, description: description, context: context, inputs: inputs, outputs: outputs, defaultLanguageCode: defaultLanguageCode, textSplitMode: textSplitMode, maximumPageLength: maximumPageLength, pageOverlapLength: pageOverlapLength, maximumPagesToTake: maximumPagesToTake, unit: default, azureOpenAITokenizerParameters: default);
         }
@@ -5886,7 +5886,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="overlapLength"> The length of overlap provided between two text chunks. Default is 0. </param>
         /// <returns> A new <see cref="Indexes.Models.ContentUnderstandingSkillChunkingProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContentUnderstandingSkillChunkingProperties ContentUnderstandingSkillChunkingProperties(ContentUnderstandingSkillChunkingUnit? unit, int? maximumLength, int? overlapLength)
+        public static ContentUnderstandingSkillChunkingProperties ContentUnderstandingSkillChunkingProperties(ContentUnderstandingSkillChunkingUnit? unit = default, int? maximumLength = default, int? overlapLength = default)
         {
             return ContentUnderstandingSkillChunkingProperties(@method: default, unit: unit, maximumLength: maximumLength, overlapLength: overlapLength);
         }
@@ -5897,7 +5897,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="identity"> The user-assigned managed identity used for connections to Azure Storage when writing knowledge store projections. If the connection string indicates an identity (ResourceId) and it's not specified, the system-assigned managed identity is used. On updates to the indexer, if the identity is unspecified, the value remains unchanged. If set to "none", the value of this property is cleared. </param>
         /// <returns> A new <see cref="Indexes.Models.KnowledgeStore"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KnowledgeStore KnowledgeStore(string storageConnectionString, IEnumerable<KnowledgeStoreProjection> projections, SearchIndexerDataIdentity identity)
+        public static KnowledgeStore KnowledgeStore(string storageConnectionString = default, IEnumerable<KnowledgeStoreProjection> projections = default, SearchIndexerDataIdentity identity = default)
         {
             return KnowledgeStore(storageConnectionString: storageConnectionString, projections: projections, identity: identity, parameters: default);
         }
@@ -5910,7 +5910,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="knowledgeSourceParams"> A list of runtime parameters for the knowledge sources. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseRetrievalRequest"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KnowledgeBaseRetrievalRequest KnowledgeBaseRetrievalRequest(IEnumerable<KnowledgeRetrievalIntent> intents, int? maxRuntimeInSeconds, int? maxOutputSizeInTokens, bool? includeActivity, IEnumerable<KnowledgeSourceParams> knowledgeSourceParams)
+        public static KnowledgeBaseRetrievalRequest KnowledgeBaseRetrievalRequest(IEnumerable<KnowledgeRetrievalIntent> intents = default, int? maxRuntimeInSeconds = default, int? maxOutputSizeInTokens = default, bool? includeActivity = default, IEnumerable<KnowledgeSourceParams> knowledgeSourceParams = default)
         {
             return KnowledgeBaseRetrievalRequest(messages: default, intents: intents, maxRuntimeInSeconds: maxRuntimeInSeconds, maxOutputSize: default, maxOutputDocuments: default, maxOutputSizeInTokens: maxOutputSizeInTokens, retrievalReasoningEffort: default, includeActivity: includeActivity, outputMode: default, knowledgeSourceParams: knowledgeSourceParams);
         }
@@ -5923,7 +5923,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="filterAddOn"> A filter condition applied to the index (e.g., 'State eq VA'). </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.SearchIndexKnowledgeSourceParams"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchIndexKnowledgeSourceParams SearchIndexKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, float? rerankerThreshold, string filterAddOn)
+        public static SearchIndexKnowledgeSourceParams SearchIndexKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, float? rerankerThreshold = default, string filterAddOn = default)
         {
             return SearchIndexKnowledgeSourceParams(knowledgeSourceName: knowledgeSourceName, includeReferences: includeReferences, includeReferenceSourceData: includeReferenceSourceData, alwaysQuerySource: default, failOnError: default, rerankerThreshold: rerankerThreshold, maxOutputDocuments: default, enableImageServing: default, filterAddOn: filterAddOn);
         }
@@ -5935,7 +5935,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.AzureBlobKnowledgeSourceParams"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AzureBlobKnowledgeSourceParams AzureBlobKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, float? rerankerThreshold)
+        public static AzureBlobKnowledgeSourceParams AzureBlobKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, float? rerankerThreshold = default)
         {
             return AzureBlobKnowledgeSourceParams(knowledgeSourceName: knowledgeSourceName, includeReferences: includeReferences, includeReferenceSourceData: includeReferenceSourceData, alwaysQuerySource: default, failOnError: default, rerankerThreshold: rerankerThreshold, maxOutputDocuments: default, enableImageServing: default);
         }
@@ -5947,7 +5947,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.IndexedOneLakeKnowledgeSourceParams"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static IndexedOneLakeKnowledgeSourceParams IndexedOneLakeKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, float? rerankerThreshold)
+        public static IndexedOneLakeKnowledgeSourceParams IndexedOneLakeKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, float? rerankerThreshold = default)
         {
             return IndexedOneLakeKnowledgeSourceParams(knowledgeSourceName: knowledgeSourceName, includeReferences: includeReferences, includeReferenceSourceData: includeReferenceSourceData, alwaysQuerySource: default, failOnError: default, rerankerThreshold: rerankerThreshold, maxOutputDocuments: default, enableImageServing: default);
         }
@@ -5963,7 +5963,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="freshness"> The freshness of web results. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.WebKnowledgeSourceParams"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static WebKnowledgeSourceParams WebKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, float? rerankerThreshold, string language, string market, int? count, string freshness)
+        public static WebKnowledgeSourceParams WebKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, float? rerankerThreshold = default, string language = default, string market = default, int? count = default, string freshness = default)
         {
             return WebKnowledgeSourceParams(knowledgeSourceName: knowledgeSourceName, includeReferences: includeReferences, includeReferenceSourceData: includeReferenceSourceData, alwaysQuerySource: default, failOnError: default, rerankerThreshold: rerankerThreshold, maxOutputDocuments: default, enableImageServing: default, language: language, market: market, count: count, freshness: freshness);
         }
@@ -5974,7 +5974,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="references"> The references for the retrieval data used in the response. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseRetrievalResponse"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KnowledgeBaseRetrievalResponse KnowledgeBaseRetrievalResponse(IEnumerable<KnowledgeBaseMessage> response, IEnumerable<KnowledgeBaseActivityRecord> activity, IEnumerable<KnowledgeBaseReference> references)
+        public static KnowledgeBaseRetrievalResponse KnowledgeBaseRetrievalResponse(IEnumerable<KnowledgeBaseMessage> response = default, IEnumerable<KnowledgeBaseActivityRecord> activity = default, IEnumerable<KnowledgeBaseReference> references = default)
         {
             return KnowledgeBaseRetrievalResponse(response: response, activity: activity, references: references, responseSensitivityLabelInfo: default);
         }
@@ -5987,7 +5987,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="outputTokensCount"> The number of output tokens for the LLM web summarization activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseModelWebSummarizationActivityRecord"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KnowledgeBaseModelWebSummarizationActivityRecord KnowledgeBaseModelWebSummarizationActivityRecord(int id, int? elapsedMs, KnowledgeBaseErrorDetail error, int? inputTokensCount, int? outputTokensCount)
+        public static KnowledgeBaseModelWebSummarizationActivityRecord KnowledgeBaseModelWebSummarizationActivityRecord(int id = 0, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, int? inputTokensCount = default, int? outputTokensCount = default)
         {
             return KnowledgeBaseModelWebSummarizationActivityRecord(id: id, elapsedMs: elapsedMs, error: error, warning: default, inputTokensCount: inputTokensCount, outputTokensCount: outputTokensCount, modelName: default);
         }
@@ -6000,7 +6000,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="retrievalReasoningEffort"> The retrieval reasoning effort configuration. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id, int? elapsedMs, KnowledgeBaseErrorDetail error, int? reasoningTokens, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort)
+        public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id = 0, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, int? reasoningTokens = default, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default)
         {
             return KnowledgeBaseAgenticReasoningActivityRecord(id: id, elapsedMs: elapsedMs, error: error, warning: default, reasoningTokens: reasoningTokens, retrievalReasoningEffort: retrievalReasoningEffort);
         }
@@ -6013,7 +6013,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="docKey"> The document key for the reference. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseSearchIndexReference"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KnowledgeBaseSearchIndexReference KnowledgeBaseSearchIndexReference(string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, string docKey)
+        public static KnowledgeBaseSearchIndexReference KnowledgeBaseSearchIndexReference(string id = default, int activitySource = 0, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, string docKey = default)
         {
             return KnowledgeBaseSearchIndexReference(id: id, activitySource: activitySource, sourceData: sourceData, rerankerScore: rerankerScore, docKey: docKey, searchSensitivityLabelInfo: default);
         }
@@ -6026,7 +6026,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="blobUrl"> The blob URL for the reference. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAzureBlobReference"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KnowledgeBaseAzureBlobReference KnowledgeBaseAzureBlobReference(string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, Uri blobUrl)
+        public static KnowledgeBaseAzureBlobReference KnowledgeBaseAzureBlobReference(string id = default, int activitySource = 0, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, Uri blobUrl = default)
         {
             return KnowledgeBaseAzureBlobReference(id: id, activitySource: activitySource, sourceData: sourceData, rerankerScore: rerankerScore, blobUrl: blobUrl, searchSensitivityLabelInfo: default);
         }
@@ -6039,7 +6039,7 @@ namespace Azure.Search.Documents.Models
         /// <param name="docUrl"> The document URL for the reference. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeReference"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static KnowledgeBaseIndexedOneLakeReference KnowledgeBaseIndexedOneLakeReference(string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, Uri docUrl)
+        public static KnowledgeBaseIndexedOneLakeReference KnowledgeBaseIndexedOneLakeReference(string id = default, int activitySource = 0, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, Uri docUrl = default)
         {
             return KnowledgeBaseIndexedOneLakeReference(id: id, activitySource: activitySource, sourceData: sourceData, rerankerScore: rerankerScore, docUrl: docUrl, searchSensitivityLabelInfo: default);
         }

@@ -49,7 +49,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <param name="models"> LLM models supported for translation. </param>
         /// <returns> A new <see cref="Text.TranslationLanguage"/> instance for mocking. </returns>
-        public static TranslationLanguage TranslationLanguage(string name = default, string nativeName = default, LanguageDirectionality directionality = default, IEnumerable<string> models = default)
+        public static TranslationLanguage TranslationLanguage(string name = default, string nativeName = default, LanguageDirectionality directionality = 0, IEnumerable<string> models = default)
         {
             models ??= new ChangeTrackingList<string>();
 
@@ -79,7 +79,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <param name="toScripts"> List of scripts available to convert text to. </param>
         /// <returns> A new <see cref="Text.TransliterableScript"/> instance for mocking. </returns>
-        public static TransliterableScript TransliterableScript(string code = default, string name = default, string nativeName = default, LanguageDirectionality directionality = default, IEnumerable<LanguageScript> toScripts = default)
+        public static TransliterableScript TransliterableScript(string code = default, string name = default, string nativeName = default, LanguageDirectionality directionality = 0, IEnumerable<LanguageScript> toScripts = default)
         {
             toScripts ??= new ChangeTrackingList<LanguageScript>();
 
@@ -98,7 +98,7 @@ namespace Azure.AI.Translation.Text
         /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
         /// <param name="directionality"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
         /// <returns> A new <see cref="Text.LanguageScript"/> instance for mocking. </returns>
-        public static LanguageScript LanguageScript(string code = default, string name = default, string nativeName = default, LanguageDirectionality directionality = default)
+        public static LanguageScript LanguageScript(string code = default, string name = default, string nativeName = default, LanguageDirectionality directionality = 0)
         {
             return new LanguageScript(code, name, nativeName, directionality, additionalBinaryDataProperties: null);
         }
@@ -220,7 +220,7 @@ namespace Azure.AI.Translation.Text
         /// The score is between zero and one and a low score indicates a low confidence.
         /// </param>
         /// <returns> A new <see cref="Text.DetectedLanguage"/> instance for mocking. </returns>
-        public static DetectedLanguage DetectedLanguage(string language = default, float score = default)
+        public static DetectedLanguage DetectedLanguage(string language = default, float score = 0F)
         {
             return new DetectedLanguage(language, score, additionalBinaryDataProperties: null);
         }

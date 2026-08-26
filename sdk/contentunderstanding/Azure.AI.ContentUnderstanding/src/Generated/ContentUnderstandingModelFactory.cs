@@ -47,7 +47,7 @@ namespace Azure.AI.ContentUnderstanding
         /// </param>
         /// <param name="contents"> The extracted content. </param>
         /// <returns> A new <see cref="ContentUnderstanding.AnalysisResult"/> instance for mocking. </returns>
-        public static AnalysisResult AnalysisResult(string analyzerId = default, string apiVersion = default, DateTimeOffset? createdAt = default, IEnumerable<ResponseError> warnings = default, IEnumerable<ResponseError> infos = default, string stringEncoding = default, IEnumerable<AnalysisContent> contents = default)
+        public static AnalysisResult AnalysisResult(string analyzerId, string apiVersion, DateTimeOffset? createdAt, IEnumerable<ResponseError> warnings, IEnumerable<ResponseError> infos, string stringEncoding, IEnumerable<AnalysisContent> contents)
         {
             warnings ??= new ChangeTrackingList<ResponseError>();
             infos ??= new ChangeTrackingList<ResponseError>();
@@ -114,7 +114,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="offset"> Starting position (0-indexed) of the element in markdown, specified in characters. </param>
         /// <param name="length"> Length of the element in markdown, specified in characters. </param>
         /// <returns> A new <see cref="ContentUnderstanding.ContentSpan"/> instance for mocking. </returns>
-        public static ContentSpan ContentSpan(int offset = default, int length = default)
+        public static ContentSpan ContentSpan(int offset = 0, int length = 0)
         {
             return new ContentSpan(offset, length, additionalBinaryDataProperties: null);
         }
@@ -144,7 +144,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="segments"> List of detected content segments.  Only if enableSegment is true. </param>
         /// <param name="chunks"> List of document chunks.  Only if chunkingStrategy is configured on the analyzer. </param>
         /// <returns> A new <see cref="ContentUnderstanding.DocumentContent"/> instance for mocking. </returns>
-        public static DocumentContent DocumentContent(string mimeType = default, string analyzerId = default, string category = default, string path = default, string markdown = default, IDictionary<string, ContentField> fields = default, IDictionary<string, string> metadata = default, int startPageNumber = default, int endPageNumber = default, LengthUnit? unit = default, IEnumerable<DocumentPage> pages = default, IEnumerable<DocumentParagraph> paragraphs = default, IEnumerable<DocumentSection> sections = default, IEnumerable<DocumentTable> tables = default, IEnumerable<DocumentFigure> figures = default, IEnumerable<DocumentAnnotation> annotations = default, IEnumerable<DocumentSignature> signatures = default, IEnumerable<DocumentHyperlink> hyperlinks = default, IEnumerable<DocumentContentSegment> segments = default, IEnumerable<DocumentChunk> chunks = default)
+        public static DocumentContent DocumentContent(string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, IDictionary<string, string> metadata, int startPageNumber = default, int endPageNumber = default, LengthUnit? unit = default, IEnumerable<DocumentPage> pages = default, IEnumerable<DocumentParagraph> paragraphs = default, IEnumerable<DocumentSection> sections = default, IEnumerable<DocumentTable> tables = default, IEnumerable<DocumentFigure> figures = default, IEnumerable<DocumentAnnotation> annotations = default, IEnumerable<DocumentSignature> signatures = default, IEnumerable<DocumentHyperlink> hyperlinks = default, IEnumerable<DocumentContentSegment> segments = default, IEnumerable<DocumentChunk> chunks = default)
         {
             fields ??= new ChangeTrackingDictionary<string, ContentField>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
@@ -199,7 +199,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="barcodes"> List of barcodes in the page.  Only if enableBarcode and returnDetails are true. </param>
         /// <param name="formulas"> List of mathematical formulas in the page.  Only if enableFormula and returnDetails are true. </param>
         /// <returns> A new <see cref="ContentUnderstanding.DocumentPage"/> instance for mocking. </returns>
-        public static DocumentPage DocumentPage(int pageNumber = default, float? width = default, float? height = default, IEnumerable<ContentSpan> spans = default, float? angle = default, IEnumerable<DocumentWord> words = default, IEnumerable<DocumentLine> lines = default, IEnumerable<DocumentBarcode> barcodes = default, IEnumerable<DocumentFormula> formulas = default)
+        public static DocumentPage DocumentPage(int pageNumber = 0, float? width = default, float? height = default, IEnumerable<ContentSpan> spans = default, float? angle = default, IEnumerable<DocumentWord> words = default, IEnumerable<DocumentLine> lines = default, IEnumerable<DocumentBarcode> barcodes = default, IEnumerable<DocumentFormula> formulas = default)
         {
             spans ??= new ChangeTrackingList<ContentSpan>();
             words ??= new ChangeTrackingList<DocumentWord>();
@@ -316,7 +316,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="footnotes"> List of table footnotes. </param>
         /// <param name="role"> Semantic role of the table. </param>
         /// <returns> A new <see cref="ContentUnderstanding.DocumentTable"/> instance for mocking. </returns>
-        public static DocumentTable DocumentTable(int rowCount = default, int columnCount = default, IEnumerable<DocumentTableCell> cells = default, string source = default, ContentSpan span = default, DocumentCaption caption = default, IEnumerable<DocumentFootnote> footnotes = default, SemanticRole? role = default)
+        public static DocumentTable DocumentTable(int rowCount = 0, int columnCount = 0, IEnumerable<DocumentTableCell> cells = default, string source = default, ContentSpan span = default, DocumentCaption caption = default, IEnumerable<DocumentFootnote> footnotes = default, SemanticRole? role = default)
         {
             cells ??= new ChangeTrackingList<DocumentTableCell>();
             footnotes ??= new ChangeTrackingList<DocumentFootnote>();
@@ -344,7 +344,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="span"> Span of the table cell in the markdown content. </param>
         /// <param name="elements"> Child elements of the table cell. </param>
         /// <returns> A new <see cref="ContentUnderstanding.DocumentTableCell"/> instance for mocking. </returns>
-        public static DocumentTableCell DocumentTableCell(DocumentTableCellKind? kind = default, int rowIndex = default, int columnIndex = default, int? rowSpan = default, int? columnSpan = default, string content = default, string source = default, ContentSpan span = default, IEnumerable<string> elements = default)
+        public static DocumentTableCell DocumentTableCell(DocumentTableCellKind? kind = default, int rowIndex = 0, int columnIndex = 0, int? rowSpan = default, int? columnSpan = default, string content = default, string source = default, ContentSpan span = default, IEnumerable<string> elements = default)
         {
             elements ??= new ChangeTrackingList<string>();
 
@@ -570,7 +570,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="confidence"> Confidence of the segmentation and category classification. </param>
         /// <param name="source"> Encoded source that identifies the position of the segment in the content. Can be used as the 'range' input to route this segment to a sub-analyzer. </param>
         /// <returns> A new <see cref="ContentUnderstanding.DocumentContentSegment"/> instance for mocking. </returns>
-        public static DocumentContentSegment DocumentContentSegment(string segmentId = default, string category = default, ContentSpan span = default, int startPageNumber = default, int endPageNumber = default, float? confidence = default, string source = default)
+        public static DocumentContentSegment DocumentContentSegment(string segmentId, string category, ContentSpan span, int startPageNumber, int endPageNumber, float? confidence, string source = default)
         {
             return new DocumentContentSegment(
                 segmentId,
@@ -611,7 +611,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="transcriptPhrases"> List of transcript phrases.  Only if returnDetails is true. </param>
         /// <param name="segments"> List of detected content segments.  Only if enableSegment is true. </param>
         /// <returns> A new <see cref="ContentUnderstanding.AudioVisualContent"/> instance for mocking. </returns>
-        public static AudioVisualContent AudioVisualContent(string mimeType = default, string analyzerId = default, string category = default, string path = default, string markdown = default, IDictionary<string, ContentField> fields = default, IDictionary<string, string> metadata = default, long startTimeMsValue = default, long endTimeMsValue = default, int? width = default, int? height = default, IEnumerable<long> cameraShotTimesMsValues = default, IEnumerable<long> keyFrameTimesMsValues = default, IEnumerable<TranscriptPhrase> transcriptPhrases = default, IEnumerable<AudioVisualContentSegment> segments = default)
+        public static AudioVisualContent AudioVisualContent(string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, IDictionary<string, string> metadata, long startTimeMsValue = default, long endTimeMsValue = default, int? width = default, int? height = default, IEnumerable<long> cameraShotTimesMsValues = default, IEnumerable<long> keyFrameTimesMsValues = default, IEnumerable<TranscriptPhrase> transcriptPhrases = default, IEnumerable<AudioVisualContentSegment> segments = default)
         {
             fields ??= new ChangeTrackingDictionary<string, ContentField>();
             metadata ??= new ChangeTrackingDictionary<string, string>();
@@ -650,7 +650,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="span"> Span of the phrase in the markdown content. </param>
         /// <param name="words"> List of words in the phrase. </param>
         /// <returns> A new <see cref="ContentUnderstanding.TranscriptPhrase"/> instance for mocking. </returns>
-        public static TranscriptPhrase TranscriptPhrase(string speaker = default, long startTimeMsValue = default, long endTimeMsValue = default, string locale = default, string text = default, float? confidence = default, ContentSpan span = default, IEnumerable<TranscriptWord> words = default)
+        public static TranscriptPhrase TranscriptPhrase(string speaker = default, long startTimeMsValue = 0L, long endTimeMsValue = 0L, string locale = default, string text = default, float? confidence = default, ContentSpan span = default, IEnumerable<TranscriptWord> words = default)
         {
             words ??= new ChangeTrackingList<TranscriptWord>();
 
@@ -672,7 +672,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="text"> Transcript text. </param>
         /// <param name="span"> Span of the word in the markdown content. </param>
         /// <returns> A new <see cref="ContentUnderstanding.TranscriptWord"/> instance for mocking. </returns>
-        public static TranscriptWord TranscriptWord(long startTimeMsValue = default, long endTimeMsValue = default, string text = default, ContentSpan span = default)
+        public static TranscriptWord TranscriptWord(long startTimeMsValue = 0L, long endTimeMsValue = 0L, string text = default, ContentSpan span = default)
         {
             return new TranscriptWord(startTimeMsValue, endTimeMsValue, text, span, additionalBinaryDataProperties: null);
         }
@@ -684,7 +684,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="startTimeMsValue"> Start time of the segment in milliseconds. </param>
         /// <param name="endTimeMsValue"> End time of the segment in milliseconds. </param>
         /// <returns> A new <see cref="ContentUnderstanding.AudioVisualContentSegment"/> instance for mocking. </returns>
-        public static AudioVisualContentSegment AudioVisualContentSegment(string segmentId = default, string category = default, ContentSpan span = default, long startTimeMsValue = default, long endTimeMsValue = default)
+        public static AudioVisualContentSegment AudioVisualContentSegment(string segmentId = default, string category = default, ContentSpan span = default, long startTimeMsValue = 0L, long endTimeMsValue = 0L)
         {
             return new AudioVisualContentSegment(
                 segmentId,
@@ -821,7 +821,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="allowInPageSegments"> Enable sub-page segmentation. When true, segments may cover a portion of a page instead of full pages. </param>
         /// <param name="chunkingStrategy"> Strategy for chunking document content into smaller units for RAG scenarios. When omitted, chunking is disabled. </param>
         /// <returns> A new <see cref="ContentUnderstanding.ContentAnalyzerConfig"/> instance for mocking. </returns>
-        public static ContentAnalyzerConfig ContentAnalyzerConfig(bool? shouldReturnDetails = default, IEnumerable<string> locales = default, bool? enableOcr = default, bool? enableLayout = default, bool? enableFigureDescription = default, bool? enableFigureAnalysis = default, bool? enableFormula = default, TableFormat? tableFormat = default, ChartFormat? chartFormat = default, AnnotationFormat? annotationFormat = default, bool? disableFaceBlurring = default, bool? estimateFieldSourceAndConfidence = default, IDictionary<string, ContentCategoryDefinition> contentCategories = default, bool? enableSegment = default, bool? segmentPerPage = default, bool? shouldOmitContent = default, ContentAnalyzerWorkflow? workflow = default, bool? allowInputTruncation = default, bool? allowInPageSegments = default, ChunkingStrategy chunkingStrategy = default)
+        public static ContentAnalyzerConfig ContentAnalyzerConfig(bool? shouldReturnDetails, IEnumerable<string> locales, bool? enableOcr, bool? enableLayout, bool? enableFigureDescription, bool? enableFigureAnalysis, bool? enableFormula, TableFormat? tableFormat, ChartFormat? chartFormat, AnnotationFormat? annotationFormat, bool? disableFaceBlurring, bool? estimateFieldSourceAndConfidence, IDictionary<string, ContentCategoryDefinition> contentCategories, bool? enableSegment, bool? segmentPerPage, bool? shouldOmitContent, ContentAnalyzerWorkflow? workflow, bool? allowInputTruncation = default, bool? allowInPageSegments = default, ChunkingStrategy chunkingStrategy = default)
         {
             locales ??= new ChangeTrackingList<string>();
             contentCategories ??= new ChangeTrackingDictionary<string, ContentCategoryDefinition>();
@@ -991,7 +991,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="contents"> The extracted content. </param>
         /// <returns> A new <see cref="ContentUnderstanding.AnalysisResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AnalysisResult AnalysisResult(string analyzerId, string apiVersion, DateTimeOffset? createdAt, IEnumerable<ResponseError> warnings, string stringEncoding, IEnumerable<AnalysisContent> contents)
+        public static AnalysisResult AnalysisResult(string analyzerId = default, string apiVersion = default, DateTimeOffset? createdAt = default, IEnumerable<ResponseError> warnings = default, string stringEncoding = default, IEnumerable<AnalysisContent> contents = default)
         {
             return AnalysisResult(analyzerId: analyzerId, apiVersion: apiVersion, createdAt: createdAt, warnings: warnings, infos: default, stringEncoding: stringEncoding, contents: contents);
         }
@@ -1019,7 +1019,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="segments"> List of detected content segments.  Only if enableSegment is true. </param>
         /// <returns> A new <see cref="ContentUnderstanding.DocumentContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DocumentContent DocumentContent(string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, int startPageNumber, int endPageNumber, LengthUnit? unit, IEnumerable<DocumentPage> pages, IEnumerable<DocumentParagraph> paragraphs, IEnumerable<DocumentSection> sections, IEnumerable<DocumentTable> tables, IEnumerable<DocumentFigure> figures, IEnumerable<DocumentAnnotation> annotations, IEnumerable<DocumentHyperlink> hyperlinks, IEnumerable<DocumentContentSegment> segments)
+        public static DocumentContent DocumentContent(string mimeType = default, string analyzerId = default, string category = default, string path = default, string markdown = default, IDictionary<string, ContentField> fields = default, int startPageNumber = 0, int endPageNumber = 0, LengthUnit? unit = default, IEnumerable<DocumentPage> pages = default, IEnumerable<DocumentParagraph> paragraphs = default, IEnumerable<DocumentSection> sections = default, IEnumerable<DocumentTable> tables = default, IEnumerable<DocumentFigure> figures = default, IEnumerable<DocumentAnnotation> annotations = default, IEnumerable<DocumentHyperlink> hyperlinks = default, IEnumerable<DocumentContentSegment> segments = default)
         {
             return DocumentContent(mimeType: mimeType, analyzerId: analyzerId, category: category, path: path, markdown: markdown, fields: fields, metadata: default, startPageNumber: startPageNumber, endPageNumber: endPageNumber, unit: unit, pages: pages, paragraphs: paragraphs, sections: sections, tables: tables, figures: figures, annotations: annotations, signatures: default, hyperlinks: hyperlinks, segments: segments, chunks: default);
         }
@@ -1032,7 +1032,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="endPageNumber"> End page number (1-indexed) of the segment. </param>
         /// <returns> A new <see cref="ContentUnderstanding.DocumentContentSegment"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DocumentContentSegment DocumentContentSegment(string segmentId, string category, ContentSpan span, int startPageNumber, int endPageNumber)
+        public static DocumentContentSegment DocumentContentSegment(string segmentId = default, string category = default, ContentSpan span = default, int startPageNumber = 0, int endPageNumber = 0)
         {
             return DocumentContentSegment(segmentId: segmentId, category: category, span: span, startPageNumber: startPageNumber, endPageNumber: endPageNumber, confidence: default, source: default);
         }
@@ -1054,7 +1054,7 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="segments"> List of detected content segments.  Only if enableSegment is true. </param>
         /// <returns> A new <see cref="ContentUnderstanding.AudioVisualContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AudioVisualContent AudioVisualContent(string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, long startTimeMsValue, long endTimeMsValue, int? width, int? height, IEnumerable<long> cameraShotTimesMsValues, IEnumerable<long> keyFrameTimesMsValues, IEnumerable<TranscriptPhrase> transcriptPhrases, IEnumerable<AudioVisualContentSegment> segments)
+        public static AudioVisualContent AudioVisualContent(string mimeType = default, string analyzerId = default, string category = default, string path = default, string markdown = default, IDictionary<string, ContentField> fields = default, long startTimeMsValue = 0L, long endTimeMsValue = 0L, int? width = default, int? height = default, IEnumerable<long> cameraShotTimesMsValues = default, IEnumerable<long> keyFrameTimesMsValues = default, IEnumerable<TranscriptPhrase> transcriptPhrases = default, IEnumerable<AudioVisualContentSegment> segments = default)
         {
             return AudioVisualContent(mimeType: mimeType, analyzerId: analyzerId, category: category, path: path, markdown: markdown, fields: fields, metadata: default, startTimeMsValue: startTimeMsValue, endTimeMsValue: endTimeMsValue, width: width, height: height, cameraShotTimesMsValues: cameraShotTimesMsValues, keyFrameTimesMsValues: keyFrameTimesMsValues, transcriptPhrases: transcriptPhrases, segments: segments);
         }
@@ -1081,7 +1081,7 @@ namespace Azure.AI.ContentUnderstanding
         /// </param>
         /// <returns> A new <see cref="ContentUnderstanding.ContentAnalyzerConfig"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContentAnalyzerConfig ContentAnalyzerConfig(bool? shouldReturnDetails, IEnumerable<string> locales, bool? enableOcr, bool? enableLayout, bool? enableFigureDescription, bool? enableFigureAnalysis, bool? enableFormula, TableFormat? tableFormat, ChartFormat? chartFormat, AnnotationFormat? annotationFormat, bool? disableFaceBlurring, bool? estimateFieldSourceAndConfidence, IDictionary<string, ContentCategoryDefinition> contentCategories, bool? enableSegment, bool? segmentPerPage, bool? shouldOmitContent)
+        public static ContentAnalyzerConfig ContentAnalyzerConfig(bool? shouldReturnDetails = default, IEnumerable<string> locales = default, bool? enableOcr = default, bool? enableLayout = default, bool? enableFigureDescription = default, bool? enableFigureAnalysis = default, bool? enableFormula = default, TableFormat? tableFormat = default, ChartFormat? chartFormat = default, AnnotationFormat? annotationFormat = default, bool? disableFaceBlurring = default, bool? estimateFieldSourceAndConfidence = default, IDictionary<string, ContentCategoryDefinition> contentCategories = default, bool? enableSegment = default, bool? segmentPerPage = default, bool? shouldOmitContent = default)
         {
             return ContentAnalyzerConfig(shouldReturnDetails: shouldReturnDetails, locales: locales, enableOcr: enableOcr, enableLayout: enableLayout, enableFigureDescription: enableFigureDescription, enableFigureAnalysis: enableFigureAnalysis, enableFormula: enableFormula, tableFormat: tableFormat, chartFormat: chartFormat, annotationFormat: annotationFormat, disableFaceBlurring: disableFaceBlurring, estimateFieldSourceAndConfidence: estimateFieldSourceAndConfidence, contentCategories: contentCategories, enableSegment: enableSegment, segmentPerPage: segmentPerPage, shouldOmitContent: shouldOmitContent, workflow: default, allowInputTruncation: default, allowInPageSegments: default, chunkingStrategy: default);
         }

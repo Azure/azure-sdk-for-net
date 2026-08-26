@@ -24,7 +24,7 @@ namespace Azure.AI.Projects
         /// <param name="credentials"> The credentials used by the connection. </param>
         /// <param name="metadata"> Metadata of the connection. </param>
         /// <returns> A new <see cref="Projects.AIProjectConnection"/> instance for mocking. </returns>
-        public static AIProjectConnection AIProjectConnection(string name = default, string id = default, ConnectionType @type = default, string target = default, bool isDefault = default, AIProjectConnectionBaseCredential credentials = default, IReadOnlyDictionary<string, string> metadata = default)
+        public static AIProjectConnection AIProjectConnection(string name = default, string id = default, ConnectionType @type = default, string target = default, bool isDefault = false, AIProjectConnectionBaseCredential credentials = default, IReadOnlyDictionary<string, string> metadata = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
 
@@ -543,7 +543,7 @@ namespace Azure.AI.Projects
         /// <param name="size"> Sku size. </param>
         /// <param name="tier"> Sku tier. </param>
         /// <returns> A new <see cref="Projects.ModelDeploymentSku"/> instance for mocking. </returns>
-        public static ModelDeploymentSku ModelDeploymentSku(long capacity = default, string family = default, string name = default, string size = default, string tier = default)
+        public static ModelDeploymentSku ModelDeploymentSku(long capacity = 0L, string family = default, string name = default, string size = default, string tier = default)
         {
             return new ModelDeploymentSku(
                 capacity,
@@ -621,7 +621,7 @@ namespace Azure.AI.Projects
         /// <param name="enabled"> Indicates whether the evaluation rule is enabled. Default is true. </param>
         /// <param name="systemData"> System metadata for the evaluation rule. </param>
         /// <returns> A new <see cref="Evaluation.EvaluationRule"/> instance for mocking. </returns>
-        public static EvaluationRule EvaluationRule(string id = default, string displayName = default, string description = default, EvaluationRuleAction action = default, EvaluationRuleFilter filter = default, EvaluationRuleEventType eventType = default, bool enabled = default, IReadOnlyDictionary<string, string> systemData = default)
+        public static EvaluationRule EvaluationRule(string id = default, string displayName = default, string description = default, EvaluationRuleAction action = default, EvaluationRuleFilter filter = default, EvaluationRuleEventType eventType = default, bool enabled = false, IReadOnlyDictionary<string, string> systemData = default)
         {
             systemData ??= new ChangeTrackingDictionary<string, string>();
 
@@ -653,7 +653,7 @@ namespace Azure.AI.Projects
         /// <param name="maxHourlyRuns"> Maximum number of evaluation runs allowed per hour. </param>
         /// <param name="samplingRate"> Percentage (0-100] chance that a matching event triggers an evaluation. When omitted, the service-default is to evaluate every event, which is equivalent to setting a sampling rate of 100. </param>
         /// <returns> A new <see cref="Evaluation.ContinuousEvaluationRuleAction"/> instance for mocking. </returns>
-        public static ContinuousEvaluationRuleAction ContinuousEvaluationRuleAction(string evalId = default, int? maxHourlyRuns = default, double? samplingRate = default)
+        public static ContinuousEvaluationRuleAction ContinuousEvaluationRuleAction(string evalId, int? maxHourlyRuns, double? samplingRate)
         {
             return new ContinuousEvaluationRuleAction(EvaluationRuleActionType.ContinuousEvaluation, additionalBinaryDataProperties: null, evalId, maxHourlyRuns, samplingRate);
         }
@@ -754,7 +754,7 @@ namespace Azure.AI.Projects
         /// <param name="seed"> The random seed for reproducibility. Defaults to 42. </param>
         /// <param name="maxCompletionTokens"> The maximum number of tokens allowed in the completion. </param>
         /// <returns> A new <see cref="Evaluation.ModelSamplingParams"/> instance for mocking. </returns>
-        public static ModelSamplingParams ModelSamplingParams(float temperature = default, float topP = default, int seed = default, int maxCompletionTokens = default)
+        public static ModelSamplingParams ModelSamplingParams(float temperature = 0F, float topP = 0F, int seed = 0, int maxCompletionTokens = 0)
         {
             return new ModelSamplingParams(temperature, topP, seed, maxCompletionTokens, additionalBinaryDataProperties: null);
         }
@@ -809,7 +809,7 @@ namespace Azure.AI.Projects
         /// <param name="properties"> Additional properties for the taxonomy sub-category. </param>
         /// <returns> A new <see cref="Evaluation.TaxonomySubCategory"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TaxonomySubCategory TaxonomySubCategory(string id = default, string name = default, string description = default, bool isEnabled = default, IDictionary<string, string> properties = default)
+        public static TaxonomySubCategory TaxonomySubCategory(string id = default, string name = default, string description = default, bool isEnabled = false, IDictionary<string, string> properties = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
 
@@ -842,7 +842,7 @@ namespace Azure.AI.Projects
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorVersion"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static EvaluatorVersion EvaluatorVersion(string displayName = default, IDictionary<string, string> metadata = default, EvaluatorType evaluatorType = default, IEnumerable<EvaluatorCategory> categories = default, IEnumerable<ProjectsEvaluationLevel> supportedEvaluationLevels = default, EvaluatorDefinition definition = default, EvaluatorGenerationArtifacts generationArtifacts = default, string generationJobId = default, IEnumerable<GenerationWarningType> warnings = default, string createdBy = default, string createdAt = default, string modifiedAt = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
+        public static EvaluatorVersion EvaluatorVersion(string displayName, IDictionary<string, string> metadata, EvaluatorType evaluatorType, IEnumerable<EvaluatorCategory> categories, IEnumerable<ProjectsEvaluationLevel> supportedEvaluationLevels, EvaluatorDefinition definition, EvaluatorGenerationArtifacts generationArtifacts, string generationJobId, IEnumerable<GenerationWarningType> warnings, string createdBy, string createdAt, string modifiedAt, string id, string name, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
             categories ??= new ChangeTrackingList<EvaluatorCategory>();
@@ -897,7 +897,7 @@ namespace Azure.AI.Projects
         /// <param name="isPrimary"> Indicates if this metric is primary when there are multiple metrics. </param>
         /// <returns> A new <see cref="Evaluation.EvaluatorMetric"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static EvaluatorMetric EvaluatorMetric(EvaluatorMetricType? @type = default, EvaluatorMetricDirection? desirableDirection = default, float? minValue = default, float? maxValue = default, float? threshold = default, bool? isPrimary = default)
+        public static EvaluatorMetric EvaluatorMetric(EvaluatorMetricType? @type, EvaluatorMetricDirection? desirableDirection, float? minValue, float? maxValue, float? threshold, bool? isPrimary)
         {
             return new EvaluatorMetric(
                 @type,
@@ -919,7 +919,7 @@ namespace Azure.AI.Projects
         /// <param name="blobUri"> The blob URI for the evaluator storage. </param>
         /// <returns> A new <see cref="Evaluation.CodeBasedEvaluatorDefinition"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static CodeBasedEvaluatorDefinition CodeBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, string codeText = default, string entryPoint = default, string imageTag = default, Uri blobUri = default)
+        public static CodeBasedEvaluatorDefinition CodeBasedEvaluatorDefinition(BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, string codeText, string entryPoint, string imageTag = default, Uri blobUri = default)
         {
             metrics ??= new ChangeTrackingDictionary<string, EvaluatorMetric>();
 
@@ -1298,7 +1298,7 @@ namespace Azure.AI.Projects
         /// <param name="standardDeviation"> Standard deviation of the metric in the evaluation run. </param>
         /// <returns> A new <see cref="Evaluation.EvalRunResultSummary"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static EvalRunResultSummary EvalRunResultSummary(string runId = default, int sampleCount = default, float average = default, float standardDeviation = default)
+        public static EvalRunResultSummary EvalRunResultSummary(string runId = default, int sampleCount = 0, float average = 0F, float standardDeviation = 0F)
         {
             return new EvalRunResultSummary(runId, sampleCount, average, standardDeviation, additionalBinaryDataProperties: null);
         }
@@ -1311,7 +1311,7 @@ namespace Azure.AI.Projects
         /// <param name="treatmentEffect"> Type of treatment effect. </param>
         /// <returns> A new <see cref="Evaluation.EvalRunResultCompareItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static EvalRunResultCompareItem EvalRunResultCompareItem(string treatmentRunId = default, EvalRunResultSummary treatmentRunSummary = default, float deltaEstimate = default, float pValue = default, TreatmentEffectType treatmentEffect = default)
+        public static EvalRunResultCompareItem EvalRunResultCompareItem(string treatmentRunId = default, EvalRunResultSummary treatmentRunSummary = default, float deltaEstimate = 0F, float pValue = 0F, TreatmentEffectType treatmentEffect = default)
         {
             return new EvalRunResultCompareItem(
                 treatmentRunId,
@@ -1368,7 +1368,7 @@ namespace Azure.AI.Projects
         /// <param name="usage"> Token usage while performing clustering analysis. </param>
         /// <returns> A new <see cref="Evaluation.InsightSummary"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static InsightSummary InsightSummary(int sampleCount = default, int uniqueSubclusterCount = default, int uniqueClusterCount = default, string methodName = default, ClusterTokenUsage usage = default)
+        public static InsightSummary InsightSummary(int sampleCount = 0, int uniqueSubclusterCount = 0, int uniqueClusterCount = 0, string methodName = default, ClusterTokenUsage usage = default)
         {
             return new InsightSummary(
                 sampleCount,
@@ -1385,7 +1385,7 @@ namespace Azure.AI.Projects
         /// <param name="totalTokenUsage"> total token usage. </param>
         /// <returns> A new <see cref="Evaluation.ClusterTokenUsage"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ClusterTokenUsage ClusterTokenUsage(int inputTokenUsage = default, int outputTokenUsage = default, int totalTokenUsage = default)
+        public static ClusterTokenUsage ClusterTokenUsage(int inputTokenUsage = 0, int outputTokenUsage = 0, int totalTokenUsage = 0)
         {
             return new ClusterTokenUsage(inputTokenUsage, outputTokenUsage, totalTokenUsage, additionalBinaryDataProperties: null);
         }
@@ -1401,7 +1401,7 @@ namespace Azure.AI.Projects
         /// <param name="samples"> List of samples that belong to this cluster. Empty if samples are part of subclusters. </param>
         /// <returns> A new <see cref="Evaluation.InsightCluster"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static InsightCluster InsightCluster(string id = default, string label = default, string suggestion = default, string suggestionTitle = default, string description = default, int weight = default, IEnumerable<InsightCluster> subClusters = default, IEnumerable<InsightSample> samples = default)
+        public static InsightCluster InsightCluster(string id = default, string label = default, string suggestion = default, string suggestionTitle = default, string description = default, int weight = 0, IEnumerable<InsightCluster> subClusters = default, IEnumerable<InsightSample> samples = default)
         {
             subClusters ??= new ChangeTrackingList<InsightCluster>();
             samples ??= new ChangeTrackingList<InsightSample>();
@@ -1464,7 +1464,7 @@ namespace Azure.AI.Projects
         /// <param name="isPassed"> indicates if the check passed or failed. </param>
         /// <returns> A new <see cref="Evaluation.EvalResult"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static EvalResult EvalResult(string name = default, string @type = default, float score = default, bool isPassed = default)
+        public static EvalResult EvalResult(string name = default, string @type = default, float score = 0F, bool isPassed = false)
         {
             return new EvalResult(name, @type, score, isPassed, additionalBinaryDataProperties: null);
         }
@@ -1475,7 +1475,7 @@ namespace Azure.AI.Projects
         /// <param name="size"> Size of the chart element. </param>
         /// <returns> A new <see cref="Evaluation.ChartCoordinate"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ChartCoordinate ChartCoordinate(int x = default, int y = default, int size = default)
+        public static ChartCoordinate ChartCoordinate(int x = 0, int y = 0, int size = 0)
         {
             return new ChartCoordinate(x, y, size, additionalBinaryDataProperties: null);
         }
@@ -1502,7 +1502,7 @@ namespace Azure.AI.Projects
         /// <param name="systemData"> System metadata for the resource. </param>
         /// <returns> A new <see cref="Evaluation.ProjectsSchedule"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ProjectsSchedule ProjectsSchedule(string id = default, string displayName = default, string description = default, bool enabled = default, ScheduleProvisioningStatus? provisioningStatus = default, ScheduleTrigger trigger = default, ProjectsScheduleTask task = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, IReadOnlyDictionary<string, string> systemData = default)
+        public static ProjectsSchedule ProjectsSchedule(string id = default, string displayName = default, string description = default, bool enabled = false, ScheduleProvisioningStatus? provisioningStatus = default, ScheduleTrigger trigger = default, ProjectsScheduleTask task = default, IDictionary<string, string> tags = default, IDictionary<string, string> properties = default, IReadOnlyDictionary<string, string> systemData = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
             properties ??= new ChangeTrackingDictionary<string, string>();
@@ -1684,7 +1684,7 @@ namespace Azure.AI.Projects
         /// <param name="properties"> Properties of the schedule run. </param>
         /// <returns> A new <see cref="Evaluation.ScheduleRun"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ScheduleRun ScheduleRun(string runId = default, string scheduleId = default, bool success = default, DateTimeOffset? triggerTime = default, string error = default, IReadOnlyDictionary<string, string> properties = default)
+        public static ScheduleRun ScheduleRun(string runId = default, string scheduleId = default, bool success = false, DateTimeOffset? triggerTime = default, string error = default, IReadOnlyDictionary<string, string> properties = default)
         {
             properties ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1729,7 +1729,7 @@ namespace Azure.AI.Projects
         /// <param name="defaultTtlSeconds"> The default time-to-live for memories in seconds. A value of `0` indicates that memories do not expire. Defaults to `0`. </param>
         /// <returns> A new <see cref="Memory.MemoryStoreDefaultOptions"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool isUserProfileEnabled = default, string userProfileDetails = default, bool isChatSummaryEnabled = default, bool? isProceduralMemoryEnabled = default, TimeSpan? defaultTtlSeconds = default)
+        public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool isUserProfileEnabled, string userProfileDetails, bool isChatSummaryEnabled, bool? isProceduralMemoryEnabled, TimeSpan? defaultTtlSeconds = default)
         {
             return new MemoryStoreDefaultOptions(
                 isUserProfileEnabled,
@@ -1771,7 +1771,7 @@ namespace Azure.AI.Projects
         /// <param name="isDeleted"> Whether the memory store was successfully deleted. </param>
         /// <returns> A new <see cref="Memory.DeleteMemoryStoreResponse"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static DeleteMemoryStoreResponse DeleteMemoryStoreResponse(string name = default, bool isDeleted = default)
+        public static DeleteMemoryStoreResponse DeleteMemoryStoreResponse(string name = default, bool isDeleted = false)
         {
             return new DeleteMemoryStoreResponse("memory_store.deleted", name, isDeleted, additionalBinaryDataProperties: null);
         }
@@ -1908,7 +1908,7 @@ namespace Azure.AI.Projects
         /// <param name="totalTokens"> The total number of tokens used. </param>
         /// <returns> A new <see cref="Memory.MemoryStoreOperationUsage"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static MemoryStoreOperationUsage MemoryStoreOperationUsage(int embeddingTokens = default, long inputTokens = default, ResponseUsageInputTokensDetails inputTokensDetails = default, long outputTokens = default, ResponseUsageOutputTokensDetails outputTokensDetails = default, long totalTokens = default)
+        public static MemoryStoreOperationUsage MemoryStoreOperationUsage(int embeddingTokens = 0, long inputTokens = 0L, ResponseUsageInputTokensDetails inputTokensDetails = default, long outputTokens = 0L, ResponseUsageOutputTokensDetails outputTokensDetails = default, long totalTokens = 0L)
         {
             return new MemoryStoreOperationUsage(
                 embeddingTokens,
@@ -1923,7 +1923,7 @@ namespace Azure.AI.Projects
         /// <summary> The ResponseUsageInputTokensDetails. </summary>
         /// <param name="cachedTokens"></param>
         /// <returns> A new <see cref="Projects.ResponseUsageInputTokensDetails"/> instance for mocking. </returns>
-        public static ResponseUsageInputTokensDetails ResponseUsageInputTokensDetails(long cachedTokens = default)
+        public static ResponseUsageInputTokensDetails ResponseUsageInputTokensDetails(long cachedTokens = 0L)
         {
             return new ResponseUsageInputTokensDetails(cachedTokens, additionalBinaryDataProperties: null);
         }
@@ -1931,7 +1931,7 @@ namespace Azure.AI.Projects
         /// <summary> The ResponseUsageOutputTokensDetails. </summary>
         /// <param name="reasoningTokens"></param>
         /// <returns> A new <see cref="Projects.ResponseUsageOutputTokensDetails"/> instance for mocking. </returns>
-        public static ResponseUsageOutputTokensDetails ResponseUsageOutputTokensDetails(long reasoningTokens = default)
+        public static ResponseUsageOutputTokensDetails ResponseUsageOutputTokensDetails(long reasoningTokens = 0L)
         {
             return new ResponseUsageOutputTokensDetails(reasoningTokens, additionalBinaryDataProperties: null);
         }
@@ -1964,7 +1964,7 @@ namespace Azure.AI.Projects
         /// <param name="isDeleted"> Whether the deletion operation was successful. </param>
         /// <returns> A new <see cref="Memory.MemoryStoreDeleteScopeResponse"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static MemoryStoreDeleteScopeResponse MemoryStoreDeleteScopeResponse(string name = default, string scope = default, bool isDeleted = default)
+        public static MemoryStoreDeleteScopeResponse MemoryStoreDeleteScopeResponse(string name = default, string scope = default, bool isDeleted = false)
         {
             return new MemoryStoreDeleteScopeResponse("memory_store.scope.deleted", name, scope, isDeleted, additionalBinaryDataProperties: null);
         }
@@ -2469,7 +2469,7 @@ namespace Azure.AI.Projects
         /// <param name="maxHourlyRuns"> Maximum number of evaluation runs allowed per hour. </param>
         /// <returns> A new <see cref="Evaluation.ContinuousEvaluationRuleAction"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContinuousEvaluationRuleAction ContinuousEvaluationRuleAction(string evalId, int? maxHourlyRuns)
+        public static ContinuousEvaluationRuleAction ContinuousEvaluationRuleAction(string evalId = default, int? maxHourlyRuns = default)
         {
             return ContinuousEvaluationRuleAction(evalId: evalId, maxHourlyRuns: maxHourlyRuns, samplingRate: default);
         }
@@ -2491,7 +2491,7 @@ namespace Azure.AI.Projects
         /// <returns> A new <see cref="Evaluation.EvaluatorVersion"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Experimental("AAIP001")]
-        public static EvaluatorVersion EvaluatorVersion(string displayName, IDictionary<string, string> metadata, EvaluatorType evaluatorType, IEnumerable<EvaluatorCategory> categories, EvaluatorDefinition definition, string createdBy, string createdAt, string modifiedAt, string id, string name, string version, string description, IDictionary<string, string> tags)
+        public static EvaluatorVersion EvaluatorVersion(string displayName = default, IDictionary<string, string> metadata = default, EvaluatorType evaluatorType = default, IEnumerable<EvaluatorCategory> categories = default, EvaluatorDefinition definition = default, string createdBy = default, string createdAt = default, string modifiedAt = default, string id = default, string name = default, string version = default, string description = default, IDictionary<string, string> tags = default)
         {
             return EvaluatorVersion(displayName: displayName, metadata: metadata, evaluatorType: evaluatorType, categories: categories, supportedEvaluationLevels: default, definition: definition, generationArtifacts: default, generationJobId: default, warnings: default, createdBy: createdBy, createdAt: createdAt, modifiedAt: modifiedAt, id: id, name: name, version: version, description: description, tags: tags);
         }
@@ -2505,7 +2505,7 @@ namespace Azure.AI.Projects
         /// <returns> A new <see cref="Evaluation.EvaluatorMetric"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Experimental("AAIP001")]
-        public static EvaluatorMetric EvaluatorMetric(EvaluatorMetricType? @type, EvaluatorMetricDirection? desirableDirection, float? minValue, float? maxValue, bool? isPrimary)
+        public static EvaluatorMetric EvaluatorMetric(EvaluatorMetricType? @type = default, EvaluatorMetricDirection? desirableDirection = default, float? minValue = default, float? maxValue = default, bool? isPrimary = default)
         {
             return EvaluatorMetric(@type: @type, desirableDirection: desirableDirection, minValue: minValue, maxValue: maxValue, threshold: default, isPrimary: isPrimary);
         }
@@ -2518,7 +2518,7 @@ namespace Azure.AI.Projects
         /// <returns> A new <see cref="Evaluation.CodeBasedEvaluatorDefinition"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Experimental("AAIP001")]
-        public static CodeBasedEvaluatorDefinition CodeBasedEvaluatorDefinition(BinaryData initParameters, BinaryData dataSchema, IDictionary<string, EvaluatorMetric> metrics, string codeText)
+        public static CodeBasedEvaluatorDefinition CodeBasedEvaluatorDefinition(BinaryData initParameters = default, BinaryData dataSchema = default, IDictionary<string, EvaluatorMetric> metrics = default, string codeText = default)
         {
             return CodeBasedEvaluatorDefinition(initParameters: initParameters, dataSchema: dataSchema, metrics: metrics, codeText: codeText, entryPoint: default, imageTag: default, blobUri: default);
         }
@@ -2530,7 +2530,7 @@ namespace Azure.AI.Projects
         /// <returns> A new <see cref="Memory.MemoryStoreDefaultOptions"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Experimental("AAIP001")]
-        public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool isUserProfileEnabled, string userProfileDetails, bool isChatSummaryEnabled)
+        public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool isUserProfileEnabled = false, string userProfileDetails = default, bool isChatSummaryEnabled = false)
         {
             return MemoryStoreDefaultOptions(isUserProfileEnabled: isUserProfileEnabled, userProfileDetails: userProfileDetails, isChatSummaryEnabled: isChatSummaryEnabled, isProceduralMemoryEnabled: default, defaultTtlSeconds: default);
         }

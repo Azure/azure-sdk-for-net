@@ -1567,7 +1567,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="receivedTimestamp"> The time at which the SMS was received. </param>
         /// <param name="segmentCount"> Number of segments in the message. </param>
         /// <returns> A new <see cref="SystemEvents.AcsSmsReceivedEventData"/> instance for mocking. </returns>
-        public static AcsSmsReceivedEventData AcsSmsReceivedEventData(string messageId = default, string @from = default, string to = default, string message = default, DateTimeOffset? receivedTimestamp = default, int segmentCount = default)
+        public static AcsSmsReceivedEventData AcsSmsReceivedEventData(string messageId = default, string @from = default, string to = default, string message = default, DateTimeOffset? receivedTimestamp = default, int segmentCount = 0)
         {
             return new AcsSmsReceivedEventData(
                 messageId,
@@ -1959,7 +1959,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="scheduledOn"> Router Job Received Scheduled Time in UTC. </param>
         /// <param name="unavailableForMatching"> Unavailable For Matching for Router Job Received. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobReceivedEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobReceivedEventData AcsRouterJobReceivedEventData(string jobId = default, string channelReference = default, string channelId = default, string queueId = default, IReadOnlyDictionary<string, string> labels = default, IReadOnlyDictionary<string, string> tags = default, AcsRouterJobStatus? status = default, string classificationPolicyId = default, int? priority = default, IEnumerable<AcsRouterWorkerSelector> requestedWorkerSelectors = default, DateTimeOffset? scheduledOn = default, bool unavailableForMatching = default)
+        public static AcsRouterJobReceivedEventData AcsRouterJobReceivedEventData(string jobId = default, string channelReference = default, string channelId = default, string queueId = default, IReadOnlyDictionary<string, string> labels = default, IReadOnlyDictionary<string, string> tags = default, AcsRouterJobStatus? status = default, string classificationPolicyId = default, int? priority = default, IEnumerable<AcsRouterWorkerSelector> requestedWorkerSelectors = default, DateTimeOffset? scheduledOn = default, bool unavailableForMatching = false)
         {
             labels ??= new ChangeTrackingDictionary<string, string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -2056,7 +2056,7 @@ namespace Azure.Messaging.EventGrid
         /// <param name="scheduledOn"> Router Job Waiting For Activation Scheduled Time in UTC. </param>
         /// <param name="unavailableForMatching"> Router Job Waiting For Activation Unavailable For Matching. </param>
         /// <returns> A new <see cref="SystemEvents.AcsRouterJobWaitingForActivationEventData"/> instance for mocking. </returns>
-        public static AcsRouterJobWaitingForActivationEventData AcsRouterJobWaitingForActivationEventData(string jobId = default, string channelReference = default, string channelId = default, string queueId = default, IReadOnlyDictionary<string, string> labels = default, IReadOnlyDictionary<string, string> tags = default, int? priority = default, IEnumerable<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = default, IEnumerable<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = default, DateTimeOffset? scheduledOn = default, bool unavailableForMatching = default)
+        public static AcsRouterJobWaitingForActivationEventData AcsRouterJobWaitingForActivationEventData(string jobId = default, string channelReference = default, string channelId = default, string queueId = default, IReadOnlyDictionary<string, string> labels = default, IReadOnlyDictionary<string, string> tags = default, int? priority = default, IEnumerable<AcsRouterWorkerSelector> expiredAttachedWorkerSelectors = default, IEnumerable<AcsRouterWorkerSelector> expiredRequestedWorkerSelectors = default, DateTimeOffset? scheduledOn = default, bool unavailableForMatching = false)
         {
             labels ??= new ChangeTrackingDictionary<string, string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
@@ -4909,7 +4909,7 @@ namespace Azure.Messaging.EventGrid
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AcsSmsReceivedEventData AcsSmsReceivedEventData(string messageId, string @from, string to, string message, DateTimeOffset? receivedTimestamp)
         {
-            return AcsSmsReceivedEventData(messageId: messageId, @from: @from, to: to, message: message, receivedTimestamp: receivedTimestamp, segmentCount: default);
+            return AcsSmsReceivedEventData(messageId: messageId, @from: @from, to: to, message: message, receivedTimestamp: receivedTimestamp, segmentCount: 0);
         }
 
         /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsEmailDeliveryReportStatusDetails"/>. </summary>
