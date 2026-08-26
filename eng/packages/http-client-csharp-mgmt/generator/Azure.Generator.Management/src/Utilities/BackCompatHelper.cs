@@ -465,7 +465,10 @@ namespace Azure.Generator.Management.Utilities
                     else if (IsETagParameter(currentParameter))
                     {
                         value = currentParameter.Type.IsValueType && !currentParameter.Type.IsNullable
-                            ? New.Instance(typeof(ETag), parameter)
+                            ? new TernaryConditionalExpression(
+                                parameter.Is(Null),
+                                Default,
+                                New.Instance(typeof(ETag), parameter))
                             : new TernaryConditionalExpression(
                                 parameter.NotEqual(Null),
                                 New.Instance(typeof(ETag), parameter),

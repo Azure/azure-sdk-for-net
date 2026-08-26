@@ -22,7 +22,7 @@ namespace Samples
         [global::Azure.Core.ForwardsClientCallsAttribute]
         public virtual string Get(string ifMatch = default)
         {
-            return this.Get(new global::Azure.ETag(ifMatch));
+            return this.Get((ifMatch is null) ? default : new global::Azure.ETag(ifMatch));
         }
     }
 }
