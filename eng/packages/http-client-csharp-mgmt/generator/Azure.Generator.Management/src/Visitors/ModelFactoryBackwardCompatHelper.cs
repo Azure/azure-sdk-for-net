@@ -13,7 +13,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Visitors
@@ -267,65 +266,24 @@ namespace Azure.Generator.Management.Visitors
                 }
             }
 
-            var signature = CreateBackwardCompatSignature(method.Signature, parameterDescriptions);
+            var signature = CreateBackwardCompatSignature(method.Signature, modelProvider, parameterDescriptions);
             updatedMethod = new MethodProvider(
                 signature,
                 Return(New.Instance(method.Signature.ReturnType, arguments)),
-                enclosingType,
-                CreateModelFactoryXmlDocs(signature, modelProvider));
+                enclosingType);
             return true;
         }
 
         /// <summary>
-        /// Mirrors how the primary factory method is documented: the model's structured summary is reused as-is so
-        /// nested lines and inner statements survive, while parameters and the return doc come from the signature,
-        /// which <see cref="CreateBackwardCompatSignature"/> has already regenerated.
-        /// </summary>
-        private static XmlDocProvider CreateModelFactoryXmlDocs(MethodSignature signature, ModelProvider modelProvider)
-        {
-            return new XmlDocProvider(
-                modelProvider.XmlDocs.Summary,
-                [.. signature.Parameters.Select(parameter => new XmlDocParamStatement(parameter))],
-                returns: new XmlDocReturnsStatement(signature.ReturnDescription!));
-        }
-
-        private static FormattableString RemoveCommonContinuationIndentation(FormattableString description)
-        {
-            var lines = description.Format.ReplaceLineEndings("\n").Split('\n');
-            if (lines.Length < 2)
-            {
-                return description;
-            }
-
-            var commonIndentation = lines
-                .Skip(1)
-                .Where(line => line.Length > 0)
-                .Select(line => line.Length - line.TrimStart().Length)
-                .DefaultIfEmpty(0)
-                .Min();
-            if (commonIndentation == 0)
-            {
-                return description;
-            }
-
-            for (int i = 1; i < lines.Length; i++)
-            {
-                lines[i] = lines[i].Length >= commonIndentation
-                    ? lines[i][commonIndentation..]
-                    : string.Empty;
-            }
-
-            return FormattableStringFactory.Create(string.Join("\n", lines), description.GetArguments());
-        }
-
-        /// <summary>
         /// Creates the hidden compatibility signature, regenerating its documentation from the current model.
-        /// The summary is deliberately left off the signature: it lives on the <see cref="XmlDocProvider"/> built by
-        /// <see cref="CreateModelFactoryXmlDocs"/>, exactly as it does for the primary factory methods, so multiple
-        /// lines and nested statements survive verbatim and the previous contract's description is never reused.
+        /// Every description comes from the current model; the previous contract supplies only the parameter list.
+        /// A parameter that no longer maps to the model has no current description, and the previous one is not
+        /// salvaged: it was parsed back out of generated C#, so it has already lost its cref text and accumulated
+        /// the writer's indentation.
         /// </summary>
         private static MethodSignature CreateBackwardCompatSignature(
             MethodSignature signature,
+            ModelProvider modelProvider,
             IReadOnlyDictionary<string, FormattableString> parameterDescriptions)
         {
             var attributes = signature.Attributes.Any(attribute =>
@@ -335,17 +293,14 @@ namespace Azure.Generator.Management.Visitors
 
             foreach (var parameter in signature.Parameters)
             {
-                // Prefer the current model's description. A parameter that no longer exists on the model has no
-                // current source, so strip the indentation the previous generation baked into the parsed
-                // description instead, which keeps regeneration idempotent.
                 parameter.Update(description: parameterDescriptions.TryGetValue(parameter.Name, out var currentDescription)
                     ? currentDescription
-                    : RemoveCommonContinuationIndentation(parameter.Description));
+                    : $"");
             }
 
             return new MethodSignature(
                 signature.Name,
-                null,
+                modelProvider.Description,
                 signature.Modifiers,
                 signature.ReturnType,
                 $"A new {signature.ReturnType:C} instance for mocking.",

@@ -191,36 +191,18 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void RestoredFactoryMethodPreservesMultiLineCurrentModelSummary()
-        {
-            var restored = BuildRestoredMethodWithUnmatchedParameter(
-                $"Legacy parameter summary.",
-                summary: new XmlDocSummaryStatement(
-                [
-                    $"First summary line for {typeof(int):C}.",
-                    $"Second summary line for {typeof(string):C}.",
-                ]));
-
-            // Both lines are reproduced from the current model; the previous contract's summary is never consulted.
-            Assert.That(DescribeDocs(restored), Is.EqualTo(
-                "<summary>\nFirst summary line for System.Int32.\nSecond summary line for System.String.\n"
-                + "<param name=\"legacyValue\">\nLegacy parameter summary.\n"
-                + "<returns>\nA new global::Samples.Models.TestModel instance for mocking.\n"));
-        }
-
-        [Test]
-        public void RestoredFactoryMethodSignatureNeverCarriesLastContractDescription()
+        public void RestoredFactoryMethodSignatureCarriesCurrentModelDescription()
         {
             var restored = BuildRestoredMethodWithUnmatchedParameter(
                 $"Legacy parameter summary.\n            Legacy parameter details.");
 
-            // The summary belongs on the XmlDocProvider, matching the primary factory methods. Leaving it off the
-            // signature is what guarantees the stale last-contract description can never leak back in.
-            Assert.That(restored.Signature.Description, Is.Null);
+            // The signature is the single source of the docs, so it must carry the current model's description.
+            // Leaving it empty is what let a later rebuild silently produce no summary at all.
+            Assert.That(restored.Signature.Description?.ToString(), Is.EqualTo("TestModel description"));
 
             var docs = DescribeDocs(restored);
             Assert.That(docs, Does.Contain("TestModel description"));
-            Assert.That(docs, Does.Not.Contain("            Legacy parameter details."));
+            Assert.That(docs, Does.Not.Contain("Legacy parameter details."));
             Assert.That(docs, Does.Not.Contain("Previous model summary."));
             Assert.That(docs, Does.Not.Contain("Previous return summary."));
         }
@@ -262,12 +244,20 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void RestoredFactoryMethodNormalizesUnmatchedLastContractDocumentation()
+        public void RestoredFactoryMethodDropsUnmatchedLastContractDocumentation()
         {
-            var docs = DescribeDocs(BuildRestoredMethodWithUnmatchedParameter(
-                $"Legacy parameter summary.\n            \n             - First item.\n            Legacy parameter details."));
+            var restored = BuildRestoredMethodWithUnmatchedParameter(
+                $"Legacy parameter summary.\n            \n             - First item.\n            Legacy parameter details.");
+            var docs = DescribeDocs(restored);
 
-            Assert.That(docs, Does.Contain("Legacy parameter summary.\n\n - First item.\nLegacy parameter details."));
+            // The parameter no longer maps to the model, so there is no current description to regenerate. The
+            // previous one is dropped rather than salvaged: it came back out of generated C# with its cref text
+            // already lost and the writer's indentation baked in.
+            Assert.That(docs, Does.Not.Contain("Legacy parameter"));
+            Assert.That(docs, Does.Contain("<param name=\"legacyValue\">"));
+
+            // Model factory methods are for mocking and never validate, so they must not document exceptions.
+            Assert.That(restored.XmlDocs.Exceptions, Is.Empty);
         }
 
         [Test]
@@ -516,8 +506,7 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         private static MethodProvider BuildRestoredMethodWithUnmatchedParameter(
-            FormattableString parameterDescription,
-            XmlDocSummaryStatement? summary = null)
+            FormattableString parameterDescription)
         {
             var inputModel = InputFactory.Model(
                 "TestModel",
@@ -526,10 +515,6 @@ namespace Azure.Generator.Mgmt.Tests
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
             var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
-            if (summary is not null)
-            {
-                model.XmlDocs.Update(summary: summary);
-            }
 
             var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
             var previousMethod = CreatePreviousFactoryMethod(
