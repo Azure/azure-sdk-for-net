@@ -11,8 +11,8 @@ namespace Azure.Provisioning.CosmosDB;
 
 public partial class CosmosDBAccount
 {
-    // CUSTOMIZATION: Restore preview-only properties exposed by the previous GA package because
-    // the selected stable TypeSpec version does not generate them.
+    // CUSTOMIZATION: Restore the entire preview-only property exposed by the previous GA package
+    // because the selected stable TypeSpec version does not include it.
     /// <summary> Describe the level of detail with which queries are to be logged. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public BicepValue<EnableFullTextQuery> DiagnosticLogEnableFullTextQuery
@@ -31,6 +31,8 @@ public partial class CosmosDBAccount
         }
     }
 
+    // CUSTOMIZATION: Restore the entire preview-only property exposed by the previous GA package
+    // because the selected stable TypeSpec version does not include it.
     /// <summary> Flag to indicate whether to enable MaterializedViews on the Cosmos DB account. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public BicepValue<bool> EnableMaterializedViews

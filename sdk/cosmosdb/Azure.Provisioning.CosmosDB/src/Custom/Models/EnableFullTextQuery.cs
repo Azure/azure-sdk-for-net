@@ -5,7 +5,8 @@ using System.ComponentModel;
 
 namespace Azure.Provisioning.CosmosDB;
 
-// CUSTOMIZATION: Restore the preview-only enum exposed by the previous GA package.
+// CUSTOMIZATION: Restore the entire preview-only enum used by DiagnosticLogEnableFullTextQuery
+// because the selected stable TypeSpec version does not include it.
 /// <summary> Describe the level of detail with which queries are to be logged. </summary>
 [EditorBrowsable(EditorBrowsableState.Never)]
 public enum EnableFullTextQuery

@@ -7,15 +7,15 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.CosmosDB;
 
-// CUSTOMIZATION: Restore setters lost because the provisioning generator does not yet recursively
-// combine the resource response and create body model graphs.
-// https://github.com/Azure/azure-sdk-for-net/issues/61011
 public partial class CosmosDBAccountLocation
 {
     private BicepValue<AzureLocation> _locationName;
     private BicepValue<int> _failoverPriority;
     private BicepValue<bool> _isZoneRedundant;
 
+    // CUSTOMIZATION: Restore the setter lost because the provisioning generator does not yet
+    // recursively combine the resource response and create body model graphs.
+    // https://github.com/Azure/azure-sdk-for-net/issues/61011
     /// <summary> Gets or sets the LocationName. </summary>
     [CodeGenMember("LocationName")]
     public BicepValue<AzureLocation> LocationName
@@ -32,6 +32,9 @@ public partial class CosmosDBAccountLocation
         }
     }
 
+    // CUSTOMIZATION: Restore the setter lost because the provisioning generator does not yet
+    // recursively combine the resource response and create body model graphs.
+    // https://github.com/Azure/azure-sdk-for-net/issues/61011
     /// <summary> Gets or sets the FailoverPriority. </summary>
     [CodeGenMember("FailoverPriority")]
     public BicepValue<int> FailoverPriority
@@ -48,6 +51,9 @@ public partial class CosmosDBAccountLocation
         }
     }
 
+    // CUSTOMIZATION: Restore the setter lost because the provisioning generator does not yet
+    // recursively combine the resource response and create body model graphs.
+    // https://github.com/Azure/azure-sdk-for-net/issues/61011
     /// <summary> Gets or sets the IsZoneRedundant. </summary>
     [CodeGenMember("IsZoneRedundant")]
     public BicepValue<bool> IsZoneRedundant
