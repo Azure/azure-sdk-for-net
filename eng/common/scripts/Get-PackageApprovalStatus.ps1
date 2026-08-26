@@ -216,6 +216,7 @@ foreach ($packageInfoFile in $packageInfoPaths) {
         $packageName = if ($packageInfo.PSObject.Properties["Name"]) { [string] $packageInfo.Name } else { "" }
         $packageVersion = if ($packageInfo.PSObject.Properties["Version"]) { [string] $packageInfo.Version } else { "" }
         $apiHash = if ($packageInfo.PSObject.Properties["ApiHash"]) { [string] $packageInfo.ApiHash } else { "" }
+        $releaseStatus = if ($packageInfo.PSObject.Properties["ReleaseStatus"]) { [string] $packageInfo.ReleaseStatus } else { "" }
 
         if ([string]::IsNullOrWhiteSpace($packageName)) {
             throw "Package-info file does not contain a package Name."
@@ -224,7 +225,17 @@ foreach ($packageInfoFile in $packageInfoPaths) {
             throw "Package-info file does not contain a package Version."
         }
 
-        Test-PackageApproval $packageName $packageVersion $apiHash
+        try {
+            Test-PackageApproval $packageName $packageVersion $apiHash
+        }
+        catch {
+            if ($releaseStatus -eq "Unreleased") {
+                Write-Host "$packageName $packageVersion is not marked for release. Ignoring approval check failure: $($_.Exception.Message)"
+            }
+            else {
+                throw
+            }
+        }
     }
     catch {
         Write-Error "Package approval failed for ${packageInfoFile}: $($_.Exception.Message)" -ErrorAction Continue

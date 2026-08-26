@@ -138,6 +138,19 @@ Describe "Get-PackageApprovalStatus.ps1" {
             Should Throw
     }
 
+    It "ignores a failed approval check for an unreleased package" {
+        $packageInfo = Get-Content $packageInfoPath -Raw | ConvertFrom-Json
+        $packageInfo | Add-Member -NotePropertyName ReleaseStatus -NotePropertyValue Unreleased
+        $packageInfo | ConvertTo-Json | Set-Content $packageInfoPath
+        $global:AzSdkExitCode = 1
+        $global:AzSdkOutput = '{"operation_status":"Failed","response_error":"Package is not approved."}'
+
+        $messages = @(& $scriptPath -Language python -PackageInfoFiles $packageInfoPath 6>&1)
+
+        ($messages -join [Environment]::NewLine) | Should Match "azure-test 1.0.0 is not marked for release. Ignoring approval check failure"
+        $global:CapturedAzSdkInvocations.Count | Should Be 1
+    }
+
     It "fails when the response contract is missing the result" {
         $global:AzSdkOutput = '{"operation_status":"Succeeded"}'
 
