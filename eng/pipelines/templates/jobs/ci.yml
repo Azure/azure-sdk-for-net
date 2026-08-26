@@ -45,6 +45,9 @@ parameters:
   - name: EnableTestCheckoutNarrowing
     type: boolean
     default: false
+  - name: UseRepositorySourceGraph
+    type: boolean
+    default: true
 
 jobs:
   - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
@@ -252,6 +255,7 @@ jobs:
                 ExcludePaths: ${{ parameters.ExcludePaths }}
                 EnableTestCheckoutNarrowing: ${{ parameters.EnableTestCheckoutNarrowing }}
                 EnableTestRuntimeWeighting: true
+                UseRepositorySourceGraph: ${{ parameters.UseRepositorySourceGraph }}
 
         AdditionalParameters:
           SDKType: ${{ parameters.SDKType }}

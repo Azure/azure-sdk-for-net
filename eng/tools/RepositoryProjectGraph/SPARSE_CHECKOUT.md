@@ -128,9 +128,8 @@ its 1,198,877-line intermediate record file is a conservative artifact-build cos
 not the expected final size.
 
 A post-deduplication Debug+Release run with inputs disabled emitted 45,204 unique
-records (rather than duplicating the two configurations), retained all 1,978 entry
-points and 7,886 MSBuild nodes, resolved 546/546 isolated-metadata roots, and produced
-a complete 2,954-configuration graph.
+records (rather than duplicating the two configurations) and retained all 1,978 entry
+points and 7,886 MSBuild nodes.
 
 A representative four-artifact projection over that full graph completed in 33.26
 seconds, used about 1.64 GiB peak RSS, and produced a 3,305,237-byte checkout graph.
