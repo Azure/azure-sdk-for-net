@@ -1844,7 +1844,7 @@ namespace Azure.Provisioning.Storage
     public partial class StorageSku : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public StorageSku() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageSkuName> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageSkuName> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageSkuTier> Tier { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
