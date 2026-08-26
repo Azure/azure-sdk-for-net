@@ -455,7 +455,9 @@ namespace Azure.ResourceManager.Resources
     }
     public static partial class ResourcesExtensions
     {
+        [System.ObsoleteAttribute("Use Azure.ResourceManager.Resources.Bicep.ResourcesBicepExtensions.BicepDecompile instead.", false)]
         public static Azure.Response<Azure.ResourceManager.Resources.Models.DecompileOperationSuccessResult> BicepDecompile(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Resources.Models.DecompileOperationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("Use Azure.ResourceManager.Resources.Bicep.ResourcesBicepExtensions.BicepDecompileAsync instead.", false)]
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Models.DecompileOperationSuccessResult>> BicepDecompileAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Resources.Models.DecompileOperationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.ObsoleteAttribute("Use Azure.ResourceManager.Resources.Deployments.ResourcesDeploymentsExtensions.CalculateDeploymentTemplateHash instead.", false)]
         public static Azure.Response<Azure.ResourceManager.Resources.Models.TemplateHashResult> CalculateDeploymentTemplateHash(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.BinaryData template, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -794,7 +796,9 @@ namespace Azure.ResourceManager.Resources.Mocking
     public partial class MockableResourcesSubscriptionResource : Azure.ResourceManager.ArmResource
     {
         protected MockableResourcesSubscriptionResource() { }
+        [System.ObsoleteAttribute("Use Azure.ResourceManager.Resources.Bicep.Mocking.MockableResourcesBicepSubscriptionResource.BicepDecompile instead.", false)]
         public virtual Azure.Response<Azure.ResourceManager.Resources.Models.DecompileOperationSuccessResult> BicepDecompile(Azure.ResourceManager.Resources.Models.DecompileOperationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        [System.ObsoleteAttribute("Use Azure.ResourceManager.Resources.Bicep.Mocking.MockableResourcesBicepSubscriptionResource.BicepDecompileAsync instead.", false)]
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.Resources.Models.DecompileOperationSuccessResult>> BicepDecompileAsync(Azure.ResourceManager.Resources.Models.DecompileOperationContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.Resources.ArmApplicationResource> GetArmApplications(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.Resources.ArmApplicationResource> GetArmApplicationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -1533,7 +1537,9 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.BasicArmDependency BasicArmDependency(string id = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), string resourceName = null) { throw null; }
         public static Azure.ResourceManager.Resources.DataBoundaryData DataBoundaryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Resources.Models.DataBoundaryProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.DataBoundaryProperties DataBoundaryProperties(Azure.ResourceManager.Resources.Models.DataBoundaryRegion? dataBoundary = default(Azure.ResourceManager.Resources.Models.DataBoundaryRegion?), Azure.ResourceManager.Resources.Models.DataBoundaryProvisioningState? provisioningState = default(Azure.ResourceManager.Resources.Models.DataBoundaryProvisioningState?)) { throw null; }
+        [System.ObsoleteAttribute("Use Azure.ResourceManager.Resources.Bicep.Models.ArmResourcesBicepModelFactory.DecompiledFileDefinition instead.", false)]
         public static Azure.ResourceManager.Resources.Models.DecompiledFileDefinition DecompiledFileDefinition(string path = null, string contents = null) { throw null; }
+        [System.ObsoleteAttribute("Use Azure.ResourceManager.Resources.Bicep.Models.ArmResourcesBicepModelFactory.DecompileOperationSuccessResult instead.", false)]
         public static Azure.ResourceManager.Resources.Models.DecompileOperationSuccessResult DecompileOperationSuccessResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.DecompiledFileDefinition> files = null, string entryPoint = null) { throw null; }
         [System.ObsoleteAttribute("Use Azure.ResourceManager.Resources.Deployments.Models.ArmResourcesModelFactory.DeploymentDiagnosticsDefinition instead.", false)]
         public static Azure.ResourceManager.Resources.Models.DeploymentDiagnosticsDefinition DeploymentDiagnosticsDefinition(Azure.ResourceManager.Resources.Models.Level level = default(Azure.ResourceManager.Resources.Models.Level), string code = null, string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ErrorAdditionalInfo> additionalInfo = null) { throw null; }
@@ -1712,6 +1718,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.DataBoundaryRegion left, Azure.ResourceManager.Resources.Models.DataBoundaryRegion right) { throw null; }
         public override string ToString() { throw null; }
     }
+    [System.ObsoleteAttribute("Use Azure.ResourceManager.Resources.Bicep.Models.DecompiledFileDefinition instead.", false)]
     public partial class DecompiledFileDefinition : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.DecompiledFileDefinition>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.DecompiledFileDefinition>
     {
         internal DecompiledFileDefinition() { }
@@ -1724,6 +1731,7 @@ namespace Azure.ResourceManager.Resources.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.DecompiledFileDefinition>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.DecompiledFileDefinition>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("Use Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationContent instead.", false)]
     public partial class DecompileOperationContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.DecompileOperationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.DecompileOperationContent>
     {
         public DecompileOperationContent(string template) { }
@@ -1735,6 +1743,7 @@ namespace Azure.ResourceManager.Resources.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.DecompileOperationContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.DecompileOperationContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    [System.ObsoleteAttribute("Use Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationSuccessResult instead.", false)]
     public partial class DecompileOperationSuccessResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.DecompileOperationSuccessResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.DecompileOperationSuccessResult>
     {
         internal DecompileOperationSuccessResult() { }

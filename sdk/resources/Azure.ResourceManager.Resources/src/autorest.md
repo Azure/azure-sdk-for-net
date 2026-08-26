@@ -26,8 +26,6 @@ enable-bicep-serialization: true
 #  show-serialized-names: true
 
 rename-mapping:
-  DecompileOperationSuccessResponse: DecompileOperationSuccessResult
-  FileDefinition: DecompiledFileDefinition
   DataBoundary: DataBoundaryRegion
   DataBoundaryDefinition: DataBoundary
   DefaultName: DataBoundaryName
@@ -491,6 +489,5 @@ input-file:
     - https://github.com/Azure/azure-rest-api-specs/blob/778b6f8c84f4d62e66f054e3876acff30e5bd4f9/specification/resources/resource-manager/Microsoft.Resources/stable/2023-08-01/deploymentScripts.json
     - https://github.com/Azure/azure-rest-api-specs/blob/778b6f8c84f4d62e66f054e3876acff30e5bd4f9/specification/resources/resource-manager/Microsoft.Resources/stable/2025-04-01/resources.json
     - https://github.com/Azure/azure-rest-api-specs/blob/778b6f8c84f4d62e66f054e3876acff30e5bd4f9/specification/resources/resource-manager/Microsoft.Solutions/stable/2019-07-01/managedapplications.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/778b6f8c84f4d62e66f054e3876acff30e5bd4f9/specification/resources/resource-manager/Microsoft.Resources/stable/2023-11-01/bicepClient.json#
     - https://github.com/Azure/azure-rest-api-specs/blob/778b6f8c84f4d62e66f054e3876acff30e5bd4f9/specification/resources/resource-manager/Microsoft.Resources/stable/2024-08-01/dataBoundaries.json
 ```
