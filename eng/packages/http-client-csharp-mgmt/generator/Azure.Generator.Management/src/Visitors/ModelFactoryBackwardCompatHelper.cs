@@ -262,34 +262,12 @@ namespace Azure.Generator.Management.Visitors
                 }
             }
 
-            var signature = CreateBackwardCompatSignature(method.Signature);
+            var signature = CreateBackwardCompatSignature(method.Signature, modelProvider, parameterDescriptions);
             updatedMethod = new MethodProvider(
                 signature,
                 Return(New.Instance(method.Signature.ReturnType, arguments)),
-                enclosingType,
-                CreateModelFactoryXmlDocs(signature, modelProvider, parameterDescriptions));
+                enclosingType);
             return true;
-        }
-
-        private static XmlDocProvider CreateModelFactoryXmlDocs(
-            MethodSignature signature,
-            ModelProvider modelProvider,
-            IReadOnlyDictionary<string, FormattableString> parameterDescriptions)
-        {
-            var parameters = new List<XmlDocParamStatement>(signature.Parameters.Count);
-            foreach (var parameter in signature.Parameters)
-            {
-                var description = parameterDescriptions.TryGetValue(parameter.Name, out var currentDescription)
-                    ? currentDescription
-                    : RemoveCommonContinuationIndentation(parameter.Description);
-                var documentedParameter = new ParameterProvider(parameter.Name, description, parameter.Type);
-                parameters.Add(new XmlDocParamStatement(documentedParameter));
-            }
-
-            return new XmlDocProvider(
-                modelProvider.XmlDocs.Summary,
-                parameters,
-                returns: new XmlDocReturnsStatement($"A new {signature.ReturnType:C} instance for mocking."));
         }
 
         private static FormattableString RemoveCommonContinuationIndentation(FormattableString description)
@@ -321,25 +299,51 @@ namespace Azure.Generator.Management.Visitors
             return FormattableStringFactory.Create(string.Join("\n", lines), description.GetArguments());
         }
 
-        private static MethodSignature CreateBackwardCompatSignature(MethodSignature signature)
+        /// <summary>
+        /// Creates the hidden compatibility signature, regenerating its documentation from the current model.
+        /// The descriptions must live on the signature rather than on an <see cref="XmlDocProvider"/> because
+        /// <see cref="MethodProvider.Update"/> rebuilds the docs from the signature whenever a signature is supplied,
+        /// which happens again at write time in <see cref="FixModelFactoryBackwardCompatOverloads"/>.
+        /// </summary>
+        private static MethodSignature CreateBackwardCompatSignature(
+            MethodSignature signature,
+            ModelProvider modelProvider,
+            IReadOnlyDictionary<string, FormattableString> parameterDescriptions)
         {
             var attributes = signature.Attributes.Any(attribute =>
                 attribute.Type is { IsFrameworkType: true } && attribute.Type.FrameworkType == typeof(EditorBrowsableAttribute))
                     ? signature.Attributes
                     : [.. signature.Attributes, new AttributeStatement(typeof(EditorBrowsableAttribute), FrameworkEnumValue(EditorBrowsableState.Never))];
 
+            foreach (var parameter in signature.Parameters)
+            {
+                // Prefer the current model's description; otherwise strip the indentation the previous
+                // generation baked into the parsed description so regeneration is idempotent.
+                parameter.Update(description: parameterDescriptions.TryGetValue(parameter.Name, out var currentDescription)
+                    ? currentDescription
+                    : RemoveCommonContinuationIndentation(parameter.Description));
+            }
+
             return new MethodSignature(
                 signature.Name,
-                signature.Description,
+                GetSummary(modelProvider) ?? signature.Description,
                 signature.Modifiers,
                 signature.ReturnType,
-                signature.ReturnDescription,
+                $"A new {signature.ReturnType:C} instance for mocking.",
                 signature.Parameters,
                 attributes,
                 signature.GenericArguments,
                 signature.GenericParameterConstraints,
                 signature.ExplicitInterface,
                 signature.NonDocumentComment);
+        }
+
+        private static FormattableString? GetSummary(ModelProvider modelProvider)
+        {
+            // Model summaries are single line in practice; anything else is left to the previous description
+            // rather than attempting to re-index the format arguments of several formattable strings.
+            var lines = modelProvider.XmlDocs.Summary?.Lines;
+            return lines?.Count == 1 ? lines[0] : null;
         }
 
         /// <summary>

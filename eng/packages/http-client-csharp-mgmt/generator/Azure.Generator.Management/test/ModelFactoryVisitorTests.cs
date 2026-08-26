@@ -191,6 +191,59 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void RestoredFactoryMethodDocumentationSurvivesWriteTimeSignatureUpdate()
+        {
+            var restored = BuildRestoredMethodWithUnmatchedParameter(
+                $"Legacy parameter summary.\n            Legacy parameter details.");
+            var before = DescribeDocs(restored);
+
+            // FixModelFactoryBackwardCompatOverloads repairs bodies at write time and re-supplies the
+            // signature, which makes MethodProvider.Update rebuild XmlDocs from scratch.
+            restored.Update(signature: restored.Signature, bodyStatements: MethodBodyStatement.Empty);
+
+            Assert.That(DescribeDocs(restored), Is.EqualTo(before));
+            Assert.That(before, Does.Not.Contain("            Legacy parameter details."));
+            Assert.That(before, Does.Not.Contain("Previous model summary."));
+            Assert.That(before, Does.Not.Contain("Previous return summary."));
+        }
+
+        [Test]
+        public void RestoredFactoryMethodDocumentationSurvivesBackwardCompatOverloadFixup()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var previousMethod = CreatePreviousFactoryMethod(
+                modelFactory,
+                model.Type,
+                "value",
+                $"Previous parameter summary.\n            Previous parameter details.");
+
+            Assert.That(
+                Management.Visitors.ModelFactoryBackwardCompatHelper.TryCreateBackwardCompatMethod(
+                    previousMethod,
+                    modelFactory,
+                    out var restoredMethod),
+                Is.True);
+
+            var primaryMethod = modelFactory.Methods.Single(
+                method => !Management.Visitors.ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(method)
+                    && method.Signature.Name == "TestModel");
+            var docsBeforeFixup = DescribeDocs(restoredMethod!);
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(
+                [primaryMethod, restoredMethod!]);
+
+            Assert.That(DescribeDocs(restoredMethod!), Is.EqualTo(docsBeforeFixup));
+            Assert.That(docsBeforeFixup, Does.Not.Contain("Previous parameter details."));
+        }
+
+        [Test]
         public void RestoredFactoryMethodNormalizesUnmatchedLastContractDocumentation()
         {
             var docs = DescribeDocs(BuildRestoredMethodWithUnmatchedParameter(
