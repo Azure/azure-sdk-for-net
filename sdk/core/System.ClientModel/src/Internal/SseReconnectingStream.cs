@@ -60,6 +60,7 @@ internal sealed class SseReconnectingStream : Stream
     private bool _pendingCarriageReturnWasBlank;
     private bool _reconnectImmediately;
     private bool _endOfStream;
+    private bool _currentFaulted;
     private volatile bool _disposed;
     private bool _isFirstLine = true;
 
@@ -116,19 +117,23 @@ internal sealed class SseReconnectingStream : Stream
 
             using CancellationTokenSource linkedCancellation =
                 CreateLinkedCancellationSource(CancellationToken.None);
-            int read;
-            try
+            int read = 0;
+            if (!_currentFaulted)
             {
-                linkedCancellation.Token.ThrowIfCancellationRequested();
-                read = GetCurrentStream().Read(
-                    _readBuffer,
-                    0,
-                    _readBuffer.Length);
-            }
-            catch (IOException) when (
-                !linkedCancellation.IsCancellationRequested)
-            {
-                read = 0;
+                try
+                {
+                    linkedCancellation.Token.ThrowIfCancellationRequested();
+                    read = GetCurrentStream().Read(
+                        _readBuffer,
+                        0,
+                        _readBuffer.Length);
+                }
+                catch (IOException) when (
+                    !linkedCancellation.IsCancellationRequested)
+                {
+                    read = 0;
+                    _currentFaulted = true;
+                }
             }
 
             if (read > 0)
@@ -138,6 +143,11 @@ internal sealed class SseReconnectingStream : Stream
             }
 
             FinalizePendingCarriageReturn();
+            if (!_currentFaulted)
+            {
+                _endOfStream = true;
+            }
+
             ready = CopyReadyEvents(
                 buffer.AsSpan(offset, count));
             if (ready > 0)
@@ -146,6 +156,11 @@ internal sealed class SseReconnectingStream : Stream
             }
 
             DiscardIncompleteEvent();
+            if (_endOfStream)
+            {
+                return 0;
+            }
+
             if (!Reconnect(linkedCancellation.Token))
             {
                 return 0;
@@ -181,19 +196,23 @@ internal sealed class SseReconnectingStream : Stream
 
             using CancellationTokenSource linkedCancellation =
                 CreateLinkedCancellationSource(cancellationToken);
-            int read;
-            try
+            int read = 0;
+            if (!_currentFaulted)
             {
-                read = await GetCurrentStream().ReadAsync(
-                    _readBuffer,
-                    0,
-                    _readBuffer.Length,
-                    linkedCancellation.Token).ConfigureAwait(false);
-            }
-            catch (IOException) when (
-                !linkedCancellation.IsCancellationRequested)
-            {
-                read = 0;
+                try
+                {
+                    read = await GetCurrentStream().ReadAsync(
+                        _readBuffer,
+                        0,
+                        _readBuffer.Length,
+                        linkedCancellation.Token).ConfigureAwait(false);
+                }
+                catch (IOException) when (
+                    !linkedCancellation.IsCancellationRequested)
+                {
+                    read = 0;
+                    _currentFaulted = true;
+                }
             }
 
             if (read > 0)
@@ -203,6 +222,11 @@ internal sealed class SseReconnectingStream : Stream
             }
 
             FinalizePendingCarriageReturn();
+            if (!_currentFaulted)
+            {
+                _endOfStream = true;
+            }
+
             ready = CopyReadyEvents(
                 buffer.AsSpan(offset, count));
             if (ready > 0)
@@ -211,6 +235,11 @@ internal sealed class SseReconnectingStream : Stream
             }
 
             DiscardIncompleteEvent();
+            if (_endOfStream)
+            {
+                return 0;
+            }
+
             if (!await ReconnectAsync(
                 linkedCancellation.Token).ConfigureAwait(false))
             {
@@ -244,17 +273,21 @@ internal sealed class SseReconnectingStream : Stream
 
             using CancellationTokenSource linkedCancellation =
                 CreateLinkedCancellationSource(cancellationToken);
-            int read;
-            try
+            int read = 0;
+            if (!_currentFaulted)
             {
-                read = await GetCurrentStream().ReadAsync(
-                    _readBuffer,
-                    linkedCancellation.Token).ConfigureAwait(false);
-            }
-            catch (IOException) when (
-                !linkedCancellation.IsCancellationRequested)
-            {
-                read = 0;
+                try
+                {
+                    read = await GetCurrentStream().ReadAsync(
+                        _readBuffer,
+                        linkedCancellation.Token).ConfigureAwait(false);
+                }
+                catch (IOException) when (
+                    !linkedCancellation.IsCancellationRequested)
+                {
+                    read = 0;
+                    _currentFaulted = true;
+                }
             }
 
             if (read > 0)
@@ -264,6 +297,11 @@ internal sealed class SseReconnectingStream : Stream
             }
 
             FinalizePendingCarriageReturn();
+            if (!_currentFaulted)
+            {
+                _endOfStream = true;
+            }
+
             ready = CopyReadyEvents(buffer.Span);
             if (ready > 0)
             {
@@ -271,6 +309,11 @@ internal sealed class SseReconnectingStream : Stream
             }
 
             DiscardIncompleteEvent();
+            if (_endOfStream)
+            {
+                return 0;
+            }
+
             if (!await ReconnectAsync(
                 linkedCancellation.Token).ConfigureAwait(false))
             {
@@ -619,6 +662,7 @@ internal sealed class SseReconnectingStream : Stream
             }
 
             _current = next;
+            _currentFaulted = false;
             return true;
         }
     }

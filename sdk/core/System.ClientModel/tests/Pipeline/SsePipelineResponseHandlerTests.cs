@@ -33,8 +33,7 @@ public class SsePipelineResponseHandlerTests
                     : null;
             return Task.FromResult(
                 requestCount == 1
-                    ? CreateResponse(
-                        HttpStatusCode.OK,
+                    ? CreateDroppedResponse(
                         "retry: 0\nid: first\ndata: one\n\n")
                     : new HttpResponseMessage(
                         HttpStatusCode.NoContent));
@@ -71,8 +70,7 @@ public class SsePipelineResponseHandlerTests
                     : null;
             return Task.FromResult(
                 requestCount == 1
-                    ? CreateResponse(
-                        HttpStatusCode.OK,
+                    ? CreateDroppedResponse(
                         "retry: 0\ndata: one\n\n")
                     : new HttpResponseMessage(
                         HttpStatusCode.NoContent));
@@ -134,8 +132,7 @@ public class SsePipelineResponseHandlerTests
                 1 => CreateRedirect(
                     HttpStatusCode.MovedPermanently,
                     "https://example.test/permanent"),
-                2 => CreateResponse(
-                    HttpStatusCode.OK,
+                2 => CreateDroppedResponse(
                     "retry: 0\ndata: one\n\n"),
                 _ => new HttpResponseMessage(
                     HttpStatusCode.NoContent)
@@ -211,8 +208,7 @@ public class SsePipelineResponseHandlerTests
                 1 => CreateRedirect(
                     HttpStatusCode.TemporaryRedirect,
                     "https://example.test/temporary"),
-                2 => CreateResponse(
-                    HttpStatusCode.OK,
+                2 => CreateDroppedResponse(
                     "retry: 0\ndata: one\n\n"),
                 _ => new HttpResponseMessage(
                     HttpStatusCode.NoContent)
@@ -251,8 +247,7 @@ public class SsePipelineResponseHandlerTests
     {
         var handler = new SyncTrackingHandler(requestCount =>
             requestCount == 1
-                ? CreateResponse(
-                    HttpStatusCode.OK,
+                ? CreateDroppedResponse(
                     "retry: 0\nid: first\ndata: one\n\n")
                 : new HttpResponseMessage(HttpStatusCode.NoContent));
         ClientPipeline pipeline = CreatePipeline(handler);
@@ -303,8 +298,7 @@ public class SsePipelineResponseHandlerTests
     {
         var handler = new SyncTrackingHandler(requestCount =>
             requestCount == 1
-                ? CreateResponse(
-                    HttpStatusCode.OK,
+                ? CreateDroppedResponse(
                     "retry: 0\nid: first\ndata: one\n\n")
                 : new HttpResponseMessage(HttpStatusCode.NoContent));
         ClientPipeline pipeline = CreatePipeline(handler);
@@ -422,11 +416,9 @@ public class SsePipelineResponseHandlerTests
                     : null);
             return Task.FromResult(requestCount switch
             {
-                1 => CreateResponse(
-                    HttpStatusCode.OK,
+                1 => CreateDroppedResponse(
                     "retry: 0\nid: lost\ndata: partial"),
-                2 => CreateResponse(
-                    HttpStatusCode.OK,
+                2 => CreateDroppedResponse(
                     "retry: 0\nid: kept\ndata: complete\n\n"),
                 _ => new HttpResponseMessage(
                     HttpStatusCode.NoContent)
@@ -489,6 +481,57 @@ public class SsePipelineResponseHandlerTests
     }
 
     [Test]
+    public async Task GracefulEndOfStreamDoesNotReconnect()
+    {
+        int requestCount = 0;
+        var handler = new MockHttpClientHandler(_ =>
+        {
+            requestCount++;
+            return Task.FromResult(CreateResponse(
+                HttpStatusCode.OK,
+                "retry: 0\nid: first\ndata: one\n\ndata: two\n\n"));
+        });
+        ClientPipeline pipeline = CreatePipeline(handler);
+        AsyncStreamingClientResult<SseItem<BinaryData>> result =
+            await CreateResultAsync(
+                pipeline,
+                new Uri("https://example.test/events"));
+        var values = new List<string>();
+
+        await foreach (SseItem<BinaryData> item in result)
+        {
+            values.Add(item.Data.ToString());
+        }
+
+        CollectionAssert.AreEqual(new[] { "one", "two" }, values);
+        Assert.AreEqual(
+            1,
+            requestCount,
+            "A stream that completes normally must not be replayed.");
+    }
+
+    [Test]
+    public void SyncGracefulEndOfStreamDoesNotReconnect()
+    {
+        var handler = new SyncTrackingHandler(_ =>
+            CreateResponse(
+                HttpStatusCode.OK,
+                "retry: 0\ndata: one\n\n"));
+        ClientPipeline pipeline = CreatePipeline(handler);
+        using PipelineResponse response = SendResponse(
+            pipeline,
+            new Uri("https://example.test/events"));
+
+        string content = ReadToEnd(response.ContentStream!);
+
+        Assert.AreEqual("retry: 0\ndata: one\n\n", content);
+        Assert.AreEqual(
+            1,
+            handler.RequestCount,
+            "A stream that completes normally must not be replayed.");
+    }
+
+    [Test]
     public async Task ZeroLengthAndRepeatedEofReadsDoNotReconnect()
     {
         int requestCount = 0;
@@ -497,8 +540,7 @@ public class SsePipelineResponseHandlerTests
             requestCount++;
             return Task.FromResult(
                 requestCount == 1
-                    ? CreateResponse(
-                        HttpStatusCode.OK,
+                    ? CreateDroppedResponse(
                         "retry: 0\ndata: one\n\n")
                     : new HttpResponseMessage(
                         HttpStatusCode.NoContent));
@@ -534,8 +576,7 @@ public class SsePipelineResponseHandlerTests
         var handler = new MockHttpClientHandler(_ =>
         {
             requestCount++;
-            return Task.FromResult(CreateResponse(
-                HttpStatusCode.OK,
+            return Task.FromResult(CreateDroppedResponse(
                 "retry: 0\ndata: done\n\n"));
         });
         ClientPipeline pipeline = CreatePipeline(handler);
@@ -609,7 +650,7 @@ public class SsePipelineResponseHandlerTests
                 TaskCreationOptions.RunContinuationsAsynchronously);
         var owner = new TrackingDisposable();
         var stream = new SseReconnectingStream(
-            Stream.Null,
+            new ThrowAtEndStream(string.Empty),
             (_, _) => throw new NotSupportedException(),
             async (_, _) =>
             {
@@ -664,8 +705,7 @@ public class SsePipelineResponseHandlerTests
             _requestCount++;
             if (_requestCount == 1)
             {
-                return CreateResponse(
-                    HttpStatusCode.OK,
+                return CreateDroppedResponse(
                     "retry: 0\ndata: one\n\n");
             }
 
@@ -766,6 +806,14 @@ public class SsePipelineResponseHandlerTests
         => new(status)
         {
             Content = new StringContent(content)
+        };
+
+    private static HttpResponseMessage CreateDroppedResponse(
+        string content)
+        => new(HttpStatusCode.OK)
+        {
+            Content = new StreamContent(
+                new ThrowAtEndStream(content))
         };
 
     private static HttpResponseMessage CreateRedirect(
@@ -883,6 +931,30 @@ public class SsePipelineResponseHandlerTests
                 count,
                 cancellationToken);
         }
+
+#if NET8_0_OR_GREATER
+        public override int Read(Span<byte> buffer)
+        {
+            if (Position == Length)
+            {
+                throw new IOException("The connection dropped.");
+            }
+
+            return base.Read(buffer);
+        }
+
+        public override ValueTask<int> ReadAsync(
+            Memory<byte> buffer,
+            CancellationToken cancellationToken = default)
+        {
+            if (Position == Length)
+            {
+                throw new IOException("The connection dropped.");
+            }
+
+            return base.ReadAsync(buffer, cancellationToken);
+        }
+#endif
     }
 
     private sealed class TrackingDisposable : IDisposable

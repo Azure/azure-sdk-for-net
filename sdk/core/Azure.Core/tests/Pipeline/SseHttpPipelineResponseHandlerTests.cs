@@ -29,7 +29,7 @@ namespace Azure.Core.Tests
                     "Last-Event-ID",
                     out lastEventId);
                 return requestCount == 1
-                    ? new MockResponse(200).SetContent(
+                    ? CreateDroppedResponse(
                         "retry: 0\nid: first\ndata: one\n\n")
                     : new MockResponse(204);
             });
@@ -60,7 +60,7 @@ namespace Azure.Core.Tests
                     "Last-Event-ID",
                     out lastEventId);
                 return requestCount == 1
-                    ? new MockResponse(200).SetContent(
+                    ? CreateDroppedResponse(
                         "retry: 0\nid: first\ndata: one\n\n" +
                         "id:\ndata: two\n\n")
                     : new MockResponse(204);
@@ -89,7 +89,7 @@ namespace Azure.Core.Tests
                     "Last-Event-ID",
                     out lastEventId);
                 return requestCount == 1
-                    ? new MockResponse(200).SetContent(
+                    ? CreateDroppedResponse(
                         "retry: 0\ndata: one\n\n")
                     : new MockResponse(204);
             });
@@ -146,7 +146,7 @@ namespace Azure.Core.Tests
                     1 => new MockResponse(301).AddHeader(
                         "Location",
                         "https://example.test/permanent"),
-                    2 => new MockResponse(200).SetContent(
+                    2 => CreateDroppedResponse(
                         "retry: 0\ndata: one\n\n"),
                     _ => new MockResponse(204)
                 };
@@ -213,7 +213,7 @@ namespace Azure.Core.Tests
                     1 => new MockResponse(307).AddHeader(
                         "Location",
                         "https://example.test/temporary"),
-                    2 => new MockResponse(200).SetContent(
+                    2 => CreateDroppedResponse(
                         "retry: 0\ndata: one\n\n"),
                     _ => new MockResponse(204)
                 };
@@ -247,6 +247,55 @@ namespace Azure.Core.Tests
             CollectionAssert.AreEqual(
                 new[] { "request", "request", "request" },
                 requestBodies);
+        }
+
+        [Test]
+        public async Task GracefulEndOfStreamDoesNotReconnect()
+        {
+            int requestCount = 0;
+            var transport = new MockTransport(_ =>
+            {
+                requestCount++;
+                return new MockResponse(200).SetContent(
+                    "retry: 0\nid: first\ndata: one\n\ndata: two\n\n");
+            });
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"));
+
+            await pipeline.SendAsync(message, CancellationToken.None);
+            string content = await ReadToEndAsync(
+                message.Response.ContentStream!);
+
+            StringAssert.Contains("data: one", content);
+            StringAssert.Contains("data: two", content);
+            Assert.AreEqual(
+                1,
+                requestCount,
+                "A stream that completes normally must not be replayed.");
+        }
+
+        [Test]
+        public void SyncGracefulEndOfStreamDoesNotReconnect()
+        {
+            var transport = new SyncOnlyTransport(_ =>
+                new MockResponse(200).SetContent(
+                    "retry: 0\ndata: one\n\n"));
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"));
+
+            pipeline.Send(message, CancellationToken.None);
+            string content = ReadToEnd(
+                message.Response.ContentStream!);
+
+            StringAssert.Contains("data: one", content);
+            Assert.AreEqual(
+                1,
+                transport.RequestCount,
+                "A stream that completes normally must not be replayed.");
         }
 
         [Test]
@@ -323,7 +372,7 @@ namespace Azure.Core.Tests
                     out string? authorization);
                 authorizationHeaders.Add(authorization!);
                 return requestCount == 1
-                    ? new MockResponse(200).SetContent(
+                    ? CreateDroppedResponse(
                         "retry: 0\ndata: one\n\n")
                     : new MockResponse(204);
             });
@@ -373,7 +422,7 @@ namespace Azure.Core.Tests
         {
             var transport = new SyncOnlyTransport(requestCount =>
                 requestCount == 1
-                    ? new MockResponse(200).SetContent(
+                    ? CreateDroppedResponse(
                         "retry: 0\nid: first\ndata: one\n\n")
                     : new MockResponse(204));
             HttpPipeline pipeline = new(transport);
@@ -395,10 +444,10 @@ namespace Azure.Core.Tests
         {
             var transport = new SyncOnlyTransport(requestCount =>
                 requestCount == 1
-                    ? new MockResponse(200).SetContent(
+                    ? CreateDroppedResponse(
                         "retry: 0\ndata: one\n\n")
                     : requestCount == 2
-                        ? new MockResponse(200).SetContent(
+                        ? CreateDroppedResponse(
                             "data: two\n\n")
                         : new MockResponse(204));
             HttpPipeline pipeline = new(transport);
@@ -420,7 +469,7 @@ namespace Azure.Core.Tests
         {
             var transport = new SyncOnlyTransport(requestCount =>
                 requestCount == 1
-                    ? new MockResponse(200).SetContent(
+                    ? CreateDroppedResponse(
                         "retry: 0\nid: first\ndata: one\n\n")
                     : new MockResponse(204));
             HttpPipeline pipeline = new(transport);
@@ -442,7 +491,7 @@ namespace Azure.Core.Tests
         {
             var transport = new AsyncOnlyTransport(requestCount =>
                 requestCount == 1
-                    ? new MockResponse(200).SetContent(
+                    ? CreateDroppedResponse(
                         "retry: 0\nid: first\ndata: one\n\n")
                     : new MockResponse(204));
             HttpPipeline pipeline = new(transport);
@@ -470,11 +519,11 @@ namespace Azure.Core.Tests
                 requestCount++;
                 if (requestCount == 1)
                 {
-                    return new MockResponse(200).SetContent(
+                    return CreateDroppedResponse(
                         "retry: 0\ndata: one\n\n");
                 }
 
-                reconnectResponse = new MockResponse(200).SetContent(
+                reconnectResponse = CreateDroppedResponse(
                     "data: two\n\n");
                 return reconnectResponse;
             });
@@ -555,7 +604,7 @@ namespace Azure.Core.Tests
                 requestCount++;
                 return requestCount switch
                 {
-                    1 => new MockResponse(200).SetContent(
+                    1 => CreateDroppedResponse(
                         "retry: 0\ndata: one\n\n"),
                     2 => new MockResponse(503),
                     _ => new MockResponse(204)
@@ -627,6 +676,76 @@ namespace Azure.Core.Tests
                 bufferSize: 1024,
                 leaveOpen: true);
             return reader.ReadToEnd();
+        }
+
+        private static MockResponse CreateDroppedResponse(
+            string content)
+            => new(200)
+            {
+                ContentStream = new ThrowAtEndStream(content)
+            };
+
+        private sealed class ThrowAtEndStream : MemoryStream
+        {
+            internal ThrowAtEndStream(string value)
+                : base(Encoding.UTF8.GetBytes(value))
+            {
+            }
+
+            public override int Read(
+                byte[] buffer,
+                int offset,
+                int count)
+            {
+                if (Position == Length)
+                {
+                    throw new IOException("The connection dropped.");
+                }
+
+                return base.Read(buffer, offset, count);
+            }
+
+            public override Task<int> ReadAsync(
+                byte[] buffer,
+                int offset,
+                int count,
+                CancellationToken cancellationToken)
+            {
+                if (Position == Length)
+                {
+                    throw new IOException("The connection dropped.");
+                }
+
+                return base.ReadAsync(
+                    buffer,
+                    offset,
+                    count,
+                    cancellationToken);
+            }
+
+#if NET8_0_OR_GREATER
+            public override int Read(Span<byte> buffer)
+            {
+                if (Position == Length)
+                {
+                    throw new IOException("The connection dropped.");
+                }
+
+                return base.Read(buffer);
+            }
+
+            public override ValueTask<int> ReadAsync(
+                Memory<byte> buffer,
+                CancellationToken cancellationToken = default)
+            {
+                if (Position == Length)
+                {
+                    throw new IOException("The connection dropped.");
+                }
+
+                return base.ReadAsync(buffer, cancellationToken);
+            }
+#endif
         }
 
         private static string? ReadContent(
@@ -723,7 +842,7 @@ namespace Azure.Core.Tests
                 _requestCount++;
                 if (_requestCount == 1)
                 {
-                    message.Response = new MockResponse(200).SetContent(
+                    message.Response = CreateDroppedResponse(
                         "retry: 0\ndata: one\n\n");
                     return;
                 }
