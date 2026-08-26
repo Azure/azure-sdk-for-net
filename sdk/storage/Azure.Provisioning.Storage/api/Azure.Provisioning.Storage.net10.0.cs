@@ -1193,6 +1193,8 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageAccountZonePlacementPolicy> ZonePlacementPolicy { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> Zones { get { throw null; } set { } }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.Storage.StorageBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.Storage.StorageBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Storage.StorageAccount FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
@@ -1546,6 +1548,41 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.BicepValue<string> NetBiosDomainName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SamAccountName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct StorageBuiltInRole : System.IEquatable<Azure.Provisioning.Storage.StorageBuiltInRole>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public StorageBuiltInRole(string value) { throw null; }
+        public static Azure.Provisioning.Storage.StorageBuiltInRole ClassicStorageAccountContributor { get { throw null; } }
+        public static Azure.Provisioning.Storage.StorageBuiltInRole ClassicStorageAccountKeyOperatorServiceRole { get { throw null; } }
+        public static Azure.Provisioning.Storage.StorageBuiltInRole StorageAccountBackupContributor { get { throw null; } }
+        public static Azure.Provisioning.Storage.StorageBuiltInRole StorageAccountContributor { get { throw null; } }
+        public static Azure.Provisioning.Storage.StorageBuiltInRole StorageAccountKeyOperatorServiceRole { get { throw null; } }
+        public static Azure.Provisioning.Storage.StorageBuiltInRole StorageBlobDataContributor { get { throw null; } }
+        public static Azure.Provisioning.Storage.StorageBuiltInRole StorageBlobDataOwner { get { throw null; } }
+        public static Azure.Provisioning.Storage.StorageBuiltInRole StorageBlobDataReader { get { throw null; } }
+        public static Azure.Provisioning.Storage.StorageBuiltInRole StorageBlobDelegator { get { throw null; } }
+        public static Azure.Provisioning.Storage.StorageBuiltInRole StorageFileDataPrivilegedContributor { get { throw null; } }
+        public static Azure.Provisioning.Storage.StorageBuiltInRole StorageFileDataPrivilegedReader { get { throw null; } }
+        public static Azure.Provisioning.Storage.StorageBuiltInRole StorageFileDataSmbShareContributor { get { throw null; } }
+        public static Azure.Provisioning.Storage.StorageBuiltInRole StorageFileDataSmbShareElevatedContributor { get { throw null; } }
+        public static Azure.Provisioning.Storage.StorageBuiltInRole StorageFileDataSmbShareReader { get { throw null; } }
+        public static Azure.Provisioning.Storage.StorageBuiltInRole StorageQueueDataContributor { get { throw null; } }
+        public static Azure.Provisioning.Storage.StorageBuiltInRole StorageQueueDataMessageProcessor { get { throw null; } }
+        public static Azure.Provisioning.Storage.StorageBuiltInRole StorageQueueDataMessageSender { get { throw null; } }
+        public static Azure.Provisioning.Storage.StorageBuiltInRole StorageQueueDataReader { get { throw null; } }
+        public static Azure.Provisioning.Storage.StorageBuiltInRole StorageTableDataContributor { get { throw null; } }
+        public static Azure.Provisioning.Storage.StorageBuiltInRole StorageTableDataReader { get { throw null; } }
+        public bool Equals(Azure.Provisioning.Storage.StorageBuiltInRole other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public static string GetBuiltInRoleName(Azure.Provisioning.Storage.StorageBuiltInRole value) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Provisioning.Storage.StorageBuiltInRole left, Azure.Provisioning.Storage.StorageBuiltInRole right) { throw null; }
+        public static implicit operator Azure.Provisioning.Storage.StorageBuiltInRole (string value) { throw null; }
+        public static bool operator !=(Azure.Provisioning.Storage.StorageBuiltInRole left, Azure.Provisioning.Storage.StorageBuiltInRole right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class StorageCorsRule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
