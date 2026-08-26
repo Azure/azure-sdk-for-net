@@ -13,52 +13,52 @@ using Azure.ResourceManager.HorizonDB;
 
 namespace Azure.ResourceManager.HorizonDB.Models
 {
-    /// <summary> The template for adding optional properties. </summary>
-    public partial class HorizonDBPrivateEndpointConnectionPatchProperties : IJsonModel<HorizonDBPrivateEndpointConnectionPatchProperties>
+    /// <summary> Authentication configuration for a HorizonDB cluster. </summary>
+    public partial class HorizonDBClusterAuthConfig : IJsonModel<HorizonDBClusterAuthConfig>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HorizonDBPrivateEndpointConnectionPatchProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual HorizonDBClusterAuthConfig PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBPrivateEndpointConnectionPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBClusterAuthConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHorizonDBPrivateEndpointConnectionPatchProperties(document.RootElement, options);
+                        return DeserializeHorizonDBClusterAuthConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDBPrivateEndpointConnectionPatchProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBClusterAuthConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBPrivateEndpointConnectionPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBClusterAuthConfig>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHorizonDBContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(HorizonDBPrivateEndpointConnectionPatchProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HorizonDBClusterAuthConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<HorizonDBPrivateEndpointConnectionPatchProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<HorizonDBClusterAuthConfig>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDBPrivateEndpointConnectionPatchProperties IPersistableModel<HorizonDBPrivateEndpointConnectionPatchProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        HorizonDBClusterAuthConfig IPersistableModel<HorizonDBClusterAuthConfig>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<HorizonDBPrivateEndpointConnectionPatchProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HorizonDBClusterAuthConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<HorizonDBPrivateEndpointConnectionPatchProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HorizonDBClusterAuthConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,25 @@ namespace Azure.ResourceManager.HorizonDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBPrivateEndpointConnectionPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBClusterAuthConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDBPrivateEndpointConnectionPatchProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBClusterAuthConfig)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(PrivateEndpoint))
+            if (Optional.IsDefined(EntraIdAuth))
             {
-                writer.WritePropertyName("privateEndpoint"u8);
-                writer.WriteObjectValue(PrivateEndpoint, options);
+                writer.WritePropertyName("entraIdAuth"u8);
+                writer.WriteStringValue(EntraIdAuth.Value.ToString());
             }
-            if (Optional.IsDefined(PrivateLinkServiceConnectionState))
+            if (Optional.IsDefined(TenantId))
             {
-                writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId);
+            }
+            if (Optional.IsDefined(PasswordAuth))
+            {
+                writer.WritePropertyName("passwordAuth"u8);
+                writer.WriteStringValue(PasswordAuth.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,50 +108,56 @@ namespace Azure.ResourceManager.HorizonDB.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        HorizonDBPrivateEndpointConnectionPatchProperties IJsonModel<HorizonDBPrivateEndpointConnectionPatchProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        HorizonDBClusterAuthConfig IJsonModel<HorizonDBClusterAuthConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual HorizonDBPrivateEndpointConnectionPatchProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual HorizonDBClusterAuthConfig JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBPrivateEndpointConnectionPatchProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HorizonDBClusterAuthConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HorizonDBPrivateEndpointConnectionPatchProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HorizonDBClusterAuthConfig)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHorizonDBPrivateEndpointConnectionPatchProperties(document.RootElement, options);
+            return DeserializeHorizonDBClusterAuthConfig(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static HorizonDBPrivateEndpointConnectionPatchProperties DeserializeHorizonDBPrivateEndpointConnectionPatchProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static HorizonDBClusterAuthConfig DeserializeHorizonDBClusterAuthConfig(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            PrivateEndpoint privateEndpoint = default;
-            HorizonDBPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
+            HorizonDBAuthenticationState? entraIdAuth = default;
+            string tenantId = default;
+            HorizonDBAuthenticationState? passwordAuth = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("privateEndpoint"u8))
+                if (prop.NameEquals("entraIdAuth"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    privateEndpoint = PrivateEndpoint.DeserializePrivateEndpoint(prop.Value, options);
+                    entraIdAuth = new HorizonDBAuthenticationState(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("privateLinkServiceConnectionState"u8))
+                if (prop.NameEquals("tenantId"u8))
+                {
+                    tenantId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("passwordAuth"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    privateLinkServiceConnectionState = HorizonDBPrivateLinkServiceConnectionState.DeserializeHorizonDBPrivateLinkServiceConnectionState(prop.Value, options);
+                    passwordAuth = new HorizonDBAuthenticationState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +165,7 @@ namespace Azure.ResourceManager.HorizonDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new HorizonDBPrivateEndpointConnectionPatchProperties(privateEndpoint, privateLinkServiceConnectionState, additionalBinaryDataProperties);
+            return new HorizonDBClusterAuthConfig(entraIdAuth, tenantId, passwordAuth, additionalBinaryDataProperties);
         }
     }
 }
