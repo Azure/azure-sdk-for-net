@@ -12,10 +12,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Visitors
@@ -269,7 +267,7 @@ namespace Azure.Generator.Management.Visitors
                 }
             }
 
-            var signature = CreateBackwardCompatSignature(method.Signature, modelProvider, parameterDescriptions);
+            var signature = CreateBackwardCompatSignature(method.Signature, parameterDescriptions);
             updatedMethod = new MethodProvider(
                 signature,
                 Return(New.Instance(method.Signature.ReturnType, arguments)),
@@ -322,13 +320,12 @@ namespace Azure.Generator.Management.Visitors
 
         /// <summary>
         /// Creates the hidden compatibility signature, regenerating its documentation from the current model.
-        /// The descriptions must live on the signature rather than on an <see cref="XmlDocProvider"/> because
-        /// <see cref="MethodProvider.Update"/> rebuilds the docs from the signature whenever a signature is supplied,
-        /// which happens again at write time in <see cref="FixModelFactoryBackwardCompatOverloads"/>.
+        /// The summary is deliberately left off the signature: it lives on the <see cref="XmlDocProvider"/> built by
+        /// <see cref="CreateModelFactoryXmlDocs"/>, exactly as it does for the primary factory methods, so multiple
+        /// lines and nested statements survive verbatim and the previous contract's description is never reused.
         /// </summary>
         private static MethodSignature CreateBackwardCompatSignature(
             MethodSignature signature,
-            ModelProvider modelProvider,
             IReadOnlyDictionary<string, FormattableString> parameterDescriptions)
         {
             var attributes = signature.Attributes.Any(attribute =>
@@ -338,8 +335,9 @@ namespace Azure.Generator.Management.Visitors
 
             foreach (var parameter in signature.Parameters)
             {
-                // Prefer the current model's description; otherwise strip the indentation the previous
-                // generation baked into the parsed description so regeneration is idempotent.
+                // Prefer the current model's description. A parameter that no longer exists on the model has no
+                // current source, so strip the indentation the previous generation baked into the parsed
+                // description instead, which keeps regeneration idempotent.
                 parameter.Update(description: parameterDescriptions.TryGetValue(parameter.Name, out var currentDescription)
                     ? currentDescription
                     : RemoveCommonContinuationIndentation(parameter.Description));
@@ -347,7 +345,7 @@ namespace Azure.Generator.Management.Visitors
 
             return new MethodSignature(
                 signature.Name,
-                GetSummary(modelProvider) ?? signature.Description,
+                null,
                 signature.Modifiers,
                 signature.ReturnType,
                 $"A new {signature.ReturnType:C} instance for mocking.",
@@ -357,83 +355,6 @@ namespace Azure.Generator.Management.Visitors
                 signature.GenericParameterConstraints,
                 signature.ExplicitInterface,
                 signature.NonDocumentComment);
-        }
-
-        private static FormattableString? GetSummary(ModelProvider modelProvider)
-            => CombineDocLines(modelProvider.XmlDocs.Summary?.Lines);
-
-        /// <summary>
-        /// Flattens the lines of a structured doc statement into a single <see cref="FormattableString"/> so it can be
-        /// carried on a <see cref="MethodSignature"/>. Placeholder indexes are re-based as the arguments are appended.
-        /// </summary>
-        private static FormattableString? CombineDocLines(IReadOnlyList<FormattableString>? lines)
-        {
-            if (lines is null || lines.Count == 0)
-            {
-                return null;
-            }
-
-            if (lines.Count == 1)
-            {
-                return lines[0];
-            }
-
-            var format = new StringBuilder();
-            var arguments = new List<object?>();
-            foreach (var line in lines)
-            {
-                if (format.Length > 0)
-                {
-                    format.Append('\n');
-                }
-
-                format.Append(OffsetPlaceholders(line.Format, arguments.Count));
-                arguments.AddRange(line.GetArguments());
-            }
-
-            return FormattableStringFactory.Create(format.ToString(), [.. arguments]);
-        }
-
-        private static string OffsetPlaceholders(string format, int offset)
-        {
-            if (offset == 0)
-            {
-                return format;
-            }
-
-            var builder = new StringBuilder(format.Length);
-            for (int i = 0; i < format.Length; i++)
-            {
-                if (format[i] != '{')
-                {
-                    builder.Append(format[i]);
-                    continue;
-                }
-
-                if (i + 1 < format.Length && format[i + 1] == '{')
-                {
-                    builder.Append("{{");
-                    i++;
-                    continue;
-                }
-
-                var digitsEnd = i + 1;
-                while (digitsEnd < format.Length && char.IsAsciiDigit(format[digitsEnd]))
-                {
-                    digitsEnd++;
-                }
-
-                if (digitsEnd == i + 1)
-                {
-                    builder.Append('{');
-                    continue;
-                }
-
-                builder.Append('{').Append(int.Parse(format[(i + 1)..digitsEnd], CultureInfo.InvariantCulture) + offset);
-                i = digitsEnd - 1;
-            }
-
-            return builder.ToString();
         }
 
         /// <summary>

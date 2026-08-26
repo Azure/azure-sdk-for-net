@@ -191,7 +191,7 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void RestoredFactoryMethodCombinesMultiLineCurrentModelSummary()
+        public void RestoredFactoryMethodPreservesMultiLineCurrentModelSummary()
         {
             var restored = BuildRestoredMethodWithUnmatchedParameter(
                 $"Legacy parameter summary.",
@@ -201,34 +201,28 @@ namespace Azure.Generator.Mgmt.Tests
                     $"Second summary line for {typeof(string):C}.",
                 ]));
 
-            var docs = DescribeDocs(restored);
-            Assert.That(docs, Does.Contain("First summary line for System.Int32."));
-            Assert.That(docs, Does.Contain("Second summary line for System.String."));
-            Assert.That(docs, Does.Not.Contain("Previous model summary."));
-
-            // The signature must carry the combined summary too, so a rebuild cannot fall back to the last contract.
-            Assert.That(restored.Signature.Description?.ToString(),
-                Is.EqualTo("First summary line for System.Int32.\nSecond summary line for System.String."));
-
-            restored.Update(signature: restored.Signature, bodyStatements: MethodBodyStatement.Empty);
-            Assert.That(DescribeDocs(restored), Does.Not.Contain("Previous model summary."));
+            // Both lines are reproduced from the current model; the previous contract's summary is never consulted.
+            Assert.That(DescribeDocs(restored), Is.EqualTo(
+                "<summary>\nFirst summary line for System.Int32.\nSecond summary line for System.String.\n"
+                + "<param name=\"legacyValue\">\nLegacy parameter summary.\n"
+                + "<returns>\nA new global::Samples.Models.TestModel instance for mocking.\n"));
         }
 
         [Test]
-        public void RestoredFactoryMethodDocumentationSurvivesWriteTimeSignatureUpdate()
+        public void RestoredFactoryMethodSignatureNeverCarriesLastContractDescription()
         {
             var restored = BuildRestoredMethodWithUnmatchedParameter(
                 $"Legacy parameter summary.\n            Legacy parameter details.");
-            var before = DescribeDocs(restored);
 
-            // FixModelFactoryBackwardCompatOverloads repairs bodies at write time and re-supplies the
-            // signature, which makes MethodProvider.Update rebuild XmlDocs from scratch.
-            restored.Update(signature: restored.Signature, bodyStatements: MethodBodyStatement.Empty);
+            // The summary belongs on the XmlDocProvider, matching the primary factory methods. Leaving it off the
+            // signature is what guarantees the stale last-contract description can never leak back in.
+            Assert.That(restored.Signature.Description, Is.Null);
 
-            Assert.That(DescribeDocs(restored), Is.EqualTo(before));
-            Assert.That(before, Does.Not.Contain("            Legacy parameter details."));
-            Assert.That(before, Does.Not.Contain("Previous model summary."));
-            Assert.That(before, Does.Not.Contain("Previous return summary."));
+            var docs = DescribeDocs(restored);
+            Assert.That(docs, Does.Contain("TestModel description"));
+            Assert.That(docs, Does.Not.Contain("            Legacy parameter details."));
+            Assert.That(docs, Does.Not.Contain("Previous model summary."));
+            Assert.That(docs, Does.Not.Contain("Previous return summary."));
         }
 
         [Test]
