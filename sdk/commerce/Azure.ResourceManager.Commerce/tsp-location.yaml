@@ -1,4 +1,4 @@
 directory: specification/commerce/resource-manager/Microsoft.Commerce/Commerce
-commit: 5e4a377883bf0f418113e98b9b7e92c6bb1cd0b5
+commit: 340b172848517c95b71b61c09e44233aedad1ecb
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
