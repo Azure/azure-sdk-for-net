@@ -140,9 +140,7 @@ union PublicNetworkAccess {
 }
 
 /** The SKU tier of the configuration store. */
-// Values use underscores (e.g., "Standard_S1") which differ from the PascalCase
-// C# enum member names (e.g., "StandardS1"), verifying that the generator
-// emits [DataMember(Name = "...")] attributes for correct serialization.
+// Wire values intentionally differ from their C# enum member names.
 union ConfigurationStoreSkuTier {
   string,
 
@@ -157,8 +155,7 @@ union ConfigurationStoreSkuTier {
 }
 
 /** The create mode for the configuration store. */
-// Values use lowercase (e.g., "default") while C# enum members use PascalCase
-// (e.g., "Default"), verifying that [DataMember] attributes are emitted.
+// Wire values intentionally differ from their C# enum member names.
 union ConfigurationStoreCreateMode {
   string,
 

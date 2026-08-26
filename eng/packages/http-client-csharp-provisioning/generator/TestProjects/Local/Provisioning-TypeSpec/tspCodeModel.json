@@ -9777,6 +9777,24 @@
                         "name": ""
                       }
                     }
+                  },
+                  {
+                    "statusCodes": [
+                      201
+                    ],
+                    "bodyType": {
+                      "$ref": "234"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
                   }
                 ],
                 "httpMethod": "PUT",

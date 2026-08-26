@@ -9,9 +9,7 @@ using Azure.Core;
 
 namespace ProvisioningTypeSpec;
 
-// ---- Model inheritance test (bug #57119) ----
-// The provisioning generator must preserve the TypeSpec base model and
-// generate inherited properties on that base model.
+// Model inheritance is preserved in the generated provisioning models.
 
 /** Base attributes for items. */
 model BaseItemAttributes {
@@ -39,12 +37,7 @@ model ItemAttributes extends BaseItemAttributes {
   displayName: string;
 }
 
-// ---- Output-only resource with separate create body (bug #57120) ----
-// The Item resource has tags with @visibility(Lifecycle.Read), making them
-// read-only on the resource model. But the create operation uses a separate
-// body model (ItemCreateOrUpdateParameters) where tags is writable.
-// The provisioning generator must cross-reference the create body to detect
-// that tags should have a setter.
+// The resource response and create operation use different visibility for tags.
 
 /** An item in a configuration store. */
 @parentResource(ConfigurationStore)

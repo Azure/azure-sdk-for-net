@@ -8,9 +8,7 @@ using Azure.ResourceManager;
 
 namespace ProvisioningTypeSpec;
 
-// ---- Singleton resource test ----
-// SingletonSetting has one fixed instance named "default". The provisioning
-// generator should emit a non-settable Name with the default singleton value.
+// A singleton resource has a fixed, non-settable name.
 
 /** A singleton setting under a configuration store. */
 @singleton("default")
