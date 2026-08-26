@@ -99,7 +99,7 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
                 -OutputPath $checkoutGraphPath -SourceCommit $sourceCommit } | Should -Throw '*graph is incomplete*'
 
         $graph.diagnostics.isComplete = $true
-        $graph.diagnostics.packageClosure.resolutionMode = 'isolated-package-metadata'
+        $graph.diagnostics.packageClosure.resolutionMode = 'unsupported-resolution-mode'
         $graph | ConvertTo-Json -Depth 20 | Set-Content $graphPath
         { & $script:CreateGraphPath -PackageInfoDirectory $packageInfo -RepoRoot $repo -GraphPath $graphPath `
                 -OutputPath $checkoutGraphPath -SourceCommit $sourceCommit } | Should -Throw '*requires the NuGet restore graph*'
