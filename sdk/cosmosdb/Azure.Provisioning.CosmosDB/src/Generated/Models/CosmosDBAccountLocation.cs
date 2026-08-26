@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -15,11 +14,8 @@ namespace Azure.Provisioning.CosmosDB
     public partial class CosmosDBAccountLocation : ProvisionableConstruct
     {
         private BicepValue<string> _id;
-        private BicepValue<AzureLocation> _locationName;
         private BicepValue<string> _documentEndpoint;
         private BicepValue<string> _provisioningState;
-        private BicepValue<int> _failoverPriority;
-        private BicepValue<bool> _isZoneRedundant;
 
         /// <summary> Creates a new CosmosDBAccountLocation. </summary>
         public CosmosDBAccountLocation()
@@ -33,16 +29,6 @@ namespace Azure.Provisioning.CosmosDB
             {
                 Initialize();
                 return _id;
-            }
-        }
-
-        /// <summary> Gets the LocationName. </summary>
-        public BicepValue<AzureLocation> LocationName
-        {
-            get
-            {
-                Initialize();
-                return _locationName;
             }
         }
 
@@ -66,36 +52,13 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets the FailoverPriority. </summary>
-        public BicepValue<int> FailoverPriority
-        {
-            get
-            {
-                Initialize();
-                return _failoverPriority;
-            }
-        }
-
-        /// <summary> Gets the IsZoneRedundant. </summary>
-        public BicepValue<bool> IsZoneRedundant
-        {
-            get
-            {
-                Initialize();
-                return _isZoneRedundant;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for CosmosDBAccountLocation. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<string>(nameof(Id), new string[] { "id" }, isOutput: true);
-            _locationName = DefineProperty<AzureLocation>(nameof(LocationName), new string[] { "locationName" });
             _documentEndpoint = DefineProperty<string>(nameof(DocumentEndpoint), new string[] { "documentEndpoint" }, isOutput: true);
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _failoverPriority = DefineProperty<int>(nameof(FailoverPriority), new string[] { "failoverPriority" });
-            _isZoneRedundant = DefineProperty<bool>(nameof(IsZoneRedundant), new string[] { "isZoneRedundant" });
             DefineAdditionalProperties();
         }
 

@@ -173,19 +173,6 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets the DatabaseAccountOfferType. </summary>
-        public BicepValue<CosmosDBAccountOfferType> DatabaseAccountOfferType
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                return Properties.DatabaseAccountOfferType;
-            }
-        }
-
         /// <summary> Gets or sets the IPRules. </summary>
         public BicepList<CosmosDBIPAddressOrRange> IPRules
         {
@@ -294,19 +281,6 @@ namespace Azure.Provisioning.CosmosDB
                     Properties = new CosmosDBAccountProperties();
                 }
                 return Properties.ReadLocations;
-            }
-        }
-
-        /// <summary> Gets the Locations. </summary>
-        public BicepList<CosmosDBAccountLocation> Locations
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                return Properties.Locations;
             }
         }
 
@@ -831,6 +805,42 @@ namespace Azure.Provisioning.CosmosDB
                     Properties = new CosmosDBAccountProperties();
                 }
                 Properties.CapacityTotalThroughputLimit = value;
+            }
+        }
+
+        /// <summary> Gets or sets the DatabaseAccountOfferType. </summary>
+        [CodeGenMember("DatabaseAccountOfferType")]
+        public BicepValue<CosmosDBAccountOfferType> DatabaseAccountOfferType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DatabaseAccountOfferType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.DatabaseAccountOfferType = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Locations. </summary>
+        [CodeGenMember("Locations")]
+        public BicepList<CosmosDBAccountLocation> Locations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Locations;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.Locations = value;
             }
         }
 

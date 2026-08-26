@@ -11,6 +11,44 @@ namespace Azure.Provisioning.CosmosDB;
 
 public partial class CosmosDBAccount
 {
+    // CUSTOMIZATION: Restore preview-only properties exposed by the previous GA package because
+    // the selected stable TypeSpec version does not generate them.
+    /// <summary> Describe the level of detail with which queries are to be logged. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public BicepValue<EnableFullTextQuery> DiagnosticLogEnableFullTextQuery
+    {
+        get
+        {
+            return Properties is null ? default : Properties.DiagnosticLogEnableFullTextQuery;
+        }
+        set
+        {
+            if (Properties is null)
+            {
+                Properties = new CosmosDBAccountProperties();
+            }
+            Properties.DiagnosticLogEnableFullTextQuery = value;
+        }
+    }
+
+    /// <summary> Flag to indicate whether to enable MaterializedViews on the Cosmos DB account. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public BicepValue<bool> EnableMaterializedViews
+    {
+        get
+        {
+            return Properties is null ? default : Properties.EnableMaterializedViews;
+        }
+        set
+        {
+            if (Properties is null)
+            {
+                Properties = new CosmosDBAccountProperties();
+            }
+            Properties.EnableMaterializedViews = value;
+        }
+    }
+
     /// <summary> Gets the private endpoint connections. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("Use PrivateEndpointConnectionResources instead.")]

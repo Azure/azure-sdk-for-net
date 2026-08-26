@@ -16,7 +16,6 @@ namespace Azure.Provisioning.CosmosDB
     {
         private BicepValue<string> _provisioningState;
         private BicepValue<string> _documentEndpoint;
-        private BicepValue<CosmosDBAccountOfferType> _databaseAccountOfferType;
         private BicepList<CosmosDBIPAddressOrRange> _ipRules;
         private BicepValue<bool> _isVirtualNetworkFilterEnabled;
         private BicepValue<bool> _enableAutomaticFailover;
@@ -24,7 +23,6 @@ namespace Azure.Provisioning.CosmosDB
         private BicepList<CosmosDBAccountCapability> _capabilities;
         private BicepList<CosmosDBAccountLocation> _writeLocations;
         private BicepList<CosmosDBAccountLocation> _readLocations;
-        private BicepList<CosmosDBAccountLocation> _locations;
         private BicepList<CosmosDBFailoverPolicy> _failoverPolicies;
         private BicepList<CosmosDBVirtualNetworkRule> _virtualNetworkRules;
         private BicepValue<bool> _enableMultipleWriteLocations;
@@ -80,16 +78,6 @@ namespace Azure.Provisioning.CosmosDB
             {
                 Initialize();
                 return _documentEndpoint;
-            }
-        }
-
-        /// <summary> Gets the DatabaseAccountOfferType. </summary>
-        public BicepValue<CosmosDBAccountOfferType> DatabaseAccountOfferType
-        {
-            get
-            {
-                Initialize();
-                return _databaseAccountOfferType;
             }
         }
 
@@ -185,16 +173,6 @@ namespace Azure.Provisioning.CosmosDB
             {
                 Initialize();
                 return _readLocations;
-            }
-        }
-
-        /// <summary> Gets the Locations. </summary>
-        public BicepList<CosmosDBAccountLocation> Locations
-        {
-            get
-            {
-                Initialize();
-                return _locations;
             }
         }
 
@@ -732,7 +710,6 @@ namespace Azure.Provisioning.CosmosDB
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _documentEndpoint = DefineProperty<string>(nameof(DocumentEndpoint), new string[] { "documentEndpoint" }, isOutput: true);
-            _databaseAccountOfferType = DefineProperty<CosmosDBAccountOfferType>(nameof(DatabaseAccountOfferType), new string[] { "databaseAccountOfferType" }, isOutput: true);
             _ipRules = DefineListProperty<CosmosDBIPAddressOrRange>(nameof(IPRules), new string[] { "ipRules" });
             _isVirtualNetworkFilterEnabled = DefineProperty<bool>(nameof(IsVirtualNetworkFilterEnabled), new string[] { "isVirtualNetworkFilterEnabled" });
             _enableAutomaticFailover = DefineProperty<bool>(nameof(EnableAutomaticFailover), new string[] { "enableAutomaticFailover" });
@@ -740,7 +717,6 @@ namespace Azure.Provisioning.CosmosDB
             _capabilities = DefineListProperty<CosmosDBAccountCapability>(nameof(Capabilities), new string[] { "capabilities" });
             _writeLocations = DefineListProperty<CosmosDBAccountLocation>(nameof(WriteLocations), new string[] { "writeLocations" }, isOutput: true);
             _readLocations = DefineListProperty<CosmosDBAccountLocation>(nameof(ReadLocations), new string[] { "readLocations" }, isOutput: true);
-            _locations = DefineListProperty<CosmosDBAccountLocation>(nameof(Locations), new string[] { "locations" }, isOutput: true);
             _failoverPolicies = DefineListProperty<CosmosDBFailoverPolicy>(nameof(FailoverPolicies), new string[] { "failoverPolicies" }, isOutput: true);
             _virtualNetworkRules = DefineListProperty<CosmosDBVirtualNetworkRule>(nameof(VirtualNetworkRules), new string[] { "virtualNetworkRules" });
             _enableMultipleWriteLocations = DefineProperty<bool>(nameof(EnableMultipleWriteLocations), new string[] { "enableMultipleWriteLocations" });

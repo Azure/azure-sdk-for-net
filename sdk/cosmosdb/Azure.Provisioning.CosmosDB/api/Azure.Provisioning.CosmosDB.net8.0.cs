@@ -685,15 +685,17 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepList<Azure.Provisioning.CosmosDB.CosmosDBAccountCorsPolicy> Cors { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.CosmosDBAccountCreateMode> CreateMode { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> CustomerManagedKeyStatus { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.CosmosDBAccountOfferType> DatabaseAccountOfferType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.CosmosDBAccountOfferType> DatabaseAccountOfferType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DefaultIdentity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.DefaultPriorityLevel> DefaultPriorityLevel { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.EnableFullTextQuery> DiagnosticLogEnableFullTextQuery { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> DisableKeyBasedMetadataWriteAccess { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> DisableLocalAuth { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DocumentEndpoint { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> EnableAutomaticFailover { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnableBurstCapacity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnableCassandraConnector { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> EnableMaterializedViews { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnableMultipleWriteLocations { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnablePartitionMerge { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnablePerRegionPerPartitionAutoscale { get { throw null; } set { } }
@@ -712,7 +714,7 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepValue<string> KeyVaultKeyUriVersion { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.CosmosDBAccountKind> Kind { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.CosmosDB.CosmosDBAccountLocation> Locations { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.CosmosDB.CosmosDBAccountLocation> Locations { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.CosmosDBMinimalTlsVersion> MinimalTlsVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.NetworkAclBypass> NetworkAclBypass { get { throw null; } set { } }
@@ -813,10 +815,10 @@ namespace Azure.Provisioning.CosmosDB
     {
         public CosmosDBAccountLocation() { }
         public Azure.Provisioning.BicepValue<string> DocumentEndpoint { get { throw null; } }
-        public Azure.Provisioning.BicepValue<int> FailoverPriority { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> FailoverPriority { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> IsZoneRedundant { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> LocationName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsZoneRedundant { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> LocationName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -2346,6 +2348,12 @@ namespace Azure.Provisioning.CosmosDB
     {
         High = 0,
         Low = 1,
+    }
+    public enum EnableFullTextQuery
+    {
+        None = 0,
+        True = 1,
+        False = 2,
     }
     public partial class ErrorResponse : Azure.Provisioning.Primitives.ProvisionableConstruct
     {

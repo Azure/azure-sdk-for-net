@@ -12,10 +12,83 @@ namespace Azure.Provisioning.CosmosDB;
 // the newly generated resource type under a distinct name.
 internal partial class CosmosDBAccountProperties
 {
+    private BicepValue<global::Azure.Provisioning.CosmosDB.CosmosDBAccountOfferType> _databaseAccountOfferType;
+    private BicepList<CosmosDBAccountLocation> _locations;
+    private BicepValue<EnableFullTextQuery> _diagnosticLogEnableFullTextQuery;
+    private BicepValue<bool> _enableMaterializedViews;
     private BicepList<CosmosDBPrivateEndpointConnection> _privateEndpointConnectionResources;
 #pragma warning disable CS0618 // Required to store the obsolete compatibility type.
     private BicepList<CosmosDBPrivateEndpointConnectionData> _privateEndpointConnections;
 #pragma warning restore CS0618
+
+    // CUSTOMIZATION: Restore setters lost because the provisioning generator does not yet
+    // recursively combine the resource response and create body model graphs.
+    // https://github.com/Azure/azure-sdk-for-net/issues/61011
+    /// <summary> Gets or sets the DatabaseAccountOfferType. </summary>
+    [CodeGenMember("DatabaseAccountOfferType")]
+    public BicepValue<global::Azure.Provisioning.CosmosDB.CosmosDBAccountOfferType> DatabaseAccountOfferType
+    {
+        get
+        {
+            Initialize();
+            return _databaseAccountOfferType;
+        }
+        set
+        {
+            Initialize();
+            _databaseAccountOfferType.Assign(value);
+        }
+    }
+
+    /// <summary> Gets or sets the Locations. </summary>
+    [CodeGenMember("Locations")]
+    public BicepList<CosmosDBAccountLocation> Locations
+    {
+        get
+        {
+            Initialize();
+            return _locations;
+        }
+        set
+        {
+            Initialize();
+            _locations.Assign(value);
+        }
+    }
+
+    // CUSTOMIZATION: Restore preview-only properties exposed by the previous GA package because
+    // the selected stable TypeSpec version does not generate them.
+    /// <summary> Describe the level of detail with which queries are to be logged. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public BicepValue<EnableFullTextQuery> DiagnosticLogEnableFullTextQuery
+    {
+        get
+        {
+            Initialize();
+            return _diagnosticLogEnableFullTextQuery;
+        }
+        set
+        {
+            Initialize();
+            _diagnosticLogEnableFullTextQuery.Assign(value);
+        }
+    }
+
+    /// <summary> Flag to indicate whether to enable MaterializedViews on the Cosmos DB account. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public BicepValue<bool> EnableMaterializedViews
+    {
+        get
+        {
+            Initialize();
+            return _enableMaterializedViews;
+        }
+        set
+        {
+            Initialize();
+            _enableMaterializedViews.Assign(value);
+        }
+    }
 
     /// <summary> Gets the private endpoint connection resources. </summary>
     [CodeGenMember("PrivateEndpointConnections")]
@@ -42,6 +115,20 @@ internal partial class CosmosDBAccountProperties
 
     partial void DefineAdditionalProperties()
     {
+        _databaseAccountOfferType = DefineProperty<global::Azure.Provisioning.CosmosDB.CosmosDBAccountOfferType>(
+            nameof(DatabaseAccountOfferType),
+            new string[] { "databaseAccountOfferType" },
+            isRequired: true);
+        _locations = DefineListProperty<CosmosDBAccountLocation>(
+            nameof(Locations),
+            new string[] { "locations" },
+            isRequired: true);
+        _diagnosticLogEnableFullTextQuery = DefineProperty<EnableFullTextQuery>(
+            nameof(DiagnosticLogEnableFullTextQuery),
+            new string[] { "diagnosticLogSettings", "enableFullTextQuery" });
+        _enableMaterializedViews = DefineProperty<bool>(
+            nameof(EnableMaterializedViews),
+            new string[] { "enableMaterializedViews" });
         _privateEndpointConnectionResources = DefineListProperty<CosmosDBPrivateEndpointConnection>(
             nameof(PrivateEndpointConnectionResources),
             new string[] { "privateEndpointConnections" },
