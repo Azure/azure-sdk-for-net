@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.0.0</Version>
+    <Version>1.1.0-beta.1</Version>
+    <ApiCompatVersion>1.0.0</ApiCompatVersion>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
     <PackageId>Azure.ResourceManager.ConnectedCache</PackageId>
     <Description>Azure Resource Manager client SDK for Azure resource provider ConnectedCache.</Description>
