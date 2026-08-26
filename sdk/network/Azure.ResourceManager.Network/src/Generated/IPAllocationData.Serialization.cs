@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IpAllocationPropertiesFormat properties = default;
+            IPAllocationPropertiesFormat properties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    properties = IpAllocationPropertiesFormat.DeserializeIpAllocationPropertiesFormat(prop.Value, options);
+                    properties = IPAllocationPropertiesFormat.DeserializeIPAllocationPropertiesFormat(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

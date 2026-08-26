@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 location,
                 default,
                 default,
-                tableName is null && mappingRuleName is null && managedIdentityResourceId is null && managedIdentityObjectId is null && cosmosDBAccountResourceId is null && cosmosDBDatabase is null && cosmosDBContainer is null && retrievalStartOn is null && provisioningState is null ? default : new CosmosDbDataConnectionProperties(
+                tableName is null && mappingRuleName is null && managedIdentityResourceId is null && managedIdentityObjectId is null && cosmosDBAccountResourceId is null && cosmosDBDatabase is null && cosmosDBContainer is null && retrievalStartOn is null && provisioningState is null ? default : new CosmosDBDataConnectionProperties(
                     tableName,
                     mappingRuleName,
                     managedIdentityResourceId,

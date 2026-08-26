@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         /// <param name="installFailureCount"> Number of times that the HelmRelease failed to install. </param>
         /// <param name="upgradeFailureCount"> Number of times that the HelmRelease failed to upgrade. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HelmReleaseProperties(long? lastRevisionApplied, ObjectReference helmChartRef, long? failureCount, long? installFailureCount, long? upgradeFailureCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HelmReleaseProperties(long? lastRevisionApplied, FluxObjectReference helmChartRef, long? failureCount, long? installFailureCount, long? upgradeFailureCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LastRevisionApplied = lastRevisionApplied;
             HelmChartRef = helmChartRef;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.FluxConfigurations.Model
         public long? LastRevisionApplied { get; }
 
         /// <summary> The reference to the HelmChart object used as the source to this HelmRelease. </summary>
-        public ObjectReference HelmChartRef { get; }
+        public FluxObjectReference HelmChartRef { get; }
 
         /// <summary> Total number of times that the HelmRelease failed to install or upgrade. </summary>
         public long? FailureCount { get; }

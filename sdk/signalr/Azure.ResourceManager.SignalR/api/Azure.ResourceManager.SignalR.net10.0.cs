@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.SignalR.Models
     {
         public SignalRNetworkAcls() { }
         public Azure.ResourceManager.SignalR.Models.SignalRNetworkAclAction? DefaultAction { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.SignalR.Models.SignalRIPRule> IpRules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.SignalR.Models.SignalRIPRule> IPRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.SignalR.Models.SignalRPrivateEndpointAcl> PrivateEndpoints { get { throw null; } }
         public Azure.ResourceManager.SignalR.Models.SignalRNetworkAcl PublicNetwork { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.SignalR.Models.SignalRNetworkAcls JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

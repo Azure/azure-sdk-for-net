@@ -141,14 +141,6 @@ namespace Azure.Generator.Provisioning.Providers
         {
             _inputModel = projection.ResourceModel;
             _resourceProjection = projection;
-            // ModelProvider may materialize and cache Type while matching custom partial classes
-            // in its constructor. At that point this derived constructor has not assigned
-            // _resourceProjection, so BuildName() falls back to the shared input-model name.
-            // When one model backs multiple ARM projections (for example, CommitmentPlan and
-            // CognitiveServicesCommitmentPlan), every provider would retain that same cached name,
-            // causing later projections to overwrite earlier generated files. Clear the base
-            // caches after assigning the projection so BuildName() uses its ResourceName.
-            base.Reset();
             _defaultApiVersion = projection.ApiVersions.Count > 0
                 ? projection.ApiVersions.Last()
                 : null;
@@ -636,7 +628,7 @@ namespace Azure.Generator.Provisioning.Providers
                     This.Invoke(
                         "DefineResource",
                         [
-                            Literal("Parent"),
+                            Nameof(Identifier("Parent")),
                             New.Array(typeof(string), [Literal("parent")]),
                             new PositionalParameterReferenceExpression("isRequired", Literal(true))
                         ],

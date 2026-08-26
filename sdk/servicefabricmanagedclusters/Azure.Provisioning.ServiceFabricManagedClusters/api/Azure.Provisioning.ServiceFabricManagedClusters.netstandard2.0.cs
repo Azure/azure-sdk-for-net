@@ -651,7 +651,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         public Azure.Provisioning.BicepValue<int> DataDiskSizeInGB { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.ServiceFabricManagedDataDiskType> DataDiskType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> DscpConfigurationId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> EnableResilientEphemeralOsDisk { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> EnableResilientEphemeralOSDisk { get { throw null; } set { } }
         public Azure.Provisioning.ServiceFabricManagedClusters.EndpointRangeDescription EphemeralPorts { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabricManagedClusters.SpotNodeVmEvictionPolicyType> EvictionPolicy { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ServiceFabricManagedClusters.NodeTypeFrontendConfiguration> FrontendConfigurations { get { throw null; } set { } }

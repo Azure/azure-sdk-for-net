@@ -6,87 +6,79 @@
 #nullable disable
 
 using System.Threading;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
+using Azure.ResourceManager.MigrationDiscoverySap;
+using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
 {
-    /// <summary> A class to add extension methods to SubscriptionResource. </summary>
+    /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableMigrationDiscoverySapSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _sapDiscoverySiteClientDiagnostics;
-        private SapDiscoverySitesRestOperations _sapDiscoverySiteRestClient;
+        private ClientDiagnostics _sapDiscoverySitesClientDiagnostics;
+        private SAPDiscoverySites _sapDiscoverySitesRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMigrationDiscoverySapSubscriptionResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of MockableMigrationDiscoverySapSubscriptionResource for mocking. </summary>
         protected MockableMigrationDiscoverySapSubscriptionResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="MockableMigrationDiscoverySapSubscriptionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MockableMigrationDiscoverySapSubscriptionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal MockableMigrationDiscoverySapSubscriptionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
         }
 
-        private ClientDiagnostics SapDiscoverySiteClientDiagnostics => _sapDiscoverySiteClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MigrationDiscoverySap", SapDiscoverySiteResource.ResourceType.Namespace, Diagnostics);
-        private SapDiscoverySitesRestOperations SapDiscoverySiteRestClient => _sapDiscoverySiteRestClient ??= new SapDiscoverySitesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(SapDiscoverySiteResource.ResourceType));
+        private ClientDiagnostics SAPDiscoverySitesClientDiagnostics => _sapDiscoverySitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MigrationDiscoverySap.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private string GetApiVersionOrNull(ResourceType resourceType)
-        {
-            TryGetApiVersion(resourceType, out string apiVersion);
-            return apiVersion;
-        }
+        private SAPDiscoverySites SAPDiscoverySitesRestClient => _sapDiscoverySitesRestClient ??= new SAPDiscoverySites(SAPDiscoverySitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2023-10-01-preview");
 
         /// <summary>
         /// Gets all SAP Migration discovery site resources in a Subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapDiscoverySites</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapDiscoverySites. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapDiscoverySites_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPDiscoverySites_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapDiscoverySiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SapDiscoverySiteResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="SapDiscoverySiteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SapDiscoverySiteResource> GetSapDiscoverySitesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SapDiscoverySiteRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SapDiscoverySiteRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SapDiscoverySiteResource(Client, SapDiscoverySiteData.DeserializeSapDiscoverySiteData(e)), SapDiscoverySiteClientDiagnostics, Pipeline, "MockableMigrationDiscoverySapSubscriptionResource.GetSapDiscoverySites", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SapDiscoverySiteData, SapDiscoverySiteResource>(new SAPDiscoverySitesGetBySubscriptionAsyncCollectionResultOfT(SAPDiscoverySitesRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySapSubscriptionResource.GetSapDiscoverySites"), data => new SapDiscoverySiteResource(Client, data));
         }
 
         /// <summary>
         /// Gets all SAP Migration discovery site resources in a Subscription.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapDiscoverySites</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Workloads/sapDiscoverySites. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>SapDiscoverySites_ListBySubscription</description>
+        /// <term> Operation Id. </term>
+        /// <description> SAPDiscoverySites_ListBySubscription. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="SapDiscoverySiteResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-10-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -94,9 +86,11 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Mocking
         /// <returns> A collection of <see cref="SapDiscoverySiteResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SapDiscoverySiteResource> GetSapDiscoverySites(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => SapDiscoverySiteRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SapDiscoverySiteRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SapDiscoverySiteResource(Client, SapDiscoverySiteData.DeserializeSapDiscoverySiteData(e)), SapDiscoverySiteClientDiagnostics, Pipeline, "MockableMigrationDiscoverySapSubscriptionResource.GetSapDiscoverySites", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SapDiscoverySiteData, SapDiscoverySiteResource>(new SAPDiscoverySitesGetBySubscriptionCollectionResultOfT(SAPDiscoverySitesRestClient, Id.SubscriptionId, context, "MockableMigrationDiscoverySapSubscriptionResource.GetSapDiscoverySites"), data => new SapDiscoverySiteResource(Client, data));
         }
     }
 }

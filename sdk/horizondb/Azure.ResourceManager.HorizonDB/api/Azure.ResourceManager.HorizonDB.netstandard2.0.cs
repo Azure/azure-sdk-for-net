@@ -499,16 +499,16 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public static Azure.ResourceManager.HorizonDB.Models.HorizonDBAdministratorContentProperties HorizonDBAdministratorContentProperties(string principalName = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBPrincipalType principalType = default(Azure.ResourceManager.HorizonDB.Models.HorizonDBPrincipalType), string tenantId = null) { throw null; }
         public static Azure.ResourceManager.HorizonDB.HorizonDBAdministratorData HorizonDBAdministratorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBAdministratorProperties properties = null) { throw null; }
         public static Azure.ResourceManager.HorizonDB.Models.HorizonDBAdministratorProperties HorizonDBAdministratorProperties(string principalName = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBPrincipalType principalType = default(Azure.ResourceManager.HorizonDB.Models.HorizonDBPrincipalType), string objectId = null, string tenantId = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBProvisioningState? provisioningState = default(Azure.ResourceManager.HorizonDB.Models.HorizonDBProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterAuthConfig HorizonDbClusterAuthConfig(Azure.ResourceManager.HorizonDB.Models.HorizonDBAuthenticationState? entraIdAuth = default(Azure.ResourceManager.HorizonDB.Models.HorizonDBAuthenticationState?), string tenantId = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBAuthenticationState? passwordAuth = default(Azure.ResourceManager.HorizonDB.Models.HorizonDBAuthenticationState?)) { throw null; }
+        public static Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterAuthConfig HorizonDBClusterAuthConfig(Azure.ResourceManager.HorizonDB.Models.HorizonDBAuthenticationState? entraIdAuth = default(Azure.ResourceManager.HorizonDB.Models.HorizonDBAuthenticationState?), string tenantId = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBAuthenticationState? passwordAuth = default(Azure.ResourceManager.HorizonDB.Models.HorizonDBAuthenticationState?)) { throw null; }
         public static Azure.ResourceManager.HorizonDB.HorizonDBClusterData HorizonDBClusterData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
-        public static Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterMirroring HorizonDbClusterMirroring(System.Collections.Generic.IEnumerable<string> databaseNames = null, Azure.Core.ResourceIdentifier userAssignedIdentityId = null) { throw null; }
+        public static Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterMirroring HorizonDBClusterMirroring(System.Collections.Generic.IEnumerable<string> databaseNames = null, Azure.Core.ResourceIdentifier userAssignedIdentityId = null) { throw null; }
         public static Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterParameterGroupConnectionProperties HorizonDBClusterParameterGroupConnectionProperties(Azure.Core.ResourceIdentifier id = null, string syncStatus = null, bool? shouldApplyImmediately = default(bool?)) { throw null; }
         public static Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterPatch HorizonDBClusterPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterPatchProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterPatchProperties HorizonDBClusterPatchProperties(string administratorLoginPassword = null, int? vCores = default(int?), Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterParameterGroupConnectionProperties parameterGroup = null, Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterAuthConfig authConfig = null, Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModel computeModel = null, Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterMirroring mirroring = null) { throw null; }
-        public static Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterProperties HorizonDBClusterProperties(string administratorLogin = null, string administratorLoginPassword = null, string version = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterCreateMode? createMode = default(Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterCreateMode?), System.DateTimeOffset? pointInTimeUtcOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier sourceClusterResourceId = null, string poolName = null, int? replicaCount = default(int?), int? vCores = default(int?), string processorType = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBPublicNetworkAccessState? publicNetworkAccess = default(Azure.ResourceManager.HorizonDB.Models.HorizonDBPublicNetworkAccessState?), Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterState? state = default(Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterState?), string fullyQualifiedDomainName = null, string readOnlyEndpoint = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBProvisioningState? provisioningState = default(Azure.ResourceManager.HorizonDB.Models.HorizonDBProvisioningState?), Azure.ResourceManager.HorizonDB.Models.HorizonDBZonePlacementPolicy? zonePlacementPolicy = default(Azure.ResourceManager.HorizonDB.Models.HorizonDBZonePlacementPolicy?), Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterParameterGroupConnectionProperties parameterGroup = null, Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterAuthConfig authConfig = null, Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModel computeModel = null, Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterMirroring mirroring = null) { throw null; }
-        public static Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModel HorizonDbComputeModel(Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModelType? type = default(Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModelType?), int? vCores = default(int?), double? minvCores = default(double?), double? maxvCores = default(double?)) { throw null; }
+        public static Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterPatchProperties HorizonDBClusterPatchProperties(string administratorLoginPassword = null, int? vCores = default(int?), Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterParameterGroupConnectionProperties parameterGroup = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterAuthConfig authConfig = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModel computeModel = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterMirroring mirroring = null) { throw null; }
+        public static Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterProperties HorizonDBClusterProperties(string administratorLogin = null, string administratorLoginPassword = null, string version = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterCreateMode? createMode = default(Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterCreateMode?), System.DateTimeOffset? pointInTimeUtcOn = default(System.DateTimeOffset?), Azure.Core.ResourceIdentifier sourceClusterResourceId = null, string poolName = null, int? replicaCount = default(int?), int? vCores = default(int?), string processorType = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBPublicNetworkAccessState? publicNetworkAccess = default(Azure.ResourceManager.HorizonDB.Models.HorizonDBPublicNetworkAccessState?), Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterState? state = default(Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterState?), string fullyQualifiedDomainName = null, string readOnlyEndpoint = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBProvisioningState? provisioningState = default(Azure.ResourceManager.HorizonDB.Models.HorizonDBProvisioningState?), Azure.ResourceManager.HorizonDB.Models.HorizonDBZonePlacementPolicy? zonePlacementPolicy = default(Azure.ResourceManager.HorizonDB.Models.HorizonDBZonePlacementPolicy?), Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterParameterGroupConnectionProperties parameterGroup = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterAuthConfig authConfig = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModel computeModel = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterMirroring mirroring = null) { throw null; }
+        public static Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModel HorizonDBComputeModel(Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModelType? type = default(Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModelType?), int? vCores = default(int?), double? minvCores = default(double?), double? maxvCores = default(double?)) { throw null; }
         public static Azure.ResourceManager.HorizonDB.HorizonDBFirewallRuleData HorizonDBFirewallRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBFirewallRuleProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.HorizonDB.Models.HorizonDBFirewallRuleProperties HorizonDBFirewallRuleProperties(string startIpAddress = null, string endIpAddress = null, string description = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBProvisioningState? provisioningState = default(Azure.ResourceManager.HorizonDB.Models.HorizonDBProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.HorizonDB.Models.HorizonDBFirewallRuleProperties HorizonDBFirewallRuleProperties(string startIPAddress = null, string endIPAddress = null, string description = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBProvisioningState? provisioningState = default(Azure.ResourceManager.HorizonDB.Models.HorizonDBProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.HorizonDB.Models.HorizonDBParameterGroupConnectionProperties HorizonDBParameterGroupConnectionProperties(string name = null, Azure.Core.ResourceIdentifier id = null, string type = null) { throw null; }
         public static Azure.ResourceManager.HorizonDB.HorizonDBParameterGroupData HorizonDBParameterGroupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HorizonDB.Models.HorizonDBParameterGroupProperties properties = null) { throw null; }
         public static Azure.ResourceManager.HorizonDB.Models.HorizonDBParameterGroupPatch HorizonDBParameterGroupPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.HorizonDB.Models.HorizonDBParameterGroupPatchProperties properties = null) { throw null; }
@@ -591,21 +591,21 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public static bool operator !=(Azure.ResourceManager.HorizonDB.Models.HorizonDBAuthenticationState left, Azure.ResourceManager.HorizonDB.Models.HorizonDBAuthenticationState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class HorizonDbClusterAuthConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterAuthConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterAuthConfig>
+    public partial class HorizonDBClusterAuthConfig : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterAuthConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterAuthConfig>
     {
-        public HorizonDbClusterAuthConfig() { }
+        public HorizonDBClusterAuthConfig() { }
         public Azure.ResourceManager.HorizonDB.Models.HorizonDBAuthenticationState? EntraIdAuth { get { throw null; } set { } }
         public Azure.ResourceManager.HorizonDB.Models.HorizonDBAuthenticationState? PasswordAuth { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterAuthConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterAuthConfig JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterAuthConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterAuthConfig PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterAuthConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterAuthConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterAuthConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterAuthConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterAuthConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterAuthConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterAuthConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterAuthConfig System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterAuthConfig>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterAuthConfig>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterAuthConfig System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterAuthConfig>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterAuthConfig>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterAuthConfig>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct HorizonDBClusterCreateMode : System.IEquatable<Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterCreateMode>
@@ -625,20 +625,20 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public static bool operator !=(Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterCreateMode left, Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterCreateMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class HorizonDbClusterMirroring : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterMirroring>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterMirroring>
+    public partial class HorizonDBClusterMirroring : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterMirroring>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterMirroring>
     {
-        public HorizonDbClusterMirroring() { }
+        public HorizonDBClusterMirroring() { }
         public System.Collections.Generic.IList<string> DatabaseNames { get { throw null; } }
         public Azure.Core.ResourceIdentifier UserAssignedIdentityId { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterMirroring JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterMirroring JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterMirroring PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterMirroring PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterMirroring System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterMirroring>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterMirroring>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterMirroring System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterMirroring>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterMirroring>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterMirroring>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterMirroring System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterMirroring>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterMirroring>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterMirroring System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterMirroring>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterMirroring>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterMirroring>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class HorizonDBClusterParameterGroupConnectionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterParameterGroupConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterParameterGroupConnectionProperties>
     {
@@ -676,9 +676,9 @@ namespace Azure.ResourceManager.HorizonDB.Models
     {
         public HorizonDBClusterPatchProperties() { }
         public string AdministratorLoginPassword { get { throw null; } set { } }
-        public Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterAuthConfig AuthConfig { get { throw null; } set { } }
-        public Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModel ComputeModel { get { throw null; } set { } }
-        public Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterMirroring Mirroring { get { throw null; } set { } }
+        public Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterAuthConfig AuthConfig { get { throw null; } set { } }
+        public Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModel ComputeModel { get { throw null; } set { } }
+        public Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterMirroring Mirroring { get { throw null; } set { } }
         public Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterParameterGroupConnectionProperties ParameterGroup { get { throw null; } set { } }
         public int? VCores { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterPatchProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -696,11 +696,11 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public HorizonDBClusterProperties(string administratorLogin) { }
         public string AdministratorLogin { get { throw null; } set { } }
         public string AdministratorLoginPassword { get { throw null; } set { } }
-        public Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterAuthConfig AuthConfig { get { throw null; } set { } }
-        public Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModel ComputeModel { get { throw null; } set { } }
+        public Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterAuthConfig AuthConfig { get { throw null; } set { } }
+        public Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModel ComputeModel { get { throw null; } set { } }
         public Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterCreateMode? CreateMode { get { throw null; } set { } }
         public string FullyQualifiedDomainName { get { throw null; } }
-        public Azure.ResourceManager.HorizonDB.Models.HorizonDbClusterMirroring Mirroring { get { throw null; } set { } }
+        public Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterMirroring Mirroring { get { throw null; } set { } }
         public Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterParameterGroupConnectionProperties ParameterGroup { get { throw null; } set { } }
         public System.DateTimeOffset? PointInTimeUtcOn { get { throw null; } set { } }
         public string PoolName { get { throw null; } set { } }
@@ -749,47 +749,47 @@ namespace Azure.ResourceManager.HorizonDB.Models
         public static bool operator !=(Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterState left, Azure.ResourceManager.HorizonDB.Models.HorizonDBClusterState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class HorizonDbComputeModel : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModel>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModel>
+    public partial class HorizonDBComputeModel : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModel>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModel>
     {
-        public HorizonDbComputeModel() { }
+        public HorizonDBComputeModel() { }
         public double? MaxvCores { get { throw null; } set { } }
         public double? MinvCores { get { throw null; } set { } }
-        public Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModelType? Type { get { throw null; } set { } }
+        public Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModelType? Type { get { throw null; } set { } }
         public int? VCores { get { throw null; } set { } }
-        protected virtual Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModel JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModel JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModel PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModel PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModel>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModel>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModel System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModel>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModel>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModel System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModel>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModel>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModel>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct HorizonDbComputeModelType : System.IEquatable<Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModelType>
+    public readonly partial struct HorizonDBComputeModelType : System.IEquatable<Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModelType>
     {
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
-        public HorizonDbComputeModelType(string value) { throw null; }
-        public static Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModelType Provisioned { get { throw null; } }
-        public static Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModelType Serverless { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModelType other) { throw null; }
+        public HorizonDBComputeModelType(string value) { throw null; }
+        public static Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModelType Provisioned { get { throw null; } }
+        public static Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModelType Serverless { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModelType other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModelType left, Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModelType right) { throw null; }
-        public static implicit operator Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModelType (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModelType? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModelType left, Azure.ResourceManager.HorizonDB.Models.HorizonDbComputeModelType right) { throw null; }
+        public static bool operator ==(Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModelType left, Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModelType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModelType (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModelType? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModelType left, Azure.ResourceManager.HorizonDB.Models.HorizonDBComputeModelType right) { throw null; }
         public override string ToString() { throw null; }
     }
     public partial class HorizonDBFirewallRuleProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBFirewallRuleProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HorizonDB.Models.HorizonDBFirewallRuleProperties>
     {
-        public HorizonDBFirewallRuleProperties(string startIpAddress, string endIpAddress) { }
+        public HorizonDBFirewallRuleProperties(string startIPAddress, string endIPAddress) { }
         public string Description { get { throw null; } set { } }
-        public string EndIpAddress { get { throw null; } set { } }
+        public string EndIPAddress { get { throw null; } set { } }
         public Azure.ResourceManager.HorizonDB.Models.HorizonDBProvisioningState? ProvisioningState { get { throw null; } }
-        public string StartIpAddress { get { throw null; } set { } }
+        public string StartIPAddress { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.HorizonDB.Models.HorizonDBFirewallRuleProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.HorizonDB.Models.HorizonDBFirewallRuleProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
