@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(BandwidthInGbps))
             {
                 writer.WritePropertyName("bandwidthInGbps"u8);
-                writer.WriteNumberValue(BandwidthInGbps.Value);
+                writer.WriteStringValue(BandwidthInGbps);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(IPConfigurations))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            double? bandwidthInGbps = default;
+            string bandwidthInGbps = default;
             IReadOnlyList<VirtualNetworkApplianceIPConfiguration> ipConfigurations = default;
             VirtualNetworkApplianceIpVersionType? privateIPAddressVersion = default;
             NetworkProvisioningState? provisioningState = default;
@@ -162,11 +162,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 if (prop.NameEquals("bandwidthInGbps"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    bandwidthInGbps = prop.Value.GetDouble();
+                    bandwidthInGbps = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("ipConfigurations"u8))

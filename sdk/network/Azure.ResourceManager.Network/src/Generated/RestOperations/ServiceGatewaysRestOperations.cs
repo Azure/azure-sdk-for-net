@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateUpdateAddressLocationsRequest(Guid subscriptionId, string resourceGroupName, string serviceGatewayName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateAddressLocationsLroRequest(Guid subscriptionId, string resourceGroupName, string serviceGatewayName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateUpdateServicesRequest(Guid subscriptionId, string resourceGroupName, string serviceGatewayName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateUpdateServicesLroRequest(Guid subscriptionId, string resourceGroupName, string serviceGatewayName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

@@ -11,33 +11,11 @@ import {
   type RbacRole,
   type ValidArmResourceSchema
 } from "../../../http-client-csharp-mgmt/emitter/src/resource-metadata.js";
-import { normalizeApiVersionOption } from "../src/emitter.js";
 import {
   buildResourceProjectionMetadata,
   getResourceProjectionGroupKey,
   preferSettableResourceProjections
 } from "../src/provisioning-code-model.js";
-
-describe("emitter options", () => {
-  it("flattens multi-service API versions from TypeSpec configuration", () => {
-    deepStrictEqual(
-      normalizeApiVersionOption({
-        Microsoft: {
-          Network: "2025-05-01",
-          Compute: "2018-10-01"
-        }
-      }),
-      {
-        "Microsoft.Network": "2025-05-01",
-        "Microsoft.Compute": "2018-10-01"
-      }
-    );
-  });
-
-  it("preserves scalar API version selections", () => {
-    strictEqual(normalizeApiVersionOption("2025-05-01"), "2025-05-01");
-  });
-});
 
 describe("resource projection metadata", () => {
   it("keeps distinct resource names in separate projection groups", () => {

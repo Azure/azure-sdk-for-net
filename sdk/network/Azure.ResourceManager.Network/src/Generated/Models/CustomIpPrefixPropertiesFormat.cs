@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,8 +22,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="CustomIpPrefixPropertiesFormat"/>. </summary>
         public CustomIpPrefixPropertiesFormat()
         {
-            ChildCustomIPPrefixes = new ChangeTrackingList<NetworkSubResource>();
-            PublicIPPrefixes = new ChangeTrackingList<NetworkSubResource>();
+            ChildCustomIPPrefixes = new ChangeTrackingList<WritableSubResource>();
+            PublicIPPrefixes = new ChangeTrackingList<WritableSubResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CustomIpPrefixPropertiesFormat"/>. </summary>
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="failedReason"> The reason why resource is in failed state. </param>
         /// <param name="provisioningState"> The provisioning state of the custom IP prefix resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CustomIpPrefixPropertiesFormat(string asn, string cidr, string signedMessage, string authorizationMessage, ResourceIdentifier customIPPrefixParent, IReadOnlyList<NetworkSubResource> childCustomIPPrefixes, CommissionedState? commissionedState, bool? expressRouteAdvertise, CidrAdvertisingGeoCode? geo, bool? noInternetAdvertise, CustomIPPrefixType? prefixType, IReadOnlyList<NetworkSubResource> publicIPPrefixes, Guid? resourceGuid, string failedReason, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CustomIpPrefixPropertiesFormat(string asn, string cidr, string signedMessage, string authorizationMessage, ResourceIdentifier customIPPrefixParent, IReadOnlyList<WritableSubResource> childCustomIPPrefixes, CommissionedState? commissionedState, bool? expressRouteAdvertise, CidrAdvertisingGeoCode? geo, bool? noInternetAdvertise, CustomIPPrefixType? prefixType, IReadOnlyList<WritableSubResource> publicIPPrefixes, Guid? resourceGuid, string failedReason, NetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Asn = asn;
             Cidr = cidr;
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The list of all Children for IPv6 /48 CustomIpPrefix. </summary>
         [WirePath("childCustomIpPrefixes")]
-        public IReadOnlyList<NetworkSubResource> ChildCustomIPPrefixes { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> ChildCustomIPPrefixes { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> The commissioned state of the Custom IP Prefix. </summary>
         [WirePath("commissionedState")]
@@ -108,7 +109,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The list of all referenced PublicIpPrefixes. </summary>
         [WirePath("publicIpPrefixes")]
-        public IReadOnlyList<NetworkSubResource> PublicIPPrefixes { get; } = new ChangeTrackingList<NetworkSubResource>();
+        public IReadOnlyList<WritableSubResource> PublicIPPrefixes { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> The resource GUID property of the custom IP prefix resource. </summary>
         [WirePath("resourceGuid")]

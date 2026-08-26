@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="NspLinkProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the NSP Link resource. </param>
-        /// <param name="autoApprovedRemotePerimeterResourceId"> Perimeter ARM Id for the remote NSP with which the link gets created in Auto-approval mode. It should be used when the NSP admin have Microsoft.Network/networkSecurityPerimeters/linkPerimeter/action permission on the remote NSP resource. </param>
+        /// <param name="autoApprovedRemotePerimeterResourceId"> Perimeter ARM Id for the remote NSP with which the link gets created in Auto-approval mode. It should be used when the NSP admin have MicrosoftNetwork/networkSecurityPerimeters/linkPerimeter/action permission on the remote NSP resource. </param>
         /// <param name="remotePerimeterGuid"> Remote NSP Guid with which the link gets created. </param>
         /// <param name="remotePerimeterLocation"> Remote NSP location with which the link gets created. </param>
         /// <param name="localInboundProfiles"> Local Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. </param>
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Network.Models
         [WirePath("provisioningState")]
         public NetworkSecurityPerimeterLinkProvisioningState? ProvisioningState { get; }
 
-        /// <summary> Perimeter ARM Id for the remote NSP with which the link gets created in Auto-approval mode. It should be used when the NSP admin have Microsoft.Network/networkSecurityPerimeters/linkPerimeter/action permission on the remote NSP resource. </summary>
+        /// <summary> Perimeter ARM Id for the remote NSP with which the link gets created in Auto-approval mode. It should be used when the NSP admin have MicrosoftNetwork/networkSecurityPerimeters/linkPerimeter/action permission on the remote NSP resource. </summary>
         [WirePath("autoApprovedRemotePerimeterResourceId")]
         public ResourceIdentifier AutoApprovedRemotePerimeterResourceId { get; set; }
 

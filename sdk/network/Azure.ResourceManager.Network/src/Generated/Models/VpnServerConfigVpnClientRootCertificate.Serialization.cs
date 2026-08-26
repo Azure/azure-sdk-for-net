@@ -82,14 +82,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(PublicCertData))
             {
                 writer.WritePropertyName("publicCertData"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(PublicCertData);
-#else
-                using (JsonDocument document = JsonDocument.Parse(PublicCertData))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WriteBase64StringValue(PublicCertData.ToArray(), "D");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -149,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    publicCertData = BinaryData.FromString(prop.Value.GetRawText());
+                    publicCertData = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (options.Format != "W")

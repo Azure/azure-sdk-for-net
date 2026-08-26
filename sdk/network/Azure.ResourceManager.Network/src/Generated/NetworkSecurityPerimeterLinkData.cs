@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network
             }
         }
 
-        /// <summary> Perimeter ARM Id for the remote NSP with which the link gets created in Auto-approval mode. It should be used when the NSP admin have Microsoft.Network/networkSecurityPerimeters/linkPerimeter/action permission on the remote NSP resource. </summary>
+        /// <summary> Perimeter ARM Id for the remote NSP with which the link gets created in Auto-approval mode. It should be used when the NSP admin have MicrosoftNetwork/networkSecurityPerimeters/linkPerimeter/action permission on the remote NSP resource. </summary>
         [WirePath("properties.autoApprovedRemotePerimeterResourceId")]
         public ResourceIdentifier AutoApprovedRemotePerimeterResourceId
         {

@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Network.Models
             CloudInitConfigurationBlobs = new ChangeTrackingList<string>();
             VirtualApplianceNics = new ChangeTrackingList<VirtualApplianceNicProperties>();
             AdditionalNics = new ChangeTrackingList<VirtualApplianceAdditionalNicProperties>();
-            InternetIngressPublicIPs = new ChangeTrackingList<InternetIngressPublicIpsProperties>();
+            InternetIngressPublicIPs = new ChangeTrackingList<WritableSubResource>();
             VirtualApplianceSites = new ChangeTrackingList<WritableSubResource>();
             VirtualApplianceConnections = new ChangeTrackingList<WritableSubResource>();
             InboundSecurityRules = new ChangeTrackingList<WritableSubResource>();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="nvaInterfaceConfigurations"> The NVA in VNet interface configurations. </param>
         /// <param name="privateIPAddress"> A Internal Load Balancer's HA port frontend IP address. Can be used to set routes &amp; UDR to load balance traffic between NVA instances. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkVirtualAppliancePropertiesFormat(VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, NetworkSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, NetworkVirtualAppliancePropertiesFormatNetworkProfile networkProfile, IList<VirtualApplianceAdditionalNicProperties> additionalNics, IList<InternetIngressPublicIpsProperties> internetIngressPublicIPs, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> virtualApplianceConnections, IReadOnlyList<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource, IList<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations, string privateIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkVirtualAppliancePropertiesFormat(VirtualApplianceSkuProperties nvaSku, string addressPrefix, IList<string> bootStrapConfigurationBlobs, NetworkSubResource virtualHub, IList<string> cloudInitConfigurationBlobs, string cloudInitConfiguration, long? virtualApplianceAsn, string sshPublicKey, IReadOnlyList<VirtualApplianceNicProperties> virtualApplianceNics, NetworkVirtualAppliancePropertiesFormatNetworkProfile networkProfile, IList<VirtualApplianceAdditionalNicProperties> additionalNics, IList<WritableSubResource> internetIngressPublicIPs, IReadOnlyList<WritableSubResource> virtualApplianceSites, IReadOnlyList<WritableSubResource> virtualApplianceConnections, IReadOnlyList<WritableSubResource> inboundSecurityRules, NetworkProvisioningState? provisioningState, string deploymentType, VirtualApplianceDelegationProperties delegation, PartnerManagedResourceProperties partnerManagedResource, IList<NvaInterfaceConfigurationsProperties> nvaInterfaceConfigurations, string privateIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NvaSku = nvaSku;
             AddressPrefix = addressPrefix;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> List of Resource Uri of Public IPs for Internet Ingress Scenario. </summary>
         [WirePath("internetIngressPublicIps")]
-        public IList<InternetIngressPublicIpsProperties> InternetIngressPublicIPs { get; } = new ChangeTrackingList<InternetIngressPublicIpsProperties>();
+        public IList<WritableSubResource> InternetIngressPublicIPs { get; } = new ChangeTrackingList<WritableSubResource>();
 
         /// <summary> List of references to VirtualApplianceSite. </summary>
         [WirePath("virtualApplianceSites")]

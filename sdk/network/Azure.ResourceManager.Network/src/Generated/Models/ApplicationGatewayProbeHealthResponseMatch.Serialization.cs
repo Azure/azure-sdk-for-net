@@ -77,14 +77,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Body))
             {
                 writer.WritePropertyName("body"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(Body);
-#else
-                using (JsonDocument document = JsonDocument.Parse(Body))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WriteBase64StringValue(Body.ToArray(), "D");
             }
             if (Optional.IsCollectionDefined(StatusCodes))
             {
@@ -154,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    body = BinaryData.FromString(prop.Value.GetRawText());
+                    body = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
                     continue;
                 }
                 if (prop.NameEquals("statusCodes"u8))

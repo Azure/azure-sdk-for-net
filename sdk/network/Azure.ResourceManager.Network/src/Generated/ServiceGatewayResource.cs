@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ServiceGateways_UpdateAddressLocations. </description>
+        /// <description> ServiceGateways_UpdateAddressLocationsLro. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -570,14 +570,14 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameters supplied to the create or updates address locations in service gateway operation. </param>
+        /// <param name="content"> Parameters supplied to create or update address locations in service gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> UpdateAddressLocationsAsync(WaitUntil waitUntil, ServiceGatewayUpdateAddressLocationsContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> UpdateAddressLocationsLroAsync(WaitUntil waitUntil, ServiceGatewayUpdateAddressLocationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _serviceGatewaysClientDiagnostics.CreateScope("ServiceGatewayResource.UpdateAddressLocations");
+            using DiagnosticScope scope = _serviceGatewaysClientDiagnostics.CreateScope("ServiceGatewayResource.UpdateAddressLocationsLro");
             scope.Start();
             try
             {
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGatewaysRestClient.CreateUpdateAddressLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateAddressLocationsContent.ToRequestContent(content), context);
+                HttpMessage message = _serviceGatewaysRestClient.CreateUpdateAddressLocationsLroRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateAddressLocationsContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_serviceGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ServiceGateways_UpdateAddressLocations. </description>
+        /// <description> ServiceGateways_UpdateAddressLocationsLro. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -628,14 +628,14 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameters supplied to the create or updates address locations in service gateway operation. </param>
+        /// <param name="content"> Parameters supplied to create or update address locations in service gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation UpdateAddressLocations(WaitUntil waitUntil, ServiceGatewayUpdateAddressLocationsContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation UpdateAddressLocationsLro(WaitUntil waitUntil, ServiceGatewayUpdateAddressLocationsContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _serviceGatewaysClientDiagnostics.CreateScope("ServiceGatewayResource.UpdateAddressLocations");
+            using DiagnosticScope scope = _serviceGatewaysClientDiagnostics.CreateScope("ServiceGatewayResource.UpdateAddressLocationsLro");
             scope.Start();
             try
             {
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGatewaysRestClient.CreateUpdateAddressLocationsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateAddressLocationsContent.ToRequestContent(content), context);
+                HttpMessage message = _serviceGatewaysRestClient.CreateUpdateAddressLocationsLroRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateAddressLocationsContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_serviceGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ServiceGateways_UpdateServices. </description>
+        /// <description> ServiceGateways_UpdateServicesLro. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -684,14 +684,14 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameters supplied to the create or updates services in service gateway operation. </param>
+        /// <param name="content"> Parameters supplied to create or update services in service gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation> UpdateServicesAsync(WaitUntil waitUntil, ServiceGatewayUpdateServicesContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation> UpdateServicesLroAsync(WaitUntil waitUntil, ServiceGatewayUpdateServicesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _serviceGatewaysClientDiagnostics.CreateScope("ServiceGatewayResource.UpdateServices");
+            using DiagnosticScope scope = _serviceGatewaysClientDiagnostics.CreateScope("ServiceGatewayResource.UpdateServicesLro");
             scope.Start();
             try
             {
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGatewaysRestClient.CreateUpdateServicesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateServicesContent.ToRequestContent(content), context);
+                HttpMessage message = _serviceGatewaysRestClient.CreateUpdateServicesLroRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateServicesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 NetworkArmOperation operation = new NetworkArmOperation(_serviceGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -727,7 +727,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ServiceGateways_UpdateServices. </description>
+        /// <description> ServiceGateways_UpdateServicesLro. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -740,14 +740,14 @@ namespace Azure.ResourceManager.Network
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="content"> Parameters supplied to the create or updates services in service gateway operation. </param>
+        /// <param name="content"> Parameters supplied to create or update services in service gateway operation. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation UpdateServices(WaitUntil waitUntil, ServiceGatewayUpdateServicesContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation UpdateServicesLro(WaitUntil waitUntil, ServiceGatewayUpdateServicesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using DiagnosticScope scope = _serviceGatewaysClientDiagnostics.CreateScope("ServiceGatewayResource.UpdateServices");
+            using DiagnosticScope scope = _serviceGatewaysClientDiagnostics.CreateScope("ServiceGatewayResource.UpdateServicesLro");
             scope.Start();
             try
             {
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.Network
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _serviceGatewaysRestClient.CreateUpdateServicesRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateServicesContent.ToRequestContent(content), context);
+                HttpMessage message = _serviceGatewaysRestClient.CreateUpdateServicesLroRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ServiceGatewayUpdateServicesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 NetworkArmOperation operation = new NetworkArmOperation(_serviceGatewaysClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
