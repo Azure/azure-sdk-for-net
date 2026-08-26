@@ -10,7 +10,6 @@ using Microsoft.Build.Execution;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Graph;
 using Microsoft.Build.Utilities;
-using NuGet.Frameworks;
 
 namespace Azure.Sdk.Tools.RepositoryProjectGraph;
 
@@ -23,6 +22,16 @@ public sealed class RepositoryProjectGraphTask : Task
         "Content",
         "EmbeddedResource",
         "AdditionalFiles",
+        "Analyzer",
+        "EditorConfigFiles",
+        "GlobalAnalyzerConfigFiles",
+        "Protobuf",
+        "TypeScriptCompile",
+        "ApplicationDefinition",
+        "Page",
+        "Resource",
+        "SplashScreen",
+        "NativeReference",
     };
 
     [Required]
@@ -62,7 +71,6 @@ public sealed class RepositoryProjectGraphTask : Task
     private void ExecuteCore()
     {
         var globalProperties = GetGlobalProperties();
-        globalProperties["IsGraphBuild"] = "false";
         if (!IncludeInputs)
         {
             globalProperties["EnableDefaultItems"] = "false";
@@ -72,7 +80,9 @@ public sealed class RepositoryProjectGraphTask : Task
             ? globalProperties.GetValueOrDefault("Configuration", "Debug")
             : Configurations;
         string[] configurations = configurationsValue
-            .Split(';', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            // A plus sign survives MSBuild command-line property parsing. Semicolons remain
+            // supported for direct task invocations, where they are not escaped as "%3B".
+            .Split(new[] { ';', '+' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
             .Distinct(StringComparer.OrdinalIgnoreCase)
             .ToArray();
         if (configurations.Length == 0)
@@ -336,20 +346,24 @@ public sealed class RepositoryProjectGraphTask : Task
                 append: false,
                 new UTF8Encoding(encoderShouldEmitUTF8Identifier: false)))
             {
+                // Debug and Release usually evaluate to identical records. Keep the union here so
+                // the isolated PowerShell artifact builder does not parse duplicate input records.
+                var emittedRecords = new HashSet<string>(StringComparer.Ordinal);
                 foreach (string project in declaredProjects)
                 {
-                    WriteRecord(writer, ref recordCount, $"DeclaredProject|{project}");
+                    WriteRecord(writer, ref recordCount, emittedRecords, $"DeclaredProject|{project}");
                 }
                 foreach (string project in rootProjects)
                 {
-                    WriteRecord(writer, ref recordCount, $"Root|{project}");
+                    WriteRecord(writer, ref recordCount, emittedRecords, $"Root|{project}");
                 }
 
                 foreach (ProjectGraphNode node in nodes
                     .OrderBy(node => GetProjectPath(node.ProjectInstance), StringComparer.OrdinalIgnoreCase)
-                    .ThenBy(node => node.ProjectInstance.GetPropertyValue("TargetFramework"), StringComparer.OrdinalIgnoreCase))
+                    .ThenBy(node => node.ProjectInstance.GetPropertyValue("TargetFramework"), StringComparer.OrdinalIgnoreCase)
+                    .ThenBy(node => node.ProjectInstance.GetPropertyValue("Configuration"), StringComparer.OrdinalIgnoreCase))
                 {
-                    AddProjectRecords(writer, ref recordCount, node);
+                    AddProjectRecords(writer, ref recordCount, emittedRecords, node);
                 }
             }
             File.Move(temporaryPath, fullRecordsPath, overwrite: true);
@@ -362,19 +376,23 @@ public sealed class RepositoryProjectGraphTask : Task
         return recordCount;
     }
 
-    private void AddProjectRecords(TextWriter writer, ref long recordCount, ProjectGraphNode node)
+    private void AddProjectRecords(
+        TextWriter writer,
+        ref long recordCount,
+        HashSet<string> emittedRecords,
+        ProjectGraphNode node)
     {
         ProjectInstance project = node.ProjectInstance;
         string projectPath = GetProjectPath(project);
         string targetFramework = project.GetPropertyValue("TargetFramework");
         foreach (string record in GetDependencyRecords(node))
         {
-            WriteRecord(writer, ref recordCount, record);
+            WriteRecord(writer, ref recordCount, emittedRecords, record);
         }
 
         if (IncludeInputs)
         {
-            AddInputRecords(writer, ref recordCount, project, projectPath, targetFramework);
+            AddInputRecords(writer, ref recordCount, emittedRecords, project, projectPath, targetFramework);
         }
     }
 
@@ -498,27 +516,16 @@ public sealed class RepositoryProjectGraphTask : Task
             return result.ToArray();
         }
 
-        NuGetFramework sourceFramework = NuGetFramework.ParseFolder(
-            sourceNode.ProjectInstance.GetPropertyValue("TargetFramework"));
-        var candidates = result
-            .Select(value => new { Value = value, Framework = NuGetFramework.ParseFolder(value) })
-            .Where(candidate => !candidate.Framework.IsUnsupported)
-            .ToArray();
-        NuGetFramework nearest = new FrameworkReducer().GetNearest(
-            sourceFramework,
-            candidates.Select(candidate => candidate.Framework));
-        return nearest is null
-            ? Array.Empty<string>()
-            : candidates
-                .Where(candidate => NuGetFramework.Comparer.Equals(candidate.Framework, nearest))
-                .Select(candidate => candidate.Value)
-                .Take(1)
-                .ToArray();
+        // MSBuild connects an outer-build reference to every concrete destination inner build.
+        // Preserve all of those configurations: choosing a nearest framework here would recreate
+        // restore compatibility policy and could omit a checkout dependency.
+        return result.OrderBy(value => value, StringComparer.OrdinalIgnoreCase).ToArray();
     }
 
     private static void AddInputRecords(
         TextWriter writer,
         ref long recordCount,
+        HashSet<string> emittedRecords,
         ProjectInstance project,
         string projectPath,
         string targetFramework)
@@ -529,6 +536,7 @@ public sealed class RepositoryProjectGraphTask : Task
             WriteRecord(
                 writer,
                 ref recordCount,
+                emittedRecords,
                 $"Input|{projectPath}|{targetFramework}|Import|{Path.GetFullPath(import)}");
         }
 
@@ -539,6 +547,7 @@ public sealed class RepositoryProjectGraphTask : Task
                 WriteRecord(
                     writer,
                     ref recordCount,
+                    emittedRecords,
                     $"Input|{projectPath}|{targetFramework}|{itemType}|{GetItemFullPath(project, item)}");
             }
         }
@@ -551,13 +560,22 @@ public sealed class RepositoryProjectGraphTask : Task
                 WriteRecord(
                     writer,
                     ref recordCount,
+                    emittedRecords,
                     $"Input|{projectPath}|{targetFramework}|ReferenceHintPath|{Path.GetFullPath(Path.Combine(project.Directory, hintPath))}");
             }
         }
     }
 
-    private static void WriteRecord(TextWriter writer, ref long recordCount, string record)
+    private static void WriteRecord(
+        TextWriter writer,
+        ref long recordCount,
+        HashSet<string> emittedRecords,
+        string record)
     {
+        if (!emittedRecords.Add(record))
+        {
+            return;
+        }
         writer.WriteLine(record);
         recordCount++;
     }
