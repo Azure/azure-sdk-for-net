@@ -2,73 +2,179 @@
 
 ## Scope and data flow
 
-This integration narrows only the PR test jobs emitted by `generate_target_service_test_matrix`. The normal matrix selection, direct/indirect package classification, batching, and `ProjectNames` values remain unchanged.
+This integration narrows only the PR test jobs emitted by
+`generate_target_service_test_matrix`. Matrix selection, direct/indirect package
+classification, batching, and each job's `ProjectNames` remain unchanged.
 
 1. The matrix seed job saves the selected package metadata as before.
-2. `GenerateRepositoryProjectGraphWithProjectGraph` evaluates every repository source/test project with MSBuild `ProjectGraph` for both `Debug` and `Release`, including every declared target framework. It records exact source-TFM to destination-TFM project edges, direct package edges, NuGet-resolved repository-package edges, and evaluated repository inputs.
-3. `Create-SparseCheckoutMap.ps1` seeds each selected artifact with every graph project beneath its package directory, unions all of its build/TFM configurations, follows configuration edges, maps reached repository packages back to shipping projects, and collapses reached files to checkout roots.
-4. The seed job publishes one map. Each generated test job resolves the union for its unchanged `ProjectNames` batch before the existing sparse-checkout step.
-5. Missing artifacts or an unavailable map make that test job use the previous full-SDK checkout. An incomplete graph, unresolved repository-package closure, conflicting configuration data, or a non-NuGet graph fails map generation rather than omitting paths.
+2. `GenerateRepositoryProjectGraphWithProjectGraph` constructs one MSBuild
+   `ProjectGraph` over all repository source and test projects. The graph evaluates
+   real `Debug` and `Release` entry points, all declared target frameworks, the
+   complete NuGet package topology, and evaluated repository inputs.
+3. `Create-SparseCheckoutGraph.ps1` scans that artifact once and publishes a compact
+   checkout graph. It contains artifact seeds, configuration/package adjacency,
+   and checkout roots instead of a precomputed closure for every artifact.
+4. Each fanned-out test job runs `Resolve-SparseCheckoutPaths.ps1`. The resolver
+   traverses only its comma-separated `ProjectNames` batch and extracts the path
+   union before the existing sparse checkout step.
+5. Missing, malformed, incomplete, dirty, or stale graph data returns no paths.
+   The test job then uses the existing full-checkout fallback.
 
-The graph captures `MSBuildAllProjects`, `Compile`, `None`, `Content`, `EmbeddedResource`, `AdditionalFiles`, and local `Reference` `HintPath` inputs. Root files and existing always-included directories are not repeated in artifact mappings.
+```text
+matrix seed (full checkout)
+    -> one RepositoryProjectGraph
+    -> one indexed checkout projection
+    -> publish TestCheckoutGraph
+
+test batch
+    -> artifact seeds for ProjectNames
+    -> forward BFS
+    -> checkout path union
+    -> sparse checkout
+```
+
+The previous implementation performed a BFS and then rescanned every graph node
+and input for every artifact. Its cost was effectively
+`artifacts × (nodes + inputs)`. The indexed design performs the large scans once;
+each test job pays only for its reachable subgraph.
 
 ## Correctness boundary
 
-This is conservative repository identity reachability, **not** proof of normal restore/build equivalence. It uses official MSBuild `ProjectGraph` topology and NuGet's resolver, but the conversion to canonical project/TFM records and the synthetic restore graph remain repository-owned. The graph continues to report `restoreEquivalent=false`.
+This is conservative repository identity reachability, not proof of normal
+restore/build equivalence. The source graph continues to report
+`restoreEquivalent=false`.
 
-The sparse selector specifically addresses known risks as follows:
+- **Target frameworks:** schema 3 preserves source-TFM to destination-TFM edges.
+  When MSBuild exposes an outer-build project reference, every concrete destination
+  inner build is retained. Checkout may over-select incompatible destination TFMs,
+  but it does not invent a nearest-framework policy that could omit source.
+- **Build configurations:** CI uses `Debug+Release`; the plus separator is deliberate
+  because MSBuild treats commas and semicolons as command-line property separators.
+  Dependency-bearing records must be equivalent before schema 3 collapses the two
+  configurations. Evaluated inputs are unioned. Duplicate records are removed in
+  the task before PowerShell builds the JSON artifact.
+- **Test reference modes:** the source graph is evaluated in normal package-reference
+  mode so the complete synthetic NuGet restore remains valid. The checkout projection
+  follows each reached repository package into every configuration of its shipping
+  source project. This conservative expansion supplies the recursive source closure
+  required when a matrix job sets `UseProjectReferenceToAzureClients=true`, without
+  constructing a second MSBuild graph.
+- **Repository packages:** direct and NuGet-derived repository package identity edges
+  are retained. `ReferenceOutputAssembly=false` P2P edges remain in the source/input
+  graph but are excluded from synthetic NuGet restore metadata.
+- **Inputs:** captured inputs include imports, `Compile`, `None`, `Content`,
+  `EmbeddedResource`, `AdditionalFiles`, local `Reference` hint paths, analyzers,
+  analyzer config files, Protobuf, TypeScript, application/page/resource items,
+  splash screens, and native references. Only tracked repository files affect paths.
+- **Checkout roots:** selected or reached SDK projects become
+  `/sdk/<service>/*`. Non-SDK linked inputs retain a narrower containing-directory
+  root. Only repository root files, `/eng`, and `/.config` are unconditional; SDK
+  services are selected by graph reachability rather than a hard-coded allowlist.
+- **Provenance:** the projection records `Build.SourceVersion`, verifies `HEAD`, and
+  rejects tracked worktree changes. Every test job verifies the same commit before
+  using the graph.
+- **Identity:** schema 3 rejects dependency-only global-property nodes and
+  dependency-bearing Debug/Release conflicts rather than silently dropping an
+  alternate MSBuild node.
 
-- **TFMs:** traversal starts from all evaluated TFMs and retains selected destination TFMs on P2P edges.
-- **Build configurations:** Debug and Release are evaluated together. Their evaluated inputs are unioned for checkout safety, but dependency-bearing records must be equivalent because unioning direct topology can change NuGet version selection. Configuration-specific dependency topology fails closed until a future schema preserves that dimension.
-- **Repository packages:** package IDs, not assembly filenames, drive NuGet-derived reachability. In NuGet mode package nodes are terminal during traversal and map to physical shipping projects only at output time. P2P references with `ReferenceOutputAssembly=false` stay available to source/input traversal but are excluded from synthetic NuGet restore metadata, matching normal restore collection.
-- **Inputs:** tracked evaluated files and local hint paths can add SDK or non-SDK directories.
-- **Matrix behavior:** matrix generation is unchanged; narrowing consumes its final `ProjectNames` values.
+The compact graph explicitly recognizes `ProjectReference`, `PackageReference`, and
+`TransitivePackageReference` configuration edges. A new edge kind, unknown artifact,
+duplicate malformed artifact, missing index, unresolved package root, or non-NuGet
+source graph causes a full-checkout fallback.
 
-Remaining semantic gaps include RID/OS-specific dependencies, custom target inputs that are not represented by captured items/imports, and lack of exhaustive parity with ordinary static-graph restore assets. Schema 3 intentionally supports Debug/Release only when dependency-bearing records are equivalent, and rejects dependency-only nodes created by additional global-property configurations. CI should broaden or fall back on any completeness failure, never continue with a known-partial map.
+## Failure and observability behavior
 
-## Initial local validation (2026-08-25)
+Graph generation is an optimization and must not prevent matrix generation. The
+seed job catches graph/projection failures and publishes an explicit incomplete
+`checkout-graph.json`. Test jobs log:
 
-Commands were run from the repository root in a Linux Amp orb with .NET SDK 10.0.400.
+- `SPARSE_CHECKOUT_GRAPH_RESULT=available|fallback` in the seed job;
+- `SPARSE_CHECKOUT_RESULT=narrowed pathCount=<n>|full` in each test job; and
+- graph/project/configuration/edge/input/artifact counts, projection bytes and time,
+  plus each query's artifact, reachable-node, and path counts.
 
-| Check | Command | Result |
-|---|---|---|
-| Task build | `dotnet build eng/tools/RepositoryProjectGraph/RepositoryProjectGraph.csproj --no-restore -v:minimal` | Passed, 0 warnings, 0 errors (8.42 s). |
-| Graph/query regression tests | `pwsh -NoProfile -Command '$r = Invoke-Pester -PassThru -Output Detailed eng/scripts/tests/RepositoryProjectGraph.Tests.ps1; if ($r.FailedCount) { exit 1 }'` | Passed 13/13. Covers mixed TFMs, configuration-only edges, NuGet P2P/local-package contributions, HintPath inputs, and oracle queries. |
-| Sparse map/resolver tests | `pwsh -NoProfile -Command '$r = Invoke-Pester -PassThru -Output Detailed eng/scripts/tests/SparseCheckout.Tests.ps1; if ($r.FailedCount) { exit 1 }'` | Passed 3/3. Covers TFM union, repository packages, cross-service inputs, batch union, and fail-closed behavior. |
-| Full graph | `dotnet msbuild /m /nr:false /nologo /tl:off /t:GenerateRepositoryProjectGraphWithProjectGraph eng/service.proj /p:SkipServiceProjectImports=true /p:RepositoryProjectGraphConfigurations=Debug%3BRelease /p:RepositoryProjectGraphReaderPath=/tmp/sparse-e2e-final/graph.json /p:RepositoryProjectGraphReaderRecordsPath=/tmp/sparse-e2e-final/project.records /p:RepositoryProjectGraphPackageRecordsPath=/tmp/sparse-e2e-final/package.records /p:RepositoryProjectGraphNuGetRestoreDirectory=/tmp/sparse-e2e-final/nuget-restore /p:RepositoryProjectGraphPackageResolutionMode=NuGetRestore /p:IncludeRepositoryProjectGraphInputs=true` | Passed in 3:14.35, peak RSS 4,830,864 KB. Complete graph: 973 projects, 2,906 project/TFM configurations, 38,406 configuration edges, 166,094 inputs, 22,557/22,557 NuGet roots resolved, zero unresolved. |
-| Representative map | `pwsh -NoProfile -File eng/scripts/Create-SparseCheckoutMap.ps1 -PackageInfoDirectory artifacts/tmp/sparse-e2e/package-info -RepoRoot . -GraphPath /tmp/sparse-e2e-final/graph.json -OutputPath /tmp/sparse-e2e-final/checkout-map.json` | Passed for `Azure.Data.SchemaRegistry` and `Azure.Template` in 41.92 s, peak RSS 1,398,496 KB. Schema Registry selected `core`, `eventhub`, `identity`, `schemaregistry`, `servicebus`, and `tools`. |
-| Matrix behavior | `Create-PrJobMatrix.ps1` with the repository platform matrix, Schema Registry direct and Template indirect, Linux filters | Preserved 3 direct jobs (net8 Debug package refs, net9 Release project refs, net10 Debug package refs) and 1 indirect net9 Release job; each retained the expected `ProjectNames`. |
-| Full vs sparse test | `dotnet test sdk/schemaregistry/Azure.Data.SchemaRegistry/tests/Azure.Data.SchemaRegistry.Tests.csproj --framework net10.0 --filter 'TestCategory!=Live'` in the full tree and a local sparse clone using the generated paths | Both passed: 86 passed, 76 skipped, 162 total. Full 20.74 s; sparse 30.66 s from a cold clone. |
+The fallback is intentionally broad. A known-partial graph is never used to narrow
+a checkout.
 
-The all-framework Schema Registry comparison was also attempted. Build/restore succeeded, net10 tests passed, but the orb lacks the net8/net9 runtimes, so those two test hosts aborted. The explicit net10 comparison above avoids presenting that environment limitation as a sparse-checkout failure.
+## Productionization findings and validation (2026-08-26)
 
-## Productionization validation (2026-08-26)
+The first hosted PR run failed in `generate_target_service_test_matrix` after one
+hour. The source graph itself completed in 49.74 seconds at about 2.54 GiB working
+set and emitted 532,685 raw input records. The old per-artifact map loop then ran
+without output for roughly 46 minutes until cancellation. This established the map
+algorithm—not ProjectGraph construction—as the immediate timeout.
 
-- The task build passed with zero warnings or errors.
-- RepositoryProjectGraph Pester tests passed 15/15, including `ReferenceOutputAssembly=false`, configuration-specific dependency topology, and dependency-only global-property regressions.
-- Sparse map/resolver Pester tests passed 3/3.
-- A Debug+Release full-repository evaluation with input capture disabled and `IsolatedMetadata` closure completed in 77.67 seconds with approximately 2.48 GiB peak RSS. It emitted 989 projects and 2,954 project/TFM keys, found zero dependency-only configurations, produced an exact 32,452-edge configuration graph, resolved 546/546 package roots, and marked the artifact complete. This was a focused schema-invariant check, not a repeat of the input-enabled NuGet sparse parity run above.
+Local checks on the current repository (989 projects) found and corrected a second
+issue: `/p:RepositoryProjectGraphConfigurations=Debug%3BRelease` reached the task as
+one escaped configuration. The `Debug+Release` form produced 1,978 entry points,
+7,886 MSBuild graph nodes, and 5,908 emitted configuration nodes before schema-3
+collapse. The complete input-enabled NuGet run produced:
 
-## Concerns and follow-up
+- 2,954 project/TFM keys and 47,898 configuration edges;
+- 189,950 unique graph inputs;
+- 22,903/22,903 resolved NuGet roots, with zero unresolved roots;
+- 367.38 seconds end to end and 6,196,838,400 bytes peak RSS on macOS.
 
-- **Performance:** evaluating Debug and Release together intentionally trades memory for conservative coverage. The full graph run and map deserialization are the main costs; measure on hosted CI agents before broadening beyond this PR test path.
-- **Artifact size/cacheability:** key a reusable graph by commit, SDK, central package files, imports, and graph policy. The seed currently regenerates it.
-- **CI observability:** retain `SPARSE_CHECKOUT_RESULT=full|narrowed`, graph diagnostics, selected paths, graph duration, and peak memory in logs. Add counters before enabling this outside PR tests.
-- **Maintenance:** schema changes must update the map reader and tests together. Treat `isComplete`, NuGet resolution mode, and repository input capture as compatibility contracts.
+That measurement predates record deduplication in `RepositoryProjectGraphTask`, so
+its 1,198,877-line intermediate record file is a conservative artifact-build cost,
+not the expected final size.
 
-## Readability streamlining investigation
+A post-deduplication Debug+Release run with inputs disabled emitted 45,204 unique
+records (rather than duplicating the two configurations), retained all 1,978 entry
+points and 7,886 MSBuild nodes, resolved 546/546 isolated-metadata roots, and produced
+a complete 2,954-configuration graph.
 
-Safe cleanup that should not change semantics:
+A representative four-artifact projection over that full graph completed in 33.26
+seconds, used about 1.64 GiB peak RSS, and produced a 3,305,237-byte checkout graph.
+Representative closures were:
 
-- Move the shared configuration-key/BFS helpers from `RepositoryProjectGraph.ps1` and `Create-SparseCheckoutMap.ps1` into one small dot-sourced query module.
-- Replace duplicated ProjectGraph task invocations in `service.proj` with one item/property expression for optional roots.
-- Give the always-included path list one checked-in source of truth shared by map generation and fallback checkout.
-- Split map parsing, closure calculation, and path projection into named functions; the current script deliberately keeps the initial integration in one file for reviewability.
+- `Azure.Data.SchemaRegistry`: 42 reachable keys, 10 paths;
+- `Azure.Provisioning.PostgreSql`: 43 reachable keys, 13 paths;
+- `Microsoft.Azure.WebJobs.Extensions.EventHubs`: 57 reachable keys, 11 paths; and
+- `Azure.Template`: 28 reachable keys, 8 paths.
 
-Changes needing deeper validation:
+The projected paths included linked `common` inputs and graph-derived `core`,
+`identity`, `resourcemanager`, `tools`, and cross-service SDK roots without keeping
+those services in the unconditional checkout cone.
 
-- Preserve full MSBuild global-property identity in schema v4 if configuration-specific dependency topology or dependency-only configurations need to be supported rather than rejected.
-- Generate or cache a provenance-preserving reverse+forward batch result in one process to avoid repeatedly materializing the graph JSON.
-- Replace synthetic NuGet inputs with authoritative static-graph restore DG specs/assets and broaden parity validation beyond the currently modeled restore inputs.
-- Narrow below `sdk/<service>` or remove always-included SDK services. Either can save more files but substantially increases missed-input risk.
-- Evaluate configurations sequentially and merge records to lower peak memory; this changes task lifecycle and requires full graph, NuGet, and sparse-clone parity testing.
+Focused validation also showed:
+
+- standard ProjectGraph `IsGraphBuild` behavior and explicit `IsGraphBuild=false`
+  produced byte-identical source records and identical package closure records apart
+  from elapsed-time diagnostics, so the nonstandard override was removed.
+- evaluating the repository only with `UseProjectReferenceToAzureClients=true`
+  made 24 synthetic restore roots fail on a Batch package-downgrade combination,
+  confirming that one normal graph plus conservative checkout expansion is safer
+  than replacing the source graph with project-reference mode.
+- every one of the 27,089 ProjectReference records from that project-reference
+  evaluation was audited against the normal-mode checkout projection. All 2,933
+  source configurations reached the exact destination configuration and checkout
+  root. The audit found and fixed one NuGet package-ID casing mismatch before the
+  result reached zero missing edges.
+- the task build and focused Pester suites cover configuration conflicts,
+  dependency-only nodes, `ReferenceOutputAssembly=false`, all-inner destination
+  edges, analyzer inputs, case-insensitive repository package expansion, transitive
+  package edges, stale provenance, duplicate artifacts, and full-checkout fallback.
+  The graph suite passed 15/15 and the sparse projection suite passed 5/5.
+- a local sparse clone using the Schema Registry closure restored and built the full
+  `UseProjectReferenceToAzureClients=true` source closure. Test execution then aborted
+  because this arm64 host has no x64 .NET test host, not because a checkout input was
+  missing.
+
+## Remaining limitations
+
+- Custom targets can consume arbitrary files that are not represented by evaluated
+  items or imports. Whole reached SDK services and the build/bootstrap cone cover
+  current repository patterns, but a new cross-service custom input must be exposed
+  as an evaluated item/import or sparse checkout must be disabled for it.
+- The graph is the host-neutral union of declared compile TFMs. It does not model an
+  OS or RID query dimension and must not be used to claim runtime-asset equivalence.
+- The manually assembled NuGet spec is deliberately not authoritative static-restore
+  output. Missing roots fail closed; indirect package closure may conservatively
+  over-select.
+- The corrected real Debug+Release graph has a higher memory cost than the earlier
+  escaped single-configuration measurements. Hosted validation should confirm agent
+  headroom before enabling this optimization outside the PR test path.
+- Windows and Linux hosted jobs still need end-to-end full-versus-sparse comparisons
+  for net8, net9, net10, and applicable net462 legs across linked-input and
+  cross-service representatives.
