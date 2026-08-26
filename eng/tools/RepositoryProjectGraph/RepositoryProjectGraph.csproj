@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <Compile Include="RepositoryProjectGraphTask.cs" />
-    <Compile Include="ResolveExternalPackageClosureTask.cs" />
     <Compile Include="ResolveExternalPackageClosureWithNuGetTask.cs" />
     <Compile Include="RunIsolatedRepositoryProjectGraphTask.cs" />
     <Reference Include="Microsoft.Build"
