@@ -13,8 +13,13 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Provisioning.Primitives;
 using Azure.ResourceManager;
-using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources.Deployments;
+using Azure.ResourceManager.Resources.Deployments.Models;
+using ResourceGroupCollection = Azure.ResourceManager.Resources.ResourceGroupCollection;
+using ResourceGroupData = Azure.ResourceManager.Resources.ResourceGroupData;
+using ResourceGroupResource = Azure.ResourceManager.Resources.ResourceGroupResource;
+using SubscriptionCollection = Azure.ResourceManager.Resources.SubscriptionCollection;
+using SubscriptionResource = Azure.ResourceManager.Resources.SubscriptionResource;
 
 namespace Azure.Provisioning;
 
@@ -209,9 +214,9 @@ public static class ProvisioningPlanExtensions
     {
         // Create a deployment
         string deploymentName = $"{resourceGroupName}-deployment";
-        Azure.ResourceManager.Resources.Models.ArmDeploymentContent deploymentContent =
+        ArmDeploymentContent deploymentContent =
             new(
-                new Azure.ResourceManager.Resources.Models.ArmDeploymentProperties(Azure.ResourceManager.Resources.Models.ArmDeploymentMode.Incremental)
+                new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
                 {
                     Template = BinaryData.FromString(armTemplate)
                 });
@@ -336,15 +341,16 @@ public static class ProvisioningPlanExtensions
 
         // Create a deployment to validate
         string deploymentName = $"{resourceGroupName}-validation";
-        Azure.ResourceManager.Resources.Models.ArmDeploymentContent deploymentContent =
+        ArmDeploymentContent deploymentContent =
             new(
-                new Azure.ResourceManager.Resources.Models.ArmDeploymentProperties(Azure.ResourceManager.Resources.Models.ArmDeploymentMode.Incremental)
+                new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
                 {
                     Template = BinaryData.FromString(armTemplate)
                 });
 
         // Validate the deployment
-        ArmDeploymentResource deployment = options.ArmClient.GetArmDeploymentResource(ArmDeploymentResource.CreateResourceIdentifier(rg.Id, deploymentName));
+        ArmDeploymentResource deployment = options.ArmClient.GetArmDeploymentResource(
+            ArmDeploymentResource.CreateResourceIdentifier(rg.Id, deploymentName));
         ArmOperation<ArmDeploymentValidateResult> deploymentValidation = async ?
             await deployment.ValidateAsync(WaitUntil.Completed, deploymentContent, cancellationToken).ConfigureAwait(false) :
             deployment.Validate(WaitUntil.Completed, deploymentContent, cancellationToken);
