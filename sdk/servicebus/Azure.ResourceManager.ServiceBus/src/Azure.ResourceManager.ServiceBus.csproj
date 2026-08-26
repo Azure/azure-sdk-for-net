@@ -6,8 +6,8 @@
     <PackageId>Azure.ResourceManager.ServiceBus</PackageId>
     <Description>Microsoft Azure management client SDK for Azure resource provider Microsoft.ServiceBus.</Description>
     <PackageTags>azure;management;arm;resource manager;azure.resourcemanager.servicebus</PackageTags>
-    <!-- Temporary: tspconfig.yaml pins the C# mgmt emitter to 2026-01-01. Remove once
-         https://github.com/Azure/azure-rest-api-specs bumps it to 2026-07-01-preview and
+    <!-- Temporary: tspconfig.yaml still pins the C# mgmt emitter to 2026-01-01 at the commit in
+         tsp-location.yaml. Remove this once the spec PR removing that pin merges and
          tsp-location.yaml is repointed at that commit. -->
     <TypespecAdditionalOptions>api-version=2026-07-01-preview</TypespecAdditionalOptions>
   </PropertyGroup>
