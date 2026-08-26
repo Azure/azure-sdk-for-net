@@ -1,11 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <RequiredTargetFrameworks>$(LtsTargetFramework)</RequiredTargetFrameworks>
-    <TargetFrameworks>$(LtsTargetFramework)</TargetFrameworks>
-    <IsTestProject>true</IsTestProject>
-    <IsMgmtLibrary>true</IsMgmtLibrary>
-    <GenerateDocumentationFile>false</GenerateDocumentationFile>
-    <Nullable>enable</Nullable>
+    <LangVersion>12</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\..\..\..\sdk\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
