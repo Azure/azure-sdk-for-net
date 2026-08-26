@@ -55,35 +55,42 @@ internal sealed class VoiceCallbackTrace : IDisposable
         var previousActivity = Activity.Current;
         var previousStartToken = s_startToken.Value;
         var startToken = new object();
-        s_startToken.Value = startToken;
         Activity? activity = null;
         Activity? startedActivity = null;
         Activity? propagationActivity = null;
+        // ActivitySource names are not unique. Recovery may own only a live callback
+        // surfaced by this exact SDK source during the current synchronous start window.
+        bool IsStartCandidate(Activity? candidate) =>
+            candidate?.Id is not null &&
+            candidate.Duration == default &&
+            !ReferenceEquals(candidate, previousActivity) &&
+            IsCallbackActivity(candidate);
         EventHandler<ActivityChangedEventArgs> captureStartedActivity = (_, args) =>
         {
-            if (!ReferenceEquals(s_startToken.Value, startToken))
+            if (!ReferenceEquals(s_startToken.Value, startToken) || startedActivity is not null)
             {
                 return;
             }
 
-            var candidate = IsCallbackActivity(args.Current)
-                ? args.Current
-                : IsCallbackActivity(args.Previous)
-                    ? args.Previous
-                    : null;
-            if (candidate is not null)
+            if (IsStartCandidate(args.Current))
             {
-                startedActivity = candidate;
+                startedActivity = args.Current;
+            }
+            else if (IsStartCandidate(args.Previous))
+            {
+                startedActivity = args.Previous;
             }
         };
-        Activity.CurrentChanged += captureStartedActivity;
         try
         {
             var tags = new ActivityTagsCollection
             {
                 ["voice.event.type"] = eventType,
             };
+            traceContext.CorrelationBaggage.AddStartTags(tags);
             VoiceActivityScope.TrySetCurrent(null);
+            s_startToken.Value = startToken;
+            Activity.CurrentChanged += captureStartedActivity;
             try
             {
                 activity = startActivity(traceContext.ActivityContext, tags);
@@ -106,7 +113,11 @@ internal sealed class VoiceCallbackTrace : IDisposable
             {
                 activity = propagationActivity?.Id is not null
                     ? propagationActivity
-                    : startedActivity ?? Activity.Current;
+                    : startedActivity;
+                if (activity is null && IsStartCandidate(Activity.Current))
+                {
+                    activity = Activity.Current;
+                }
                 if (!IsCallbackActivity(activity))
                 {
                     activity = ReferenceEquals(activity, propagationActivity)
@@ -124,8 +135,14 @@ internal sealed class VoiceCallbackTrace : IDisposable
         finally
         {
             Activity.CurrentChanged -= captureStartedActivity;
-            s_startToken.Value = previousStartToken;
-            VoiceActivityScope.TrySetCurrent(previousActivity);
+            try
+            {
+                VoiceActivityScope.TrySetCurrent(previousActivity);
+            }
+            finally
+            {
+                s_startToken.Value = previousStartToken;
+            }
         }
         traceContext.ApplyBaggage(activity);
         return new VoiceCallbackTrace(activity);
@@ -167,7 +184,7 @@ internal sealed class VoiceCallbackTrace : IDisposable
     }
 
     private static bool IsCallbackActivity(Activity? activity) =>
-        activity?.Source.Name == InvocationsActivitySource.DefaultName &&
+        ReferenceEquals(activity?.Source, s_activitySource) &&
         activity.OperationName == OperationName;
 
     private static void TryInvokeTelemetry(Action action)

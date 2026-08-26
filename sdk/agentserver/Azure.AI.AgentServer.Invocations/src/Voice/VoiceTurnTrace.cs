@@ -209,29 +209,40 @@ public class VoiceTurnTrace : IDisposable
         var previous = Activity.Current;
         var previousStartToken = s_startToken.Value;
         var startToken = new object();
-        s_startToken.Value = startToken;
         Activity? activity = null;
         Activity? startedActivity = null;
         Activity? propagationActivity = null;
+        // ActivityListener callbacks are cooperative diagnostics hooks. Recovery excludes the
+        // caller's prior turn and stopped activities; callbacks must not substitute unrelated
+        // live activities through Activity.Current during this synchronous creation window.
+        bool IsStartCandidate(Activity? candidate) =>
+            candidate?.Id is not null &&
+            candidate.Duration == default &&
+            !ReferenceEquals(candidate, previous) &&
+            ReferenceEquals(candidate.Source, s_activitySource) &&
+            IsTargetTurn(candidate);
         EventHandler<ActivityChangedEventArgs> captureStartedActivity = (_, args) =>
         {
-            if (!ReferenceEquals(s_startToken.Value, startToken))
+            if (!ReferenceEquals(s_startToken.Value, startToken) || startedActivity is not null)
             {
                 return;
             }
-            var candidate = IsTargetTurn(args.Current)
-                ? args.Current
-                : IsTargetTurn(args.Previous)
-                    ? args.Previous
-                    : null;
-            if (candidate is not null)
+            if (IsStartCandidate(args.Current))
             {
-                startedActivity = candidate;
+                startedActivity = args.Current;
+            }
+            else if (IsStartCandidate(args.Previous))
+            {
+                startedActivity = args.Previous;
             }
         };
-        Activity.CurrentChanged += captureStartedActivity;
         try
         {
+            // Isolate the caller's turn so a pre-creation listener failure cannot transfer it
+            // to the handle returned by this start attempt.
+            VoiceActivityScope.TrySetCurrent(null);
+            s_startToken.Value = startToken;
+            Activity.CurrentChanged += captureStartedActivity;
             var tags = new ActivityTagsCollection
             {
                 ["gen_ai.operation.name"] = OperationName,
@@ -240,6 +251,7 @@ public class VoiceTurnTrace : IDisposable
                 ["turn.origin"] = ToTagValue(origin),
                 ["bridge.input.count"] = inputCount,
             };
+            traceContext.CorrelationBaggage.AddStartTags(tags);
             activity = s_activitySource.StartActivity(
                 OperationName,
                 ActivityKind.Internal,
@@ -262,9 +274,15 @@ public class VoiceTurnTrace : IDisposable
         }
         catch (Exception exception) when (!ContainsOutOfMemoryException(exception))
         {
+            // StartActivity may throw after creating an activity when a listener callback fails.
+            // Retain only a candidate surfaced during this invocation's synchronous start window.
             activity = propagationActivity?.Id is not null
                 ? propagationActivity
-                : startedActivity ?? Activity.Current;
+                : startedActivity;
+            if (activity is null && IsStartCandidate(Activity.Current))
+            {
+                activity = Activity.Current;
+            }
             if (!IsTargetTurn(activity))
             {
                 activity = ReferenceEquals(activity, propagationActivity)
@@ -275,8 +293,16 @@ public class VoiceTurnTrace : IDisposable
         finally
         {
             Activity.CurrentChanged -= captureStartedActivity;
-            s_startToken.Value = previousStartToken;
-            VoiceActivityScope.TrySetCurrent(previous);
+            try
+            {
+                // Keep this token installed while restoring ambient state so an outer observer
+                // cannot claim a reentrant activity during the CurrentChanged notification.
+                VoiceActivityScope.TrySetCurrent(previous);
+            }
+            finally
+            {
+                s_startToken.Value = previousStartToken;
+            }
         }
         traceContext.ApplyBaggage(activity);
         return new VoiceTurnTrace(activity);

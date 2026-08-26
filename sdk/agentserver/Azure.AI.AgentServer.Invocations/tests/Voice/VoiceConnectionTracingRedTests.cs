@@ -7,6 +7,7 @@ using System.Diagnostics.Metrics;
 using System.Net;
 using System.Net.WebSockets;
 using System.Text;
+using Azure.AI.AgentServer.Core.Internal;
 using Azure.AI.AgentServer.Invocations.Internal;
 using Azure.AI.AgentServer.Invocations.Voice;
 using Microsoft.AspNetCore.Builder;
@@ -31,6 +32,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Voice;
 public class VoiceConnectionTracingRedTests
 {
     private const string InvocationsSourceName = "Azure.AI.AgentServer.Invocations";
+    private const string CallbackOperationName = "voice.callback";
     private const string ConnectionOperationName = "agentserver.connection";
     private const string TargetTurnCustomerSourceName = "VoiceConnectionTracingRedTests.Customer";
     private static readonly TimeSpan TestTimeout = TimeSpan.FromSeconds(5);
@@ -138,8 +140,11 @@ public class VoiceConnectionTracingRedTests
             Assert.That(callback?.TraceId, Is.EqualTo(traceId));
             Assert.That(callback?.ParentSpanId, Is.EqualTo(connection?.SpanId));
             Assert.That(callback?.GetTagItem("voice.event.type"), Is.EqualTo("session.start"));
+            Assert.That(
+                callback?.GetTagItem("microsoft.session.id"),
+                Is.EqualTo(callback?.GetBaggageItem("azure.ai.agentserver.session_id")));
             Assert.That(callback?.TagObjects.Select(tag => tag.Key),
-                Is.EquivalentTo(new[] { "voice.event.type" }));
+                Is.EquivalentTo(new[] { "voice.event.type", "microsoft.session.id" }));
             Assert.That(customer?.TraceId, Is.EqualTo(traceId));
             Assert.That(customer?.ParentSpanId, Is.EqualTo(callback?.SpanId));
             Assert.That(activities.Any(IsGenericWebSocketRequest), Is.False);
@@ -249,6 +254,45 @@ public class VoiceConnectionTracingRedTests
             Assert.That(logs.CloseCodes, Does.Contain(1011));
             Assert.That(logs.ErrorCodes, Does.Contain("accept_failed"));
             Assert.That(logs.DiagnosticExceptions, Does.Contain(acceptCancellation));
+        });
+    }
+
+    [Test]
+    public async Task RawWebSocket_AcceptFailureScopeDisposeFailurePreservesPrimaryException()
+    {
+        var acceptFailure = new InvalidOperationException("injected raw accept failure");
+        var featureDecorator = new AcceptFailureFeatureDecorator(acceptFailure);
+        var logger = new ThrowOnceLoggerProvider(scopeFailureTarget: ScopeFailureTarget.Dispose);
+        var escapedException = new TaskCompletionSource<Exception>(
+            TaskCreationOptions.RunContinuationsAsynchronously);
+        var exporter = new CapturingActivityExporter();
+        await using var server = await StartRawServerAsync(
+            exporter,
+            decorateWebSocketFeature: featureDecorator.Decorate,
+            loggerProvider: logger,
+            configureApplication: app => app.Use(async (_, next) =>
+            {
+                try
+                {
+                    await next();
+                }
+                catch (Exception exception)
+                {
+                    escapedException.TrySetResult(exception);
+                    throw;
+                }
+            }));
+
+        _ = await ConnectAndCaptureFailureAsync(server.WebSocketUri);
+        var escaped = await escapedException.Task.WaitAsync(TestTimeout);
+        var retryCloseCode = await ConnectAndCloseAsync(server.WebSocketUri);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(escaped, Is.SameAs(acceptFailure));
+            Assert.That(logger.FailureCount, Is.EqualTo(1));
+            Assert.That(featureDecorator.AttemptCount, Is.EqualTo(2));
+            Assert.That(retryCloseCode, Is.EqualTo(1000));
         });
     }
 
@@ -611,6 +655,79 @@ public class VoiceConnectionTracingRedTests
             Assert.That(rejections, Has.Length.EqualTo(2));
             Assert.That(rejections.Select(activity => activity.TraceId),
                 Is.EquivalentTo(new[] { firstTraceId, secondTraceId }));
+        });
+    }
+
+    [Test]
+    public async Task MiddlewareRejection_SampleFailureDoesNotAdoptSameNameForeignActivity()
+    {
+        var exporter = new CapturingActivityExporter();
+        await using var server = await StartVoiceServerAsync(
+            exporter,
+            configureApplication: app => app.Run(context =>
+            {
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                return Task.CompletedTask;
+            }));
+        using var foreignSource = new ActivitySource(InvocationsSourceName);
+        Activity? foreignActivity = null;
+        var failureCount = 0;
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = static source => source.Name == InvocationsSourceName,
+            Sample = (ref ActivityCreationOptions<ActivityContext> options) =>
+            {
+                if (options.Name == "GET /invocations_ws" &&
+                    Interlocked.CompareExchange(ref failureCount, 1, 0) == 0)
+                {
+                    var previous = Activity.Current;
+                    foreignActivity = foreignSource.StartActivity(options.Name);
+                    Activity.Current = previous;
+                    throw new InvalidOperationException("injected rejection Sample failure");
+                }
+                return ActivitySamplingResult.AllDataAndRecorded;
+            },
+        };
+        ActivitySource.AddActivityListener(listener);
+        using var client = new HttpClient();
+        var firstTraceId = ActivityTraceId.CreateRandom();
+        var secondTraceId = ActivityTraceId.CreateRandom();
+
+        using (var firstRequest = CreateWebSocketCandidateRequest(
+            server.HttpUri,
+            Convert.ToBase64String(new byte[16])))
+        {
+            firstRequest.Headers.TryAddWithoutValidation(
+                "traceparent",
+                $"00-{firstTraceId}-{ActivitySpanId.CreateRandom()}-01");
+            using var firstResponse = await client.SendAsync(firstRequest).WaitAsync(TestTimeout);
+            Assert.That(firstResponse.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
+        }
+
+        using (var secondRequest = CreateWebSocketCandidateRequest(
+            server.HttpUri,
+            Convert.ToBase64String(new byte[16])))
+        {
+            secondRequest.Headers.TryAddWithoutValidation(
+                "traceparent",
+                $"00-{secondTraceId}-{ActivitySpanId.CreateRandom()}-01");
+            using var secondResponse = await client.SendAsync(secondRequest).WaitAsync(TestTimeout);
+            Assert.That(secondResponse.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
+        }
+        var retryObserved = await exporter.TryWaitForAsync(
+            activity => IsRejectedVoiceRequest(activity, secondTraceId),
+            ObservationTimeout);
+        var foreignStatusAfterFailure = foreignActivity?.Status;
+        var foreignErrorAfterFailure = foreignActivity?.GetTagItem("error.type");
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(failureCount, Is.EqualTo(1));
+            Assert.That(foreignActivity, Is.Not.Null);
+            Assert.That(foreignActivity?.Source, Is.SameAs(foreignSource));
+            Assert.That(foreignStatusAfterFailure, Is.EqualTo(ActivityStatusCode.Unset));
+            Assert.That(foreignErrorAfterFailure, Is.Null);
+            Assert.That(retryObserved, Is.True);
         });
     }
 
@@ -1116,6 +1233,53 @@ public class VoiceConnectionTracingRedTests
         });
     }
 
+    [TestCase("session_on_start", "session_on_start")]
+    [TestCase("", null)]
+    public void VoiceHierarchy_ProvidesSessionEnrichmentAtProcessorStart(
+        string sessionId,
+        string? expectedSessionId)
+    {
+        var started = new ConcurrentQueue<(string OperationName, object? SessionId)>();
+        using var provider = Sdk.CreateTracerProviderBuilder()
+            .AddSource(InvocationsSourceName)
+            .AddProcessor(new FoundryEnrichmentProcessor())
+            .AddProcessor(new OnStartSessionCapturingProcessor(started))
+            .Build();
+        var correlationBaggage = new InvocationCorrelationBaggage(
+            "invocation_on_start",
+            sessionId,
+            "request_on_start");
+        var connection = VoiceConnectionTelemetry.Start(
+            new HeaderDictionary(),
+            correlationBaggage);
+
+        using (var callback = VoiceCallbackTrace.Start(connection.Context, "session.start"))
+        {
+        }
+        using (var turn = VoiceTurnTrace.Start(
+            connection.Context,
+            VoiceTurnOrigin.User,
+            inputCount: 1))
+        {
+            turn.Complete(new VoiceTurnResult(VoiceTurnOutcome.None, outputItemCount: 0));
+        }
+        connection.Complete("session_on_start", 1000, null, null, 0);
+
+        var semanticStarts = started.Where(item =>
+            item.OperationName is ConnectionOperationName or "voice.callback" or "invoke_agent")
+            .ToArray();
+        Assert.Multiple(() =>
+        {
+            Assert.That(semanticStarts, Has.Length.EqualTo(3));
+            Assert.That(
+                semanticStarts.Select(item => item.OperationName),
+                Is.EquivalentTo(new[] { ConnectionOperationName, "voice.callback", "invoke_agent" }));
+            Assert.That(
+                semanticStarts.Select(item => item.SessionId),
+                Is.All.EqualTo(expectedSessionId));
+        });
+    }
+
     [Test]
     public async Task VoiceHierarchy_CorrelationDoesNotDependOnAmbientRequestActivity()
     {
@@ -1257,6 +1421,64 @@ public class VoiceConnectionTracingRedTests
             Assert.That(callbacks.Select(activity => activity.Duration),
                 Is.All.Not.EqualTo(default(TimeSpan)));
             Assert.That(callbacks.Select(activity => activity.TraceId).Distinct().Count(), Is.EqualTo(2));
+        });
+    }
+
+    [Test]
+    public void CallbackSampleFailure_DoesNotAdoptSameNameForeignActivityAndRetrySucceeds()
+    {
+        var connectionContext = new ActivityContext(
+            ActivityTraceId.CreateRandom(),
+            ActivitySpanId.CreateRandom(),
+            ActivityTraceFlags.Recorded);
+        using var foreignSource = new ActivitySource(InvocationsSourceName);
+        var stopped = new ConcurrentQueue<Activity>();
+        Activity? foreignActivity = null;
+        var sampleCount = 0;
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = static source => source.Name == InvocationsSourceName,
+            Sample = (ref ActivityCreationOptions<ActivityContext> _) =>
+            {
+                if (Interlocked.Increment(ref sampleCount) == 1)
+                {
+                    var previous = Activity.Current;
+                    foreignActivity = foreignSource.StartActivity(CallbackOperationName);
+                    Activity.Current = previous;
+                    throw new InvalidOperationException("injected callback Sample failure");
+                }
+                return ActivitySamplingResult.AllDataAndRecorded;
+            },
+            ActivityStopped = stopped.Enqueue,
+        };
+        ActivitySource.AddActivityListener(listener);
+
+        using (var failed = VoiceCallbackTrace.Start(connectionContext, "session.start"))
+        {
+            failed.RecordFailure(new ApplicationException("must not reach foreign activity"));
+        }
+
+        var foreignStatusAfterFailure = foreignActivity?.Status;
+        var foreignErrorAfterFailure = foreignActivity?.GetTagItem("error.type");
+
+        Activity? retryActivity;
+        using (var retry = VoiceCallbackTrace.Start(connectionContext, "session.start"))
+        {
+            using var activation = retry.Activate();
+            retryActivity = Activity.Current;
+        }
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(foreignActivity, Is.Not.Null);
+            Assert.That(foreignActivity?.Source, Is.SameAs(foreignSource));
+            Assert.That(foreignStatusAfterFailure, Is.EqualTo(ActivityStatusCode.Unset));
+            Assert.That(foreignErrorAfterFailure, Is.Null);
+            Assert.That(retryActivity, Is.Not.Null);
+            Assert.That(retryActivity?.Source, Is.Not.SameAs(foreignSource));
+            Assert.That(retryActivity?.OperationName, Is.EqualTo(CallbackOperationName));
+            Assert.That(retryActivity?.Duration, Is.Not.EqualTo(default(TimeSpan)));
+            Assert.That(stopped.Count(activity => ReferenceEquals(activity, retryActivity)), Is.EqualTo(1));
         });
     }
 
@@ -1912,6 +2134,61 @@ public class VoiceConnectionTracingRedTests
     }
 
     [Test]
+    public async Task AcceptFailure_LoggerFailurePreservesOutcomeAndSuccessfulRetry()
+    {
+        var acceptFailure = new InvalidOperationException("injected accept failure");
+        var featureDecorator = new AcceptFailureFeatureDecorator(acceptFailure);
+        var exporter = new CapturingActivityExporter();
+        var logger = new ThrowOnceLoggerProvider(throwOnException: true);
+        var escapedException = new TaskCompletionSource<Exception>(
+            TaskCreationOptions.RunContinuationsAsynchronously);
+        Exception observedFailure;
+        int? retryCloseCode;
+        bool observed;
+        await using (var server = await StartVoiceServerAsync<PassiveVoiceHandler>(
+            exporter,
+            decorateWebSocketFeature: featureDecorator.Decorate,
+            loggerProvider: logger,
+            configureApplication: app => app.Use(async (_, next) =>
+            {
+                try
+                {
+                    await next();
+                }
+                catch (Exception exception)
+                {
+                    escapedException.TrySetResult(exception);
+                    throw;
+                }
+            })))
+        {
+            observedFailure = await ConnectAndCaptureFailureAsync(server.WebSocketUri);
+            retryCloseCode = await ConnectAndCloseAsync(server.WebSocketUri);
+            observed = await exporter.TryWaitForSemanticCountAsync(2, ObservationTimeout);
+        }
+        var escaped = await escapedException.Task.WaitAsync(TestTimeout);
+
+        var connections = exporter.GetFinishedActivities().Where(IsSemanticConnection).ToArray();
+        Assert.Multiple(() =>
+        {
+            Assert.That(observedFailure, Is.Not.Null);
+            Assert.That(escaped, Is.SameAs(acceptFailure));
+            Assert.That(logger.FailureCount, Is.EqualTo(1));
+            Assert.That(featureDecorator.AttemptCount, Is.EqualTo(2));
+            Assert.That(retryCloseCode, Is.EqualTo(1000));
+            Assert.That(observed, Is.True);
+            Assert.That(connections, Has.Length.EqualTo(2));
+            Assert.That(
+                connections.Select(activity => activity.GetTagItem("bridge.outcome")),
+                Is.EqualTo(new object?[] { "accept_error", "completed" }));
+            Assert.That(
+                connections.Select(activity => activity.GetTagItem(
+                    InvocationsWebSocketConstants.AttrSpanCloseCode)),
+                Is.EqualTo(new object?[] { 1011, 1000 }));
+        });
+    }
+
+    [Test]
     public async Task CloseFailure_IsSecondaryAndDoesNotOverwriteCompletedOutcome()
     {
         var closeFailure = new WebSocketException("injected close failure");
@@ -2311,6 +2588,67 @@ public class VoiceConnectionTracingRedTests
     }
 
     [Test]
+    public void ConnectionSampleFailure_DoesNotAdoptSameNameForeignActivityAndRetrySucceeds()
+    {
+        using var propagatorScope = UseTraceContextPropagator();
+        var traceId = ActivityTraceId.CreateRandom();
+        var parentSpanId = ActivitySpanId.CreateRandom();
+        var headers = new HeaderDictionary
+        {
+            ["traceparent"] = $"00-{traceId}-{parentSpanId}-01",
+        };
+        using var foreignSource = new ActivitySource(InvocationsSourceName);
+        var stopped = new ConcurrentQueue<Activity>();
+        Activity? foreignActivity = null;
+        var sampleCount = 0;
+        using var listener = new ActivityListener
+        {
+            ShouldListenTo = static source => source.Name == InvocationsSourceName,
+            Sample = (ref ActivityCreationOptions<ActivityContext> _) =>
+            {
+                if (Interlocked.Increment(ref sampleCount) == 1)
+                {
+                    var previous = Activity.Current;
+                    foreignActivity = foreignSource.StartActivity(ConnectionOperationName);
+                    Activity.Current = previous;
+                    throw new InvalidOperationException("injected connection Sample failure");
+                }
+                return ActivitySamplingResult.AllDataAndRecorded;
+            },
+            ActivityStopped = stopped.Enqueue,
+        };
+        ActivitySource.AddActivityListener(listener);
+
+        var failed = VoiceConnectionTelemetry.Start(headers);
+        failed.Complete("must_not_reach_foreign", 1011, "callback_error", null, 17);
+
+        var foreignSessionAfterFailure = foreignActivity?.GetTagItem(
+            InvocationsWebSocketConstants.AttrSpanSessionId);
+        var foreignOutcomeAfterFailure = foreignActivity?.GetTagItem("bridge.outcome");
+
+        var retry = VoiceConnectionTelemetry.Start(headers);
+        retry.Complete("session_retry", 1000, null, null, 23);
+        var retryActivity = stopped.SingleOrDefault(activity =>
+            activity.OperationName == ConnectionOperationName &&
+            !ReferenceEquals(activity.Source, foreignSource));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(foreignActivity, Is.Not.Null);
+            Assert.That(foreignActivity?.Source, Is.SameAs(foreignSource));
+            Assert.That(foreignSessionAfterFailure, Is.Null);
+            Assert.That(foreignOutcomeAfterFailure, Is.Null);
+            Assert.That(retryActivity, Is.Not.Null);
+            Assert.That(
+                retryActivity?.GetTagItem(InvocationsWebSocketConstants.AttrSpanSessionId),
+                Is.EqualTo("session_retry"));
+            Assert.That(retryActivity?.GetTagItem("bridge.outcome"), Is.EqualTo("completed"));
+            Assert.That(retryActivity?.Duration, Is.Not.EqualTo(default(TimeSpan)));
+            Assert.That(stopped.Count(activity => ReferenceEquals(activity, retryActivity)), Is.EqualTo(1));
+        });
+    }
+
+    [Test]
     public async Task ConcurrentActivityStartedMutations_ExportDistinctConnectionsWithoutLeaks()
     {
         const int connectionCount = 8;
@@ -2606,7 +2944,8 @@ public class VoiceConnectionTracingRedTests
         Func<IHttpWebSocketFeature, IHttpWebSocketFeature>? decorateWebSocketFeature = null,
         CancellationToken requestAborted = default,
         ILoggerProvider? loggerProvider = null,
-        HttpProtocols? serverProtocols = null)
+        HttpProtocols? serverProtocols = null,
+        Action<WebApplication>? configureApplication = null)
     {
         var builder = CreateBuilder(exporter, serverProtocols);
         if (loggerProvider is not null)
@@ -2636,6 +2975,7 @@ public class VoiceConnectionTracingRedTests
                 await next();
             });
         }
+        configureApplication?.Invoke(app);
         app.MapInvocationsServer();
         return await StartAsync(app, prefix: null, requestPath: null);
     }
@@ -3428,6 +3768,18 @@ public class VoiceConnectionTracingRedTests
 
             public void Dispose() => _owner.ThrowOnce();
         }
+    }
+
+    private sealed class OnStartSessionCapturingProcessor : BaseProcessor<Activity>
+    {
+        private readonly ConcurrentQueue<(string OperationName, object? SessionId)> _started;
+
+        public OnStartSessionCapturingProcessor(
+            ConcurrentQueue<(string OperationName, object? SessionId)> started) =>
+            _started = started;
+
+        public override void OnStart(Activity activity) =>
+            _started.Enqueue((activity.OperationName, activity.GetTagItem("microsoft.session.id")));
     }
 
     public enum ScopeFailureTarget

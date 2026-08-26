@@ -27,10 +27,8 @@ public static class VoiceHostingExtensions
 
         VoiceTracingRegistration.Add(services);
         services.AddInvocationsServer(configure);
-        services.AddScoped<VoiceHandler, THandler>();
-        services.AddScoped<InvocationHandler>(provider =>
-            provider.GetRequiredService<VoiceHandler>());
-        services.AddSingleton<VoiceRegistrationMarker>();
+        services.AddScoped<InvocationHandler, THandler>();
+        services.AddSingleton(new VoiceRegistrationMarker(typeof(THandler)));
         return services;
     }
 
@@ -47,7 +45,12 @@ public static class VoiceHostingExtensions
     }
 }
 
-internal sealed class VoiceRegistrationMarker;
+internal sealed class VoiceRegistrationMarker
+{
+    internal VoiceRegistrationMarker(Type handlerType) => HandlerType = handlerType;
+
+    internal Type HandlerType { get; }
+}
 
 /// <summary>One-line startup for a typed Voice relay.</summary>
 [Experimental("AAAS001")]

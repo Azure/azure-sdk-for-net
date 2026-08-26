@@ -103,7 +103,7 @@ internal sealed class WebSocketEndpointHandler
             ["InvocationId"] = invocationId,
         };
         using var logScope = lifecycle is null
-            ? _logger.BeginScope(logScopeState)
+            ? WrapLoggerScope(_logger.BeginScope(logScopeState))
             : BeginLifecycleLogScopeSafely(logScopeState);
 
         var startTimestamp = Stopwatch.GetTimestamp();
@@ -127,12 +127,12 @@ internal sealed class WebSocketEndpointHandler
             }
             catch (Exception acceptEx)
             {
-                _logger.LogError(
-                    acceptEx,
-                    "WebSocket accept failed for session {SessionId}",
-                    sessionId);
                 closeCode = InvocationsWebSocketConstants.CloseInternalError;
                 errorCode = InvocationsWebSocketConstants.ErrorCodeAcceptFailed;
+                TryInvokeLogger(() => _logger.LogError(
+                    acceptEx,
+                    "WebSocket accept failed for session {SessionId}",
+                    sessionId));
                 throw;
             }
 
@@ -250,8 +250,11 @@ internal sealed class WebSocketEndpointHandler
     {
         IDisposable? scope = null;
         TryInvokeLogger(() => scope = _logger.BeginScope(state));
-        return scope is null ? null : new SafeLoggerScope(scope);
+        return WrapLoggerScope(scope);
     }
+
+    private static IDisposable? WrapLoggerScope(IDisposable? scope) =>
+        scope is null ? null : new SafeLoggerScope(scope);
 
     private static void TryInvokeLogger(Action log)
     {

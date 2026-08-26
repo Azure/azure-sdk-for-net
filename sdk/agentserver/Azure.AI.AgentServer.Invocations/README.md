@@ -149,6 +149,8 @@ What the SDK does for you when the registered handler derives from `InvocationWe
 
 The session ID honours `FOUNDRY_AGENT_SESSION_ID` (matching the HTTP `POST /invocations` precedence, minus the query-param override which has no ergonomic equivalent on a long-lived WS connection), falling back to a generated UUID. Both transports on the same container therefore report the same session ID.
 
+For typed Voice endpoints, the SDK suppresses the generic ASP.NET Core request span and replaces it with semantic Voice spans to avoid duplicate request telemetry. The application's OpenTelemetry configuration controls whether those semantic spans are recorded and exported. When configuring tracing manually, register the `Azure.AI.AgentServer.Invocations` activity source and configure an appropriate sampler and exporter; the SDK does not override sampling or export decisions for the semantic spans. Register `VoiceHandler` implementations with `AddVoice<THandler>()`, not `AddInvocations()`, because the generic Invocations registration does not install Voice-specific tracing.
+
 ### Typed Voice relay
 
 `VoiceHandler` layers immutable Voice Live Bridge Protocol 1.0 messages over the existing `/invocations_ws` transport. The application explicitly sends readiness, responses, output, completion, control, and error messages.

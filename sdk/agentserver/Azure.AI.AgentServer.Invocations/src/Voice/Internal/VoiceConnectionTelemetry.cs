@@ -44,29 +44,33 @@ internal sealed class VoiceConnectionTelemetry
         var previousActivity = Activity.Current;
         var previousStartToken = s_connectionStartToken.Value;
         var startToken = new object();
-        s_connectionStartToken.Value = startToken;
         Activity? activity = null;
         Activity? startedActivity = null;
         Activity? propagationActivity = null;
         ActivityContext extractedContext = default;
+        // ActivitySource names are not unique. Recovery may own only a live connection
+        // surfaced by this exact SDK source during the current synchronous start window.
+        bool IsStartCandidate(Activity? candidate) =>
+            candidate?.Id is not null &&
+            candidate.Duration == default &&
+            !ReferenceEquals(candidate, previousActivity) &&
+            IsConnectionActivity(candidate);
         EventHandler<ActivityChangedEventArgs> captureStartedActivity = (_, args) =>
         {
-            if (!ReferenceEquals(s_connectionStartToken.Value, startToken))
+            if (!ReferenceEquals(s_connectionStartToken.Value, startToken) || startedActivity is not null)
             {
                 return;
             }
 
-            var candidate = IsConnectionActivity(args.Current)
-                ? args.Current
-                : IsConnectionActivity(args.Previous)
-                    ? args.Previous
-                    : null;
-            if (candidate is not null)
+            if (IsStartCandidate(args.Current))
             {
-                startedActivity = candidate;
+                startedActivity = args.Current;
+            }
+            else if (IsStartCandidate(args.Previous))
+            {
+                startedActivity = args.Previous;
             }
         };
-        Activity.CurrentChanged += captureStartedActivity;
         try
         {
             var hasTraceparent = headers.ContainsKey(PlatformHeaders.TraceParent);
@@ -81,14 +85,19 @@ internal sealed class VoiceConnectionTelemetry
             {
                 RecordPropagationFailure(hasTraceparent ? "invalid" : "missing");
             }
+            var tags = new ActivityTagsCollection();
+            correlationBaggage.AddStartTags(tags);
 
             TrySetCurrent(null);
+            s_connectionStartToken.Value = startToken;
+            Activity.CurrentChanged += captureStartedActivity;
             try
             {
                 activity = s_activitySource.StartActivity(
                     ConnectionOperationName,
                     ActivityKind.Server,
-                    propagationContext.ActivityContext);
+                    propagationContext.ActivityContext,
+                    tags);
                 if (activity is null &&
                     (extractedContext.TraceFlags & ActivityTraceFlags.Recorded) != 0)
                 {
@@ -98,6 +107,10 @@ internal sealed class VoiceConnectionTelemetry
                             extractedContext.SpanId,
                             extractedContext.TraceFlags);
                     propagationActivity.TraceStateString = extractedContext.TraceState;
+                    foreach (var tag in tags)
+                    {
+                        propagationActivity.SetTag(tag.Key, tag.Value);
+                    }
                     activity = propagationActivity.Start();
                 }
             }
@@ -105,7 +118,11 @@ internal sealed class VoiceConnectionTelemetry
             {
                 activity = propagationActivity?.Id is not null
                     ? propagationActivity
-                    : startedActivity ?? Activity.Current;
+                    : startedActivity;
+                if (activity is null && IsStartCandidate(Activity.Current))
+                {
+                    activity = Activity.Current;
+                }
                 if (!IsConnectionActivity(activity))
                 {
                     activity = ReferenceEquals(activity, propagationActivity)
@@ -121,8 +138,14 @@ internal sealed class VoiceConnectionTelemetry
         finally
         {
             Activity.CurrentChanged -= captureStartedActivity;
-            s_connectionStartToken.Value = previousStartToken;
-            TrySetCurrent(previousActivity);
+            try
+            {
+                TrySetCurrent(previousActivity);
+            }
+            finally
+            {
+                s_connectionStartToken.Value = previousStartToken;
+            }
         }
 
         var connectionContext = activity?.Context ??
@@ -254,7 +277,7 @@ internal sealed class VoiceConnectionTelemetry
     }
 
     private static bool IsConnectionActivity(Activity? activity) =>
-        activity?.Source.Name == InvocationsActivitySource.DefaultName &&
+        ReferenceEquals(activity?.Source, s_activitySource) &&
         activity.OperationName == ConnectionOperationName;
 
     private static ActivityContext CreateUnsampledChildContext(ActivityContext parent) =>

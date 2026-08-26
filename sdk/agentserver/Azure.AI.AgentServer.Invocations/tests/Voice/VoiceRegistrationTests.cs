@@ -6,6 +6,7 @@ using System.Text;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Invocations.Voice;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.TestHost;
@@ -28,6 +29,22 @@ public class VoiceRegistrationTests
         Assert.That(
             services.Count(descriptor => descriptor.ServiceType == typeof(InvocationHandler)),
             Is.EqualTo(1));
+    }
+
+    [Test]
+    public void AddVoiceScopedHandlerDisposesExactlyOnce()
+    {
+        var services = new ServiceCollection();
+        services.AddVoice<DisposableScopedVoiceHandler>();
+        using var provider = services.BuildServiceProvider();
+        InvocationHandler handler;
+
+        using (var scope = provider.CreateScope())
+        {
+            handler = scope.ServiceProvider.GetRequiredService<InvocationHandler>();
+        }
+
+        Assert.That(((DisposableScopedVoiceHandler)handler).DisposeCount, Is.EqualTo(1));
     }
 
     [Test]
@@ -93,11 +110,10 @@ public class VoiceRegistrationTests
     [TestCase(InvocationsRegistration.Generic)]
     [TestCase(InvocationsRegistration.Instance)]
     [TestCase(InvocationsRegistration.Factory)]
-    public void AddInvocationsDoesNotRejectDirectVoiceHandlerRegistration(
+    public void AddInvocationsAcceptsNonVoiceHandlerRegistration(
         InvocationsRegistration registration)
     {
         var builder = AgentHost.CreateBuilder();
-        builder.Services.AddScoped<VoiceHandler, TestVoiceHandler>();
 
         Assert.That(
             () => RegisterInvocations(builder, registration),
@@ -107,14 +123,154 @@ public class VoiceRegistrationTests
         Assert.Multiple(() =>
         {
             Assert.That(
-                builder.Services.Count(descriptor => descriptor.ServiceType == typeof(VoiceHandler)),
-                Is.EqualTo(1));
-            Assert.That(
                 builder.Services.Count(descriptor => descriptor.ServiceType == typeof(InvocationHandler)),
                 Is.EqualTo(1));
             Assert.That(
                 scope.ServiceProvider.GetRequiredService<InvocationHandler>(),
                 Is.TypeOf<RawHandler>());
+        });
+    }
+
+    [TestCase(InvocationsRegistration.Generic)]
+    [TestCase(InvocationsRegistration.Instance)]
+    public void AddInvocationsRejectsVoiceHandlerBeforeMutatingServices(
+        InvocationsRegistration registration)
+    {
+        var builder = AgentHost.CreateBuilder();
+        var servicesBeforeRegistration = builder.Services.ToArray();
+
+        Assert.That(
+            () => RegisterVoiceInvocations(builder, registration),
+            Throws.TypeOf<InvalidOperationException>()
+                .With.Message.Contains("AddVoice"));
+        Assert.That(
+            builder.Services.ToArray(),
+            Is.EqualTo(servicesBeforeRegistration),
+            "Rejected Voice registration must not leave partial service registrations.");
+    }
+
+    [Test]
+    public async Task AddInvocationsFactoryRejectsVoiceHandlerAndNextRequestSucceeds()
+    {
+        var builder = AgentHost.CreateBuilder();
+        builder.WebApplicationBuilder.WebHost.UseTestServer();
+        var factoryCalls = 0;
+        DisposableVoiceHandler? rejectedHandler = null;
+        builder.AddInvocations(_ => Interlocked.Increment(ref factoryCalls) == 1
+            ? rejectedHandler = new DisposableVoiceHandler()
+            : new RawHandler());
+        await using var app = builder.Build().App;
+        Exception? rejectedException = null;
+        app.UseExceptionHandler(error => error.Run(context =>
+        {
+            rejectedException = context.Features.Get<IExceptionHandlerFeature>()?.Error;
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            return Task.CompletedTask;
+        }));
+        await app.StartAsync();
+        using var client = app.GetTestClient();
+
+        using var rejectedResponse = await client.PostAsync("/invocations", new StringContent("{}"));
+        await rejectedHandler!.Disposed.Task.WaitAsync(TestTimeout);
+        using var retryResponse = await client.PostAsync("/invocations", new StringContent("{}"));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(
+                rejectedResponse.StatusCode,
+                Is.EqualTo(System.Net.HttpStatusCode.InternalServerError));
+            Assert.That(
+                rejectedResponse.Headers.GetValues(PlatformHeaders.ErrorSource),
+                Is.EqualTo(new[] { PlatformHeaders.ErrorSourcePlatform }));
+            Assert.That(rejectedException, Is.TypeOf<InvalidOperationException>());
+            Assert.That(rejectedException?.Message, Does.Contain("AddVoice"));
+            Assert.That(rejectedHandler, Is.Not.Null);
+            Assert.That(rejectedHandler?.DisposeCount, Is.EqualTo(1));
+            Assert.That(retryResponse.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
+            Assert.That(factoryCalls, Is.EqualTo(2));
+        });
+    }
+
+    [Test]
+    public async Task AddInvocationsFactoryManualVoiceOverrideIsRejected()
+    {
+        var builder = AgentHost.CreateBuilder();
+        builder.WebApplicationBuilder.WebHost.UseTestServer();
+        var factoryCalls = 0;
+        builder.AddInvocations(_ =>
+        {
+            factoryCalls++;
+            return new RawHandler();
+        });
+        builder.Services.AddScoped<InvocationHandler, TestVoiceHandler>();
+        await using var app = builder.Build().App;
+        Exception? rejectedException = null;
+        app.UseExceptionHandler(error => error.Run(context =>
+        {
+            rejectedException = context.Features.Get<IExceptionHandlerFeature>()?.Error;
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            return Task.CompletedTask;
+        }));
+        await app.StartAsync();
+
+        using var response = await app.GetTestClient().PostAsync(
+            "/invocations",
+            new StringContent("{}"));
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.InternalServerError));
+            Assert.That(rejectedException, Is.TypeOf<InvalidOperationException>());
+            Assert.That(rejectedException?.Message, Does.Contain("AddVoice"));
+            Assert.That(
+                response.Headers.GetValues(PlatformHeaders.ErrorSource),
+                Is.EqualTo(new[] { PlatformHeaders.ErrorSourcePlatform }));
+            Assert.That(factoryCalls, Is.Zero);
+        });
+    }
+
+    [Test]
+    public async Task PreRegisteredVoiceHandlerCannotBypassAddInvocationsGuard()
+    {
+        RouteSelectedVoiceHandler.Reset();
+        var builder = AgentHost.CreateBuilder();
+        builder.WebApplicationBuilder.WebHost.UseTestServer();
+        builder.Services.AddScoped<InvocationHandler, RouteSelectedVoiceHandler>();
+        builder.AddInvocations<RawHandler>();
+        await using var app = builder.Build().App;
+        await app.StartAsync();
+
+        Assert.That(
+            async () => await ConnectAsync(app),
+            Throws.TypeOf<InvalidOperationException>()
+                .With.Message.Contains("AddVoice"));
+        Assert.That(RouteSelectedVoiceHandler.Selected.Task.IsCompleted, Is.False);
+    }
+
+    [Test]
+    public async Task AddInvocationsFactoryDisposesRejectedAsyncVoiceHandler()
+    {
+        var builder = AgentHost.CreateBuilder();
+        builder.WebApplicationBuilder.WebHost.UseTestServer();
+        var handler = new AsyncDisposableVoiceHandler();
+        builder.AddInvocations(_ => handler);
+        await using var app = builder.Build().App;
+        app.UseExceptionHandler(error => error.Run(context =>
+        {
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            return Task.CompletedTask;
+        }));
+        await app.StartAsync();
+
+        using var response = await app.GetTestClient().PostAsync(
+            "/invocations",
+            new StringContent("{}"));
+        await handler.Disposed.Task.WaitAsync(TestTimeout);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.InternalServerError));
+            Assert.That(handler.DisposeCount, Is.EqualTo(1));
         });
     }
 
@@ -176,6 +332,45 @@ public class VoiceRegistrationTests
             WebSocketCloseStatus.NormalClosure,
             "done",
             CancellationToken.None);
+    }
+
+    [Test]
+    public async Task AddVoiceThenManualInvocationHandlerOverrideFailsExplicitly()
+    {
+        RouteSelectedVoiceHandler.Reset();
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddAgentServerCore();
+        builder.Services.AddVoice<RouteSelectedVoiceHandler>();
+        builder.Services.AddScoped<InvocationHandler, RawHandler>();
+        await using var app = builder.Build();
+        app.UseAgentServerCore();
+        app.MapInvocationsServer();
+        await app.StartAsync();
+
+        Assert.That(
+            async () => await ConnectAsync(app),
+            Throws.TypeOf<InvalidOperationException>()
+                .With.Message.Contains("overridden"));
+        Assert.That(RouteSelectedVoiceHandler.Selected.Task.IsCompleted, Is.False);
+    }
+
+    [Test]
+    public async Task AddVoiceAllowsCustomEndpointOnReturnedRouteGroup()
+    {
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddAgentServerCore();
+        builder.Services.AddVoice<TestVoiceHandler>();
+        await using var app = builder.Build();
+        app.UseAgentServerCore();
+        var group = app.MapInvocationsServer("/voice");
+        group.MapGet("/health", () => Results.Ok());
+        await app.StartAsync();
+
+        using var response = await app.GetTestClient().GetAsync("/voice/health");
+
+        Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.OK));
     }
 
     [Test]
@@ -286,6 +481,23 @@ public class VoiceRegistrationTests
         }
     }
 
+    private static void RegisterVoiceInvocations(
+        AgentHostBuilder builder,
+        InvocationsRegistration registration)
+    {
+        switch (registration)
+        {
+            case InvocationsRegistration.Generic:
+                builder.AddInvocations<TestVoiceHandler>();
+                break;
+            case InvocationsRegistration.Instance:
+                builder.AddInvocations(new TestVoiceHandler());
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(registration));
+        }
+    }
+
     public enum InvocationsRegistration
     {
         Generic,
@@ -313,6 +525,42 @@ public class VoiceRegistrationTests
             CancellationToken.None);
 
     private sealed class TestVoiceHandler : VoiceHandler;
+
+    private sealed class DisposableScopedVoiceHandler : VoiceHandler, IDisposable
+    {
+        public int DisposeCount { get; private set; }
+
+        public void Dispose() => DisposeCount++;
+    }
+
+    private sealed class DisposableVoiceHandler : VoiceHandler, IDisposable
+    {
+        public TaskCompletionSource Disposed { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public int DisposeCount { get; private set; }
+
+        public void Dispose()
+        {
+            DisposeCount++;
+            Disposed.TrySetResult();
+        }
+    }
+
+    private sealed class AsyncDisposableVoiceHandler : VoiceHandler, IAsyncDisposable
+    {
+        public TaskCompletionSource Disposed { get; } =
+            new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        public int DisposeCount { get; private set; }
+
+        public ValueTask DisposeAsync()
+        {
+            DisposeCount++;
+            Disposed.TrySetResult();
+            return ValueTask.CompletedTask;
+        }
+    }
 
     private sealed class SessionCapturingVoiceHandler : VoiceHandler
     {

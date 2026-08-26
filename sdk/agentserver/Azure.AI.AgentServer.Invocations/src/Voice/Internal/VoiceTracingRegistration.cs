@@ -130,27 +130,31 @@ internal static class VoiceTracingRegistration
         var previousActivity = Activity.Current;
         var previousStartToken = s_rejectionStartToken.Value;
         var startToken = new object();
-        s_rejectionStartToken.Value = startToken;
         Activity? activity = null;
         Activity? startedActivity = null;
+        // ActivitySource names are not unique. Recovery may own only a live rejection
+        // surfaced by this exact SDK source during the current synchronous start window.
+        bool IsStartCandidate(Activity? candidate) =>
+            candidate?.Id is not null &&
+            candidate.Duration == default &&
+            !ReferenceEquals(candidate, previousActivity) &&
+            IsRejectionActivity(candidate, operationName);
         EventHandler<ActivityChangedEventArgs> captureStartedActivity = (_, args) =>
         {
-            if (!ReferenceEquals(s_rejectionStartToken.Value, startToken))
+            if (!ReferenceEquals(s_rejectionStartToken.Value, startToken) || startedActivity is not null)
             {
                 return;
             }
 
-            var candidate = IsRejectionActivity(args.Current, operationName)
-                ? args.Current
-                : IsRejectionActivity(args.Previous, operationName)
-                    ? args.Previous
-                    : null;
-            if (candidate is not null)
+            if (IsStartCandidate(args.Current))
             {
-                startedActivity = candidate;
+                startedActivity = args.Current;
+            }
+            else if (IsStartCandidate(args.Previous))
+            {
+                startedActivity = args.Previous;
             }
         };
-        Activity.CurrentChanged += captureStartedActivity;
         try
         {
             var statusCode = state.HttpContext.Response.StatusCode;
@@ -162,6 +166,8 @@ internal static class VoiceTracingRegistration
                 ["http.response.status_code"] = statusCode,
             };
             TrySetCurrent(null);
+            s_rejectionStartToken.Value = startToken;
+            Activity.CurrentChanged += captureStartedActivity;
             try
             {
                 activity = s_activitySource.StartActivity(
@@ -173,11 +179,15 @@ internal static class VoiceTracingRegistration
             }
             catch (Exception exception) when (!ContainsOutOfMemoryException(exception))
             {
-                activity = startedActivity ?? Activity.Current;
-                if (!IsRejectionActivity(activity, operationName))
+                activity = IsStartCandidate(startedActivity) ? startedActivity : null;
+                if (activity is null && IsStartCandidate(Activity.Current))
                 {
-                    activity = null;
+                    activity = Activity.Current;
                 }
+            }
+            if (!IsStartCandidate(activity))
+            {
+                activity = null;
             }
             if (statusCode >= StatusCodes.Status500InternalServerError)
             {
@@ -192,18 +202,24 @@ internal static class VoiceTracingRegistration
         finally
         {
             Activity.CurrentChanged -= captureStartedActivity;
-            s_rejectionStartToken.Value = previousStartToken;
-            TrySetCurrent(previousActivity);
-            if (activity is not null)
+            try
             {
-                TryInvokeTelemetry(activity.Stop);
+                TrySetCurrent(previousActivity);
+                if (activity is not null)
+                {
+                    TryInvokeTelemetry(activity.Stop);
+                }
+                TrySetCurrent(previousActivity);
             }
-            TrySetCurrent(previousActivity);
+            finally
+            {
+                s_rejectionStartToken.Value = previousStartToken;
+            }
         }
     }
 
     private static bool IsRejectionActivity(Activity? activity, string operationName) =>
-        activity?.Source.Name == InvocationsActivitySource.DefaultName &&
+        ReferenceEquals(activity?.Source, s_activitySource) &&
         activity.OperationName == operationName;
 
     private static void SuppressRequestActivity(Activity requestActivity)

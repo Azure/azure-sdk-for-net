@@ -29,6 +29,7 @@ public static class InvocationsServerEndpointRouteBuilderExtensions
     {
         var groupPrefix = string.IsNullOrEmpty(prefix) ? string.Empty : prefix.TrimEnd('/');
         var group = endpoints.MapGroup(groupPrefix);
+        group.AddEndpointFilter<VoiceRegistrationGuardFilter>();
 
         // Register Invocations protocol identity with the version registry (if available)
         var registry = endpoints.ServiceProvider.GetService<ServerVersionRegistry>();

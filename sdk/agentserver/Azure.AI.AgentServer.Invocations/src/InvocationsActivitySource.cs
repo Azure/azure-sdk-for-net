@@ -69,6 +69,16 @@ internal readonly record struct InvocationCorrelationBaggage(
     string? SessionId,
     string? RequestId)
 {
+    internal void AddStartTags(ActivityTagsCollection tags)
+    {
+        // Processors run synchronously during StartActivity. Seed only the sanctioned
+        // enrichment attribute here; ApplyBaggage handles downstream propagation.
+        if (!string.IsNullOrWhiteSpace(SessionId))
+        {
+            tags["microsoft.session.id"] = SessionId;
+        }
+    }
+
     internal static InvocationCorrelationBaggage Create(
         InvocationContext context,
         IHeaderDictionary headers)

@@ -477,17 +477,161 @@ public class VoiceTurnTracingRedTests
     }
 
     [Test]
+    public void NestedStart_SampleFailureDoesNotAdoptOuterTurnAndRetrySucceeds()
+    {
+        var started = new ConcurrentQueue<Activity>();
+        var stopped = new ConcurrentQueue<Activity>();
+        using var captureListener = CreateListener(started, stopped);
+        var session = CreateSession(CreateConnectionContext(recorded: true));
+        using var outer = session.StartTurn(VoiceTurnOrigin.User, inputCount: 1);
+        var outerActivity = started.Single(IsTargetTurn);
+
+        using (outer.Activate())
+        {
+            using (var throwingListener = new ActivityListener
+            {
+                ShouldListenTo = static source => source.Name == ActivitySourceName,
+                Sample = (ref ActivityCreationOptions<ActivityContext> _) =>
+                    throw new InvalidOperationException("injected Sample failure"),
+            })
+            {
+                ActivitySource.AddActivityListener(throwingListener);
+                using var failedInner = session.StartTurn(VoiceTurnOrigin.Proactive, inputCount: 0);
+                failedInner.Complete(new VoiceTurnResult(VoiceTurnOutcome.None, outputItemCount: 0));
+            }
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(Activity.Current, Is.SameAs(outerActivity));
+                Assert.That(started.Count(IsTargetTurn), Is.EqualTo(1));
+                Assert.That(stopped.Any(IsTargetTurn), Is.False);
+                Assert.That(outerActivity.Duration, Is.EqualTo(default(TimeSpan)));
+                Assert.That(outerActivity.GetTagItem("bridge.outcome"), Is.Null);
+                Assert.That(outerActivity.GetTagItem("bridge.output.item_count"), Is.Null);
+                Assert.That(outerActivity.GetTagItem("gen_ai.response.id"), Is.Null);
+            });
+
+            using var retry = session.StartTurn(VoiceTurnOrigin.Proactive, inputCount: 0);
+            var retryActivity = started.Single(activity =>
+                IsTargetTurn(activity) && !ReferenceEquals(activity, outerActivity));
+            retry.Complete(new VoiceTurnResult(VoiceTurnOutcome.None, outputItemCount: 0));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(Activity.Current, Is.SameAs(outerActivity));
+                Assert.That(stopped.Single(IsTargetTurn), Is.SameAs(retryActivity));
+                Assert.That(outerActivity.Duration, Is.EqualTo(default(TimeSpan)));
+                Assert.That(outerActivity.GetTagItem("bridge.outcome"), Is.Null);
+            });
+        }
+
+        outer.Complete(new VoiceTurnResult(
+            VoiceTurnOutcome.Response,
+            outputItemCount: 1,
+            responseId: "outer_after_retry"));
+
+        var targets = stopped.Where(IsTargetTurn).ToArray();
+        Assert.Multiple(() =>
+        {
+            Assert.That(targets, Has.Length.EqualTo(2));
+            Assert.That(targets.Count(activity => ReferenceEquals(activity, outerActivity)), Is.EqualTo(1));
+            Assert.That(outerActivity.GetTagItem("bridge.outcome"), Is.EqualTo("response"));
+            Assert.That(outerActivity.GetTagItem("gen_ai.response.id"), Is.EqualTo("outer_after_retry"));
+        });
+    }
+
+    [Test]
+    public void NestedStart_SampleFailureDoesNotAdoptReentrantTurn()
+    {
+        var started = new ConcurrentQueue<Activity>();
+        var stopped = new ConcurrentQueue<Activity>();
+        using var captureListener = CreateListener(started, stopped);
+        var session = CreateSession(CreateConnectionContext(recorded: true));
+        using var outer = session.StartTurn(VoiceTurnOrigin.User, inputCount: 1);
+        var outerActivity = started.Single(IsTargetTurn);
+        VoiceTurnTrace? reentrant = null;
+        var sampleCount = 0;
+
+        using (outer.Activate())
+        {
+            using (var throwingListener = new ActivityListener
+            {
+                ShouldListenTo = static source => source.Name == ActivitySourceName,
+                Sample = (ref ActivityCreationOptions<ActivityContext> _) =>
+                {
+                    if (Interlocked.Increment(ref sampleCount) == 1)
+                    {
+                        reentrant = session.StartTurn(VoiceTurnOrigin.Recovery, inputCount: 0);
+                        throw new InvalidOperationException("injected Sample failure after reentrant start");
+                    }
+                    return ActivitySamplingResult.AllDataAndRecorded;
+                },
+            })
+            {
+                ActivitySource.AddActivityListener(throwingListener);
+                using var failedInner = session.StartTurn(VoiceTurnOrigin.Proactive, inputCount: 0);
+                failedInner.Complete(new VoiceTurnResult(VoiceTurnOutcome.None, outputItemCount: 0));
+            }
+
+            var reentrantActivity = started.Single(activity =>
+                IsTargetTurn(activity) && !ReferenceEquals(activity, outerActivity));
+            Assert.Multiple(() =>
+            {
+                Assert.That(reentrant, Is.Not.Null);
+                Assert.That(sampleCount, Is.EqualTo(2));
+                Assert.That(Activity.Current, Is.SameAs(outerActivity));
+                Assert.That(started.Count(IsTargetTurn), Is.EqualTo(2));
+                Assert.That(stopped.Any(IsTargetTurn), Is.False);
+                Assert.That(reentrantActivity.Duration, Is.EqualTo(default(TimeSpan)));
+                Assert.That(reentrantActivity.GetTagItem("bridge.outcome"), Is.Null);
+                Assert.That(outerActivity.Duration, Is.EqualTo(default(TimeSpan)));
+                Assert.That(outerActivity.GetTagItem("bridge.outcome"), Is.Null);
+            });
+
+            reentrant!.Complete(new VoiceTurnResult(
+                VoiceTurnOutcome.Response,
+                outputItemCount: 1,
+                responseId: "reentrant_response"));
+
+            Assert.Multiple(() =>
+            {
+                Assert.That(Activity.Current, Is.SameAs(outerActivity));
+                Assert.That(stopped.Single(IsTargetTurn), Is.SameAs(reentrantActivity));
+                Assert.That(reentrantActivity.GetTagItem("bridge.outcome"), Is.EqualTo("response"));
+                Assert.That(
+                    reentrantActivity.GetTagItem("gen_ai.response.id"),
+                    Is.EqualTo("reentrant_response"));
+                Assert.That(outerActivity.Duration, Is.EqualTo(default(TimeSpan)));
+                Assert.That(outerActivity.GetTagItem("bridge.outcome"), Is.Null);
+            });
+        }
+
+        outer.Complete(new VoiceTurnResult(VoiceTurnOutcome.None, outputItemCount: 0));
+
+        var targets = stopped.Where(IsTargetTurn).ToArray();
+        Assert.Multiple(() =>
+        {
+            Assert.That(targets, Has.Length.EqualTo(2));
+            Assert.That(targets.Count(activity => ReferenceEquals(activity, outerActivity)), Is.EqualTo(1));
+            Assert.That(outerActivity.GetTagItem("bridge.outcome"), Is.EqualTo("none"));
+        });
+    }
+
+    [Test]
     public void CurrentChangedFailure_DoesNotLeakTargetOrBlockLaterTurn()
     {
+        var started = new ConcurrentQueue<Activity>();
         var stopped = new ConcurrentQueue<Activity>();
-        using var listener = CreateListener(stoppedActivities: stopped);
+        using var listener = CreateListener(started, stopped);
         using var ambientSource = new ActivitySource("VoiceTurnTracingRedTests.CurrentChangedFailure");
         using var ambient = ambientSource.StartActivity("ambient")!;
         var session = CreateSession(CreateConnectionContext(recorded: true));
+        Activity? failedTarget = null;
         EventHandler<ActivityChangedEventArgs> throwingHandler = (_, args) =>
         {
             if (IsTargetTurn(args.Current))
             {
+                failedTarget ??= args.Current;
                 throw new InvalidOperationException("injected CurrentChanged failure");
             }
         };
@@ -508,12 +652,18 @@ public class VoiceTurnTracingRedTests
 
         using var second = session.StartTurn(VoiceTurnOrigin.User, inputCount: 1);
         second.Complete(new VoiceTurnResult(VoiceTurnOutcome.None, outputItemCount: 0));
+        var retryTarget = started.Single(activity =>
+            IsTargetTurn(activity) && !ReferenceEquals(activity, failedTarget));
 
         var targets = stopped.Where(IsTargetTurn).ToArray();
         Assert.Multiple(() =>
         {
             Assert.That(Activity.Current, Is.SameAs(ambient));
+            Assert.That(failedTarget, Is.Not.Null);
             Assert.That(targets, Has.Length.EqualTo(2));
+            Assert.That(targets.Count(activity => ReferenceEquals(activity, failedTarget)), Is.EqualTo(1));
+            Assert.That(targets.Count(activity => ReferenceEquals(activity, retryTarget)), Is.EqualTo(1));
+            Assert.That(retryTarget, Is.Not.SameAs(failedTarget));
             Assert.That(targets.All(activity => activity.Duration != default), Is.True);
         });
     }
@@ -573,6 +723,7 @@ public class VoiceTurnTracingRedTests
         using var prior = session.StartTurn(VoiceTurnOrigin.User, inputCount: 1);
         prior.Complete(new VoiceTurnResult(VoiceTurnOutcome.None, outputItemCount: 0));
         var priorActivity = stopped.Single(IsTargetTurn);
+        Activity? currentActivity = null;
         var mutationCount = 0;
         EventHandler<ActivityChangedEventArgs> hostile = (_, args) =>
         {
@@ -580,6 +731,7 @@ public class VoiceTurnTracingRedTests
                 !ReferenceEquals(args.Current, priorActivity) &&
                 Interlocked.Increment(ref mutationCount) == 1)
             {
+                currentActivity = args.Current;
                 Activity.Current = priorActivity;
                 throw new InvalidOperationException("injected prior-target mutation");
             }
@@ -609,12 +761,14 @@ public class VoiceTurnTracingRedTests
         Assert.Multiple(() =>
         {
             Assert.That(mutationCount, Is.EqualTo(1));
+            Assert.That(currentActivity, Is.Not.Null);
             Assert.That(targets, Has.Length.EqualTo(3));
+            Assert.That(targets.Count(activity => ReferenceEquals(activity, priorActivity)), Is.EqualTo(1));
+            Assert.That(targets.Count(activity => ReferenceEquals(activity, currentActivity)), Is.EqualTo(1));
             Assert.That(targets.Select(activity => activity.SpanId).Distinct().ToArray(), Has.Length.EqualTo(3));
             Assert.That(priorActivity.GetTagItem("bridge.outcome"), Is.EqualTo("none"));
-            Assert.That(targets.Single(activity =>
-                activity.GetTagItem("gen_ai.response.id") as string == "response_after_mutation"),
-                Is.Not.SameAs(priorActivity));
+            Assert.That(currentActivity!.GetTagItem("gen_ai.response.id"), Is.EqualTo("response_after_mutation"));
+            Assert.That(currentActivity, Is.Not.SameAs(priorActivity));
         });
     }
 
