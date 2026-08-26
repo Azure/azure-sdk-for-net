@@ -191,6 +191,30 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void RestoredFactoryMethodCombinesMultiLineCurrentModelSummary()
+        {
+            var restored = BuildRestoredMethodWithUnmatchedParameter(
+                $"Legacy parameter summary.",
+                summary: new XmlDocSummaryStatement(
+                [
+                    $"First summary line for {typeof(int):C}.",
+                    $"Second summary line for {typeof(string):C}.",
+                ]));
+
+            var docs = DescribeDocs(restored);
+            Assert.That(docs, Does.Contain("First summary line for System.Int32."));
+            Assert.That(docs, Does.Contain("Second summary line for System.String."));
+            Assert.That(docs, Does.Not.Contain("Previous model summary."));
+
+            // The signature must carry the combined summary too, so a rebuild cannot fall back to the last contract.
+            Assert.That(restored.Signature.Description?.ToString(),
+                Is.EqualTo("First summary line for System.Int32.\nSecond summary line for System.String."));
+
+            restored.Update(signature: restored.Signature, bodyStatements: MethodBodyStatement.Empty);
+            Assert.That(DescribeDocs(restored), Does.Not.Contain("Previous model summary."));
+        }
+
+        [Test]
         public void RestoredFactoryMethodDocumentationSurvivesWriteTimeSignatureUpdate()
         {
             var restored = BuildRestoredMethodWithUnmatchedParameter(
@@ -497,7 +521,9 @@ namespace Azure.Generator.Mgmt.Tests
             return new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView);
         }
 
-        private static MethodProvider BuildRestoredMethodWithUnmatchedParameter(FormattableString parameterDescription)
+        private static MethodProvider BuildRestoredMethodWithUnmatchedParameter(
+            FormattableString parameterDescription,
+            XmlDocSummaryStatement? summary = null)
         {
             var inputModel = InputFactory.Model(
                 "TestModel",
@@ -506,6 +532,11 @@ namespace Azure.Generator.Mgmt.Tests
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
             var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            if (summary is not null)
+            {
+                model.XmlDocs.Update(summary: summary);
+            }
+
             var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
             var previousMethod = CreatePreviousFactoryMethod(
                 modelFactory,
@@ -578,5 +609,27 @@ namespace Azure.Generator.Mgmt.Tests
 
             protected override MethodProvider[] BuildMethods() => MethodsToBuild;
         }
-    }
+
+        [Test]
+        public void PrimaryFactoryMethodDocumentationSurvivesConstructorCallFixup()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            _ = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+
+            var before = DescribeDocs(modelFactory.Methods.Single());
+            Assert.That(before, Does.Contain("TestModel description"));
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+
+            // Rebuilding the constructor call only changes the body. The summary that core attached to the primary
+            // factory method lives on the XmlDocProvider, not on the (empty) signature description, so a signature
+            // round-trip would silently erase it.
+            Assert.That(DescribeDocs(modelFactory.Methods.Single()), Is.EqualTo(before));
+        }
+}
 }

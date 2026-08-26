@@ -12,8 +12,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Management.Visitors
@@ -55,7 +57,9 @@ namespace Azure.Generator.Management.Visitors
 
                 if (bodyUpdated)
                 {
-                    method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
+                    // Only the body changed. Passing the signature back would make MethodProvider rebuild the XML docs
+                    // from the (empty) signature description and drop the summary this method was created with.
+                    method.Update(bodyStatements: updatedBodyStatements);
                 }
             }
         }
@@ -99,7 +103,7 @@ namespace Azure.Generator.Management.Visitors
                     {
                         updatedBodyStatements.RemoveAll(statement => IsUnusedLocalDeclaration(statement, unusedLocalVariables));
                     }
-                    method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
+                    method.Update(bodyStatements: updatedBodyStatements);
                 }
             }
         }
@@ -166,7 +170,10 @@ namespace Azure.Generator.Management.Visitors
 
                 if (bodyUpdated)
                 {
-                    method.Update(signature: method.Signature, bodyStatements: updatedBodyStatements);
+                    // Deliberately does not re-supply the signature: it is this method's own signature, so passing it
+                    // changes nothing except forcing MethodProvider.Update to rebuild XmlDocs, discarding the
+                    // documentation regenerated when the overload was created.
+                    method.Update(bodyStatements: updatedBodyStatements);
                 }
             }
         }
@@ -266,8 +273,22 @@ namespace Azure.Generator.Management.Visitors
             updatedMethod = new MethodProvider(
                 signature,
                 Return(New.Instance(method.Signature.ReturnType, arguments)),
-                enclosingType);
+                enclosingType,
+                CreateModelFactoryXmlDocs(signature, modelProvider));
             return true;
+        }
+
+        /// <summary>
+        /// Mirrors how the primary factory method is documented: the model's structured summary is reused as-is so
+        /// nested lines and inner statements survive, while parameters and the return doc come from the signature,
+        /// which <see cref="CreateBackwardCompatSignature"/> has already regenerated.
+        /// </summary>
+        private static XmlDocProvider CreateModelFactoryXmlDocs(MethodSignature signature, ModelProvider modelProvider)
+        {
+            return new XmlDocProvider(
+                modelProvider.XmlDocs.Summary,
+                [.. signature.Parameters.Select(parameter => new XmlDocParamStatement(parameter))],
+                returns: new XmlDocReturnsStatement(signature.ReturnDescription!));
         }
 
         private static FormattableString RemoveCommonContinuationIndentation(FormattableString description)
@@ -339,11 +360,80 @@ namespace Azure.Generator.Management.Visitors
         }
 
         private static FormattableString? GetSummary(ModelProvider modelProvider)
+            => CombineDocLines(modelProvider.XmlDocs.Summary?.Lines);
+
+        /// <summary>
+        /// Flattens the lines of a structured doc statement into a single <see cref="FormattableString"/> so it can be
+        /// carried on a <see cref="MethodSignature"/>. Placeholder indexes are re-based as the arguments are appended.
+        /// </summary>
+        private static FormattableString? CombineDocLines(IReadOnlyList<FormattableString>? lines)
         {
-            // Model summaries are single line in practice; anything else is left to the previous description
-            // rather than attempting to re-index the format arguments of several formattable strings.
-            var lines = modelProvider.XmlDocs.Summary?.Lines;
-            return lines?.Count == 1 ? lines[0] : null;
+            if (lines is null || lines.Count == 0)
+            {
+                return null;
+            }
+
+            if (lines.Count == 1)
+            {
+                return lines[0];
+            }
+
+            var format = new StringBuilder();
+            var arguments = new List<object?>();
+            foreach (var line in lines)
+            {
+                if (format.Length > 0)
+                {
+                    format.Append('\n');
+                }
+
+                format.Append(OffsetPlaceholders(line.Format, arguments.Count));
+                arguments.AddRange(line.GetArguments());
+            }
+
+            return FormattableStringFactory.Create(format.ToString(), [.. arguments]);
+        }
+
+        private static string OffsetPlaceholders(string format, int offset)
+        {
+            if (offset == 0)
+            {
+                return format;
+            }
+
+            var builder = new StringBuilder(format.Length);
+            for (int i = 0; i < format.Length; i++)
+            {
+                if (format[i] != '{')
+                {
+                    builder.Append(format[i]);
+                    continue;
+                }
+
+                if (i + 1 < format.Length && format[i + 1] == '{')
+                {
+                    builder.Append("{{");
+                    i++;
+                    continue;
+                }
+
+                var digitsEnd = i + 1;
+                while (digitsEnd < format.Length && char.IsAsciiDigit(format[digitsEnd]))
+                {
+                    digitsEnd++;
+                }
+
+                if (digitsEnd == i + 1)
+                {
+                    builder.Append('{');
+                    continue;
+                }
+
+                builder.Append('{').Append(int.Parse(format[(i + 1)..digitsEnd], CultureInfo.InvariantCulture) + offset);
+                i = digitsEnd - 1;
+            }
+
+            return builder.ToString();
         }
 
         /// <summary>
