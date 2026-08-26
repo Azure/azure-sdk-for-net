@@ -1671,23 +1671,14 @@ namespace Azure.Storage.Blobs.Specialized
                     }
 
                     // Start downloading the blob, routing to the layout endpoint if necessary.
-                    Response<BlobDownloadStreamingResult> response;
-                    using (layoutEndpoint != null
-                        ? HttpPipeline.CreateHttpMessagePropertiesScope(
-                            new Dictionary<string, object>
-                            {
-                                { DataLocalityPolicy.LayoutEndpointKey, layoutEndpoint }
-                            })
-                        : null)
-                    {
-                        response = await StartDownloadAsync(
-                            range,
-                            conditions,
-                            validationOptions,
-                            async: async,
-                            cancellationToken: cancellationToken)
-                            .ConfigureAwait(false);
-                    }
+                    Response<BlobDownloadStreamingResult> response = await StartDownloadAsync(
+                        range,
+                        conditions,
+                        validationOptions,
+                        layoutEndpoint: layoutEndpoint,
+                        async: async,
+                        cancellationToken: cancellationToken)
+                        .ConfigureAwait(false);
 
                     // Return an exploding Response on 304
                     if (response.IsUnavailable())
@@ -1703,25 +1694,14 @@ namespace Azure.Storage.Blobs.Specialized
                     // allow retrying if it fails.
                     async ValueTask<Response<BlobDownloadStreamingResult>> Factory(long offset, bool async, CancellationToken cancellationToken)
                     {
-                        // Re-establish the layout endpoint scope for retry requests, since the
-                        // scope around the initial StartDownloadAsync call has already been
-                        // disposed by the time retries occur.
-                        using (layoutEndpoint != null
-                            ? HttpPipeline.CreateHttpMessagePropertiesScope(
-                                new Dictionary<string, object>
-                                {
-                                    { DataLocalityPolicy.LayoutEndpointKey, layoutEndpoint }
-                                })
-                            : null)
-                        {
-                            return await StartDownloadAsync(
-                                range,
-                                conditionsWithEtag,
-                                validationOptions,
-                                offset,
-                                async,
-                                cancellationToken).ConfigureAwait(false);
-                        }
+                        return await StartDownloadAsync(
+                            range,
+                            conditionsWithEtag,
+                            validationOptions,
+                            offset,
+                            layoutEndpoint: layoutEndpoint,
+                            async: async,
+                            cancellationToken: cancellationToken).ConfigureAwait(false);
                     }
                     async ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.RawDecodedData DecodedData)> StructuredMessageFactory(
                         long offset, bool async, CancellationToken cancellationToken)
@@ -1835,6 +1815,12 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="startOffset">
         /// Starting offset to request - in the event of a retry.
         /// </param>
+        /// <param name="layoutEndpoint">
+        /// Optional. When non-null, this request is routed to the given layout
+        /// endpoint via <see cref="DataLocalityPolicy"/>. The value is applied to
+        /// the individual request message, so other requests issued while this
+        /// download is in flight are never rerouted.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1858,6 +1844,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobRequestConditions conditions,
             DownloadTransferValidationOptions validationOptions,
             long startOffset = 0,
+            string layoutEndpoint = null,
             bool async = true,
             CancellationToken cancellationToken = default)
         {
@@ -1917,6 +1904,7 @@ namespace Azure.Storage.Blobs.Specialized
                     encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                     ifTags: conditions?.TagConditions,
                     requestConditions: conditions,
+                    layoutEndpoint: layoutEndpoint,
                     cancellationToken: cancellationToken)
                     .ConfigureAwait(false);
             }
@@ -1936,6 +1924,7 @@ namespace Azure.Storage.Blobs.Specialized
                     encryptionAlgorithm: ClientConfiguration.CustomerProvidedKey?.EncryptionAlgorithm == null ? null : EncryptionAlgorithmTypeInternal.AES256,
                     ifTags: conditions?.TagConditions,
                     requestConditions: conditions,
+                    layoutEndpoint: layoutEndpoint,
                     cancellationToken: cancellationToken);
             }
 

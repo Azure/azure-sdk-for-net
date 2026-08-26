@@ -1080,18 +1080,12 @@ namespace Azure.Storage.Blobs.Test
             var transport = new MockTransport(new MockResponse(200));
             var pipeline = new HttpPipeline(transport, new HttpPipelinePolicy[] { DataLocalityPolicy.Shared });
 
-            // Set HttpMessage property with LayoutEndpoint
+            // Set the LayoutEndpoint property on this message only
             string LayoutEndpoint = "https://layout-host.blob.core.windows.net:443";
-            using DisposableBucket disposableBucket = new();
-            disposableBucket.Add(
-                HttpPipeline.CreateHttpMessagePropertiesScope(
-                    new Dictionary<string, object>
-                    {
-                        { DataLocalityPolicy.LayoutEndpointKey, LayoutEndpoint }
-                    }));
 
             HttpMessage message = pipeline.CreateMessage();
             message.Request.Uri.Reset(new Uri("https://original-host.blob.core.windows.net/container/blob"));
+            message.SetProperty(DataLocalityPolicy.LayoutEndpointKey, LayoutEndpoint);
 
             // Act
             pipeline.Send(message, CancellationToken.None);
@@ -1128,9 +1122,9 @@ namespace Azure.Storage.Blobs.Test
         {
             // Arrange - Force RetriableStream inside DownloadStreamingInternal to invoke
             // its Factory(offset, ...) closure by returning a faulty content stream on the
-            // initial download, then a clean stream on the retry. The Factory closure is
-            // expected to re-establish the LayoutEndpointKey scope so DataLocalityPolicy
-            // rewrites the retry request to the layout endpoint as well.
+            // initial download, then a clean stream on the retry. The Factory closure passes
+            // the layout endpoint back down so it is set on the retry's own HttpMessage and
+            // DataLocalityPolicy rewrites the retry request to the layout endpoint as well.
             const string layoutEndpoint = "https://layout-host.blob.core.windows.net:443";
             Uri originalUri = new Uri("https://original-host.blob.core.windows.net/container/blob");
 
