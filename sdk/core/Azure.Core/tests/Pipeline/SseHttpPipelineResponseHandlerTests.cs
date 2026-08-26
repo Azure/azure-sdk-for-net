@@ -742,7 +742,7 @@ namespace Azure.Core.Tests
                         "retry: 0\ndata: one\n\n")
                     : new MockResponse(200)
                         .AddHeader("Content-Type", "application/json")
-                        .SetContent("{\"error\":\"gateway\"}\n\n");
+                        .SetContent("data: gateway\n\n");
             });
             HttpPipeline pipeline = new(transport);
             using HttpMessage message = CreateMessage(

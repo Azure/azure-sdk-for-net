@@ -827,7 +827,7 @@ public class SsePipelineResponseHandlerTests
                 requestCount == 1
                     ? CreateDroppedResponse(
                         "retry: 0\ndata: one\n\n")
-                    : CreateJsonResponse("{\"error\":\"gateway\"}\n\n"));
+                    : CreateJsonResponse("data: gateway\n\n"));
         });
         ClientPipeline pipeline = CreatePipeline(handler);
         AsyncStreamingClientResult<SseItem<BinaryData>> result =
