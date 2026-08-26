@@ -1,14 +1,14 @@
 import "@azure-tools/typespec-azure-resource-manager";
 import "@azure-tools/typespec-client-generator-core";
-import "./configurationStore.tsp";
-import "./keyValue.tsp";
-import "./backupPolicy.tsp";
-import "./item.tsp";
-import "./profileRevision.tsp";
-import "./resourceModelProperty.tsp";
-import "./extensionAssignment.tsp";
-import "./singletonSetting.tsp";
-import "./privateLinkResource.tsp";
+import "./trackedResource.tsp";
+import "./childResource.tsp";
+import "./discriminatedModel.tsp";
+import "./createBodyResource.tsp";
+import "./sharedModelResource.tsp";
+import "./resourceModelAsProperty.tsp";
+import "./extensionResource.tsp";
+import "./singletonResource.tsp";
+import "./readOnlyResource.tsp";
 
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;

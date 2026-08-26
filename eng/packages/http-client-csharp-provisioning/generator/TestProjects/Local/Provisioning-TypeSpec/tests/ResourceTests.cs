@@ -28,11 +28,6 @@ public class ResourceTests
                         ContentType = "text/plain"
                     }
                 };
-                SingletonSetting singleton = new(nameof(singleton))
-                {
-                    Parent = store,
-                    SingletonSettingEnabled = true
-                };
                 ExtensionAssignment extension = new(nameof(extension))
                 {
                     Scope = store,
@@ -58,7 +53,6 @@ public class ResourceTests
 
                 infra.Add(store);
                 infra.Add(keyValue);
-                infra.Add(singleton);
                 infra.Add(extension);
                 infra.Add(profile);
                 infra.Add(revision);
@@ -81,14 +75,6 @@ public class ResourceTests
               properties: {
                 value: 'value'
                 contentType: 'text/plain'
-              }
-              parent: store
-            }
-
-            resource singleton 'ProvisioningTypeSpec/configurationStores/settings@2024-05-01' = {
-              name: 'default'
-              properties: {
-                enabled: true
               }
               parent: store
             }
