@@ -73,6 +73,12 @@
 # ServiceOwners:                                                   @jsquire @Azure/azure-sdk-write-net-core
 # AzureSdkOwners:                                                  @jsquire
 
+# PRLabel: %Tables
+/sdk/tables/                                                       @jorgerangel-msft @jsquire
+
+# AzureSdkOwners:                                                  @jorgerangel-msft
+# ServiceLabel: %Tables
+
 ####################
 # Client Libraries
 ####################
