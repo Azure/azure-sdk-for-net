@@ -410,7 +410,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _binaryContent = DefineProperty<BinaryData>(nameof(BinaryContent), new string[] { "binaryContent" }, format: "base64");
             _urlSafeBinaryContent = DefineProperty<BinaryData>(nameof(UrlSafeBinaryContent), new string[] { "urlSafeBinaryContent" }, format: "base64url");
             _lastModified = DefineProperty<DateTimeOffset>(nameof(LastModified), new string[] { "lastModified" }, format: "R");
-            _auditTimestamps = DefineListProperty<DateTimeOffset>(nameof(AuditTimestamps), new string[] { "auditTimestamps" });
+            _auditTimestamps = DefineListProperty<DateTimeOffset>(nameof(AuditTimestamps), new string[] { "auditTimestamps" }, format: "O");
             _expirationTimestamp = DefineProperty<DateTimeOffset>(nameof(ExpirationTimestamp), new string[] { "expirationTimestamp" }, format: "U");
             _activationOn = DefineProperty<DateTimeOffset>(nameof(ActivationOn), new string[] { "activationDate" }, format: "D");
             _activationTime = DefineProperty<TimeSpan>(nameof(ActivationTime), new string[] { "activationTime" }, format: "T");

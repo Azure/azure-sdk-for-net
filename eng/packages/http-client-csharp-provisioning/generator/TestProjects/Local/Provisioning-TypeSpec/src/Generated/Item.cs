@@ -187,7 +187,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ItemProperties>(nameof(Properties), new string[] { "properties" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<ConfigurationStore>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ConfigurationStore>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

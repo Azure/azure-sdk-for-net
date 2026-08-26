@@ -31,6 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Backup is VMAppContainer
         /// </param>
         /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="sourceLocation"> Source location of the container. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sourceResourceId"> Fully qualified ARM url. </param>
         /// <param name="storageAccountVersion"> Storage account version. </param>
@@ -38,7 +39,13 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="protectedItemCount"> Number of items backed up in this container. </param>
         /// <param name="acquireStorageAccountLock"> Whether storage account lock is to be acquired for this container or not. </param>
         /// <param name="operationType"> Re-Do Operation. </param>
-        internal StorageContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier sourceResourceId, string storageAccountVersion, string resourceGroup, long? protectedItemCount, AcquireStorageAccountLock? acquireStorageAccountLock, WorkloadOperationType? operationType) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, additionalBinaryDataProperties)
+        /// <param name="accessType">
+        /// Whether access to the storage account is key-based or identity-based.
+        /// When `IdentityBased`, `identityInfo` must be provided to identify the
+        /// managed identity used to access the storage account.
+        /// </param>
+        /// <param name="identityInfo"> Managed identity information required to access the storage account. </param>
+        internal StorageContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, AzureLocation? sourceLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier sourceResourceId, string storageAccountVersion, string resourceGroup, long? protectedItemCount, AcquireStorageAccountLock? acquireStorageAccountLock, WorkloadOperationType? operationType, AccessType? accessType, BackupIdentityInfo identityInfo) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, sourceLocation, additionalBinaryDataProperties)
         {
             SourceResourceId = sourceResourceId;
             StorageAccountVersion = storageAccountVersion;
@@ -46,6 +53,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             ProtectedItemCount = protectedItemCount;
             AcquireStorageAccountLock = acquireStorageAccountLock;
             OperationType = operationType;
+            AccessType = accessType;
+            IdentityInfo = identityInfo;
         }
 
         /// <summary> Fully qualified ARM url. </summary>
@@ -65,5 +74,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Re-Do Operation. </summary>
         public WorkloadOperationType? OperationType { get; set; }
+
+        /// <summary>
+        /// Whether access to the storage account is key-based or identity-based.
+        /// When `IdentityBased`, `identityInfo` must be provided to identify the
+        /// managed identity used to access the storage account.
+        /// </summary>
+        public AccessType? AccessType { get; set; }
+
+        /// <summary> Managed identity information required to access the storage account. </summary>
+        public BackupIdentityInfo IdentityInfo { get; set; }
     }
 }

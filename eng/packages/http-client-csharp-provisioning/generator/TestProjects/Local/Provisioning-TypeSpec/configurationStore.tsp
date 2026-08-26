@@ -69,7 +69,7 @@ model ConfigurationStoreProperties {
   @encode("rfc7231")
   lastModified?: utcDateTime;
 
-  /** Date-times whose element format cannot yet be propagated by the provisioning runtime. */
+  /** Date-times serialized using RFC 3339. */
   auditTimestamps?: utcDateTime[];
 
   /** A date-time serialized as a Unix timestamp. */

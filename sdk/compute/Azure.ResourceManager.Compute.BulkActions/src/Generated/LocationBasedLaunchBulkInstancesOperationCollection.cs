@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
             TryGetApiVersion(LocationBasedLaunchBulkInstancesOperationResource.ResourceType, out string locationBasedLaunchBulkInstancesOperationApiVersion);
             _location = location;
             _launchBulkInstancesOperationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions", LocationBasedLaunchBulkInstancesOperationResource.ResourceType.Namespace, Diagnostics);
-            _launchBulkInstancesOperationRestClient = new LaunchBulkInstancesOperation(_launchBulkInstancesOperationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, locationBasedLaunchBulkInstancesOperationApiVersion ?? "2026-07-06-preview");
+            _launchBulkInstancesOperationRestClient = new LaunchBulkInstancesOperation(_launchBulkInstancesOperationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, locationBasedLaunchBulkInstancesOperationApiVersion ?? "2026-08-06-preview");
             ValidateResourceId(id);
         }
 
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -529,7 +529,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

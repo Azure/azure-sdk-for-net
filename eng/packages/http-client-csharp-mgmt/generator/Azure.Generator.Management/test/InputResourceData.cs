@@ -1091,7 +1091,7 @@ namespace Azure.Generator.Management.Tests.Common
             return (parentClient, childClient, [parentModel, childModel, childPageModel]);
         }
 
-        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithExtensionScopedResourceList()
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithExtensionScopedResourceList(string listMethodName = "getEventsBySingleResource", bool hasClientNameOverride = false)
         {
             const string TestClientName = "TestClient";
             var eventModel = InputFactory.Model("EventData",
@@ -1120,7 +1120,15 @@ namespace Azure.Generator.Management.Tests.Common
             var eventResourceId = "/subscriptions/{subscriptionId}/providers/Microsoft.Tests/events/{eventName}";
             var getEventOp = InputFactory.Operation("getEvent", parameters: [subscriptionIdOpParam, eventNameOpParam], responses: [InputFactory.OperationResponse([200], eventModel)], path: eventResourceId);
             var listBySingleResourcePath = "/{resourceUri}/providers/Microsoft.Tests/events";
-            var listBySingleResourceOp = InputFactory.Operation("listBySingleResource", parameters: [resourceUriOpParam, filterOpParam], responses: [InputFactory.OperationResponse([200], pageModel)], path: listBySingleResourcePath);
+            IReadOnlyList<InputDecoratorInfo>? listDecorators = hasClientNameOverride
+                ? [new InputDecoratorInfo("Azure.ResourceManager.@hasClientNameOverride", new Dictionary<string, BinaryData>())]
+                : null;
+            var operationName = hasClientNameOverride ? listMethodName : "listBySingleResource";
+            var listBySingleResourceOp = InputFactory.Operation(operationName, parameters: [resourceUriOpParam, filterOpParam], responses: [InputFactory.OperationResponse([200], pageModel)], path: listBySingleResourcePath, decorators: listDecorators);
+            if (hasClientNameOverride)
+            {
+                listBySingleResourceOp.GetType().GetProperty("OriginalName")!.GetSetMethod(true)!.Invoke(listBySingleResourceOp, [listMethodName]);
+            }
 
             var subscriptionIdParam = InputFactory.MethodParameter("subscriptionId", uuidType, location: InputRequestLocation.Path);
             var eventNameParam = InputFactory.MethodParameter("eventName", InputPrimitiveType.String, location: InputRequestLocation.Path, isRequired: true);
@@ -1129,7 +1137,7 @@ namespace Azure.Generator.Management.Tests.Common
 
             var getEventMethod = InputFactory.BasicServiceMethod("getEvent", getEventOp, parameters: [eventNameParam, subscriptionIdParam], crossLanguageDefinitionId: "Microsoft.Tests.Events.get");
             var listBySingleResourceMethod = InputFactory.PagingServiceMethod(
-                "getEventsBySingleResource",
+                listMethodName,
                 listBySingleResourceOp,
                 parameters: [resourceUriParam, filterParam],
                 pagingMetadata: InputFactory.NextLinkPagingMetadata("value", "nextLink", InputResponseLocation.Body));

@@ -2460,7 +2460,7 @@
                 "kind": "property",
                 "name": "auditTimestamps",
                 "serializedName": "auditTimestamps",
-                "doc": "Date-times whose element format cannot yet be propagated by the provisioning runtime.",
+                "doc": "Date-times serialized using RFC 3339.",
                 "type": {
                   "$id": "210",
                   "kind": "array",

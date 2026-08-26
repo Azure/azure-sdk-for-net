@@ -69,6 +69,30 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(result, Is.Null);
         }
 
+        [TestCase(true)]
+        [TestCase(false)]
+        public void EnumPreservesShippedUrlMemberAndNormalizesNewMember(bool isExtensible)
+        {
+            var enumName = isExtensible ? "ExtensibleTestKind" : "FixedTestKind";
+            var enumType = InputFactory.StringEnum(
+                enumName,
+                [("ExistingUrl", "ExistingUrl"), ("NewUrl", "NewUrl")],
+                isExtensible: isExtensible,
+                clientNamespace: "Samples.Models");
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputEnums: () => [enumType],
+                lastContractCompilation: () => Helpers.GetCompilationFromDirectory());
+
+            var provider = plugin.Object.TypeFactory.CreateEnum(enumType)!;
+            var generatedNames = provider.EnumValues.Select(v => v.Name).ToArray();
+
+            Assert.That(provider.LastContractView, Is.Not.Null);
+            Assert.That(generatedNames, Does.Contain("ExistingUrl"));
+            Assert.That(generatedNames, Does.Not.Contain("ExistingUri"));
+            Assert.That(generatedNames, Does.Contain("NewUri"));
+            Assert.That(generatedNames, Does.Not.Contain("NewUrl"));
+        }
+
         [TestCase]
         public void UseManagedServiceIdentityV3_DetectsNoSpaceValue()
         {

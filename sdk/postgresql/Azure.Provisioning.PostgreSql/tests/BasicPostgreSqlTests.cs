@@ -15,6 +15,7 @@ public class BasicPostgreSqlTests
         return new Trycep().Define(
             ctx =>
             {
+#pragma warning disable CS0618 // Exercise the legacy compatibility resource without changing expected Bicep.
                 #region Snippet:PostgreSqlBasic
                 Infrastructure infra = new();
 
@@ -96,6 +97,7 @@ public class BasicPostgreSqlTests
                     };
                 infra.Add(admin);
                 #endregion
+#pragma warning restore CS0618
 
                 return infra;
             });

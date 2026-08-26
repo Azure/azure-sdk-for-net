@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
     {
         private readonly ClientDiagnostics _extensionTypeInterfaceClientDiagnostics;
         private readonly ExtensionTypeInterface _extensionTypeInterfaceRestClient;
-        private readonly ExtensionTypeVersionForReleaseTrainData _data;
+        private readonly KubernetesConfigurationExtensionTypeVersionForReleaseTrainData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.KubernetesConfiguration/extensionTypes/versions";
 
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         /// <summary> Initializes a new instance of <see cref="ClusterExtensionTypeVersionResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ClusterExtensionTypeVersionResource(ArmClient client, ExtensionTypeVersionForReleaseTrainData data) : this(client, data.Id)
+        internal ClusterExtensionTypeVersionResource(ArmClient client, KubernetesConfigurationExtensionTypeVersionForReleaseTrainData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ExtensionTypeVersionForReleaseTrainData Data
+        public virtual KubernetesConfigurationExtensionTypeVersionForReleaseTrainData Data
         {
             get
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 };
                 HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ExtensionTypeVersionForReleaseTrainData> response = Response.FromValue(ExtensionTypeVersionForReleaseTrainData.FromResponse(result), result);
+                Response<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData> response = Response.FromValue(KubernetesConfigurationExtensionTypeVersionForReleaseTrainData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 };
                 HttpMessage message = _extensionTypeInterfaceRestClient.CreateClusterGetVersionRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.ResourceType.Namespace, Id.Parent.Parent.ResourceType.Type, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ExtensionTypeVersionForReleaseTrainData> response = Response.FromValue(ExtensionTypeVersionForReleaseTrainData.FromResponse(result), result);
+                Response<KubernetesConfigurationExtensionTypeVersionForReleaseTrainData> response = Response.FromValue(KubernetesConfigurationExtensionTypeVersionForReleaseTrainData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

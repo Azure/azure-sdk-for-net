@@ -85,10 +85,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("knowledgeSourceName"u8);
                 writer.WriteStringValue(KnowledgeSourceName);
             }
-            if (Optional.IsDefined(QueryTime))
+            if (Optional.IsDefined(QueryOn))
             {
                 writer.WritePropertyName("queryTime"u8);
-                writer.WriteStringValue(QueryTime.Value, "O");
+                writer.WriteStringValue(QueryOn.Value, "O");
             }
             if (Optional.IsDefined(Count))
             {
@@ -146,7 +146,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             string warning = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string knowledgeSourceName = default;
-            DateTimeOffset? queryTime = default;
+            DateTimeOffset? queryOn = default;
             int? count = default;
             ImageServingStatistics imageServing = default;
             KnowledgeBaseFileActivityArguments fileArguments = default;
@@ -215,7 +215,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     {
                         continue;
                     }
-                    queryTime = prop.Value.GetDateTimeOffset("O");
+                    queryOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("count"u8))
@@ -269,7 +269,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 warning,
                 additionalBinaryDataProperties,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
                 fileArguments,

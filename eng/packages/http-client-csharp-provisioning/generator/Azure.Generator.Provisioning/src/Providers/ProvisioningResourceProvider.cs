@@ -628,7 +628,7 @@ namespace Azure.Generator.Provisioning.Providers
                     This.Invoke(
                         "DefineResource",
                         [
-                            Literal("Parent"),
+                            Nameof(Identifier("Parent")),
                             New.Array(typeof(string), [Literal("parent")]),
                             new PositionalParameterReferenceExpression("isRequired", Literal(true))
                         ],
