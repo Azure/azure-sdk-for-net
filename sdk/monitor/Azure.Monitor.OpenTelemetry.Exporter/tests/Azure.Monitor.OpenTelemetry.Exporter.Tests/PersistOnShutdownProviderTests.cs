@@ -35,6 +35,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
     {
         private const string TestEndpoint = "http://localhost:5050";
 
+        /// <summary>
+        /// Stands in for an endpoint that will not answer. Held on a thread pool thread, so it is
+        /// kept only long enough to outlast the drain budget rather than tying a thread up for the
+        /// tests that follow.
+        /// </summary>
+        private static readonly TimeSpan UnresponsiveIngestion = TimeSpan.FromSeconds(5);
+
         private readonly string _storageRoot;
         private readonly string _sourceName;
         private readonly ActivitySource _activitySource;
@@ -194,7 +201,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 _ =>
                 {
                     // Stands in for an unreachable or wedged ingestion endpoint.
-                    System.Threading.Thread.Sleep(TimeSpan.FromSeconds(30));
+                    System.Threading.Thread.Sleep(UnresponsiveIngestion);
                     return new MockResponse(200);
                 });
 
@@ -223,7 +230,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                     out _,
                     _ =>
                     {
-                        System.Threading.Thread.Sleep(TimeSpan.FromSeconds(30));
+                        System.Threading.Thread.Sleep(UnresponsiveIngestion);
                         return new MockResponse(200);
                     });
 
@@ -424,7 +431,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                     out _,
                     _ =>
                     {
-                        System.Threading.Thread.Sleep(TimeSpan.FromSeconds(30));
+                        System.Threading.Thread.Sleep(UnresponsiveIngestion);
                         return new MockResponse(200);
                     });
 
