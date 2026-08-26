@@ -24,9 +24,16 @@ parameters:
   - name: EnableTestCheckoutNarrowing
     type: boolean
     default: false
+  - name: UseRepositorySourceGraph
+    type: boolean
+    default: true
 
 steps:
   - template: /eng/pipelines/templates/steps/install-dotnet.yml
+
+  - pwsh: |
+      Write-Host "##vso[task.setvariable variable=AZURESDK_USE_REPOSITORY_SOURCE_GRAPH;]${{ parameters.UseRepositorySourceGraph }}"
+    displayName: Select repository dependency authority
 
   # ForceDirect removes indirect packages before matrix generation, so avoid calculating them.
   - ${{ if eq(parameters.ForceDirect, true) }}:
@@ -91,7 +98,6 @@ steps:
             dotnet msbuild /m /nr:false /nologo /tl:off `
               /t:GenerateRepositoryProjectGraphWithProjectGraph ./eng/service.proj `
               /p:RepositoryProjectGraphReaderPath="$graphPath" `
-              /p:RepositoryProjectGraphPackageResolutionMode=NuGetRestore `
               /p:RepositoryProjectGraphConfigurations=Debug+Release `
               /p:SkipServiceProjectImports=true `
               /p:IncludeRepositoryProjectGraphInputs=true `

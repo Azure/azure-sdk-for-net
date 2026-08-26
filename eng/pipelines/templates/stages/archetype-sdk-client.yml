@@ -57,6 +57,9 @@ parameters:
   - name: EnableTestCheckoutNarrowing
     type: boolean
     default: false
+  - name: UseRepositorySourceGraph
+    type: boolean
+    default: true
   - name: PublicFeed
     type: string
     default: 'Nuget.org'
@@ -106,6 +109,7 @@ extends:
               TestSetupSteps: ${{ parameters.TestSetupSteps }}
               TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
               EnableTestCheckoutNarrowing: ${{ parameters.EnableTestCheckoutNarrowing }}
+              UseRepositorySourceGraph: ${{ parameters.UseRepositorySourceGraph }}
               MatrixConfigs:
                 - ${{ each config in parameters.MatrixConfigs }}:
                     - ${{ config }}
