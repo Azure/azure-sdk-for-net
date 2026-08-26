@@ -1076,7 +1076,7 @@ namespace Azure.Security.CodeTransparency.Tests
             byte[] transparentStatementBytes = readFileBytes("transparent_statement.cose");
 
             var exception = Assert.Throws<AggregateException>(() => CodeTransparencyClient.VerifyTransparentStatement(transparentStatementBytes, verificationOptions, options));
-            Assert.AreEqual("The ECDsa key uses the wrong algorithm. Expected -39 Found -35", exception.InnerExceptions[0].Message);
+            Assert.AreEqual("Unsupported elliptic curve 'P-512'.", exception.InnerExceptions[0].Message);
 #endif
         }
 

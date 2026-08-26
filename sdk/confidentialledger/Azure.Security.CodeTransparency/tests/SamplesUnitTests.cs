@@ -82,12 +82,11 @@ namespace Azure.Security.CodeTransparency.Tests
             FileStream fileStream = File.OpenRead("signature.cose");
             BinaryData content = BinaryData.FromStream(fileStream);
 #endif
-            Operation<BinaryData> operation = await client.CreateEntryAsync(WaitUntil.Started, content);
+            NullableResponse<BinaryData> submission = await client.CreateEntryAsync(content, waitForCommit: true);
             #endregion Snippet:CodeTransparencySubmission
 
             #region Snippet:CodeTransparencyDownloadTransparentStatement
-            Response<BinaryData> operationResult = await operation.WaitForCompletionAsync();
-            string entryId = CborUtils.GetStringValueFromCborMapByKey(operationResult.Value.ToArray(), "EntryId");
+            string entryId = CodeTransparencyClient.GetEntryIdFromLocation(submission.GetRawResponse());
             Console.WriteLine($"The entry ID to use to retrieve the receipt and transparent statement is {{{entryId}}}");
             #region Snippet:CodeTransparencySample2_GetEntryStatement
             Response<BinaryData> transparentStatementResponse = await client.GetEntryStatementAsync(entryId);
@@ -95,8 +94,7 @@ namespace Azure.Security.CodeTransparency.Tests
             #endregion Snippet:CodeTransparencySample2_GetEntryStatement
             #endregion Snippet:CodeTransparencyDownloadTransparentStatement
 
-            Assert.IsTrue(operation.HasCompleted);
-            Assert.IsTrue(operation.HasValue);
+            Assert.AreEqual("123.23", entryId);
 
             #region Snippet:CodeTransparencySample2_GetRawReceipt
 #if SNIPPET

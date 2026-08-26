@@ -12,12 +12,6 @@ namespace Azure.Security.CodeTransparency
         public static Azure.Security.CodeTransparency.AzureSecurityCodeTransparencyContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
-    public partial class CborUtils
-    {
-        public CborUtils() { }
-        public static string GetStringValueFromCborMapByKey(byte[] cborBytes, int key) { throw null; }
-        public static string GetStringValueFromCborMapByKey(byte[] cborBytes, string key) { throw null; }
-    }
     public partial class CcfReceipt
     {
         public static readonly int CcfProofLeafLabel;
@@ -42,6 +36,7 @@ namespace Azure.Security.CodeTransparency
     {
         public CcfReceiptVerifier() { }
         public static void VerifyTransparentStatementReceipt(Azure.Security.CodeTransparency.JsonWebKey jsonWebKey, byte[] receiptBytes, byte[] signedStatementBytes) { }
+        public static void VerifyTransparentStatementReceipt(System.Security.Cryptography.ECDsa publicKey, string keyId, byte[] receiptBytes, byte[] signedStatementBytes) { }
     }
     public partial class CodeTransparencyCertificateClient
     {

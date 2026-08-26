@@ -19,7 +19,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Azure.Security.KeyVault.Keys" />
     <PackageReference Include="System.Security.Cryptography.Cose" />
   </ItemGroup>
 </Project>

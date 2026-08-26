@@ -26,8 +26,52 @@ namespace Azure.Security.CodeTransparency
     /// </summary>
     public class CcfReceiptVerifier
     {
+        // COSE algorithm identifiers, https://www.iana.org/assignments/cose/cose.xhtml#algorithms
+        private const int CoseAlgorithmEs256 = -7;
+        private const int CoseAlgorithmEs384 = -35;
+        private const int CoseAlgorithmEs512 = -36;
+
         /// <summary>
-        /// Verify a CCF SCITT receipt.
+        /// Converts an elliptic-curve <see cref="JsonWebKey"/> into an <see cref="ECDsa"/> public key.
+        /// </summary>
+        /// <param name="jsonWebKey">The JWK to convert.</param>
+        /// <returns>An <see cref="ECDsa"/> holding the public key material.</returns>
+        /// <exception cref="InvalidOperationException">The key is not an EC key or uses an unsupported curve.</exception>
+        internal static ECDsa ConvertToECDsa(JsonWebKey jsonWebKey)
+        {
+            if (!string.Equals(jsonWebKey.Kty, "EC", StringComparison.Ordinal))
+            {
+                throw new InvalidOperationException($"Only EC keys are supported for receipt verification. Found key type '{jsonWebKey.Kty}'.");
+            }
+
+            if (string.IsNullOrEmpty(jsonWebKey.X) || string.IsNullOrEmpty(jsonWebKey.Y))
+            {
+                throw new InvalidOperationException("The EC key is missing the X or Y coordinate.");
+            }
+
+            ECCurve curve = jsonWebKey.Crv switch
+            {
+                "P-256" => ECCurve.NamedCurves.nistP256,
+                "P-384" => ECCurve.NamedCurves.nistP384,
+                "P-521" => ECCurve.NamedCurves.nistP521,
+                _ => throw new InvalidOperationException($"Unsupported elliptic curve '{jsonWebKey.Crv}'.")
+            };
+
+            ECParameters parameters = new()
+            {
+                Curve = curve,
+                Q = new ECPoint
+                {
+                    X = Base64Url.Decode(jsonWebKey.X),
+                    Y = Base64Url.Decode(jsonWebKey.Y)
+                }
+            };
+
+            return ECDsa.Create(parameters);
+        }
+
+        /// <summary>
+        /// Verify a CCF SCITT receipt using the service's public key (JWK).
         /// If the verification fails, an exception is thrown explaining in which step the verification failed.
         /// #1 Reference: https://datatracker.ietf.org/doc/draft-ietf-scitt-architecture/
         /// #2 Reference: https://datatracker.ietf.org/doc/draft-birkholz-cose-receipts-ccf-profile/
@@ -38,13 +82,37 @@ namespace Azure.Security.CodeTransparency
         /// <exception cref="InvalidOperationException">Thrown when the verification fails.</exception>
         public static void VerifyTransparentStatementReceipt(JsonWebKey jsonWebKey, byte[] receiptBytes, byte[] signedStatementBytes)
         {
+            Argument.AssertNotNull(jsonWebKey, nameof(jsonWebKey));
+
+            using ECDsa publicKey = ConvertToECDsa(jsonWebKey);
+            VerifyTransparentStatementReceipt(publicKey, jsonWebKey.Kid, receiptBytes, signedStatementBytes);
+        }
+
+        /// <summary>
+        /// Verify a CCF SCITT receipt using the service's public key.
+        /// If the verification fails, an exception is thrown explaining in which step the verification failed.
+        /// #1 Reference: https://datatracker.ietf.org/doc/draft-ietf-scitt-architecture/
+        /// #2 Reference: https://datatracker.ietf.org/doc/draft-birkholz-cose-receipts-ccf-profile/
+        /// </summary>
+        /// <param name="publicKey">The service's receipt signing public key.</param>
+        /// <param name="keyId">The key id (<c>kid</c>) that the receipt's COSE header is expected to carry.</param>
+        /// <param name="receiptBytes">Receipt in COSE_Sign1 cbor bytes.</param>
+        /// <param name="signedStatementBytes">The input signed statement bytes.</param>
+        /// <exception cref="InvalidOperationException">Thrown when the verification fails.</exception>
+        public static void VerifyTransparentStatementReceipt(ECDsa publicKey, string keyId, byte[] receiptBytes, byte[] signedStatementBytes)
+        {
+            Argument.AssertNotNull(publicKey, nameof(publicKey));
+            Argument.AssertNotNullOrEmpty(keyId, nameof(keyId));
+            Argument.AssertNotNull(receiptBytes, nameof(receiptBytes));
+            Argument.AssertNotNull(signedStatementBytes, nameof(signedStatementBytes));
+
             using SHA256 sha256 = SHA256.Create();
             byte[] claimsDigest = sha256.ComputeHash(signedStatementBytes);
 
             // Extract the expected KID from the public key used for verification,
             // and check it against the value set in the COSE header before using
             // it to verify the proofs.
-            byte[] expectedKid = Encoding.UTF8.GetBytes(jsonWebKey.Kid);
+            byte[] expectedKid = Encoding.UTF8.GetBytes(keyId);
 
             CoseSign1Message receipt = CoseMessage.DecodeSign1(receiptBytes);
 
@@ -58,22 +126,17 @@ namespace Azure.Security.CodeTransparency
             // Get the ECDsa key size from the certificate
             int algValue = alg.GetValueAsInt32();
 
-            switch (jsonWebKey.Crv)
+            int expectedAlg = publicKey.KeySize switch
             {
-                case "P-256":
-                    if (algValue != -7)
-                        throw new InvalidOperationException($"The ECDsa key uses the wrong algorithm. Expected -7 Found {algValue}");
-                    break;
-                case "P-384":
-                    if (algValue != -35)
-                        throw new InvalidOperationException($"The ECDsa key uses the wrong algorithm. Expected -35 Found {algValue}");
-                    break;
-                case "P-512":
-                    if (algValue != -39)
-                        throw new InvalidOperationException($"The ECDsa key uses the wrong algorithm. Expected -39 Found {algValue}");
-                    break;
-                default:
-                    throw new InvalidOperationException("ECDsa key and Alg mismatch.");
+                256 => CoseAlgorithmEs256,
+                384 => CoseAlgorithmEs384,
+                521 => CoseAlgorithmEs512,
+                _ => throw new InvalidOperationException($"Unsupported ECDsa key size {publicKey.KeySize}.")
+            };
+
+            if (algValue != expectedAlg)
+            {
+                throw new InvalidOperationException($"The ECDsa key uses the wrong algorithm. Expected {expectedAlg} Found {algValue}");
             }
 
             if (!receipt.ProtectedHeaders.TryGetValue(CoseHeaderLabel.KeyIdentifier, out CoseHeaderValue kid) ||
@@ -163,20 +226,7 @@ namespace Azure.Security.CodeTransparency
                     }
                 }
 
-                // We are mapping our JWK with AKV JWK in order to leverage the already established
-                // ECDsa conversion given a JWK.
-                KeyVault.Keys.JsonWebKey tmpAkvKey = new KeyVault.Keys.JsonWebKey(null)
-                {
-                    CurveName = jsonWebKey.Crv,
-                    X = Base64Url.Decode(jsonWebKey.X),
-                    Y = Base64Url.Decode(jsonWebKey.Y),
-                    Id = jsonWebKey.Kid,
-                    KeyType = jsonWebKey.Kty
-                };
-
-                using ECDsa ecdsaKey = tmpAkvKey.ToECDsa(false);
-
-                if (!receipt.VerifyDetached(ecdsaKey, new ReadOnlySpan<byte>(accumulator)))
+                if (!receipt.VerifyDetached(publicKey, new ReadOnlySpan<byte>(accumulator)))
                 {
                     throw new InvalidOperationException("Signature verification failed");
                 }

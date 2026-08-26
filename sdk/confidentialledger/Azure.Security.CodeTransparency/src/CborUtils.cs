@@ -13,7 +13,7 @@ namespace Azure.Security.CodeTransparency
     /// absence, or unexpected CBOR shapes they return an empty string instead of throwing,
     /// allowing callers to decide whether absence is an error condition.
     /// </summary>
-    public class CborUtils
+    internal static class CborUtils
     {
         /// <summary>
         /// Reads a CBOR-encoded map and returns the text string value associated with the specified key.
@@ -31,37 +31,46 @@ namespace Azure.Security.CodeTransparency
 
             string value = string.Empty;
 
-            CborReader cborReader = new(cborBytes);
-            cborReader.ReadStartMap();
-            while (cborReader.PeekState() != CborReaderState.EndMap)
+            try
             {
-                CborReaderState keyState = cborReader.PeekState();
-
-                if (keyState != CborReaderState.TextString)
+                CborReader cborReader = new(cborBytes);
+                cborReader.ReadStartMap();
+                while (cborReader.PeekState() != CborReaderState.EndMap)
                 {
-                    // Non-text key: skip key and its value
-                    cborReader.SkipValue();
-                    cborReader.SkipValue();
-                    continue;
-                }
+                    CborReaderState keyState = cborReader.PeekState();
 
-                string currentKey = cborReader.ReadTextString();
-                if (string.Equals(currentKey, key, StringComparison.Ordinal))
-                {
-                    if (cborReader.PeekState() == CborReaderState.TextString)
+                    if (keyState != CborReaderState.TextString)
                     {
-                        value = cborReader.ReadTextString();
+                        // Non-text key: skip key and its value
+                        cborReader.SkipValue();
+                        cborReader.SkipValue();
+                        continue;
+                    }
+
+                    string currentKey = cborReader.ReadTextString();
+                    if (string.Equals(currentKey, key, StringComparison.Ordinal))
+                    {
+                        if (cborReader.PeekState() == CborReaderState.TextString)
+                        {
+                            value = cborReader.ReadTextString();
+                        }
+                        else
+                        {
+                            cborReader.SkipValue();
+                        }
+                        break;
                     }
                     else
                     {
                         cborReader.SkipValue();
                     }
-                    break;
                 }
-                else
-                {
-                    cborReader.SkipValue();
-                }
+            }
+            catch (Exception ex) when (ex is CborContentException || ex is InvalidOperationException)
+            {
+                // The payload is malformed or its root is not a map. The documented contract is to
+                // report absence rather than throw, so callers can decide whether that is an error.
+                return string.Empty;
             }
 
             return value;
@@ -83,40 +92,49 @@ namespace Azure.Security.CodeTransparency
 
             string value = string.Empty;
 
-            CborReader cborReader = new(cborBytes);
-            cborReader.ReadStartMap();
-            while (cborReader.PeekState() != CborReaderState.EndMap)
+            try
             {
-                int? currentIntKey = null;
-                switch (cborReader.PeekState())
+                CborReader cborReader = new(cborBytes);
+                cborReader.ReadStartMap();
+                while (cborReader.PeekState() != CborReaderState.EndMap)
                 {
-                    case CborReaderState.UnsignedInteger:
-                    case CborReaderState.NegativeInteger:
-                        currentIntKey = cborReader.ReadInt32();
-                        break;
-                    default:
-                        // Unsupported key type - skip key and its value
-                        cborReader.SkipValue();
-                        cborReader.SkipValue();
-                        continue;
-                }
-
-                if (currentIntKey.HasValue && currentIntKey.Value == key)
-                {
-                    if (cborReader.PeekState() == CborReaderState.TextString)
+                    int? currentIntKey = null;
+                    switch (cborReader.PeekState())
                     {
-                        value = cborReader.ReadTextString();
+                        case CborReaderState.UnsignedInteger:
+                        case CborReaderState.NegativeInteger:
+                            currentIntKey = cborReader.ReadInt32();
+                            break;
+                        default:
+                            // Unsupported key type - skip key and its value
+                            cborReader.SkipValue();
+                            cborReader.SkipValue();
+                            continue;
+                    }
+
+                    if (currentIntKey.HasValue && currentIntKey.Value == key)
+                    {
+                        if (cborReader.PeekState() == CborReaderState.TextString)
+                        {
+                            value = cborReader.ReadTextString();
+                        }
+                        else
+                        {
+                            cborReader.SkipValue();
+                        }
+                        break;
                     }
                     else
                     {
                         cborReader.SkipValue();
                     }
-                    break;
                 }
-                else
-                {
-                    cborReader.SkipValue();
-                }
+            }
+            catch (Exception ex) when (ex is CborContentException || ex is InvalidOperationException)
+            {
+                // The payload is malformed or its root is not a map. The documented contract is to
+                // report absence rather than throw, so callers can decide whether that is an error.
+                return string.Empty;
             }
 
             return value;

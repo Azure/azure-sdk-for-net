@@ -4,11 +4,34 @@
 
 ### Features Added
 
+- Added `CcfReceiptVerifier.VerifyTransparentStatementReceipt(ECDsa publicKey, string keyId, byte[] receiptBytes, byte[] signedStatementBytes)`.
+  This overload lets callers supply a key they already own as a standard `System.Security.Cryptography.ECDsa`
+  instance, instead of having to obtain an `Azure.Security.CodeTransparency.JsonWebKey`, which has no public
+  constructor and therefore could only be acquired from a service response.
+
 ### Breaking Changes
+
+- `CborUtils` is no longer public. It carried no service semantics and only existed on the public
+  surface so that the documented sample could dig the entry id out of the raw CBOR response body.
+  Use `CodeTransparencyClient.GetEntryIdFromLocation(Response)` instead, which is the supported way
+  to read the entry id from a submission response.
 
 ### Bugs Fixed
 
+- Fixed receipt verification for P-521 keys. The curve was matched against the non-existent name
+  `P-512` and validated against COSE algorithm `-39` (PS512, an RSA algorithm) rather than `-36`
+  (ES512), so every P-521 key was rejected with an "unsupported curve" error.
+- CBOR parsing no longer throws on malformed input. `CborUtils.GetStringValueFromCborMapByKey` is
+  documented to return an empty string when a value cannot be read, but a payload whose root was not
+  a CBOR map threw `InvalidOperationException` and a truncated map threw `CborContentException`. This
+  surfaced as an unhandled exception out of entry-creation polling when the service returned a body
+  that was not a CBOR map.
+
 ### Other Changes
+
+- Removed the dependency on `Azure.Security.KeyVault.Keys`. The whole Key Vault Keys client library was
+  being referenced solely to reuse its JSON Web Key to `ECDsa` conversion inside a single method body;
+  that conversion is now done directly against `System.Security.Cryptography`.
 
 ## 1.0.0-beta.12 (2026-07-31)
 
