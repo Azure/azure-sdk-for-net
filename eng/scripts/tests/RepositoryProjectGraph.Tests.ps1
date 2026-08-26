@@ -18,6 +18,9 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $testPackage = Split-Path (Split-Path $testProject -Parent) -Parent
 
         New-Item -ItemType Directory -Path $repoRoot -Force | Out-Null
+        & git -C $repoRoot init --quiet
+        & git -C $repoRoot -c user.name=Test -c user.email=test@example.com commit --quiet --allow-empty -m fixture
+        $sourceCommit = (& git -C $repoRoot rev-parse HEAD).Trim()
         @(
             "Node|$projectA|net8.0|Azure.A|Azure.A|$packageA|true|||true"
             "Node|$projectA|net9.0|Azure.A|Azure.A|$packageA|true|||true"
@@ -42,6 +45,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
     It "builds a versioned artifact that unions evaluated target frameworks" {
         $graph = Get-Content -Raw $graphPath | ConvertFrom-Json -Depth 100
         $graph.schemaVersion | Should -Be 3
+        $graph.sourceCommit | Should -Be $sourceCommit
         $graph.diagnostics.isComplete | Should -BeTrue
         $graph.diagnostics.configurationCount | Should -Be 5
         $graph.diagnostics.configurationGraph.isExact | Should -BeTrue
@@ -422,6 +426,9 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $taskGraph = Get-Content -Raw $taskGraphPath | ConvertFrom-Json -Depth 100
         $taskGraph.diagnostics.isComplete | Should -BeTrue
         $taskGraph.diagnostics.configurationGraph.isExact | Should -BeTrue
+        $taskGraph.diagnostics.generation.configurations | Should -Be @("Debug", "Release")
+        $taskGraph.diagnostics.generation.includesInputs | Should -BeTrue
+        Get-Content $taskRecordsPath | Should -Contain "GraphGeneration|Debug,Release|True"
         ($taskGraph.nodes | Where-Object packageId -eq "Azure.A.Tests").targetFrameworks | Should -Be @("net8.0", "net9.0")
         $taskPackageEdge = $taskGraph.edges | Where-Object { $_.kind -eq "PackageReference" -and $_.to -eq "Azure.B" }
         $taskPackageEdge.targetFrameworks | Should -Be @("net8.0")

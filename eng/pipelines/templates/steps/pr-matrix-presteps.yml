@@ -34,6 +34,12 @@ steps:
         Write-Host "##vso[task.setvariable variable=AZURESDK_SKIP_DEPENDENT_PACKAGE_CALCULATION;]true"
       displayName: Skip dependent package calculation (direct packages only)
 
+  # Ask Language-Settings.ps1 to make its dependency graph reusable by sparse checkout.
+  - ${{ if parameters.EnableTestCheckoutNarrowing }}:
+    - pwsh: |
+        Write-Host "##vso[task.setvariable variable=AZURESDK_BUILD_SPARSE_CHECKOUT_GRAPH;]true"
+      displayName: Enable reusable repository graph
+
   - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
     parameters:
       ServiceDirectory: ${{parameters.ServiceDirectory}}
@@ -51,37 +57,58 @@ steps:
 
   - ${{ if parameters.EnableTestCheckoutNarrowing }}:
     - pwsh: |
-        $graphDirectory = "$(Build.ArtifactStagingDirectory)/RepositoryProjectGraph"
-        $graphPath = "$graphDirectory/repository-project-graph.json"
+        # Language-Settings.ps1 writes its reverse-dependency graph to this service.proj default.
+        # Reuse it when present; ForceDirect and empty-change passes intentionally do not create it.
+        $graphDirectory = "$(Build.SourcesDirectory)/artifacts/obj/RepositoryProjectGraph"
+        $graphPath = "$graphDirectory/repository-project-graph.reader.json"
         $checkoutGraphDirectory = "$(Build.ArtifactStagingDirectory)/TestCheckoutGraph"
         $checkoutGraphPath = "$checkoutGraphDirectory/checkout-graph.json"
         New-Item -ItemType Directory -Path $checkoutGraphDirectory -Force | Out-Null
 
         try {
-          # Build the expensive source graph once. The compact projection expands repository
-          # package identities through their source projects so it covers both package-reference
-          # and project-reference test modes without a second MSBuild evaluation. Test jobs query
-          # only the closure for their ProjectNames batch.
-          dotnet msbuild /m /nr:false /nologo /tl:off `
-            /t:GenerateRepositoryProjectGraphWithProjectGraph ./eng/service.proj `
-            /p:RepositoryProjectGraphReaderPath="$graphPath" `
-            /p:RepositoryProjectGraphReaderRecordsPath="$graphDirectory/project.records" `
-            /p:RepositoryProjectGraphPackageRecordsPath="$graphDirectory/package.records" `
-            /p:RepositoryProjectGraphNuGetRestoreDirectory="$graphDirectory/nuget-restore" `
-            /p:RepositoryProjectGraphPackageResolutionMode=NuGetRestore `
-            /p:RepositoryProjectGraphConfigurations=Debug+Release `
-            /p:SkipServiceProjectImports=true `
-            /p:IncludeRepositoryProjectGraphInputs=true
-          if ($LASTEXITCODE -ne 0) {
-            throw "RepositoryProjectGraph generation failed with exit code $LASTEXITCODE."
+          $reusedGraph = $false
+          if (Test-Path -LiteralPath $graphPath) {
+            try {
+              # Projection validates commit provenance, Debug+Release input coverage, NuGet
+              # completeness, and schema policy before accepting the reusable artifact.
+              ./eng/scripts/Create-SparseCheckoutGraph.ps1 `
+                -PackageInfoDirectory "$(Build.ArtifactStagingDirectory)/PackageInfo" `
+                -RepoRoot "$(Build.SourcesDirectory)" `
+                -GraphPath $graphPath `
+                -OutputPath $checkoutGraphPath `
+                -SourceCommit "$(Build.SourceVersion)"
+              $reusedGraph = $true
+              Write-Host 'REPOSITORY_PROJECT_GRAPH_RESULT=reused'
+            }
+            catch {
+              Write-Warning "The canonical repository graph cannot be reused: $_"
+              Remove-Item -LiteralPath $checkoutGraphPath -Force -ErrorAction SilentlyContinue
+            }
           }
 
-          ./eng/scripts/Create-SparseCheckoutGraph.ps1 `
-            -PackageInfoDirectory "$(Build.ArtifactStagingDirectory)/PackageInfo" `
-            -RepoRoot "$(Build.SourcesDirectory)" `
-            -GraphPath $graphPath `
-            -OutputPath $checkoutGraphPath `
-            -SourceCommit "$(Build.SourceVersion)"
+          if (-not $reusedGraph) {
+            # ForceDirect and other passes without dependency analysis still construct one graph.
+            dotnet msbuild /m /nr:false /nologo /tl:off `
+              /t:GenerateRepositoryProjectGraphWithProjectGraph ./eng/service.proj `
+              /p:RepositoryProjectGraphReaderPath="$graphPath" `
+              /p:RepositoryProjectGraphPackageResolutionMode=NuGetRestore `
+              /p:RepositoryProjectGraphConfigurations=Debug+Release `
+              /p:SkipServiceProjectImports=true `
+              /p:IncludeRepositoryProjectGraphInputs=true `
+              /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false `
+              /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false
+            if ($LASTEXITCODE -ne 0) {
+              throw "RepositoryProjectGraph generation failed with exit code $LASTEXITCODE."
+            }
+
+            ./eng/scripts/Create-SparseCheckoutGraph.ps1 `
+              -PackageInfoDirectory "$(Build.ArtifactStagingDirectory)/PackageInfo" `
+              -RepoRoot "$(Build.SourcesDirectory)" `
+              -GraphPath $graphPath `
+              -OutputPath $checkoutGraphPath `
+              -SourceCommit "$(Build.SourceVersion)"
+            Write-Host 'REPOSITORY_PROJECT_GRAPH_RESULT=generated'
+          }
           Write-Host 'SPARSE_CHECKOUT_GRAPH_RESULT=available'
         }
         catch {

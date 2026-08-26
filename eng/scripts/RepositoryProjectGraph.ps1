@@ -31,6 +31,17 @@ function Get-RelativePath([string] $Root, [string] $Path) {
   return [System.IO.Path]::GetRelativePath($Root, (Normalize-AbsolutePath $Path)).Replace('\', '/')
 }
 
+function Get-SourceCommit([string] $Root) {
+  if (!(Test-Path -LiteralPath (Join-Path $Root '.git'))) {
+    return ''
+  }
+  $commit = @(& git -C $Root rev-parse HEAD 2>$null)
+  if ($LASTEXITCODE -ne 0 -or $commit.Count -ne 1) {
+    throw "Unable to read the source commit under '$Root'."
+  }
+  return ([string] $commit[0]).Trim()
+}
+
 function New-CaseInsensitiveSet {
   $set = [System.Collections.Generic.HashSet[string]]::new([System.StringComparer]::OrdinalIgnoreCase)
   return ,$set
@@ -169,6 +180,8 @@ function Build-Graph {
   $unresolvedPackageClosure = [System.Collections.Generic.List[object]]::new()
   $packageClosureSummary = $null
   $packageClosureSummaryCount = 0
+  $graphGeneration = $null
+  $graphGenerationRecordCount = 0
   $transitivePackageRecordCount = 0
   $packageClosureAttempted = !!$PackageRecordsPath
   $recordPaths = [System.Collections.Generic.List[string]]::new()
@@ -185,6 +198,14 @@ function Build-Graph {
       if ([string]::IsNullOrWhiteSpace($line)) { continue }
       $parts = $line.Split('|')
       switch ($parts[0]) {
+      'GraphGeneration' {
+        if ($parts.Length -lt 3) { throw "Invalid graph-generation record: $line" }
+        $graphGenerationRecordCount++
+        $graphGeneration = [ordered]@{
+          configurations = @($parts[1].Split(',', [System.StringSplitOptions]::RemoveEmptyEntries) | Sort-Object -Unique)
+          includesInputs = [bool]::Parse($parts[2])
+        }
+      }
       'Node' {
         if ($parts.Length -lt 10) { throw "Invalid node record: $line" }
         $path = Get-RelativePath $root $parts[1]
@@ -514,6 +535,7 @@ function Build-Graph {
   $graph = [ordered]@{
     schemaVersion = 3
     repositoryRoot = $root.Replace('\', '/')
+    sourceCommit = Get-SourceCommit $root
     nodes = @($nodes.Values | Sort-Object projectPath | ForEach-Object {
       $_.targetFrameworks = @($_.targetFrameworks | Sort-Object)
       [pscustomobject]$_
@@ -533,7 +555,8 @@ function Build-Graph {
         $missingDeclaredProjects.Count -eq 0 -and $rootsWithoutNodes.Count -eq 0 -and $nodeMetadataConflicts.Count -eq 0 -and
         $missingConfigurationReferences.Count -eq 0 -and
         (!$requiresExactConfigurationGraph -or $inferredProjectReferenceConfigurations.Count -eq 0) -and
-        $packageClosureSummaryConsistent -and (!$packageClosureAttempted -or !$packageClosureHasUnresolved)
+        $packageClosureSummaryConsistent -and (!$packageClosureAttempted -or !$packageClosureHasUnresolved) -and
+        $graphGenerationRecordCount -le 1
       projectCount = $nodes.Count
       configurationCount = $configurationKeys.Count
       edgeCount = $edges.Count
@@ -555,6 +578,8 @@ function Build-Graph {
       packageClosureSummaryCount = $packageClosureSummaryCount
       packageClosureSummaryConsistent = $packageClosureSummaryConsistent
       packageClosure = $packageClosureSummary
+      generation = $graphGeneration
+      graphGenerationRecordCount = $graphGenerationRecordCount
       unresolvedExternalPackageClosure = @($unresolvedPackageClosure)
       hasUnresolvedExternalPackageClosure = $packageClosureHasUnresolved
     }

@@ -101,13 +101,14 @@ public sealed class RepositoryProjectGraphTask : Task
             }))
             .ToArray();
 
-        EvaluateAndWriteRecords(entryPoints, projectPaths, GetFullPaths(RootProjects));
+        EvaluateAndWriteRecords(entryPoints, projectPaths, GetFullPaths(RootProjects), configurations);
     }
 
     private void EvaluateAndWriteRecords(
         ProjectGraphEntryPoint[] entryPoints,
         string[] projectPaths,
-        string[] rootProjectPaths)
+        string[] rootProjectPaths,
+        string[] configurations)
     {
         var options = new ProjectGraphOptions
         {
@@ -129,7 +130,7 @@ public sealed class RepositoryProjectGraphTask : Task
 
             IReadOnlyCollection<ProjectGraphNode> canonicalNodes = GetCanonicalNodes(graph, out GraphStatistics statistics);
             var recordsStopwatch = Stopwatch.StartNew();
-            long recordCount = WriteRecords(projectPaths, rootProjectPaths, canonicalNodes);
+            long recordCount = WriteRecords(projectPaths, rootProjectPaths, canonicalNodes, configurations);
             recordsStopwatch.Stop();
 
             Log.LogMessage(
@@ -328,7 +329,8 @@ public sealed class RepositoryProjectGraphTask : Task
     private long WriteRecords(
         IEnumerable<string> declaredProjects,
         IEnumerable<string> rootProjects,
-        IEnumerable<ProjectGraphNode> nodes)
+        IEnumerable<ProjectGraphNode> nodes,
+        IEnumerable<string> configurations)
     {
         string fullRecordsPath = Path.GetFullPath(RecordsPath);
         string recordsDirectory = Path.GetDirectoryName(fullRecordsPath);
@@ -349,6 +351,15 @@ public sealed class RepositoryProjectGraphTask : Task
                 // Debug and Release usually evaluate to identical records. Keep the union here so
                 // the isolated PowerShell artifact builder does not parse duplicate input records.
                 var emittedRecords = new HashSet<string>(StringComparer.Ordinal);
+                WriteRecord(
+                    writer,
+                    ref recordCount,
+                    emittedRecords,
+                    string.Join(
+                        "|",
+                        "GraphGeneration",
+                        string.Join(",", configurations.OrderBy(value => value, StringComparer.OrdinalIgnoreCase)),
+                        IncludeInputs));
                 foreach (string project in declaredProjects)
                 {
                     WriteRecord(writer, ref recordCount, emittedRecords, $"DeclaredProject|{project}");

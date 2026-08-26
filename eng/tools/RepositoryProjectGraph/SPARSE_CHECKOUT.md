@@ -6,12 +6,15 @@ This integration narrows only the PR test jobs emitted by
 `generate_target_service_test_matrix`. Matrix selection, direct/indirect package
 classification, batching, and each job's `ProjectNames` remain unchanged.
 
-1. The matrix seed job saves the selected package metadata as before.
-2. `GenerateRepositoryProjectGraphWithProjectGraph` constructs one MSBuild
-   `ProjectGraph` over all repository source and test projects. The graph evaluates
-   real `Debug` and `Release` entry points, all declared target frameworks, the
-   complete NuGet package topology, and evaluated repository inputs.
-3. `Create-SparseCheckoutGraph.ps1` scans that artifact once and publishes a compact
+1. During package selection, `Language-Settings.ps1` constructs the reverse-dependency
+   graph at the canonical service.proj path
+   `artifacts/obj/RepositoryProjectGraph/repository-project-graph.reader.json`.
+   When checkout narrowing is enabled, it requests the `Debug+Release`, input-enabled
+   NuGet graph needed by both dependency analysis and sparse checkout.
+2. The matrix seed reuses that artifact when its commit, generation policy, schema,
+   and completeness diagnostics match. Passes that skip dependency analysis construct
+   the same canonical graph once as a fallback.
+3. `Create-SparseCheckoutGraph.ps1` scans the canonical artifact once and publishes a compact
    checkout graph. It contains artifact seeds, configuration/package adjacency,
    and checkout roots instead of a precomputed closure for every artifact.
 4. Each fanned-out test job runs `Resolve-SparseCheckoutPaths.ps1`. The resolver
@@ -21,8 +24,11 @@ classification, batching, and each job's `ProjectNames` remain unchanged.
    The test job then uses the existing full-checkout fallback.
 
 ```text
-matrix seed (full checkout)
-    -> one RepositoryProjectGraph
+package selection
+    -> one canonical RepositoryProjectGraph
+
+matrix seed (same full checkout)
+    -> reuse canonical graph (or generate if absent)
     -> one indexed checkout projection
     -> publish TestCheckoutGraph
 
@@ -70,9 +76,10 @@ restore/build equivalence. The source graph continues to report
   `/sdk/<service>/*`. Non-SDK linked inputs retain a narrower containing-directory
   root. Only repository root files, `/eng`, and `/.config` are unconditional; SDK
   services are selected by graph reachability rather than a hard-coded allowlist.
-- **Provenance:** the projection records `Build.SourceVersion`, verifies `HEAD`, and
-  rejects tracked worktree changes. Every test job verifies the same commit before
-  using the graph.
+- **Provenance:** the source artifact records its Git commit and generation policy.
+  Projection requires the same `Build.SourceVersion`, `Debug+Release`, and evaluated
+  inputs, verifies `HEAD`, and rejects tracked worktree changes. Every test job verifies
+  the same commit before using the projected graph.
 - **Identity:** schema 3 rejects dependency-only global-property nodes and
   dependency-bearing Debug/Release conflicts rather than silently dropping an
   alternate MSBuild node.
@@ -89,6 +96,7 @@ seed job catches graph/projection failures and publishes an explicit incomplete
 `checkout-graph.json`. Test jobs log:
 
 - `SPARSE_CHECKOUT_GRAPH_RESULT=available|fallback` in the seed job;
+- `REPOSITORY_PROJECT_GRAPH_RESULT=reused|generated` in the seed job;
 - `SPARSE_CHECKOUT_RESULT=narrowed pathCount=<n>|full` in each test job; and
 - graph/project/configuration/edge/input/artifact counts, projection bytes and time,
   plus each query's artifact, reachable-node, and path counts.
