@@ -21,6 +21,7 @@ namespace Azure.Generator.Management.Utilities
     internal static class BackCompatHelper
     {
         private static readonly Type ForwardsClientCallsAttributeType = typeof(ForwardsClientCallsAttribute);
+        private const string GeneralWarningDiagnosticCode = "general-warning";
         private const string CancellationTokenAnalyzerRule = "AZC0002";
         private const string CancellationTokenSuppressionJustification =
             "Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. " +
@@ -92,7 +93,7 @@ namespace Azure.Generator.Management.Utilities
 
                 if (currentMethod is null)
                 {
-                    if (transformedSignatures.Count > 0 || HasConditionalHeaderParameter(previousMethod.Signature))
+                    if (HasConditionalHeaderParameter(previousMethod.Signature))
                     {
                         ReportDroppedOverloadDiagnostic(enclosingType, previousMethod.Signature);
                     }
@@ -522,7 +523,7 @@ namespace Azure.Generator.Management.Utilities
         private static void ReportDroppedOverloadDiagnostic(TypeProvider enclosingType, MethodSignature previousSignature)
         {
             ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
-                code: "general-warning",
+                code: GeneralWarningDiagnosticCode,
                 message: $"Could not synthesize backward-compatible overload '{previousSignature.Name}' on '{enclosingType.Name}'. The previous public method may require a custom overload or ApiCompat suppression.",
                 targetCrossLanguageDefinitionId: enclosingType.Name);
         }
