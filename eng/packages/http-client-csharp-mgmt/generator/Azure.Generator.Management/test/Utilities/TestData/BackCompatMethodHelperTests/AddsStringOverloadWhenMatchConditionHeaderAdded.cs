@@ -25,7 +25,7 @@ namespace Samples
         {
             return this.Get((ifMatch is null) ? ((global::Azure.MatchConditions)null) : new global::Azure.MatchConditions
             {
-                IfMatch = (ifMatch != null) ? new global::Azure.ETag(ifMatch) : ((global::Azure.ETag?)null)
+                IfMatch = new global::Azure.ETag(ifMatch)
             }, cancellationToken);
         }
     }

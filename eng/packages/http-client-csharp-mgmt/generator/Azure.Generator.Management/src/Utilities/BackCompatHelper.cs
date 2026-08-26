@@ -548,6 +548,15 @@ namespace Azure.Generator.Management.Utilities
             var propertyInitializers = new Dictionary<ValueExpression, ValueExpression>();
             ScopedApi<bool>? allNull = null;
             var hasRequiredCondition = false;
+            var conditionalParameterCount = 0;
+            foreach (var parameter in previousParameters)
+            {
+                if (ConditionalHeaderProperties.ContainsKey(parameter.Name))
+                {
+                    conditionalParameterCount++;
+                }
+            }
+
             foreach (var parameter in previousParameters)
             {
                 if (!ConditionalHeaderProperties.TryGetValue(parameter.Name, out var propertyName))
@@ -555,14 +564,20 @@ namespace Azure.Generator.Management.Utilities
                     continue;
                 }
 
-                propertyInitializers.Add(
-                    new MemberExpression(null, propertyName),
-                    GetConditionalParameterKind(parameter) == ConditionalParameterKind.StringETagHeader
-                        ? new TernaryConditionalExpression(
+                ValueExpression value = parameter;
+                if (GetConditionalParameterKind(parameter) == ConditionalParameterKind.StringETagHeader)
+                {
+                    value = conditionalParameterCount == 1
+                        ? New.Instance(typeof(ETag), parameter)
+                        : new TernaryConditionalExpression(
                             parameter.NotEqual(Null),
                             New.Instance(typeof(ETag), parameter),
-                            new CastExpression(Null, new CSharpType(typeof(ETag), isNullable: true)))
-                        : parameter);
+                            new CastExpression(Null, new CSharpType(typeof(ETag), isNullable: true)));
+                }
+
+                propertyInitializers.Add(
+                    new MemberExpression(null, propertyName),
+                    value);
                 if (parameter.Type.IsValueType && !parameter.Type.IsNullable)
                 {
                     hasRequiredCondition = true;
