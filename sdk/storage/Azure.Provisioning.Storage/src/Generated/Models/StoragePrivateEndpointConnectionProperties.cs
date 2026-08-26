@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -63,7 +64,7 @@ namespace Azure.Provisioning.Storage
         }
 
         /// <summary> Gets the Id. </summary>
-        public BicepValue<string> PrivateEndpointId
+        public BicepValue<ResourceIdentifier> PrivateEndpointId
         {
             get
             {

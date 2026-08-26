@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.Storage
     /// <summary> The Private Endpoint resource. </summary>
     internal partial class PrivateEndpoint : ProvisionableConstruct
     {
-        private BicepValue<string> _id;
+        private BicepValue<ResourceIdentifier> _id;
 
         /// <summary> Creates a new PrivateEndpoint. </summary>
         public PrivateEndpoint()
@@ -21,7 +22,7 @@ namespace Azure.Provisioning.Storage
         }
 
         /// <summary> Gets the Id. </summary>
-        public BicepValue<string> Id
+        public BicepValue<ResourceIdentifier> Id
         {
             get
             {
@@ -34,7 +35,7 @@ namespace Azure.Provisioning.Storage
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _id = DefineProperty<string>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

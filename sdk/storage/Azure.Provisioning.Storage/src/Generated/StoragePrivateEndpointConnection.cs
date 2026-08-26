@@ -124,7 +124,7 @@ namespace Azure.Provisioning.Storage
         }
 
         /// <summary> Gets the Id. </summary>
-        public BicepValue<string> PrivateEndpointId
+        public BicepValue<ResourceIdentifier> PrivateEndpointId
         {
             get
             {
