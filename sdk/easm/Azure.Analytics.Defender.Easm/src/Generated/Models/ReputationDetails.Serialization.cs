@@ -103,10 +103,10 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("lastSeen"u8);
                 writer.WriteStringValue(LastSeen.Value, "O");
             }
-            if (Optional.IsDefined(ListUpdatedAt))
+            if (Optional.IsDefined(ListUpdatedOn))
             {
                 writer.WritePropertyName("listUpdatedAt"u8);
-                writer.WriteStringValue(ListUpdatedAt.Value, "O");
+                writer.WriteStringValue(ListUpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(Recent))
             {
@@ -161,7 +161,7 @@ namespace Azure.Analytics.Defender.Easm
             string cidr = default;
             DateTimeOffset? firstSeen = default;
             DateTimeOffset? lastSeen = default;
-            DateTimeOffset? listUpdatedAt = default;
+            DateTimeOffset? listUpdatedOn = default;
             bool? recent = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -214,7 +214,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    listUpdatedAt = prop.Value.GetDateTimeOffset("O");
+                    listUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("recent"u8))
@@ -238,7 +238,7 @@ namespace Azure.Analytics.Defender.Easm
                 cidr,
                 firstSeen,
                 lastSeen,
-                listUpdatedAt,
+                listUpdatedOn,
                 recent,
                 additionalBinaryDataProperties);
         }

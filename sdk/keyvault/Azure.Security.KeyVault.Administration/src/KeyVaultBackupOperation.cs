@@ -79,12 +79,12 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary>
         /// The start time of the backup operation.
         /// </summary>
-        public DateTimeOffset? StartTime => _value?.StartTime;
+        public DateTimeOffset? StartTime => _value?.StartsOn;
 
         /// <summary>
         /// The end time of the backup operation.
         /// </summary>
-        public DateTimeOffset? EndTime => _value?.EndTime;
+        public DateTimeOffset? EndTime => _value?.EndsOn;
 
         /// <inheritdoc/>
         public override string Id => _id;
@@ -112,13 +112,13 @@ namespace Azure.Security.KeyVault.Administration
                     _value.AzureStorageBlobContainerUri is null ?
                     null :
                     new Uri(_value.AzureStorageBlobContainerUri) ,
-                    _value.StartTime.Value,
-                    _value.EndTime.Value);
+                    _value.StartsOn.Value,
+                    _value.EndsOn.Value);
             }
         }
 
         /// <inheritdoc/>
-        public override bool HasCompleted => _value?.EndTime.HasValue ?? false;
+        public override bool HasCompleted => _value?.EndsOn.HasValue ?? false;
 
         /// <inheritdoc/>
         public override bool HasValue => _response != null && _value?.Error == null && HasCompleted;
@@ -158,7 +158,7 @@ namespace Azure.Security.KeyVault.Administration
                     throw _requestFailedException;
                 }
 
-                if (_value != null && _value.EndTime.HasValue && _value.Error != null)
+                if (_value != null && _value.EndsOn.HasValue && _value.Error != null)
                 {
                     _requestFailedException = _response != null ?
                         new RequestFailedException(_response)

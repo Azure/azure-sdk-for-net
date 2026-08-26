@@ -182,7 +182,7 @@ namespace Azure.Storage.Blobs.Test
         {
             var originalRange = new HttpRange(100, 200);
             var result = BlobClientSideDecryptor.GetEncryptedBlobRange(originalRange, default(EncryptionData));
-            Assert.AreEqual(originalRange, result);
+            Assert.AreEqual(originalRange, result.BlobRange);
         }
 
         [Test]
@@ -193,8 +193,8 @@ namespace Azure.Storage.Blobs.Test
 
             var result = BlobClientSideDecryptor.GetEncryptedBlobRange(originalRange, encryptionData);
 
-            Assert.AreEqual(0, result.Offset);
-            Assert.AreEqual(32, result.Length);
+            Assert.AreEqual(0, result.BlobRange.Offset);
+            Assert.AreEqual(32, result.BlobRange.Length);
         }
 
         [Test]
@@ -207,9 +207,9 @@ namespace Azure.Storage.Blobs.Test
             var result = BlobClientSideDecryptor.GetEncryptedBlobRange(originalRange, encryptionData);
 
             // offset adjusted back by 5 (diff from block boundary), so offset=0
-            Assert.AreEqual(0, result.Offset);
+            Assert.AreEqual(0, result.BlobRange.Offset);
             // count adjusted: 10 + 5 = 15, rounded up to block boundary = 16
-            Assert.AreEqual(16, result.Length);
+            Assert.AreEqual(16, result.BlobRange.Length);
         }
 
         [Test]
@@ -222,9 +222,9 @@ namespace Azure.Storage.Blobs.Test
             var result = BlobClientSideDecryptor.GetEncryptedBlobRange(originalRange, encryptionData);
 
             // offset = 20 - 4(diff) - 16(IV) = 0
-            Assert.AreEqual(0, result.Offset);
+            Assert.AreEqual(0, result.BlobRange.Offset);
             // count = 10 + 4(diff) + 16(IV) = 30, rounded up to 32
-            Assert.AreEqual(32, result.Length);
+            Assert.AreEqual(32, result.BlobRange.Length);
         }
 
         [Test]
@@ -235,8 +235,8 @@ namespace Azure.Storage.Blobs.Test
 
             var result = BlobClientSideDecryptor.GetEncryptedBlobRange(originalRange, encryptionData);
 
-            Assert.AreEqual(0, result.Offset);
-            Assert.IsNull(result.Length);
+            Assert.AreEqual(0, result.BlobRange.Offset);
+            Assert.IsNull(result.BlobRange.Length);
         }
 
         [Test]
@@ -250,9 +250,9 @@ namespace Azure.Storage.Blobs.Test
 
             var result = BlobClientSideDecryptor.GetEncryptedBlobRange(originalRange, encryptionData);
 
-            Assert.AreEqual(0, result.Offset);
+            Assert.AreEqual(0, result.BlobRange.Offset);
             // end is in region 0, so count = 1 * totalRegionSize
-            Assert.AreEqual(totalRegionSize, result.Length);
+            Assert.AreEqual(totalRegionSize, result.BlobRange.Length);
         }
 
         [Test]
@@ -270,9 +270,9 @@ namespace Azure.Storage.Blobs.Test
             var result = BlobClientSideDecryptor.GetEncryptedBlobRange(originalRange, encryptionData);
 
             // Region 1 start
-            Assert.AreEqual(1 * totalRegionSize, result.Offset);
+            Assert.AreEqual(1 * totalRegionSize, result.BlobRange.Offset);
             // End is also in region 1, so count = 2 * totalRegionSize - 1 * totalRegionSize = totalRegionSize
-            Assert.AreEqual(totalRegionSize, result.Length);
+            Assert.AreEqual(totalRegionSize, result.BlobRange.Length);
         }
 
         [Test]
@@ -283,8 +283,8 @@ namespace Azure.Storage.Blobs.Test
 
             var result = BlobClientSideDecryptor.GetEncryptedBlobRange(originalRange, encryptionData);
 
-            Assert.AreEqual(0, result.Offset);
-            Assert.IsNull(result.Length);
+            Assert.AreEqual(0, result.BlobRange.Offset);
+            Assert.IsNull(result.BlobRange.Length);
         }
 
         [Test]
@@ -296,8 +296,8 @@ namespace Azure.Storage.Blobs.Test
 
             var result = BlobClientSideDecryptor.GetEncryptedBlobRange(originalRange, rawEncryptionData);
 
-            Assert.AreEqual(0, result.Offset);
-            Assert.IsTrue(result.Length > 100);
+            Assert.AreEqual(0, result.BlobRange.Offset);
+            Assert.IsTrue(result.BlobRange.Length > 100);
         }
 
         #endregion
