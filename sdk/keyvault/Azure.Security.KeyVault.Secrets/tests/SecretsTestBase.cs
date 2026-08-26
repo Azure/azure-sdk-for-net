@@ -44,6 +44,10 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             : base(isAsync, mode)
         {
             _serviceVersion = serviceVersion;
+
+            // Proof-of-Possession token binding adds this header on authorized requests; exclude it from
+            // recording so it doesn't affect request matching. Scoped to Key Vault rather than the shared base.
+            LegacyExcludedHeaders.Add("x-ms-tokenboundauth");
         }
 
         internal SecretClient GetClient(TokenCredential credential = default)

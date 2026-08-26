@@ -123,7 +123,7 @@ namespace Azure.Security.KeyVault.Keys
         public System.ReadOnlyMemory<byte> PublicKeyAttestation { get { throw null; } }
         public string Version { get { throw null; } }
     }
-    public partial class KeyClient : System.IDisposable
+    public partial class KeyClient
     {
         protected KeyClient() { }
         public KeyClient(System.Uri vaultUri, Azure.Core.TokenCredential credential) { }
@@ -141,7 +141,6 @@ namespace Azure.Security.KeyVault.Keys
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey>> CreateOctKeyAsync(Azure.Security.KeyVault.Keys.CreateOctKeyOptions octKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey> CreateRsaKey(Azure.Security.KeyVault.Keys.CreateRsaKeyOptions rsaKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.KeyVaultKey>> CreateRsaKeyAsync(Azure.Security.KeyVault.Keys.CreateRsaKeyOptions rsaKeyOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public void Dispose() { }
         public virtual Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient GetCryptographyClient(string keyName, string keyVersion = null) { throw null; }
         public virtual Azure.Response<Azure.Security.KeyVault.Keys.DeletedKey> GetDeletedKey(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Security.KeyVault.Keys.DeletedKey>> GetDeletedKeyAsync(string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -408,7 +407,7 @@ namespace Azure.Security.KeyVault.Keys
 }
 namespace Azure.Security.KeyVault.Keys.Cryptography
 {
-    public partial class CryptographyClient : Azure.Core.Cryptography.IKeyEncryptionKey, System.IDisposable
+    public partial class CryptographyClient : Azure.Core.Cryptography.IKeyEncryptionKey
     {
         protected CryptographyClient() { }
         public CryptographyClient(Azure.Security.KeyVault.Keys.JsonWebKey key) { }
@@ -426,7 +425,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public virtual Azure.Security.KeyVault.Keys.Cryptography.DecryptResult Decrypt(Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm algorithm, byte[] ciphertext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Keys.Cryptography.DecryptResult> DecryptAsync(Azure.Security.KeyVault.Keys.Cryptography.DecryptParameters decryptParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Keys.Cryptography.DecryptResult> DecryptAsync(Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm algorithm, byte[] ciphertext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public void Dispose() { }
         public virtual Azure.Security.KeyVault.Keys.Cryptography.EncryptResult Encrypt(Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm algorithm, byte[] plaintext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Security.KeyVault.Keys.Cryptography.EncryptResult Encrypt(Azure.Security.KeyVault.Keys.Cryptography.EncryptParameters encryptParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Keys.Cryptography.EncryptResult> EncryptAsync(Azure.Security.KeyVault.Keys.Cryptography.EncryptionAlgorithm algorithm, byte[] plaintext, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -555,14 +553,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         public byte[] Iv { get { throw null; } }
         public string KeyId { get { throw null; } }
     }
-    public partial class KeyResolver : Azure.Core.Cryptography.IKeyEncryptionKeyResolver, System.IDisposable
+    public partial class KeyResolver : Azure.Core.Cryptography.IKeyEncryptionKeyResolver
     {
         protected KeyResolver() { }
         public KeyResolver(Azure.Core.TokenCredential credential) { }
         public KeyResolver(Azure.Core.TokenCredential credential, Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions options) { }
         Azure.Core.Cryptography.IKeyEncryptionKey Azure.Core.Cryptography.IKeyEncryptionKeyResolver.Resolve(string keyId, System.Threading.CancellationToken cancellationToken) { throw null; }
         System.Threading.Tasks.Task<Azure.Core.Cryptography.IKeyEncryptionKey> Azure.Core.Cryptography.IKeyEncryptionKeyResolver.ResolveAsync(string keyId, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public void Dispose() { }
         public virtual Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient Resolve(System.Uri keyId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Security.KeyVault.Keys.Cryptography.CryptographyClient> ResolveAsync(System.Uri keyId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }

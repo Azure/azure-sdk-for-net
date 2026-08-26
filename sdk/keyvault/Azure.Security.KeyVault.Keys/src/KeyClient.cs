@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Keys
     /// supports creating, retrieving, updating, deleting, purging, backing up, restoring, and listing the <see cref="KeyVaultKey"/>.
     /// The client also supports listing <see cref="DeletedKey"/> for a soft-delete enabled Azure Key Vault.
     /// </summary>
-    public class KeyClient : IDisposable
+    public class KeyClient
     {
         internal const string KeysPath = "/keys/";
         internal const string DeletedKeysPath = "/deletedkeys/";
@@ -89,15 +89,6 @@ namespace Azure.Security.KeyVault.Keys
 
             _clientDiagnostics = new ClientDiagnostics(options);
             _pipeline = new KeyVaultPipeline(vaultUri, apiVersion, pipeline, _clientDiagnostics);
-        }
-
-        /// <summary>
-        /// Releases the resources used by this <see cref="KeyClient"/>, including the dedicated transport created
-        /// internally when <see cref="KeyClientOptions.EnableProofOfPossession"/> is enabled. A no-op otherwise.
-        /// </summary>
-        public void Dispose()
-        {
-            (_pipeline?.HttpPipeline as IDisposable)?.Dispose();
         }
 
         /// <summary>

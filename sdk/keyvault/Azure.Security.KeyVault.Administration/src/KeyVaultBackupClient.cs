@@ -13,7 +13,7 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// The KeyVaultBackupClient provides synchronous and asynchronous methods to perform full and selective key backup and restore of the Azure Managed HSM.
     /// </summary>
-    public class KeyVaultBackupClient : IDisposable
+    public class KeyVaultBackupClient
     {
         private readonly ClientDiagnostics _diagnostics;
         private readonly KeyVaultRestClient _restClient;
@@ -57,17 +57,6 @@ namespace Azure.Security.KeyVault.Administration
             options ??= new KeyVaultAdministrationClientOptions();
             _diagnostics = new ClientDiagnostics(options, true);
             _restClient = new KeyVaultRestClient(VaultUri, credential, options);
-        }
-
-        /// <summary>
-        /// Releases the resources used by this <see cref="KeyVaultBackupClient"/>, including the dedicated
-        /// transport created internally when
-        /// <see cref="KeyVaultAdministrationClientOptions.EnableProofOfPossession"/> is enabled. A no-op
-        /// otherwise.
-        /// </summary>
-        public void Dispose()
-        {
-            _restClient?.Dispose();
         }
 
         /// <summary>

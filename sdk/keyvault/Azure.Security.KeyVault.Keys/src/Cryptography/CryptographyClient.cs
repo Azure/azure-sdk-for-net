@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     /// A client used to perform cryptographic operations with Azure Key Vault keys.
     /// </summary>
     [CallerShouldAudit(CallerShouldAuditReason)]
-    public class CryptographyClient : IKeyEncryptionKey, IDisposable
+    public class CryptographyClient : IKeyEncryptionKey
     {
         private const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-keys";
         private const string GetOperation = "get";
@@ -186,21 +186,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// Gets whether this <see cref="CryptographyClient"/> runs only local operations.
         /// </summary>
         private bool LocalOnly => _remoteProvider is null;
-
-        /// <summary>
-        /// Releases the resources used by this <see cref="CryptographyClient"/>. Only disposes the underlying
-        /// transport when this instance created its own dedicated <see cref="RemoteCryptographyClient"/> (e.g. via
-        /// the <see cref="CryptographyClient(Uri, TokenCredential)"/> constructors). Instances created by
-        /// <see cref="KeyClient"/> (or another owning client) share that client's pipeline and must not dispose it
-        /// here, since it may still be in use by the client that created it.
-        /// </summary>
-        public void Dispose()
-        {
-            if (_remoteProvider?.OwnsPipeline == true)
-            {
-                (_remoteProvider.Pipeline.HttpPipeline as IDisposable)?.Dispose();
-            }
-        }
 
         /// <summary>
         /// Encrypts the specified plaintext.

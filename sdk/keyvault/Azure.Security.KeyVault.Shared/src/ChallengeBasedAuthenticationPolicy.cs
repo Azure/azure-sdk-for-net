@@ -285,6 +285,14 @@ namespace Azure.Security.KeyVault
             {
                 message.Request.Headers.SetValue(TokenBoundAuthHeaderName, "true");
             }
+            else
+            {
+                // The token acquired for this (re-)authorization is not Proof-of-Possession bound - for example a
+                // CAE re-authorization on the same message returned a plain bearer token, or the binding
+                // certificate could not be applied to the transport. Remove any x-ms-tokenboundauth set on an
+                // earlier attempt so the header never outlives the bound token it was meant to signal.
+                message.Request.Headers.Remove(TokenBoundAuthHeaderName);
+            }
         }
 
         /// <inheritdoc />

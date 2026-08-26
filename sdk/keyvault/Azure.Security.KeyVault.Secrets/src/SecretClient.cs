@@ -29,7 +29,7 @@ namespace Azure.Security.KeyVault.Secrets
     /// invoked.
     /// </remarks>
     [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/security-keyvault-secrets")]
-    public class SecretClient : IDisposable
+    public class SecretClient
     {
         private const string OTelSecretNameKey    = "az.keyvault.secret.name";
         private const string OTelSecretVersionKey = "az.keyvault.secret.version";
@@ -89,16 +89,6 @@ namespace Azure.Security.KeyVault.Secrets
                 MapApiVersion(options.Version),
                 pipeline,
                 _diagnostics);
-        }
-
-        /// <summary>
-        /// Releases the resources used by this <see cref="SecretClient"/>, including the dedicated transport
-        /// created internally when <see cref="SecretClientOptions.EnableProofOfPossession"/> is enabled. A no-op
-        /// otherwise.
-        /// </summary>
-        public void Dispose()
-        {
-            (_pipeline as IDisposable)?.Dispose();
         }
 
         /// <summary>Initializes a new instance of the <see cref="SecretClient"/> class from settings.</summary>
