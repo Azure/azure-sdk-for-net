@@ -131,9 +131,18 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet($LocatedPackages,
   $outputFilePath = Join-Path $RepoRoot "_dependencylist.txt"
   $sourceGraphOutputFilePath = Join-Path $RepoRoot "_dependencylist.source-graph.txt"
   $projectGraphOutputFilePath = Join-Path $RepoRoot "_dependencylist.project-graph.txt"
+  # Keep the complete graph at the service.proj default so later PR matrix steps can reuse the
+  # same commit-attributed artifact for sparse checkout instead of evaluating the repository again.
+  $repositoryProjectGraphPath = Join-Path $RepoRoot "artifacts/obj/RepositoryProjectGraph/repository-project-graph.reader.json"
+  $sparseCheckoutGraphArguments = if ($env:AZURESDK_BUILD_SPARSE_CHECKOUT_GRAPH -eq 'true') {
+    " /p:RepositoryProjectGraphConfigurations=Debug+Release /p:IncludeRepositoryProjectGraphInputs=true"
+  } else {
+    ""
+  }
 
   $projectGraphCommand = "dotnet msbuild /m /nr:false /t:QueryRepositoryProjectGraphReverseWithProjectGraph ./eng/service.proj /p:TestDependsOnDependency=`"$TestDependsOnDependency`" /p:TestDependsIncludePackageRootDirectoryOnly=true /p:IncludeSrc=false " +
     "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false /p:RepositoryProjectGraphPackageResolutionMode=NuGetRestore" +
+    "$sparseCheckoutGraphArguments /p:RepositoryProjectGraphReaderPath=`"$repositoryProjectGraphPath`"" +
     " /p:OutputProjectFilePath=`"$projectGraphOutputFilePath`""
 
   Write-Host "Calculating dependencies using the MSBuild ProjectGraph reader."

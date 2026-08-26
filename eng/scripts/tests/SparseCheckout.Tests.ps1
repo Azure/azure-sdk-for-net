@@ -40,6 +40,7 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
         [ordered]@{
             schemaVersion = 3
             repositoryRoot = $repo.Replace('\', '/')
+            sourceCommit = $sourceCommit
             nodes = @(
                 @{ projectPath = 'sdk/alpha/A/tests/A.Tests.csproj'; packageRoot = 'sdk/alpha/A'; targetFrameworks = @('net8.0', 'net9.0'); packageId = 'Azure.A.Tests'; isShippingLibrary = $false }
                 @{ projectPath = 'sdk/beta/B/src/B.csproj'; packageRoot = 'sdk/beta/B'; targetFrameworks = @('net8.0'); packageId = 'Azure.B'; isShippingLibrary = $true }
@@ -59,6 +60,10 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
             )
             diagnostics = @{
                 isComplete = $true
+                generation = @{
+                    configurations = @('Debug', 'Release')
+                    includesInputs = $true
+                }
                 packageClosure = @{ resolutionMode = 'nuget-restore-graph' }
             }
         } | ConvertTo-Json -Depth 20 | Set-Content $graphPath
@@ -98,9 +103,23 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
         $graph | ConvertTo-Json -Depth 20 | Set-Content $graphPath
         { & $script:CreateGraphPath -PackageInfoDirectory $packageInfo -RepoRoot $repo -GraphPath $graphPath `
                 -OutputPath $checkoutGraphPath -SourceCommit $sourceCommit } | Should -Throw '*requires the NuGet restore graph*'
+
+        $graph.diagnostics.packageClosure.resolutionMode = 'nuget-restore-graph'
+        $graph.diagnostics.generation.includesInputs = $false
+        $graph | ConvertTo-Json -Depth 20 | Set-Content $graphPath
+        { & $script:CreateGraphPath -PackageInfoDirectory $packageInfo -RepoRoot $repo -GraphPath $graphPath `
+                -OutputPath $checkoutGraphPath -SourceCommit $sourceCommit } | Should -Throw '*requires a Debug+Release*'
     }
 
     It 'rejects graph provenance when tracked source differs from the recorded commit' {
+        $graph = Get-Content $graphPath -Raw | ConvertFrom-Json
+        $graph.sourceCommit = 'stale'
+        $graph | ConvertTo-Json -Depth 20 | Set-Content $graphPath
+        { & $script:CreateGraphPath -PackageInfoDirectory $packageInfo -RepoRoot $repo -GraphPath $graphPath `
+                -OutputPath $checkoutGraphPath -SourceCommit $sourceCommit } | Should -Throw '*does not match requested sparse-checkout provenance*'
+
+        $graph.sourceCommit = $sourceCommit
+        $graph | ConvertTo-Json -Depth 20 | Set-Content $graphPath
         Set-Content -LiteralPath (Join-Path $repo 'sdk/alpha/A/tests/A.Tests.csproj') -Value 'modified'
 
         { & $script:CreateGraphPath -PackageInfoDirectory $packageInfo -RepoRoot $repo -GraphPath $graphPath `
