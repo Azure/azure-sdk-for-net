@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
   [Parameter(Mandatory = $true)]
-  [ValidateSet('Build', 'Forward', 'Reverse', 'ValidateOracle')]
+  [ValidateSet('Build', 'Forward', 'Reverse')]
   [string] $Operation,
 
   [Parameter(Mandatory = $true)]
@@ -14,7 +14,6 @@ param(
   [string] $Dependencies,
   [string] $RootProjects,
   [string] $RootProjectsPath,
-  [string] $OraclePath,
   [string] $PackageRootsOnly = 'false',
   [ValidateSet('Projects', 'Inputs', 'All')]
   [string] $ForwardOutputKind = 'Projects'
@@ -690,119 +689,8 @@ function Invoke-ForwardQuery {
   Write-Host "Forward query wrote $($lines.Count) records."
 }
 
-function Invoke-OracleValidation {
-  if (!$OraclePath) { throw 'OraclePath is required for ValidateOracle.' }
-  if (!$OutputPath) { throw 'OutputPath is required for ValidateOracle.' }
-  $graph = Read-Graph $GraphPath
-  $indexes = New-GraphIndexes $graph
-  $knownAliases = @{}
-  $implementationProjects = @{}
-  foreach ($node in $graph.nodes) {
-    if (!$node.isShippingLibrary -or !$node.packageId) { continue }
-    $knownAliases[$node.packageId] = $node.packageId
-    if ($node.assemblyName) { $knownAliases[$node.assemblyName] = $node.packageId }
-    if (!$implementationProjects.ContainsKey($node.packageId)) {
-      $implementationProjects[$node.packageId] = [System.Collections.Generic.List[string]]::new()
-    }
-    $implementationProjects[$node.packageId].Add($node.projectPath)
-  }
-
-  $closures = @{}
-  $missing = [System.Collections.Generic.List[object]]::new()
-  $queryDependencies = New-CaseInsensitiveSet
-  foreach ($dependency in ($Dependencies -split '\s+' | Where-Object { $_ })) {
-    $null = $queryDependencies.Add($dependency)
-  }
-  $expectedQueryRoots = New-CaseInsensitiveSet
-  $checked = 0
-  foreach ($line in [System.IO.File]::ReadLines($OraclePath)) {
-    if (!$line) { continue }
-    $parts = $line.Split('|')
-    $project = Get-RelativePath $graph.repositoryRoot $parts[0]
-    if ($parts.Length -ge 3 -and $queryDependencies.Contains($parts[2])) {
-      $null = $expectedQueryRoots.Add($project)
-    }
-    if ($parts.Length -lt 3 -or !$knownAliases.ContainsKey($parts[2])) { continue }
-    $targetFramework = $parts[1]
-    $configuration = Get-ConfigurationKey $project $targetFramework
-    if (!$indexes.ConfigurationsByProject.ContainsKey($project) -or
-        !$indexes.ConfigurationsByProject[$project].Contains($configuration)) {
-      $checked++
-      $missing.Add([ordered]@{
-        projectPath = $project
-        targetFramework = $targetFramework
-        resolvedAssembly = $parts[2]
-        packageId = $knownAliases[$parts[2]]
-      })
-      continue
-    }
-    if (!$closures.ContainsKey($configuration)) {
-      $closures[$configuration] = Get-Reachable $indexes.Forward @($configuration)
-    }
-    $packageId = $knownAliases[$parts[2]]
-    $packageKey = Get-PackageKey $packageId
-    $implementedProjectReached = $false
-    foreach ($implementationProject in $implementationProjects[$packageId]) {
-      if (Test-ProjectReached $indexes $closures[$configuration] $implementationProject) {
-        $implementedProjectReached = $true
-        break
-      }
-    }
-    $checked++
-    if (!$closures[$configuration].Contains($packageKey) -and !$implementedProjectReached) {
-      $missing.Add([ordered]@{
-        projectPath = $project
-        targetFramework = $targetFramework
-        resolvedAssembly = $parts[2]
-        packageId = $packageId
-      })
-    }
-  }
-
-  $queryValidation = $null
-  if ($queryDependencies.Count -gt 0) {
-    $reachable = Get-Reachable $indexes.Reverse @($queryDependencies | ForEach-Object { Get-PackageKey $_ })
-    $actualQueryRoots = New-CaseInsensitiveSet
-    foreach ($root in $graph.roots) {
-      $node = $indexes.Nodes[$root]
-      if ((Test-ProjectReached $indexes $reachable $root) -and $node.isClientLibrary -and !$node.isGeneratorLibrary) {
-        $null = $actualQueryRoots.Add($root)
-      }
-    }
-    $missingQueryRoots = @($expectedQueryRoots | Where-Object { !$actualQueryRoots.Contains($_) } | Sort-Object)
-    $extraQueryRoots = @($actualQueryRoots | Where-Object { !$expectedQueryRoots.Contains($_) } | Sort-Object)
-    $queryValidation = [ordered]@{
-      dependencies = @($queryDependencies | Sort-Object)
-      expectedRootCount = $expectedQueryRoots.Count
-      actualRootCount = $actualQueryRoots.Count
-      missingRoots = $missingQueryRoots
-      extraRoots = $extraQueryRoots
-    }
-  }
-
-  $result = [ordered]@{
-    schemaVersion = 1
-    checkedResolvedRepositoryReferences = $checked
-    missingCount = $missing.Count
-    missing = @($missing)
-    queryValidation = $queryValidation
-  }
-  $result | ConvertTo-Json -Depth 20 | Set-Content -Path $OutputPath -Encoding utf8
-  Write-Host "Oracle validation checked $checked resolved repository references; missing=$($missing.Count)."
-  if ($queryValidation) {
-    Write-Host "Oracle query comparison expected $($queryValidation.expectedRootCount) roots and found $($queryValidation.actualRootCount); missing=$($queryValidation.missingRoots.Count), extra=$($queryValidation.extraRoots.Count)."
-  }
-  if ($queryValidation -and ($queryValidation.missingRoots.Count -gt 0 -or $queryValidation.extraRoots.Count -gt 0)) {
-    throw "Source graph query did not match the resolved-reference oracle. See $OutputPath"
-  }
-  if (!$queryValidation -and $missing.Count -gt 0) {
-    throw "Source graph missed $($missing.Count) resolved repository references. See $OutputPath"
-  }
-}
-
 switch ($Operation) {
   'Build' { Build-Graph }
   'Forward' { Invoke-ForwardQuery }
   'Reverse' { Invoke-ReverseQuery }
-  'ValidateOracle' { Invoke-OracleValidation }
 }

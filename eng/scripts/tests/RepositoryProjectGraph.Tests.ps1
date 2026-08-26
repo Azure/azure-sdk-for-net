@@ -67,7 +67,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $closureGraphPath = Join-Path $TestDrive "closure.json"
         @(
             "TransitivePackageReference|$testProject|net9.0|Azure.B|Azure.External|1.2.3|Azure.External 1.2.3>Azure.B [1.0.0, )"
-            "PackageClosureSummary|1|1|1|0|2|2|0|0.125|isolated-package-metadata|false|false"
+            "PackageClosureSummary|1|1|1|0|2|2|0|0.125|nuget-restore-graph|false|true|1|1|2"
         ) | Set-Content $packageRecordsPath
 
         & $scriptPath -Operation Build -GraphPath $closureGraphPath -RecordsPath $recordsPath -PackageRecordsPath $packageRecordsPath -RepoRoot $repoRoot
@@ -79,16 +79,16 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $edge.viaVersion | Should -Be "1.2.3"
         $edge.targetFrameworks | Should -Be @("net9.0")
         $graph.diagnostics.isComplete | Should -BeTrue
-        $graph.diagnostics.packageClosure.resolutionMode | Should -Be "isolated-package-metadata"
+        $graph.diagnostics.packageClosure.resolutionMode | Should -Be "nuget-restore-graph"
         $graph.diagnostics.packageClosure.restoreEquivalent | Should -BeFalse
-        $graph.diagnostics.packageClosure.transitiveDependencyAssetFiltersApplied | Should -BeFalse
+        $graph.diagnostics.packageClosure.transitiveDependencyAssetFiltersApplied | Should -BeTrue
         $graph.diagnostics.hasUnresolvedExternalPackageClosure | Should -BeFalse
     }
 
     It "fails closed when the package closure summary contradicts its detail records" {
         $packageRecordsPath = Join-Path $TestDrive "inconsistent-package-closure.records"
         $closureGraphPath = Join-Path $TestDrive "inconsistent-closure.json"
-        "PackageClosureSummary|1|0|0|1|1|0|1|0.125|isolated-package-metadata|false|false" | Set-Content $packageRecordsPath
+        "PackageClosureSummary|1|0|0|1|1|0|1|0.125|nuget-restore-graph|false|true|1|1|0" | Set-Content $packageRecordsPath
 
         & $scriptPath -Operation Build -GraphPath $closureGraphPath -RecordsPath $recordsPath -PackageRecordsPath $packageRecordsPath -RepoRoot $repoRoot
         if ($LASTEXITCODE) { throw "Graph build failed with exit code $LASTEXITCODE" }
@@ -145,36 +145,6 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $result | Should -Contain "Project|sdk/example/A/src/A.csproj"
         $result | Should -Contain "Project|sdk/example/B/src/B.csproj"
         $result | Should -Contain "Input|sdk/example/A/src/A.cs"
-    }
-
-    It "validates known resolved assembly references against source reachability" {
-        $oraclePath = Join-Path $TestDrive "oracle.txt"
-        $oraclePackageRecordsPath = Join-Path $TestDrive "oracle.packages.records"
-        $oracleGraphPath = Join-Path $TestDrive "oracle-graph.json"
-        $forwardOutputPath = Join-Path $TestDrive "oracle-forward.txt"
-        $resultPath = Join-Path $TestDrive "oracle-result.json"
-        "PackageClosureSummary|0|0|0|0|0|0|0|0.001|nuget-restore-graph|false|true|0|0|0" |
-            Set-Content $oraclePackageRecordsPath
-        & $scriptPath -Operation Build -GraphPath $oracleGraphPath -RecordsPath $recordsPath -PackageRecordsPath $oraclePackageRecordsPath -RepoRoot $repoRoot
-        if ($LASTEXITCODE) { throw "Graph build failed with exit code $LASTEXITCODE" }
-
-        "$testProject|net9.0|Different.Assembly" | Set-Content $oraclePath
-        & $scriptPath -Operation ValidateOracle -GraphPath $oracleGraphPath -OraclePath $oraclePath -OutputPath $resultPath
-        if ($LASTEXITCODE) { throw "Oracle validation failed with exit code $LASTEXITCODE" }
-        $result = Get-Content -Raw $resultPath | ConvertFrom-Json
-        $result.checkedResolvedRepositoryReferences | Should -Be 1
-        $result.missingCount | Should -Be 0
-
-        & $scriptPath -Operation Forward -GraphPath $oracleGraphPath -RootProjects "sdk/example/A/tests/A.Tests.csproj" -OutputPath $forwardOutputPath
-        if ($LASTEXITCODE) { throw "Forward query failed with exit code $LASTEXITCODE" }
-        Get-Content $forwardOutputPath | Should -Contain "Project|sdk/example/B/src/B.csproj"
-
-        "$testProject|net8.0|Different.Assembly" | Set-Content $oraclePath
-        { & $scriptPath -Operation ValidateOracle -GraphPath $oracleGraphPath -OraclePath $oraclePath -OutputPath $resultPath } |
-            Should -Throw "*missed 1 resolved repository references*"
-        $result = Get-Content -Raw $resultPath | ConvertFrom-Json
-        $result.missingCount | Should -Be 1
-        $result.missing[0].targetFramework | Should -Be "net8.0"
     }
 
     It "marks missing repository project references in diagnostics" {
