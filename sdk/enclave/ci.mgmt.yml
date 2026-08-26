@@ -10,3 +10,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Enclave
       safeName: AzureResourceManagerEnclave
+    - name: Azure.Provisioning.Enclave
+      safeName: AzureProvisioningEnclave

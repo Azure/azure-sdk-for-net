@@ -96,6 +96,24 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Enable Only IPv6 Peering for this connection. </summary>
+        [WirePath("properties.enableOnlyIpv6Peering")]
+        public EnableOnlyIPv6PeeringState? EnableOnlyIPv6Peering
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableOnlyIPv6Peering;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HubVirtualNetworkConnectionProperties();
+                }
+                Properties.EnableOnlyIPv6Peering = value;
+            }
+        }
+
         /// <summary> The provisioning state of the hub virtual network connection resource. </summary>
         [WirePath("properties.provisioningState")]
         public NetworkProvisioningState? ProvisioningState

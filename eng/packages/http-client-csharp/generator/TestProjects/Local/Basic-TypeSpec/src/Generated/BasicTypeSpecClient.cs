@@ -2783,7 +2783,8 @@ namespace BasicTypeSpec
             {
                 using HttpMessage message = CreateReceiveJsonLinesRequest(context);
                 message.BufferResponse = false;
-                return AsyncStreamingClientResult.CreateJsonLines(new AzurePipelineResponse(await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false)));
+                await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return AsyncStreamingClientResult.CreateJsonLines(new AzurePipelineResponse(message));
             }
             catch (Exception e)
             {
@@ -2801,7 +2802,8 @@ namespace BasicTypeSpec
         {
             using HttpMessage message = CreateReceiveJsonLinesRequest(cancellationToken.ToRequestContext());
             message.BufferResponse = false;
-            return AsyncStreamingClientResult.CreateJsonLines<StreamingItem>(new AzurePipelineResponse(await Pipeline.ProcessMessageAsync(message, cancellationToken.ToRequestContext()).ConfigureAwait(false)), data => ModelReaderWriter.Read<StreamingItem>(data, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default), cancellationToken);
+            await Pipeline.ProcessMessageAsync(message, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return AsyncStreamingClientResult.CreateJsonLines<StreamingItem>(new AzurePipelineResponse(message), data => ModelReaderWriter.Read<StreamingItem>(data, ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default), cancellationToken);
         }
 #pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
 
@@ -2825,7 +2827,8 @@ namespace BasicTypeSpec
             {
                 using HttpMessage message = CreateReceiveSseRequest(context);
                 message.BufferResponse = false;
-                return AsyncStreamingClientResult.CreateSse(new AzurePipelineResponse(await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false)), item => item.Data.ToString() == "[DONE]");
+                await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                return AsyncStreamingClientResult.CreateSse(new AzurePipelineResponse(message), item => item.Data.ToString() == "[DONE]");
             }
             catch (Exception e)
             {
@@ -2843,9 +2846,88 @@ namespace BasicTypeSpec
         {
             using HttpMessage message = CreateReceiveSseRequest(cancellationToken.ToRequestContext());
             message.BufferResponse = false;
-            return AsyncStreamingClientResult.CreateSse<StreamingItem>(new AzurePipelineResponse(await Pipeline.ProcessMessageAsync(message, cancellationToken.ToRequestContext()).ConfigureAwait(false)), (@_, data) => ModelReaderWriter.Read<StreamingItem>(BinaryData.FromBytes(data.ToArray()), ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default), item => item.Data.ToString() == "[DONE]", cancellationToken);
+            await Pipeline.ProcessMessageAsync(message, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return AsyncStreamingClientResult.CreateSse<StreamingItem>(new AzurePipelineResponse(message), (@_, data) => ModelReaderWriter.Read<StreamingItem>(BinaryData.FromBytes(data.ToArray()), ModelSerializationExtensions.WireOptions, BasicTypeSpecContext.Default), item => item.Data.ToString() == "[DONE]", cancellationToken);
         }
 #pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+        /// <summary>
+        /// [Protocol Method] GetOptionalResponse
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response GetOptionalResponse(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetOptionalResponse");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetOptionalResponseRequest(context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] GetOptionalResponse
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> GetOptionalResponseAsync(RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("BasicTypeSpecClient.GetOptionalResponse");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetOptionalResponseRequest(context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> GetOptionalResponse. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        public virtual NullableResponse<ThingModel> GetOptionalResponse(CancellationToken cancellationToken = default)
+        {
+            Response result = GetOptionalResponse(cancellationToken.ToRequestContext());
+            if (result.Status == 204)
+            {
+                return new NoValueResponse<ThingModel>(result);
+            }
+            return Response.FromValue((ThingModel)result, result);
+        }
+
+        /// <summary> GetOptionalResponse. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        public virtual async Task<NullableResponse<ThingModel>> GetOptionalResponseAsync(CancellationToken cancellationToken = default)
+        {
+            Response result = await GetOptionalResponseAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            if (result.Status == 204)
+            {
+                return new NoValueResponse<ThingModel>(result);
+            }
+            return Response.FromValue((ThingModel)result, result);
+        }
 
         /// <summary> Initializes a new instance of PlantOperations. </summary>
         public virtual PlantOperations GetPlantOperationsClient()

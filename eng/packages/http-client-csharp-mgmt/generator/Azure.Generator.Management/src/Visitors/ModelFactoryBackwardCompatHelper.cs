@@ -547,7 +547,7 @@ namespace Azure.Generator.Management.Visitors
             var changed = constructorParameters.Count != newInstanceExpression.Parameters.Count;
             foreach (var constructorParameter in constructorParameters)
             {
-                if (argumentsByName.TryGetValue(constructorParameter.Name, out var argument))
+                if (TryGetArgumentByName(argumentsByName, constructorParameter.Name, out var argument))
                 {
                     arguments.Add(argument);
                     usedArguments.Add(argument);
@@ -567,6 +567,36 @@ namespace Azure.Generator.Management.Visitors
             unusedArguments = newInstanceExpression.Parameters.Where(argument => !usedArguments.Contains(argument)).ToArray();
             updatedArguments = changed ? arguments : null;
             return changed;
+        }
+
+        private static bool TryGetArgumentByName(
+            IReadOnlyDictionary<string, ValueExpression> argumentsByName,
+            string parameterName,
+            [NotNullWhen(true)] out ValueExpression? argument)
+        {
+            if (argumentsByName.TryGetValue(parameterName, out argument))
+            {
+                return true;
+            }
+
+            argument = null;
+            foreach (var candidate in argumentsByName)
+            {
+                if (!string.Equals(candidate.Key, parameterName, StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                if (argument is not null)
+                {
+                    argument = null;
+                    return false;
+                }
+
+                argument = candidate.Value;
+            }
+
+            return argument is not null;
         }
 
         private static bool TryGetArgumentName(ValueExpression argument, [NotNullWhen(true)] out string? name)

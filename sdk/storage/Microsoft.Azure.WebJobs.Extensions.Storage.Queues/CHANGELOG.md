@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-- Fix QueueMetricsProvider: preserve ApproximateMessagesCount when PeekMessages fails
+- Fixed queue scale metrics reporting `QueueLength=0` when messages were present but could not be decoded with the configured `MessageEncoding`, which prevented affected functions from scaling out. Scale metrics now read the queue using `QueueMessageEncoding.None`, so peek results are never filtered by decode failures. Message processing is unaffected and continues to use the configured encoding.
 
 ### Other Changes
 

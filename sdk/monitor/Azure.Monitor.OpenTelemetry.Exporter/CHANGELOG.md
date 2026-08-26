@@ -3,10 +3,25 @@
 ## 1.9.0-beta.1 (Unreleased)
 
 ### Features Added
+- Add support for project id attributes propagation
+  ([#62052](https://github.com/Azure/azure-sdk-for-net/pull/62052))
+
+- Shutting down a provider (including `Dispose()`) now writes pending telemetry to offline storage and uploads it in the background instead of blocking on ingestion. Short-lived applications such as CLI tools previously lost this telemetry, because they exit before a transmission completes; process exit now costs a file write rather than an ingestion round trip, and delivery is completed by a background drain in this or a subsequent run. `ForceFlush` is unchanged by default and can be opted in with the `Azure.Monitor.OpenTelemetry.Exporter.PersistOnForceFlush` AppContext switch, which applies to traces and logs only: a metric reader cannot distinguish a caller's flush from its periodic collection, so metric `ForceFlush` always transmits. The previous behavior can be restored with the `Azure.Monitor.OpenTelemetry.Exporter.DisablePersistOnShutdown` AppContext switch.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Telemetry left in offline storage by a process that exited during a transmission is no longer stranded permanently. A leased blob is renamed so that it matches neither the storage provider's blob enumeration nor its retention sweep, and the provider only reclaims those leases on a two minute maintenance timer that a short-lived process never reaches. Expired leases are now reclaimed when storage is drained.
+
+- Offline storage is now drained shortly after startup rather than only after the process has been running for two minutes, so telemetry persisted by a previous run is uploaded even when no single run is long-lived.
+
+- Stored telemetry is now coalesced into a single request per batch and drained oldest-first, instead of one request per blob newest-first. Previously a backlog could grow faster than it drained, and the oldest telemetry expired before it was ever sent.
+
+- Telemetry is no longer dropped when the offline storage directory reaches its size cap. The oldest stored telemetry is evicted to make room.
+
+- Log fields are now culture-invariant. ([#61996](https://github.com/Azure/azure-sdk-for-net/pull/61996))
+- Added the `telemetrySuccess` dimension to `Item_Dropped_Count` for request and dependency telemetry.
 
 ### Other Changes
 

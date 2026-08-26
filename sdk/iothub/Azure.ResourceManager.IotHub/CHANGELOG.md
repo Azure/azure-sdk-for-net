@@ -1,12 +1,26 @@
 # Release History
 
-## 1.2.0-beta.4 (Unreleased)
+## 1.2.0-beta.5 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+### Other Changes
+
+## 1.2.0-beta.4 (2026-08-12)
+
+### Features Added
+
+- Upgraded API version from `2026-03-01-preview` to `2026-05-01-preview`.
+- Added `RoutingEventStreamProperties` model and `EventStreamAuthenticationType` enum for routing event stream endpoints.
+- Added `RoutingEndpoints.EventStreams` collection property.
+
+### Breaking Changes
+
+- Removed `IotHubSku.Gen2` static property and `IotHubSkuTier.Generation2` enum member — the GEN2 IoT Hub SKU is no longer present in the `2026-05-01-preview` API.
 
 ### Other Changes
 

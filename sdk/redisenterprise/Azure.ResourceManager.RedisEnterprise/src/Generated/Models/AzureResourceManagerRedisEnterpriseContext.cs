@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RedisEnterprise.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.RedisEnterprise
 {
@@ -78,6 +79,7 @@ namespace Azure.ResourceManager.RedisEnterprise
     [ModelReaderWriterBuildable(typeof(RedisEnterpriseSkuDetailsList))]
     [ModelReaderWriterBuildable(typeof(RedisPersistenceSettings))]
     [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownRedisEnterpriseMigrationProperties))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
