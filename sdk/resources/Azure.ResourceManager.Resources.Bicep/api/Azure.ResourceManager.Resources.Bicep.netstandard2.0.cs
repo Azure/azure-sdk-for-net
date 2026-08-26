@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
     {
         internal DecompileOperationSuccessResult() { }
         public string EntryPoint { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Bicep.Models.DecompiledFileDefinition> Files { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Bicep.Models.DecompiledFileDefinition> Files { get { throw null; } }
         protected virtual Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationSuccessResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Resources.Bicep.Models.DecompileOperationSuccessResult PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

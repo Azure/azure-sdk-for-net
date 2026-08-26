@@ -74,12 +74,12 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
             {
                 throw new FormatException($"The model {nameof(DecompiledFileDefinition)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Path))
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (options.Format != "W" && Optional.IsDefined(Contents))
+            if (Optional.IsDefined(Contents))
             {
                 writer.WritePropertyName("contents"u8);
                 writer.WriteStringValue(Contents);

@@ -7,7 +7,7 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources.Bicep;
+using System.Linq;
 
 namespace Azure.ResourceManager.Resources.Bicep.Models
 {
@@ -18,16 +18,19 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DecompileOperationSuccessResult"/>. </summary>
-        internal DecompileOperationSuccessResult()
+        /// <param name="files"> An array of key-value pairs containing the entryPoint string as the key for the Bicep file decompiled from the ARM json template. </param>
+        /// <param name="entryPoint"> The file path to the main Bicep file generated from the decompiled ARM json template. </param>
+        internal DecompileOperationSuccessResult(IEnumerable<DecompiledFileDefinition> files, string entryPoint)
         {
-            Files = new ChangeTrackingList<DecompiledFileDefinition>();
+            Files = files.ToList();
+            EntryPoint = entryPoint;
         }
 
         /// <summary> Initializes a new instance of <see cref="DecompileOperationSuccessResult"/>. </summary>
         /// <param name="files"> An array of key-value pairs containing the entryPoint string as the key for the Bicep file decompiled from the ARM json template. </param>
         /// <param name="entryPoint"> The file path to the main Bicep file generated from the decompiled ARM json template. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DecompileOperationSuccessResult(IReadOnlyList<DecompiledFileDefinition> files, string entryPoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DecompileOperationSuccessResult(IList<DecompiledFileDefinition> files, string entryPoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Files = files;
             EntryPoint = entryPoint;
@@ -35,7 +38,7 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
         }
 
         /// <summary> An array of key-value pairs containing the entryPoint string as the key for the Bicep file decompiled from the ARM json template. </summary>
-        public IReadOnlyList<DecompiledFileDefinition> Files { get; }
+        public IList<DecompiledFileDefinition> Files { get; }
 
         /// <summary> The file path to the main Bicep file generated from the decompiled ARM json template. </summary>
         public string EntryPoint { get; }

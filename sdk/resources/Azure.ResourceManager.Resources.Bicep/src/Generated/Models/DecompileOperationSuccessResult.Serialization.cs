@@ -17,6 +17,11 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
     /// <summary> The response of the decompileBicep operation. </summary>
     public partial class DecompileOperationSuccessResult : IJsonModel<DecompileOperationSuccessResult>
     {
+        /// <summary> Initializes a new instance of <see cref="DecompileOperationSuccessResult"/> for deserialization. </summary>
+        internal DecompileOperationSuccessResult()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DecompileOperationSuccessResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -82,21 +87,15 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
             {
                 throw new FormatException($"The model {nameof(DecompileOperationSuccessResult)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W")
+            writer.WritePropertyName("files"u8);
+            writer.WriteStartArray();
+            foreach (DecompiledFileDefinition item in Files)
             {
-                writer.WritePropertyName("files"u8);
-                writer.WriteStartArray();
-                foreach (DecompiledFileDefinition item in Files)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WriteObjectValue(item, options);
             }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("entryPoint"u8);
-                writer.WriteStringValue(EntryPoint);
-            }
+            writer.WriteEndArray();
+            writer.WritePropertyName("entryPoint"u8);
+            writer.WriteStringValue(EntryPoint);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Resources.Bicep.Models
             {
                 return null;
             }
-            IReadOnlyList<DecompiledFileDefinition> files = default;
+            IList<DecompiledFileDefinition> files = default;
             string entryPoint = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())

@@ -1,4 +1,4 @@
 directory: specification/resources/resource-manager/Microsoft.Resources/bicep
-commit: b3f5654abfc5415a4240f51c8c65451b177415c5
+commit: 5cc95140dba2509cca539c9fce674180129f6331
 repo: Azure/azure-rest-api-specs
 emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
