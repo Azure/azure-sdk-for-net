@@ -40,6 +40,16 @@ namespace Azure.Generator.Management.Utilities
             [IfUnmodifiedSince.ToIdentifierName()] = nameof(RequestConditions.IfUnmodifiedSince)
         };
 
+        private enum ConditionalParameterKind
+        {
+            None,
+            StringETagHeader,
+            ETagHeader,
+            DateHeader,
+            MatchConditions,
+            RequestConditions
+        }
+
         private static void AddETagBackwardCompatibilityMethods(
             TypeProvider enclosingType,
             List<MethodProvider> methods,
@@ -95,7 +105,10 @@ namespace Azure.Generator.Management.Utilities
                 {
                     if (HasConditionalHeaderParameter(previousMethod.Signature))
                     {
-                        ReportDroppedOverloadDiagnostic(enclosingType, previousMethod.Signature);
+                        ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                            code: GeneralWarningDiagnosticCode,
+                            message: $"Could not synthesize backward-compatible overload '{previousMethod.Signature.Name}' on '{enclosingType.Name}'. The previous public method may require a custom overload or ApiCompat suppression.",
+                            targetCrossLanguageDefinitionId: enclosingType.Name);
                     }
                     continue;
                 }
@@ -103,7 +116,10 @@ namespace Azure.Generator.Management.Utilities
                 var overload = BuildStringToETagOverload(enclosingType, previousMethod, currentMethod);
                 if (overload is null)
                 {
-                    ReportDroppedOverloadDiagnostic(enclosingType, previousMethod.Signature);
+                    ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                        code: GeneralWarningDiagnosticCode,
+                        message: $"Could not synthesize backward-compatible overload '{previousMethod.Signature.Name}' on '{enclosingType.Name}'. The previous public method may require a custom overload or ApiCompat suppression.",
+                        targetCrossLanguageDefinitionId: enclosingType.Name);
                     continue;
                 }
 
@@ -267,15 +283,15 @@ namespace Azure.Generator.Management.Utilities
                     continue;
                 }
 
-                if (!IsSupportedConditionalHeaderParameter(parameter, propertyName))
+                var parameterKind = GetConditionalParameterKind(parameter);
+                if (parameterKind == ConditionalParameterKind.None)
                 {
                     return [];
                 }
 
                 conditionalParameters.Add(parameter);
                 hasModificationCondition |= propertyName is nameof(RequestConditions.IfModifiedSince) or nameof(RequestConditions.IfUnmodifiedSince);
-                if (propertyName is nameof(RequestConditions.IfMatch) or nameof(RequestConditions.IfNoneMatch)
-                    && parameter.Type.Equals(typeof(string)))
+                if (parameterKind == ConditionalParameterKind.StringETagHeader)
                 {
                     etagParameters.Add(CloneParameter(parameter, type: new CSharpType(typeof(ETag), isNullable: true)));
                     hasDirectETagParameter = true;
@@ -379,7 +395,8 @@ namespace Azure.Generator.Management.Utilities
             var currentConditionalParameters = new Dictionary<string, ParameterProvider>(StringComparer.OrdinalIgnoreCase);
             foreach (var parameter in currentSignature.Parameters)
             {
-                if (IsConditionsParameter(parameter) || IsETagParameter(parameter))
+                var parameterKind = GetConditionalParameterKind(parameter);
+                if (parameterKind is ConditionalParameterKind.ETagHeader or ConditionalParameterKind.MatchConditions or ConditionalParameterKind.RequestConditions)
                 {
                     currentConditionalParameter ??= parameter;
                 }
@@ -446,7 +463,8 @@ namespace Azure.Generator.Management.Utilities
             {
                 var currentParameter = currentSignature.Parameters[i];
                 ValueExpression value;
-                if (IsConditionsParameter(currentParameter))
+                var currentParameterKind = GetConditionalParameterKind(currentParameter);
+                if (currentParameterKind is ConditionalParameterKind.MatchConditions or ConditionalParameterKind.RequestConditions)
                 {
                     value = BuildConditionsArgument(currentParameter, parameters);
                 }
@@ -462,7 +480,7 @@ namespace Azure.Generator.Management.Utilities
                     {
                         value = parameter;
                     }
-                    else if (IsETagParameter(currentParameter))
+                    else if (currentParameterKind == ConditionalParameterKind.ETagHeader)
                     {
                         value = currentParameter.Type.IsValueType && !currentParameter.Type.IsNullable
                             ? new TernaryConditionalExpression(
@@ -523,14 +541,6 @@ namespace Azure.Generator.Management.Utilities
             return new MethodProvider(signature, body, enclosingType, xmlDocs);
         }
 
-        private static void ReportDroppedOverloadDiagnostic(TypeProvider enclosingType, MethodSignature previousSignature)
-        {
-            ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
-                code: GeneralWarningDiagnosticCode,
-                message: $"Could not synthesize backward-compatible overload '{previousSignature.Name}' on '{enclosingType.Name}'. The previous public method may require a custom overload or ApiCompat suppression.",
-                targetCrossLanguageDefinitionId: enclosingType.Name);
-        }
-
         private static ValueExpression BuildConditionsArgument(
             ParameterProvider currentParameter,
             IReadOnlyList<ParameterProvider> previousParameters)
@@ -547,7 +557,7 @@ namespace Azure.Generator.Management.Utilities
 
                 propertyInitializers.Add(
                     new MemberExpression(null, propertyName),
-                    IsETagConditionalHeader(parameter) && parameter.Type.Equals(typeof(string))
+                    GetConditionalParameterKind(parameter) == ConditionalParameterKind.StringETagHeader
                         ? new TernaryConditionalExpression(
                             parameter.NotEqual(Null),
                             New.Instance(typeof(ETag), parameter),
@@ -581,14 +591,6 @@ namespace Azure.Generator.Management.Utilities
             CSharpType? type = null,
             WireInformation? wireInfo = null)
         {
-            if (name is null
-                && type is null
-                && wireInfo is null
-                && !(removeDefault && parameter.DefaultValue is not null))
-            {
-                return parameter;
-            }
-
             return new(
                 name ?? parameter.Name,
                 parameter.Description,
@@ -611,26 +613,37 @@ namespace Azure.Generator.Management.Utilities
             };
         }
 
-        private static bool IsETagConditionalHeader(ParameterProvider parameter)
-            => ConditionalHeaderProperties.TryGetValue(parameter.Name, out var propertyName)
-                && propertyName is nameof(RequestConditions.IfMatch) or nameof(RequestConditions.IfNoneMatch);
+        private static ConditionalParameterKind GetConditionalParameterKind(ParameterProvider parameter)
+        {
+            if (parameter.Type is { IsFrameworkType: true, FrameworkType: { } type })
+            {
+                if (type == typeof(MatchConditions) && parameter.Name == MatchConditionsParameterName)
+                {
+                    return ConditionalParameterKind.MatchConditions;
+                }
 
-        private static bool IsETagParameter(ParameterProvider parameter)
-            => IsETagConditionalHeader(parameter)
-                && parameter.Type is { IsFrameworkType: true, FrameworkType: { } type }
-                && type == typeof(ETag);
+                if (type == typeof(RequestConditions) && parameter.Name == RequestConditionsParameterName)
+                {
+                    return ConditionalParameterKind.RequestConditions;
+                }
+            }
 
-        private static bool IsConditionsParameter(ParameterProvider parameter)
-            => parameter.Type is { IsFrameworkType: true, FrameworkType: { } type }
-                && (type == typeof(MatchConditions) && parameter.Name == MatchConditionsParameterName
-                    || type == typeof(RequestConditions) && parameter.Name == RequestConditionsParameterName);
+            if (!ConditionalHeaderProperties.TryGetValue(parameter.Name, out var propertyName))
+            {
+                return ConditionalParameterKind.None;
+            }
 
-        private static bool IsSupportedConditionalHeaderParameter(ParameterProvider parameter, string propertyName)
-            => propertyName is nameof(RequestConditions.IfMatch) or nameof(RequestConditions.IfNoneMatch)
-                ? parameter.Type.Equals(typeof(string)) || IsETagParameter(parameter)
-                // Date conditional headers can only be grouped when the previous signature is already compatible
-                // with the DateTimeOffset? properties exposed by RequestConditions.
-                : parameter.Type is { IsFrameworkType: true, FrameworkType: { } type } && type == typeof(DateTimeOffset);
+            return propertyName switch
+            {
+                nameof(RequestConditions.IfMatch) or nameof(RequestConditions.IfNoneMatch)
+                    when parameter.Type.Equals(typeof(string)) => ConditionalParameterKind.StringETagHeader,
+                nameof(RequestConditions.IfMatch) or nameof(RequestConditions.IfNoneMatch)
+                    when parameter.Type is { IsFrameworkType: true, FrameworkType: { } frameworkType } && frameworkType == typeof(ETag) => ConditionalParameterKind.ETagHeader,
+                nameof(RequestConditions.IfModifiedSince) or nameof(RequestConditions.IfUnmodifiedSince)
+                    when parameter.Type is { IsFrameworkType: true, FrameworkType: { } frameworkType } && frameworkType == typeof(DateTimeOffset) => ConditionalParameterKind.DateHeader,
+                _ => ConditionalParameterKind.None
+            };
+        }
 
         private static bool HasConditionalHeaderParameter(MethodSignature signature)
         {

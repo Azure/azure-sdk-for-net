@@ -47,7 +47,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                     OptionalCancellationToken()
                 ]);
 
-            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = [previous]
+            };
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
+
+            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current], [current]);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile(parameterName)));
         }
@@ -72,7 +78,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                 ],
                 returnType: typeof(object));
 
-            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = [previous]
+            };
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
+
+            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current], [current]);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
@@ -96,7 +108,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                     OptionalCancellationToken()
                 ]);
 
-            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = [previous]
+            };
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
+
+            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current], [current]);
             Assert.That(result[1].Signature.Parameters[0].DefaultValue, Is.Null);
             Assert.That(result[1].Signature.Parameters[1].DefaultValue, Is.Not.Null);
 
@@ -122,7 +140,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                     OptionalCancellationToken()
                 ]);
 
-            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = [previous]
+            };
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
+
+            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current], [current]);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
@@ -144,7 +168,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                     OptionalCancellationToken()
                 ]);
 
-            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = [previous]
+            };
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
+
+            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current], [current]);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
@@ -168,7 +198,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                     OptionalCancellationToken()
                 ]);
 
-            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = [previous]
+            };
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
+
+            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current], [current]);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
@@ -190,7 +226,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                     OptionalCancellationToken()
                 ]);
 
-            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = [previous]
+            };
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
+
+            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current], [current]);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
@@ -212,7 +254,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                     OptionalCancellationToken()
                 ]);
 
-            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = [previous]
+            };
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
+
+            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current], [current]);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
@@ -235,7 +283,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                     OptionalCancellationToken()
                 ]);
 
-            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = [previous]
+            };
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
+
+            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current], [current]);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
@@ -257,7 +311,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                     OptionalCancellationToken()
                 ]);
 
-            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = [previous]
+            };
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
+
+            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current], [current]);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
@@ -273,7 +333,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                 enclosingType,
                 [new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default)]);
 
-            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = [previous]
+            };
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
+
+            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current], [current]);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
@@ -289,7 +355,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             previousParameter.Update(wireInfo: new WireInformation(default, "ifMatch"));
             var previous = CreateMethod(enclosingType, [previousParameter]);
 
-            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = [previous]
+            };
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
+
+            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current], [current]);
 
             Assert.That(result[1].Signature.Parameters[0].WireInfo, Is.SameAs(currentParameter.WireInfo));
         }
@@ -308,7 +380,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                 enclosingType,
                 [new ParameterProvider("ifMatch", $"The match condition.", typeof(string))]);
 
-            var result = DecorateWithLastContract(enclosingType, [current, baseGenerated], [current], [previous]);
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = [previous]
+            };
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
+
+            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current, baseGenerated], [current]);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
@@ -330,7 +408,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             customCodeView.MethodsToBuild = [customMethod];
             ManagementMockHelpers.SetCustomCodeView(enclosingType, customCodeView);
 
-            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = [previous]
+            };
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
+
+            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current], [current]);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
@@ -347,7 +431,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                 enclosingType,
                 [new ParameterProvider(parameterName, $"The value.", typeof(string))]);
 
-            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = [previous]
+            };
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
+
+            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current], [current]);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile(parameterName)));
         }
@@ -369,7 +459,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                     new ParameterProvider("ifMatch", $"The condition.", typeof(string))
                 ]);
 
-            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = [previous]
+            };
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
+
+            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current], [current]);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
@@ -385,7 +481,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                 enclosingType,
                 [new ParameterProvider("ifMatch", $"The condition.", new CSharpType(typeof(string), isNullable: true))]);
 
-            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = [previous]
+            };
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
+
+            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current], [current]);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
@@ -402,7 +504,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                 [new ParameterProvider("ifMatch", $"The condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default)],
                 returnType: typeof(object));
 
-            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = [previous]
+            };
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
+
+            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current], [current]);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
@@ -419,7 +527,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                 [new ParameterProvider("ifMatch", $"The condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default)],
                 attributes: [new AttributeStatement(typeof(EditorBrowsableAttribute), FrameworkEnumValue(EditorBrowsableState.Never))]);
 
-            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = [previous]
+            };
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
+
+            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current], [current]);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
@@ -442,7 +556,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                     OptionalCancellationToken()
                 ]);
 
-            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = [previous]
+            };
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
+
+            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current], [current]);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
@@ -609,7 +729,13 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                 enclosingType,
                 [new ParameterProvider("ifMatch", $"The match condition.", typeof(string), defaultValue: Default)]);
 
-            var result = DecorateWithLastContract(enclosingType, [], [], [previous]);
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = [previous]
+            };
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
+
+            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([], []);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
@@ -652,27 +778,6 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
 
         private static bool HasForwardsClientCalls(MethodProvider method)
             => method.Signature.Attributes.Any(a => a.Type.Name == ForwardsClientCallsAttributeName);
-
-        private static IReadOnlyList<MethodProvider> DecorateWithLastContract(
-            TestTypeView enclosingType,
-            IReadOnlyList<MethodProvider> currentMethods,
-            IReadOnlyList<MethodProvider> previousMethods)
-            => DecorateWithLastContract(enclosingType, currentMethods, currentMethods, previousMethods);
-
-        private static IReadOnlyList<MethodProvider> DecorateWithLastContract(
-            TestTypeView enclosingType,
-            IReadOnlyList<MethodProvider> backCompatMethods,
-            IReadOnlyList<MethodProvider> originalMethods,
-            IReadOnlyList<MethodProvider> previousMethods)
-        {
-            var lastContractView = new TestTypeView(enclosingType.Name)
-            {
-                MethodsToBuild = previousMethods.ToArray()
-            };
-            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
-
-            return BackCompatHelper.DecorateBackwardCompatibilityMethods(backCompatMethods, originalMethods);
-        }
 
         private static string Render(TypeProvider typeProvider)
             => new TypeProviderWriter(typeProvider).Write().Content.Replace("\r\n", "\n");
