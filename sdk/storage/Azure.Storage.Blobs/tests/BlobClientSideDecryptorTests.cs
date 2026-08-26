@@ -182,7 +182,7 @@ namespace Azure.Storage.Blobs.Test
         {
             var originalRange = new HttpRange(100, 200);
             var result = BlobClientSideDecryptor.GetEncryptedBlobRange(originalRange, default(EncryptionData));
-            Assert.AreEqual(originalRange, result);
+            Assert.AreEqual(originalRange, result.BlobRange);
         }
 
         [Test]
