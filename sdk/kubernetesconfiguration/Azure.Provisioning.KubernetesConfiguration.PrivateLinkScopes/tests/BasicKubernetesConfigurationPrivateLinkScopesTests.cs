@@ -37,7 +37,6 @@ public class BasicKubernetesConfigurationPrivateLinkScopesTests
     }
 
     [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.hybridcompute")]
     public async Task CreatePrivateLinkScope()
     {
         await using Trycep test = CreatePrivateLinkScopeTest();

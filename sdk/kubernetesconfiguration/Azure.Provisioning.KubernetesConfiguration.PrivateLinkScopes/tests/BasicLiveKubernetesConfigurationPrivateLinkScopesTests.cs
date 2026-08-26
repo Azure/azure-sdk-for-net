@@ -12,7 +12,6 @@ public class BasicLiveKubernetesConfigurationPrivateLinkScopesTests(bool async)
     : ProvisioningTestBase(async)
 {
     [Test]
-    [Description("https://github.com/Azure/azure-quickstart-templates/tree/master/quickstarts/microsoft.hybridcompute")]
     [LiveOnly]
     public async Task CreatePrivateLinkScope()
     {
