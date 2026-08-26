@@ -9,6 +9,7 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Fabric.Models
 {
+    [Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppress("FabricCapacityPatch", typeof(FabricSku), typeof(IDictionary<string, string>), typeof(FabricCapacityUpdateProperties))]
     public static partial class ArmFabricModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.FabricCapacityProperties"/>. </summary>
@@ -28,11 +29,23 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <param name="fabricCapacityUpdateAdministrationMembers"> An array of administrator user identities. </param>
         /// <returns> A new <see cref="Models.FabricCapacityPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static FabricCapacityPatch FabricCapacityPatch(FabricSku sku, IDictionary<string, string> tags, IEnumerable<string> fabricCapacityUpdateAdministrationMembers)
+        public static FabricCapacityPatch FabricCapacityPatch(FabricSku sku = default, IDictionary<string, string> tags = default, IEnumerable<string> fabricCapacityUpdateAdministrationMembers = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new FabricCapacityPatch(sku, tags, fabricCapacityUpdateAdministrationMembers is null ? default : new FabricCapacityUpdateProperties(default, new FabricCapacityAdministration(fabricCapacityUpdateAdministrationMembers.ToList(), default), default), default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.FabricCapacityPatch"/>. </summary>
+        /// <param name="sku"> The SKU details. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.FabricCapacityPatch"/> instance for mocking. </returns>
+        public static FabricCapacityPatch FabricCapacityPatchWithProperties(FabricSku sku = default, IDictionary<string, string> tags = default, FabricCapacityUpdateProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new FabricCapacityPatch(sku, tags, properties, default);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.FabricCapacityUpdateProperties"/>. </summary>

@@ -92,7 +92,7 @@ public partial class AgentAdministrationClient
         Pipeline = ClientPipeline.Create(options, Array.Empty<PipelinePolicy>(), new PipelinePolicy[] {
             new UserAgentPolicy(typeof(InternalProjectsClient).Assembly),
             new BearerTokenPolicy(tokenProvider, _flows),
-            new FoundryFeaturesPolicy("MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V2Preview,Routines=V1Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview"),
+            new FoundryFeaturesPolicy("MemoryStores=V1Preview,ContainerAgents=V1Preview,WorkflowAgents=V1Preview,Evaluations=V1Preview,Schedules=V1Preview,RedTeams=V1Preview,AgentEndpoints=V1Preview,Skills=V1Preview,Insights=V1Preview,DataGenerationJobs=V1Preview,Models=V1Preview,AgentsOptimization=V2Preview,Routines=V2Preview,ExternalAgents=V1Preview,DraftAgents=V1Preview,VoiceAgents=V1Preview"),
         }, Array.Empty<PipelinePolicy>());
         _apiVersion = options.Version;
         ClientDiagnostics = new ClientDiagnostics(options, true);

@@ -9,12 +9,12 @@ public partial class ProjectsAgentsModelFactory
     /// <param name="id">The agent identifier.</param>
     /// <param name="name">The agent name.</param>
     /// <param name="state">The agent state.</param>
-    public static ProjectsAgentRecord ProjectsAgentRecord(string id = default, string name = default, AgentState state=default)
+    public static ProjectsAgentRecord ProjectsAgentRecord(string id = default, string name = default, AgentState state = default)
     {
         return new ProjectsAgentRecord("agent", id, name, state, default, new AgentObjectVersions(), default, default, default, default, default, null);
     }
 
-    internal static ProjectsAgentRecord ProjectsAgentRecord(string id = default, string name = default, AgentState state=default, AgentStateSource? stateSource = default, AgentObjectVersions versions = default, AgentEndpointConfiguration agentEndpoint = default, AgentIdentity instanceIdentity = default, AgentIdentity blueprint = default, AgentBlueprintReference blueprintReference = default, AgentCard agentCard = default)
+    internal static ProjectsAgentRecord ProjectsAgentRecord(string id = default, string name = default, AgentState state = default, AgentStateSource? stateSource = default, AgentObjectVersions versions = default, AgentEndpointConfiguration agentEndpoint = default, AgentIdentity instanceIdentity = default, AgentIdentity blueprint = default, AgentBlueprintReference blueprintReference = default, AgentCard agentCard = default)
     {
         return new ProjectsAgentRecord("agent", id, name, state, stateSource, versions, agentEndpoint, instanceIdentity, blueprint, blueprintReference, agentCard, additionalBinaryDataProperties: null);
     }

@@ -73,6 +73,12 @@
 # ServiceOwners:                                                   @jsquire @Azure/azure-sdk-write-net-core
 # AzureSdkOwners:                                                  @jsquire
 
+# PRLabel: %Tables
+/sdk/tables/                                                       @JonathanCrd @jsquire
+
+# AzureSdkOwners:                                                  @JonathanCrd
+# ServiceLabel: %Tables
+
 ####################
 # Client Libraries
 ####################
@@ -125,9 +131,6 @@
 
 # ServiceLabel: %Azure Load Testing
 # ServiceOwners: @azure/testing-services
-
-# PRLabel: %Azure Projects
-/sdk/cloudmachine/    @KrzysztofCwalina
 
 # PRLabel: %Azure Stack
 /sdk/azurestack*/    @bganapa
@@ -436,7 +439,7 @@
 /sdk/search/    @Azure/azure-sdk-write-search
 
 # ServiceLabel: %Search
-# ServiceOwners: @efrainretana @mattgotteiner
+# ServiceOwners: @efrainretana @lc48t @mattgotteiner
 
 # PRLabel: %Service Bus
 /sdk/servicebus/    @EldertGrootenboer @j7nw4r @jsquire @sagar0207 @skarri-microsoft @SwayGom
@@ -511,12 +514,6 @@
 # ServiceLabel: %Synapse
 # ServiceOwners: @wanyang7
 
-# PRLabel: %Tables
-/sdk/tables/    @jorgerangel-msft
-
-# AzureSdkOwners: @jorgerangel-msft
-# ServiceLabel: %Tables
-
 # PRLabel: %Voice Live
 /sdk/voicelive/Azure.AI.VoiceLive/    @amber-yujueWang @emilyjiji @pankopon @rhurey @xitzhang
 
@@ -524,7 +521,7 @@
 # ServiceOwners: @rhurey @xitzhang @yulin-li
 
 # PRLabel: %WebPubSub
-/sdk/webpubsub/    @JialinXin @KrzysztofCwalina @vicancy
+/sdk/webpubsub/    @JialinXin @vicancy
 
 # PRLabel: %WebPubSub
 /sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/    @JialinXin @vicancy @Y-Sindo

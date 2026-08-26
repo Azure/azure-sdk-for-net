@@ -32,6 +32,11 @@ namespace Azure.ResourceManager.Sql
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ManagedInstanceLongTermRetentionBackupData"/>. </summary>
+        public ManagedInstanceLongTermRetentionBackupData()
+        {
+        }
+
         /// <summary> Resource properties. </summary>
         [WirePath("properties")]
         internal ManagedInstanceLongTermRetentionBackupProperties Properties { get; }

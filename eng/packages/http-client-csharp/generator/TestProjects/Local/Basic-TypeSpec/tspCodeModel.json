@@ -2594,6 +2594,10 @@
       "doc": "this is a roundtrip model",
       "decorators": [
         {
+          "name": "TypeSpec.HttpClient.CSharp.@dynamicModel",
+          "arguments": {}
+        },
+        {
           "name": "Azure.ClientGenerator.Core.@useSystemTextJsonConverter",
           "arguments": {}
         }

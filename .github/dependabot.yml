@@ -5,6 +5,8 @@ updates:
       - "/eng/packages/http-client-csharp-mgmt"
     schedule:
       interval: "daily"
+    labels:
+      - "dependencies"
     open-pull-requests-limit: 0
     cooldown:
       default-days: 7
@@ -35,6 +37,8 @@ updates:
       - "/eng/packages/http-client-csharp-provisioning"
     schedule:
       interval: "daily"
+    labels:
+      - "dependencies"
     open-pull-requests-limit: 0
     cooldown:
       default-days: 7
@@ -65,6 +69,8 @@ updates:
       - "/eng/packages/http-client-csharp"
     schedule:
       interval: "daily"
+    labels:
+      - "dependencies"
     open-pull-requests-limit: 0
     cooldown:
       default-days: 7
@@ -95,6 +101,8 @@ updates:
       - "/eng/packages/http-server-csharp-aspnet"
     schedule:
       interval: "daily"
+    labels:
+      - "dependencies"
     open-pull-requests-limit: 0
     cooldown:
       default-days: 7

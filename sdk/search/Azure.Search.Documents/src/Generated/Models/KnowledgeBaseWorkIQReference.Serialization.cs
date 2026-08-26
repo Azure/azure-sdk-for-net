@@ -80,15 +80,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 throw new FormatException($"The model {nameof(KnowledgeBaseWorkIQReference)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsCollectionDefined(Attributions))
+            if (Optional.IsDefined(SearchSensitivityLabelInfo))
             {
-                writer.WritePropertyName("attributions"u8);
-                writer.WriteStartArray();
-                foreach (WorkIQAttribution item in Attributions)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("searchSensitivityLabelInfo"u8);
+                writer.WriteObjectValue(SearchSensitivityLabelInfo, options);
             }
         }
 
@@ -123,7 +118,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             IDictionary<string, BinaryData> sourceData = default;
             float? rerankerScore = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IList<WorkIQAttribution> attributions = default;
+            PurviewSensitivityLabelInfo searchSensitivityLabelInfo = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -171,18 +166,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     rerankerScore = prop.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("attributions"u8))
+                if (prop.NameEquals("searchSensitivityLabelInfo"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<WorkIQAttribution> array = new List<WorkIQAttribution>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(WorkIQAttribution.DeserializeWorkIQAttribution(item, options));
-                    }
-                    attributions = array;
+                    searchSensitivityLabelInfo = PurviewSensitivityLabelInfo.DeserializePurviewSensitivityLabelInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -197,7 +187,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 sourceData ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 rerankerScore,
                 additionalBinaryDataProperties,
-                attributions ?? new ChangeTrackingList<WorkIQAttribution>());
+                searchSensitivityLabelInfo);
         }
     }
 }

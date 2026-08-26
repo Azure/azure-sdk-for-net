@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class HybridContainerServiceVirtualNetworkProperties : IUtf8JsonSerializable, IJsonModel<HybridContainerServiceVirtualNetworkProperties>
+    /// <summary> Properties of the virtual network resource. </summary>
+    public partial class HybridContainerServiceVirtualNetworkProperties : IJsonModel<HybridContainerServiceVirtualNetworkProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridContainerServiceVirtualNetworkProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HybridContainerServiceVirtualNetworkProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHybridContainerServiceVirtualNetworkProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridContainerServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HybridContainerServiceVirtualNetworkProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HybridContainerServiceVirtualNetworkProperties IPersistableModel<HybridContainerServiceVirtualNetworkProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HybridContainerServiceVirtualNetworkProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HybridContainerServiceVirtualNetworkProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(InfraVnetProfile))
             {
                 writer.WritePropertyName("infraVnetProfile"u8);
@@ -43,7 +83,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 writer.WritePropertyName("vipPool"u8);
                 writer.WriteStartArray();
-                foreach (var item in VipPool)
+                foreach (KubernetesVirtualIPItem item in VipPool)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -53,7 +93,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 writer.WritePropertyName("vmipPool"u8);
                 writer.WriteStartArray();
-                foreach (var item in VmipPool)
+                foreach (VirtualMachineIPItem item in VmipPool)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -63,8 +103,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStartArray();
-                foreach (var item in DnsServers)
+                foreach (string item in DnsServers)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -94,15 +139,15 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -111,22 +156,27 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
         }
 
-        HybridContainerServiceVirtualNetworkProperties IJsonModel<HybridContainerServiceVirtualNetworkProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HybridContainerServiceVirtualNetworkProperties IJsonModel<HybridContainerServiceVirtualNetworkProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HybridContainerServiceVirtualNetworkProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHybridContainerServiceVirtualNetworkProperties(document.RootElement, options);
         }
 
-        internal static HybridContainerServiceVirtualNetworkProperties DeserializeHybridContainerServiceVirtualNetworkProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HybridContainerServiceVirtualNetworkProperties DeserializeHybridContainerServiceVirtualNetworkProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -140,104 +190,109 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             int? vlanId = default;
             HybridContainerServiceProvisioningState? provisioningState = default;
             HybridContainerServiceNetworkStatus status = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("infraVnetProfile"u8))
+                if (prop.NameEquals("infraVnetProfile"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    infraVnetProfile = InfraVnetProfile.DeserializeInfraVnetProfile(property.Value, options);
+                    infraVnetProfile = InfraVnetProfile.DeserializeInfraVnetProfile(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("vipPool"u8))
+                if (prop.NameEquals("vipPool"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<KubernetesVirtualIPItem> array = new List<KubernetesVirtualIPItem>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(KubernetesVirtualIPItem.DeserializeKubernetesVirtualIPItem(item, options));
                     }
                     vipPool = array;
                     continue;
                 }
-                if (property.NameEquals("vmipPool"u8))
+                if (prop.NameEquals("vmipPool"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<VirtualMachineIPItem> array = new List<VirtualMachineIPItem>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(VirtualMachineIPItem.DeserializeVirtualMachineIPItem(item, options));
                     }
                     vmipPool = array;
                     continue;
                 }
-                if (property.NameEquals("dnsServers"u8))
+                if (prop.NameEquals("dnsServers"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     dnsServers = array;
                     continue;
                 }
-                if (property.NameEquals("gateway"u8))
+                if (prop.NameEquals("gateway"u8))
                 {
-                    gateway = property.Value.GetString();
+                    gateway = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("ipAddressPrefix"u8))
+                if (prop.NameEquals("ipAddressPrefix"u8))
                 {
-                    ipAddressPrefix = property.Value.GetString();
+                    ipAddressPrefix = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("vlanID"u8))
+                if (prop.NameEquals("vlanID"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    vlanId = property.Value.GetInt32();
+                    vlanId = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("provisioningState"u8))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new HybridContainerServiceProvisioningState(property.Value.GetString());
+                    provisioningState = new HybridContainerServiceProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("status"u8))
+                if (prop.NameEquals("status"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    status = HybridContainerServiceNetworkStatus.DeserializeHybridContainerServiceNetworkStatus(property.Value, options);
+                    status = HybridContainerServiceNetworkStatus.DeserializeHybridContainerServiceNetworkStatus(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new HybridContainerServiceVirtualNetworkProperties(
                 infraVnetProfile,
                 vipPool ?? new ChangeTrackingList<KubernetesVirtualIPItem>(),
@@ -248,38 +303,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 vlanId,
                 provisioningState,
                 status,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<HybridContainerServiceVirtualNetworkProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridContainerServiceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HybridContainerServiceVirtualNetworkProperties IPersistableModel<HybridContainerServiceVirtualNetworkProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHybridContainerServiceVirtualNetworkProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HybridContainerServiceVirtualNetworkProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

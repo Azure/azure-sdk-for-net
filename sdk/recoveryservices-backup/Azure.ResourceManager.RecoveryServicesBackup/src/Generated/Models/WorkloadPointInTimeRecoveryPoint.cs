@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="WorkloadPointInTimeRecoveryPoint"/>. </summary>
         /// <param name="objectType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
-        private protected WorkloadPointInTimeRecoveryPoint(string objectType) : base("AzureWorkloadPointInTimeRecoveryPoint")
+        private protected WorkloadPointInTimeRecoveryPoint(string objectType) : base(objectType)
         {
             TimeRanges = new ChangeTrackingList<PointInTimeRange>();
         }

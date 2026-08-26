@@ -203,8 +203,8 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets the LastKeyRotationTimestamp. </summary>
-        public BicepValue<DateTimeOffset> LastKeyRotationTimestamp
+        /// <summary> Gets the LastKeyRotationOn. </summary>
+        public BicepValue<DateTimeOffset> LastKeyRotationOn
         {
             get
             {
@@ -212,7 +212,7 @@ namespace Azure.Provisioning.Compute
                 {
                     Properties = new EncryptionSetProperties();
                 }
-                return Properties.LastKeyRotationTimestamp;
+                return Properties.LastKeyRotationOn;
             }
         }
 

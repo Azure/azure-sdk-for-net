@@ -191,7 +191,7 @@ namespace Azure.Provisioning.CognitiveServices
             _properties = DefineModelProperty<CognitiveServicesPrivateEndpointConnectionProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
-            _parent = DefineResource<CognitiveServicesAccount>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<CognitiveServicesAccount>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
