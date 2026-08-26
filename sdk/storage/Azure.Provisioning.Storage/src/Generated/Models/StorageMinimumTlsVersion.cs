@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using System.Runtime.Serialization;
 
 namespace Azure.Provisioning.Storage
@@ -14,15 +16,35 @@ namespace Azure.Provisioning.Storage
     {
         /// <summary> Tls10. </summary>
         [DataMember(Name = "TLS1_0")]
-        Tls10 = 0,
+        Tls10 = 4,
         /// <summary> Tls11. </summary>
         [DataMember(Name = "TLS1_1")]
-        Tls11 = 1,
+        Tls11 = 5,
         /// <summary> Tls12. </summary>
         [DataMember(Name = "TLS1_2")]
-        Tls12 = 2,
+        Tls12 = 6,
         /// <summary> Tls13. </summary>
         [DataMember(Name = "TLS1_3")]
-        Tls13 = 3
+        Tls13 = 7,
+        /// <summary> Tls1_0. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use Tls10 instead.")]
+        [DataMember(Name = "TLS1_0")]
+        Tls1_0 = 0,
+        /// <summary> Tls1_1. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use Tls11 instead.")]
+        [DataMember(Name = "TLS1_1")]
+        Tls1_1 = 1,
+        /// <summary> Tls1_2. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use Tls12 instead.")]
+        [DataMember(Name = "TLS1_2")]
+        Tls1_2 = 2,
+        /// <summary> Tls1_3. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("Use Tls13 instead.")]
+        [DataMember(Name = "TLS1_3")]
+        Tls1_3 = 3
     }
 }

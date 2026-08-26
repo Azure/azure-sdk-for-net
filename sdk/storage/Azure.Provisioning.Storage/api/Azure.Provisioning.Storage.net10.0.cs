@@ -1670,14 +1670,26 @@ namespace Azure.Provisioning.Storage
     }
     public enum StorageMinimumTlsVersion
     {
+        [System.ObsoleteAttribute("Use Tls10 instead.")]
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS1_0")]
-        Tls10 = 0,
+        Tls1_0 = 0,
+        [System.ObsoleteAttribute("Use Tls11 instead.")]
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS1_1")]
-        Tls11 = 1,
+        Tls1_1 = 1,
+        [System.ObsoleteAttribute("Use Tls12 instead.")]
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS1_2")]
-        Tls12 = 2,
+        Tls1_2 = 2,
+        [System.ObsoleteAttribute("Use Tls13 instead.")]
         [System.Runtime.Serialization.DataMemberAttribute(Name="TLS1_3")]
-        Tls13 = 3,
+        Tls1_3 = 3,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="TLS1_0")]
+        Tls10 = 4,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="TLS1_1")]
+        Tls11 = 5,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="TLS1_2")]
+        Tls12 = 6,
+        [System.Runtime.Serialization.DataMemberAttribute(Name="TLS1_3")]
+        Tls13 = 7,
     }
     public enum StorageNetworkBypass
     {

@@ -7,3 +7,32 @@ using Microsoft.TypeSpec.Generator.Customizations;
 [assembly: CodeGenEnumValue("StoragePublicAccessType", "None", 0)]
 [assembly: CodeGenEnumValue("StoragePublicAccessType", "Container", 1)]
 [assembly: CodeGenEnumValue("StoragePublicAccessType", "Blob", 2)]
+
+[assembly: CodeGenEnumValue(
+    "StorageMinimumTlsVersion",
+    "Tls1_0",
+    0,
+    WireName = "TLS1_0",
+    EditorBrowsableNever = true,
+    ObsoleteMessage = "Use Tls10 instead.")]
+[assembly: CodeGenEnumValue(
+    "StorageMinimumTlsVersion",
+    "Tls1_1",
+    1,
+    WireName = "TLS1_1",
+    EditorBrowsableNever = true,
+    ObsoleteMessage = "Use Tls11 instead.")]
+[assembly: CodeGenEnumValue(
+    "StorageMinimumTlsVersion",
+    "Tls1_2",
+    2,
+    WireName = "TLS1_2",
+    EditorBrowsableNever = true,
+    ObsoleteMessage = "Use Tls12 instead.")]
+[assembly: CodeGenEnumValue(
+    "StorageMinimumTlsVersion",
+    "Tls1_3",
+    3,
+    WireName = "TLS1_3",
+    EditorBrowsableNever = true,
+    ObsoleteMessage = "Use Tls13 instead.")]
