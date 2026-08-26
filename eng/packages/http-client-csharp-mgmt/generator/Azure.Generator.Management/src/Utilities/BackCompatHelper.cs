@@ -466,9 +466,9 @@ namespace Azure.Generator.Management.Utilities
                     {
                         value = currentParameter.Type.IsValueType && !currentParameter.Type.IsNullable
                             ? new TernaryConditionalExpression(
-                                parameter.Is(Null),
-                                Default,
-                                New.Instance(typeof(ETag), parameter))
+                                parameter.NotEqual(Null),
+                                New.Instance(typeof(ETag), parameter),
+                                Default)
                             : new TernaryConditionalExpression(
                                 parameter.NotEqual(Null),
                                 New.Instance(typeof(ETag), parameter),
@@ -628,6 +628,8 @@ namespace Azure.Generator.Management.Utilities
         private static bool IsSupportedConditionalHeaderParameter(ParameterProvider parameter, string propertyName)
             => propertyName is nameof(RequestConditions.IfMatch) or nameof(RequestConditions.IfNoneMatch)
                 ? parameter.Type.Equals(typeof(string)) || IsETagParameter(parameter)
+                // Date conditional headers can only be grouped when the previous signature is already compatible
+                // with the DateTimeOffset? properties exposed by RequestConditions.
                 : parameter.Type is { IsFrameworkType: true, FrameworkType: { } type } && type == typeof(DateTimeOffset);
 
         private static bool HasConditionalHeaderParameter(MethodSignature signature)
