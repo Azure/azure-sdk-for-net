@@ -416,6 +416,51 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task AsyncReadOnSyncEstablishedStreamUsesSyncTransport()
+        {
+            var transport = new SyncOnlyTransport(requestCount =>
+                requestCount == 1
+                    ? new MockResponse(200).SetContent(
+                        "retry: 0\nid: first\ndata: one\n\n")
+                    : new MockResponse(204));
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"));
+
+            pipeline.Send(message, CancellationToken.None);
+            Stream stream = message.ExtractResponseContent()!;
+            string content = await ReadToEndAsync(stream);
+
+            StringAssert.Contains("data: one", content);
+            Assert.AreEqual(2, transport.RequestCount);
+            Assert.AreEqual("first", transport.LastEventId);
+        }
+
+        [Test]
+        public void SyncReadOnAsyncEstablishedStreamUsesAsyncTransport()
+        {
+            var transport = new AsyncOnlyTransport(requestCount =>
+                requestCount == 1
+                    ? new MockResponse(200).SetContent(
+                        "retry: 0\nid: first\ndata: one\n\n")
+                    : new MockResponse(204));
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"));
+
+            pipeline.SendAsync(message, CancellationToken.None)
+                .AsTask().GetAwaiter().GetResult();
+            Stream stream = message.ExtractResponseContent()!;
+            string content = ReadToEnd(stream);
+
+            StringAssert.Contains("data: one", content);
+            Assert.AreEqual(2, transport.RequestCount);
+            Assert.AreEqual("first", transport.LastEventId);
+        }
+
+        [Test]
         public async Task DisposingStreamDisposesReconnectResponse()
         {
             int requestCount = 0;
@@ -625,6 +670,37 @@ namespace Azure.Core.Tests
             public override ValueTask ProcessAsync(HttpMessage message)
                 => throw new AssertionException(
                     "The synchronous read path must not use the async transport.");
+        }
+
+        private sealed class AsyncOnlyTransport : HttpPipelineTransport
+        {
+            private readonly Func<int, MockResponse> _onSend;
+
+            internal AsyncOnlyTransport(Func<int, MockResponse> onSend)
+            {
+                _onSend = onSend;
+            }
+
+            internal int RequestCount { get; private set; }
+
+            internal string? LastEventId { get; private set; }
+
+            public override Request CreateRequest() => new MockRequest();
+
+            public override void Process(HttpMessage message)
+                => throw new AssertionException(
+                    "Reconnects must use the same send mode as the initial request.");
+
+            public override ValueTask ProcessAsync(HttpMessage message)
+            {
+                RequestCount++;
+                message.Request.Headers.TryGetValue(
+                    "Last-Event-ID",
+                    out string? lastEventId);
+                LastEventId = lastEventId;
+                message.Response = _onSend(RequestCount);
+                return default;
+            }
         }
 
         private sealed class CancellationAwareTransport

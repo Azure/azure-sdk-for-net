@@ -23,6 +23,7 @@ internal sealed class SsePipelineResponseHandler : IDisposable
     private Uri _uri;
     private string _method;
     private BinaryData? _content;
+    private bool _initialSendWasAsync;
     private bool _disposed;
 
     private SsePipelineResponseHandler(
@@ -90,6 +91,7 @@ internal sealed class SsePipelineResponseHandler : IDisposable
 
     internal void WrapResponse(PipelineMessage message)
     {
+        _initialSendWasAsync = false;
         PipelineResponse response = message.Response ??
             throw new InvalidOperationException(
                 "The SSE request did not produce a response.");
@@ -105,6 +107,7 @@ internal sealed class SsePipelineResponseHandler : IDisposable
 
     internal async ValueTask WrapResponseAsync(PipelineMessage message)
     {
+        _initialSendWasAsync = true;
         PipelineResponse response = message.Response ??
             throw new InvalidOperationException(
                 "The SSE request did not produce a response.");
@@ -147,17 +150,38 @@ internal sealed class SsePipelineResponseHandler : IDisposable
             initialLastEventId: _initialLastEventId);
     }
 
+    // Reconnects always use the same pipeline send mode as the initial
+    // request. Process and ProcessAsync are independent transport
+    // extension points, so a transport that implements only the one used
+    // to establish the stream would otherwise fail on the first reconnect.
     private SseReconnectResult? Reconnect(
         string? lastEventId,
         CancellationToken cancellationToken)
-        => ReconnectCoreAsync(false, lastEventId, cancellationToken)
-            .EnsureCompleted();
+    {
+        if (!_initialSendWasAsync)
+        {
+            return ReconnectCoreAsync(false, lastEventId, cancellationToken)
+                .EnsureCompleted();
+        }
+
+        // The stream was established with SendAsync, so the transport is
+        // only known to support ProcessAsync. Blocking here is safe because
+        // the reconnect path awaits with ConfigureAwait(false) throughout.
+#pragma warning disable AZC0102
+        return ReconnectCoreAsync(true, lastEventId, cancellationToken)
+            .AsTask().GetAwaiter().GetResult();
+#pragma warning restore AZC0102
+    }
 
     private async ValueTask<SseReconnectResult?> ReconnectAsync(
         string? lastEventId,
         CancellationToken cancellationToken)
-        => await ReconnectCoreAsync(true, lastEventId, cancellationToken)
-            .ConfigureAwait(false);
+#pragma warning disable AZC0108
+        => await ReconnectCoreAsync(
+            _initialSendWasAsync,
+            lastEventId,
+            cancellationToken).ConfigureAwait(false);
+#pragma warning restore AZC0108
 
     private async ValueTask<SseReconnectResult?> ReconnectCoreAsync(
         bool async,

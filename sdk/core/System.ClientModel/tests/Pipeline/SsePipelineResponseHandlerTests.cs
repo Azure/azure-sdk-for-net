@@ -299,6 +299,35 @@ public class SsePipelineResponseHandlerTests
     }
 
     [Test]
+    public async Task AsyncReadOnSyncEstablishedStreamUsesSyncTransport()
+    {
+        var handler = new SyncTrackingHandler(requestCount =>
+            requestCount == 1
+                ? CreateResponse(
+                    HttpStatusCode.OK,
+                    "retry: 0\nid: first\ndata: one\n\n")
+                : new HttpResponseMessage(HttpStatusCode.NoContent));
+        ClientPipeline pipeline = CreatePipeline(handler);
+        using PipelineResponse response = SendResponse(
+            pipeline,
+            new Uri("https://example.test/events"));
+
+        string content = await ReadToEndAsync(response.ContentStream!);
+
+        Assert.AreEqual(
+            "retry: 0\nid: first\ndata: one\n\n",
+            content);
+        Assert.AreEqual(2, handler.RequestCount);
+        Assert.AreEqual("first", handler.LastEventId);
+#if NET5_0_OR_GREATER
+        Assert.AreEqual(
+            0,
+            handler.AsyncRequestCount,
+            "Reconnects must use the same send mode as the initial request.");
+#endif
+    }
+
+    [Test]
     public void SyncSendFollowsInitialRedirect()
     {
         int requestCount = 0;
