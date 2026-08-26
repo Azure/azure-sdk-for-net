@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -514,6 +514,41 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             MockResponse response401 = new MockResponse(401)
                     .WithHeader("WWW-Authenticate", @"Bearer authorization=""https://login.windows.net/de763a21-49f7-4b08-a8e1-52c8fbc103b4"", resource=""https://vault.azure.net""");
             Assert.IsNull(ChallengeBasedAuthenticationPolicy.getDecodedClaimsParameter(null, response401));
+        }
+
+        [Test]
+        public async Task HandlesCaeChallengeWhenChallengeCacheIsEmpty()
+        {
+            // Regression: a CAE challenge (error="insufficient_claims") that arrives with no prior entry in the
+            // static challenge cache must not dereference a null challenge. AuthorizeRequestOnChallenge previously
+            // read _challenge.Scopes[0] immediately after a cache miss and threw NullReferenceException; it now
+            // falls back to the scope parsed from the response and completes authorization normally.
+            ChallengeBasedAuthenticationPolicy.ClearCache();
+
+            MockTransport transport = new MockTransport(request =>
+            {
+                if (request.Headers.TryGetValue("Authorization", out _))
+                {
+                    return new MockResponse(200, "OK")
+                    {
+                        ContentStream = new KeyVaultSecret("test-secret", "secret-value").ToStream(),
+                    };
+                }
+
+                MockResponse challenge = new MockResponse(401, "Unauthorized");
+                challenge.AddHeader(new HttpHeader(
+                    "WWW-Authenticate",
+                    $@"Bearer authorization=""https://login.windows.net/{TenantId}"", resource=""https://vault.azure.net"", error=""insufficient_claims"", claims=""eyJhY2Nlc3NfdG9rZW4iOnsiYWNycyI6eyJlc3NlbnRpYWwiOnRydWUsInZhbHVlIjoiY3AxIn19fQ=="""));
+                return challenge;
+            });
+
+            SecretClient client = new SecretClient(
+                VaultUri,
+                new CallbackTokenCredential((_, _) => new AccessToken("token", DateTimeOffset.UtcNow.AddMinutes(5))),
+                new SecretClientOptions { Transport = transport });
+
+            KeyVaultSecret secret = await client.GetSecretAsync("test-secret").ConfigureAwait(false);
+            Assert.AreEqual("secret-value", secret.Value);
         }
 
         private class MockTransportBuilder

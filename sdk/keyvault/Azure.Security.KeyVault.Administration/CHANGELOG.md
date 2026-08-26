@@ -11,6 +11,8 @@
 
 ### Bugs Fixed
 
+- Fixed a `NullReferenceException` in the challenge-based authentication policy that could occur when a Continuous Access Evaluation (CAE) claims challenge was received for an authority that had not yet been cached.
+
 ### Other Changes
 
 ## 4.9.0-beta.1 (2026-06-04)

@@ -196,9 +196,14 @@ namespace Azure.Security.KeyVault
             string claims = getDecodedClaimsParameter(error, message.Response);
             if (claims != null)
             {
-                // Get the scope from the cache
-                s_challengeCache.TryGetValue(authority, out _challenge);
-                scope = _challenge.Scopes[0];
+                // Reuse the scope from the challenge cached for this authority when one exists. If the authority
+                // has not been challenged before (cache miss), there is no cached scope to reuse - keep the scope
+                // parsed from this response rather than dereferencing a null challenge (which previously threw a
+                // NullReferenceException on a CAE challenge that arrived before any entry was cached).
+                if (s_challengeCache.TryGetValue(authority, out _challenge))
+                {
+                    scope = _challenge.Scopes[0];
+                }
             }
 
             if (scope is null)
