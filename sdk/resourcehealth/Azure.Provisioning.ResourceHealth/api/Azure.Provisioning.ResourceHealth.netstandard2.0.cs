@@ -144,6 +144,7 @@ namespace Azure.Provisioning.ResourceHealth
         public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ResourceHealth.ResourceHealthKeyValueItem> Info { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.ResourceHealth.ResourceHealthEvent Parent { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> TargetRegion { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } }
