@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
 
         private ClientDiagnostics ProvisioningServiceDescriptionsClientDiagnostics => _provisioningServiceDescriptionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ProvisioningServiceDescriptions ProvisioningServiceDescriptionsRestClient => _provisioningServiceDescriptionsRestClient ??= new ProvisioningServiceDescriptions(ProvisioningServiceDescriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-02-01-preview");
+        private ProvisioningServiceDescriptions ProvisioningServiceDescriptionsRestClient => _provisioningServiceDescriptionsRestClient ??= new ProvisioningServiceDescriptions(ProvisioningServiceDescriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-31");
 
         private ClientDiagnostics IotDpsResourceOperationGroupClientDiagnostics => _iotDpsResourceOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DeviceProvisioningServices.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IotDpsResourceOperationGroup IotDpsResourceOperationGroupRestClient => _iotDpsResourceOperationGroupRestClient ??= new IotDpsResourceOperationGroup(IotDpsResourceOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-02-01-preview");
+        private IotDpsResourceOperationGroup IotDpsResourceOperationGroupRestClient => _iotDpsResourceOperationGroupRestClient ??= new IotDpsResourceOperationGroup(IotDpsResourceOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-31");
 
         /// <summary>
         /// List all the provisioning services for a given subscription id.
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2026-08-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2026-08-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2026-08-31. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-02-01-preview. </description>
+        /// <description> 2026-08-31. </description>
         /// </item>
         /// </list>
         /// </summary>

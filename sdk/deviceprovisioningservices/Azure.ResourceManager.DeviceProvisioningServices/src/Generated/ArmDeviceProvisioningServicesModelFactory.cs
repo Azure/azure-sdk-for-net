@@ -147,7 +147,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="privateEndpointConnections"> Private endpoint connections created on this IotHub. </param>
         /// <param name="provisioningState"> The ARM provisioning state of the provisioning service. </param>
         /// <param name="iotHubs"> List of IoT hubs associated with this provisioning service. </param>
-        /// <param name="deviceRegistryNamespace"> The Device Registry namespace that is linked to the provisioning service. </param>
         /// <param name="allocationPolicy"> Allocation policy to be used by this provisioning service. </param>
         /// <param name="serviceOperationsHostName"> Service endpoint for provisioning service. </param>
         /// <param name="deviceProvisioningHostName"> Device endpoint for this provisioning service. </param>
@@ -158,8 +157,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// Indicates if the DPS instance has Data Residency enabled, removing the cross geo-pair disaster recovery.
         /// </param>
         /// <param name="portalOperationsHostName"> Portal endpoint to enable CORS for this provisioning service. </param>
+        /// <param name="disableLocalAuth"> Disables all authentication methods other than Azure RBAC. </param>
         /// <returns> A new <see cref="Models.DeviceProvisioningServiceProperties"/> instance for mocking. </returns>
-        public static DeviceProvisioningServiceProperties DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state = default, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<DeviceProvisioningServicesIPFilterRule> ipFilterRules = default, IEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections = default, string provisioningState = default, IEnumerable<IotHubDefinitionDescription> iotHubs = default, DeviceRegistryNamespaceDescription deviceRegistryNamespace = default, DeviceProvisioningServicesAllocationPolicy? allocationPolicy = default, string serviceOperationsHostName = default, string deviceProvisioningHostName = default, string idScope = default, IEnumerable<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies = default, bool? isDataResidencyEnabled = default, string portalOperationsHostName = default)
+        public static DeviceProvisioningServiceProperties DeviceProvisioningServiceProperties(DeviceProvisioningServicesState? state = default, DeviceProvisioningServicesPublicNetworkAccess? publicNetworkAccess = default, IEnumerable<DeviceProvisioningServicesIPFilterRule> ipFilterRules = default, IEnumerable<DeviceProvisioningServicesPrivateEndpointConnectionData> privateEndpointConnections = default, string provisioningState = default, IEnumerable<IotHubDefinitionDescription> iotHubs = default, DeviceProvisioningServicesAllocationPolicy? allocationPolicy = default, string serviceOperationsHostName = default, string deviceProvisioningHostName = default, string idScope = default, IEnumerable<DeviceProvisioningServicesSharedAccessKey> authorizationPolicies = default, bool? isDataResidencyEnabled = default, string portalOperationsHostName = default, bool? disableLocalAuth = default)
         {
             ipFilterRules ??= new ChangeTrackingList<DeviceProvisioningServicesIPFilterRule>();
             privateEndpointConnections ??= new ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>();
@@ -173,7 +173,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 (privateEndpointConnections ?? new ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>()).ToList(),
                 provisioningState,
                 (iotHubs ?? new ChangeTrackingList<IotHubDefinitionDescription>()).ToList(),
-                deviceRegistryNamespace,
                 allocationPolicy,
                 serviceOperationsHostName,
                 deviceProvisioningHostName,
@@ -181,6 +180,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 (authorizationPolicies ?? new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>()).ToList(),
                 isDataResidencyEnabled,
                 portalOperationsHostName,
+                disableLocalAuth,
                 default);
         }
 
@@ -231,27 +231,24 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
         /// <param name="applyAllocationPolicy"> flag for applying allocationPolicy or not for a given iot hub. </param>
         /// <param name="allocationWeight"> weight to apply for a given iot h. </param>
         /// <param name="name"> Host name of the IoT hub. </param>
-        /// <param name="connectionString"> Connection string of the IoT hub. </param>
+        /// <param name="hostName"> Host name of the IoT hub. This is required when connectionString is not provided. </param>
+        /// <param name="authenticationType"> IotHub MI authentication type: KeyBased, UserAssigned, SystemAssigned. </param>
+        /// <param name="selectedUserAssignedIdentityResourceId"> The selected user-assigned identity resource Id associated with IoT hub. This is required when authenticationType is UserAssigned. </param>
+        /// <param name="connectionString"> Connection string of the IoT hub. This is required when authenticationType is KeyBased. </param>
         /// <param name="location"> ARM region of the IoT hub. </param>
         /// <returns> A new <see cref="Models.IotHubDefinitionDescription"/> instance for mocking. </returns>
-        public static IotHubDefinitionDescription IotHubDefinitionDescription(bool? applyAllocationPolicy = default, int? allocationWeight = default, string name = default, string connectionString = default, AzureLocation location = default)
+        public static IotHubDefinitionDescription IotHubDefinitionDescription(bool? applyAllocationPolicy = default, int? allocationWeight = default, string name = default, string hostName = default, IotHubAuthenticationType? authenticationType = default, ResourceIdentifier selectedUserAssignedIdentityResourceId = default, string connectionString = default, AzureLocation location = default)
         {
             return new IotHubDefinitionDescription(
                 applyAllocationPolicy,
                 allocationWeight,
                 name,
+                hostName,
+                authenticationType,
+                selectedUserAssignedIdentityResourceId,
                 connectionString,
                 location,
                 default);
-        }
-
-        /// <param name="resourceId"> The ARM resource ID of the Device Registry namespace. </param>
-        /// <param name="authenticationType"> Device Registry Namespace MI authentication type: UserAssigned, SystemAssigned. </param>
-        /// <param name="selectedUserAssignedIdentityResourceId"> The selected user-assigned identity resource Id associated with Device Registry namespace. This is required when authenticationType is UserAssigned. </param>
-        /// <returns> A new <see cref="Models.DeviceRegistryNamespaceDescription"/> instance for mocking. </returns>
-        public static DeviceRegistryNamespaceDescription DeviceRegistryNamespaceDescription(ResourceIdentifier resourceId = default, DeviceRegistryNamespaceAuthenticationType authenticationType = default, ResourceIdentifier selectedUserAssignedIdentityResourceId = default)
-        {
-            return new DeviceRegistryNamespaceDescription(resourceId, authenticationType, selectedUserAssignedIdentityResourceId, default);
         }
 
         /// <param name="keyName"> Name of the key. </param>
@@ -391,7 +388,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 (privateEndpointConnections ?? new ChangeTrackingList<DeviceProvisioningServicesPrivateEndpointConnectionData>()).ToList(),
                 provisioningState,
                 (iotHubs ?? new ChangeTrackingList<IotHubDefinitionDescription>()).ToList(),
-                default,
                 allocationPolicy,
                 serviceOperationsHostName,
                 deviceProvisioningHostName,
@@ -399,6 +395,29 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 (authorizationPolicies ?? new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>()).ToList(),
                 isDataResidencyEnabled,
                 default,
+                default,
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.IotHubDefinitionDescription"/>. </summary>
+        /// <param name="applyAllocationPolicy"> flag for applying allocationPolicy or not for a given iot hub. </param>
+        /// <param name="allocationWeight"> weight to apply for a given iot h. </param>
+        /// <param name="name"> Host name of the IoT hub. </param>
+        /// <param name="connectionString"> Connection string of the IoT hub. </param>
+        /// <param name="location"> ARM region of the IoT hub. </param>
+        /// <returns> A new <see cref="Models.IotHubDefinitionDescription"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IotHubDefinitionDescription IotHubDefinitionDescription(bool? applyAllocationPolicy = default, int? allocationWeight = default, string name = default, string connectionString = default, AzureLocation location = default)
+        {
+            return new IotHubDefinitionDescription(
+                applyAllocationPolicy,
+                allocationWeight,
+                name,
+                default,
+                default,
+                default,
+                connectionString,
+                location,
                 default);
         }
     }

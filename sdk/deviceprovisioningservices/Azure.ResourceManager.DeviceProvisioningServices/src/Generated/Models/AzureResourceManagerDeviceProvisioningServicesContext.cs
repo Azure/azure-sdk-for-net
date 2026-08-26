@@ -40,7 +40,6 @@ namespace Azure.ResourceManager.DeviceProvisioningServices
     [ModelReaderWriterBuildable(typeof(DeviceProvisioningServicesSharedAccessKey))]
     [ModelReaderWriterBuildable(typeof(DeviceProvisioningServicesSkuDefinition))]
     [ModelReaderWriterBuildable(typeof(DeviceProvisioningServicesSkuInfo))]
-    [ModelReaderWriterBuildable(typeof(DeviceRegistryNamespaceDescription))]
     [ModelReaderWriterBuildable(typeof(IotDpsSkuDefinitionListResult))]
     [ModelReaderWriterBuildable(typeof(IotHubDefinitionDescription))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
