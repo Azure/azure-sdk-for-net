@@ -106,6 +106,27 @@ if (-not $graph.diagnostics.isComplete) {
 if ($graph.diagnostics.packageClosure.resolutionMode -ne 'nuget-restore-graph') {
   throw "Sparse checkout requires the NuGet restore graph, but '$($graph.diagnostics.packageClosure.resolutionMode)' was used."
 }
+$sourceCommitProperty = $graph.PSObject.Properties['sourceCommit']
+$recordedSourceCommit = if ($null -eq $sourceCommitProperty) { '' } else { [string] $sourceCommitProperty.Value }
+if (-not $recordedSourceCommit.Equals($SourceCommit, [System.StringComparison]::OrdinalIgnoreCase)) {
+  throw "Repository project graph commit '$recordedSourceCommit' does not match requested sparse-checkout provenance '$SourceCommit'."
+}
+
+# A reusable graph must prove it evaluated every sparse-checkout input dimension. Older or
+# single-configuration artifacts remain valid for their original queries, but cannot narrow CI.
+$generationProperty = $graph.diagnostics.PSObject.Properties['generation']
+if ($null -eq $generationProperty -or $null -eq $generationProperty.Value) {
+  throw 'Repository project graph does not describe its generation policy.'
+}
+$generation = $generationProperty.Value
+$requestedConfigurations = New-StringSet
+foreach ($configuration in @($generation.configurations)) {
+  $null = $requestedConfigurations.Add([string] $configuration)
+}
+if (-not $generation.includesInputs -or -not $requestedConfigurations.Contains('Debug') -or
+    -not $requestedConfigurations.Contains('Release')) {
+  throw 'Sparse checkout requires a Debug+Release repository graph with evaluated inputs.'
+}
 
 $actualCommit = (& git -C $repositoryRoot rev-parse HEAD).Trim()
 if ($LASTEXITCODE -ne 0 -or -not $actualCommit) {
