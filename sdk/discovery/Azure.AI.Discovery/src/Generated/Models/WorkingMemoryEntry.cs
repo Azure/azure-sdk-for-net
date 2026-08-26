@@ -28,13 +28,13 @@ namespace Azure.AI.Discovery
         /// <summary> Initializes a new instance of <see cref="WorkingMemoryEntry"/>. </summary>
         /// <param name="content"> The content of the working memory entry. </param>
         /// <param name="type"> The type of the working memory entry. </param>
-        /// <param name="createdAt"> The timestamp when the resource was created. </param>
+        /// <param name="createdOn"> The timestamp when the resource was created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkingMemoryEntry(string content, WorkingMemoryEntryType @type, DateTimeOffset? createdAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkingMemoryEntry(string content, WorkingMemoryEntryType @type, DateTimeOffset? createdOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Content = content;
             Type = @type;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,6 +45,6 @@ namespace Azure.AI.Discovery
         public WorkingMemoryEntryType Type { get; }
 
         /// <summary> The timestamp when the resource was created. </summary>
-        public DateTimeOffset? CreatedAt { get; }
+        public DateTimeOffset? CreatedOn { get; }
     }
 }
