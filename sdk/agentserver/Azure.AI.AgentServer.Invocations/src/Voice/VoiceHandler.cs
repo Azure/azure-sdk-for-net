@@ -21,6 +21,8 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
 {
     private static readonly UTF8Encoding StrictUtf8 = new(false, true);
 
+    internal virtual VoiceHandler ApplicationHandler => this;
+
     /// <inheritdoc />
     public sealed override async Task HandleWebSocketAsync(
         WebSocket webSocket,
@@ -241,7 +243,7 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
         Exception? cleanupException = null;
         try
         {
-            OnConnectionTerminating(session);
+            ApplicationHandler.OnConnectionTerminating(session);
         }
         catch (Exception exception)
         {
@@ -283,17 +285,17 @@ public abstract class VoiceHandler : InvocationWebSocketHandler
         VoiceInboundMessage message,
         CancellationToken cancellationToken) => message switch
         {
-            VoiceSessionStartEvent start => OnSessionStartAsync(session, start, cancellationToken),
-            VoiceUserMessageEvent userMessage => OnUserMessageAsync(session, userMessage, cancellationToken),
-            VoiceUserNoInputEvent noInput => OnUserNoInputAsync(session, noInput, cancellationToken),
+            VoiceSessionStartEvent start => ApplicationHandler.OnSessionStartAsync(session, start, cancellationToken),
+            VoiceUserMessageEvent userMessage => ApplicationHandler.OnUserMessageAsync(session, userMessage, cancellationToken),
+            VoiceUserNoInputEvent noInput => ApplicationHandler.OnUserNoInputAsync(session, noInput, cancellationToken),
             VoiceUserSpeechStartedEvent speechStarted =>
-                OnUserSpeechStartedAsync(session, speechStarted, cancellationToken),
-            VoiceBargeInEvent bargeIn => OnBargeInAsync(session, bargeIn, cancellationToken),
-            VoiceResponseAcceptedEvent accepted => OnResponseAcceptedAsync(session, accepted, cancellationToken),
-            VoiceResponseDroppedEvent dropped => OnResponseDroppedAsync(session, dropped, cancellationToken),
-            VoiceResponseCancelledEvent cancelled => OnResponseCancelledAsync(session, cancelled, cancellationToken),
-            VoiceResponseTimeoutEvent timeout => OnResponseTimeoutAsync(session, timeout, cancellationToken),
-            VoiceSessionEndEvent end => OnSessionEndAsync(session, end, cancellationToken),
+                ApplicationHandler.OnUserSpeechStartedAsync(session, speechStarted, cancellationToken),
+            VoiceBargeInEvent bargeIn => ApplicationHandler.OnBargeInAsync(session, bargeIn, cancellationToken),
+            VoiceResponseAcceptedEvent accepted => ApplicationHandler.OnResponseAcceptedAsync(session, accepted, cancellationToken),
+            VoiceResponseDroppedEvent dropped => ApplicationHandler.OnResponseDroppedAsync(session, dropped, cancellationToken),
+            VoiceResponseCancelledEvent cancelled => ApplicationHandler.OnResponseCancelledAsync(session, cancelled, cancellationToken),
+            VoiceResponseTimeoutEvent timeout => ApplicationHandler.OnResponseTimeoutAsync(session, timeout, cancellationToken),
+            VoiceSessionEndEvent end => ApplicationHandler.OnSessionEndAsync(session, end, cancellationToken),
             _ => Task.CompletedTask,
         };
 

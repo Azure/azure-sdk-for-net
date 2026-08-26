@@ -3,6 +3,7 @@
 
 using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Core;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Azure.AI.AgentServer.Invocations.Voice;
@@ -27,8 +28,15 @@ public static class VoiceHostingExtensions
 
         VoiceTracingRegistration.Add(services);
         services.AddInvocationsServer(configure);
-        services.AddScoped<InvocationHandler, THandler>();
-        services.AddSingleton(new VoiceRegistrationMarker(typeof(THandler)));
+        // Factory aliases capture disposable results independently, so THandler needs one DI owner.
+        var marker = new VoiceRegistrationMarker(typeof(VoiceHandlerAdapter<THandler>));
+        services.AddScoped<InvocationWebSocketHandler, THandler>();
+        services.AddScoped<VoiceHandler>(provider =>
+            new VoiceHandlerAdapter<THandler>(
+                (THandler)provider.GetRequiredService<InvocationWebSocketHandler>()));
+        services.AddScoped<InvocationHandler>(provider =>
+            provider.GetRequiredService<VoiceHandler>());
+        services.AddSingleton(marker);
         return services;
     }
 
@@ -43,6 +51,58 @@ public static class VoiceHostingExtensions
         builder.RegisterProtocol("Voice", endpoints => endpoints.MapInvocationsServer());
         return builder;
     }
+}
+
+[Experimental("AAAS001")]
+internal sealed class VoiceHandlerAdapter<THandler> : VoiceHandler
+    where THandler : VoiceHandler
+{
+    private readonly THandler _handler;
+
+    internal VoiceHandlerAdapter(THandler handler) => _handler = handler;
+
+    internal override VoiceHandler ApplicationHandler => _handler;
+
+    public override Task HandleAsync(
+        HttpRequest request,
+        HttpResponse response,
+        InvocationContext context,
+        CancellationToken cancellationToken) =>
+        _handler.HandleAsync(request, response, context, cancellationToken);
+
+    public override Task GetAsync(
+        string invocationId,
+        HttpRequest request,
+        HttpResponse response,
+        InvocationContext context,
+        CancellationToken cancellationToken) =>
+        _handler.GetAsync(invocationId, request, response, context, cancellationToken);
+
+    public override Task CancelAsync(
+        string invocationId,
+        HttpRequest request,
+        HttpResponse response,
+        InvocationContext context,
+        CancellationToken cancellationToken) =>
+        _handler.CancelAsync(invocationId, request, response, context, cancellationToken);
+
+    public override Task GetOpenApiAsync(
+        HttpRequest request,
+        HttpResponse response,
+        CancellationToken cancellationToken) =>
+        _handler.GetOpenApiAsync(request, response, cancellationToken);
+
+    public override Task GetAsyncApiJsonAsync(
+        HttpRequest request,
+        HttpResponse response,
+        CancellationToken cancellationToken) =>
+        _handler.GetAsyncApiJsonAsync(request, response, cancellationToken);
+
+    public override Task GetAsyncApiYamlAsync(
+        HttpRequest request,
+        HttpResponse response,
+        CancellationToken cancellationToken) =>
+        _handler.GetAsyncApiYamlAsync(request, response, cancellationToken);
 }
 
 internal sealed class VoiceRegistrationMarker

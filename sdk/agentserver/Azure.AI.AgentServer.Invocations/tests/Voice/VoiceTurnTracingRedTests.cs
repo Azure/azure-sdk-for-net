@@ -17,6 +17,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Voice;
 [NonParallelizable]
 public class VoiceTurnTracingRedTests
 {
+    private static readonly TimeSpan TestTimeout = TimeSpan.FromSeconds(2);
     private const string ActivitySourceName = "Azure.AI.AgentServer.Invocations";
     private const string CustomerSourceName = "VoiceTurnTracingRedTests.Customer";
     private static readonly ActivityTraceId s_connectionTraceId =
@@ -71,6 +72,69 @@ public class VoiceTurnTracingRedTests
         var target = activities.Single(IsTargetTurn);
         Assert.That(await childParent, Is.EqualTo(target.SpanId));
         turn.Complete(new VoiceTurnResult(VoiceTurnOutcome.None, outputItemCount: 0));
+    }
+
+    [Test]
+    public async Task ConcurrentCompletion_DefersStopUntilActivationIsReleased()
+    {
+        var started = new ConcurrentQueue<Activity>();
+        var stopped = new ConcurrentQueue<Activity>();
+        using var listener = CreateListener(started, stopped);
+        using var customerSource = new ActivitySource(CustomerSourceName);
+        var session = CreateSession(CreateConnectionContext(recorded: true));
+        using var turn = session.StartTurn(VoiceTurnOrigin.User, inputCount: 1);
+        var activationEntered = new TaskCompletionSource(
+            TaskCreationOptions.RunContinuationsAsynchronously);
+        var continueAfterCompletion = new TaskCompletionSource(
+            TaskCreationOptions.RunContinuationsAsynchronously);
+
+        var activatedWork = Task.Run(async () =>
+        {
+            using (turn.Activate())
+            {
+                activationEntered.TrySetResult();
+                await continueAfterCompletion.Task;
+                var ambientWasRunning = Activity.Current?.Duration == TimeSpan.Zero;
+                using var child = customerSource.StartActivity("customer.after-completion")!;
+                return (AmbientWasRunning: ambientWasRunning, child.ParentSpanId);
+            }
+        });
+
+        await activationEntered.Task.WaitAsync(TestTimeout);
+        var target = started.Single(IsTargetTurn);
+        await Task.Run(() => turn.Complete(
+            new VoiceTurnResult(VoiceTurnOutcome.None, outputItemCount: 0)));
+        var stoppedBeforeRelease = stopped.Any(IsTargetTurn);
+        continueAfterCompletion.TrySetResult();
+        var observation = await activatedWork.WaitAsync(TestTimeout);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(stoppedBeforeRelease, Is.False);
+            Assert.That(observation.AmbientWasRunning, Is.True);
+            Assert.That(observation.ParentSpanId, Is.EqualTo(target.SpanId));
+            Assert.That(stopped.Count(IsTargetTurn), Is.EqualTo(1));
+        });
+    }
+
+    [Test]
+    public void Completion_WaitsForEveryActivationLease()
+    {
+        var stopped = new ConcurrentQueue<Activity>();
+        using var listener = CreateListener(stoppedActivities: stopped);
+        var session = CreateSession(CreateConnectionContext(recorded: true));
+        using var turn = session.StartTurn(VoiceTurnOrigin.User, inputCount: 1);
+        using var outerActivation = turn.Activate();
+        using var innerActivation = turn.Activate();
+
+        turn.Complete(new VoiceTurnResult(VoiceTurnOutcome.None, outputItemCount: 0));
+        Assert.That(stopped.Any(IsTargetTurn), Is.False);
+
+        innerActivation.Dispose();
+        Assert.That(stopped.Any(IsTargetTurn), Is.False);
+
+        outerActivation.Dispose();
+        Assert.That(stopped.Count(IsTargetTurn), Is.EqualTo(1));
     }
 
     [Test]

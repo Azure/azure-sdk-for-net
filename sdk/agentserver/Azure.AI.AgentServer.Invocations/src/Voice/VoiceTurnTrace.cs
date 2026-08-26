@@ -120,7 +120,9 @@ public class VoiceTurnTrace : IDisposable
     private const string OperationName = "invoke_agent";
     private static readonly ActivitySource s_activitySource = new("Azure.AI.AgentServer.Invocations");
     private static readonly AsyncLocal<object?> s_startToken = new();
+    private readonly object _gate = new();
     private Activity? _activity;
+    private int _activeActivations;
     private int _completed;
 
     /// <summary>Initializes a mockable no-op turn trace.</summary>
@@ -136,38 +138,85 @@ public class VoiceTurnTrace : IDisposable
     /// <returns>A scope that restores the exact previous ambient activity when disposed.</returns>
     public virtual IDisposable Activate()
     {
-        var activity = Volatile.Read(ref _activity);
-        if (activity is null || Volatile.Read(ref _completed) != 0)
+        Activity? activity;
+        lock (_gate)
         {
-            return VoiceActivityScope.Empty;
+            activity = _activity;
+            if (activity is null || _completed != 0 || activity.Duration != default)
+            {
+                return VoiceActivityScope.Empty;
+            }
+            _activeActivations++;
         }
 
         var activation = VoiceActivityScope.Activate(activity);
-        if (!activation.IsActive || Volatile.Read(ref _completed) != 0 || activity.Duration != default)
+        if (!activation.IsActive)
         {
-            activation.Dispose();
+            ReleaseActivation();
             return VoiceActivityScope.Empty;
         }
-        return activation;
+        return new VoiceTurnActivation(this, activation);
     }
 
     /// <summary>Completes the turn with the first immutable application-supplied result.</summary>
     /// <param name="result">The application-owned terminal facts.</param>
+    /// <remarks>
+    /// Completion rejects later activations and stops the turn after every active
+    /// scope returned by <see cref="Activate"/> has been disposed.
+    /// </remarks>
     public virtual void Complete(VoiceTurnResult result)
     {
         ArgumentNullException.ThrowIfNull(result);
-        if (Interlocked.Exchange(ref _completed, 1) != 0)
+        Activity? activityToStop = null;
+        lock (_gate)
         {
-            return;
+            if (_completed != 0)
+            {
+                return;
+            }
+            _completed = 1;
+
+            var activity = _activity;
+            if (activity is null)
+            {
+                return;
+            }
+
+            TryInvokeTelemetry(() => ApplyResult(activity, result));
+            if (_activeActivations == 0)
+            {
+                _activity = null;
+                activityToStop = activity;
+            }
         }
 
-        var activity = Interlocked.Exchange(ref _activity, null);
-        if (activity is null)
+        if (activityToStop is not null)
         {
-            return;
+            StopActivity(activityToStop);
+        }
+    }
+
+    private void ReleaseActivation()
+    {
+        Activity? activityToStop = null;
+        lock (_gate)
+        {
+            _activeActivations--;
+            if (_activeActivations == 0 && _completed != 0)
+            {
+                activityToStop = _activity;
+                _activity = null;
+            }
         }
 
-        TryInvokeTelemetry(() => ApplyResult(activity, result));
+        if (activityToStop is not null)
+        {
+            StopActivity(activityToStop);
+        }
+    }
+
+    private static void StopActivity(Activity activity)
+    {
         var current = Activity.Current;
         TryInvokeTelemetry(activity.Stop);
         if (!ReferenceEquals(current, activity))
@@ -376,5 +425,35 @@ public class VoiceTurnTrace : IDisposable
         }
         return exception is AggregateException aggregateException &&
             aggregateException.InnerExceptions.Any(ContainsOutOfMemoryException);
+    }
+
+    private sealed class VoiceTurnActivation : IDisposable
+    {
+        private VoiceTurnTrace? _owner;
+        private IDisposable? _activation;
+
+        internal VoiceTurnActivation(VoiceTurnTrace owner, IDisposable activation)
+        {
+            _owner = owner;
+            _activation = activation;
+        }
+
+        public void Dispose()
+        {
+            var activation = Interlocked.Exchange(ref _activation, null);
+            if (activation is null)
+            {
+                return;
+            }
+
+            try
+            {
+                activation.Dispose();
+            }
+            finally
+            {
+                Interlocked.Exchange(ref _owner, null)?.ReleaseActivation();
+            }
+        }
     }
 }

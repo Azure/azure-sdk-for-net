@@ -31,20 +31,136 @@ public class VoiceRegistrationTests
             Is.EqualTo(1));
     }
 
-    [Test]
-    public void AddVoiceScopedHandlerDisposesExactlyOnce()
+    [TestCase(true)]
+    [TestCase(false)]
+    public void AddVoiceScopedAliasesShareSingleDisposalOwner(bool resolveVoiceFirst)
     {
+        DisposableScopedVoiceHandler.Reset();
         var services = new ServiceCollection();
         services.AddVoice<DisposableScopedVoiceHandler>();
         using var provider = services.BuildServiceProvider();
-        InvocationHandler handler;
+        VoiceHandler voiceHandler;
+        InvocationHandler invocationHandler;
 
         using (var scope = provider.CreateScope())
         {
-            handler = scope.ServiceProvider.GetRequiredService<InvocationHandler>();
+            if (resolveVoiceFirst)
+            {
+                voiceHandler = scope.ServiceProvider.GetRequiredService<VoiceHandler>();
+                invocationHandler = scope.ServiceProvider.GetRequiredService<InvocationHandler>();
+            }
+            else
+            {
+                invocationHandler = scope.ServiceProvider.GetRequiredService<InvocationHandler>();
+                voiceHandler = scope.ServiceProvider.GetRequiredService<VoiceHandler>();
+            }
+
+            Assert.That(invocationHandler, Is.SameAs(voiceHandler));
+            Assert.That(
+                scope.ServiceProvider.GetService<DisposableScopedVoiceHandler>(),
+                Is.Null);
         }
 
-        Assert.That(((DisposableScopedVoiceHandler)handler).DisposeCount, Is.EqualTo(1));
+        Assert.Multiple(() =>
+        {
+            Assert.That(DisposableScopedVoiceHandler.ConstructorCount, Is.EqualTo(1));
+            Assert.That(DisposableScopedVoiceHandler.DisposeCount, Is.EqualTo(1));
+        });
+    }
+
+    [TestCase(true)]
+    [TestCase(false)]
+    public async Task AddVoiceScopedAliasesShareSingleAsyncDisposalOwner(bool resolveVoiceFirst)
+    {
+        AsyncDisposableScopedVoiceHandler.Reset();
+        var services = new ServiceCollection();
+        services.AddVoice<AsyncDisposableScopedVoiceHandler>();
+        await using var provider = services.BuildServiceProvider();
+        VoiceHandler voiceHandler;
+        InvocationHandler invocationHandler;
+
+        await using (var scope = provider.CreateAsyncScope())
+        {
+            if (resolveVoiceFirst)
+            {
+                voiceHandler = scope.ServiceProvider.GetRequiredService<VoiceHandler>();
+                invocationHandler = scope.ServiceProvider.GetRequiredService<InvocationHandler>();
+            }
+            else
+            {
+                invocationHandler = scope.ServiceProvider.GetRequiredService<InvocationHandler>();
+                voiceHandler = scope.ServiceProvider.GetRequiredService<VoiceHandler>();
+            }
+
+            Assert.That(invocationHandler, Is.SameAs(voiceHandler));
+        }
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(AsyncDisposableScopedVoiceHandler.ConstructorCount, Is.EqualTo(1));
+            Assert.That(AsyncDisposableScopedVoiceHandler.DisposeCount, Is.EqualTo(1));
+        });
+    }
+
+    [Test]
+    public void AddVoicePreservesUnkeyedHandlerActivationSemantics()
+    {
+        KeyAwareVoiceHandler.Reset();
+        var services = new ServiceCollection();
+        services.AddVoice<KeyAwareVoiceHandler>();
+        using var provider = services.BuildServiceProvider();
+        using var scope = provider.CreateScope();
+
+        _ = scope.ServiceProvider.GetRequiredService<VoiceHandler>();
+
+        Assert.That(KeyAwareVoiceHandler.ServiceKey, Is.Null);
+    }
+
+    [Test]
+    public void AddVoicePrivateOwnerIsNotReplacedByLaterUnkeyedHandlerRegistration()
+    {
+        var services = new ServiceCollection();
+        services.AddVoice<DisposableScopedVoiceHandler>();
+        services.AddScoped<DisposableScopedVoiceHandler>();
+        using var provider = services.BuildServiceProvider();
+        using var scope = provider.CreateScope();
+
+        var voiceHandler = scope.ServiceProvider.GetRequiredService<VoiceHandler>();
+        var unkeyedHandler = scope.ServiceProvider.GetRequiredService<DisposableScopedVoiceHandler>();
+
+        Assert.That(voiceHandler.ApplicationHandler, Is.Not.SameAs(unkeyedHandler));
+    }
+
+    [Test]
+    public void AddVoicePreservesValidateOnBuildConstructorValidation()
+    {
+        var services = new ServiceCollection();
+        services.AddVoice<MissingDependencyVoiceHandler>();
+
+        var exception = Assert.Throws<AggregateException>(() =>
+            services.BuildServiceProvider(new ServiceProviderOptions
+            {
+                ValidateOnBuild = true,
+                ValidateScopes = true,
+            }));
+
+        Assert.That(exception?.ToString(), Does.Contain(nameof(IMissingVoiceDependency)));
+    }
+
+    [Test]
+    public void AddVoicePreservesImplementationTypeConstructorSelection()
+    {
+        var services = new ServiceCollection();
+        services.AddSingleton<ConstructorDependency>();
+        services.AddVoice<ConstructorSelectionVoiceHandler>();
+        using var provider = services.BuildServiceProvider();
+        using var scope = provider.CreateScope();
+
+        var handler = scope.ServiceProvider.GetRequiredService<VoiceHandler>();
+
+        Assert.That(
+            ((ConstructorSelectionVoiceHandler)handler.ApplicationHandler).SelectedConstructor,
+            Is.EqualTo("dependency"));
     }
 
     [Test]
@@ -334,6 +450,30 @@ public class VoiceRegistrationTests
             CancellationToken.None);
     }
 
+    [TestCase("POST", "/invocations", "handle")]
+    [TestCase("GET", "/invocations/test-id", "get")]
+    [TestCase("POST", "/invocations/test-id/cancel", "cancel")]
+    [TestCase("GET", "/invocations/docs/openapi.json", "openapi")]
+    [TestCase("GET", "/invocations/docs/asyncapi.json", "asyncapi-json")]
+    [TestCase("GET", "/invocations/docs/asyncapi.yaml", "asyncapi-yaml")]
+    public async Task AddVoiceForwardsInvocationHandlerEndpointOverrides(
+        string method,
+        string path,
+        string expectedOperation)
+    {
+        FullSurfaceVoiceHandler.Reset();
+        await using var app = BuildApp<FullSurfaceVoiceHandler>();
+        await app.StartAsync();
+        using var request = new HttpRequestMessage(new HttpMethod(method), path);
+        using var response = await app.GetTestClient().SendAsync(request);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(System.Net.HttpStatusCode.NoContent));
+            Assert.That(FullSurfaceVoiceHandler.Operation, Is.EqualTo(expectedOperation));
+        });
+    }
+
     [Test]
     public async Task AddVoiceThenManualInvocationHandlerOverrideFailsExplicitly()
     {
@@ -528,9 +668,71 @@ public class VoiceRegistrationTests
 
     private sealed class DisposableScopedVoiceHandler : VoiceHandler, IDisposable
     {
-        public int DisposeCount { get; private set; }
+        public DisposableScopedVoiceHandler() => ConstructorCount++;
+
+        public static int ConstructorCount { get; private set; }
+
+        public static int DisposeCount { get; private set; }
+
+        public static void Reset()
+        {
+            ConstructorCount = 0;
+            DisposeCount = 0;
+        }
 
         public void Dispose() => DisposeCount++;
+    }
+
+    private sealed class AsyncDisposableScopedVoiceHandler : VoiceHandler, IAsyncDisposable
+    {
+        public AsyncDisposableScopedVoiceHandler() => ConstructorCount++;
+
+        public static int ConstructorCount { get; private set; }
+
+        public static int DisposeCount { get; private set; }
+
+        public static void Reset()
+        {
+            ConstructorCount = 0;
+            DisposeCount = 0;
+        }
+
+        public ValueTask DisposeAsync()
+        {
+            DisposeCount++;
+            return ValueTask.CompletedTask;
+        }
+    }
+
+    private sealed class KeyAwareVoiceHandler : VoiceHandler
+    {
+        public KeyAwareVoiceHandler([ServiceKey] object? serviceKey = null) => ServiceKey = serviceKey;
+
+        public static object? ServiceKey { get; private set; }
+
+        public static void Reset() => ServiceKey = new object();
+    }
+
+    private interface IMissingVoiceDependency;
+
+    private sealed class MissingDependencyVoiceHandler : VoiceHandler
+    {
+        public MissingDependencyVoiceHandler(IMissingVoiceDependency dependency)
+        {
+        }
+    }
+
+    private sealed class ConstructorDependency;
+
+    private sealed class ConstructorSelectionVoiceHandler : VoiceHandler
+    {
+        [ActivatorUtilitiesConstructor]
+        public ConstructorSelectionVoiceHandler() => SelectedConstructor = "attributed";
+
+        public ConstructorSelectionVoiceHandler(ConstructorDependency dependency) =>
+            SelectedConstructor = "dependency";
+
+        public string SelectedConstructor { get; }
     }
 
     private sealed class DisposableVoiceHandler : VoiceHandler, IDisposable
@@ -576,6 +778,57 @@ public class VoiceRegistrationTests
             CancellationToken cancellationToken)
         {
             SessionId.TrySetResult(session.InvocationContext.SessionId);
+            return Task.CompletedTask;
+        }
+    }
+
+    private sealed class FullSurfaceVoiceHandler : VoiceHandler
+    {
+        private static string? s_operation;
+
+        public static string? Operation => Volatile.Read(ref s_operation);
+
+        public static void Reset() => Interlocked.Exchange(ref s_operation, null);
+
+        public override Task HandleAsync(
+            HttpRequest request,
+            HttpResponse response,
+            InvocationContext context,
+            CancellationToken cancellationToken) => Complete(response, "handle");
+
+        public override Task GetAsync(
+            string invocationId,
+            HttpRequest request,
+            HttpResponse response,
+            InvocationContext context,
+            CancellationToken cancellationToken) => Complete(response, "get");
+
+        public override Task CancelAsync(
+            string invocationId,
+            HttpRequest request,
+            HttpResponse response,
+            InvocationContext context,
+            CancellationToken cancellationToken) => Complete(response, "cancel");
+
+        public override Task GetOpenApiAsync(
+            HttpRequest request,
+            HttpResponse response,
+            CancellationToken cancellationToken) => Complete(response, "openapi");
+
+        public override Task GetAsyncApiJsonAsync(
+            HttpRequest request,
+            HttpResponse response,
+            CancellationToken cancellationToken) => Complete(response, "asyncapi-json");
+
+        public override Task GetAsyncApiYamlAsync(
+            HttpRequest request,
+            HttpResponse response,
+            CancellationToken cancellationToken) => Complete(response, "asyncapi-yaml");
+
+        private static Task Complete(HttpResponse response, string operation)
+        {
+            Interlocked.Exchange(ref s_operation, operation);
+            response.StatusCode = StatusCodes.Status204NoContent;
             return Task.CompletedTask;
         }
     }
