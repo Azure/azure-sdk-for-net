@@ -1315,8 +1315,7 @@ namespace Azure.Storage.Blobs.Test
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
-                SessionMode = SessionMode.Enabled,
-                AccountName = Tenants.TestConfigOAuth.AccountName,
+                SessionMode = SessionMode.Enabled
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
             BlobServiceClient oauthServiceClient = GetServiceClient_OAuth(options);
@@ -1379,7 +1378,6 @@ namespace Azure.Storage.Blobs.Test
             options.SessionOptions = new SessionOptions()
             {
                 SessionMode = SessionMode.Enabled,
-                AccountName = Tenants.TestConfigOAuth.AccountName,
                 SessionProvider = sharedProvider,
             };
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);

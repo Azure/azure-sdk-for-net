@@ -85,7 +85,7 @@ namespace Azure.Storage.Blobs
         /// <param name="encryptionAlgorithm"> Optional.  Version 2019-07-07 and later.  Specifies the algorithm to use for encryption. If not specified, the default is AES256. </param>
         /// <param name="ifTags"> Specify a SQL where clause on blob tags to operate only on blobs with a matching value. </param>
         /// <param name="requestConditions"> The content to send as the request conditions of the request. </param>
-        /// <param name="layoutEndpoint"> Optional.  When set, this request is routed to the given layout endpoint by <see cref="DataLocalityPolicy"/>.  The value is set on this message only, so requests issued while this download is in flight are never rerouted. </param>
+        /// <param name="layoutEndpoint"> Optional.  When set, this request is routed to the given layout endpoint by <see cref="DataLocalityPolicy"/>. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual async Task<Response<Stream>> DownloadAsync(string snapshot = default, string versionId = default, int? timeout = default, string range = default, string leaseId = default, bool? rangeGetContentMd5 = default, bool? rangeGetContentCrc64 = default, string structuredBodyType = default, string encryptionKey = default, string encryptionKeySha256 = default, EncryptionAlgorithmTypeInternal? encryptionAlgorithm = default, string ifTags = default, RequestConditions requestConditions = default, string layoutEndpoint = default, CancellationToken cancellationToken = default)
