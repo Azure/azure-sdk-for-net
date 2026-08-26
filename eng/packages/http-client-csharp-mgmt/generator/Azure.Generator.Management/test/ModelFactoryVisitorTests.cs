@@ -186,7 +186,8 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(docs, Does.Not.Contain("Previous model summary."));
             Assert.That(docs, Does.Not.Contain("Previous parameter summary."));
             Assert.That(docs, Does.Not.Contain("Previous parameter details."));
-            Assert.That(restoredMethod!.XmlDocs.Returns, Is.Not.Null);
+            Assert.That(docs, Does.Contain("A new global::Samples.Models.TestModel instance for mocking."));
+            Assert.That(docs, Does.Not.Contain("Previous return summary."));
         }
 
         [Test]
