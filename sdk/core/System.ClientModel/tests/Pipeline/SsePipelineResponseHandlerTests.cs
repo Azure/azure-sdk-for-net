@@ -247,6 +247,58 @@ public class SsePipelineResponseHandlerTests
     }
 
     [Test]
+    public void SyncReadReconnectsAndSendsLastEventId()
+    {
+        var handler = new SyncTrackingHandler(requestCount =>
+            requestCount == 1
+                ? CreateResponse(
+                    HttpStatusCode.OK,
+                    "retry: 0\nid: first\ndata: one\n\n")
+                : new HttpResponseMessage(HttpStatusCode.NoContent));
+        ClientPipeline pipeline = CreatePipeline(handler);
+        using PipelineResponse response = SendResponse(
+            pipeline,
+            new Uri("https://example.test/events"));
+
+        string content = ReadToEnd(response.ContentStream!);
+
+        Assert.AreEqual(
+            "retry: 0\nid: first\ndata: one\n\n",
+            content);
+        Assert.AreEqual(2, handler.RequestCount);
+        Assert.AreEqual("first", handler.LastEventId);
+#if NET5_0_OR_GREATER
+        Assert.AreEqual(
+            0,
+            handler.AsyncRequestCount,
+            "The synchronous read path must not use the async transport.");
+#endif
+    }
+
+    [Test]
+    public void SyncReadReconnectsAfterReadFailure()
+    {
+        var handler = new SyncTrackingHandler(requestCount =>
+            requestCount == 1
+                ? new HttpResponseMessage(HttpStatusCode.OK)
+                {
+                    Content = new StreamContent(
+                        new ThrowAtEndStream(
+                            "retry: 0\ndata: one\n\n"))
+                }
+                : new HttpResponseMessage(HttpStatusCode.NoContent));
+        ClientPipeline pipeline = CreatePipeline(handler);
+        using PipelineResponse response = SendResponse(
+            pipeline,
+            new Uri("https://example.test/events"));
+
+        string content = ReadToEnd(response.ContentStream!);
+
+        Assert.AreEqual("retry: 0\ndata: one\n\n", content);
+        Assert.AreEqual(2, handler.RequestCount);
+    }
+
+    [Test]
     public void SyncSendFollowsInitialRedirect()
     {
         int requestCount = 0;
@@ -529,6 +581,7 @@ public class SsePipelineResponseHandlerTests
         var owner = new TrackingDisposable();
         var stream = new SseReconnectingStream(
             Stream.Null,
+            (_, _) => throw new NotSupportedException(),
             async (_, _) =>
             {
                 reconnectStarted.TrySetResult(true);
@@ -659,6 +712,25 @@ public class SsePipelineResponseHandlerTests
         return message.ExtractResponse()!;
     }
 
+    private static PipelineResponse SendResponse(
+        ClientPipeline pipeline,
+        Uri uri,
+        string method = "GET")
+    {
+        using PipelineMessage message = pipeline.CreateMessage(
+            uri,
+            method,
+            PipelineMessageClassifier.Create(
+                stackalloc ushort[] { 200 }));
+        message.BufferResponse = false;
+        message.Request.Headers.Set(
+            "Accept",
+            "text/event-stream");
+
+        pipeline.Send(message);
+        return message.ExtractResponse()!;
+    }
+
     private static HttpResponseMessage CreateResponse(
         HttpStatusCode status,
         string content)
@@ -688,6 +760,61 @@ public class SsePipelineResponseHandlerTests
             bufferSize: 1024,
             leaveOpen: true);
         return await reader.ReadToEndAsync();
+    }
+
+    private static string ReadToEnd(Stream stream)
+    {
+        using var reader = new StreamReader(
+            stream,
+            Encoding.UTF8,
+            detectEncodingFromByteOrderMarks: false,
+            bufferSize: 1024,
+            leaveOpen: true);
+        return reader.ReadToEnd();
+    }
+
+    private sealed class SyncTrackingHandler : HttpMessageHandler
+    {
+        private readonly Func<int, HttpResponseMessage> _onSend;
+
+        internal SyncTrackingHandler(
+            Func<int, HttpResponseMessage> onSend)
+        {
+            _onSend = onSend;
+        }
+
+        internal int RequestCount { get; private set; }
+
+        internal int AsyncRequestCount { get; private set; }
+
+        internal string? LastEventId { get; private set; }
+
+        protected override Task<HttpResponseMessage> SendAsync(
+            HttpRequestMessage request,
+            CancellationToken cancellationToken)
+        {
+            AsyncRequestCount++;
+            return Task.FromResult(CreateResponse(request));
+        }
+
+#if NET5_0_OR_GREATER
+        protected override HttpResponseMessage Send(
+            HttpRequestMessage request,
+            CancellationToken cancellationToken)
+            => CreateResponse(request);
+#endif
+
+        private HttpResponseMessage CreateResponse(
+            HttpRequestMessage request)
+        {
+            RequestCount++;
+            LastEventId = request.Headers.TryGetValues(
+                "Last-Event-ID",
+                out IEnumerable<string>? values)
+                    ? string.Join(",", values)
+                    : null;
+            return _onSend(RequestCount);
+        }
     }
 
     private sealed class ThrowAtEndStream : MemoryStream

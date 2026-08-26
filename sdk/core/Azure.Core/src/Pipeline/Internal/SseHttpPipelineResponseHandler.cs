@@ -231,6 +231,7 @@ namespace Azure.Core.Pipeline
                 throw DisposeAndCreateInvalidResponseException(response);
             response.ContentStream = new SseReconnectingStream(
                 initialStream,
+                Reconnect,
                 ReconnectAsync,
                 _operationCancellationToken,
                 reconnectOwner: this,
@@ -238,8 +239,23 @@ namespace Azure.Core.Pipeline
             return response;
         }
 
+        private SseReconnectResult? Reconnect(
+            string? lastEventId,
+            CancellationToken cancellationToken)
+            => ReconnectCoreAsync(false, lastEventId, cancellationToken)
+                .EnsureCompleted();
+
+        private async ValueTask<SseReconnectResult?> ReconnectAsync(
+            string? lastEventId,
+            CancellationToken cancellationToken)
+            => await ReconnectCoreAsync(
+                true,
+                lastEventId,
+                cancellationToken).ConfigureAwait(false);
+
         private async ValueTask<SseReconnectResult?>
-            ReconnectAsync(
+            ReconnectCoreAsync(
+                bool async,
                 string? lastEventId,
                 CancellationToken cancellationToken)
         {
@@ -251,14 +267,23 @@ namespace Azure.Core.Pipeline
             for (int redirectCount = 0; ;)
             {
                 EnsureRedirectLimit(redirectCount);
-                SseSendResult result = await SendAsync(
-                    requestUri,
-                    method,
-                    content,
-                    dropContentHeaders,
-                    lastEventId,
-                    classifyResponse: true,
-                    cancellationToken).ConfigureAwait(false);
+                SseSendResult result = async
+                    ? await SendAsync(
+                        requestUri,
+                        method,
+                        content,
+                        dropContentHeaders,
+                        lastEventId,
+                        classifyResponse: true,
+                        cancellationToken).ConfigureAwait(false)
+                    : Send(
+                        requestUri,
+                        method,
+                        content,
+                        dropContentHeaders,
+                        lastEventId,
+                        classifyResponse: true,
+                        cancellationToken);
                 Response response = result.Response;
 
                 if (TryGetRedirect(

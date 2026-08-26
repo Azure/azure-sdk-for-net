@@ -41,7 +41,8 @@ internal sealed class SseReconnectingStream : Stream
     private static readonly TimeSpan s_defaultReconnectionInterval =
         TimeSpan.FromSeconds(3);
 
-    private readonly Func<string?, CancellationToken, ValueTask<SseReconnectResult?>> _reconnect;
+    private readonly Func<string?, CancellationToken, ValueTask<SseReconnectResult?>> _reconnectAsync;
+    private readonly Func<string?, CancellationToken, SseReconnectResult?> _reconnect;
     private readonly CancellationToken _operationCancellationToken;
     private readonly IDisposable? _reconnectOwner;
     private readonly CancellationTokenSource _disposeCancellation = new();
@@ -64,7 +65,8 @@ internal sealed class SseReconnectingStream : Stream
 
     internal SseReconnectingStream(
         Stream initialStream,
-        Func<string?, CancellationToken, ValueTask<SseReconnectResult?>> reconnect,
+        Func<string?, CancellationToken, SseReconnectResult?> reconnect,
+        Func<string?, CancellationToken, ValueTask<SseReconnectResult?>> reconnectAsync,
         CancellationToken operationCancellationToken,
         bool reconnectImmediately = false,
         IDisposable? reconnectOwner = null,
@@ -72,6 +74,7 @@ internal sealed class SseReconnectingStream : Stream
     {
         _current = new SseReconnectResult(initialStream);
         _reconnect = reconnect;
+        _reconnectAsync = reconnectAsync;
         _operationCancellationToken = operationCancellationToken;
         _reconnectImmediately = reconnectImmediately;
         _reconnectOwner = reconnectOwner;
@@ -97,10 +100,57 @@ internal sealed class SseReconnectingStream : Stream
             return 0;
         }
 
-#pragma warning disable AZC0102 // Sync-over-async is required by Stream.Read.
-        return ReadAsync(buffer, offset, count, CancellationToken.None)
-            .GetAwaiter().GetResult();
-#pragma warning restore AZC0102
+        while (true)
+        {
+            ThrowIfDisposed();
+            int ready = CopyReadyEvents(
+                buffer.AsSpan(offset, count));
+            if (ready > 0)
+            {
+                return ready;
+            }
+            if (_endOfStream)
+            {
+                return 0;
+            }
+
+            using CancellationTokenSource linkedCancellation =
+                CreateLinkedCancellationSource(CancellationToken.None);
+            int read;
+            try
+            {
+                linkedCancellation.Token.ThrowIfCancellationRequested();
+                read = GetCurrentStream().Read(
+                    _readBuffer,
+                    0,
+                    _readBuffer.Length);
+            }
+            catch (IOException) when (
+                !linkedCancellation.IsCancellationRequested)
+            {
+                read = 0;
+            }
+
+            if (read > 0)
+            {
+                ProcessBytes(_readBuffer.AsSpan(0, read));
+                continue;
+            }
+
+            FinalizePendingCarriageReturn();
+            ready = CopyReadyEvents(
+                buffer.AsSpan(offset, count));
+            if (ready > 0)
+            {
+                return ready;
+            }
+
+            DiscardIncompleteEvent();
+            if (!Reconnect(linkedCancellation.Token))
+            {
+                return 0;
+            }
+        }
     }
 
     public override async Task<int> ReadAsync(
@@ -230,6 +280,76 @@ internal sealed class SseReconnectingStream : Stream
     }
 #endif
 
+    private bool Reconnect(CancellationToken cancellationToken)
+    {
+        if (_endOfStream)
+        {
+            return false;
+        }
+
+        ReleaseCurrent();
+        ResetConnectionParsingState();
+
+        try
+        {
+            while (true)
+            {
+                if (!_reconnectImmediately)
+                {
+                    WaitForReconnectionInterval(cancellationToken);
+                }
+                _reconnectImmediately = false;
+
+                try
+                {
+                    SseReconnectResult? next = _reconnect(
+                        string.IsNullOrEmpty(_lastEventId)
+                            ? null
+                            : _lastEventId,
+                        cancellationToken);
+                    if (next is null)
+                    {
+                        _endOfStream = true;
+                        return false;
+                    }
+                    if (!TrySetCurrent(next))
+                    {
+                        next.Dispose();
+                        cancellationToken.ThrowIfCancellationRequested();
+                        throw new ObjectDisposedException(
+                            GetType().FullName);
+                    }
+
+                    return true;
+                }
+                catch (IOException) when (
+                    !cancellationToken.IsCancellationRequested)
+                {
+                }
+            }
+        }
+        catch
+        {
+            _endOfStream = true;
+            throw;
+        }
+    }
+
+    private void WaitForReconnectionInterval(
+        CancellationToken cancellationToken)
+    {
+        if (_reconnectionInterval <= TimeSpan.Zero)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            return;
+        }
+
+        if (cancellationToken.WaitHandle.WaitOne(_reconnectionInterval))
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+        }
+    }
+
     private async ValueTask<bool> ReconnectAsync(
         CancellationToken cancellationToken)
     {
@@ -255,7 +375,7 @@ internal sealed class SseReconnectingStream : Stream
 
                 try
                 {
-                    SseReconnectResult? next = await _reconnect(
+                    SseReconnectResult? next = await _reconnectAsync(
                         string.IsNullOrEmpty(_lastEventId)
                             ? null
                             : _lastEventId,

@@ -82,10 +82,10 @@ internal sealed class SsePipelineResponseHandler : IDisposable
                 out string? accept) ||
             !ContainsEventStream(accept))
         {
-            return new SsePipelineResponseHandler(pipeline, message);
+            return null;
         }
 
-        return null;
+        return new SsePipelineResponseHandler(pipeline, message);
     }
 
     internal void WrapResponse(PipelineMessage message)
@@ -140,13 +140,27 @@ internal sealed class SsePipelineResponseHandler : IDisposable
 
         response.ContentStream = new SseReconnectingStream(
             initialStream,
+            Reconnect,
             ReconnectAsync,
             _operationCancellationToken,
             reconnectOwner: this,
             initialLastEventId: _initialLastEventId);
     }
 
+    private SseReconnectResult? Reconnect(
+        string? lastEventId,
+        CancellationToken cancellationToken)
+        => ReconnectCoreAsync(false, lastEventId, cancellationToken)
+            .EnsureCompleted();
+
     private async ValueTask<SseReconnectResult?> ReconnectAsync(
+        string? lastEventId,
+        CancellationToken cancellationToken)
+        => await ReconnectCoreAsync(true, lastEventId, cancellationToken)
+            .ConfigureAwait(false);
+
+    private async ValueTask<SseReconnectResult?> ReconnectCoreAsync(
+        bool async,
         string? lastEventId,
         CancellationToken cancellationToken)
     {
@@ -174,7 +188,14 @@ internal sealed class SsePipelineResponseHandler : IDisposable
 
             try
             {
-                await _pipeline.SendAsync(message).ConfigureAwait(false);
+                if (async)
+                {
+                    await _pipeline.SendAsync(message).ConfigureAwait(false);
+                }
+                else
+                {
+                    _pipeline.Send(message);
+                }
             }
             catch (Exception exception)
                 when (!cancellationToken.IsCancellationRequested &&

@@ -369,6 +369,53 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public void SyncReadReconnectsAndSendsLastEventId()
+        {
+            var transport = new SyncOnlyTransport(requestCount =>
+                requestCount == 1
+                    ? new MockResponse(200).SetContent(
+                        "retry: 0\nid: first\ndata: one\n\n")
+                    : new MockResponse(204));
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"));
+
+            pipeline.Send(message, CancellationToken.None);
+            Stream stream = message.ExtractResponseContent()!;
+            string content = ReadToEnd(stream);
+
+            StringAssert.Contains("data: one", content);
+            Assert.AreEqual(2, transport.RequestCount);
+            Assert.AreEqual("first", transport.LastEventId);
+        }
+
+        [Test]
+        public void SyncReadReconnectsAfterConnectionDrop()
+        {
+            var transport = new SyncOnlyTransport(requestCount =>
+                requestCount == 1
+                    ? new MockResponse(200).SetContent(
+                        "retry: 0\ndata: one\n\n")
+                    : requestCount == 2
+                        ? new MockResponse(200).SetContent(
+                            "data: two\n\n")
+                        : new MockResponse(204));
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"));
+
+            pipeline.Send(message, CancellationToken.None);
+            Stream stream = message.ExtractResponseContent()!;
+            string content = ReadToEnd(stream);
+
+            StringAssert.Contains("data: one", content);
+            StringAssert.Contains("data: two", content);
+            Assert.AreEqual(3, transport.RequestCount);
+        }
+
+        [Test]
         public async Task DisposingStreamDisposesReconnectResponse()
         {
             int requestCount = 0;
@@ -526,6 +573,17 @@ namespace Azure.Core.Tests
             return await reader.ReadToEndAsync();
         }
 
+        private static string ReadToEnd(Stream stream)
+        {
+            using var reader = new StreamReader(
+                stream,
+                Encoding.UTF8,
+                detectEncodingFromByteOrderMarks: false,
+                bufferSize: 1024,
+                leaveOpen: true);
+            return reader.ReadToEnd();
+        }
+
         private static string? ReadContent(
             RequestContent? content)
         {
@@ -537,6 +595,36 @@ namespace Azure.Core.Tests
             using var stream = new MemoryStream();
             content.WriteTo(stream, CancellationToken.None);
             return Encoding.UTF8.GetString(stream.ToArray());
+        }
+
+        private sealed class SyncOnlyTransport : HttpPipelineTransport
+        {
+            private readonly Func<int, MockResponse> _onSend;
+
+            internal SyncOnlyTransport(Func<int, MockResponse> onSend)
+            {
+                _onSend = onSend;
+            }
+
+            internal int RequestCount { get; private set; }
+
+            internal string? LastEventId { get; private set; }
+
+            public override Request CreateRequest() => new MockRequest();
+
+            public override void Process(HttpMessage message)
+            {
+                RequestCount++;
+                message.Request.Headers.TryGetValue(
+                    "Last-Event-ID",
+                    out string? lastEventId);
+                LastEventId = lastEventId;
+                message.Response = _onSend(RequestCount);
+            }
+
+            public override ValueTask ProcessAsync(HttpMessage message)
+                => throw new AssertionException(
+                    "The synchronous read path must not use the async transport.");
         }
 
         private sealed class CancellationAwareTransport
