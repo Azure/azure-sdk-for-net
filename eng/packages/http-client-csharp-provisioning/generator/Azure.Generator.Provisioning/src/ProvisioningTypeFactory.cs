@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
-using System.Linq;
 
 namespace Azure.Generator.Provisioning
 {
@@ -197,9 +196,7 @@ namespace Azure.Generator.Provisioning
                 var info = infoProvider.GetProvisioningPropertyInfo(inputModelProperty);
                 if (info == null) return null;
                 var resolvedName = baseProperty?.Name ?? info.PropertyName;
-                var bicepType = info.IsDiscriminator
-                    ? new CSharpType(typeof(BicepValue<>), typeof(string))
-                    : info.TypeOverride ?? CreateCSharpType(inputModelProperty.Type);
+                var bicepType = info.TypeOverride ?? CreateCSharpType(inputModelProperty.Type);
                 if (bicepType == null) return null;
 
                 return ProvisioningPropertyProvider.Create(
@@ -211,6 +208,31 @@ namespace Azure.Generator.Provisioning
             }
 
             return baseProperty;
+        }
+
+        internal static bool IsInheritedDiscriminatorProperty(
+            InputModelType model,
+            InputModelProperty property)
+        {
+            if (model.DiscriminatorValue == null)
+            {
+                return false;
+            }
+
+            var serializedName = property.SerializedName ?? property.Name;
+            for (var baseModel = model.BaseModel; baseModel != null; baseModel = baseModel.BaseModel)
+            {
+                if (baseModel.DiscriminatorProperty is { } discriminator
+                    && string.Equals(
+                        discriminator.SerializedName ?? discriminator.Name,
+                        serializedName,
+                        StringComparison.Ordinal))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

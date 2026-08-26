@@ -305,7 +305,20 @@ namespace Azure.Generator.Provisioning.Providers
                     [bicepIdentifierParam, resourceVersionParam],
                     null,
                     initializer);
-                return [new ConstructorProvider(sig, MethodBodyStatement.Empty, this)];
+                var discriminatorProperty = BaseModelProvider?.CanonicalView.Properties
+                    .FirstOrDefault(property => property.IsDiscriminator);
+                MethodBodyStatement body = MethodBodyStatement.Empty;
+                if (discriminatorProperty != null)
+                {
+                    body = This.Property(discriminatorProperty.Name)
+                        .Invoke(
+                            "Assign",
+                            BicepTypeHelpers.BuildDiscriminatorValueExpression(
+                                _inputModel,
+                                discriminatorProperty))
+                        .Terminate();
+                }
+                return [new ConstructorProvider(sig, body, this)];
             }
 
             // Base resource: base(bicepIdentifier, "ResourceType", resourceVersion ?? "defaultVersion")
@@ -554,18 +567,6 @@ namespace Azure.Generator.Provisioning.Providers
         {
             var statements = new List<MethodBodyStatement>();
             statements.Add(Base.Invoke("DefineProvisionableProperties").Terminate());
-
-            if (_inputModel.DiscriminatorValue != null)
-            {
-                var discriminatorProperty = FindDiscriminatorPropertyProvider();
-                if (discriminatorProperty != null)
-                {
-                    statements.Add(
-                        This.Property(discriminatorProperty.Name)
-                            .Invoke("Assign", Literal(_inputModel.DiscriminatorValue))
-                            .Terminate());
-                }
-            }
 
             foreach (var provProp in Properties.OfType<ProvisioningPropertyProvider>())
             {
@@ -918,7 +919,7 @@ namespace Azure.Generator.Provisioning.Providers
             var result = new Dictionary<InputModelProperty, ProvisioningPropertyInfo>();
             foreach (var prop in _inputModel.Properties)
             {
-                if (prop.IsDiscriminator && IsInheritedDiscriminator(prop)) continue;
+                if (ProvisioningTypeFactory.IsInheritedDiscriminatorProperty(_inputModel, prop)) continue;
                 var serializedName = prop.SerializedName ?? prop.Name;
                 string[] bicepPath = [serializedName];
                 var isOutput = !prop.IsDiscriminator && prop.IsReadOnly;
@@ -934,43 +935,6 @@ namespace Azure.Generator.Provisioning.Providers
                         IsDiscriminator: prop.IsDiscriminator));
             }
             return result;
-        }
-
-        private PropertyProvider? FindDiscriminatorPropertyProvider()
-        {
-            var model = _inputModel.BaseModel;
-            while (model != null)
-            {
-                if (model.DiscriminatorProperty != null)
-                {
-                    var discriminatorProperty = CodeModelGenerator.Instance.TypeFactory.CreateModel(model)?
-                        .Properties.FirstOrDefault(property => property.IsDiscriminator);
-                    if (discriminatorProperty != null)
-                        return discriminatorProperty;
-                }
-                model = model.BaseModel;
-            }
-            return null;
-        }
-
-        private bool IsInheritedDiscriminator(InputModelProperty property)
-        {
-            var serializedName = property.SerializedName ?? property.Name;
-            var model = _inputModel.BaseModel;
-            while (model != null)
-            {
-                var discriminator = model.DiscriminatorProperty;
-                if (discriminator != null
-                    && string.Equals(
-                        discriminator.SerializedName ?? discriminator.Name,
-                        serializedName,
-                        StringComparison.Ordinal))
-                {
-                    return true;
-                }
-                model = model.BaseModel;
-            }
-            return false;
         }
 
         // ── ResourceVersions nested class ────────────────────────────

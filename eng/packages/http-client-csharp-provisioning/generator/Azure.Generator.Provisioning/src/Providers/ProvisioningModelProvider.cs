@@ -125,6 +125,12 @@ namespace Azure.Generator.Provisioning.Providers
             {
                 foreach (var inputProperty in model.Properties)
                 {
+                    if (ReferenceEquals(model, _inputModel)
+                        && ProvisioningTypeFactory.IsInheritedDiscriminatorProperty(_inputModel, inputProperty))
+                    {
+                        continue;
+                    }
+
                     if (ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(inputProperty, this)
                         is ProvisioningPropertyProvider property)
                     {
@@ -255,7 +261,20 @@ namespace Azure.Generator.Provisioning.Providers
                     [],
                     null,
                     initializer);
-                return [new ConstructorProvider(sig, MethodBodyStatement.Empty, this)];
+                var discriminatorProperty = BaseModelProvider?.CanonicalView.Properties
+                    .FirstOrDefault(property => property.IsDiscriminator);
+                MethodBodyStatement body = MethodBodyStatement.Empty;
+                if (discriminatorProperty != null)
+                {
+                    body = This.Property(discriminatorProperty.Name)
+                        .Invoke(
+                            "Assign",
+                            BicepTypeHelpers.BuildDiscriminatorValueExpression(
+                                _inputModel,
+                                discriminatorProperty))
+                        .Terminate();
+                }
+                return [new ConstructorProvider(sig, body, this)];
             }
 
             var regularSig = new ConstructorSignature(
@@ -270,18 +289,6 @@ namespace Azure.Generator.Provisioning.Providers
         {
             var statements = new List<MethodBodyStatement>();
             statements.Add(Base.Invoke("DefineProvisionableProperties").Terminate());
-
-            if (_inputModel.DiscriminatorValue != null)
-            {
-                var discriminatorProperty = FindDiscriminatorPropertyProvider();
-                if (discriminatorProperty != null)
-                {
-                    statements.Add(
-                        This.Property(discriminatorProperty.Name)
-                            .Invoke("Assign", Literal(_inputModel.DiscriminatorValue))
-                            .Terminate());
-                }
-            }
 
             foreach (var provProp in Properties.OfType<ProvisioningPropertyProvider>())
             {
@@ -350,25 +357,6 @@ namespace Azure.Generator.Provisioning.Providers
 
         protected override TypeProvider[] BuildSerializationProviders()
             => [];
-
-        // ── Discriminator helpers ────────────────────────────────────
-
-        private PropertyProvider? FindDiscriminatorPropertyProvider()
-        {
-            var model = _inputModel.BaseModel;
-            while (model != null)
-            {
-                if (model.DiscriminatorProperty != null)
-                {
-                    var discriminatorProperty = CodeModelGenerator.Instance.TypeFactory.CreateModel(model)?
-                        .Properties.FirstOrDefault(property => property.IsDiscriminator);
-                    if (discriminatorProperty != null)
-                        return discriminatorProperty;
-                }
-                model = model.BaseModel;
-            }
-            return null;
-        }
 
         // ── Type resolution helpers ──────────────────────────────────
 

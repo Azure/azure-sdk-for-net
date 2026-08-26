@@ -16,7 +16,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
     /// </summary>
     public partial class BackupPolicy : ProvisionableConstruct
     {
-        private BicepValue<string> _kind;
+        private BicepValue<BackupPolicyKind> _kind;
         private BicepValue<int> _retentionDays;
 
         /// <summary> Creates a new BackupPolicy. </summary>
@@ -25,7 +25,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         }
 
         /// <summary> The backup policy kind. </summary>
-        internal BicepValue<string> Kind
+        internal BicepValue<BackupPolicyKind> Kind
         {
             get
             {
@@ -53,7 +53,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" }, isRequired: true);
+            _kind = DefineProperty<BackupPolicyKind>(nameof(Kind), new string[] { "kind" }, isRequired: true);
             _retentionDays = DefineProperty<int>(nameof(RetentionDays), new string[] { "retentionDays" });
             DefineAdditionalProperties();
         }

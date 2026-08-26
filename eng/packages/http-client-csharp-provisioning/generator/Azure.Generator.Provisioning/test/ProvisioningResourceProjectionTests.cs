@@ -1012,10 +1012,15 @@ namespace Azure.Generator.Provisioning.Tests
         [Test]
         public void DiscriminatedResourceUsesInternalPropertyAndDerivedAssignment()
         {
+            var discriminatorEnum = CreateStringEnum(
+                "WidgetKind",
+                ("Base", "base"),
+                ("Derived", "derived"));
             var discriminatorProperty = CreateProperty(
                 "Kind",
                 isRequired: true,
                 isDiscriminator: true,
+                type: discriminatorEnum,
                 serializedName: "type");
             var armResourceType = CreateProperty("Type", serializedName: "type");
             var armResource = CreateModel("Resource", [armResourceType]);
@@ -1024,12 +1029,16 @@ namespace Azure.Generator.Provisioning.Tests
                 [discriminatorProperty],
                 armResource,
                 discriminatorProperty: discriminatorProperty);
+            var derivedDiscriminator = CreateProperty(
+                "Kind",
+                isRequired: true,
+                type: discriminatorEnum.Values.Single(value => Equals(value.Value, "derived")),
+                serializedName: "type");
             var derivedModel = CreateModel(
                 "DerivedWritableWidget",
-                [discriminatorProperty],
+                [derivedDiscriminator],
                 baseModel,
-                discriminatorValue: "derived",
-                discriminatorProperty: discriminatorProperty);
+                discriminatorValue: "derived");
             AddDiscriminatedSubtype(baseModel, derivedModel);
             var writableResource = CreateMetadata(
                 baseModel,
@@ -1042,22 +1051,23 @@ namespace Azure.Generator.Provisioning.Tests
                     CreateMethod(ResourceOperationKind.Read, ResourceScope.ResourceGroup),
                     CreateMethod(ResourceOperationKind.Create, ResourceScope.ResourceGroup)
                 ]);
-            ProvisioningMockHelpers.LoadMockPlugin(inputModels: () => [armResource, baseModel, derivedModel]);
+            ProvisioningMockHelpers.LoadMockPlugin(
+                inputEnums: () => [discriminatorEnum],
+                inputModels: () => [armResource, baseModel, derivedModel]);
             var baseProvider = CreateResourceProvider(writableResource);
             RegisterResourceProviders(baseProvider);
             var derivedProvider = new ProvisioningResourceProvider(derivedModel);
             var property = (ProvisioningPropertyProvider)baseProvider.Properties.Single();
-            var methodBody = derivedProvider.Methods
-                .Single(method => method.Signature.Name == "DefineProvisionableProperties")
-                .BodyStatements!
-                .ToDisplayString();
+            var constructorBody = derivedProvider.Constructors.Single().BodyStatements!.ToDisplayString();
 
             Assert.That(property.IsDiscriminator, Is.True);
             Assert.That(property.Modifiers.HasFlag(MethodSignatureModifiers.Internal), Is.True);
             Assert.That(property.Body.HasSetter, Is.False);
             Assert.That(property.BicepPath, Is.EqualTo(new[] { "type" }));
-            Assert.That(methodBody, Does.Contain("Kind.Assign(\"derived\");"));
-            Assert.That(methodBody, Does.Not.Contain("defaultValue: \"derived\""));
+            Assert.That(property.Type.Arguments[0].Name, Is.EqualTo("WidgetKind"));
+            Assert.That(derivedProvider.Properties, Is.Empty);
+            Assert.That(constructorBody, Does.Contain("WidgetKind.Derived"));
+            Assert.That(constructorBody, Does.Not.Contain("defaultValue: \"derived\""));
         }
 
         [Test]
@@ -1095,20 +1105,18 @@ namespace Azure.Generator.Provisioning.Tests
             RegisterResourceProviders(baseProvider);
             var intermediateProvider = new ProvisioningResourceProvider(intermediateModel);
             var leafProvider = new ProvisioningResourceProvider(leafModel);
+            var intermediateConstructorBody = intermediateProvider.Constructors.Single().BodyStatements!.ToDisplayString();
+            var leafConstructorBody = leafProvider.Constructors.Single().BodyStatements!.ToDisplayString();
             var intermediateBody = intermediateProvider.Methods
-                .Single(method => method.Signature.Name == "DefineProvisionableProperties")
-                .BodyStatements!
-                .ToDisplayString();
-            var leafBody = leafProvider.Methods
                 .Single(method => method.Signature.Name == "DefineProvisionableProperties")
                 .BodyStatements!
                 .ToDisplayString();
 
             Assert.That(intermediateProvider.Properties.Single().Name, Is.EqualTo("Breed"));
             Assert.That(intermediateProvider.Properties.Single().IsDiscriminator, Is.True);
-            Assert.That(intermediateBody, Does.Contain("Kind.Assign(\"intermediate\");"));
+            Assert.That(intermediateConstructorBody, Does.Contain("Kind.Assign(\"intermediate\");"));
             Assert.That(intermediateBody, Does.Contain("nameof(Breed)"));
-            Assert.That(leafBody, Does.Contain("Breed.Assign(\"leaf\");"));
+            Assert.That(leafConstructorBody, Does.Contain("Breed.Assign(\"leaf\");"));
         }
 
         private static ArmResourceMetadata CreateMetadata(
@@ -1406,5 +1414,35 @@ namespace Azure.Generator.Provisioning.Tests
                 isDiscriminator: isDiscriminator,
                 serializedName: serializedName ?? name.ToVariableName(),
                 serializationOptions: new(json: new(serializedName ?? name.ToVariableName())));
+
+        private static InputEnumType CreateStringEnum(
+            string name,
+            params (string Name, string Value)[] members)
+        {
+            var values = new List<InputEnumTypeValue>();
+            var enumType = new InputEnumType(
+                name,
+                "Sample.Models",
+                $"Sample.Models.{name}",
+                "public",
+                null,
+                string.Empty,
+                $"{name} enum.",
+                InputModelTypeUsage.Input | InputModelTypeUsage.Output,
+                InputPrimitiveType.String,
+                values,
+                true);
+            foreach (var member in members)
+            {
+                values.Add(new InputEnumTypeValue(
+                    member.Name,
+                    member.Value,
+                    InputPrimitiveType.String,
+                    string.Empty,
+                    $"{member.Name}.",
+                    enumType));
+            }
+            return enumType;
+        }
     }
 }
