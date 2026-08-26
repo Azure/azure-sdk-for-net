@@ -253,18 +253,18 @@ namespace Azure.AI.AnomalyDetector
         /// to be detected.
         /// </param>
         /// <param name="topContributorCount"> Number of top contributed variables for one anomalous time stamp in the response. </param>
-        /// <param name="startTime">
+        /// <param name="startsOn">
         /// Start date/time of data for detection, which should
         /// be in ISO 8601 format.
         /// </param>
-        /// <param name="endTime">
+        /// <param name="endsOn">
         /// End date/time of data for detection, which should
         /// be in ISO 8601 format.
         /// </param>
         /// <returns> A new <see cref="AnomalyDetector.MultivariateBatchDetectionOptions"/> instance for mocking. </returns>
-        public static MultivariateBatchDetectionOptions MultivariateBatchDetectionOptions(Uri dataSource = default, int? topContributorCount = default, DateTimeOffset startTime = default, DateTimeOffset endTime = default)
+        public static MultivariateBatchDetectionOptions MultivariateBatchDetectionOptions(Uri dataSource = default, int? topContributorCount = default, DateTimeOffset startsOn = default, DateTimeOffset endsOn = default)
         {
-            return new MultivariateBatchDetectionOptions(dataSource, topContributorCount, startTime, endTime, additionalBinaryDataProperties: null);
+            return new MultivariateBatchDetectionOptions(dataSource, topContributorCount, startsOn, endsOn, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Anomaly status and information. </summary>
@@ -331,11 +331,11 @@ namespace Azure.AI.AnomalyDetector
         /// Data schema of the input data source. The default
         /// is OneTable.
         /// </param>
-        /// <param name="startTime">
+        /// <param name="startsOn">
         /// Start date/time of training data, which should be
         /// in ISO 8601 format.
         /// </param>
-        /// <param name="endTime">
+        /// <param name="endsOn">
         /// End date/time of training data, which should be
         /// in ISO 8601 format.
         /// </param>
@@ -352,15 +352,15 @@ namespace Azure.AI.AnomalyDetector
         /// <param name="errors"> Error messages after failure to create a model. </param>
         /// <param name="diagnosticsInfo"> Diagnostics information to help inspect the states of a model or variable. </param>
         /// <returns> A new <see cref="AnomalyDetector.ModelInfo"/> instance for mocking. </returns>
-        public static ModelInfo ModelInfo(Uri dataSource = default, DataSchema? dataSchema = default, DateTimeOffset startTime = default, DateTimeOffset endTime = default, string displayName = default, int? slidingWindow = default, AlignPolicy alignPolicy = default, ModelStatus? status = default, IEnumerable<ErrorResponse> errors = default, DiagnosticsInfo diagnosticsInfo = default)
+        public static ModelInfo ModelInfo(Uri dataSource = default, DataSchema? dataSchema = default, DateTimeOffset startsOn = default, DateTimeOffset endsOn = default, string displayName = default, int? slidingWindow = default, AlignPolicy alignPolicy = default, ModelStatus? status = default, IEnumerable<ErrorResponse> errors = default, DiagnosticsInfo diagnosticsInfo = default)
         {
             errors ??= new ChangeTrackingList<ErrorResponse>();
 
             return new ModelInfo(
                 dataSource,
                 dataSchema,
-                startTime,
-                endTime,
+                startsOn,
+                endsOn,
                 displayName,
                 slidingWindow,
                 alignPolicy,
@@ -421,16 +421,16 @@ namespace Azure.AI.AnomalyDetector
 
         /// <summary> Response of getting a model. </summary>
         /// <param name="modelId"> Model identifier. </param>
-        /// <param name="createdTime"> Date and time (UTC) when the model was created. </param>
-        /// <param name="lastUpdatedTime"> Date and time (UTC) when the model was last updated. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the model was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the model was last updated. </param>
         /// <param name="modelInfo">
         /// Training result of a model, including its status, errors, and diagnostics
         /// information.
         /// </param>
         /// <returns> A new <see cref="AnomalyDetector.AnomalyDetectionModel"/> instance for mocking. </returns>
-        public static AnomalyDetectionModel AnomalyDetectionModel(Guid modelId = default, DateTimeOffset createdTime = default, DateTimeOffset lastUpdatedTime = default, ModelInfo modelInfo = default)
+        public static AnomalyDetectionModel AnomalyDetectionModel(Guid modelId = default, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, ModelInfo modelInfo = default)
         {
-            return new AnomalyDetectionModel(modelId, createdTime, lastUpdatedTime, modelInfo, additionalBinaryDataProperties: null);
+            return new AnomalyDetectionModel(modelId, createdOn, lastUpdatedOn, modelInfo, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Request of the last detection. </summary>

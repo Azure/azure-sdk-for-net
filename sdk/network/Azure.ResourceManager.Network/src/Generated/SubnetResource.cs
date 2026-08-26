@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(ResourceType, out string subnetApiVersion);
             _subnetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _subnetsRestClient = new Subnets(_subnetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subnetApiVersion ?? "2025-07-01");
+            _subnetsRestClient = new Subnets(_subnetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subnetApiVersion ?? "2025-09-01");
             _resourceNavigationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _resourceNavigationLinksRestClient = new ResourceNavigationLinks(_resourceNavigationLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subnetApiVersion ?? "2025-07-01");
+            _resourceNavigationLinksRestClient = new ResourceNavigationLinks(_resourceNavigationLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subnetApiVersion ?? "2025-09-01");
             _serviceAssociationLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", ResourceType.Namespace, Diagnostics);
-            _serviceAssociationLinksRestClient = new ServiceAssociationLinks(_serviceAssociationLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subnetApiVersion ?? "2025-07-01");
+            _serviceAssociationLinksRestClient = new ServiceAssociationLinks(_serviceAssociationLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subnetApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -521,7 +521,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

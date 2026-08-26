@@ -221,7 +221,7 @@ namespace Azure.Provisioning.Cdn
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<FrontDoorEndpointProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<CdnProfile>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<CdnProfile>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

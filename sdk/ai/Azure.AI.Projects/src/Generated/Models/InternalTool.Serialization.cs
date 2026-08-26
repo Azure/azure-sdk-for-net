@@ -143,10 +143,14 @@ namespace Azure.AI.Projects
                         return CaptureStructuredOutputsTool.DeserializeCaptureStructuredOutputsTool(element, options);
                     case "a2a_preview":
                         return A2APreviewTool.DeserializeA2APreviewTool(element, options);
+                    case "a2a":
+                        return A2ATool.DeserializeA2ATool(element, options);
                     case "work_iq_preview":
                         return WorkIQPreviewTool.DeserializeWorkIQPreviewTool(element, options);
                     case "fabric_iq_preview":
                         return FabricIQPreviewTool.DeserializeFabricIQPreviewTool(element, options);
+                    case "web_iq_preview":
+                        return WebIQPreviewTool.DeserializeWebIQPreviewTool(element, options);
                     case "memory_search_preview":
                         return MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool(element, options);
                     case "code_interpreter":

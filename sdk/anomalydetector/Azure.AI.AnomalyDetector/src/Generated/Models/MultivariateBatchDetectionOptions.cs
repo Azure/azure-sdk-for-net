@@ -28,22 +28,22 @@ namespace Azure.AI.AnomalyDetector
         /// contain at least slidingWindow entries preceding the start time of the data
         /// to be detected.
         /// </param>
-        /// <param name="startTime">
+        /// <param name="startsOn">
         /// Start date/time of data for detection, which should
         /// be in ISO 8601 format.
         /// </param>
-        /// <param name="endTime">
+        /// <param name="endsOn">
         /// End date/time of data for detection, which should
         /// be in ISO 8601 format.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="dataSource"/> is null. </exception>
-        public MultivariateBatchDetectionOptions(Uri dataSource, DateTimeOffset startTime, DateTimeOffset endTime)
+        public MultivariateBatchDetectionOptions(Uri dataSource, DateTimeOffset startsOn, DateTimeOffset endsOn)
         {
             Argument.AssertNotNull(dataSource, nameof(dataSource));
 
             DataSource = dataSource;
-            StartTime = startTime;
-            EndTime = endTime;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="MultivariateBatchDetectionOptions"/>. </summary>
@@ -56,21 +56,21 @@ namespace Azure.AI.AnomalyDetector
         /// to be detected.
         /// </param>
         /// <param name="topContributorCount"> Number of top contributed variables for one anomalous time stamp in the response. </param>
-        /// <param name="startTime">
+        /// <param name="startsOn">
         /// Start date/time of data for detection, which should
         /// be in ISO 8601 format.
         /// </param>
-        /// <param name="endTime">
+        /// <param name="endsOn">
         /// End date/time of data for detection, which should
         /// be in ISO 8601 format.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MultivariateBatchDetectionOptions(Uri dataSource, int? topContributorCount, DateTimeOffset startTime, DateTimeOffset endTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MultivariateBatchDetectionOptions(Uri dataSource, int? topContributorCount, DateTimeOffset startsOn, DateTimeOffset endsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataSource = dataSource;
             TopContributorCount = topContributorCount;
-            StartTime = startTime;
-            EndTime = endTime;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -91,12 +91,12 @@ namespace Azure.AI.AnomalyDetector
         /// Start date/time of data for detection, which should
         /// be in ISO 8601 format.
         /// </summary>
-        public DateTimeOffset StartTime { get; set; }
+        public DateTimeOffset StartsOn { get; set; }
 
         /// <summary>
         /// End date/time of data for detection, which should
         /// be in ISO 8601 format.
         /// </summary>
-        public DateTimeOffset EndTime { get; set; }
+        public DateTimeOffset EndsOn { get; set; }
     }
 }

@@ -101,8 +101,8 @@ namespace Azure.Security.KeyVault.Administration
         /// </summary>
         public DateTimeOffset? StartTime => _value switch
         {
-            SelectiveKeyRestoreDetailsInternal r => r.StartTime,
-            RestoreDetailsInternal r => r.StartTime,
+            SelectiveKeyRestoreDetailsInternal r => r.StartsOn,
+            RestoreDetailsInternal r => r.StartsOn,
             null => default,
             _ => throw new InvalidOperationException("Unknown type")
         };
@@ -112,8 +112,8 @@ namespace Azure.Security.KeyVault.Administration
         /// </summary>
         public DateTimeOffset? EndTime => _value switch
         {
-            SelectiveKeyRestoreDetailsInternal r => r.EndTime,
-            RestoreDetailsInternal r => r.EndTime,
+            SelectiveKeyRestoreDetailsInternal r => r.EndsOn,
+            RestoreDetailsInternal r => r.EndsOn,
             null => default,
             _ => throw new InvalidOperationException("Unknown type")
         };
