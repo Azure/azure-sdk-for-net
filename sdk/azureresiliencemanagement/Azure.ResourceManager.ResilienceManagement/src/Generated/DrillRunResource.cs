@@ -538,10 +538,17 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="operationId"> A GUID that represents the Long Running OperationId. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ListReportDownloadUrlResult>> GetReportDownloadUriAsync(ListReportDownloadUrlContent content = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<ArmOperation> GetReportDownloadUriAsync(WaitUntil waitUntil, string operationId, ListReportDownloadUrlContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            Argument.AssertNotNull(content, nameof(content));
+
             using DiagnosticScope scope = _drillRunsClientDiagnostics.CreateScope("DrillRunResource.GetReportDownloadUri");
             scope.Start();
             try
@@ -550,14 +557,14 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _drillRunsRestClient.CreateGetReportDownloadUriRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ListReportDownloadUrlContent.ToRequestContent(content), context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ListReportDownloadUrlResult> response = Response.FromValue(ListReportDownloadUrlResult.FromResponse(result), result);
-                if (response.Value == null)
+                HttpMessage message = _drillRunsRestClient.CreateGetReportDownloadUriRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, ListReportDownloadUrlContent.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillRunsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                 {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 }
-                return response;
+                return operation;
             }
             catch (Exception e)
             {
@@ -587,10 +594,17 @@ namespace Azure.ResourceManager.ResilienceManagement
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="operationId"> A GUID that represents the Long Running OperationId. </param>
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ListReportDownloadUrlResult> GetReportDownloadUri(ListReportDownloadUrlContent content = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual ArmOperation GetReportDownloadUri(WaitUntil waitUntil, string operationId, ListReportDownloadUrlContent content, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
+            Argument.AssertNotNull(content, nameof(content));
+
             using DiagnosticScope scope = _drillRunsClientDiagnostics.CreateScope("DrillRunResource.GetReportDownloadUri");
             scope.Start();
             try
@@ -599,14 +613,14 @@ namespace Azure.ResourceManager.ResilienceManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _drillRunsRestClient.CreateGetReportDownloadUriRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, ListReportDownloadUrlContent.ToRequestContent(content), context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<ListReportDownloadUrlResult> response = Response.FromValue(ListReportDownloadUrlResult.FromResponse(result), result);
-                if (response.Value == null)
+                HttpMessage message = _drillRunsRestClient.CreateGetReportDownloadUriRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, operationId, ListReportDownloadUrlContent.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                ResilienceManagementArmOperation operation = new ResilienceManagementArmOperation(_drillRunsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
                 {
-                    throw new RequestFailedException(response.GetRawResponse());
+                    operation.WaitForCompletionResponse(cancellationToken);
                 }
-                return response;
+                return operation;
             }
             catch (Exception e)
             {

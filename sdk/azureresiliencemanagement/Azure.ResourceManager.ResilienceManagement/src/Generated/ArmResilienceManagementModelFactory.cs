@@ -1685,15 +1685,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new ListReportDownloadUrlContent(format, default);
         }
 
-        /// <param name="format"> Format of the report the download URL refers to. </param>
-        /// <param name="downloadUri"> Short-lived, read-only URL to download the report. </param>
-        /// <param name="expiryTimestamp"> Timestamp at which the download URL expires. </param>
-        /// <returns> A new <see cref="Models.ListReportDownloadUrlResult"/> instance for mocking. </returns>
-        public static ListReportDownloadUrlResult ListReportDownloadUrlResult(DrillReportFormat? format = default, Uri downloadUri = default, DateTimeOffset? expiryTimestamp = default)
-        {
-            return new ListReportDownloadUrlResult(format, downloadUri, expiryTimestamp, default);
-        }
-
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>

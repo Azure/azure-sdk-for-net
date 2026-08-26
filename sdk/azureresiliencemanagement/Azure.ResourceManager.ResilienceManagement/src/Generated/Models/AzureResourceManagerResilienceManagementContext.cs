@@ -77,7 +77,6 @@ namespace Azure.ResourceManager.ResilienceManagement
     [ModelReaderWriterBuildable(typeof(JobUserComment))]
     [ModelReaderWriterBuildable(typeof(LastRunProperties))]
     [ModelReaderWriterBuildable(typeof(ListReportDownloadUrlContent))]
-    [ModelReaderWriterBuildable(typeof(ListReportDownloadUrlResult))]
     [ModelReaderWriterBuildable(typeof(ManagedServiceIdentity))]
     [ModelReaderWriterBuildable(typeof(MarkAsCompleteContent))]
     [ModelReaderWriterBuildable(typeof(MonitoringPropertiesOfDrill))]

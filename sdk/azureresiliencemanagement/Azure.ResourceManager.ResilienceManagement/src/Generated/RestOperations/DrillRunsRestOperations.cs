@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.ResilienceManagement
             return message;
         }
 
-        internal HttpMessage CreateGetReportDownloadUriRequest(string serviceGroupName, string drillName, string drillRunName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetReportDownloadUriRequest(string serviceGroupName, string drillName, string drillRunName, string operationId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -297,10 +297,8 @@ namespace Azure.ResourceManager.ResilienceManagement
             request.Uri = uri;
             request.Method = RequestMethod.Post;
             _userAgent.Apply(message);
-            if (content != null)
-            {
-                request.Headers.SetValue("Content-Type", "application/json");
-            }
+            request.Headers.SetValue("operation-id", operationId);
+            request.Headers.SetValue("Content-Type", "application/json");
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
