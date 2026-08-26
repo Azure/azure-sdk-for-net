@@ -104,6 +104,16 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("maxProvisionedBandwidthMiBPerSec"u8);
                 writer.WriteNumberValue(MaxProvisionedBandwidthMiBPerSec.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(GuardrailIOScalar))
+            {
+                writer.WritePropertyName("guardrailIOScalar"u8);
+                writer.WriteNumberValue(GuardrailIOScalar.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(GuardrailBandwidthScalar))
+            {
+                writer.WritePropertyName("guardrailBandwidthScalar"u8);
+                writer.WriteNumberValue(GuardrailBandwidthScalar.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -152,6 +162,8 @@ namespace Azure.ResourceManager.Storage.Models
             int? maxProvisionedIops = default;
             int? minProvisionedBandwidthMiBPerSec = default;
             int? maxProvisionedBandwidthMiBPerSec = default;
+            double? guardrailIOScalar = default;
+            double? guardrailBandwidthScalar = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -209,6 +221,24 @@ namespace Azure.ResourceManager.Storage.Models
                     maxProvisionedBandwidthMiBPerSec = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("guardrailIOScalar"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    guardrailIOScalar = prop.Value.GetDouble();
+                    continue;
+                }
+                if (prop.NameEquals("guardrailBandwidthScalar"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    guardrailBandwidthScalar = prop.Value.GetDouble();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -221,6 +251,8 @@ namespace Azure.ResourceManager.Storage.Models
                 maxProvisionedIops,
                 minProvisionedBandwidthMiBPerSec,
                 maxProvisionedBandwidthMiBPerSec,
+                guardrailIOScalar,
+                guardrailBandwidthScalar,
                 additionalBinaryDataProperties);
         }
     }
