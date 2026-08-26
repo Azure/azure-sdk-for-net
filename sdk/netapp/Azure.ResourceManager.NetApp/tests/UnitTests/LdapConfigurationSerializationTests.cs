@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.NetApp.Tests
             {
                 Domain = "contoso.com",
                 IsLdapOverTlsEnabled = false,
-                SecureLdapType = SecureLdapType.LdapOverTLS,
+                SecureLdapType = SecureLdapType.LdapOverTls,
                 ServerCACertificate = "certificate",
                 CertificateCNHost = "ldap.contoso.com",
                 LdapPort = 636,
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NetApp.Tests
                 LdapConfiguration = new LdapConfiguration
                 {
                     Domain = "contoso.com",
-                    SecureLdapType = SecureLdapType.LdapOverTLS
+                    SecureLdapType = SecureLdapType.LdapOverTls
                 }
             };
 

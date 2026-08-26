@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.NetApp.Models
             SecureLdapType? secureLdapType = SecureLdapType;
             if (!Optional.IsDefined(secureLdapType) && Optional.IsDefined(IsLdapOverTlsEnabled))
             {
-                secureLdapType = IsLdapOverTlsEnabled.Value ? global::Azure.ResourceManager.NetApp.Models.SecureLdapType.LdapOverTLS : global::Azure.ResourceManager.NetApp.Models.SecureLdapType.None;
+                secureLdapType = IsLdapOverTlsEnabled.Value ? global::Azure.ResourceManager.NetApp.Models.SecureLdapType.LdapOverTls : global::Azure.ResourceManager.NetApp.Models.SecureLdapType.None;
             }
             if (Optional.IsDefined(secureLdapType))
             {
