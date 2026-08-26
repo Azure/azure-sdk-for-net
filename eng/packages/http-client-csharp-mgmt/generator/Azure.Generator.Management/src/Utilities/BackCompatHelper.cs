@@ -457,14 +457,23 @@ namespace Azure.Generator.Management.Utilities
                     }
 
                     var parameter = parameters[parameterIndex];
-                    value = parameter.Type.AreNamesEqual(currentParameter.Type)
-                        ? parameter
-                        : currentParameter.Type.IsValueType && !currentParameter.Type.IsNullable
+                    if (parameter.Type.AreNamesEqual(currentParameter.Type))
+                    {
+                        value = parameter;
+                    }
+                    else if (IsETagParameter(currentParameter))
+                    {
+                        value = currentParameter.Type.IsValueType && !currentParameter.Type.IsNullable
                             ? New.Instance(typeof(ETag), parameter)
                             : new TernaryConditionalExpression(
-                            parameter.NotEqual(Null),
-                            New.Instance(typeof(ETag), parameter),
-                            new CastExpression(Null, currentParameter.Type));
+                                parameter.NotEqual(Null),
+                                New.Instance(typeof(ETag), parameter),
+                                new CastExpression(Null, currentParameter.Type));
+                    }
+                    else
+                    {
+                        return null;
+                    }
 
                     if (parameter.IsRef || parameter.IsOut)
                     {
