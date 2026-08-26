@@ -6021,6 +6021,37 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        [LiveOnly(Reason = "Encryption Key cannot be stored in recordings.")]
+        public async Task GetLayoutAsync_CPK()
+        {
+            await using DisposingFileSystem test = await GetNewFileSystem();
+
+            // Arrange
+            DataLakeCustomerProvidedKey customerProvidedKey = GetCustomerProvidedKey();
+            DataLakeFileClient file = InstrumentClient(
+                test.FileSystem.GetFileClient(GetNewFileName()).WithCustomerProvidedKey(customerProvidedKey));
+            long size = 5 * Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream);
+            }
+
+            // Act
+            bool anyPages = false;
+            await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync())
+            {
+                anyPages = true;
+
+                // Assert
+                Assert.AreEqual(customerProvidedKey.EncryptionKeyHash, layoutInfo.EncryptionKeySha256);
+            }
+
+            Assert.IsTrue(anyPages, "Expected GetLayoutAsync to return at least one page when using a customer-provided key");
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetLayoutAsync_OAuth()
         {
             // The layout endpoints are returned by the service, so exercise the
