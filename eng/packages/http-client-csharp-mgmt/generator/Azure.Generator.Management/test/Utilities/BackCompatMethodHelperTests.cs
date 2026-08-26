@@ -97,6 +97,9 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                 ]);
 
             var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            Assert.That(result[1].Signature.Parameters[0].DefaultValue, Is.Null);
+            Assert.That(result[1].Signature.Parameters[1].DefaultValue, Is.Not.Null);
+
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
         }
@@ -125,6 +128,28 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         }
 
         [Test]
+        public void AddsETagOverloadForMatchConditionsParameter()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("matchConditions", $"The match conditions.", new CSharpType(typeof(MatchConditions), isNullable: true), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
+            var previous = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(ETag), isNullable: true), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
+
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
+        [Test]
         public void AddsStringOverloadForRequestConditionsParameter()
         {
             var enclosingType = new TestTypeView("TestClient");
@@ -139,6 +164,28 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                 [
                     new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default),
                     new ParameterProvider("ifNoneMatch", $"The non-match condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default),
+                    new ParameterProvider("ifModifiedSince", $"The modification condition.", new CSharpType(typeof(DateTimeOffset), isNullable: true), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
+
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
+        [Test]
+        public void AddsModificationConditionOverloadForRequestConditionsParameter()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("requestConditions", $"The request conditions.", new CSharpType(typeof(RequestConditions), isNullable: true), defaultValue: Default),
+                    OptionalCancellationToken()
+                ]);
+            var previous = CreateMethod(
+                enclosingType,
+                [
                     new ParameterProvider("ifModifiedSince", $"The modification condition.", new CSharpType(typeof(DateTimeOffset), isNullable: true), defaultValue: Default),
                     OptionalCancellationToken()
                 ]);
@@ -213,6 +260,38 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             var result = DecorateWithLastContract(enclosingType, [current], [previous]);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
+        [Test]
+        public void AddsStringOverloadForRequiredETagParameter()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(ETag)))]);
+            var previous = CreateMethod(
+                enclosingType,
+                [new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default)]);
+
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
+        [Test]
+        public void GeneratedOverloadUsesCurrentConditionalHeaderWireInfo()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var currentParameter = new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(ETag), isNullable: true), defaultValue: Default);
+            currentParameter.Update(wireInfo: new WireInformation(default, "If-Match"));
+            var current = CreateMethod(enclosingType, [currentParameter]);
+            var previousParameter = new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default);
+            previousParameter.Update(wireInfo: new WireInformation(default, "ifMatch"));
+            var previous = CreateMethod(enclosingType, [previousParameter]);
+
+            var result = DecorateWithLastContract(enclosingType, [current], [previous]);
+
+            Assert.That(result[1].Signature.Parameters[0].WireInfo, Is.SameAs(currentParameter.WireInfo));
         }
 
         [Test]

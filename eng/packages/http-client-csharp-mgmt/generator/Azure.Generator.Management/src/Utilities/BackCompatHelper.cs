@@ -29,6 +29,8 @@ namespace Azure.Generator.Management.Utilities
         private const string IfNoneMatch = "If-None-Match";
         private const string IfModifiedSince = "If-Modified-Since";
         private const string IfUnmodifiedSince = "If-Unmodified-Since";
+        private const string MatchConditionsParameterName = "matchConditions";
+        private const string RequestConditionsParameterName = "requestConditions";
         private static readonly Dictionary<string, string> ConditionalHeaderProperties = new(StringComparer.OrdinalIgnoreCase)
         {
             [IfMatch.ToIdentifierName()] = nameof(RequestConditions.IfMatch),
@@ -75,7 +77,8 @@ namespace Azure.Generator.Management.Utilities
                 }
 
                 MethodProvider? currentMethod = null;
-                foreach (var transformedSignature in TransformConditionalHeaderParameters(previousMethod.Signature))
+                var transformedSignatures = TransformConditionalHeaderParameters(previousMethod.Signature);
+                foreach (var transformedSignature in transformedSignatures)
                 {
                     if (candidates.TryGetValue(transformedSignature.Name, out var methodsWithName))
                     {
@@ -89,12 +92,17 @@ namespace Azure.Generator.Management.Utilities
 
                 if (currentMethod is null)
                 {
+                    if (transformedSignatures.Count > 0 || HasConditionalHeaderParameter(previousMethod.Signature))
+                    {
+                        ReportDroppedOverloadDiagnostic(enclosingType, previousMethod.Signature);
+                    }
                     continue;
                 }
 
                 var overload = BuildStringToETagOverload(enclosingType, previousMethod, currentMethod);
                 if (overload is null)
                 {
+                    ReportDroppedOverloadDiagnostic(enclosingType, previousMethod.Signature);
                     continue;
                 }
 
@@ -243,7 +251,7 @@ namespace Azure.Generator.Management.Utilities
         {
             var conditionalParameters = new List<ParameterProvider>();
             var etagParameters = new List<ParameterProvider>(signature.Parameters.Count);
-            var hasETagParameter = false;
+            var hasDirectETagParameter = false;
             var hasModificationCondition = false;
             foreach (var parameter in signature.Parameters)
             {
@@ -258,13 +266,18 @@ namespace Azure.Generator.Management.Utilities
                     continue;
                 }
 
+                if (!IsSupportedConditionalHeaderParameter(parameter, propertyName))
+                {
+                    return [];
+                }
+
                 conditionalParameters.Add(parameter);
                 hasModificationCondition |= propertyName is nameof(RequestConditions.IfModifiedSince) or nameof(RequestConditions.IfUnmodifiedSince);
                 if (propertyName is nameof(RequestConditions.IfMatch) or nameof(RequestConditions.IfNoneMatch)
                     && parameter.Type.Equals(typeof(string)))
                 {
                     etagParameters.Add(CloneParameter(parameter, type: new CSharpType(typeof(ETag), isNullable: true)));
-                    hasETagParameter = true;
+                    hasDirectETagParameter = true;
                 }
                 else
                 {
@@ -272,14 +285,15 @@ namespace Azure.Generator.Management.Utilities
                 }
             }
 
-            if (!hasETagParameter)
+            if (conditionalParameters.Count == 0)
             {
                 return [];
             }
 
-            var transformedSignatures = new List<MethodSignature>(3)
+            var transformedSignatures = new List<MethodSignature>(3);
+            if (hasDirectETagParameter)
             {
-                new(
+                transformedSignatures.Add(new(
                     signature.Name,
                     signature.Description,
                     signature.Modifiers,
@@ -290,8 +304,8 @@ namespace Azure.Generator.Management.Utilities
                     GenericArguments: signature.GenericArguments,
                     GenericParameterConstraints: signature.GenericParameterConstraints,
                     ExplicitInterface: signature.ExplicitInterface,
-                    NonDocumentComment: signature.NonDocumentComment)
-            };
+                    NonDocumentComment: signature.NonDocumentComment));
+            }
 
             if (!hasModificationCondition)
             {
@@ -301,7 +315,7 @@ namespace Azure.Generator.Management.Utilities
                     signature.Modifiers,
                     signature.ReturnType,
                     signature.ReturnDescription,
-                    CreateGroupedParameters(signature, conditionalParameters, "matchConditions", typeof(MatchConditions)),
+                    CreateGroupedParameters(signature, conditionalParameters, MatchConditionsParameterName, typeof(MatchConditions)),
                     Attributes: signature.Attributes,
                     GenericArguments: signature.GenericArguments,
                     GenericParameterConstraints: signature.GenericParameterConstraints,
@@ -315,7 +329,7 @@ namespace Azure.Generator.Management.Utilities
                 signature.Modifiers,
                 signature.ReturnType,
                 signature.ReturnDescription,
-                CreateGroupedParameters(signature, conditionalParameters, "requestConditions", typeof(RequestConditions)),
+                CreateGroupedParameters(signature, conditionalParameters, RequestConditionsParameterName, typeof(RequestConditions)),
                 Attributes: signature.Attributes,
                 GenericArguments: signature.GenericArguments,
                 GenericParameterConstraints: signature.GenericParameterConstraints,
@@ -361,12 +375,17 @@ namespace Azure.Generator.Management.Utilities
             var previousSignature = previousMethod.Signature;
             var currentSignature = currentMethod.Signature;
             ParameterProvider? currentConditionalParameter = null;
+            var currentConditionalParameters = new Dictionary<string, ParameterProvider>(StringComparer.OrdinalIgnoreCase);
             foreach (var parameter in currentSignature.Parameters)
             {
                 if (IsConditionsParameter(parameter) || IsETagParameter(parameter))
                 {
-                    currentConditionalParameter = parameter;
-                    break;
+                    currentConditionalParameter ??= parameter;
+                }
+
+                if (ConditionalHeaderProperties.ContainsKey(parameter.Name))
+                {
+                    currentConditionalParameters[parameter.Name] = parameter;
                 }
             }
             if (currentConditionalParameter is null)
@@ -386,7 +405,7 @@ namespace Azure.Generator.Management.Utilities
                 return null;
             }
 
-            var firstConvertedParameter = 0;
+            var firstConvertedParameter = -1;
             for (var i = 0; i < previousSignature.Parameters.Count; i++)
             {
                 if (ConditionalHeaderProperties.ContainsKey(previousSignature.Parameters[i].Name))
@@ -395,13 +414,24 @@ namespace Azure.Generator.Management.Utilities
                     break;
                 }
             }
+            if (firstConvertedParameter < 0)
+            {
+                return null;
+            }
 
             var removeLeadingDefaults = currentConditionalParameter.DefaultValue is not null;
             var parameters = new List<ParameterProvider>(previousSignature.Parameters.Count);
             var parameterIndexes = new Dictionary<string, int>(StringComparer.Ordinal);
             for (var i = 0; i < previousSignature.Parameters.Count; i++)
             {
-                var parameter = CloneParameter(previousSignature.Parameters[i], removeDefault: removeLeadingDefaults && i <= firstConvertedParameter);
+                var previousParameter = previousSignature.Parameters[i];
+                currentConditionalParameters.TryGetValue(previousParameter.Name, out var currentParameter);
+                // When the new overload keeps the conditional parameter optional, drop defaults through the first
+                // converted parameter so calls that omit all conditions bind to the new overload instead of becoming ambiguous.
+                var parameter = CloneParameter(
+                    previousParameter,
+                    removeDefault: removeLeadingDefaults && i <= firstConvertedParameter,
+                    wireInfo: currentParameter?.WireInfo);
                 if (parameterIndexes.ContainsKey(parameter.Name))
                 {
                     return null;
@@ -427,9 +457,11 @@ namespace Azure.Generator.Management.Utilities
                     }
 
                     var parameter = parameters[parameterIndex];
-                    value = parameter.Type.Equals(currentParameter.Type)
+                    value = parameter.Type.AreNamesEqual(currentParameter.Type)
                         ? parameter
-                        : new TernaryConditionalExpression(
+                        : currentParameter.Type.IsValueType && !currentParameter.Type.IsNullable
+                            ? New.Instance(typeof(ETag), parameter)
+                            : new TernaryConditionalExpression(
                             parameter.NotEqual(Null),
                             New.Instance(typeof(ETag), parameter),
                             new CastExpression(Null, currentParameter.Type));
@@ -476,6 +508,14 @@ namespace Azure.Generator.Management.Utilities
                 previousXmlDocs.Returns,
                 previousXmlDocs.Inherit);
             return new MethodProvider(signature, body, enclosingType, xmlDocs);
+        }
+
+        private static void ReportDroppedOverloadDiagnostic(TypeProvider enclosingType, MethodSignature previousSignature)
+        {
+            ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
+                code: "general-warning",
+                message: $"Could not synthesize backward-compatible overload '{previousSignature.Name}' on '{enclosingType.Name}'. The previous public method may require a custom overload or ApiCompat suppression.",
+                targetCrossLanguageDefinitionId: enclosingType.Name);
         }
 
         private static ValueExpression BuildConditionsArgument(
@@ -525,10 +565,12 @@ namespace Azure.Generator.Management.Utilities
             ParameterProvider parameter,
             bool removeDefault = false,
             string? name = null,
-            CSharpType? type = null)
+            CSharpType? type = null,
+            WireInformation? wireInfo = null)
         {
             if (name is null
                 && type is null
+                && wireInfo is null
                 && !(removeDefault && parameter.DefaultValue is not null))
             {
                 return parameter;
@@ -548,7 +590,7 @@ namespace Azure.Generator.Management.Utilities
                 field: parameter.Field,
                 initializationValue: parameter.InitializationValue,
                 location: parameter.Location,
-                wireInfo: parameter.WireInfo,
+                wireInfo: wireInfo ?? parameter.WireInfo,
                 validation: parameter.Validation,
                 inputParameter: parameter.InputParameter)
             {
@@ -562,12 +604,31 @@ namespace Azure.Generator.Management.Utilities
 
         private static bool IsETagParameter(ParameterProvider parameter)
             => IsETagConditionalHeader(parameter)
-                && parameter.Type.Equals(new CSharpType(typeof(ETag), isNullable: true));
+                && parameter.Type is { IsFrameworkType: true, FrameworkType: { } type }
+                && type == typeof(ETag);
 
         private static bool IsConditionsParameter(ParameterProvider parameter)
             => parameter.Type is { IsFrameworkType: true, FrameworkType: { } type }
-                && (type == typeof(MatchConditions) && parameter.Name == "matchConditions"
-                    || type == typeof(RequestConditions) && parameter.Name == "requestConditions");
+                && (type == typeof(MatchConditions) && parameter.Name == MatchConditionsParameterName
+                    || type == typeof(RequestConditions) && parameter.Name == RequestConditionsParameterName);
+
+        private static bool IsSupportedConditionalHeaderParameter(ParameterProvider parameter, string propertyName)
+            => propertyName is nameof(RequestConditions.IfMatch) or nameof(RequestConditions.IfNoneMatch)
+                ? parameter.Type.Equals(typeof(string)) || IsETagParameter(parameter)
+                : parameter.Type is { IsFrameworkType: true, FrameworkType: { } type } && type == typeof(DateTimeOffset);
+
+        private static bool HasConditionalHeaderParameter(MethodSignature signature)
+        {
+            foreach (var parameter in signature.Parameters)
+            {
+                if (ConditionalHeaderProperties.ContainsKey(parameter.Name))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         private static bool IsPublicApi(MethodSignatureModifiers modifiers)
             => (modifiers.HasFlag(MethodSignatureModifiers.Public) || modifiers.HasFlag(MethodSignatureModifiers.Protected))
