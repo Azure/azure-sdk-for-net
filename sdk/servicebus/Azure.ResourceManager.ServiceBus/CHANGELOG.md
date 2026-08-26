@@ -4,6 +4,7 @@
 
 ### Features Added
 
+- Updated the default API version to `2026-07-01-preview`.
 - Added the string-valued `ServiceBusCorrelationFilter.Properties` property.
 
 ### Breaking Changes
