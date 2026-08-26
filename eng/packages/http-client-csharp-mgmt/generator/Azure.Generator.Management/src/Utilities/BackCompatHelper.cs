@@ -409,9 +409,10 @@ namespace Azure.Generator.Management.Utilities
                     currentConditionalParameter ??= parameter;
                 }
 
-                if (ConditionalHeaderProperties.ContainsKey(parameter.Name))
+                if (ConditionalHeaderProperties.ContainsKey(parameter.Name)
+                    && !currentConditionalParameters.TryGetValue(parameter.Name, out _))
                 {
-                    currentConditionalParameters[parameter.Name] = parameter;
+                    currentConditionalParameters.Add(parameter.Name, parameter);
                 }
             }
             if (currentConditionalParameter is null)
