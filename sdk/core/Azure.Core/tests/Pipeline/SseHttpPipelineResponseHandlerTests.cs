@@ -811,14 +811,21 @@ namespace Azure.Core.Tests
                     "Reconnects must use the same send mode as the initial request.");
 
             public override ValueTask ProcessAsync(HttpMessage message)
+                => ProcessCoreAsync(message);
+
+            private async ValueTask ProcessCoreAsync(HttpMessage message)
             {
+                // Suspend so the send completes asynchronously, the way a
+                // real transport does. Without this the reconnect would
+                // finish synchronously and would not exercise the blocking
+                // path taken by a synchronous read.
+                await Task.Yield();
                 RequestCount++;
                 message.Request.Headers.TryGetValue(
                     "Last-Event-ID",
                     out string? lastEventId);
                 LastEventId = lastEventId;
                 message.Response = _onSend(RequestCount);
-                return default;
             }
         }
 
