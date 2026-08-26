@@ -195,6 +195,7 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
                     new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default),
                     new ParameterProvider("ifNoneMatch", $"The non-match condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default),
                     new ParameterProvider("ifModifiedSince", $"The modification condition.", new CSharpType(typeof(DateTimeOffset), isNullable: true), defaultValue: Default),
+                    new ParameterProvider("ifUnmodifiedSince", $"The unmodified condition.", new CSharpType(typeof(DateTimeOffset), isNullable: true), defaultValue: Default),
                     OptionalCancellationToken()
                 ]);
 

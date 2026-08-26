@@ -89,14 +89,17 @@ namespace Azure.Generator.Management.Utilities
 
                 MethodProvider? currentMethod = null;
                 var transformedSignatures = TransformConditionalHeaderParameters(previousMethod.Signature);
-                foreach (var transformedSignature in transformedSignatures)
+                if (transformedSignatures is not null)
                 {
-                    if (candidates.TryGetValue(transformedSignature.Name, out var methodsWithName))
+                    foreach (var transformedSignature in transformedSignatures)
                     {
-                        currentMethod = methodsWithName.FirstOrDefault(method => SignaturesMatch(transformedSignature, method.Signature));
-                        if (currentMethod is not null)
+                        if (candidates.TryGetValue(transformedSignature.Name, out var methodsWithName))
                         {
-                            break;
+                            currentMethod = methodsWithName.FirstOrDefault(method => SignaturesMatch(transformedSignature, method.Signature));
+                            if (currentMethod is not null)
+                            {
+                                break;
+                            }
                         }
                     }
                 }
@@ -264,7 +267,7 @@ namespace Azure.Generator.Management.Utilities
             return lastParameter.DefaultValue is null && lastParameter.Type.Equals(typeof(CancellationToken));
         }
 
-        private static IReadOnlyList<MethodSignature> TransformConditionalHeaderParameters(MethodSignature signature)
+        private static IReadOnlyList<MethodSignature>? TransformConditionalHeaderParameters(MethodSignature signature)
         {
             var conditionalParameters = new List<ParameterProvider>();
             var etagParameters = new List<ParameterProvider>(signature.Parameters.Count);
@@ -274,7 +277,7 @@ namespace Azure.Generator.Management.Utilities
             {
                 if (parameter.IsRef || parameter.IsOut)
                 {
-                    return [];
+                    return null;
                 }
 
                 if (!ConditionalHeaderProperties.TryGetValue(parameter.Name, out var propertyName))
@@ -286,7 +289,7 @@ namespace Azure.Generator.Management.Utilities
                 var parameterKind = GetConditionalParameterKind(parameter);
                 if (parameterKind == ConditionalParameterKind.None)
                 {
-                    return [];
+                    return null;
                 }
 
                 conditionalParameters.Add(parameter);
@@ -304,58 +307,72 @@ namespace Azure.Generator.Management.Utilities
 
             if (conditionalParameters.Count == 0)
             {
-                return [];
+                return null;
             }
 
             var transformedSignatures = new List<MethodSignature>(3);
-            void AddTransformedSignature(IReadOnlyList<ParameterProvider> parameters)
-            {
-                transformedSignatures.Add(new(
-                    signature.Name,
-                    signature.Description,
-                    signature.Modifiers,
-                    signature.ReturnType,
-                    signature.ReturnDescription,
-                    parameters,
-                    Attributes: signature.Attributes,
-                    GenericArguments: signature.GenericArguments,
-                    GenericParameterConstraints: signature.GenericParameterConstraints,
-                    ExplicitInterface: signature.ExplicitInterface,
-                    NonDocumentComment: signature.NonDocumentComment));
-            }
-
             if (hasDirectETagParameter)
             {
-                AddTransformedSignature(etagParameters);
+                transformedSignatures.Add(CreateTransformedSignature(signature, etagParameters));
             }
 
             if (!hasModificationCondition)
             {
-                AddTransformedSignature(CreateGroupedParameters(
+                var matchConditionsParameters = CreateGroupedParameters(
                     signature,
                     conditionalParameters,
                     MatchConditionsParameterName,
-                    typeof(MatchConditions)));
+                    typeof(MatchConditions));
+                if (matchConditionsParameters is not null)
+                {
+                    transformedSignatures.Add(CreateTransformedSignature(signature, matchConditionsParameters));
+                }
             }
 
-            AddTransformedSignature(CreateGroupedParameters(
+            var requestConditionsParameters = CreateGroupedParameters(
                 signature,
                 conditionalParameters,
                 RequestConditionsParameterName,
-                typeof(RequestConditions)));
+                typeof(RequestConditions));
+            if (requestConditionsParameters is not null)
+            {
+                transformedSignatures.Add(CreateTransformedSignature(signature, requestConditionsParameters));
+            }
 
             return transformedSignatures;
         }
 
-        private static IReadOnlyList<ParameterProvider> CreateGroupedParameters(
+        private static MethodSignature CreateTransformedSignature(
+            MethodSignature signature,
+            IReadOnlyList<ParameterProvider> parameters)
+            => new(
+                signature.Name,
+                signature.Description,
+                signature.Modifiers,
+                signature.ReturnType,
+                signature.ReturnDescription,
+                parameters,
+                Attributes: signature.Attributes,
+                GenericArguments: signature.GenericArguments,
+                GenericParameterConstraints: signature.GenericParameterConstraints,
+                ExplicitInterface: signature.ExplicitInterface,
+                NonDocumentComment: signature.NonDocumentComment);
+
+        private static IReadOnlyList<ParameterProvider>? CreateGroupedParameters(
             MethodSignature signature,
             IReadOnlyList<ParameterProvider> conditionalParameters,
             string name,
             Type type)
         {
+            if (conditionalParameters.Count == 0)
+            {
+                return null;
+            }
+
             var transformedParameter = CloneParameter(
                 conditionalParameters[0],
                 name: name,
+                // The current grouped-condition overload accepts null to represent no conditions.
                 type: new CSharpType(type, isNullable: true));
             var addedTransformedParameter = false;
             var parameters = new List<ParameterProvider>(signature.Parameters.Count - conditionalParameters.Count + 1);

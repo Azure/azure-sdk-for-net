@@ -22,13 +22,14 @@ namespace Samples
 
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Never)]
         [global::Azure.Core.ForwardsClientCallsAttribute]
-        public virtual string Get(string ifMatch, string ifNoneMatch = default, global::System.DateTimeOffset? ifModifiedSince = default, global::System.Threading.CancellationToken cancellationToken = default)
+        public virtual string Get(string ifMatch, string ifNoneMatch = default, global::System.DateTimeOffset? ifModifiedSince = default, global::System.DateTimeOffset? ifUnmodifiedSince = default, global::System.Threading.CancellationToken cancellationToken = default)
         {
-            return this.Get((((ifMatch is null) && (ifNoneMatch is null)) && (ifModifiedSince is null)) ? ((global::Azure.RequestConditions)null) : new global::Azure.RequestConditions
+            return this.Get(((((ifMatch is null) && (ifNoneMatch is null)) && (ifModifiedSince is null)) && (ifUnmodifiedSince is null)) ? ((global::Azure.RequestConditions)null) : new global::Azure.RequestConditions
             {
                 IfMatch = (ifMatch != null) ? new global::Azure.ETag(ifMatch) : ((global::Azure.ETag?)null),
                 IfNoneMatch = (ifNoneMatch != null) ? new global::Azure.ETag(ifNoneMatch) : ((global::Azure.ETag?)null),
-                IfModifiedSince = ifModifiedSince
+                IfModifiedSince = ifModifiedSince,
+                IfUnmodifiedSince = ifUnmodifiedSince
             }, cancellationToken);
         }
     }
