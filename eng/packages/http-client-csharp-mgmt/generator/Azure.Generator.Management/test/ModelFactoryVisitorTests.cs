@@ -487,10 +487,13 @@ namespace Azure.Generator.Mgmt.Tests
                 }
             }
 
-            foreach (var line in method.XmlDocs.Returns?.Lines ?? [])
+            if (method.XmlDocs.Returns is not null)
             {
                 builder.AppendLine("<returns>");
-                builder.AppendLine(line.ToString());
+                foreach (var line in method.XmlDocs.Returns.Lines)
+                {
+                    builder.AppendLine(line.ToString());
+                }
             }
 
             return builder.ToString().Replace("\r\n", "\n");
