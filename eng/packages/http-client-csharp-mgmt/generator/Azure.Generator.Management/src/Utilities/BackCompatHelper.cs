@@ -308,7 +308,7 @@ namespace Azure.Generator.Management.Utilities
             }
 
             var transformedSignatures = new List<MethodSignature>(3);
-            if (hasDirectETagParameter)
+            void AddTransformedSignature(IReadOnlyList<ParameterProvider> parameters)
             {
                 transformedSignatures.Add(new(
                     signature.Name,
@@ -316,42 +316,33 @@ namespace Azure.Generator.Management.Utilities
                     signature.Modifiers,
                     signature.ReturnType,
                     signature.ReturnDescription,
-                    etagParameters,
+                    parameters,
                     Attributes: signature.Attributes,
                     GenericArguments: signature.GenericArguments,
                     GenericParameterConstraints: signature.GenericParameterConstraints,
                     ExplicitInterface: signature.ExplicitInterface,
                     NonDocumentComment: signature.NonDocumentComment));
+            }
+
+            if (hasDirectETagParameter)
+            {
+                AddTransformedSignature(etagParameters);
             }
 
             if (!hasModificationCondition)
             {
-                transformedSignatures.Add(new(
-                    signature.Name,
-                    signature.Description,
-                    signature.Modifiers,
-                    signature.ReturnType,
-                    signature.ReturnDescription,
-                    CreateGroupedParameters(signature, conditionalParameters, MatchConditionsParameterName, typeof(MatchConditions)),
-                    Attributes: signature.Attributes,
-                    GenericArguments: signature.GenericArguments,
-                    GenericParameterConstraints: signature.GenericParameterConstraints,
-                    ExplicitInterface: signature.ExplicitInterface,
-                    NonDocumentComment: signature.NonDocumentComment));
+                AddTransformedSignature(CreateGroupedParameters(
+                    signature,
+                    conditionalParameters,
+                    MatchConditionsParameterName,
+                    typeof(MatchConditions)));
             }
 
-            transformedSignatures.Add(new(
-                signature.Name,
-                signature.Description,
-                signature.Modifiers,
-                signature.ReturnType,
-                signature.ReturnDescription,
-                CreateGroupedParameters(signature, conditionalParameters, RequestConditionsParameterName, typeof(RequestConditions)),
-                Attributes: signature.Attributes,
-                GenericArguments: signature.GenericArguments,
-                GenericParameterConstraints: signature.GenericParameterConstraints,
-                ExplicitInterface: signature.ExplicitInterface,
-                NonDocumentComment: signature.NonDocumentComment));
+            AddTransformedSignature(CreateGroupedParameters(
+                signature,
+                conditionalParameters,
+                RequestConditionsParameterName,
+                typeof(RequestConditions)));
 
             return transformedSignatures;
         }
