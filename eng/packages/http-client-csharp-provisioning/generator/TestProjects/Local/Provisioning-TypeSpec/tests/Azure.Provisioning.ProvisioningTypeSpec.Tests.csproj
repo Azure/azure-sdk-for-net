@@ -4,9 +4,8 @@
     <TargetFrameworks>$(LtsTargetFramework)</TargetFrameworks>
     <IsTestProject>true</IsTestProject>
     <IsMgmtLibrary>true</IsMgmtLibrary>
-    <LangVersion>12</LangVersion>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Nullable>enable</Nullable>
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\..\..\..\sdk\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
