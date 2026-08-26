@@ -14,23 +14,11 @@ namespace Azure.Provisioning.Storage
     /// <summary> A service that allows server-side encryption to be used. </summary>
     public partial class StorageEncryptionService : ProvisionableConstruct
     {
-        private BicepValue<bool> _isEnabled;
         private BicepValue<DateTimeOffset> _lastEnabledOn;
-        private BicepValue<StorageEncryptionKeyType> _keyType;
 
         /// <summary> Creates a new StorageEncryptionService. </summary>
         public StorageEncryptionService()
         {
-        }
-
-        /// <summary> Gets the IsEnabled. </summary>
-        public BicepValue<bool> IsEnabled
-        {
-            get
-            {
-                Initialize();
-                return _isEnabled;
-            }
         }
 
         /// <summary> Gets the LastEnabledOn. </summary>
@@ -43,23 +31,11 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets the KeyType. </summary>
-        public BicepValue<StorageEncryptionKeyType> KeyType
-        {
-            get
-            {
-                Initialize();
-                return _keyType;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for StorageEncryptionService. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "enabled" });
             _lastEnabledOn = DefineProperty<DateTimeOffset>(nameof(LastEnabledOn), new string[] { "lastEnabledTime" }, isOutput: true, format: "O");
-            _keyType = DefineProperty<StorageEncryptionKeyType>(nameof(KeyType), new string[] { "keyType" });
             DefineAdditionalProperties();
         }
 

@@ -14,9 +14,6 @@ namespace Azure.Provisioning.Storage
     /// <summary> Properties of key vault. </summary>
     public partial class StorageAccountKeyVaultProperties : ProvisionableConstruct
     {
-        private BicepValue<string> _keyName;
-        private BicepValue<string> _keyVersion;
-        private BicepValue<Uri> _keyVaultUri;
         private BicepValue<string> _currentVersionedKeyIdentifier;
         private BicepValue<DateTimeOffset> _lastKeyRotationTimestamp;
         private BicepValue<DateTimeOffset> _currentVersionedKeyExpirationTimestamp;
@@ -24,36 +21,6 @@ namespace Azure.Provisioning.Storage
         /// <summary> Creates a new StorageAccountKeyVaultProperties. </summary>
         public StorageAccountKeyVaultProperties()
         {
-        }
-
-        /// <summary> Gets the KeyName. </summary>
-        public BicepValue<string> KeyName
-        {
-            get
-            {
-                Initialize();
-                return _keyName;
-            }
-        }
-
-        /// <summary> Gets the KeyVersion. </summary>
-        public BicepValue<string> KeyVersion
-        {
-            get
-            {
-                Initialize();
-                return _keyVersion;
-            }
-        }
-
-        /// <summary> Gets the KeyVaultUri. </summary>
-        public BicepValue<Uri> KeyVaultUri
-        {
-            get
-            {
-                Initialize();
-                return _keyVaultUri;
-            }
         }
 
         /// <summary> Gets the CurrentVersionedKeyIdentifier. </summary>
@@ -90,9 +57,6 @@ namespace Azure.Provisioning.Storage
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _keyName = DefineProperty<string>(nameof(KeyName), new string[] { "keyname" });
-            _keyVersion = DefineProperty<string>(nameof(KeyVersion), new string[] { "keyversion" });
-            _keyVaultUri = DefineProperty<Uri>(nameof(KeyVaultUri), new string[] { "keyvaulturi" });
             _currentVersionedKeyIdentifier = DefineProperty<string>(nameof(CurrentVersionedKeyIdentifier), new string[] { "currentVersionedKeyIdentifier" }, isOutput: true);
             _lastKeyRotationTimestamp = DefineProperty<DateTimeOffset>(nameof(LastKeyRotationTimestamp), new string[] { "lastKeyRotationTimestamp" }, isOutput: true, format: "O");
             _currentVersionedKeyExpirationTimestamp = DefineProperty<DateTimeOffset>(nameof(CurrentVersionedKeyExpirationTimestamp), new string[] { "currentVersionedKeyExpirationTimestamp" }, isOutput: true, format: "O");

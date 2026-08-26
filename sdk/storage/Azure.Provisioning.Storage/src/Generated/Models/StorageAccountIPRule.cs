@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Storage
@@ -13,40 +12,15 @@ namespace Azure.Provisioning.Storage
     /// <summary> IP rule with specific IP or IP range in CIDR format. </summary>
     public partial class StorageAccountIPRule : ProvisionableConstruct
     {
-        private BicepValue<string> _ipAddressOrRange;
-        private BicepValue<StorageAccountNetworkRuleAction> _action;
-
         /// <summary> Creates a new StorageAccountIPRule. </summary>
         public StorageAccountIPRule()
         {
-        }
-
-        /// <summary> Gets the IPAddressOrRange. </summary>
-        public BicepValue<string> IPAddressOrRange
-        {
-            get
-            {
-                Initialize();
-                return _ipAddressOrRange;
-            }
-        }
-
-        /// <summary> Gets the Action. </summary>
-        public BicepValue<StorageAccountNetworkRuleAction> Action
-        {
-            get
-            {
-                Initialize();
-                return _action;
-            }
         }
 
         /// <summary> Define all the provisionable properties for StorageAccountIPRule. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _ipAddressOrRange = DefineProperty<string>(nameof(IPAddressOrRange), new string[] { "value" });
-            _action = DefineProperty<StorageAccountNetworkRuleAction>(nameof(Action), new string[] { "action" });
             DefineAdditionalProperties();
         }
 

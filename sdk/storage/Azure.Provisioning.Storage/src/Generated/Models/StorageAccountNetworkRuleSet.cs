@@ -13,56 +13,11 @@ namespace Azure.Provisioning.Storage
     /// <summary> Network rule set. </summary>
     public partial class StorageAccountNetworkRuleSet : ProvisionableConstruct
     {
-        private BicepValue<StorageNetworkBypass> _bypass;
-        private BicepList<StorageAccountResourceAccessRule> _resourceAccessRules;
-        private BicepList<StorageAccountVirtualNetworkRule> _virtualNetworkRules;
-        private BicepList<StorageAccountIPRule> _ipRules;
         private BicepList<StorageAccountIPRule> _ipv6Rules;
-        private BicepValue<StorageNetworkDefaultAction> _defaultAction;
 
         /// <summary> Creates a new StorageAccountNetworkRuleSet. </summary>
         public StorageAccountNetworkRuleSet()
         {
-        }
-
-        /// <summary> Gets the Bypass. </summary>
-        public BicepValue<StorageNetworkBypass> Bypass
-        {
-            get
-            {
-                Initialize();
-                return _bypass;
-            }
-        }
-
-        /// <summary> Gets the ResourceAccessRules. </summary>
-        public BicepList<StorageAccountResourceAccessRule> ResourceAccessRules
-        {
-            get
-            {
-                Initialize();
-                return _resourceAccessRules;
-            }
-        }
-
-        /// <summary> Gets the VirtualNetworkRules. </summary>
-        public BicepList<StorageAccountVirtualNetworkRule> VirtualNetworkRules
-        {
-            get
-            {
-                Initialize();
-                return _virtualNetworkRules;
-            }
-        }
-
-        /// <summary> Gets the IPRules. </summary>
-        public BicepList<StorageAccountIPRule> IPRules
-        {
-            get
-            {
-                Initialize();
-                return _ipRules;
-            }
         }
 
         /// <summary> Gets the IPv6Rules. </summary>
@@ -75,26 +30,11 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets the DefaultAction. </summary>
-        public BicepValue<StorageNetworkDefaultAction> DefaultAction
-        {
-            get
-            {
-                Initialize();
-                return _defaultAction;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for StorageAccountNetworkRuleSet. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _bypass = DefineProperty<StorageNetworkBypass>(nameof(Bypass), new string[] { "bypass" });
-            _resourceAccessRules = DefineListProperty<StorageAccountResourceAccessRule>(nameof(ResourceAccessRules), new string[] { "resourceAccessRules" });
-            _virtualNetworkRules = DefineListProperty<StorageAccountVirtualNetworkRule>(nameof(VirtualNetworkRules), new string[] { "virtualNetworkRules" });
-            _ipRules = DefineListProperty<StorageAccountIPRule>(nameof(IPRules), new string[] { "ipRules" });
             _ipv6Rules = DefineListProperty<StorageAccountIPRule>(nameof(IPv6Rules), new string[] { "ipv6Rules" });
-            _defaultAction = DefineProperty<StorageNetworkDefaultAction>(nameof(DefaultAction), new string[] { "defaultAction" });
             DefineAdditionalProperties();
         }
 

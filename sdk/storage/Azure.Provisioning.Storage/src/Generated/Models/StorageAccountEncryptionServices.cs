@@ -12,64 +12,15 @@ namespace Azure.Provisioning.Storage
     /// <summary> A list of services that support encryption. </summary>
     public partial class StorageAccountEncryptionServices : ProvisionableConstruct
     {
-        private StorageEncryptionService _blob;
-        private StorageEncryptionService _file;
-        private StorageEncryptionService _table;
-        private StorageEncryptionService _queue;
-
         /// <summary> Creates a new StorageAccountEncryptionServices. </summary>
         public StorageAccountEncryptionServices()
         {
-        }
-
-        /// <summary> Gets the Blob. </summary>
-        public StorageEncryptionService Blob
-        {
-            get
-            {
-                Initialize();
-                return _blob;
-            }
-        }
-
-        /// <summary> Gets the File. </summary>
-        public StorageEncryptionService File
-        {
-            get
-            {
-                Initialize();
-                return _file;
-            }
-        }
-
-        /// <summary> Gets the Table. </summary>
-        public StorageEncryptionService Table
-        {
-            get
-            {
-                Initialize();
-                return _table;
-            }
-        }
-
-        /// <summary> Gets the Queue. </summary>
-        public StorageEncryptionService Queue
-        {
-            get
-            {
-                Initialize();
-                return _queue;
-            }
         }
 
         /// <summary> Define all the provisionable properties for StorageAccountEncryptionServices. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _blob = DefineModelProperty<StorageEncryptionService>(nameof(Blob), new string[] { "blob" });
-            _file = DefineModelProperty<StorageEncryptionService>(nameof(File), new string[] { "file" });
-            _table = DefineModelProperty<StorageEncryptionService>(nameof(Table), new string[] { "table" });
-            _queue = DefineModelProperty<StorageEncryptionService>(nameof(Queue), new string[] { "queue" });
             DefineAdditionalProperties();
         }
 

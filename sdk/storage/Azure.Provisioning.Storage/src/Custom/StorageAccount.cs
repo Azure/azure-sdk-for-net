@@ -5,7 +5,9 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.Storage;
 
@@ -90,6 +92,86 @@ public partial class StorageAccount : ProvisionableResource
                 Properties = new StorageAccountProperties();
             }
             return Properties.PrivateEndpointConnections;
+        }
+    }
+
+    /// <summary> Gets or sets the custom domain assigned to this storage account. </summary>
+    [CodeGenMember("CustomDomain")]
+    public StorageCustomDomain CustomDomain
+    {
+        get => Properties is null ? default! : Properties.CustomDomain;
+        set
+        {
+            Properties ??= new StorageAccountProperties();
+            Properties.CustomDomain = value;
+        }
+    }
+
+    /// <summary> Gets or sets the SAS policy assigned to the storage account. </summary>
+    [CodeGenMember("SasPolicy")]
+    public StorageAccountSasPolicy SasPolicy
+    {
+        get => Properties is null ? default! : Properties.SasPolicy;
+        set
+        {
+            Properties ??= new StorageAccountProperties();
+            Properties.SasPolicy = value;
+        }
+    }
+
+    /// <summary> Gets or sets the encryption settings on the storage account. </summary>
+    [CodeGenMember("Encryption")]
+    public StorageAccountEncryption Encryption
+    {
+        get => Properties is null ? default! : Properties.Encryption;
+        set
+        {
+            Properties ??= new StorageAccountProperties();
+            Properties.Encryption = value;
+        }
+    }
+
+    /// <summary> Gets or sets the access tier. </summary>
+    [CodeGenMember("AccessTier")]
+    public BicepValue<StorageAccountAccessTier> AccessTier
+    {
+        get
+        {
+            Properties ??= new StorageAccountProperties();
+            return Properties.AccessTier;
+        }
+        set
+        {
+            Properties ??= new StorageAccountProperties();
+            Properties.AccessTier = value;
+        }
+    }
+
+    /// <summary> Gets or sets the network rule set. </summary>
+    [CodeGenMember("NetworkRuleSet")]
+    public StorageAccountNetworkRuleSet NetworkRuleSet
+    {
+        get => Properties is null ? default! : Properties.NetworkRuleSet;
+        set
+        {
+            Properties ??= new StorageAccountProperties();
+            Properties.NetworkRuleSet = value;
+        }
+    }
+
+    /// <summary> Gets or sets the key expiration period in days. </summary>
+    [CodeGenMember("KeyExpirationPeriodInDays")]
+    public BicepValue<int> KeyExpirationPeriodInDays
+    {
+        get
+        {
+            Properties ??= new StorageAccountProperties();
+            return Properties.KeyExpirationPeriodInDays;
+        }
+        set
+        {
+            Properties ??= new StorageAccountProperties();
+            Properties.KeyExpirationPeriodInDays = value;
         }
     }
 }

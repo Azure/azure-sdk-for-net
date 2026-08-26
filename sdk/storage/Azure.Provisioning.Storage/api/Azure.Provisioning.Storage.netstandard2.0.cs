@@ -195,8 +195,8 @@ namespace Azure.Provisioning.Storage
     public partial class BlobRestoreContent : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public BlobRestoreContent() { }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Storage.BlobRestoreRange> BlobRanges { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> TimeToRestore { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Storage.BlobRestoreRange> BlobRanges { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> TimeToRestore { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum BlobRestoreProgressStatus
@@ -208,8 +208,8 @@ namespace Azure.Provisioning.Storage
     public partial class BlobRestoreRange : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public BlobRestoreRange() { }
-        public Azure.Provisioning.BicepValue<string> EndRange { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> StartRange { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> EndRange { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> StartRange { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class BlobRestoreStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1137,7 +1137,7 @@ namespace Azure.Provisioning.Storage
     public partial class StorageAccount : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public StorageAccount(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageAccountAccessTier> AccessTier { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageAccountAccessTier> AccessTier { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> AllowBlobPublicAccess { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> AllowCrossTenantReplication { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.AllowedCopyScope> AllowedCopyScope { get { throw null; } set { } }
@@ -1145,10 +1145,10 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.Storage.FilesIdentityBasedAuthentication AzureFilesIdentityBasedAuthentication { get { throw null; } set { } }
         public Azure.Provisioning.Storage.BlobRestoreStatus BlobRestoreStatus { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
-        public Azure.Provisioning.Storage.StorageCustomDomain CustomDomain { get { throw null; } }
+        public Azure.Provisioning.Storage.StorageCustomDomain CustomDomain { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageDnsEndpointType> DnsEndpointType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EnableHttpsTrafficOnly { get { throw null; } set { } }
-        public Azure.Provisioning.Storage.StorageAccountEncryption Encryption { get { throw null; } }
+        public Azure.Provisioning.Storage.StorageAccountEncryption Encryption { get { throw null; } set { } }
         public Azure.Provisioning.Resources.ExtendedAzureLocation ExtendedLocation { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> GeoPriorityReplicationStatusIsBlobEnabled { get { throw null; } set { } }
         public Azure.Provisioning.Storage.GeoReplicationStatistics GeoReplicationStats { get { throw null; } }
@@ -1166,14 +1166,14 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.BicepValue<bool> IsSftpEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsSkuConversionBlocked { get { throw null; } }
         public Azure.Provisioning.Storage.StorageAccountKeyCreationTime KeyCreationTime { get { throw null; } }
-        public Azure.Provisioning.BicepValue<int> KeyExpirationPeriodInDays { get { throw null; } }
+        public Azure.Provisioning.BicepValue<int> KeyExpirationPeriodInDays { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageKind> Kind { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.LargeFileSharesState> LargeFileSharesState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastGeoFailoverOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageMinimumTlsVersion> MinimumTlsVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Storage.StorageAccountNetworkRuleSet NetworkRuleSet { get { throw null; } }
+        public Azure.Provisioning.Storage.StorageAccountNetworkRuleSet NetworkRuleSet { get { throw null; } set { } }
         public Azure.Provisioning.Storage.StorageAccountEndpoints PrimaryEndpoints { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> PrimaryLocation { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Storage.StoragePrivateEndpointConnection> PrivateEndpointConnectionResources { get { throw null; } }
@@ -1182,7 +1182,7 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageAccountProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StoragePublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.Storage.StorageRoutingPreference RoutingPreference { get { throw null; } set { } }
-        public Azure.Provisioning.Storage.StorageAccountSasPolicy SasPolicy { get { throw null; } }
+        public Azure.Provisioning.Storage.StorageAccountSasPolicy SasPolicy { get { throw null; } set { } }
         public Azure.Provisioning.Storage.StorageAccountEndpoints SecondaryEndpoints { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> SecondaryLocation { get { throw null; } }
         public Azure.Provisioning.Storage.StorageSku Sku { get { throw null; } set { } }
@@ -1237,27 +1237,27 @@ namespace Azure.Provisioning.Storage
     public partial class StorageAccountEncryption : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public StorageAccountEncryption() { }
-        public Azure.Provisioning.Storage.StorageAccountEncryptionIdentity EncryptionIdentity { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageAccountKeySource> KeySource { get { throw null; } }
-        public Azure.Provisioning.Storage.StorageAccountKeyVaultProperties KeyVaultProperties { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> RequireInfrastructureEncryption { get { throw null; } }
-        public Azure.Provisioning.Storage.StorageAccountEncryptionServices Services { get { throw null; } }
+        public Azure.Provisioning.Storage.StorageAccountEncryptionIdentity EncryptionIdentity { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageAccountKeySource> KeySource { get { throw null; } set { } }
+        public Azure.Provisioning.Storage.StorageAccountKeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> RequireInfrastructureEncryption { get { throw null; } set { } }
+        public Azure.Provisioning.Storage.StorageAccountEncryptionServices Services { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class StorageAccountEncryptionIdentity : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public StorageAccountEncryptionIdentity() { }
-        public Azure.Provisioning.BicepValue<string> EncryptionFederatedIdentityClientId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> EncryptionUserAssignedIdentity { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> EncryptionFederatedIdentityClientId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> EncryptionUserAssignedIdentity { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class StorageAccountEncryptionServices : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public StorageAccountEncryptionServices() { }
-        public Azure.Provisioning.Storage.StorageEncryptionService Blob { get { throw null; } }
-        public Azure.Provisioning.Storage.StorageEncryptionService File { get { throw null; } }
-        public Azure.Provisioning.Storage.StorageEncryptionService Queue { get { throw null; } }
-        public Azure.Provisioning.Storage.StorageEncryptionService Table { get { throw null; } }
+        public Azure.Provisioning.Storage.StorageEncryptionService Blob { get { throw null; } set { } }
+        public Azure.Provisioning.Storage.StorageEncryptionService File { get { throw null; } set { } }
+        public Azure.Provisioning.Storage.StorageEncryptionService Queue { get { throw null; } set { } }
+        public Azure.Provisioning.Storage.StorageEncryptionService Table { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class StorageAccountEndpoints : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1286,8 +1286,8 @@ namespace Azure.Provisioning.Storage
     public partial class StorageAccountIPRule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public StorageAccountIPRule() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageAccountNetworkRuleAction> Action { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> IPAddressOrRange { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageAccountNetworkRuleAction> Action { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> IPAddressOrRange { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class StorageAccountIPv6Endpoints : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1322,9 +1322,9 @@ namespace Azure.Provisioning.Storage
         public StorageAccountKeyVaultProperties() { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CurrentVersionedKeyExpirationTimestamp { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> CurrentVersionedKeyIdentifier { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> KeyName { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.Uri> KeyVaultUri { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> KeyVersion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> KeyName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> KeyVaultUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> KeyVersion { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastKeyRotationTimestamp { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -1463,12 +1463,12 @@ namespace Azure.Provisioning.Storage
     public partial class StorageAccountNetworkRuleSet : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public StorageAccountNetworkRuleSet() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageNetworkBypass> Bypass { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageNetworkDefaultAction> DefaultAction { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Storage.StorageAccountIPRule> IPRules { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageNetworkBypass> Bypass { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageNetworkDefaultAction> DefaultAction { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Storage.StorageAccountIPRule> IPRules { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Storage.StorageAccountIPRule> IPv6Rules { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Storage.StorageAccountResourceAccessRule> ResourceAccessRules { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Storage.StorageAccountVirtualNetworkRule> VirtualNetworkRules { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Storage.StorageAccountResourceAccessRule> ResourceAccessRules { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Storage.StorageAccountVirtualNetworkRule> VirtualNetworkRules { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum StorageAccountNetworkRuleState
@@ -1489,15 +1489,15 @@ namespace Azure.Provisioning.Storage
     public partial class StorageAccountResourceAccessRule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public StorageAccountResourceAccessRule() { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ResourceId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class StorageAccountSasPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public StorageAccountSasPolicy() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.ExpirationAction> ExpirationAction { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> SasExpirationPeriod { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.ExpirationAction> ExpirationAction { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SasExpirationPeriod { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum StorageAccountSkuConversionState
@@ -1525,9 +1525,9 @@ namespace Azure.Provisioning.Storage
     public partial class StorageAccountVirtualNetworkRule : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public StorageAccountVirtualNetworkRule() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageAccountNetworkRuleAction> Action { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageAccountNetworkRuleAction> Action { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageAccountNetworkRuleState> State { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VirtualNetworkResourceId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> VirtualNetworkResourceId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum StorageAccountZonePlacementPolicy
@@ -1597,8 +1597,8 @@ namespace Azure.Provisioning.Storage
     public partial class StorageCustomDomain : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public StorageCustomDomain() { }
-        public Azure.Provisioning.BicepValue<bool> IsUseSubDomainNameEnabled { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsUseSubDomainNameEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum StorageDnsEndpointType
@@ -1614,8 +1614,8 @@ namespace Azure.Provisioning.Storage
     public partial class StorageEncryptionService : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public StorageEncryptionService() { }
-        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageEncryptionKeyType> KeyType { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageEncryptionKeyType> KeyType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastEnabledOn { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }

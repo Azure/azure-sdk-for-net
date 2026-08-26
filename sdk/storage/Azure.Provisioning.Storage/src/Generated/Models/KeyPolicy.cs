@@ -5,36 +5,21 @@
 
 #nullable disable
 
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Storage
 {
-    /// <summary> KeyPolicy assigned to the storage account. </summary>
     internal partial class KeyPolicy : ProvisionableConstruct
     {
-        private BicepValue<int> _keyExpirationPeriodInDays;
-
         /// <summary> Creates a new KeyPolicy. </summary>
         public KeyPolicy()
         {
-        }
-
-        /// <summary> Gets the KeyExpirationPeriodInDays. </summary>
-        public BicepValue<int> KeyExpirationPeriodInDays
-        {
-            get
-            {
-                Initialize();
-                return _keyExpirationPeriodInDays;
-            }
         }
 
         /// <summary> Define all the provisionable properties for KeyPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _keyExpirationPeriodInDays = DefineProperty<int>(nameof(KeyExpirationPeriodInDays), new string[] { "keyExpirationPeriodInDays" });
             DefineAdditionalProperties();
         }
 

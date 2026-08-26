@@ -5,9 +5,6 @@
 
 #nullable disable
 
-using System;
-using Azure.Core;
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Storage
@@ -15,40 +12,15 @@ namespace Azure.Provisioning.Storage
     /// <summary> Resource Access Rule. </summary>
     public partial class StorageAccountResourceAccessRule : ProvisionableConstruct
     {
-        private BicepValue<Guid> _tenantId;
-        private BicepValue<ResourceIdentifier> _resourceId;
-
         /// <summary> Creates a new StorageAccountResourceAccessRule. </summary>
         public StorageAccountResourceAccessRule()
         {
-        }
-
-        /// <summary> Gets the TenantId. </summary>
-        public BicepValue<Guid> TenantId
-        {
-            get
-            {
-                Initialize();
-                return _tenantId;
-            }
-        }
-
-        /// <summary> Gets the ResourceId. </summary>
-        public BicepValue<ResourceIdentifier> ResourceId
-        {
-            get
-            {
-                Initialize();
-                return _resourceId;
-            }
         }
 
         /// <summary> Define all the provisionable properties for StorageAccountResourceAccessRule. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _tenantId = DefineProperty<Guid>(nameof(TenantId), new string[] { "tenantId" });
-            _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" });
             DefineAdditionalProperties();
         }
 

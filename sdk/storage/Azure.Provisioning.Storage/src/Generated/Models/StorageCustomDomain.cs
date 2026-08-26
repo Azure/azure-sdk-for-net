@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Storage
@@ -13,40 +12,15 @@ namespace Azure.Provisioning.Storage
     /// <summary> The custom domain assigned to this storage account. This can be set via Update. </summary>
     public partial class StorageCustomDomain : ProvisionableConstruct
     {
-        private BicepValue<string> _name;
-        private BicepValue<bool> _isUseSubDomainNameEnabled;
-
         /// <summary> Creates a new StorageCustomDomain. </summary>
         public StorageCustomDomain()
         {
-        }
-
-        /// <summary> Gets the Name. </summary>
-        public BicepValue<string> Name
-        {
-            get
-            {
-                Initialize();
-                return _name;
-            }
-        }
-
-        /// <summary> Gets the IsUseSubDomainNameEnabled. </summary>
-        public BicepValue<bool> IsUseSubDomainNameEnabled
-        {
-            get
-            {
-                Initialize();
-                return _isUseSubDomainNameEnabled;
-            }
         }
 
         /// <summary> Define all the provisionable properties for StorageCustomDomain. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
-            _isUseSubDomainNameEnabled = DefineProperty<bool>(nameof(IsUseSubDomainNameEnabled), new string[] { "useSubDomainName" });
             DefineAdditionalProperties();
         }
 
