@@ -19,14 +19,14 @@ This is conservative repository identity reachability, **not** proof of normal r
 The sparse selector specifically addresses known risks as follows:
 
 - **TFMs:** traversal starts from all evaluated TFMs and retains selected destination TFMs on P2P edges.
-- **Build configurations:** Debug and Release are evaluated together. Their edges are unioned for checkout safety; conflicting restore properties or package versions fail closed.
-- **Repository packages:** package IDs, not assembly filenames, drive NuGet-derived reachability. In NuGet mode package nodes are terminal during traversal and map to physical shipping projects only at output time.
+- **Build configurations:** Debug and Release are evaluated together. Their evaluated inputs are unioned for checkout safety, but dependency-bearing records must be equivalent because unioning direct topology can change NuGet version selection. Configuration-specific dependency topology fails closed until a future schema preserves that dimension.
+- **Repository packages:** package IDs, not assembly filenames, drive NuGet-derived reachability. In NuGet mode package nodes are terminal during traversal and map to physical shipping projects only at output time. P2P references with `ReferenceOutputAssembly=false` stay available to source/input traversal but are excluded from synthetic NuGet restore metadata, matching normal restore collection.
 - **Inputs:** tracked evaluated files and local hint paths can add SDK or non-SDK directories.
 - **Matrix behavior:** matrix generation is unchanged; narrowing consumes its final `ProjectNames` values.
 
-Remaining semantic gaps include RID/OS-specific dependencies, custom target inputs that are not represented by captured items/imports, configuration dimensions other than Debug/Release, full MSBuild global-property identity, `ReferenceOutputAssembly=false` treatment in the synthetic restore model, and lack of exhaustive parity with ordinary static-graph restore assets. CI should broaden or fall back on any completeness failure, never continue with a known-partial map.
+Remaining semantic gaps include RID/OS-specific dependencies, custom target inputs that are not represented by captured items/imports, and lack of exhaustive parity with ordinary static-graph restore assets. Schema 3 intentionally supports Debug/Release only when dependency-bearing records are equivalent, and rejects dependency-only nodes created by additional global-property configurations. CI should broaden or fall back on any completeness failure, never continue with a known-partial map.
 
-## Local validation (2026-08-25)
+## Initial local validation (2026-08-25)
 
 Commands were run from the repository root in a Linux Amp orb with .NET SDK 10.0.400.
 
@@ -41,6 +41,13 @@ Commands were run from the repository root in a Linux Amp orb with .NET SDK 10.0
 | Full vs sparse test | `dotnet test sdk/schemaregistry/Azure.Data.SchemaRegistry/tests/Azure.Data.SchemaRegistry.Tests.csproj --framework net10.0 --filter 'TestCategory!=Live'` in the full tree and a local sparse clone using the generated paths | Both passed: 86 passed, 76 skipped, 162 total. Full 20.74 s; sparse 30.66 s from a cold clone. |
 
 The all-framework Schema Registry comparison was also attempted. Build/restore succeeded, net10 tests passed, but the orb lacks the net8/net9 runtimes, so those two test hosts aborted. The explicit net10 comparison above avoids presenting that environment limitation as a sparse-checkout failure.
+
+## Productionization validation (2026-08-26)
+
+- The task build passed with zero warnings or errors.
+- RepositoryProjectGraph Pester tests passed 15/15, including `ReferenceOutputAssembly=false`, configuration-specific dependency topology, and dependency-only global-property regressions.
+- Sparse map/resolver Pester tests passed 3/3.
+- A Debug+Release full-repository evaluation with input capture disabled and `IsolatedMetadata` closure completed in 77.67 seconds with approximately 2.48 GiB peak RSS. It emitted 989 projects and 2,954 project/TFM keys, found zero dependency-only configurations, produced an exact 32,452-edge configuration graph, resolved 546/546 package roots, and marked the artifact complete. This was a focused schema-invariant check, not a repeat of the input-enabled NuGet sparse parity run above.
 
 ## Concerns and follow-up
 
@@ -60,8 +67,8 @@ Safe cleanup that should not change semantics:
 
 Changes needing deeper validation:
 
-- Preserve full MSBuild global-property identity in schema v4 instead of conservatively collapsing Debug/Release into project+TFM keys.
+- Preserve full MSBuild global-property identity in schema v4 if configuration-specific dependency topology or dependency-only configurations need to be supported rather than rejected.
 - Generate or cache a provenance-preserving reverse+forward batch result in one process to avoid repeatedly materializing the graph JSON.
-- Replace synthetic NuGet inputs with authoritative static-graph restore DG specs/assets and correctly model `ReferenceOutputAssembly=false`.
+- Replace synthetic NuGet inputs with authoritative static-graph restore DG specs/assets and broaden parity validation beyond the currently modeled restore inputs.
 - Narrow below `sdk/<service>` or remove always-included SDK services. Either can save more files but substantially increases missed-input risk.
 - Evaluate configurations sequentially and merge records to lower peak memory; this changes task lifecycle and requires full graph, NuGet, and sparse-clone parity testing.

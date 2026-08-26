@@ -241,6 +241,21 @@ public sealed class RepositoryProjectGraphTask : Task
             }
         }
 
+        ProjectGraphNode[] dependencyOnlyNodes = graph.ProjectNodes
+            .Where(node => !expectedNodes.Contains(node))
+            .ToArray();
+        if (dependencyOnlyNodes.Length > 0)
+        {
+            string examples = string.Join(
+                ", ",
+                dependencyOnlyNodes.Take(5).Select(FormatConfiguration));
+            throw new InvalidOperationException(
+                $"ProjectGraph contains {dependencyOnlyNodes.Length} dependency-only configurations that schema 3 cannot represent: {examples}. " +
+                "Preserve the complete global-property identity before using this graph for dependency selection.");
+        }
+
+        ValidateSchemaV3Configurations(canonicalNodes);
+
         statistics = new GraphStatistics(
             graph.ProjectNodes
                 .Select(node => GetProjectPath(node.ProjectInstance))
@@ -252,6 +267,52 @@ public sealed class RepositoryProjectGraphTask : Task
             graph.ProjectNodes.Count - expectedNodes.Count);
 
         return canonicalNodes;
+    }
+
+    private static void ValidateSchemaV3Configurations(IEnumerable<ProjectGraphNode> nodes)
+    {
+        // Debug and Release may have different evaluated inputs, which are safe to union for checkout.
+        // Dependency topology is not safely monotonic through NuGet version selection, so schema 3
+        // can collapse build configurations only when their dependency-bearing records are equivalent.
+        foreach (IGrouping<string, ProjectGraphNode> group in nodes.GroupBy(
+            node => GetSchemaConfigurationKey(node.ProjectInstance),
+            StringComparer.OrdinalIgnoreCase))
+        {
+            string[] signatures = group
+                .Select(GetDependencySignature)
+                .Distinct(StringComparer.Ordinal)
+                .Take(2)
+                .ToArray();
+            if (signatures.Length <= 1)
+            {
+                continue;
+            }
+
+            string configurations = string.Join(
+                ", ",
+                group.Select(node => node.ProjectInstance.GetPropertyValue("Configuration"))
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .OrderBy(value => value, StringComparer.OrdinalIgnoreCase));
+            throw new InvalidOperationException(
+                $"Project configuration '{GetSchemaConfigurationKey(group.First().ProjectInstance)}' has conflicting " +
+                $"dependency-bearing records across build configurations [{configurations}]. Schema 3 cannot safely combine them.");
+        }
+    }
+
+    private static string GetDependencySignature(ProjectGraphNode node) => string.Join(
+        '\n',
+        GetDependencyRecords(node)
+            .Distinct(StringComparer.Ordinal)
+            .OrderBy(record => record, StringComparer.Ordinal));
+
+    private static string GetSchemaConfigurationKey(ProjectInstance project) =>
+        $"{GetProjectPath(project)}|{project.GetPropertyValue("TargetFramework")}";
+
+    private static string FormatConfiguration(ProjectGraphNode node)
+    {
+        ProjectInstance project = node.ProjectInstance;
+        return $"'{GetProjectPath(project)}' " +
+            $"(TargetFramework={project.GetPropertyValue("TargetFramework")}, Configuration={project.GetPropertyValue("Configuration")})";
     }
 
     private long WriteRecords(
@@ -306,12 +367,22 @@ public sealed class RepositoryProjectGraphTask : Task
         ProjectInstance project = node.ProjectInstance;
         string projectPath = GetProjectPath(project);
         string targetFramework = project.GetPropertyValue("TargetFramework");
-        Dictionary<string, string> packageVersions = project.GetItems("PackageVersion")
-            .GroupBy(item => item.EvaluatedInclude, StringComparer.OrdinalIgnoreCase)
-            .ToDictionary(
-                group => group.Key,
-                group => group.Last().GetMetadataValue("Version"),
-                StringComparer.OrdinalIgnoreCase);
+        foreach (string record in GetDependencyRecords(node))
+        {
+            WriteRecord(writer, ref recordCount, record);
+        }
+
+        if (IncludeInputs)
+        {
+            AddInputRecords(writer, ref recordCount, project, projectPath, targetFramework);
+        }
+    }
+
+    private static IEnumerable<string> GetDependencyRecords(ProjectGraphNode node)
+    {
+        ProjectInstance project = node.ProjectInstance;
+        string projectPath = GetProjectPath(project);
+        string targetFramework = project.GetPropertyValue("TargetFramework");
         string packageId = project.GetPropertyValue("PackageId");
         if (string.IsNullOrEmpty(packageId))
         {
@@ -325,7 +396,7 @@ public sealed class RepositoryProjectGraphTask : Task
                 .TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
         }
 
-        WriteRecord(writer, ref recordCount, string.Join(
+        yield return string.Join(
             "|",
             "Node",
             projectPath,
@@ -344,7 +415,7 @@ public sealed class RepositoryProjectGraphTask : Task
             project.GetPropertyValue("TreatWarningsAsErrors"),
             NormalizeRecordMetadata(project.GetPropertyValue("WarningsAsErrors")),
             NormalizeRecordMetadata(project.GetPropertyValue("NoWarn")),
-            NormalizeRecordMetadata(project.GetPropertyValue("WarningsNotAsErrors"))));
+            NormalizeRecordMetadata(project.GetPropertyValue("WarningsNotAsErrors")));
 
         var projectReferenceRecords = new HashSet<string>(StringComparer.Ordinal);
         foreach (ProjectItemInstance reference in project.GetItems("ProjectReference"))
@@ -372,14 +443,20 @@ public sealed class RepositoryProjectGraphTask : Task
                     referencedTargetFramework);
                 if (projectReferenceRecords.Add(record))
                 {
-                    WriteRecord(writer, ref recordCount, record);
+                    yield return record;
                 }
             }
         }
 
+        Dictionary<string, string> packageVersions = project.GetItems("PackageVersion")
+            .GroupBy(item => item.EvaluatedInclude, StringComparer.OrdinalIgnoreCase)
+            .ToDictionary(
+                group => group.Key,
+                group => group.Last().GetMetadataValue("Version"),
+                StringComparer.OrdinalIgnoreCase);
         foreach (ProjectItemInstance reference in project.GetItems("PackageReference"))
         {
-            WriteRecord(writer, ref recordCount, string.Join(
+            yield return string.Join(
                 "|",
                 "PackageReference",
                 projectPath,
@@ -388,12 +465,7 @@ public sealed class RepositoryProjectGraphTask : Task
                 NormalizeAssetMetadata(reference.GetMetadataValue("PrivateAssets")),
                 NormalizeAssetMetadata(reference.GetMetadataValue("IncludeAssets")),
                 NormalizeAssetMetadata(reference.GetMetadataValue("ExcludeAssets")),
-                GetPackageVersion(reference, packageVersions)));
-        }
-
-        if (IncludeInputs)
-        {
-            AddInputRecords(writer, ref recordCount, project, projectPath, targetFramework);
+                GetPackageVersion(reference, packageVersions));
         }
     }
 
