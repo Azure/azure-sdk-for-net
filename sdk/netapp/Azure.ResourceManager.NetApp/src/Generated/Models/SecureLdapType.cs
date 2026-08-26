@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.NetApp.Models
     {
         private readonly string _value;
         /// <summary> LDAP traffic is encrypted using LDAP over TLS. </summary>
-        private const string LdapOverTLSValue = "LdapOverTLS";
+        private const string LdapOverTlsValue = "LdapOverTLS";
         /// <summary> LDAP traffic is not encrypted. </summary>
         private const string NoneValue = "None";
 
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
 
         /// <summary> LDAP traffic is encrypted using LDAP over TLS. </summary>
-        public static SecureLdapType LdapOverTLS { get; } = new SecureLdapType(LdapOverTLSValue);
+        public static SecureLdapType LdapOverTls { get; } = new SecureLdapType(LdapOverTlsValue);
 
         /// <summary> LDAP traffic is not encrypted. </summary>
         public static SecureLdapType None { get; } = new SecureLdapType(NoneValue);
