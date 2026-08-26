@@ -53,35 +53,65 @@ steps:
     - pwsh: |
         $graphDirectory = "$(Build.ArtifactStagingDirectory)/RepositoryProjectGraph"
         $graphPath = "$graphDirectory/repository-project-graph.json"
-        dotnet msbuild /m /nr:false /nologo /tl:off `
-          /t:GenerateRepositoryProjectGraphWithProjectGraph ./eng/service.proj `
-          /p:RepositoryProjectGraphReaderPath="$graphPath" `
-          /p:RepositoryProjectGraphReaderRecordsPath="$graphDirectory/project.records" `
-          /p:RepositoryProjectGraphPackageRecordsPath="$graphDirectory/package.records" `
-          /p:RepositoryProjectGraphNuGetRestoreDirectory="$graphDirectory/nuget-restore" `
-          /p:RepositoryProjectGraphPackageResolutionMode=NuGetRestore `
-          /p:RepositoryProjectGraphConfigurations=Debug%3BRelease `
-          /p:SkipServiceProjectImports=true `
-          /p:IncludeRepositoryProjectGraphInputs=true
-        if ($LASTEXITCODE -ne 0) {
-          throw "RepositoryProjectGraph generation failed with exit code $LASTEXITCODE."
+        $checkoutGraphDirectory = "$(Build.ArtifactStagingDirectory)/TestCheckoutGraph"
+        $checkoutGraphPath = "$checkoutGraphDirectory/checkout-graph.json"
+        New-Item -ItemType Directory -Path $checkoutGraphDirectory -Force | Out-Null
+
+        try {
+          # Build the expensive source graph once. The compact projection expands repository
+          # package identities through their source projects so it covers both package-reference
+          # and project-reference test modes without a second MSBuild evaluation. Test jobs query
+          # only the closure for their ProjectNames batch.
+          dotnet msbuild /m /nr:false /nologo /tl:off `
+            /t:GenerateRepositoryProjectGraphWithProjectGraph ./eng/service.proj `
+            /p:RepositoryProjectGraphReaderPath="$graphPath" `
+            /p:RepositoryProjectGraphReaderRecordsPath="$graphDirectory/project.records" `
+            /p:RepositoryProjectGraphPackageRecordsPath="$graphDirectory/package.records" `
+            /p:RepositoryProjectGraphNuGetRestoreDirectory="$graphDirectory/nuget-restore" `
+            /p:RepositoryProjectGraphPackageResolutionMode=NuGetRestore `
+            /p:RepositoryProjectGraphConfigurations=Debug+Release `
+            /p:SkipServiceProjectImports=true `
+            /p:IncludeRepositoryProjectGraphInputs=true
+          if ($LASTEXITCODE -ne 0) {
+            throw "RepositoryProjectGraph generation failed with exit code $LASTEXITCODE."
+          }
+
+          ./eng/scripts/Create-SparseCheckoutGraph.ps1 `
+            -PackageInfoDirectory "$(Build.ArtifactStagingDirectory)/PackageInfo" `
+            -RepoRoot "$(Build.SourcesDirectory)" `
+            -GraphPath $graphPath `
+            -OutputPath $checkoutGraphPath `
+            -SourceCommit "$(Build.SourceVersion)"
+          Write-Host 'SPARSE_CHECKOUT_GRAPH_RESULT=available'
+        }
+        catch {
+          # Sparse checkout is an optimization. Publish an explicit fallback artifact so graph
+          # incompleteness never prevents matrix generation or narrows a later test checkout.
+          $reason = $_.Exception.Message -replace "`r?`n", ' '
+          Write-Host "##vso[task.logissue type=warning]Sparse checkout graph is unavailable: $reason Tests will use a full checkout."
+          [ordered]@{
+            schemaVersion = 1
+            sourceCommit = "$(Build.SourceVersion)"
+            isComplete = $false
+            failureReason = $reason
+            alwaysIncludedPaths = @()
+            artifacts = @{}
+            adjacency = @{}
+            paths = @{}
+            diagnostics = @{}
+          } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $checkoutGraphPath -Encoding utf8NoBOM
+          Write-Host 'SPARSE_CHECKOUT_GRAPH_RESULT=fallback'
         }
 
-        ./eng/scripts/Create-SparseCheckoutMap.ps1 `
-          -PackageInfoDirectory "$(Build.ArtifactStagingDirectory)/PackageInfo" `
-          -RepoRoot "$(Build.SourcesDirectory)" `
-          -GraphPath $graphPath `
-          -OutputPath "$(Build.ArtifactStagingDirectory)/TestCheckoutMap/checkout-map.json"
-
         Copy-Item ./eng/scripts/Resolve-SparseCheckoutPaths.ps1 `
-          "$(Build.ArtifactStagingDirectory)/TestCheckoutMap/Resolve-SparseCheckoutPaths.ps1"
-      displayName: Build ProjectGraph test checkout map
+          "$checkoutGraphDirectory/Resolve-SparseCheckoutPaths.ps1"
+      displayName: Build ProjectGraph test checkout graph
 
     - ${{ if eq(parameters.PublishArtifact, true) }}:
       - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
         parameters:
-          ArtifactName: TestCheckoutMap
-          ArtifactPath: $(Build.ArtifactStagingDirectory)/TestCheckoutMap
+          ArtifactName: TestCheckoutGraph
+          ArtifactPath: $(Build.ArtifactStagingDirectory)/TestCheckoutGraph
 
   - ${{ if eq(parameters.PublishArtifact, true) }}:
     - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml

@@ -63,7 +63,9 @@ repository projects + declared TFMs
 
 There is no MSBuild process spawned per inner project. `ProjectGraph` still performs real MSBuild evaluation, including imports, properties, conditions, central package versions, and TFM-specific items; it is not a lightweight XML parser.
 
-Schema 3 intentionally collapses requested build configurations into each project/TFM key only when their node, P2P, and direct-package records are equivalent. Evaluated inputs may differ and are unioned conservatively for sparse checkout. Dependency-only nodes created by additional global properties, or configuration-specific dependency topology, fail generation until a future schema preserves that identity.
+Schema 3 intentionally collapses requested build configurations into each project/TFM key only when their node, P2P, and direct-package records are equivalent. Evaluated inputs may differ and are unioned conservatively for sparse checkout. Dependency-only nodes created by additional global properties, or configuration-specific dependency topology, fail generation until a future schema preserves that identity. Use `Debug+Release` for a multi-configuration command-line invocation; MSBuild consumes commas and semicolons as property separators, while the task accepts `+` as an unambiguous delimiter.
+
+MSBuild outer-build references connect to each concrete destination inner build. The source graph preserves all of those destination configurations rather than applying a repository-owned nearest-framework reduction. This can conservatively over-select configurations, but it cannot discard an edge that MSBuild exposed. NuGet's synthetic P2P metadata remains path-based and deduplicates those records by referenced project, leaving compatibility selection to restore.
 
 ### External package resolution modes
 
@@ -103,7 +105,7 @@ Select this mode explicitly with:
 - Direct `PackageReference` compile asset filters are applied in both modes. The default metadata mode does not consistently preserve transitive dependency asset filters and records `transitiveDependencyAssetFiltersApplied=false`; the NuGet mode consumes the lock file and records it as `true`.
 - The package-only phase does not reproduce all lock-file, RID-specific, conflict-resolution, source-mapping, or other restore behavior. These differences can produce false-positive or false-negative reachability if repository assumptions change.
 - The graph deliberately models the union of declared TFMs and does not add an OS-specific query dimension. Host-dependent MSBuild conditions remain an assumption of the repository analysis.
-- The task currently requires the repository's .NET 10 SDK and reached approximately 2.24 GiB peak process working set in a local full-graph measurement.
+- The task currently requires the repository's .NET 10 SDK. A single-configuration source graph has used roughly 2–3 GiB locally; a real Debug+Release input-enabled graph is materially larger. See [`SPARSE_CHECKOUT.md`](SPARSE_CHECKOUT.md) for the current CI-oriented measurement.
 
 ## Performance observed during the experiment
 

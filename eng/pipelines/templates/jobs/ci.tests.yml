@@ -90,31 +90,34 @@ jobs:
 
       - ${{ if parameters.EnableTestCheckoutNarrowing }}:
         - task: DownloadPipelineArtifact@2
-          displayName: Download MSBuild test checkout map
+          displayName: Download MSBuild test checkout graph
           continueOnError: true
           inputs:
-            artifact: TestCheckoutMap
-            path: $(Agent.TempDirectory)/TestCheckoutMap
+            artifact: TestCheckoutGraph
+            path: $(Agent.TempDirectory)/TestCheckoutGraph
 
         - pwsh: |
             $fallback = @('/*', '!SessionRecords', '/sdk/*/**/SessionRecords/*')
-            $directory = '$(Agent.TempDirectory)/TestCheckoutMap'
+            $directory = '$(Agent.TempDirectory)/TestCheckoutGraph'
             $resolver = Get-ChildItem -LiteralPath $directory -Filter Resolve-SparseCheckoutPaths.ps1 `
               -File -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
-            $map = Get-ChildItem -LiteralPath $directory -Filter checkout-map.json `
+            $graph = Get-ChildItem -LiteralPath $directory -Filter checkout-graph.json `
               -File -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1
 
             $paths = $null
-            if ($resolver -and $map) {
+            if ($resolver -and $graph) {
               try {
-                $paths = @(& $resolver.FullName -MapPath $map.FullName -ArtifactNames '$(ProjectNames)')
+                $paths = @(& $resolver.FullName `
+                  -GraphPath $graph.FullName `
+                  -ArtifactNames '$(ProjectNames)' `
+                  -ExpectedSourceCommit '$(Build.SourceVersion)')
               }
               catch {
-                Write-Warning "Unable to resolve the MSBuild checkout map: $_"
+                Write-Warning "Unable to query the MSBuild checkout graph: $_"
               }
             }
             else {
-              Write-Warning 'The MSBuild checkout map artifact is unavailable.'
+              Write-Warning 'The MSBuild checkout graph artifact is unavailable.'
             }
 
             if (-not $paths) {
@@ -128,7 +131,7 @@ jobs:
             $json = $paths | ConvertTo-Json -Compress -AsArray
             Write-Host "Sparse checkout paths: $($paths -join ' ')"
             Write-Host "##vso[task.setvariable variable=TestSparseCheckoutPaths]$json"
-          displayName: Resolve MSBuild test checkout paths
+          displayName: Extract MSBuild test checkout dependencies
 
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
         - ${{ if parameters.EnableTestCheckoutNarrowing }}:

@@ -351,11 +351,14 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $fixtureA = Join-Path $fixtureRoot "sdk/example/A/tests/A.Tests.csproj"
         $fixtureB = Join-Path $fixtureRoot "sdk/example/B/src/B.csproj"
         $hintAssembly = Join-Path $fixtureRoot "sdk/shared/lib/Shared.dll"
+        $analyzerAssembly = Join-Path $fixtureRoot "sdk/shared/analyzers/Shared.Analyzer.dll"
         $driverPath = Join-Path $fixtureRoot "driver.proj"
         $taskRecordsPath = Join-Path $fixtureRoot "task.records"
         $taskGraphPath = Join-Path $fixtureRoot "task.json"
-        New-Item -ItemType Directory -Path (Split-Path $fixtureA -Parent), (Split-Path $fixtureB -Parent), (Split-Path $hintAssembly -Parent) -Force | Out-Null
+        New-Item -ItemType Directory -Path (Split-Path $fixtureA -Parent), (Split-Path $fixtureB -Parent), `
+            (Split-Path $hintAssembly -Parent), (Split-Path $analyzerAssembly -Parent) -Force | Out-Null
         Set-Content $hintAssembly "fixture"
+        Set-Content $analyzerAssembly "fixture"
 
         @'
 <Project Sdk="Microsoft.NET.Sdk">
@@ -372,6 +375,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
     <PackageReference Include="Azure.C" />
     <ProjectReference Include="../../B/src/B.csproj" ReferenceOutputAssembly="false" Condition="'$(TargetFramework)' == 'net9.0'" />
     <Reference Include="Shared" HintPath="../../../shared/lib/Shared.dll" />
+    <Analyzer Include="../../../shared/analyzers/Shared.Analyzer.dll" />
   </ItemGroup>
 </Project>
 '@ | Set-Content $fixtureA
@@ -402,7 +406,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
                                 RootProjects="@(GraphRoot)"
                                 RecordsPath="$taskRecordsPath"
                                 IncludeInputs="true"
-                                Configurations="Debug;Release"
+                                Configurations="Debug+Release"
                                 DegreeOfParallelism="2" />
   </Target>
 </Project>
@@ -425,15 +429,20 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $releasePackageEdge = $taskGraph.edges | Where-Object { $_.kind -eq "PackageReference" -and $_.to -eq "Azure.C" }
         $releasePackageEdge.targetFrameworks | Should -Be @("net8.0", "net9.0")
         ($taskGraph.edges | Where-Object { $_.kind -eq "ProjectReference" -and $_.fromProject -like "*/A.Tests.csproj" }).targetFrameworks | Should -Be @("net9.0")
-        $taskProjectEdge = $taskGraph.configurationEdges | Where-Object {
+        $taskProjectEdges = @($taskGraph.configurationEdges | Where-Object {
             $_.kind -eq "ProjectReference" -and $_.fromProject -like "*/A.Tests.csproj"
-        }
-        $taskProjectEdge.fromTargetFramework | Should -Be "net9.0"
-        $taskProjectEdge.toTargetFramework | Should -Be "net8.0"
+        })
+        @($taskProjectEdges.fromTargetFramework | Select-Object -Unique) | Should -Be @("net9.0")
+        @($taskProjectEdges.toTargetFramework | Sort-Object) | Should -Be @("net8.0", "netstandard2.0")
         Get-Content $taskRecordsPath | Should -Contain "ProjectReference|$fixtureA|net9.0|$fixtureB|false|||||net8.0"
         $hintInput = $taskGraph.inputs | Where-Object kind -eq "ReferenceHintPath"
         $hintInput.path | Should -Be "sdk/shared/lib/Shared.dll"
         $hintInput.targetFrameworks | Should -Be @("net8.0", "net9.0")
+        $analyzerInput = $taskGraph.inputs | Where-Object {
+            $_.kind -eq "Analyzer" -and $_.path -eq "sdk/shared/analyzers/Shared.Analyzer.dll"
+        }
+        $analyzerInput.path | Should -Be "sdk/shared/analyzers/Shared.Analyzer.dll"
+        $analyzerInput.targetFrameworks | Should -Be @("net8.0", "net9.0")
     }
 
     It "fails closed when build configurations have different dependency topology" {
@@ -464,7 +473,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
   <Target Name="BuildGraph">
     <RepositoryProjectGraphTask Projects="$project"
                                 RecordsPath="$recordsPath"
-                                Configurations="Debug;Release" />
+                                Configurations="Debug+Release" />
   </Target>
 </Project>
 "@ | Set-Content $driverPath
