@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Provisioning.Expressions;
+using Azure.Provisioning.Primitives;
+
 namespace Azure.Provisioning.Storage;
 
 public partial class StorageAccountLocalUser
@@ -55,5 +58,21 @@ public partial class StorageAccountLocalUser
         public static readonly string V2016_01_01 = "2016-01-01";
         /// <summary>2015-06-15.</summary>
         public static readonly string V2015_06_15 = "2015-06-15";
+    }
+
+    // Provisioning generation does not emit custom ARM actions yet. Keep the shipped listKeys helper
+    // until the generator can produce it: https://github.com/Azure/azure-sdk-for-net/issues/56753.
+    /// <summary>
+    /// Get access keys for this StorageAccountLocalUser resource.
+    /// </summary>
+    /// <returns>The keys for this StorageAccountLocalUser resource.</returns>
+    public LocalUserKeys GetKeys()
+    {
+        LocalUserKeys keys = new();
+        ((IBicepValue)keys).Expression = new FunctionCallExpression(
+            new MemberExpression(
+                new IdentifierExpression(BicepIdentifier),
+                "listKeys"));
+        return keys;
     }
 }

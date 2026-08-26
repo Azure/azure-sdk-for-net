@@ -803,6 +803,13 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.BicepValue<string> Upn { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class LocalUserKeys : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public LocalUserKeys() { }
+        public Azure.Provisioning.BicepValue<string> SharedKey { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Storage.StorageSshPublicKey> SshAuthorizedKeys { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class ManagementPolicyAction : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ManagementPolicyAction() { }
@@ -1197,6 +1204,7 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.Storage.StorageBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Storage.StorageAccount FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Storage.StorageAccountKey> GetKeys() { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
@@ -1303,12 +1311,26 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.BicepValue<string> Web { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class StorageAccountKey : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public StorageAccountKey() { }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> KeyName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageAccountKeyPermission> Permissions { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Value { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class StorageAccountKeyCreationTime : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public StorageAccountKeyCreationTime() { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> Key1 { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> Key2 { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public enum StorageAccountKeyPermission
+    {
+        Read = 0,
+        Full = 1,
     }
     public enum StorageAccountKeySource
     {
@@ -1349,6 +1371,7 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.BicepValue<int> UserId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Storage.StorageAccountLocalUser FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public Azure.Provisioning.Storage.LocalUserKeys GetKeys() { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {

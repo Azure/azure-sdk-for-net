@@ -6,6 +6,7 @@
 using System;
 using System.ComponentModel;
 using Azure.Provisioning;
+using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -173,5 +174,28 @@ public partial class StorageAccount : ProvisionableResource
             Properties ??= new StorageAccountProperties();
             Properties.KeyExpirationPeriodInDays = value;
         }
+    }
+
+    // Provisioning generation does not emit custom ARM actions yet. Keep the shipped listKeys helper
+    // until the generator can produce it: https://github.com/Azure/azure-sdk-for-net/issues/56753.
+    /// <summary>
+    /// Get access keys for this StorageAccount resource.
+    /// </summary>
+    /// <returns>The keys for this StorageAccount resource.</returns>
+    public BicepList<StorageAccountKey> GetKeys()
+    {
+        return BicepList<StorageAccountKey>.FromExpression(
+            expression =>
+            {
+                StorageAccountKey key = new();
+                ((IBicepValue)key).Expression = expression;
+                return key;
+            },
+            new MemberExpression(
+                new FunctionCallExpression(
+                    new MemberExpression(
+                        new IdentifierExpression(BicepIdentifier),
+                        "listKeys")),
+                "keys"));
     }
 }
