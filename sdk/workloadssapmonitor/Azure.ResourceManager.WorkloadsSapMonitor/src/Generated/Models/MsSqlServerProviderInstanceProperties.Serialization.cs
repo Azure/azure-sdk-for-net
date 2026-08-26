@@ -14,11 +14,11 @@ using Azure.ResourceManager.WorkloadsSapMonitor;
 namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 {
     /// <summary> Gets or sets the SQL server provider properties. </summary>
-    public partial class MsSqlServerProviderInstanceProperties : ProviderSpecificProperties, IJsonModel<MsSqlServerProviderInstanceProperties>
+    public partial class MsSqlServerProviderInstanceProperties : SapProviderInstanceSpecificProperties, IJsonModel<MsSqlServerProviderInstanceProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ProviderSpecificProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SapProviderInstanceSpecificProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MsSqlServerProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ProviderSpecificProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SapProviderInstanceSpecificProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MsSqlServerProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

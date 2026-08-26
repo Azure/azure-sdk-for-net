@@ -14,51 +14,51 @@ using Azure.ResourceManager.WorkloadsSapMonitor;
 namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 {
     /// <summary> Resource health details. </summary>
-    public partial class Health : IJsonModel<Health>
+    public partial class WorkloadsSapMonitorHealth : IJsonModel<WorkloadsSapMonitorHealth>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Health PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual WorkloadsSapMonitorHealth PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Health>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadsSapMonitorHealth>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeHealth(document.RootElement, options);
+                        return DeserializeWorkloadsSapMonitorHealth(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Health)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadsSapMonitorHealth)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Health>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadsSapMonitorHealth>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadsSapMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(Health)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadsSapMonitorHealth)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<Health>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<WorkloadsSapMonitorHealth>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Health IPersistableModel<Health>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        WorkloadsSapMonitorHealth IPersistableModel<WorkloadsSapMonitorHealth>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<Health>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WorkloadsSapMonitorHealth>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<Health>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WorkloadsSapMonitorHealth>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Health>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadsSapMonitorHealth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Health)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadsSapMonitorHealth)} does not support writing '{format}' format.");
             }
             if (options.Format != "W" && Optional.IsDefined(HealthState))
             {
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        Health IJsonModel<Health>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        WorkloadsSapMonitorHealth IJsonModel<WorkloadsSapMonitorHealth>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Health JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual WorkloadsSapMonitorHealth JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Health>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkloadsSapMonitorHealth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Health)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadsSapMonitorHealth)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHealth(document.RootElement, options);
+            return DeserializeWorkloadsSapMonitorHealth(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static Health DeserializeHealth(JsonElement element, ModelReaderWriterOptions options)
+        internal static WorkloadsSapMonitorHealth DeserializeWorkloadsSapMonitorHealth(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Health(healthState, impactingReasons, additionalBinaryDataProperties);
+            return new WorkloadsSapMonitorHealth(healthState, impactingReasons, additionalBinaryDataProperties);
         }
     }
 }

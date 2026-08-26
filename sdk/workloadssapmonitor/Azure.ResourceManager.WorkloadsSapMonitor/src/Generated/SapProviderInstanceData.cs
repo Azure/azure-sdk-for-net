@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         }
 
         /// <summary> Resource health details. </summary>
-        public Health Health
+        public WorkloadsSapMonitorHealth Health
         {
             get
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         }
 
         /// <summary> Defines the provider specific properties. </summary>
-        public ProviderSpecificProperties ProviderSettings
+        public SapProviderInstanceSpecificProperties ProviderSettings
         {
             get
             {

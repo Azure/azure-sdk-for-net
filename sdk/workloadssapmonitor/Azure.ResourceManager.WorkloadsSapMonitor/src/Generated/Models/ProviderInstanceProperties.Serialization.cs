@@ -139,9 +139,9 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                 return null;
             }
             WorkloadMonitorProvisioningState? provisioningState = default;
-            Health health = default;
+            WorkloadsSapMonitorHealth health = default;
             ResponseError errors = default;
-            ProviderSpecificProperties providerSettings = default;
+            SapProviderInstanceSpecificProperties providerSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                     {
                         continue;
                     }
-                    health = Health.DeserializeHealth(prop.Value, options);
+                    health = WorkloadsSapMonitorHealth.DeserializeWorkloadsSapMonitorHealth(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("errors"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                     {
                         continue;
                     }
-                    providerSettings = ProviderSpecificProperties.DeserializeProviderSpecificProperties(prop.Value, options);
+                    providerSettings = SapProviderInstanceSpecificProperties.DeserializeSapProviderInstanceSpecificProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

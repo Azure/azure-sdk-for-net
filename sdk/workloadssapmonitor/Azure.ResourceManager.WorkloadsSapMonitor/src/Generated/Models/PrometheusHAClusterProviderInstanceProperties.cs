@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 {
     /// <summary> Gets or sets the PrometheusHaCluster provider properties. </summary>
-    public partial class PrometheusHAClusterProviderInstanceProperties : ProviderSpecificProperties
+    public partial class PrometheusHAClusterProviderInstanceProperties : SapProviderInstanceSpecificProperties
     {
         /// <summary> Initializes a new instance of <see cref="PrometheusHAClusterProviderInstanceProperties"/>. </summary>
         public PrometheusHAClusterProviderInstanceProperties() : base("PrometheusHaCluster")

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 {
     /// <summary> Gets or sets the DB2 provider properties. </summary>
-    public partial class DB2ProviderInstanceProperties : ProviderSpecificProperties
+    public partial class DB2ProviderInstanceProperties : SapProviderInstanceSpecificProperties
     {
         /// <summary> Initializes a new instance of <see cref="DB2ProviderInstanceProperties"/>. </summary>
         public DB2ProviderInstanceProperties() : base("Db2")

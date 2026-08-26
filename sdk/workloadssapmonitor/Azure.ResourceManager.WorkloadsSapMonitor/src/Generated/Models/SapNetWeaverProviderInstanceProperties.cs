@@ -12,7 +12,7 @@ using Azure.ResourceManager.WorkloadsSapMonitor;
 namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 {
     /// <summary> Gets or sets the provider properties. </summary>
-    public partial class SapNetWeaverProviderInstanceProperties : ProviderSpecificProperties
+    public partial class SapNetWeaverProviderInstanceProperties : SapProviderInstanceSpecificProperties
     {
         /// <summary> Initializes a new instance of <see cref="SapNetWeaverProviderInstanceProperties"/>. </summary>
         public SapNetWeaverProviderInstanceProperties() : base("SapNetWeaver")

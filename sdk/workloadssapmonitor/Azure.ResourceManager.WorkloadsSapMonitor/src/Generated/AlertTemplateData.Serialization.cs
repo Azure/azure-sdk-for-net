@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            AlertTemplateProperties properties = default;
+            SapMonitorAlertTemplateProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                     {
                         continue;
                     }
-                    properties = AlertTemplateProperties.DeserializeAlertTemplateProperties(prop.Value, options);
+                    properties = SapMonitorAlertTemplateProperties.DeserializeSapMonitorAlertTemplateProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

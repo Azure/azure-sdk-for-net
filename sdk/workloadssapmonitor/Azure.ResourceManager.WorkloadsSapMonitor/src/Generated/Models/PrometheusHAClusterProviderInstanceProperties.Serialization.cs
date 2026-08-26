@@ -14,11 +14,11 @@ using Azure.ResourceManager.WorkloadsSapMonitor;
 namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 {
     /// <summary> Gets or sets the PrometheusHaCluster provider properties. </summary>
-    public partial class PrometheusHAClusterProviderInstanceProperties : ProviderSpecificProperties, IJsonModel<PrometheusHAClusterProviderInstanceProperties>
+    public partial class PrometheusHAClusterProviderInstanceProperties : SapProviderInstanceSpecificProperties, IJsonModel<PrometheusHAClusterProviderInstanceProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ProviderSpecificProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SapProviderInstanceSpecificProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PrometheusHAClusterProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ProviderSpecificProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SapProviderInstanceSpecificProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<PrometheusHAClusterProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

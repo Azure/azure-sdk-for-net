@@ -13,18 +13,18 @@ using Azure.ResourceManager.WorkloadsSapMonitor;
 namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 {
     /// <summary> Describes the properties of an Alert Template for SAP monitor. </summary>
-    public partial class AlertTemplateProperties
+    public partial class SapMonitorAlertTemplateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AlertTemplateProperties"/>. </summary>
-        internal AlertTemplateProperties()
+        /// <summary> Initializes a new instance of <see cref="SapMonitorAlertTemplateProperties"/>. </summary>
+        internal SapMonitorAlertTemplateProperties()
         {
             QueryInputParameters = new ChangeTrackingList<AlertTemplateQueryInputContent>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertTemplateProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapMonitorAlertTemplateProperties"/>. </summary>
         /// <param name="errors"> Defines the SAP monitor Alert Template errors. </param>
         /// <param name="provisioningState"> State of provisioning of the Alert Template. </param>
         /// <param name="templateDisplayName"> Display name of the alert template. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         /// <param name="metricMeasurement"> Describes the properties for metric measurement in alerts template. </param>
         /// <param name="queryInputParameters"> Describes the Query Input Parameter properties in alerts template. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertTemplateProperties(ResponseError errors, WorkloadMonitorProvisioningState? provisioningState, string templateDisplayName, string providerType, string description, int? severity, string query, AlertRuleConditionalOperator? thresholdOperator, int? defaultThreshold, int? lowerBound, int? upperBound, AlertTemplateDefaultThresholdInputOption? defaultThresholdInputOption, string alertUnit, AlertTemplateMetricMeasurement metricMeasurement, IList<AlertTemplateQueryInputContent> queryInputParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SapMonitorAlertTemplateProperties(ResponseError errors, WorkloadMonitorProvisioningState? provisioningState, string templateDisplayName, string providerType, string description, int? severity, string query, AlertRuleConditionalOperator? thresholdOperator, int? defaultThreshold, int? lowerBound, int? upperBound, AlertTemplateDefaultThresholdInputOption? defaultThresholdInputOption, string alertUnit, AlertTemplateMetricMeasurement metricMeasurement, IList<AlertTemplateQueryInputContent> queryInputParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Errors = errors;
             ProvisioningState = provisioningState;

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 {
     /// <summary> Gets or sets the PrometheusOS provider properties. </summary>
-    public partial class PrometheusOSProviderInstanceProperties : ProviderSpecificProperties
+    public partial class PrometheusOSProviderInstanceProperties : SapProviderInstanceSpecificProperties
     {
         /// <summary> Initializes a new instance of <see cref="PrometheusOSProviderInstanceProperties"/>. </summary>
         public PrometheusOSProviderInstanceProperties() : base("PrometheusOS")

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 {
     /// <summary> Gets or sets the SQL server provider properties. </summary>
-    public partial class MsSqlServerProviderInstanceProperties : ProviderSpecificProperties
+    public partial class MsSqlServerProviderInstanceProperties : SapProviderInstanceSpecificProperties
     {
         /// <summary> Initializes a new instance of <see cref="MsSqlServerProviderInstanceProperties"/>. </summary>
         public MsSqlServerProviderInstanceProperties() : base("MsSqlServer")

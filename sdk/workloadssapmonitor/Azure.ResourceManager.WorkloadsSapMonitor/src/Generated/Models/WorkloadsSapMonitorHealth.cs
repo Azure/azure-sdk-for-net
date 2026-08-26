@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 {
     /// <summary> Resource health details. </summary>
-    public partial class Health
+    public partial class WorkloadsSapMonitorHealth
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="Health"/>. </summary>
-        internal Health()
+        /// <summary> Initializes a new instance of <see cref="WorkloadsSapMonitorHealth"/>. </summary>
+        internal WorkloadsSapMonitorHealth()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="Health"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadsSapMonitorHealth"/>. </summary>
         /// <param name="healthState"> Health state of the resource. </param>
         /// <param name="impactingReasons"> Reasons impacting health state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal Health(WorkloadProviderInstanceHealthState? healthState, string impactingReasons, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkloadsSapMonitorHealth(WorkloadProviderInstanceHealthState? healthState, string impactingReasons, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HealthState = healthState;
             ImpactingReasons = impactingReasons;

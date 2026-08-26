@@ -16,57 +16,57 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
     /// Gets or sets the provider specific properties.
     /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="HanaDBProviderInstanceProperties"/>, <see cref="SapNetWeaverProviderInstanceProperties"/>, <see cref="PrometheusOSProviderInstanceProperties"/>, <see cref="DB2ProviderInstanceProperties"/>, <see cref="PrometheusHAClusterProviderInstanceProperties"/>, <see cref="MsSqlServerProviderInstanceProperties"/>, and <see cref="OracleProviderInstanceProperties"/>.
     /// </summary>
-    [PersistableModelProxy(typeof(UnknownProviderSpecificProperties))]
-    public abstract partial class ProviderSpecificProperties : IJsonModel<ProviderSpecificProperties>
+    [PersistableModelProxy(typeof(UnknownSapProviderInstanceSpecificProperties))]
+    public abstract partial class SapProviderInstanceSpecificProperties : IJsonModel<SapProviderInstanceSpecificProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="ProviderSpecificProperties"/> for deserialization. </summary>
-        internal ProviderSpecificProperties()
+        /// <summary> Initializes a new instance of <see cref="SapProviderInstanceSpecificProperties"/> for deserialization. </summary>
+        internal SapProviderInstanceSpecificProperties()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProviderSpecificProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SapProviderInstanceSpecificProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderSpecificProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapProviderInstanceSpecificProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProviderSpecificProperties(document.RootElement, options);
+                        return DeserializeSapProviderInstanceSpecificProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProviderSpecificProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapProviderInstanceSpecificProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderSpecificProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapProviderInstanceSpecificProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadsSapMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProviderSpecificProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapProviderInstanceSpecificProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProviderSpecificProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SapProviderInstanceSpecificProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProviderSpecificProperties IPersistableModel<ProviderSpecificProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SapProviderInstanceSpecificProperties IPersistableModel<SapProviderInstanceSpecificProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProviderSpecificProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SapProviderInstanceSpecificProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProviderSpecificProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SapProviderInstanceSpecificProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderSpecificProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapProviderInstanceSpecificProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderSpecificProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SapProviderInstanceSpecificProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("providerType"u8);
             writer.WriteStringValue(ProviderType);
@@ -103,24 +103,24 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProviderSpecificProperties IJsonModel<ProviderSpecificProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SapProviderInstanceSpecificProperties IJsonModel<SapProviderInstanceSpecificProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProviderSpecificProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SapProviderInstanceSpecificProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProviderSpecificProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapProviderInstanceSpecificProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderSpecificProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SapProviderInstanceSpecificProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProviderSpecificProperties(document.RootElement, options);
+            return DeserializeSapProviderInstanceSpecificProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProviderSpecificProperties DeserializeProviderSpecificProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static SapProviderInstanceSpecificProperties DeserializeSapProviderInstanceSpecificProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                         return OracleProviderInstanceProperties.DeserializeOracleProviderInstanceProperties(element, options);
                 }
             }
-            return UnknownProviderSpecificProperties.DeserializeUnknownProviderSpecificProperties(element, options);
+            return UnknownSapProviderInstanceSpecificProperties.DeserializeUnknownSapProviderInstanceSpecificProperties(element, options);
         }
     }
 }

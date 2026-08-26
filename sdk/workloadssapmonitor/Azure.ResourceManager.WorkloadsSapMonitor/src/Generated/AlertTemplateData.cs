@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Alert Template properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AlertTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AlertTemplateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal AlertTemplateData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SapMonitorAlertTemplateProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Alert Template properties. </summary>
-        public AlertTemplateProperties Properties { get; }
+        public SapMonitorAlertTemplateProperties Properties { get; }
     }
 }

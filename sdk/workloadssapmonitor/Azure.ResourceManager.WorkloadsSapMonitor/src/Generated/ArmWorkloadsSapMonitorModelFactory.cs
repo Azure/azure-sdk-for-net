@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         /// <param name="errors"> Defines the provider instance errors. </param>
         /// <param name="providerSettings"> Defines the provider specific properties. </param>
         /// <returns> A new <see cref="WorkloadsSapMonitor.SapProviderInstanceData"/> instance for mocking. </returns>
-        public static SapProviderInstanceData SapProviderInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WorkloadMonitorProvisioningState? provisioningState = default, Health health = default, ResponseError errors = default, ProviderSpecificProperties providerSettings = default)
+        public static SapProviderInstanceData SapProviderInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WorkloadMonitorProvisioningState? provisioningState = default, WorkloadsSapMonitorHealth health = default, ResponseError errors = default, SapProviderInstanceSpecificProperties providerSettings = default)
         {
             return new SapProviderInstanceData(
                 id,
@@ -105,17 +105,17 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 
         /// <param name="healthState"> Health state of the resource. </param>
         /// <param name="impactingReasons"> Reasons impacting health state. </param>
-        /// <returns> A new <see cref="Models.Health"/> instance for mocking. </returns>
-        public static Health Health(WorkloadProviderInstanceHealthState? healthState = default, string impactingReasons = default)
+        /// <returns> A new <see cref="Models.WorkloadsSapMonitorHealth"/> instance for mocking. </returns>
+        public static WorkloadsSapMonitorHealth WorkloadsSapMonitorHealth(WorkloadProviderInstanceHealthState? healthState = default, string impactingReasons = default)
         {
-            return new Health(healthState, impactingReasons, default);
+            return new WorkloadsSapMonitorHealth(healthState, impactingReasons, default);
         }
 
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
-        /// <returns> A new <see cref="Models.ProviderSpecificProperties"/> instance for mocking. </returns>
-        public static ProviderSpecificProperties ProviderSpecificProperties(string providerType = default)
+        /// <returns> A new <see cref="Models.SapProviderInstanceSpecificProperties"/> instance for mocking. </returns>
+        public static SapProviderInstanceSpecificProperties SapProviderInstanceSpecificProperties(string providerType = default)
         {
-            return new UnknownProviderSpecificProperties(providerType, default);
+            return new UnknownSapProviderInstanceSpecificProperties(providerType, default);
         }
 
         /// <param name="hostname"> Gets or sets the target virtual machine size. </param>
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Alert Template properties. </param>
         /// <returns> A new <see cref="WorkloadsSapMonitor.AlertTemplateData"/> instance for mocking. </returns>
-        public static AlertTemplateData AlertTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AlertTemplateProperties properties = default)
+        public static AlertTemplateData AlertTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SapMonitorAlertTemplateProperties properties = default)
         {
             return new AlertTemplateData(
                 id,
@@ -458,12 +458,12 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         /// <param name="alertUnit"> Unit of the alert. </param>
         /// <param name="metricMeasurement"> Describes the properties for metric measurement in alerts template. </param>
         /// <param name="queryInputParameters"> Describes the Query Input Parameter properties in alerts template. </param>
-        /// <returns> A new <see cref="Models.AlertTemplateProperties"/> instance for mocking. </returns>
-        public static AlertTemplateProperties AlertTemplateProperties(ResponseError errors = default, WorkloadMonitorProvisioningState? provisioningState = default, string templateDisplayName = default, string providerType = default, string description = default, int? severity = default, string query = default, AlertRuleConditionalOperator? thresholdOperator = default, int? defaultThreshold = default, int? lowerBound = default, int? upperBound = default, AlertTemplateDefaultThresholdInputOption? defaultThresholdInputOption = default, string alertUnit = default, AlertTemplateMetricMeasurement metricMeasurement = default, IEnumerable<AlertTemplateQueryInputContent> queryInputParameters = default)
+        /// <returns> A new <see cref="Models.SapMonitorAlertTemplateProperties"/> instance for mocking. </returns>
+        public static SapMonitorAlertTemplateProperties SapMonitorAlertTemplateProperties(ResponseError errors = default, WorkloadMonitorProvisioningState? provisioningState = default, string templateDisplayName = default, string providerType = default, string description = default, int? severity = default, string query = default, AlertRuleConditionalOperator? thresholdOperator = default, int? defaultThreshold = default, int? lowerBound = default, int? upperBound = default, AlertTemplateDefaultThresholdInputOption? defaultThresholdInputOption = default, string alertUnit = default, AlertTemplateMetricMeasurement metricMeasurement = default, IEnumerable<AlertTemplateQueryInputContent> queryInputParameters = default)
         {
             queryInputParameters ??= new ChangeTrackingList<AlertTemplateQueryInputContent>();
 
-            return new AlertTemplateProperties(
+            return new SapMonitorAlertTemplateProperties(
                 errors,
                 provisioningState,
                 templateDisplayName,

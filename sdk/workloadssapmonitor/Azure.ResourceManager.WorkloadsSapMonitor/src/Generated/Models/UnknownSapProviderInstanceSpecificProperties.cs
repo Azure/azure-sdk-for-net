@@ -10,12 +10,12 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 {
-    internal partial class UnknownProviderSpecificProperties : ProviderSpecificProperties
+    internal partial class UnknownSapProviderInstanceSpecificProperties : SapProviderInstanceSpecificProperties
     {
-        /// <summary> Initializes a new instance of <see cref="UnknownProviderSpecificProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="UnknownSapProviderInstanceSpecificProperties"/>. </summary>
         /// <param name="providerType"> The provider type. For example, the value can be SapHana. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownProviderSpecificProperties(string providerType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(providerType ?? "unknown", additionalBinaryDataProperties)
+        internal UnknownSapProviderInstanceSpecificProperties(string providerType, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(providerType ?? "unknown", additionalBinaryDataProperties)
         {
         }
     }

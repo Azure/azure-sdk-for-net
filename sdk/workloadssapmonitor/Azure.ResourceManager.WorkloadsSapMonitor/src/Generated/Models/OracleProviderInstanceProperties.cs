@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 {
     /// <summary> Gets or sets the Oracle provider properties. </summary>
-    public partial class OracleProviderInstanceProperties : ProviderSpecificProperties
+    public partial class OracleProviderInstanceProperties : SapProviderInstanceSpecificProperties
     {
         /// <summary> Initializes a new instance of <see cref="OracleProviderInstanceProperties"/>. </summary>
         public OracleProviderInstanceProperties() : base("Oracle")

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 {
     /// <summary> Gets or sets the provider properties. </summary>
-    public partial class HanaDBProviderInstanceProperties : ProviderSpecificProperties
+    public partial class HanaDBProviderInstanceProperties : SapProviderInstanceSpecificProperties
     {
         /// <summary> Initializes a new instance of <see cref="HanaDBProviderInstanceProperties"/>. </summary>
         public HanaDBProviderInstanceProperties() : base("SapHana")
