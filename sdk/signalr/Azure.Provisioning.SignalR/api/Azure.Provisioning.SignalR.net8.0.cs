@@ -28,7 +28,7 @@ namespace Azure.Provisioning.SignalR
         public static Azure.Provisioning.SignalR.SignalRBuiltInRole SignalRRestApiReader { get { throw null; } }
         public static Azure.Provisioning.SignalR.SignalRBuiltInRole SignalRServiceOwner { get { throw null; } }
         public bool Equals(Azure.Provisioning.SignalR.SignalRBuiltInRole other) { throw null; }
-        public override bool Equals(object? obj) { throw null; }
+        public override bool Equals(object obj) { throw null; }
         public static string GetBuiltInRoleName(Azure.Provisioning.SignalR.SignalRBuiltInRole value) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Provisioning.SignalR.SignalRBuiltInRole left, Azure.Provisioning.SignalR.SignalRBuiltInRole right) { throw null; }
@@ -191,6 +191,7 @@ namespace Azure.Provisioning.SignalR
             public static readonly string V2025_01_01_PREVIEW;
         }
     }
+    [System.ObsoleteAttribute("This class is deprecated and it will be removed in a future version. Please use SignalRPrivateEndpointConnection instead.")]
     public partial class SignalRPrivateEndpointConnectionData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SignalRPrivateEndpointConnectionData() { }
@@ -338,15 +339,15 @@ namespace Azure.Provisioning.SignalR
         public Azure.Provisioning.SignalR.SignalRRouteSettings RouteSettings { get { throw null; } set { } }
         public Azure.Provisioning.SignalR.SignalRServerlessSettings Serverless { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> ServerPort { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.SignalR.SignalRSharedPrivateLink> SharedPrivateLinkResourceItems { get { throw null; } }
-        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use SharedPrivateLinkResourceItems instead.")]
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use SharedPrivateLinks instead.")]
         public Azure.Provisioning.BicepList<Azure.Provisioning.SignalR.SignalRSharedPrivateLinkResourceData> SharedPrivateLinkResources { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.SignalR.SignalRSharedPrivateLink> SharedPrivateLinks { get { throw null; } }
         public Azure.Provisioning.SignalR.SignalRResourceSku Sku { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.SignalR.SignalRUpstreamTemplate> UpstreamTemplates { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Version { get { throw null; } }
-        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.SignalR.SignalRBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string? bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.SignalR.SignalRBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string bicepIdentifierSuffix = null) { throw null; }
         public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.SignalR.SignalRBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.SignalR.SignalRService FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -397,6 +398,7 @@ namespace Azure.Provisioning.SignalR
             public static readonly string V2025_01_01_PREVIEW;
         }
     }
+    [System.ObsoleteAttribute("This class is deprecated and it will be removed in a future version. Please use SignalRSharedPrivateLink instead.")]
     public partial class SignalRSharedPrivateLinkResourceData : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public SignalRSharedPrivateLinkResourceData() { }

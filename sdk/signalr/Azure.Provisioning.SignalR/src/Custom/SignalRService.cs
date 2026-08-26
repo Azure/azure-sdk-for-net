@@ -1,22 +1,26 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using System;
 using System.ComponentModel;
-using Azure.Provisioning.Authorization;
 using Azure.Provisioning.Expressions;
-using Azure.Provisioning.Roles;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.SignalR;
 
+// Preserve the shipped SignalRService resource name and compatibility members not represented by the current schema.
 /// <summary> A class representing a resource. </summary>
 [CodeGenType("SignalR")]
 public partial class SignalRService
 {
+    // Preserve the old flattened data-model lists for callers compiled against previous releases.
+#pragma warning disable CS0618 // These fields support properties intentionally preserved for compatibility.
     private BicepList<SignalRPrivateEndpointConnectionData> _privateEndpointConnections;
     private BicepList<SignalRSharedPrivateLinkResourceData> _sharedPrivateLinkResources;
 
+    // Expose the generated child-resource lists under distinct names so they can coexist with the legacy lists.
     /// <summary> Gets the private endpoint connection resources. </summary>
     [CodeGenMember("PrivateEndpointConnections")]
     public BicepList<SignalRPrivateEndpointConnection> PrivateEndpointConnectionResources
@@ -33,7 +37,7 @@ public partial class SignalRService
 
     /// <summary> Gets the shared private link resources. </summary>
     [CodeGenMember("SharedPrivateLinkResources")]
-    public BicepList<SignalRSharedPrivateLink> SharedPrivateLinkResourceItems
+    public BicepList<SignalRSharedPrivateLink> SharedPrivateLinks
     {
         get
         {
@@ -45,6 +49,7 @@ public partial class SignalRService
         }
     }
 
+    // Preserve the previously shipped data-model properties as hidden obsolete compatibility APIs.
     /// <summary> Gets the private endpoint connection data models. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This property is deprecated and it will be removed in a future version. Please use PrivateEndpointConnectionResources instead.")]
@@ -59,7 +64,7 @@ public partial class SignalRService
 
     /// <summary> Gets the shared private link resource data models. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    [Obsolete("This property is deprecated and it will be removed in a future version. Please use SharedPrivateLinkResourceItems instead.")]
+    [Obsolete("This property is deprecated and it will be removed in a future version. Please use SharedPrivateLinks instead.")]
     public BicepList<SignalRSharedPrivateLinkResourceData> SharedPrivateLinkResources
     {
         get
@@ -68,7 +73,9 @@ public partial class SignalRService
             return _sharedPrivateLinkResources;
         }
     }
+#pragma warning restore CS0618
 
+    // Preserve the flattened property name while wiring it to the generated nested TLS member.
     /// <summary> Gets or sets whether client certificate authentication is enabled. </summary>
     [CodeGenMember("TlsIsClientCertEnabled")]
     public BicepValue<bool> IsClientCertEnabled
@@ -84,6 +91,7 @@ public partial class SignalRService
         }
     }
 
+    // The provisioning emitter does not generate the listKeys expression used by this convenience API.
     /// <summary> Gets the access keys for this SignalR service. </summary>
     /// <returns> The access keys for this SignalR service. </returns>
     public SignalRKeys GetKeys()
@@ -93,28 +101,7 @@ public partial class SignalRService
         return key;
     }
 
-    /// <summary> Creates a role assignment for a user-assigned identity. </summary>
-    public RoleAssignment CreateRoleAssignment(SignalRBuiltInRole role, UserAssignedIdentity identity) =>
-        new($"{BicepIdentifier}_{identity.BicepIdentifier}_{SignalRBuiltInRole.GetBuiltInRoleName(role)}")
-        {
-            Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(BicepIdentifier),
-            PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
-            RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
-            PrincipalId = identity.PrincipalId
-        };
-
-    /// <summary> Creates a role assignment for a principal. </summary>
-    public RoleAssignment CreateRoleAssignment(SignalRBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string? bicepIdentifierSuffix = default) =>
-        new($"{BicepIdentifier}_{SignalRBuiltInRole.GetBuiltInRoleName(role)}{(bicepIdentifierSuffix is null ? "" : "_")}{bicepIdentifierSuffix}")
-        {
-            Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-            Scope = new IdentifierExpression(BicepIdentifier),
-            PrincipalType = principalType,
-            RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
-            PrincipalId = principalId
-        };
-
+    // Register the legacy model paths because the generated child-resource properties no longer represent them.
     partial void DefineAdditionalProperties()
     {
 #pragma warning disable CS0618 // These properties are intentionally preserved for compatibility.

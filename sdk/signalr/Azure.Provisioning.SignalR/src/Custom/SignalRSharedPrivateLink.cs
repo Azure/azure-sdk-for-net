@@ -1,10 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.SignalR;
 
+// Preserve the shipped resource name for the generated SignalRSharedPrivateLinkResource type.
 /// <summary> Describes a Shared Private Link Resource. </summary>
 [CodeGenType("SignalRSharedPrivateLinkResource")]
 public partial class SignalRSharedPrivateLink
