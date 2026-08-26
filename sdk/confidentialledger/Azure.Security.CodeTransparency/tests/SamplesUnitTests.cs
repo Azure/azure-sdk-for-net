@@ -82,7 +82,7 @@ namespace Azure.Security.CodeTransparency.Tests
             FileStream fileStream = File.OpenRead("signature.cose");
             BinaryData content = BinaryData.FromStream(fileStream);
 #endif
-            Operation<BinaryData> operation = await client.CreateEntryAsync(WaitUntil.Started, content);
+            CreateEntryOperation operation = await client.CreateEntryAsync(WaitUntil.Started, content);
             #endregion Snippet:CodeTransparencySubmission
 
             #region Snippet:CodeTransparencyDownloadTransparentStatement

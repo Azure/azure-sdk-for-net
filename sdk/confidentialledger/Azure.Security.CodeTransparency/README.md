@@ -51,7 +51,7 @@ Use the following code to submit the signature:
 CodeTransparencyClient client = new(new Uri("https://<< service name >>.confidential-ledger.azure.com"));
 FileStream fileStream = File.OpenRead("signature.cose");
 BinaryData content = BinaryData.FromStream(fileStream);
-Operation<BinaryData> operation = await client.CreateEntryAsync(WaitUntil.Started, content);
+CreateEntryOperation operation = await client.CreateEntryAsync(WaitUntil.Started, content);
 ```
 
 Then obtain the transparent statement:

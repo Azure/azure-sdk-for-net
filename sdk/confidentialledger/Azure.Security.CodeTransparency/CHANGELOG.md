@@ -6,9 +6,15 @@
 
 ### Breaking Changes
 
+- Replaced the optional `CodeTransparencyClientOptions` constructor parameter with separate endpoint-only and endpoint-plus-options constructors.
+- Changed the long-running `CreateEntry` overloads to return the concrete `CreateEntryOperation` type.
+- Made the implementation-only `CborUtils` and `CcfReceipt` types internal.
+
 ### Bugs Fixed
 
 ### Other Changes
+
+- Removed the unnecessary dependency on `Azure.Security.KeyVault.Keys`.
 
 ## 1.0.0-beta.12 (2026-07-31)
 

@@ -14,7 +14,7 @@ namespace Azure.Security.CodeTransparency
     /// Tracks the status of a call to <see cref="CodeTransparencyClient.CreateEntry(WaitUntil, BinaryData, CancellationToken)"/>
     /// or <see cref="CodeTransparencyClient.CreateEntryAsync(WaitUntil, BinaryData, CancellationToken)"/> until completion.
     /// </summary>
-    internal class CreateEntryOperation : Operation<BinaryData>, IOperation
+    public class CreateEntryOperation : Operation<BinaryData>, IOperation
     {
         private readonly CodeTransparencyClient _client;
         private readonly OperationInternal _operationInternal;
@@ -31,7 +31,7 @@ namespace Azure.Security.CodeTransparency
         /// </summary>
         /// <param name="client"> The <see cref="CodeTransparencyClient"/>. </param>
         /// <param name="operationId"> The operation id from a previous call to create the entry. </param>
-        public CreateEntryOperation(CodeTransparencyClient client, string operationId)
+        internal CreateEntryOperation(CodeTransparencyClient client, string operationId)
         {
             _client = client;
             Id = operationId;
@@ -45,7 +45,7 @@ namespace Azure.Security.CodeTransparency
         /// <param name="entryId"> The id of the committed entry. </param>
         /// <param name="rawResponse"> The final response returned by the create entry call. </param>
         /// <param name="value"> The value exposed by the completed operation. </param>
-        public CreateEntryOperation(string entryId, Response rawResponse, BinaryData value)
+        internal CreateEntryOperation(string entryId, Response rawResponse, BinaryData value)
         {
             Id = entryId;
             _value = value;

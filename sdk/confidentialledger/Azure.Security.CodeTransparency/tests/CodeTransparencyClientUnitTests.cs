@@ -205,7 +205,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             BinaryData content = BinaryData.FromString("Hello World!");
-            Operation<BinaryData> response = await client.CreateEntryAsync(WaitUntil.Started, content);
+            CreateEntryOperation response = await client.CreateEntryAsync(WaitUntil.Started, content);
 
             Assert.AreEqual("https://foo.bar.com/entries?api-version=2026-03-26&waitForCommit=true", mockTransport.Requests[0].Uri.ToString());
             Assert.IsTrue(response.HasCompleted);
@@ -228,7 +228,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             BinaryData content = BinaryData.FromString("Hello World!");
-            Operation<BinaryData> response = await client.CreateEntryAsync(WaitUntil.Started, content);
+            CreateEntryOperation response = await client.CreateEntryAsync(WaitUntil.Started, content);
 
             Assert.AreEqual("https://foo.bar.com/entries?api-version=2026-03-26&waitForCommit=true", mockTransport.Requests[0].Uri.ToString());
             Assert.AreEqual(1, mockTransport.Requests.Count);
@@ -250,7 +250,7 @@ namespace Azure.Security.CodeTransparency.Tests
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             BinaryData content = BinaryData.FromString("Hello World!");
-            Operation<BinaryData> response = await client.CreateEntryAsync(WaitUntil.Started, content);
+            CreateEntryOperation response = await client.CreateEntryAsync(WaitUntil.Started, content);
 
             Assert.AreEqual(2, mockTransport.Requests.Count);
             Assert.AreEqual("https://foo.bar.com/entries?api-version=2026-03-26&waitForCommit=true", mockTransport.Requests[1].Uri.ToString());
@@ -273,7 +273,7 @@ namespace Azure.Security.CodeTransparency.Tests
             };
             CodeTransparencyClient client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 
-            Operation<BinaryData> result = await client.CreateEntryAsync(WaitUntil.Started, BinaryData.FromString("Hello World!"));
+            CreateEntryOperation result = await client.CreateEntryAsync(WaitUntil.Started, BinaryData.FromString("Hello World!"));
 
             Assert.NotNull(result);
             Assert.IsTrue(result.HasCompleted);
@@ -301,7 +301,7 @@ namespace Azure.Security.CodeTransparency.Tests
             };
             CodeTransparencyClient client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 
-            Operation<BinaryData> result = client.CreateEntry(WaitUntil.Started, BinaryData.FromString("test-body"));
+            CreateEntryOperation result = client.CreateEntry(WaitUntil.Started, BinaryData.FromString("test-body"));
 
             Assert.AreEqual(1, mockTransport.Requests.Count);
             Assert.IsTrue(result.HasCompleted);

@@ -163,18 +163,23 @@ namespace Azure.Security.CodeTransparency
                     }
                 }
 
-                // We are mapping our JWK with AKV JWK in order to leverage the already established
-                // ECDsa conversion given a JWK.
-                KeyVault.Keys.JsonWebKey tmpAkvKey = new KeyVault.Keys.JsonWebKey(null)
+                ECCurve curve = jsonWebKey.Crv switch
                 {
-                    CurveName = jsonWebKey.Crv,
-                    X = Base64Url.Decode(jsonWebKey.X),
-                    Y = Base64Url.Decode(jsonWebKey.Y),
-                    Id = jsonWebKey.Kid,
-                    KeyType = jsonWebKey.Kty
+                    "P-256" => ECCurve.NamedCurves.nistP256,
+                    "P-384" => ECCurve.NamedCurves.nistP384,
+                    "P-512" => ECCurve.NamedCurves.nistP521,
+                    _ => throw new InvalidOperationException($"Unsupported ECDsa curve '{jsonWebKey.Crv}'.")
                 };
 
-                using ECDsa ecdsaKey = tmpAkvKey.ToECDsa(false);
+                using ECDsa ecdsaKey = ECDsa.Create(new ECParameters
+                {
+                    Curve = curve,
+                    Q = new ECPoint
+                    {
+                        X = Base64Url.Decode(jsonWebKey.X),
+                        Y = Base64Url.Decode(jsonWebKey.Y)
+                    }
+                });
 
                 if (!receipt.VerifyDetached(ecdsaKey, new ReadOnlySpan<byte>(accumulator)))
                 {

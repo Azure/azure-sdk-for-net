@@ -75,9 +75,20 @@ namespace Azure.Security.CodeTransparency
         /// If the CA changes then there is a TTL which will help healing the long lived clients.
         /// </summary>
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
+        public CodeTransparencyClient(Uri endpoint) : this(endpoint, null, new CodeTransparencyClientOptions())
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of CodeTransparencyClient. The client will download its own
+        /// TLS CA cert to perform server cert authentication.
+        /// If the CA changes then there is a TTL which will help healing the long lived clients.
+        /// </summary>
+        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
-        public CodeTransparencyClient(Uri endpoint, CodeTransparencyClientOptions options = default) : this(endpoint, null, options)
+        public CodeTransparencyClient(Uri endpoint, CodeTransparencyClientOptions options) : this(endpoint, null, options)
         {
         }
 
@@ -223,8 +234,7 @@ namespace Azure.Security.CodeTransparency
         /// <param name="body"> CoseSign1 signature envelope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        [Obsolete("Use CreateEntry(BinaryData, bool, CancellationToken) instead.")]
-        public virtual Operation<BinaryData> CreateEntry(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
+        public virtual CreateEntryOperation CreateEntry(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntry");
@@ -246,8 +256,7 @@ namespace Azure.Security.CodeTransparency
         /// <param name="body"> CoseSign1 signature envelope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        [Obsolete("Use CreateEntryAsync(BinaryData, bool, CancellationToken) instead.")]
-        public virtual async Task<Operation<BinaryData>> CreateEntryAsync(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
+        public virtual async Task<CreateEntryOperation> CreateEntryAsync(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("CodeTransparencyClient.CreateEntryAsync");
