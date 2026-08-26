@@ -6021,6 +6021,42 @@ namespace Azure.Storage.Files.DataLake.Tests
 
         [RecordedTest]
         [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
+        public async Task GetLayoutAsync_OAuth()
+        {
+            // The layout endpoints are returned by the service, so exercise the
+            // bearer-token path explicitly rather than relying on the SharedKey
+            // coverage above.
+            DataLakeServiceClient oauthService = GetServiceClient_OAuth();
+            await using DisposingFileSystem test = await GetNewFileSystem(service: oauthService);
+
+            // Arrange
+            DataLakeFileClient file = InstrumentClient(test.FileSystem.GetFileClient(GetNewFileName()));
+            long size = 5 * Constants.KB;
+            byte[] data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await file.UploadAsync(stream);
+            }
+
+            // Act
+            bool anyPages = false;
+            await foreach (DataLakeFileLayoutInfo layoutInfo in file.GetLayoutAsync())
+            {
+                anyPages = true;
+
+                // Assert
+                Assert.AreNotEqual(default(ETag), layoutInfo.ETag);
+                Assert.AreEqual(size, layoutInfo.FileContentLength);
+                Assert.AreNotEqual(default(DateTimeOffset), layoutInfo.LastModified);
+                Assert.NotNull(layoutInfo.Ranges);
+                Assert.NotNull(layoutInfo.Endpoints);
+            }
+
+            Assert.IsTrue(anyPages, "Expected GetLayoutAsync to return at least one page under OAuth");
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = DataLakeClientOptions.ServiceVersion.V2026_02_06)]
         public async Task GetLayoutAsync_FileSAS()
         {
             string fileSystemName = GetNewFileSystemName();

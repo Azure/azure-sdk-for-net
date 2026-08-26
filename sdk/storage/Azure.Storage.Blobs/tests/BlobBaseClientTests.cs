@@ -4424,6 +4424,46 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        public async Task GetLayoutAsync_OAuth()
+        {
+            // The layout endpoints are returned by the service, so exercise the
+            // bearer-token path explicitly rather than relying on the SharedKey
+            // coverage above.
+            BlobServiceClient oauthService = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(service: oauthService);
+
+            // Arrange
+            BlockBlobClient blob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+            long size = 5 * Constants.KB;
+            var data = GetRandomBuffer(size);
+            using (var stream = new MemoryStream(data))
+            {
+                await blob.UploadAsync(stream);
+            }
+
+            // Act
+            bool anyPages = false;
+            await foreach (BlobLayoutInfo blobLayoutInfo in blob.GetLayoutAsync())
+            {
+                anyPages = true;
+
+                // Assert
+                Assert.AreNotEqual(default(ETag), blobLayoutInfo.ETag);
+                Assert.AreEqual(size, blobLayoutInfo.BlobContentLength);
+                Assert.AreEqual(BlobType.Block, blobLayoutInfo.BlobType);
+                Assert.AreNotEqual(default(DateTimeOffset), blobLayoutInfo.LastModified);
+                Assert.AreNotEqual(default(DateTimeOffset), blobLayoutInfo.CreatedOn);
+                Assert.IsTrue(blobLayoutInfo.IsServerEncrypted);
+                Assert.AreEqual(LeaseStatus.Unlocked, blobLayoutInfo.LeaseStatus);
+                Assert.AreEqual(LeaseState.Available, blobLayoutInfo.LeaseState);
+                Assert.NotNull(blobLayoutInfo.Ranges);
+                Assert.NotNull(blobLayoutInfo.Endpoints);
+            }
+
+            Assert.IsTrue(anyPages, "Expected GetLayoutAsync to return at least one page under OAuth");
+        }
+
+        [RecordedTest]
         public async Task GetLayoutAsync_EmptyBlob()
         {
             await using DisposingContainer test = await GetTestContainerAsync();
