@@ -1,5 +1,11 @@
 # Release History
 
+## 1.0.0 (2026-08-26)
+
+### Other Changes
+
+- Promoted `1.0.0-beta.12` to stable `1.0.0` with no API or implementation changes.
+
 ## 1.0.0-beta.12 (2026-07-31)
 
 ### Bugs Fixed
