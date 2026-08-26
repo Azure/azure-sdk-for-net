@@ -21,19 +21,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public WorkloadSqlRecoveryPointExtendedInfo()
         {
             DataDirectoryPaths = new ChangeTrackingList<SqlDataDirectory>();
-            IncludedDatabases = new ChangeTrackingList<BackupDatabaseInRecoveryPoint>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkloadSqlRecoveryPointExtendedInfo"/>. </summary>
         /// <param name="dataDirectoryInfoCapturedOn"> UTC time at which data directory info was captured. </param>
         /// <param name="dataDirectoryPaths"> List of data directory paths during restore operation. </param>
-        /// <param name="includedDatabases"> List of databases included in recovery point. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkloadSqlRecoveryPointExtendedInfo(DateTimeOffset? dataDirectoryInfoCapturedOn, IList<SqlDataDirectory> dataDirectoryPaths, IList<BackupDatabaseInRecoveryPoint> includedDatabases, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkloadSqlRecoveryPointExtendedInfo(DateTimeOffset? dataDirectoryInfoCapturedOn, IList<SqlDataDirectory> dataDirectoryPaths, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DataDirectoryInfoCapturedOn = dataDirectoryInfoCapturedOn;
             DataDirectoryPaths = dataDirectoryPaths;
-            IncludedDatabases = includedDatabases;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,8 +39,5 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> List of data directory paths during restore operation. </summary>
         public IList<SqlDataDirectory> DataDirectoryPaths { get; }
-
-        /// <summary> List of databases included in recovery point. </summary>
-        public IList<BackupDatabaseInRecoveryPoint> IncludedDatabases { get; }
     }
 }

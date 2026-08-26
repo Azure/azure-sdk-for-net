@@ -12,6 +12,17 @@ namespace Azure.AI.Projects.Agents
     public partial class AzureAISearchTool : ProjectsAgentTool
     {
         /// <summary> Initializes a new instance of <see cref="AzureAISearchTool"/>. </summary>
+        /// <param name="options"> The azure ai search index resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        public AzureAISearchTool(AzureAISearchToolOptions options) : base(ToolType.AzureAiSearch)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
+            Options = options;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureAISearchTool"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>

@@ -73,6 +73,12 @@
 # ServiceOwners:                                                   @jsquire @Azure/azure-sdk-write-net-core
 # AzureSdkOwners:                                                  @jsquire
 
+# PRLabel: %Tables
+/sdk/tables/                                                       @jorgerangel-msft @jsquire
+
+# AzureSdkOwners:                                                  @jorgerangel-msft
+# ServiceLabel: %Tables
+
 ####################
 # Client Libraries
 ####################
@@ -87,7 +93,6 @@
 
 /sdk/ai/Azure.AI.Projects.Agents/    @rhurey
 
-/sdk/tables/Azure.Data.Tables/    @jorgerangel-msft @jsquire
 
 # PRLabel: %AI Agents
 /sdk/agentserver/    @ankitbko @RaviPidaparthi @Shivakishore14 @vangarp
@@ -514,7 +519,7 @@
 # ServiceOwners: @wanyang7
 
 # PRLabel: %Tables
-/sdk/tables/    @jorgerangel-msft
+/sdk/tables/    @jorgerangel-msft @jsquire
 
 # AzureSdkOwners: @jorgerangel-msft
 # ServiceLabel: %Tables

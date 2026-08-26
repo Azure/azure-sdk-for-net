@@ -44,7 +44,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="searchOptions"> Options for searching the memory store. </param>
         /// <param name="updateDelayInSeconds"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemorySearchPreviewTool(ResponseToolKind @type, string memoryStoreName, string scope, MemorySearchOptions searchOptions, int? updateDelayInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
+        internal MemorySearchPreviewTool(ResponseToolKind @type, string memoryStoreName, string scope, MemorySearchResultOptions searchOptions, int? updateDelayInSeconds, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             MemoryStoreName = memoryStoreName;
             Scope = scope;
@@ -64,7 +64,7 @@ namespace Azure.AI.Extensions.OpenAI
         public string Scope { get; set; }
 
         /// <summary> Options for searching the memory store. </summary>
-        public MemorySearchOptions SearchOptions { get; set; }
+        public MemorySearchResultOptions SearchOptions { get; set; }
 
         /// <summary> Time to wait before updating memories after inactivity (seconds). Default 300. </summary>
         public int? UpdateDelayInSeconds { get; set; }
