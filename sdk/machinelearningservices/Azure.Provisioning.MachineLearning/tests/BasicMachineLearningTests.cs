@@ -169,8 +169,8 @@ public class BasicMachineLearningTests
 
             resource applicationInsight 'Microsoft.Insights/components@2020-02-02' = {
               name: take('applicationInsight-${uniqueString(resourceGroup().id)}', 260)
-              kind: 'web'
               location: location
+              kind: 'web'
               properties: {
                 Application_Type: 'web'
               }
