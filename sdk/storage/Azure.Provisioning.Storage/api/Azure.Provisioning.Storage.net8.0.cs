@@ -564,7 +564,7 @@ namespace Azure.Provisioning.Storage
     {
         public FileShare(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.FileShareAccessTier> AccessTier { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> AccessTierChangedOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> AccessTierChangeOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> AccessTierStatus { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> DeletedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.FileShareEnabledProtocol> EnabledProtocol { get { throw null; } set { } }
@@ -1868,7 +1868,7 @@ namespace Azure.Provisioning.Storage
         public StorageServiceAccessPolicy() { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Permission { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class StorageSignedIdentifier : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1972,7 +1972,7 @@ namespace Azure.Provisioning.Storage
         public StorageTableAccessPolicy() { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Permission { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class StorageTableSignedIdentifier : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -2018,9 +2018,11 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
         public Azure.Provisioning.Storage.StorageTaskAssignmentExecutionContext ExecutionContext { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsoleted and will be removed in a future version. Please use StorageTaskAssignmentProvisioningState instead.")]
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ReportPrefix { get { throw null; } set { } }
         public Azure.Provisioning.Storage.StorageTaskReportProperties RunStatus { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageTaskAssignmentProvisioningState> StorageTaskAssignmentProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TaskId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }

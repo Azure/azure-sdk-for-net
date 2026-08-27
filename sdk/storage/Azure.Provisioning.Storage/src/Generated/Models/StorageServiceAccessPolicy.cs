@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Storage
     /// <summary> The StorageServiceAccessPolicy. </summary>
     public partial class StorageServiceAccessPolicy : ProvisionableConstruct
     {
-        private BicepValue<DateTimeOffset> _startsOn;
+        private BicepValue<DateTimeOffset> _startOn;
         private BicepValue<DateTimeOffset> _expireOn;
         private BicepValue<string> _permission;
 
@@ -23,18 +23,18 @@ namespace Azure.Provisioning.Storage
         {
         }
 
-        /// <summary> Gets or sets the StartsOn. </summary>
-        public BicepValue<DateTimeOffset> StartsOn
+        /// <summary> Gets or sets the StartOn. </summary>
+        public BicepValue<DateTimeOffset> StartOn
         {
             get
             {
                 Initialize();
-                return _startsOn;
+                return _startOn;
             }
             set
             {
                 Initialize();
-                _startsOn.Assign(value);
+                _startOn.Assign(value);
             }
         }
 
@@ -72,7 +72,7 @@ namespace Azure.Provisioning.Storage
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startTime" }, format: "O");
+            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, format: "O");
             _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "expiryTime" }, format: "O");
             _permission = DefineProperty<string>(nameof(Permission), new string[] { "permission" });
             DefineAdditionalProperties();

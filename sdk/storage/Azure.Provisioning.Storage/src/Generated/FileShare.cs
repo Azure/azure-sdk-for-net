@@ -356,8 +356,8 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets the AccessTierChangedOn. </summary>
-        public BicepValue<DateTimeOffset> AccessTierChangedOn
+        /// <summary> Gets the AccessTierChangeOn. </summary>
+        public BicepValue<DateTimeOffset> AccessTierChangeOn
         {
             get
             {
@@ -365,7 +365,7 @@ namespace Azure.Provisioning.Storage
                 {
                     FileShareProperties = new FileShareProperties();
                 }
-                return FileShareProperties.AccessTierChangedOn;
+                return FileShareProperties.AccessTierChangeOn;
             }
         }
 

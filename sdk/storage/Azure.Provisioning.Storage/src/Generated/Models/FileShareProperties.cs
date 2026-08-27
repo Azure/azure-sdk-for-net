@@ -31,7 +31,7 @@ namespace Azure.Provisioning.Storage
         private BicepValue<DateTimeOffset> _deletedOn;
         private BicepValue<int> _remainingRetentionDays;
         private BicepValue<FileShareAccessTier> _accessTier;
-        private BicepValue<DateTimeOffset> _accessTierChangedOn;
+        private BicepValue<DateTimeOffset> _accessTierChangeOn;
         private BicepValue<string> _accessTierStatus;
         private BicepValue<long> _shareUsageBytes;
         private BicepValue<StorageLeaseStatus> _leaseStatus;
@@ -251,13 +251,13 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets the AccessTierChangedOn. </summary>
-        public BicepValue<DateTimeOffset> AccessTierChangedOn
+        /// <summary> Gets the AccessTierChangeOn. </summary>
+        public BicepValue<DateTimeOffset> AccessTierChangeOn
         {
             get
             {
                 Initialize();
-                return _accessTierChangedOn;
+                return _accessTierChangeOn;
             }
         }
 
@@ -372,7 +372,7 @@ namespace Azure.Provisioning.Storage
             _deletedOn = DefineProperty<DateTimeOffset>(nameof(DeletedOn), new string[] { "deletedTime" }, isOutput: true, format: "O");
             _remainingRetentionDays = DefineProperty<int>(nameof(RemainingRetentionDays), new string[] { "remainingRetentionDays" }, isOutput: true);
             _accessTier = DefineProperty<FileShareAccessTier>(nameof(AccessTier), new string[] { "accessTier" });
-            _accessTierChangedOn = DefineProperty<DateTimeOffset>(nameof(AccessTierChangedOn), new string[] { "accessTierChangeTime" }, isOutput: true, format: "O");
+            _accessTierChangeOn = DefineProperty<DateTimeOffset>(nameof(AccessTierChangeOn), new string[] { "accessTierChangeTime" }, isOutput: true, format: "O");
             _accessTierStatus = DefineProperty<string>(nameof(AccessTierStatus), new string[] { "accessTierStatus" }, isOutput: true);
             _shareUsageBytes = DefineProperty<long>(nameof(ShareUsageBytes), new string[] { "shareUsageBytes" }, isOutput: true);
             _leaseStatus = DefineProperty<StorageLeaseStatus>(nameof(LeaseStatus), new string[] { "leaseStatus" }, isOutput: true);
