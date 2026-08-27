@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDateTimeUTC"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endDateTimeUTC"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(AggregationInterval))
             {
@@ -157,8 +157,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 return null;
             }
             Uri endpoint = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             FrontDoorTimeSeriesInfoAggregationInterval? aggregationInterval = default;
             FrontDoorTimeSeriesType? timeSeriesType = default;
             string country = default;
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endDateTimeUTC"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("aggregationInterval"u8))
@@ -237,8 +237,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             }
             return new TimeseriesProperties(
                 endpoint,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 aggregationInterval,
                 timeSeriesType,
                 country,
