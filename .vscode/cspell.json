@@ -215,12 +215,6 @@
       ]
     },
     {
-      "filename": "**/sdk/agentserver/**/*",
-      "words": [
-        "aaas"
-      ]
-    },
-    {
       "filename": "**/sdk/analysisservices/**/*.cs",
       "words": [
         "dmts"
