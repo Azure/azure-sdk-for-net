@@ -114,11 +114,11 @@ namespace Azure.ResourceManager.CostManagement.Models
         }
 
         /// <summary> The time when export was picked up to be run. </summary>
-        public DateTimeOffset? ProcessingStartOn
+        public DateTimeOffset? ProcessingStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.ProcessingStartOn;
+                return Properties is null ? default : Properties.ProcessingStartsOn;
             }
             set
             {
@@ -126,16 +126,16 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.ProcessingStartOn = value;
+                Properties.ProcessingStartsOn = value;
             }
         }
 
         /// <summary> The time when the export run finished. </summary>
-        public DateTimeOffset? ProcessingEndOn
+        public DateTimeOffset? ProcessingEndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.ProcessingEndOn;
+                return Properties is null ? default : Properties.ProcessingEndsOn;
             }
             set
             {
@@ -143,16 +143,16 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.ProcessingEndOn = value;
+                Properties.ProcessingEndsOn = value;
             }
         }
 
         /// <summary> The start datetime for the export. </summary>
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -160,16 +160,16 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
         /// <summary> The end datetime for the export. </summary>
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 
