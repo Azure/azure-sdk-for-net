@@ -52,11 +52,6 @@ namespace Azure.Data.AppConfiguration
 
         private static string GetVersionString(ServiceVersion version) => version switch
         {
-            ServiceVersion.V1_0 => "1.0",
-            ServiceVersion.V2023_10_01 => "2023-10-01",
-            ServiceVersion.V2023_11_01 => "2023-11-01",
-            ServiceVersion.V2024_09_01 => "2024-09-01",
-            ServiceVersion.V2026_04_01 => "2026-04-01",
             ServiceVersion.V2026_05_01_Preview => "2026-05-01-preview",
 
             _ => throw new NotSupportedException()

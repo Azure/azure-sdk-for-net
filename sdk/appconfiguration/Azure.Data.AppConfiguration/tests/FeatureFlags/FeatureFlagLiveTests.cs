@@ -9,12 +9,12 @@ using NUnit.Framework;
 
 namespace Azure.Data.AppConfiguration.Tests
 {
-    [ClientTestFixture(ConfigurationClientOptions.ServiceVersion.V2026_05_01_Preview)]
+    [ClientTestFixture(FeatureFlagClientOptions.ServiceVersion.V2026_05_01_Preview)]
     public class FeatureFlagLiveTests : RecordedTestBase<AppConfigurationTestEnvironment>
     {
-        private readonly ConfigurationClientOptions.ServiceVersion _serviceVersion;
+        private readonly FeatureFlagClientOptions.ServiceVersion _serviceVersion;
 
-        public FeatureFlagLiveTests(bool isAsync, ConfigurationClientOptions.ServiceVersion serviceVersion) : base(isAsync)
+        public FeatureFlagLiveTests(bool isAsync, FeatureFlagClientOptions.ServiceVersion serviceVersion) : base(isAsync)
         {
             _serviceVersion = serviceVersion;
         }
@@ -24,8 +24,7 @@ namespace Azure.Data.AppConfiguration.Tests
 
         private FeatureFlagClient GetClient(bool skipInstrumentation = false)
         {
-            FeatureFlagClientOptions clientOptions = new FeatureFlagClientOptions(
-                (FeatureFlagClientOptions.ServiceVersion)Enum.Parse(typeof(FeatureFlagClientOptions.ServiceVersion), _serviceVersion.ToString()));
+            FeatureFlagClientOptions clientOptions = new FeatureFlagClientOptions(_serviceVersion);
             FeatureFlagClientOptions options = InstrumentClientOptions(clientOptions);
             FeatureFlagClient client = new FeatureFlagClient(new System.Uri(TestEnvironment.Endpoint), TestEnvironment.Credential, options);
             // Conditional paging relies on the concrete pageable type, which client instrumentation
@@ -49,7 +48,7 @@ namespace Azure.Data.AppConfiguration.Tests
             }
             catch (RequestFailedException ex) when (IsUnsupportedApiVersion(ex))
             {
-                Assert.Ignore($"Feature flag tests require API version {ConfigurationClientOptions.ServiceVersion.V2026_05_01_Preview}.");
+                Assert.Ignore($"Feature flag tests require API version {FeatureFlagClientOptions.ServiceVersion.V2026_05_01_Preview}.");
             }
             catch (RequestFailedException ex) when (ex.Status == 404)
             {
