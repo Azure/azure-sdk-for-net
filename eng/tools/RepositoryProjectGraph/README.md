@@ -61,7 +61,7 @@ repository projects + declared TFMs
        -> union physical project/package roots
 ```
 
-There is no MSBuild process spawned per inner project. `ProjectGraph` still performs real MSBuild evaluation, including imports, properties, conditions, central package versions, and TFM-specific items; it is not a lightweight XML parser.
+There is no MSBuild process spawned per inner project. `ProjectGraph` still performs real MSBuild evaluation, including imports, properties, conditions, central package versions, and TFM-specific items; it is not a lightweight XML parser. Repository graph evaluation sets `EnableDefaultItems=false`: every reached project already contributes its containing checkout root, so SDK-default items beneath that root add no sparse-checkout coverage. Explicit items, linked files, imports, analyzers, and hint paths remain evaluated and can contribute additional roots.
 
 The graph always evaluates `Debug`, matching the established `ProjectDependsOn` dependency query, and preserves every declared target framework. This keeps one entry point per physical project while retaining TFM-specific dependencies and inputs. Dependency-only nodes created by additional global properties fail generation until a future schema preserves that identity. The artifact records its source commit, `Debug` generation policy, and whether inputs were evaluated so consumers can safely reuse only a compatible result.
 
@@ -109,6 +109,7 @@ The NuGet mode is still marked `restoreEquivalent=false` until broader lock-file
 - Direct `PackageReference` compile asset filters are applied, and the NuGet lock-file traversal records `transitiveDependencyAssetFiltersApplied=true`.
 - The package-only phase does not reproduce all lock-file, RID-specific, conflict-resolution, source-mapping, or other restore behavior. These differences can produce false-positive or false-negative reachability if repository assumptions change.
 - The graph deliberately models the union of declared TFMs and does not add an OS-specific query dimension. Host-dependent MSBuild conditions remain an assumption of the repository analysis.
+- Build logic that derives dependencies from the presence of SDK-default items is not represented while `EnableDefaultItems=false`. The repository currently has no such dependency logic; adding it requires either an explicit graph input/reference or removal of this optimization.
 - The task currently requires the repository's .NET 10 SDK. Repository-wide Debug evaluation has used roughly 2–3 GiB without sparse-checkout inputs; input-enabled measurements must be tracked separately. See [`SPARSE_CHECKOUT.md`](SPARSE_CHECKOUT.md) for the current CI validation scope.
 
 ## Performance
