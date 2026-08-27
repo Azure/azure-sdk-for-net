@@ -6209,7 +6209,7 @@ namespace Azure.ResourceManager.NetApp.Models
         private readonly object _dummy;
         private readonly int _dummyPrimitive;
         public SecureLdapType(string value) { throw null; }
-        public static Azure.ResourceManager.NetApp.Models.SecureLdapType LdapOverTLS { get { throw null; } }
+        public static Azure.ResourceManager.NetApp.Models.SecureLdapType LdapOverTls { get { throw null; } }
         public static Azure.ResourceManager.NetApp.Models.SecureLdapType None { get { throw null; } }
         public bool Equals(Azure.ResourceManager.NetApp.Models.SecureLdapType other) { throw null; }
         public override bool Equals(object obj) { throw null; }

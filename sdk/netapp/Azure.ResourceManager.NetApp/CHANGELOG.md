@@ -11,10 +11,6 @@
 
 - Changed the `ArmNetAppModelFactory.LdapConfiguration` and `ArmNetAppModelFactory.LdapConfigurationPatch` factory methods to accept `SecureLdapType` instead of `bool` for the LDAP security setting.
 
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.19.0-beta.1 (2026-08-12)
 
 ### Features Added
