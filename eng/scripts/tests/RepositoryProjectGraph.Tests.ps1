@@ -44,16 +44,22 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
 
     It "builds a versioned artifact that unions evaluated target frameworks" {
         $graph = Get-Content -Raw $graphPath | ConvertFrom-Json -Depth 100
-        $graph.schemaVersion | Should -Be 3
+        $graph.schemaVersion | Should -Be 4
         $graph.sourceCommit | Should -Be $sourceCommit
         $graph.diagnostics.isComplete | Should -BeTrue
         $graph.diagnostics.configurationCount | Should -Be 5
         $graph.diagnostics.configurationGraph.isExact | Should -BeTrue
         $node = $graph.nodes | Where-Object packageId -eq "Azure.A" | Select-Object -First 1
         $node.targetFrameworks | Should -Be @("net8.0", "net9.0")
-        $edge = $graph.edges | Where-Object { $_.kind -eq "PackageReference" -and $_.fromProject -like "*/A/src/A.csproj" }
+        $node.PSObject.Properties.Name | Should -Be @(
+            "projectPath", "packageId", "packageRoot", "isClientLibrary", "isGeneratorLibrary", "isShippingLibrary", "targetFrameworks")
+        $graph.PSObject.Properties.Name | Should -Not -Contain "edges"
+        $edge = $graph.configurationEdges | Where-Object {
+            $_.kind -eq "PackageReference" -and $_.fromProject -like "*/A/src/A.csproj"
+        }
         $edge.to | Should -Be "Azure.B"
-        $edge.targetFrameworks | Should -Be @("net9.0")
+        $edge.fromTargetFramework | Should -Be "net9.0"
+        $edge.PSObject.Properties.Name | Should -Be @("kind", "fromProject", "fromTargetFramework", "to")
         $configurationEdge = $graph.configurationEdges | Where-Object {
             $_.kind -eq "ProjectReference" -and $_.fromProject -like "*/A.Tests.csproj" -and $_.fromTargetFramework -eq "net9.0"
         }
@@ -73,11 +79,11 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         & $scriptPath -Operation Build -GraphPath $closureGraphPath -RecordsPath $recordsPath -PackageRecordsPath $packageRecordsPath -RepoRoot $repoRoot
         if ($LASTEXITCODE) { throw "Graph build failed with exit code $LASTEXITCODE" }
         $graph = Get-Content -Raw $closureGraphPath | ConvertFrom-Json -Depth 100
-        $edge = $graph.edges | Where-Object { $_.kind -eq "TransitivePackageReference" }
+        $edge = $graph.configurationEdges | Where-Object {
+            $_.kind -eq "PackageReference" -and $_.fromProject -like "*/A.Tests.csproj" -and $_.to -eq "Azure.B"
+        }
         $edge.to | Should -Be "Azure.B"
-        $edge.viaPackage | Should -Be "Azure.External"
-        $edge.viaVersion | Should -Be "1.2.3"
-        $edge.targetFrameworks | Should -Be @("net9.0")
+        $edge.fromTargetFramework | Should -Be "net9.0"
         $graph.diagnostics.isComplete | Should -BeTrue
         $graph.diagnostics.packageClosure.resolutionMode | Should -Be "nuget-restore-graph"
         $graph.diagnostics.packageClosure.restoreEquivalent | Should -BeFalse
@@ -174,11 +180,11 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
     It "rejects unsupported graph schemas" {
         $unsupportedPath = Join-Path $TestDrive "unsupported.json"
         $graph = Get-Content -Raw $graphPath | ConvertFrom-Json -Depth 100
-        $graph.schemaVersion = 4
+        $graph.schemaVersion = 5
         $graph | ConvertTo-Json -Depth 100 | Set-Content $unsupportedPath
         $outputPath = Join-Path $TestDrive "unsupported.txt"
         { & $scriptPath -Operation Reverse -GraphPath $unsupportedPath -Dependencies "Azure.A" -OutputPath $outputPath } |
-            Should -Throw "*schema version '4'*"
+            Should -Throw "*schema version '5'*"
     }
 
     It "diagnoses unevaluated declarations and cross-TFM identity conflicts" {
@@ -400,23 +406,22 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $taskGraph.diagnostics.generation.includesInputs | Should -BeTrue
         Get-Content $taskRecordsPath | Should -Contain "GraphGeneration|Debug,Release|True"
         ($taskGraph.nodes | Where-Object packageId -eq "Azure.A.Tests").targetFrameworks | Should -Be @("net8.0", "net9.0")
-        $taskPackageEdge = $taskGraph.edges | Where-Object { $_.kind -eq "PackageReference" -and $_.to -eq "Azure.B" }
-        $taskPackageEdge.targetFrameworks | Should -Be @("net8.0")
-        $taskPackageEdge.version | Should -Be "1.2.3"
-        $releasePackageEdge = $taskGraph.edges | Where-Object { $_.kind -eq "PackageReference" -and $_.to -eq "Azure.C" }
-        $releasePackageEdge.targetFrameworks | Should -Be @("net8.0", "net9.0")
-        ($taskGraph.edges | Where-Object { $_.kind -eq "ProjectReference" -and $_.fromProject -like "*/A.Tests.csproj" }).targetFrameworks | Should -Be @("net9.0")
+        $taskPackageEdge = @($taskGraph.configurationEdges | Where-Object {
+            $_.kind -eq "PackageReference" -and $_.to -eq "Azure.B"
+        })
+        $taskPackageEdge.fromTargetFramework | Should -Be @("net8.0")
+        @($taskGraph.configurationEdges | Where-Object { $_.to -eq "Azure.C" }) | Should -BeNullOrEmpty
+        $taskGraph.diagnostics.externalPackageReferences | Should -Contain "Azure.C"
         $taskProjectEdges = @($taskGraph.configurationEdges | Where-Object {
             $_.kind -eq "ProjectReference" -and $_.fromProject -like "*/A.Tests.csproj"
         })
         @($taskProjectEdges.fromTargetFramework | Select-Object -Unique) | Should -Be @("net9.0")
         @($taskProjectEdges.toTargetFramework | Sort-Object) | Should -Be @("net8.0", "netstandard2.0")
         Get-Content $taskRecordsPath | Should -Contain "ProjectReference|$fixtureA|net9.0|$fixtureB|false|||||net8.0"
-        $hintInput = $taskGraph.inputs | Where-Object kind -eq "ReferenceHintPath"
-        $hintInput.path | Should -Be "sdk/shared/lib/Shared.dll"
+        $hintInput = $taskGraph.inputs | Where-Object path -eq "sdk/shared/lib/Shared.dll"
         $hintInput.targetFrameworks | Should -Be @("net8.0", "net9.0")
         $analyzerInput = $taskGraph.inputs | Where-Object {
-            $_.kind -eq "Analyzer" -and $_.path -eq "sdk/shared/analyzers/Shared.Analyzer.dll"
+            $_.path -eq "sdk/shared/analyzers/Shared.Analyzer.dll"
         }
         $analyzerInput.path | Should -Be "sdk/shared/analyzers/Shared.Analyzer.dll"
         $analyzerInput.targetFrameworks | Should -Be @("net8.0", "net9.0")
@@ -511,7 +516,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $LASTEXITCODE | Should -Be 0
         $output = & dotnet msbuild -nologo -v:minimal -t:BuildGraph $driverPath 2>&1
         $LASTEXITCODE | Should -Not -Be 0
-        $output | Out-String | Should -Match "dependency-only configurations that schema 3 cannot represent"
+        $output | Out-String | Should -Match "dependency-only configurations that schema 4 cannot represent"
         Test-Path $recordsPath | Should -BeFalse
     }
 }

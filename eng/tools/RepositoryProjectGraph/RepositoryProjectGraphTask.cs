@@ -261,11 +261,11 @@ public sealed class RepositoryProjectGraphTask : Task
                 ", ",
                 dependencyOnlyNodes.Take(5).Select(FormatConfiguration));
             throw new InvalidOperationException(
-                $"ProjectGraph contains {dependencyOnlyNodes.Length} dependency-only configurations that schema 3 cannot represent: {examples}. " +
+                $"ProjectGraph contains {dependencyOnlyNodes.Length} dependency-only configurations that schema 4 cannot represent: {examples}. " +
                 "Preserve the complete global-property identity before using this graph for dependency selection.");
         }
 
-        ValidateSchemaV3Configurations(canonicalNodes);
+        ValidateSchemaV4Configurations(canonicalNodes);
 
         statistics = new GraphStatistics(
             graph.ProjectNodes
@@ -280,10 +280,10 @@ public sealed class RepositoryProjectGraphTask : Task
         return canonicalNodes;
     }
 
-    private static void ValidateSchemaV3Configurations(IEnumerable<ProjectGraphNode> nodes)
+    private static void ValidateSchemaV4Configurations(IEnumerable<ProjectGraphNode> nodes)
     {
         // Debug and Release may have different evaluated inputs, which are safe to union for checkout.
-        // Dependency topology is not safely monotonic through NuGet version selection, so schema 3
+        // Dependency topology is not safely monotonic through NuGet version selection, so schema 4
         // can collapse build configurations only when their dependency-bearing records are equivalent.
         foreach (IGrouping<string, ProjectGraphNode> group in nodes.GroupBy(
             node => GetSchemaConfigurationKey(node.ProjectInstance),
@@ -306,7 +306,7 @@ public sealed class RepositoryProjectGraphTask : Task
                     .OrderBy(value => value, StringComparer.OrdinalIgnoreCase));
             throw new InvalidOperationException(
                 $"Project configuration '{GetSchemaConfigurationKey(group.First().ProjectInstance)}' has conflicting " +
-                $"dependency-bearing records across build configurations [{configurations}]. Schema 3 cannot safely combine them.");
+                $"dependency-bearing records across build configurations [{configurations}]. Schema 4 cannot safely combine them.");
         }
     }
 
