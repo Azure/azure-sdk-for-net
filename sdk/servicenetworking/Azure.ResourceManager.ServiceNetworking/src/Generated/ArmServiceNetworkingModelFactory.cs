@@ -99,6 +99,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 default);
         }
 
+        /// <summary> Ip Access Policy Rules. </summary>
         /// <param name="name"> Name of the Ip Access Rule. </param>
         /// <param name="priority"> The priority of the rule. The value can be between 1 and 500. The priority number must be unique for each rule in the collection. The lower the priority number, the higher the priority of the rule. </param>
         /// <param name="sourceAddressPrefixes"> Source Address Prefixed Applied by the Rule. Asterisk '*' can also be used to match all source IPs. </param>
@@ -111,6 +112,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             return new ServiceNetworkingIPAccessRule(name, priority, (sourceAddressPrefixes ?? new ChangeTrackingList<string>()).ToList(), action, default);
         }
 
+        /// <summary> The type used for update operations of the SecurityPolicy. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.ApplicationGatewayForContainersSecurityPolicyPatch"/> instance for mocking. </returns>
