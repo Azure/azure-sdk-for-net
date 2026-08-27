@@ -696,12 +696,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="targetModelName"> The name of the replacement model. </param>
         /// <param name="targetModelVersion"> The version of the replacement model. </param>
-        /// <param name="autoUpgradeStartOn"> The date when automatic upgrade should start. This applies to deployments with the OnceNewDefaultVersionAvailable upgrade option. </param>
+        /// <param name="autoUpgradeStartsOn"> The date when automatic upgrade should start. This applies to deployments with the OnceNewDefaultVersionAvailable upgrade option. </param>
         /// <param name="upgradeOnExpiryLeadTimeDays"> The number of days before deprecation date to trigger upgrade. This applies to deployments with the OnceCurrentVersionExpired upgrade option. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesModelReplacementConfiguration"/> instance for mocking. </returns>
-        public static CognitiveServicesModelReplacementConfiguration CognitiveServicesModelReplacementConfiguration(string targetModelName = default, string targetModelVersion = default, DateTimeOffset? autoUpgradeStartOn = default, int? upgradeOnExpiryLeadTimeDays = default)
+        public static CognitiveServicesModelReplacementConfiguration CognitiveServicesModelReplacementConfiguration(string targetModelName = default, string targetModelVersion = default, DateTimeOffset? autoUpgradeStartsOn = default, int? upgradeOnExpiryLeadTimeDays = default)
         {
-            return new CognitiveServicesModelReplacementConfiguration(targetModelName, targetModelVersion, autoUpgradeStartOn, upgradeOnExpiryLeadTimeDays, default);
+            return new CognitiveServicesModelReplacementConfiguration(targetModelName, targetModelVersion, autoUpgradeStartsOn, upgradeOnExpiryLeadTimeDays, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

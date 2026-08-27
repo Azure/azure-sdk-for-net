@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <summary> Initializes a new instance of <see cref="BillingBenefitsDiscountProperties"/>. </summary>
         /// <param name="entityType"> This defines whether the entity being created is primary or affiliate. Supported values: primary, affiliate. Validation: Required, must match one of the 2 values. </param>
         /// <param name="productCode"> This is the catalog UPN for the product. </param>
-        /// <param name="startOn"> Start date of the discount. Value is the date the discount started or will start in the future. </param>
-        private protected BillingBenefitsDiscountProperties(DiscountEntityType entityType, string productCode, DateTimeOffset startOn)
+        /// <param name="startsOn"> Start date of the discount. Value is the date the discount started or will start in the future. </param>
+        private protected BillingBenefitsDiscountProperties(DiscountEntityType entityType, string productCode, DateTimeOffset startsOn)
         {
             EntityType = entityType;
             ProductCode = productCode;
-            StartOn = startOn;
+            StartsOn = startsOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingBenefitsDiscountProperties"/>. </summary>
         /// <param name="entityType"> This defines whether the entity being created is primary or affiliate. Supported values: primary, affiliate. Validation: Required, must match one of the 2 values. </param>
         /// <param name="productCode"> This is the catalog UPN for the product. </param>
-        /// <param name="startOn"> Start date of the discount. Value is the date the discount started or will start in the future. </param>
+        /// <param name="startsOn"> Start date of the discount. Value is the date the discount started or will start in the future. </param>
         /// <param name="systemId"> This is the globally unique identifier of the Discount which will not change for the lifetime of the Discount. </param>
         /// <param name="provisioningState"> The state of the resource. Supported values are Pending, Failed, Succeeded, Canceled. </param>
         /// <param name="billingAccountResourceId"> Billing account resource id where the discount metadata is present. </param>
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="benefitResourceId"> Fully-qualified identifier of the benefit under applicable benefit list. </param>
         /// <param name="appliedScopeType"> List of applied scopes supported for discounts. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingBenefitsDiscountProperties(DiscountEntityType entityType, string productCode, DateTimeOffset startOn, string systemId, DiscountProvisioningState? provisioningState, ResourceIdentifier billingAccountResourceId, ResourceIdentifier billingProfileResourceId, ResourceIdentifier customerResourceId, string displayName, DiscountStatus? status, ResourceIdentifier benefitResourceId, DiscountAppliedScopeType? appliedScopeType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingBenefitsDiscountProperties(DiscountEntityType entityType, string productCode, DateTimeOffset startsOn, string systemId, DiscountProvisioningState? provisioningState, ResourceIdentifier billingAccountResourceId, ResourceIdentifier billingProfileResourceId, ResourceIdentifier customerResourceId, string displayName, DiscountStatus? status, ResourceIdentifier benefitResourceId, DiscountAppliedScopeType? appliedScopeType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EntityType = entityType;
             ProductCode = productCode;
-            StartOn = startOn;
+            StartsOn = startsOn;
             SystemId = systemId;
             ProvisioningState = provisioningState;
             BillingAccountResourceId = billingAccountResourceId;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         public string ProductCode { get; set; }
 
         /// <summary> Start date of the discount. Value is the date the discount started or will start in the future. </summary>
-        public DateTimeOffset StartOn { get; set; }
+        public DateTimeOffset StartsOn { get; set; }
 
         /// <summary> This is the globally unique identifier of the Discount which will not change for the lifetime of the Discount. </summary>
         public string SystemId { get; set; }

@@ -559,14 +559,14 @@ namespace Azure.ResourceManager.CloudHealth.Models
             return new EntityAlertConfiguration(severity, description, (actionGroupIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
-        /// <param name="startOn"> Start time for the history query. Defaults to 24 hours ago if not specified. </param>
-        /// <param name="endOn"> End time for the history query. Defaults to now if not specified. </param>
+        /// <param name="startsOn"> Start time for the history query. Defaults to 24 hours ago if not specified. </param>
+        /// <param name="endsOn"> End time for the history query. Defaults to now if not specified. </param>
         /// <param name="top"> Maximum number of health state transitions to return per page. Defaults to 1000. </param>
         /// <param name="nextMarker"> An opaque string value that identifies the portion of the result set to be returned with the next operation. Must not be combined with startAt or endAt. </param>
         /// <returns> A new <see cref="Models.EntityHistoryContent"/> instance for mocking. </returns>
-        public static EntityHistoryContent EntityHistoryContent(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, int? top = default, string nextMarker = default)
+        public static EntityHistoryContent EntityHistoryContent(DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, int? top = default, string nextMarker = default)
         {
-            return new EntityHistoryContent(startOn, endOn, top, nextMarker, default);
+            return new EntityHistoryContent(startsOn, endsOn, top, nextMarker, default);
         }
 
         /// <param name="entityName"> Name of the entity. </param>
@@ -591,17 +591,17 @@ namespace Azure.ResourceManager.CloudHealth.Models
         }
 
         /// <param name="signalName"> Name of the signal to get history for. </param>
-        /// <param name="startOn"> Start time for the history query. Defaults to 24 hours ago if not specified. </param>
-        /// <param name="endOn"> End time for the history query. Defaults to now if not specified. </param>
+        /// <param name="startsOn"> Start time for the history query. Defaults to 24 hours ago if not specified. </param>
+        /// <param name="endsOn"> End time for the history query. Defaults to now if not specified. </param>
         /// <param name="top"> Maximum number of data points to return per page. Defaults to 1000. </param>
         /// <param name="nextMarker"> An opaque string value that identifies the portion of the result set to be returned with the next operation. Must not be combined with startAt or endAt. </param>
         /// <returns> A new <see cref="Models.EntitySignalHistoryContent"/> instance for mocking. </returns>
-        public static EntitySignalHistoryContent EntitySignalHistoryContent(string signalName = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, int? top = default, string nextMarker = default)
+        public static EntitySignalHistoryContent EntitySignalHistoryContent(string signalName = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, int? top = default, string nextMarker = default)
         {
             return new EntitySignalHistoryContent(
                 signalName,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 top,
                 nextMarker,
                 default);
@@ -678,14 +678,14 @@ namespace Azure.ResourceManager.CloudHealth.Models
             return new EntityDataAnnotation(annotationId, createdOn, annotationDetails ?? new ChangeTrackingDictionary<string, string>(), description, default);
         }
 
-        /// <param name="startOn"> Start of UTC time range. Defaults to 24 hours ago if not specified. </param>
-        /// <param name="endOn"> End of UTC time range. Defaults to now if not specified. </param>
+        /// <param name="startsOn"> Start of UTC time range. Defaults to 24 hours ago if not specified. </param>
+        /// <param name="endsOn"> End of UTC time range. Defaults to now if not specified. </param>
         /// <param name="top"> Maximum number of annotations to return per page. Defaults to 100. </param>
         /// <param name="nextMarker"> An opaque string value that identifies the portion of the result set to be returned with the next operation. Must not be combined with startAt or endAt. </param>
         /// <returns> A new <see cref="Models.EntityGetDataAnnotationsContent"/> instance for mocking. </returns>
-        public static EntityGetDataAnnotationsContent EntityGetDataAnnotationsContent(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, int? top = default, string nextMarker = default)
+        public static EntityGetDataAnnotationsContent EntityGetDataAnnotationsContent(DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, int? top = default, string nextMarker = default)
         {
-            return new EntityGetDataAnnotationsContent(startOn, endOn, top, nextMarker, default);
+            return new EntityGetDataAnnotationsContent(startsOn, endsOn, top, nextMarker, default);
         }
 
         /// <param name="entityName"> Name of the entity. </param>

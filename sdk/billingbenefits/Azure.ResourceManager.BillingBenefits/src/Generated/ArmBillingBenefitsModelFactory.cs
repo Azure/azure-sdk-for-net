@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <param name="entityType"> This defines whether the entity being created is primary or affiliate. Supported values: primary, affiliate. Validation: Required, must match one of the 2 values. </param>
         /// <param name="productCode"> This is the catalog UPN for the product. </param>
-        /// <param name="startOn"> Start date of the discount. Value is the date the discount started or will start in the future. </param>
+        /// <param name="startsOn"> Start date of the discount. Value is the date the discount started or will start in the future. </param>
         /// <param name="systemId"> This is the globally unique identifier of the Discount which will not change for the lifetime of the Discount. </param>
         /// <param name="provisioningState"> The state of the resource. Supported values are Pending, Failed, Succeeded, Canceled. </param>
         /// <param name="billingAccountResourceId"> Billing account resource id where the discount metadata is present. </param>
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="benefitResourceId"> Fully-qualified identifier of the benefit under applicable benefit list. </param>
         /// <param name="appliedScopeType"> List of applied scopes supported for discounts. </param>
         /// <returns> A new <see cref="Models.BillingBenefitsDiscountProperties"/> instance for mocking. </returns>
-        public static BillingBenefitsDiscountProperties BillingBenefitsDiscountProperties(string entityType = default, string productCode = default, DateTimeOffset startOn = default, string systemId = default, DiscountProvisioningState? provisioningState = default, ResourceIdentifier billingAccountResourceId = default, ResourceIdentifier billingProfileResourceId = default, ResourceIdentifier customerResourceId = default, string displayName = default, DiscountStatus? status = default, ResourceIdentifier benefitResourceId = default, DiscountAppliedScopeType? appliedScopeType = default)
+        public static BillingBenefitsDiscountProperties BillingBenefitsDiscountProperties(string entityType = default, string productCode = default, DateTimeOffset startsOn = default, string systemId = default, DiscountProvisioningState? provisioningState = default, ResourceIdentifier billingAccountResourceId = default, ResourceIdentifier billingProfileResourceId = default, ResourceIdentifier customerResourceId = default, string displayName = default, DiscountStatus? status = default, ResourceIdentifier benefitResourceId = default, DiscountAppliedScopeType? appliedScopeType = default)
         {
             return new UnknownBillingBenefitsDiscountProperties(
                 default,
                 productCode,
-                startOn,
+                startsOn,
                 systemId,
                 provisioningState,
                 billingAccountResourceId,
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         }
 
         /// <param name="productCode"> This is the catalog UPN for the product. </param>
-        /// <param name="startOn"> Start date of the discount. Value is the date the discount started or will start in the future. </param>
+        /// <param name="startsOn"> Start date of the discount. Value is the date the discount started or will start in the future. </param>
         /// <param name="systemId"> This is the globally unique identifier of the Discount which will not change for the lifetime of the Discount. </param>
         /// <param name="provisioningState"> The state of the resource. Supported values are Pending, Failed, Succeeded, Canceled. </param>
         /// <param name="billingAccountResourceId"> Billing account resource id where the discount metadata is present. </param>
@@ -96,14 +96,14 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="benefitResourceId"> Fully-qualified identifier of the benefit under applicable benefit list. </param>
         /// <param name="appliedScopeType"> List of applied scopes supported for discounts. </param>
         /// <param name="primaryResourceId"> This will be present in the response if the primary has a resource ID. </param>
-        /// <param name="endOn"> End date of the discount. No duration will be supported. Allowed value is any date greater than or equal to startDate. </param>
+        /// <param name="endsOn"> End date of the discount. No duration will be supported. Allowed value is any date greater than or equal to startDate. </param>
         /// <returns> A new <see cref="Models.EntityTypeAffiliateDiscount"/> instance for mocking. </returns>
-        public static EntityTypeAffiliateDiscount EntityTypeAffiliateDiscount(string productCode = default, DateTimeOffset startOn = default, string systemId = default, DiscountProvisioningState? provisioningState = default, ResourceIdentifier billingAccountResourceId = default, ResourceIdentifier billingProfileResourceId = default, ResourceIdentifier customerResourceId = default, string displayName = default, DiscountStatus? status = default, ResourceIdentifier benefitResourceId = default, DiscountAppliedScopeType? appliedScopeType = default, ResourceIdentifier primaryResourceId = default, DateTimeOffset? endOn = default)
+        public static EntityTypeAffiliateDiscount EntityTypeAffiliateDiscount(string productCode = default, DateTimeOffset startsOn = default, string systemId = default, DiscountProvisioningState? provisioningState = default, ResourceIdentifier billingAccountResourceId = default, ResourceIdentifier billingProfileResourceId = default, ResourceIdentifier customerResourceId = default, string displayName = default, DiscountStatus? status = default, ResourceIdentifier benefitResourceId = default, DiscountAppliedScopeType? appliedScopeType = default, ResourceIdentifier primaryResourceId = default, DateTimeOffset? endsOn = default)
         {
             return new EntityTypeAffiliateDiscount(
                 default,
                 productCode,
-                startOn,
+                startsOn,
                 systemId,
                 provisioningState,
                 billingAccountResourceId,
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 appliedScopeType,
                 default,
                 primaryResourceId,
-                endOn);
+                endsOn);
         }
 
         /// <param name="productCode"> This is the catalog UPN for the product. </param>
-        /// <param name="startOn"> Start date of the discount. Value is the date the discount started or will start in the future. </param>
+        /// <param name="startsOn"> Start date of the discount. Value is the date the discount started or will start in the future. </param>
         /// <param name="systemId"> This is the globally unique identifier of the Discount which will not change for the lifetime of the Discount. </param>
         /// <param name="provisioningState"> The state of the resource. Supported values are Pending, Failed, Succeeded, Canceled. </param>
         /// <param name="billingAccountResourceId"> Billing account resource id where the discount metadata is present. </param>
@@ -130,14 +130,14 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="benefitResourceId"> Fully-qualified identifier of the benefit under applicable benefit list. </param>
         /// <param name="appliedScopeType"> List of applied scopes supported for discounts. </param>
         /// <param name="discountTypeProperties"> This defines the conditions for a given discount type. </param>
-        /// <param name="endOn"> End date of the discount. No duration will be supported. Allowed value is any date greater than or equal to startDate. </param>
+        /// <param name="endsOn"> End date of the discount. No duration will be supported. Allowed value is any date greater than or equal to startDate. </param>
         /// <returns> A new <see cref="Models.EntityTypePrimaryDiscount"/> instance for mocking. </returns>
-        public static EntityTypePrimaryDiscount EntityTypePrimaryDiscount(string productCode = default, DateTimeOffset startOn = default, string systemId = default, DiscountProvisioningState? provisioningState = default, ResourceIdentifier billingAccountResourceId = default, ResourceIdentifier billingProfileResourceId = default, ResourceIdentifier customerResourceId = default, string displayName = default, DiscountStatus? status = default, ResourceIdentifier benefitResourceId = default, DiscountAppliedScopeType? appliedScopeType = default, DiscountTypeProperties discountTypeProperties = default, DateTimeOffset endOn = default)
+        public static EntityTypePrimaryDiscount EntityTypePrimaryDiscount(string productCode = default, DateTimeOffset startsOn = default, string systemId = default, DiscountProvisioningState? provisioningState = default, ResourceIdentifier billingAccountResourceId = default, ResourceIdentifier billingProfileResourceId = default, ResourceIdentifier customerResourceId = default, string displayName = default, DiscountStatus? status = default, ResourceIdentifier benefitResourceId = default, DiscountAppliedScopeType? appliedScopeType = default, DiscountTypeProperties discountTypeProperties = default, DateTimeOffset endsOn = default)
         {
             return new EntityTypePrimaryDiscount(
                 default,
                 productCode,
-                startOn,
+                startsOn,
                 systemId,
                 provisioningState,
                 billingAccountResourceId,
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 appliedScopeType,
                 default,
                 discountTypeProperties,
-                endOn);
+                endsOn);
         }
 
         /// <param name="discountType"> Defines the type of discount. Supported values are ProductFamily, Product, Sku, CustomPrice, and CustomPriceMultiCurrency. </param>
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="effectOn"> DateTime of the savings plan starts providing benefit from. </param>
         /// <param name="expireOn"> Expiry date time. </param>
         /// <param name="purchaseOn"> Date time when the savings plan was purchased. </param>
-        /// <param name="benefitStartOn"> This is the DateTime when the savings plan benefit started. </param>
+        /// <param name="benefitStartsOn"> This is the DateTime when the savings plan benefit started. </param>
         /// <param name="extendedStatusInfo"> Gets the ExtendedStatusInfo. </param>
         /// <param name="isRenewed"> Setting this to true will automatically purchase a new benefit on the expiration date time. </param>
         /// <param name="utilization"> Savings plan utilization. </param>
@@ -438,14 +438,14 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="renewPurchaseProperties"> Gets or sets the PurchaseProperties. </param>
         /// <param name="skuName"> Gets or sets the Name. </param>
         /// <returns> A new <see cref="BillingBenefits.BillingBenefitsSavingsPlanData"/> instance for mocking. </returns>
-        public static BillingBenefitsSavingsPlanData BillingBenefitsSavingsPlanData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, BillingBenefitsProvisioningState? provisioningState = default, string displayProvisioningState = default, ResourceIdentifier billingScopeId = default, ResourceIdentifier billingProfileId = default, ResourceIdentifier customerId = default, ResourceIdentifier billingAccountId = default, BillingBenefitsTerm? term = default, BillingBenefitsBillingPlan? billingPlan = default, BillingBenefitsAppliedScopeType? appliedScopeType = default, string userFriendlyAppliedScopeType = default, BillingBenefitsAppliedScopeProperties appliedScopeProperties = default, BillingBenefitsCommitment commitment = default, DateTimeOffset? effectOn = default, DateTimeOffset? expireOn = default, DateTimeOffset? purchaseOn = default, DateTimeOffset? benefitStartOn = default, BillingBenefitsExtendedStatusInfo extendedStatusInfo = default, bool? isRenewed = default, BillingBenefitsSavingsPlanUtilization utilization = default, string renewSource = default, string renewDestination = default, BillingBenefitsPurchaseContent renewPurchaseProperties = default, string skuName = default)
+        public static BillingBenefitsSavingsPlanData BillingBenefitsSavingsPlanData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, BillingBenefitsProvisioningState? provisioningState = default, string displayProvisioningState = default, ResourceIdentifier billingScopeId = default, ResourceIdentifier billingProfileId = default, ResourceIdentifier customerId = default, ResourceIdentifier billingAccountId = default, BillingBenefitsTerm? term = default, BillingBenefitsBillingPlan? billingPlan = default, BillingBenefitsAppliedScopeType? appliedScopeType = default, string userFriendlyAppliedScopeType = default, BillingBenefitsAppliedScopeProperties appliedScopeProperties = default, BillingBenefitsCommitment commitment = default, DateTimeOffset? effectOn = default, DateTimeOffset? expireOn = default, DateTimeOffset? purchaseOn = default, DateTimeOffset? benefitStartsOn = default, BillingBenefitsExtendedStatusInfo extendedStatusInfo = default, bool? isRenewed = default, BillingBenefitsSavingsPlanUtilization utilization = default, string renewSource = default, string renewDestination = default, BillingBenefitsPurchaseContent renewPurchaseProperties = default, string skuName = default)
         {
             return new BillingBenefitsSavingsPlanData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                displayName is null && provisioningState is null && displayProvisioningState is null && billingScopeId is null && billingProfileId is null && customerId is null && billingAccountId is null && term is null && billingPlan is null && appliedScopeType is null && userFriendlyAppliedScopeType is null && appliedScopeProperties is null && commitment is null && effectOn is null && expireOn is null && purchaseOn is null && benefitStartOn is null && extendedStatusInfo is null && isRenewed is null && utilization is null && renewSource is null && renewDestination is null && renewPurchaseProperties is null ? default : new SavingsPlanModelProperties(
+                displayName is null && provisioningState is null && displayProvisioningState is null && billingScopeId is null && billingProfileId is null && customerId is null && billingAccountId is null && term is null && billingPlan is null && appliedScopeType is null && userFriendlyAppliedScopeType is null && appliedScopeProperties is null && commitment is null && effectOn is null && expireOn is null && purchaseOn is null && benefitStartsOn is null && extendedStatusInfo is null && isRenewed is null && utilization is null && renewSource is null && renewDestination is null && renewPurchaseProperties is null ? default : new SavingsPlanModelProperties(
                     displayName,
                     provisioningState,
                     displayProvisioningState,
@@ -462,7 +462,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     effectOn,
                     expireOn,
                     purchaseOn,
-                    benefitStartOn,
+                    benefitStartsOn,
                     extendedStatusInfo,
                     isRenewed,
                     utilization,
@@ -572,19 +572,19 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <param name="productCode"> Represents catalog UPN. </param>
         /// <param name="charge"> Shortfall amount with grain. </param>
-        /// <param name="startOn"> Start DateTime. </param>
-        /// <param name="endOn"> End DateTime in UTC. </param>
+        /// <param name="startsOn"> Start DateTime. </param>
+        /// <param name="endsOn"> End DateTime in UTC. </param>
         /// <param name="resourceId"> Fully-qualified resource identifier of the credits associated with the shortfall. </param>
         /// <param name="balanceVersion"> Points to BalanceVersion document that indicates the remaining commitment balance when the credit was created. </param>
         /// <param name="systemId"> This is an identifier of the shortfall which will not change for its lifetime. </param>
         /// <returns> A new <see cref="Models.Shortfall"/> instance for mocking. </returns>
-        public static Shortfall Shortfall(string productCode = default, BillingBenefitsCommitment charge = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, ResourceIdentifier resourceId = default, float? balanceVersion = default, string systemId = default)
+        public static Shortfall Shortfall(string productCode = default, BillingBenefitsCommitment charge = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, ResourceIdentifier resourceId = default, float? balanceVersion = default, string systemId = default)
         {
             return new Shortfall(
                 productCode,
                 charge,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 resourceId,
                 balanceVersion,
                 systemId,
@@ -593,18 +593,18 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <param name="milestoneId"> Globally unique identifier for the milestone. Format: {guid}. </param>
         /// <param name="commitment"> Commitment associated with this milestone. </param>
-        /// <param name="endOn"> End date time for the milestone. Timestamp must be in the ISO date format YYYY-MM-DDT23:59:59Z. </param>
+        /// <param name="endsOn"> End date time for the milestone. Timestamp must be in the ISO date format YYYY-MM-DDT23:59:59Z. </param>
         /// <param name="automaticShortfall"> Setting this to 'Enable' enables automatic shortfall invoicing when milestone commitment is not met. </param>
         /// <param name="automaticShortfallSuppressReason"> Optional field to record suppression reason for automatic shortfall. </param>
         /// <param name="status"> Represents the current status of the Milestone. </param>
         /// <param name="shortfall"> Details of the shortfall associated with this milestone. </param>
         /// <returns> A new <see cref="Models.MaccMilestone"/> instance for mocking. </returns>
-        public static MaccMilestone MaccMilestone(string milestoneId = default, BillingBenefitsPrice commitment = default, DateTimeOffset? endOn = default, EnablementMode? automaticShortfall = default, AutomaticShortfallSuppressReason automaticShortfallSuppressReason = default, MaccMilestoneStatus? status = default, Shortfall shortfall = default)
+        public static MaccMilestone MaccMilestone(string milestoneId = default, BillingBenefitsPrice commitment = default, DateTimeOffset? endsOn = default, EnablementMode? automaticShortfall = default, AutomaticShortfallSuppressReason automaticShortfallSuppressReason = default, MaccMilestoneStatus? status = default, Shortfall shortfall = default)
         {
             return new MaccMilestone(
                 milestoneId,
                 commitment,
-                endOn,
+                endsOn,
                 automaticShortfall,
                 automaticShortfallSuppressReason,
                 status,
@@ -622,8 +622,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="productCode"> Product UPN for the credit type. </param>
         /// <param name="reason"> The reason for the credit. Not required if not applicable. </param>
         /// <param name="credit"> The entire investment amount for the credit contract, including currency and amount. </param>
-        /// <param name="startOn"> Start DateTime. </param>
-        /// <param name="endOn"> End DateTime in UTC. </param>
+        /// <param name="startsOn"> Start DateTime. </param>
+        /// <param name="endsOn"> End DateTime in UTC. </param>
         /// <param name="policies"> Credit breakdown item representing a milestone, line-item, or no-charge service. </param>
         /// <param name="billingAccountResourceId"> Fully-qualified identifier of the billing account where the benefit is applied. Present only for Enterprise Agreement customers. </param>
         /// <param name="billingProfileResourceId"> Fully-qualified identifier of the billing profile where the benefit is applied. Present only for Field-led or Customer-led customers. </param>
@@ -639,7 +639,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="plan"> Plan for the resource. </param>
         /// <returns> A new <see cref="BillingBenefits.CreditData"/> instance for mocking. </returns>
-        public static CreditData CreditData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CreditStatus? status = default, string productCode = default, CreditReason reason = default, BillingBenefitsCommitment credit = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, CreditPolicies policies = default, ResourceIdentifier billingAccountResourceId = default, ResourceIdentifier billingProfileResourceId = default, IEnumerable<CreditBreakdownItem> breakdown = default, BillingBenefitsProvisioningState? provisioningState = default, string systemId = default, string customerId = default, ResourceIdentifier resourceId = default, string managedBy = default, string kind = default, string eTag = default, ManagedServiceIdentity identity = default, BillingBenefitsSku sku = default, BillingBenefitsPlan plan = default)
+        public static CreditData CreditData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CreditStatus? status = default, string productCode = default, CreditReason reason = default, BillingBenefitsCommitment credit = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, CreditPolicies policies = default, ResourceIdentifier billingAccountResourceId = default, ResourceIdentifier billingProfileResourceId = default, IEnumerable<CreditBreakdownItem> breakdown = default, BillingBenefitsProvisioningState? provisioningState = default, string systemId = default, string customerId = default, ResourceIdentifier resourceId = default, string managedBy = default, string kind = default, string eTag = default, ManagedServiceIdentity identity = default, BillingBenefitsSku sku = default, BillingBenefitsPlan plan = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -650,13 +650,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                status is null && productCode is null && reason is null && credit is null && startOn is null && endOn is null && policies is null && billingAccountResourceId is null && billingProfileResourceId is null && breakdown is null && provisioningState is null && systemId is null && customerId is null && resourceId is null ? default : new CreditProperties(
+                status is null && productCode is null && reason is null && credit is null && startsOn is null && endsOn is null && policies is null && billingAccountResourceId is null && billingProfileResourceId is null && breakdown is null && provisioningState is null && systemId is null && customerId is null && resourceId is null ? default : new CreditProperties(
                     status,
                     productCode,
                     reason,
                     credit,
-                    startOn,
-                    endOn,
+                    startsOn,
+                    endsOn,
                     policies,
                     billingAccountResourceId,
                     billingProfileResourceId,
@@ -692,15 +692,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         }
 
         /// <param name="allocation"> Allocation details including currency and amount for this breakdown item. </param>
-        /// <param name="startOn"> Start DateTime. </param>
-        /// <param name="endOn"> End DateTime in UTC. </param>
+        /// <param name="startsOn"> Start DateTime. </param>
+        /// <param name="endsOn"> End DateTime in UTC. </param>
         /// <param name="dimensions"> Key-value pairs for additional parameters and metadata. </param>
         /// <returns> A new <see cref="Models.CreditBreakdownItem"/> instance for mocking. </returns>
-        public static CreditBreakdownItem CreditBreakdownItem(BillingBenefitsCommitment allocation = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<CreditDimension> dimensions = default)
+        public static CreditBreakdownItem CreditBreakdownItem(BillingBenefitsCommitment allocation = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<CreditDimension> dimensions = default)
         {
             dimensions ??= new ChangeTrackingList<CreditDimension>();
 
-            return new CreditBreakdownItem(allocation, startOn, endOn, (dimensions ?? new ChangeTrackingList<CreditDimension>()).ToList(), default);
+            return new CreditBreakdownItem(allocation, startsOn, endsOn, (dimensions ?? new ChangeTrackingList<CreditDimension>()).ToList(), default);
         }
 
         /// <param name="key"> The dimension key (e.g., productFamily, description, creditType). </param>
@@ -713,14 +713,14 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <param name="tags"> Resource tags. </param>
         /// <param name="credit"> The entire investment amount for the credit contract, including currency and amount. Only amount can be modified. </param>
-        /// <param name="endOn"> End DateTime in UTC. </param>
+        /// <param name="endsOn"> End DateTime in UTC. </param>
         /// <param name="breakdown"> Credit line-items/milestones/no-charge services breakdown. Entire breakdown will be replaced in a PATCH operation. </param>
         /// <returns> A new <see cref="Models.CreditPatch"/> instance for mocking. </returns>
-        public static CreditPatch CreditPatch(IDictionary<string, string> tags = default, BillingBenefitsCommitment credit = default, DateTimeOffset? endOn = default, IEnumerable<CreditBreakdownItem> breakdown = default)
+        public static CreditPatch CreditPatch(IDictionary<string, string> tags = default, BillingBenefitsCommitment credit = default, DateTimeOffset? endsOn = default, IEnumerable<CreditBreakdownItem> breakdown = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new CreditPatch(tags ?? new ChangeTrackingDictionary<string, string>(), credit is null && endOn is null && breakdown is null ? default : new CreditPatchProperties(credit, endOn, (breakdown ?? new ChangeTrackingList<CreditBreakdownItem>()).ToList(), default), default);
+            return new CreditPatch(tags ?? new ChangeTrackingDictionary<string, string>(), credit is null && endsOn is null && breakdown is null ? default : new CreditPatchProperties(credit, endsOn, (breakdown ?? new ChangeTrackingList<CreditBreakdownItem>()).ToList(), default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -763,13 +763,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="billingAccountResourceId"> The billing account resource ID. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="status"> The status of the conditional credit. </param>
-        /// <param name="startOn"> Start date of the conditional credit. </param>
-        /// <param name="endOn"> End date of the conditional credit (derived from last milestone). </param>
+        /// <param name="startsOn"> Start date of the conditional credit. </param>
+        /// <param name="endsOn"> End date of the conditional credit (derived from last milestone). </param>
         /// <param name="productCode"> Product code for the conditional credit. </param>
         /// <param name="benefitResourceId"> Fully-qualified identifier of the benefit under applicable benefit list. </param>
         /// <param name="resourceId"> Fully-qualified resource identifier of the resource. Format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BillingBenefits/{benefitType}/{benefitName}. </param>
         /// <returns> A new <see cref="Models.BillingBenefitsConditionalCreditProperties"/> instance for mocking. </returns>
-        public static BillingBenefitsConditionalCreditProperties BillingBenefitsConditionalCreditProperties(string entityType = default, string displayName = default, ResourceIdentifier billingAccountResourceId = default, ConditionalCreditsProvisioningState? provisioningState = default, ConditionalCreditStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string productCode = default, ResourceIdentifier benefitResourceId = default, ResourceIdentifier resourceId = default)
+        public static BillingBenefitsConditionalCreditProperties BillingBenefitsConditionalCreditProperties(string entityType = default, string displayName = default, ResourceIdentifier billingAccountResourceId = default, ConditionalCreditsProvisioningState? provisioningState = default, ConditionalCreditStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, string productCode = default, ResourceIdentifier benefitResourceId = default, ResourceIdentifier resourceId = default)
         {
             return new UnknownBillingBenefitsConditionalCreditProperties(
                 default,
@@ -777,8 +777,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 billingAccountResourceId,
                 provisioningState,
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 productCode,
                 benefitResourceId,
                 resourceId,
@@ -789,8 +789,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="billingAccountResourceId"> The billing account resource ID. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="status"> The status of the conditional credit. </param>
-        /// <param name="startOn"> Start date of the conditional credit. </param>
-        /// <param name="endOn"> End date of the conditional credit (derived from last milestone). </param>
+        /// <param name="startsOn"> Start date of the conditional credit. </param>
+        /// <param name="endsOn"> End date of the conditional credit (derived from last milestone). </param>
         /// <param name="productCode"> Product code for the conditional credit. </param>
         /// <param name="benefitResourceId"> Fully-qualified identifier of the benefit under applicable benefit list. </param>
         /// <param name="resourceId"> Fully-qualified resource identifier of the resource. Format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BillingBenefits/{benefitType}/{benefitName}. </param>
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="milestones"> List of milestones copied from primary conditional credit (excludes award details). </param>
         /// <param name="primaryBillingAccountResourceId"> Fully-qualified billing account resource identifier of the primary CACO. Format must be Azure Resource ID: /providers/Microsoft.Billing/billingAccounts/{acctId:orgId}. </param>
         /// <returns> A new <see cref="Models.ContributorConditionalCreditProperties"/> instance for mocking. </returns>
-        public static ContributorConditionalCreditProperties ContributorConditionalCreditProperties(string displayName = default, ResourceIdentifier billingAccountResourceId = default, ConditionalCreditsProvisioningState? provisioningState = default, ConditionalCreditStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string productCode = default, ResourceIdentifier benefitResourceId = default, ResourceIdentifier resourceId = default, ResourceIdentifier primaryResourceId = default, string systemId = default, IEnumerable<ContributorConditionalCreditMilestone> milestones = default, ResourceIdentifier primaryBillingAccountResourceId = default)
+        public static ContributorConditionalCreditProperties ContributorConditionalCreditProperties(string displayName = default, ResourceIdentifier billingAccountResourceId = default, ConditionalCreditsProvisioningState? provisioningState = default, ConditionalCreditStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, string productCode = default, ResourceIdentifier benefitResourceId = default, ResourceIdentifier resourceId = default, ResourceIdentifier primaryResourceId = default, string systemId = default, IEnumerable<ContributorConditionalCreditMilestone> milestones = default, ResourceIdentifier primaryBillingAccountResourceId = default)
         {
             milestones ??= new ChangeTrackingList<ContributorConditionalCreditMilestone>();
 
@@ -809,8 +809,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 billingAccountResourceId,
                 provisioningState,
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 productCode,
                 benefitResourceId,
                 resourceId,
@@ -824,17 +824,17 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="milestoneId"> Unique identifier for the milestone. </param>
         /// <param name="name"> Display name for the milestone. </param>
         /// <param name="status"> Current status of the milestone. </param>
-        /// <param name="endOn"> End date for this milestone. </param>
+        /// <param name="endsOn"> End date for this milestone. </param>
         /// <param name="spendTarget"> Spend target for this milestone. </param>
         /// <param name="award"> Award details for this milestone (only present for primary conditional credits). </param>
         /// <returns> A new <see cref="Models.ContributorConditionalCreditMilestone"/> instance for mocking. </returns>
-        public static ContributorConditionalCreditMilestone ContributorConditionalCreditMilestone(string milestoneId = default, string name = default, MilestoneStatus? status = default, DateTimeOffset? endOn = default, BillingBenefitsPrice spendTarget = default, Award award = default)
+        public static ContributorConditionalCreditMilestone ContributorConditionalCreditMilestone(string milestoneId = default, string name = default, MilestoneStatus? status = default, DateTimeOffset? endsOn = default, BillingBenefitsPrice spendTarget = default, Award award = default)
         {
             return new ContributorConditionalCreditMilestone(
                 milestoneId,
                 name,
                 status,
-                endOn,
+                endsOn,
                 spendTarget,
                 award,
                 default);
@@ -843,36 +843,36 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="milestoneId"> Unique identifier for the milestone. </param>
         /// <param name="name"> Display name for the milestone. </param>
         /// <param name="status"> Current status of the milestone. </param>
-        /// <param name="endOn"> End date for this milestone. </param>
+        /// <param name="endsOn"> End date for this milestone. </param>
         /// <param name="spendTarget"> Spend target for this milestone. </param>
         /// <param name="award"> Award details for this milestone (only present for primary conditional credits). </param>
         /// <returns> A new <see cref="Models.ConditionalCreditMilestoneBase"/> instance for mocking. </returns>
-        public static ConditionalCreditMilestoneBase ConditionalCreditMilestoneBase(string milestoneId = default, string name = default, MilestoneStatus? status = default, DateTimeOffset? endOn = default, BillingBenefitsPrice spendTarget = default, Award award = default)
+        public static ConditionalCreditMilestoneBase ConditionalCreditMilestoneBase(string milestoneId = default, string name = default, MilestoneStatus? status = default, DateTimeOffset? endsOn = default, BillingBenefitsPrice spendTarget = default, Award award = default)
         {
             return new ConditionalCreditMilestoneBase(
                 milestoneId,
                 name,
                 status,
-                endOn,
+                endsOn,
                 spendTarget,
                 award,
                 default);
         }
 
         /// <param name="credit"> Credit amount to be awarded. </param>
-        /// <param name="startOn"> Start date when the credit becomes effective. </param>
-        /// <param name="endOn"> End date when the credit expires. </param>
+        /// <param name="startsOn"> Start date when the credit becomes effective. </param>
+        /// <param name="endsOn"> End date when the credit expires. </param>
         /// <param name="resourceId"> Resource ID for the awarded credit. </param>
         /// <param name="systemId"> This is the globally unique identifier of the credit which will not change for its lifetime. </param>
         /// <param name="balanceVersion"> Points to BalanceVersion document that indicates the remaining commitment balance when the credit was created. </param>
         /// <param name="duration"> Duration for which the benefit is active. Will be in format P{int}M or P{int}Y. Any values representing up to 12 years are valid. Upper limit examples: P144M, P12Y. </param>
         /// <returns> A new <see cref="Models.Award"/> instance for mocking. </returns>
-        public static Award Award(BillingBenefitsCommitment credit = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, ResourceIdentifier resourceId = default, string systemId = default, float? balanceVersion = default, BillingBenefitsTerm? duration = default)
+        public static Award Award(BillingBenefitsCommitment credit = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, ResourceIdentifier resourceId = default, string systemId = default, float? balanceVersion = default, BillingBenefitsTerm? duration = default)
         {
             return new Award(
                 credit,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 resourceId,
                 systemId,
                 balanceVersion,
@@ -884,8 +884,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="billingAccountResourceId"> The billing account resource ID. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="status"> The status of the conditional credit. </param>
-        /// <param name="startOn"> Start date of the conditional credit. </param>
-        /// <param name="endOn"> End date of the conditional credit (derived from last milestone). </param>
+        /// <param name="startsOn"> Start date of the conditional credit. </param>
+        /// <param name="endsOn"> End date of the conditional credit (derived from last milestone). </param>
         /// <param name="productCode"> Product code for the conditional credit. </param>
         /// <param name="benefitResourceId"> Fully-qualified identifier of the benefit under applicable benefit list. </param>
         /// <param name="resourceId"> Fully-qualified resource identifier of the resource. Format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BillingBenefits/{benefitType}/{benefitName}. </param>
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="allowContributors"> Whether this conditional credit allows contributor billing accounts. </param>
         /// <param name="milestones"> List of milestones for this conditional credit (must include awards). </param>
         /// <returns> A new <see cref="Models.PrimaryConditionalCreditProperties"/> instance for mocking. </returns>
-        public static PrimaryConditionalCreditProperties PrimaryConditionalCreditProperties(string displayName = default, ResourceIdentifier billingAccountResourceId = default, ConditionalCreditsProvisioningState? provisioningState = default, ConditionalCreditStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string productCode = default, ResourceIdentifier benefitResourceId = default, ResourceIdentifier resourceId = default, string systemId = default, EnablementMode? allowContributors = default, IEnumerable<ConditionalCreditMilestone> milestones = default)
+        public static PrimaryConditionalCreditProperties PrimaryConditionalCreditProperties(string displayName = default, ResourceIdentifier billingAccountResourceId = default, ConditionalCreditsProvisioningState? provisioningState = default, ConditionalCreditStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, string productCode = default, ResourceIdentifier benefitResourceId = default, ResourceIdentifier resourceId = default, string systemId = default, EnablementMode? allowContributors = default, IEnumerable<ConditionalCreditMilestone> milestones = default)
         {
             milestones ??= new ChangeTrackingList<ConditionalCreditMilestone>();
 
@@ -903,8 +903,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 billingAccountResourceId,
                 provisioningState,
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 productCode,
                 benefitResourceId,
                 resourceId,
@@ -917,33 +917,33 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="milestoneId"> Unique identifier for the milestone. </param>
         /// <param name="name"> Display name for the milestone. </param>
         /// <param name="status"> Current status of the milestone. </param>
-        /// <param name="endOn"> End date for this milestone. </param>
+        /// <param name="endsOn"> End date for this milestone. </param>
         /// <param name="spendTarget"> Spend target for this milestone. </param>
         /// <param name="award"> Award details for this milestone (only present for primary conditional credits). </param>
         /// <returns> A new <see cref="Models.ConditionalCreditMilestone"/> instance for mocking. </returns>
-        public static ConditionalCreditMilestone ConditionalCreditMilestone(string milestoneId = default, string name = default, MilestoneStatus? status = default, DateTimeOffset? endOn = default, BillingBenefitsPrice spendTarget = default, Award award = default)
+        public static ConditionalCreditMilestone ConditionalCreditMilestone(string milestoneId = default, string name = default, MilestoneStatus? status = default, DateTimeOffset? endsOn = default, BillingBenefitsPrice spendTarget = default, Award award = default)
         {
             return new ConditionalCreditMilestone(
                 milestoneId,
                 name,
                 status,
-                endOn,
+                endsOn,
                 spendTarget,
                 award,
                 default);
         }
 
         /// <param name="displayName"> Display name for the conditional credit. </param>
-        /// <param name="endOn"> End DateTime in UTC. </param>
+        /// <param name="endsOn"> End DateTime in UTC. </param>
         /// <param name="allowContributors"> Whether this conditional credit allows contributor billing accounts. </param>
         /// <param name="milestones"> Updated milestones list (only applicable for primary conditional credits). </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ConditionalCreditPatch"/> instance for mocking. </returns>
-        public static ConditionalCreditPatch ConditionalCreditPatch(string displayName = default, DateTimeOffset? endOn = default, EnablementMode? allowContributors = default, IEnumerable<ConditionalCreditMilestone> milestones = default, IDictionary<string, string> tags = default)
+        public static ConditionalCreditPatch ConditionalCreditPatch(string displayName = default, DateTimeOffset? endsOn = default, EnablementMode? allowContributors = default, IEnumerable<ConditionalCreditMilestone> milestones = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new ConditionalCreditPatch(displayName is null && endOn is null && allowContributors is null && milestones is null ? default : new ConditionalCreditPatchRequestProperties(displayName, endOn, allowContributors, (milestones ?? new ChangeTrackingList<ConditionalCreditMilestone>()).ToList(), default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new ConditionalCreditPatch(displayName is null && endsOn is null && allowContributors is null && milestones is null ? default : new ConditionalCreditPatchRequestProperties(displayName, endsOn, allowContributors, (milestones ?? new ChangeTrackingList<ConditionalCreditMilestone>()).ToList(), default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -954,8 +954,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="billingAccountResourceId"> The billing account resource ID. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="status"> The status of the conditional credit. </param>
-        /// <param name="startOn"> Start date of the conditional credit. </param>
-        /// <param name="endOn"> End date of the conditional credit (derived from last milestone). </param>
+        /// <param name="startsOn"> Start date of the conditional credit. </param>
+        /// <param name="endsOn"> End date of the conditional credit (derived from last milestone). </param>
         /// <param name="productCode"> Product code for the conditional credit. </param>
         /// <param name="benefitResourceId"> Fully-qualified identifier of the benefit under applicable benefit list. </param>
         /// <param name="resourceId"> Fully-qualified resource identifier of the resource. Format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BillingBenefits/{benefitType}/{benefitName}. </param>
@@ -964,21 +964,21 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="milestones"> List of milestones copied from primary conditional credit (excludes award details). </param>
         /// <param name="primaryBillingAccountResourceId"> Fully-qualified billing account resource identifier of the primary CACO. Format must be Azure Resource ID: /providers/Microsoft.Billing/billingAccounts/{acctId:orgId}. </param>
         /// <returns> A new <see cref="BillingBenefits.ConditionalCreditContributorData"/> instance for mocking. </returns>
-        public static ConditionalCreditContributorData ConditionalCreditContributorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, ResourceIdentifier billingAccountResourceId = default, ConditionalCreditsProvisioningState? provisioningState = default, ConditionalCreditStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string productCode = default, ResourceIdentifier benefitResourceId = default, ResourceIdentifier resourceId = default, ResourceIdentifier primaryResourceId = default, string systemId = default, IEnumerable<ContributorConditionalCreditMilestone> milestones = default, ResourceIdentifier primaryBillingAccountResourceId = default)
+        public static ConditionalCreditContributorData ConditionalCreditContributorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, ResourceIdentifier billingAccountResourceId = default, ConditionalCreditsProvisioningState? provisioningState = default, ConditionalCreditStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, string productCode = default, ResourceIdentifier benefitResourceId = default, ResourceIdentifier resourceId = default, ResourceIdentifier primaryResourceId = default, string systemId = default, IEnumerable<ContributorConditionalCreditMilestone> milestones = default, ResourceIdentifier primaryBillingAccountResourceId = default)
         {
             return new ConditionalCreditContributorData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                displayName is null && billingAccountResourceId is null && provisioningState is null && status is null && startOn is null && endOn is null && productCode is null && benefitResourceId is null && resourceId is null && primaryResourceId is null && systemId is null && milestones is null && primaryBillingAccountResourceId is null ? default : new ContributorConditionalCreditProperties(
+                displayName is null && billingAccountResourceId is null && provisioningState is null && status is null && startsOn is null && endsOn is null && productCode is null && benefitResourceId is null && resourceId is null && primaryResourceId is null && systemId is null && milestones is null && primaryBillingAccountResourceId is null ? default : new ContributorConditionalCreditProperties(
                     default,
                     displayName,
                     billingAccountResourceId,
                     provisioningState,
                     status,
-                    startOn,
-                    endOn,
+                    startsOn,
+                    endsOn,
                     productCode,
                     benefitResourceId,
                     resourceId,
@@ -991,7 +991,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         }
 
         /// <param name="commitment"> Commitment towards the benefit. </param>
-        /// <param name="endOn"> End DateTime in UTC. </param>
+        /// <param name="endsOn"> End DateTime in UTC. </param>
         /// <param name="isAllowContributors"> Setting this to true means multi-entity. </param>
         /// <param name="automaticShortfall"> Represents the enablement status of a feature or settings. </param>
         /// <param name="automaticShortfallSuppressReason"> Optional field to record suppression reason for automatic shortfall. </param>
@@ -1002,13 +1002,13 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="primaryBillingAccountResourceId"> Fully-qualified billing account resource identifier of the primary MACC. Format must be Azure Resource ID: /providers/Microsoft.Billing/billingAccounts/{acctId:orgId}. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.MaccPatch"/> instance for mocking. </returns>
-        public static MaccPatch MaccPatch(BillingBenefitsCommitment commitment = default, DateTimeOffset? endOn = default, bool? isAllowContributors = default, EnablementMode? automaticShortfall = default, AutomaticShortfallSuppressReason automaticShortfallSuppressReason = default, string displayName = default, MaccMilestoneStatus? status = default, IEnumerable<MaccMilestone> milestones = default, ResourceIdentifier primaryResourceId = default, ResourceIdentifier primaryBillingAccountResourceId = default, IDictionary<string, string> tags = default)
+        public static MaccPatch MaccPatch(BillingBenefitsCommitment commitment = default, DateTimeOffset? endsOn = default, bool? isAllowContributors = default, EnablementMode? automaticShortfall = default, AutomaticShortfallSuppressReason automaticShortfallSuppressReason = default, string displayName = default, MaccMilestoneStatus? status = default, IEnumerable<MaccMilestone> milestones = default, ResourceIdentifier primaryResourceId = default, ResourceIdentifier primaryBillingAccountResourceId = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new MaccPatch(commitment is null && endOn is null && isAllowContributors is null && automaticShortfall is null && automaticShortfallSuppressReason is null && displayName is null && status is null && milestones is null && primaryResourceId is null && primaryBillingAccountResourceId is null ? default : new MaccPatchRequestProperties(
+            return new MaccPatch(commitment is null && endsOn is null && isAllowContributors is null && automaticShortfall is null && automaticShortfallSuppressReason is null && displayName is null && status is null && milestones is null && primaryResourceId is null && primaryBillingAccountResourceId is null ? default : new MaccPatchRequestProperties(
                 commitment,
-                endOn,
+                endsOn,
                 isAllowContributors,
                 automaticShortfall,
                 automaticShortfallSuppressReason,
@@ -1022,19 +1022,19 @@ namespace Azure.ResourceManager.BillingBenefits.Models
 
         /// <param name="productCode"> Represents catalog UPN. </param>
         /// <param name="charge"> Shortfall amount with grain. </param>
-        /// <param name="startOn"> Start DateTime. </param>
-        /// <param name="endOn"> End DateTime in UTC. </param>
+        /// <param name="startsOn"> Start DateTime. </param>
+        /// <param name="endsOn"> End DateTime in UTC. </param>
         /// <param name="resourceId"> Fully-qualified resource identifier of the credits associated with the shortfall. </param>
         /// <param name="balanceVersion"> Points to BalanceVersion document that indicates the remaining commitment balance when the credit was created. </param>
         /// <param name="systemId"> This is an identifier of the shortfall which will not change for its lifetime. </param>
         /// <returns> A new <see cref="Models.ChargeShortfallRequest"/> instance for mocking. </returns>
-        public static ChargeShortfallRequest ChargeShortfallRequest(string productCode = default, BillingBenefitsCommitment charge = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, ResourceIdentifier resourceId = default, float? balanceVersion = default, string systemId = default)
+        public static ChargeShortfallRequest ChargeShortfallRequest(string productCode = default, BillingBenefitsCommitment charge = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, ResourceIdentifier resourceId = default, float? balanceVersion = default, string systemId = default)
         {
-            return new ChargeShortfallRequest(productCode is null && charge is null && startOn is null && endOn is null && resourceId is null && balanceVersion is null && systemId is null ? default : new Shortfall(
+            return new ChargeShortfallRequest(productCode is null && charge is null && startsOn is null && endsOn is null && resourceId is null && balanceVersion is null && systemId is null ? default : new Shortfall(
                 productCode,
                 charge,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 resourceId,
                 balanceVersion,
                 systemId,
@@ -1054,20 +1054,20 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="term"> Represent benefit term in ISO 8601 format. </param>
         /// <param name="billingPlan"> Represents the billing plan in ISO 8601 format. Required only for monthly billing plans. </param>
         /// <param name="expireOn"> Expiry date time. </param>
-        /// <param name="benefitStartOn"> This is the DateTime when the savings plan benefit started. </param>
+        /// <param name="benefitStartsOn"> This is the DateTime when the savings plan benefit started. </param>
         /// <param name="planInformation"> Information describing the type of billing plan for this savings plan. </param>
         /// <param name="savingsPlans"> Gets the SavingsPlans. </param>
         /// <param name="extendedStatusInfo"> Gets the ExtendedStatusInfo. </param>
         /// <param name="skuName"> Gets or sets the Name. </param>
         /// <returns> A new <see cref="BillingBenefits.BillingBenefitsSavingsPlanOrderData"/> instance for mocking. </returns>
-        public static BillingBenefitsSavingsPlanOrderData BillingBenefitsSavingsPlanOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, BillingBenefitsProvisioningState? provisioningState = default, ResourceIdentifier billingScopeId = default, ResourceIdentifier billingProfileId = default, ResourceIdentifier customerId = default, ResourceIdentifier billingAccountId = default, BillingBenefitsTerm? term = default, BillingBenefitsBillingPlan? billingPlan = default, DateTimeOffset? expireOn = default, DateTimeOffset? benefitStartOn = default, BillingPlanInformation planInformation = default, IEnumerable<string> savingsPlans = default, BillingBenefitsExtendedStatusInfo extendedStatusInfo = default, string skuName = default)
+        public static BillingBenefitsSavingsPlanOrderData BillingBenefitsSavingsPlanOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, BillingBenefitsProvisioningState? provisioningState = default, ResourceIdentifier billingScopeId = default, ResourceIdentifier billingProfileId = default, ResourceIdentifier customerId = default, ResourceIdentifier billingAccountId = default, BillingBenefitsTerm? term = default, BillingBenefitsBillingPlan? billingPlan = default, DateTimeOffset? expireOn = default, DateTimeOffset? benefitStartsOn = default, BillingPlanInformation planInformation = default, IEnumerable<string> savingsPlans = default, BillingBenefitsExtendedStatusInfo extendedStatusInfo = default, string skuName = default)
         {
             return new BillingBenefitsSavingsPlanOrderData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                displayName is null && provisioningState is null && billingScopeId is null && billingProfileId is null && customerId is null && billingAccountId is null && term is null && billingPlan is null && expireOn is null && benefitStartOn is null && planInformation is null && savingsPlans is null && extendedStatusInfo is null ? default : new SavingsPlanOrderModelProperties(
+                displayName is null && provisioningState is null && billingScopeId is null && billingProfileId is null && customerId is null && billingAccountId is null && term is null && billingPlan is null && expireOn is null && benefitStartsOn is null && planInformation is null && savingsPlans is null && extendedStatusInfo is null ? default : new SavingsPlanOrderModelProperties(
                     displayName,
                     provisioningState,
                     billingScopeId,
@@ -1077,7 +1077,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     term,
                     billingPlan,
                     expireOn,
-                    benefitStartOn,
+                    benefitStartsOn,
                     planInformation,
                     (savingsPlans ?? new ChangeTrackingList<string>()).ToList(),
                     extendedStatusInfo,
@@ -1087,15 +1087,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         }
 
         /// <param name="pricingCurrencyTotal"> Amount of money to be paid for the Order. Tax is not included. </param>
-        /// <param name="startOn"> Date when the billing plan has started. </param>
+        /// <param name="startsOn"> Date when the billing plan has started. </param>
         /// <param name="nextPaymentDueOn"> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </param>
         /// <param name="transactions"></param>
         /// <returns> A new <see cref="Models.BillingPlanInformation"/> instance for mocking. </returns>
-        public static BillingPlanInformation BillingPlanInformation(BillingBenefitsPrice pricingCurrencyTotal = default, DateTimeOffset? startOn = default, DateTimeOffset? nextPaymentDueOn = default, IEnumerable<SavingsPlanOrderPaymentDetail> transactions = default)
+        public static BillingPlanInformation BillingPlanInformation(BillingBenefitsPrice pricingCurrencyTotal = default, DateTimeOffset? startsOn = default, DateTimeOffset? nextPaymentDueOn = default, IEnumerable<SavingsPlanOrderPaymentDetail> transactions = default)
         {
             transactions ??= new ChangeTrackingList<SavingsPlanOrderPaymentDetail>();
 
-            return new BillingPlanInformation(pricingCurrencyTotal, startOn, nextPaymentDueOn, (transactions ?? new ChangeTrackingList<SavingsPlanOrderPaymentDetail>()).ToList(), default);
+            return new BillingPlanInformation(pricingCurrencyTotal, startsOn, nextPaymentDueOn, (transactions ?? new ChangeTrackingList<SavingsPlanOrderPaymentDetail>()).ToList(), default);
         }
 
         /// <param name="dueOn"> Date when the payment needs to be done. </param>
@@ -1321,8 +1321,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="productCode"> Product UPN for the credit type. </param>
         /// <param name="reason"> The reason for the credit. Not required if not applicable. </param>
         /// <param name="credit"> The entire investment amount for the credit contract, including currency and amount. </param>
-        /// <param name="startOn"> Start DateTime. </param>
-        /// <param name="endOn"> End DateTime in UTC. </param>
+        /// <param name="startsOn"> Start DateTime. </param>
+        /// <param name="endsOn"> End DateTime in UTC. </param>
         /// <param name="policies"> Credit breakdown item representing a milestone, line-item, or no-charge service. </param>
         /// <param name="billingAccountResourceId"> Fully-qualified identifier of the billing account where the benefit is applied. Present only for Enterprise Agreement customers. </param>
         /// <param name="billingProfileResourceId"> Fully-qualified identifier of the billing profile where the benefit is applied. Present only for Field-led or Customer-led customers. </param>
@@ -1332,9 +1332,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="customerId"> Fully-qualified identifier of the customer where the savings plan is applied. Present only for Partner-led customers. Format is /providers/Microsoft.Billing/billingAccounts/{acctId:orgId}. </param>
         /// <param name="resourceId"> Fully-qualified resource identifier of the resource. Format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BillingBenefits/{benefitType}/{benefitName}. </param>
         /// <returns> A new <see cref="Models.CreditsValidateModel"/> instance for mocking. </returns>
-        public static CreditsValidateModel CreditsValidateModel(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation? location = default, string managedBy = default, string kind = default, string eTag = default, ManagedServiceIdentity identity = default, BillingBenefitsSku sku = default, BillingBenefitsPlan plan = default, CreditStatus? status = default, string productCode = default, CreditReason reason = default, BillingBenefitsCommitment credit = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, CreditPolicies policies = default, ResourceIdentifier billingAccountResourceId = default, ResourceIdentifier billingProfileResourceId = default, IEnumerable<CreditBreakdownItem> breakdown = default, BillingBenefitsProvisioningState? provisioningState = default, string systemId = default, string customerId = default, ResourceIdentifier resourceId = default)
+        public static CreditsValidateModel CreditsValidateModel(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation? location = default, string managedBy = default, string kind = default, string eTag = default, ManagedServiceIdentity identity = default, BillingBenefitsSku sku = default, BillingBenefitsPlan plan = default, CreditStatus? status = default, string productCode = default, CreditReason reason = default, BillingBenefitsCommitment credit = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, CreditPolicies policies = default, ResourceIdentifier billingAccountResourceId = default, ResourceIdentifier billingProfileResourceId = default, IEnumerable<CreditBreakdownItem> breakdown = default, BillingBenefitsProvisioningState? provisioningState = default, string systemId = default, string customerId = default, ResourceIdentifier resourceId = default)
         {
-            return new CreditsValidateModel(default, default, id is null && name is null && resourceType is null && systemData is null && tags is null && location is null && status is null && productCode is null && reason is null && credit is null && startOn is null && endOn is null && policies is null && billingAccountResourceId is null && billingProfileResourceId is null && breakdown is null && provisioningState is null && systemId is null && customerId is null && resourceId is null && managedBy is null && kind is null && eTag is null && identity is null && sku is null && plan is null ? default : new CreditData(
+            return new CreditsValidateModel(default, default, id is null && name is null && resourceType is null && systemData is null && tags is null && location is null && status is null && productCode is null && reason is null && credit is null && startsOn is null && endsOn is null && policies is null && billingAccountResourceId is null && billingProfileResourceId is null && breakdown is null && provisioningState is null && systemId is null && customerId is null && resourceId is null && managedBy is null && kind is null && eTag is null && identity is null && sku is null && plan is null ? default : new CreditData(
                 id,
                 name,
                 resourceType.GetValueOrDefault(),
@@ -1346,8 +1346,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     productCode,
                     reason,
                     credit,
-                    startOn,
-                    endOn,
+                    startsOn,
+                    endsOn,
                     policies,
                     billingAccountResourceId,
                     billingProfileResourceId,
@@ -1373,8 +1373,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="productCode"> Represents catalog UPN. </param>
         /// <param name="billingAccountResourceId"> Fully-qualified identifier of the billing account where the MACC is applied. Present only for Enterprise Agreement customers. Format must be Azure Resource ID: /providers/Microsoft.Billing/billingAccounts/{acctId:orgId}. </param>
         /// <param name="commitment"> Commitment towards the benefit. </param>
-        /// <param name="startOn"> Must be start of month. Timestamp must be in the ISO date format YYYY-MM-DDT00:00:00Z. </param>
-        /// <param name="endOn"> Must be end of month. Timestamp must be in the ISO date format YYYY-MM-DDT23:59:59Z. </param>
+        /// <param name="startsOn"> Must be start of month. Timestamp must be in the ISO date format YYYY-MM-DDT00:00:00Z. </param>
+        /// <param name="endsOn"> Must be end of month. Timestamp must be in the ISO date format YYYY-MM-DDT23:59:59Z. </param>
         /// <param name="systemId"> This is the globally unique identifier of the MACC which will not change for the lifetime of the MACC. </param>
         /// <param name="automaticShortfall"> Setting this to 'Enable' enables automatic shortfall charging when commitment is not met. </param>
         /// <param name="automaticShortfallSuppressReason"> Optional field to record suppression reason for automatic shortfall. </param>
@@ -1385,9 +1385,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="primaryResourceId"> Fully-qualified resource identifier of the primary MACC. Format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.BillingBenefits/maccs/{maccName}. </param>
         /// <param name="primaryBillingAccountResourceId"> Fully-qualified billing account resource identifier of the primary MACC. Format must be Azure Resource ID: /providers/Microsoft.Billing/billingAccounts/{acctId:orgId}. </param>
         /// <returns> A new <see cref="Models.MaccValidateModel"/> instance for mocking. </returns>
-        public static MaccValidateModel MaccValidateModel(string provisioningState = default, MaccStatus? status = default, MaccEntityType? maccEntityType = default, string displayName = default, string productCode = default, ResourceIdentifier billingAccountResourceId = default, BillingBenefitsCommitment commitment = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string systemId = default, EnablementMode? automaticShortfall = default, AutomaticShortfallSuppressReason automaticShortfallSuppressReason = default, Shortfall shortfall = default, IEnumerable<MaccMilestone> milestones = default, ResourceIdentifier resourceId = default, bool? isAllowContributors = default, ResourceIdentifier primaryResourceId = default, ResourceIdentifier primaryBillingAccountResourceId = default)
+        public static MaccValidateModel MaccValidateModel(string provisioningState = default, MaccStatus? status = default, MaccEntityType? maccEntityType = default, string displayName = default, string productCode = default, ResourceIdentifier billingAccountResourceId = default, BillingBenefitsCommitment commitment = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, string systemId = default, EnablementMode? automaticShortfall = default, AutomaticShortfallSuppressReason automaticShortfallSuppressReason = default, Shortfall shortfall = default, IEnumerable<MaccMilestone> milestones = default, ResourceIdentifier resourceId = default, bool? isAllowContributors = default, ResourceIdentifier primaryResourceId = default, ResourceIdentifier primaryBillingAccountResourceId = default)
         {
-            return new MaccValidateModel(default, default, provisioningState is null && status is null && maccEntityType is null && displayName is null && productCode is null && billingAccountResourceId is null && commitment is null && startOn is null && endOn is null && systemId is null && automaticShortfall is null && automaticShortfallSuppressReason is null && shortfall is null && milestones is null && resourceId is null && isAllowContributors is null && primaryResourceId is null && primaryBillingAccountResourceId is null ? default : new MaccModelProperties(
+            return new MaccValidateModel(default, default, provisioningState is null && status is null && maccEntityType is null && displayName is null && productCode is null && billingAccountResourceId is null && commitment is null && startsOn is null && endsOn is null && systemId is null && automaticShortfall is null && automaticShortfallSuppressReason is null && shortfall is null && milestones is null && resourceId is null && isAllowContributors is null && primaryResourceId is null && primaryBillingAccountResourceId is null ? default : new MaccModelProperties(
                 provisioningState,
                 status,
                 maccEntityType.GetValueOrDefault(),
@@ -1395,8 +1395,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 productCode,
                 billingAccountResourceId,
                 commitment,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 systemId,
                 automaticShortfall,
                 automaticShortfallSuppressReason,
@@ -1501,8 +1501,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="productCode"> This is the catalog UPN for the product. </param>
         /// <param name="status"> Current status of the free services. </param>
-        /// <param name="startOn"> Date and time when the free services become active. </param>
-        /// <param name="endOn"> Expiration date and time of the free services. </param>
+        /// <param name="startsOn"> Date and time when the free services become active. </param>
+        /// <param name="endsOn"> Expiration date and time of the free services. </param>
         /// <param name="provisioningState"> Provisioning state of Free Services as assigned by RPaaS. This indicates the last operation's status. For all practical purposes, this can be ignored. For current status of Free Services resource, refer to FreeServicesStatus. </param>
         /// <param name="billingAccountResourceId"> Billing account resource id where the free services metadata is present. </param>
         /// <param name="billingProfileResourceId"> Billing profile resource id where the free services are scoped to. </param>
@@ -1515,7 +1515,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         /// <param name="sku"> The resource model definition representing SKU. </param>
         /// <param name="plan"> Plan for the resource. </param>
         /// <returns> A new <see cref="BillingBenefits.FreeServicesData"/> instance for mocking. </returns>
-        public static FreeServicesData FreeServicesData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string productCode = default, FreeServicesStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string provisioningState = default, ResourceIdentifier billingAccountResourceId = default, ResourceIdentifier billingProfileResourceId = default, ResourceIdentifier customerResourceId = default, string systemId = default, string managedBy = default, string kind = default, string eTag = default, ManagedServiceIdentity identity = default, BillingBenefitsSku sku = default, BillingBenefitsPlan plan = default)
+        public static FreeServicesData FreeServicesData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string productCode = default, FreeServicesStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, string provisioningState = default, ResourceIdentifier billingAccountResourceId = default, ResourceIdentifier billingProfileResourceId = default, ResourceIdentifier customerResourceId = default, string systemId = default, string managedBy = default, string kind = default, string eTag = default, ManagedServiceIdentity identity = default, BillingBenefitsSku sku = default, BillingBenefitsPlan plan = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1526,11 +1526,11 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                productCode is null && status is null && startOn is null && endOn is null && provisioningState is null && billingAccountResourceId is null && billingProfileResourceId is null && customerResourceId is null && systemId is null ? default : new FreeServicesProperties(
+                productCode is null && status is null && startsOn is null && endsOn is null && provisioningState is null && billingAccountResourceId is null && billingProfileResourceId is null && customerResourceId is null && systemId is null ? default : new FreeServicesProperties(
                     productCode,
                     status,
-                    startOn,
-                    endOn,
+                    startsOn,
+                    endsOn,
                     provisioningState,
                     billingAccountResourceId,
                     billingProfileResourceId,
@@ -1546,14 +1546,14 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 default);
         }
 
-        /// <param name="endOn"> Updated expiration date and time of the free services. </param>
+        /// <param name="endsOn"> Updated expiration date and time of the free services. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.FreeServicesPatch"/> instance for mocking. </returns>
-        public static FreeServicesPatch FreeServicesPatch(DateTimeOffset? endOn = default, IDictionary<string, string> tags = default)
+        public static FreeServicesPatch FreeServicesPatch(DateTimeOffset? endsOn = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new FreeServicesPatch(endOn is null ? default : new FreeServicesPatchRequestProperties(endOn, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
+            return new FreeServicesPatch(endsOn is null ? default : new FreeServicesPatchRequestProperties(endsOn, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
     }
 }
