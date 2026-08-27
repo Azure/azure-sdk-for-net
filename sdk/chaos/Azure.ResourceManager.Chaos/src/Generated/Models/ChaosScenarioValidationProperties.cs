@@ -25,18 +25,18 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Initializes a new instance of <see cref="ChaosScenarioValidationProperties"/>. </summary>
         /// <param name="status"> The scenario validation status. </param>
-        /// <param name="startOn"> The scenario validation UTC start time. </param>
+        /// <param name="startsOn"> The scenario validation UTC start time. </param>
         /// <param name="executionPlanJson"> Execution plan created from validation. This plan will be executed as-is on next scenario execution. </param>
-        /// <param name="endOn"> The scenario validation UTC end time. </param>
+        /// <param name="endsOn"> The scenario validation UTC end time. </param>
         /// <param name="errors"> System or infrastructure errors encountered during validation. </param>
         /// <param name="validationErrors"> Business errors from validation — permission and resource state issues. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosScenarioValidationProperties(ChaosScenarioValidationState status, DateTimeOffset startOn, string executionPlanJson, DateTimeOffset? endOn, IReadOnlyList<ChaosOperationError> errors, ChaosScenarioErrors validationErrors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChaosScenarioValidationProperties(ChaosScenarioValidationState status, DateTimeOffset startsOn, string executionPlanJson, DateTimeOffset? endsOn, IReadOnlyList<ChaosOperationError> errors, ChaosScenarioErrors validationErrors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
-            StartOn = startOn;
+            StartsOn = startsOn;
             ExecutionPlanJson = executionPlanJson;
-            EndOn = endOn;
+            EndsOn = endsOn;
             Errors = errors;
             ValidationErrors = validationErrors;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.Chaos.Models
         public ChaosScenarioValidationState Status { get; }
 
         /// <summary> The scenario validation UTC start time. </summary>
-        public DateTimeOffset StartOn { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary> Execution plan created from validation. This plan will be executed as-is on next scenario execution. </summary>
         public string ExecutionPlanJson { get; }
 
         /// <summary> The scenario validation UTC end time. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> System or infrastructure errors encountered during validation. </summary>
         public IReadOnlyList<ChaosOperationError> Errors { get; }

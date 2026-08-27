@@ -36,15 +36,15 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="executionErrors"> Business errors from fault injection — permission and resource state issues. </param>
         /// <param name="scenarioRunJson"> The scenario run json. </param>
         /// <param name="scenarioRunSummary"> The scenario run summary. </param>
-        /// <param name="startOn"> When the scenario run was started. </param>
-        /// <param name="endOn"> When the scenario run was completed. </param>
+        /// <param name="startsOn"> When the scenario run was started. </param>
+        /// <param name="endsOn"> When the scenario run was completed. </param>
         /// <param name="zoneResolution">
         /// Zone resolution information. Present when the scenario configuration
         /// used physical zone targeting (`physicalZones`). Contains the mode,
         /// requested physical zones, and per-subscription logical zone mappings.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosScenarioRunProperties(string workspaceName, string scenarioName, string scenarioConfigurationName, Guid managedIdentityPrincipalId, ChaosScenarioRunState status, IReadOnlyList<ChaosScenarioRunResourceInfo> resources, IReadOnlyList<ChaosOperationError> errors, ChaosScenarioErrors executionErrors, string scenarioRunJson, IReadOnlyList<ChaosScenarioRunSummaryAction> scenarioRunSummary, DateTimeOffset startOn, DateTimeOffset? endOn, ChaosZoneResolutionInfo zoneResolution, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChaosScenarioRunProperties(string workspaceName, string scenarioName, string scenarioConfigurationName, Guid managedIdentityPrincipalId, ChaosScenarioRunState status, IReadOnlyList<ChaosScenarioRunResourceInfo> resources, IReadOnlyList<ChaosOperationError> errors, ChaosScenarioErrors executionErrors, string scenarioRunJson, IReadOnlyList<ChaosScenarioRunSummaryAction> scenarioRunSummary, DateTimeOffset startsOn, DateTimeOffset? endsOn, ChaosZoneResolutionInfo zoneResolution, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             WorkspaceName = workspaceName;
             ScenarioName = scenarioName;
@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Chaos.Models
             ExecutionErrors = executionErrors;
             ScenarioRunJson = scenarioRunJson;
             ScenarioRunSummary = scenarioRunSummary;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             ZoneResolution = zoneResolution;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.Chaos.Models
         public IReadOnlyList<ChaosScenarioRunSummaryAction> ScenarioRunSummary { get; }
 
         /// <summary> When the scenario run was started. </summary>
-        public DateTimeOffset StartOn { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary> When the scenario run was completed. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary>
         /// Zone resolution information. Present when the scenario configuration
