@@ -247,11 +247,11 @@ namespace Azure.ResourceManager.BillingBenefits
         }
 
         /// <summary> This is the DateTime when the savings plan benefit started. </summary>
-        public DateTimeOffset? BenefitStartOn
+        public DateTimeOffset? BenefitStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.BenefitStartOn;
+                return Properties is null ? default : Properties.BenefitStartsOn;
             }
             set
             {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 {
                     Properties = new SavingsPlanModelProperties();
                 }
-                Properties.BenefitStartOn = value;
+                Properties.BenefitStartsOn = value;
             }
         }
 

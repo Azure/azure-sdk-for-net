@@ -112,15 +112,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WritePropertyName("commitment"u8);
                 writer.WriteObjectValue(Commitment, options);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startAt"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endAt"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(SystemId))
             {
@@ -221,8 +221,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             string productCode = default;
             ResourceIdentifier billingAccountResourceId = default;
             BillingBenefitsCommitment commitment = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             string systemId = default;
             EnablementMode? automaticShortfall = default;
             AutomaticShortfallSuppressReason automaticShortfallSuppressReason = default;
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endAt"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("systemId"u8))
@@ -395,8 +395,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 productCode,
                 billingAccountResourceId,
                 commitment,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 systemId,
                 automaticShortfall,
                 automaticShortfallSuppressReason,

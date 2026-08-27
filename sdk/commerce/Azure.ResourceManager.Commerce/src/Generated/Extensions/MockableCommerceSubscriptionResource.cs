@@ -63,14 +63,14 @@ namespace Azure.ResourceManager.Commerce.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="reportedStartTime"> The start of the time range to retrieve data for. </param>
-        /// <param name="reportedEndTime"> The end of the time range to retrieve data for. </param>
+        /// <param name="reportedStartsOn"> The start of the time range to retrieve data for. </param>
+        /// <param name="reportedEndsOn"> The end of the time range to retrieve data for. </param>
         /// <param name="showDetails"> `True` returns usage data in instance-level detail, `false` causes server-side aggregation with fewer details. For example, if you have 3 website instances, by default you will get 3 line items for website consumption. If you specify showDetails = false, the data will be aggregated as a single line item for website consumption within the time period (for the given subscriptionId, meterId, usageStartTime and usageEndTime). </param>
         /// <param name="aggregationGranularity"> `Daily` (default) returns the data in daily granularity, `Hourly` returns the data in hourly granularity. </param>
         /// <param name="continuationToken"> Used when a continuation token string is provided in the response body of the previous call, enabling paging through a large result set. If not present, the data is retrieved from the beginning of the day/hour (based on the granularity) passed in. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CommerceUsageAggregation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CommerceUsageAggregation> GetUsageAggregatesAsync(DateTimeOffset reportedStartTime, DateTimeOffset reportedEndTime, bool? showDetails = default, CommerceUsageAggregationGranularity? aggregationGranularity = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<CommerceUsageAggregation> GetUsageAggregatesAsync(DateTimeOffset reportedStartsOn, DateTimeOffset reportedEndsOn, bool? showDetails = default, CommerceUsageAggregationGranularity? aggregationGranularity = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Commerce.Mocking
             return new UsageAggregatesGetUsageAggregatesAsyncCollectionResultOfT(
                 UsageAggregatesRestClient,
                 Id.SubscriptionId,
-                reportedStartTime,
-                reportedEndTime,
+                reportedStartsOn,
+                reportedEndsOn,
                 showDetails,
                 aggregationGranularity?.ToSerialString(),
                 continuationToken,
@@ -105,14 +105,14 @@ namespace Azure.ResourceManager.Commerce.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="reportedStartTime"> The start of the time range to retrieve data for. </param>
-        /// <param name="reportedEndTime"> The end of the time range to retrieve data for. </param>
+        /// <param name="reportedStartsOn"> The start of the time range to retrieve data for. </param>
+        /// <param name="reportedEndsOn"> The end of the time range to retrieve data for. </param>
         /// <param name="showDetails"> `True` returns usage data in instance-level detail, `false` causes server-side aggregation with fewer details. For example, if you have 3 website instances, by default you will get 3 line items for website consumption. If you specify showDetails = false, the data will be aggregated as a single line item for website consumption within the time period (for the given subscriptionId, meterId, usageStartTime and usageEndTime). </param>
         /// <param name="aggregationGranularity"> `Daily` (default) returns the data in daily granularity, `Hourly` returns the data in hourly granularity. </param>
         /// <param name="continuationToken"> Used when a continuation token string is provided in the response body of the previous call, enabling paging through a large result set. If not present, the data is retrieved from the beginning of the day/hour (based on the granularity) passed in. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="CommerceUsageAggregation"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CommerceUsageAggregation> GetUsageAggregates(DateTimeOffset reportedStartTime, DateTimeOffset reportedEndTime, bool? showDetails = default, CommerceUsageAggregationGranularity? aggregationGranularity = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<CommerceUsageAggregation> GetUsageAggregates(DateTimeOffset reportedStartsOn, DateTimeOffset reportedEndsOn, bool? showDetails = default, CommerceUsageAggregationGranularity? aggregationGranularity = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
@@ -121,8 +121,8 @@ namespace Azure.ResourceManager.Commerce.Mocking
             return new UsageAggregatesGetUsageAggregatesCollectionResultOfT(
                 UsageAggregatesRestClient,
                 Id.SubscriptionId,
-                reportedStartTime,
-                reportedEndTime,
+                reportedStartsOn,
+                reportedEndsOn,
                 showDetails,
                 aggregationGranularity?.ToSerialString(),
                 continuationToken,
