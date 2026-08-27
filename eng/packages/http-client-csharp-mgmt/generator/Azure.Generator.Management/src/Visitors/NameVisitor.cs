@@ -108,7 +108,7 @@ internal class NameVisitor : ScmLibraryVisitor
     {
         if (propertyProvider is not null)
         {
-            MtgDateTimePropertyMatcher.RegisterSourceProperty(propertyProvider, property);
+            ManagementClientGenerator.Instance.DateTimePropertyMatcher.RegisterSourceProperty(propertyProvider, property);
         }
 
         DoPreVisitPropertyForResourceTypeName(property, propertyProvider);

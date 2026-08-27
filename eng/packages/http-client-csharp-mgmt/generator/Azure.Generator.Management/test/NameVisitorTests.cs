@@ -60,7 +60,7 @@ namespace Azure.Generator.Mgmt.Tests
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
             var property = plugin.Object.TypeFactory.CreateModel(inputModel)!.Properties.Single();
 
-            Assert.That(Management.Visitors.MtgDateTimePropertyMatcher.IsMtgRenamedDateTimeProperty(property), Is.EqualTo(expected));
+            Assert.That(plugin.Object.DateTimePropertyMatcher.IsMtgRenamedDateTimeProperty(property), Is.EqualTo(expected));
         }
 
         [Test]

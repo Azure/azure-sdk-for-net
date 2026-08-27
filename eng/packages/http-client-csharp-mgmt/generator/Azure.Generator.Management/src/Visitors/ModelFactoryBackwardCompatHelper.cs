@@ -629,14 +629,14 @@ namespace Azure.Generator.Management.Visitors
                 return true;
             }
 
-            if (constructorParameter.Property is not { } property || !MtgDateTimePropertyMatcher.IsMtgRenamedDateTimeProperty(property))
+            if (constructorParameter.Property is not { } property || !ManagementClientGenerator.Instance.DateTimePropertyMatcher.IsMtgRenamedDateTimeProperty(property))
             {
                 return false;
             }
 
             foreach (var candidate in argumentsByName.Values)
             {
-                if (!MtgDateTimePropertyMatcher.HasSameSourceProperty(property, candidate))
+                if (!ManagementClientGenerator.Instance.DateTimePropertyMatcher.HasSameSourceProperty(property, candidate))
                 {
                     continue;
                 }
@@ -852,10 +852,10 @@ namespace Azure.Generator.Management.Visitors
                 // the writer disambiguates them. Prefer the parameter from the same source property when available.
                 matches = matches.Where(p => ReferenceEquals(p.Property, expectedProperty)).ToArray();
             }
-            else if (matches.Length == 0 && expectedProperty is not null && MtgDateTimePropertyMatcher.IsMtgRenamedDateTimeProperty(expectedProperty))
+            else if (matches.Length == 0 && expectedProperty is not null && ManagementClientGenerator.Instance.DateTimePropertyMatcher.IsMtgRenamedDateTimeProperty(expectedProperty))
             {
                 matches = method.Signature.Parameters.Where(p =>
-                    MtgDateTimePropertyMatcher.HasSameSourceProperty(expectedProperty, p.Property)
+                    ManagementClientGenerator.Instance.DateTimePropertyMatcher.HasSameSourceProperty(expectedProperty, p.Property)
                     && AreCompatibleParameterTypes(p.Type, expectedType)).ToArray();
             }
 

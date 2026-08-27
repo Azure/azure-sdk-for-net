@@ -47,6 +47,8 @@ namespace Azure.Generator.Management
         /// <inheritdoc/>
         public override ManagementTypeFactory TypeFactory { get; }
 
+        internal MtgDateTimePropertyMatcher DateTimePropertyMatcher { get; } = new();
+
         private ResourceDataCustomizationResolver? _resourceDataCustomizationResolver;
         internal ResourceDataCustomizationResolver ResourceDataCustomizationResolver => _resourceDataCustomizationResolver ??= new();
 

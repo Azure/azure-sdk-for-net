@@ -6,14 +6,13 @@ using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 
 namespace Azure.Generator.Management.Visitors;
 
-internal static class MtgDateTimePropertyMatcher
+internal sealed class MtgDateTimePropertyMatcher
 {
-    private static readonly ConditionalWeakTable<PropertyProvider, InputProperty> _sourceProperties = new();
-    private static readonly ConditionalWeakTable<VariableExpression, InputProperty> _sourcePropertiesByVariable = new();
+    private readonly Dictionary<PropertyProvider, InputProperty> _sourceProperties = new(ReferenceEqualityComparer.Instance);
+    private readonly Dictionary<VariableExpression, InputProperty> _sourcePropertiesByVariable = new(ReferenceEqualityComparer.Instance);
 
     private static readonly HashSet<string> _mtgDateTimeVerbPrefixes = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -37,16 +36,13 @@ internal static class MtgDateTimePropertyMatcher
         "At",
     ];
 
-    internal static void RegisterSourceProperty(PropertyProvider propertyProvider, InputProperty inputProperty)
+    internal void RegisterSourceProperty(PropertyProvider propertyProvider, InputProperty inputProperty)
     {
-        _sourceProperties.Remove(propertyProvider);
-        _sourceProperties.Add(propertyProvider, inputProperty);
-        var variable = propertyProvider.AsVariableExpression;
-        _sourcePropertiesByVariable.Remove(variable);
-        _sourcePropertiesByVariable.Add(variable, inputProperty);
+        _sourceProperties[propertyProvider] = inputProperty;
+        _sourcePropertiesByVariable[propertyProvider.AsVariableExpression] = inputProperty;
     }
 
-    internal static bool IsMtgRenamedDateTimeProperty(PropertyProvider? property)
+    internal bool IsMtgRenamedDateTimeProperty(PropertyProvider? property)
     {
         if (property is null ||
             !_sourceProperties.TryGetValue(property, out var inputProperty) ||
@@ -83,13 +79,13 @@ internal static class MtgDateTimePropertyMatcher
         return false;
     }
 
-    internal static bool HasSameSourceProperty(PropertyProvider expectedProperty, PropertyProvider? candidateProperty)
+    internal bool HasSameSourceProperty(PropertyProvider expectedProperty, PropertyProvider? candidateProperty)
         => candidateProperty is not null &&
             _sourceProperties.TryGetValue(expectedProperty, out var expectedInput) &&
             _sourceProperties.TryGetValue(candidateProperty, out var candidateInput) &&
             ReferenceEquals(expectedInput, candidateInput);
 
-    internal static bool HasSameSourceProperty(PropertyProvider expectedProperty, ValueExpression candidate)
+    internal bool HasSameSourceProperty(PropertyProvider expectedProperty, ValueExpression candidate)
         => candidate is VariableExpression variable &&
             _sourceProperties.TryGetValue(expectedProperty, out var expectedInput) &&
             _sourcePropertiesByVariable.TryGetValue(variable, out var candidateInput) &&
