@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.Commerce.Models
                 writer.WritePropertyName("meterId"u8);
                 writer.WriteStringValue(MeterId);
             }
-            if (Optional.IsDefined(UsageStartOn))
+            if (Optional.IsDefined(UsageStartsOn))
             {
                 writer.WritePropertyName("usageStartTime"u8);
-                writer.WriteStringValue(UsageStartOn.Value, "O");
+                writer.WriteStringValue(UsageStartsOn.Value, "O");
             }
-            if (Optional.IsDefined(UsageEndOn))
+            if (Optional.IsDefined(UsageEndsOn))
             {
                 writer.WritePropertyName("usageEndTime"u8);
-                writer.WriteStringValue(UsageEndOn.Value, "O");
+                writer.WriteStringValue(UsageEndsOn.Value, "O");
             }
             if (Optional.IsDefined(Quantity))
             {
@@ -185,8 +185,8 @@ namespace Azure.ResourceManager.Commerce.Models
             }
             Guid? subscriptionId = default;
             string meterId = default;
-            DateTimeOffset? usageStartOn = default;
-            DateTimeOffset? usageEndOn = default;
+            DateTimeOffset? usageStartsOn = default;
+            DateTimeOffset? usageEndsOn = default;
             float? quantity = default;
             string unit = default;
             string meterName = default;
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Commerce.Models
                     {
                         continue;
                     }
-                    usageStartOn = prop.Value.GetDateTimeOffset("O");
+                    usageStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("usageEndTime"u8))
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Commerce.Models
                     {
                         continue;
                     }
-                    usageEndOn = prop.Value.GetDateTimeOffset("O");
+                    usageEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("quantity"u8))
@@ -286,8 +286,8 @@ namespace Azure.ResourceManager.Commerce.Models
             return new UsageSample(
                 subscriptionId,
                 meterId,
-                usageStartOn,
-                usageEndOn,
+                usageStartsOn,
+                usageEndsOn,
                 quantity,
                 unit,
                 meterName,

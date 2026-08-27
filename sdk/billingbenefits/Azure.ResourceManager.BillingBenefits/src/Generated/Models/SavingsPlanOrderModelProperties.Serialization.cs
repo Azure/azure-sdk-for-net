@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WritePropertyName("expiryDateTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(BenefitStartOn))
+            if (Optional.IsDefined(BenefitStartsOn))
             {
                 writer.WritePropertyName("benefitStartTime"u8);
-                writer.WriteStringValue(BenefitStartOn.Value, "O");
+                writer.WriteStringValue(BenefitStartsOn.Value, "O");
             }
             if (Optional.IsDefined(PlanInformation))
             {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             BillingBenefitsTerm? term = default;
             BillingBenefitsBillingPlan? billingPlan = default;
             DateTimeOffset? expireOn = default;
-            DateTimeOffset? benefitStartOn = default;
+            DateTimeOffset? benefitStartsOn = default;
             BillingPlanInformation planInformation = default;
             IList<string> savingsPlans = default;
             BillingBenefitsExtendedStatusInfo extendedStatusInfo = default;
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    benefitStartOn = prop.Value.GetDateTimeOffset("O");
+                    benefitStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("planInformation"u8))
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 term,
                 billingPlan,
                 expireOn,
-                benefitStartOn,
+                benefitStartsOn,
                 planInformation,
                 savingsPlans ?? new ChangeTrackingList<string>(),
                 extendedStatusInfo,
