@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingAccountEnrollmentDetails"/>. </summary>
-        /// <param name="startOn"> The start date of the enrollment. </param>
-        /// <param name="endOn"> The end date of the enrollment. </param>
+        /// <param name="startsOn"> The start date of the enrollment. </param>
+        /// <param name="endsOn"> The end date of the enrollment. </param>
         /// <param name="currency"> The billing currency for the enrollment. </param>
         /// <param name="channel"> The channel type of the enrollment. </param>
         /// <param name="language"> The language for the enrollment. </param>
@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="indirectRelationshipInfo"> The properties of an enrollment which are applicable only for indirect enrollments. </param>
         /// <param name="invoiceRecipient"> The contact who receives invoices of the enrollment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingAccountEnrollmentDetails(DateTimeOffset? startOn, DateTimeOffset? endOn, string currency, string channel, string language, string countryCode, string billingCycle, ExtendedTermOption? extendedTermOption, BillingEnrollmentSupportLevel? supportLevel, string supportCoverage, string cloud, string poNumber, EnrollmentMarkupStatus? markupStatus, IndirectRelationshipInfo indirectRelationshipInfo, string invoiceRecipient, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingAccountEnrollmentDetails(DateTimeOffset? startsOn, DateTimeOffset? endsOn, string currency, string channel, string language, string countryCode, string billingCycle, ExtendedTermOption? extendedTermOption, BillingEnrollmentSupportLevel? supportLevel, string supportCoverage, string cloud, string poNumber, EnrollmentMarkupStatus? markupStatus, IndirectRelationshipInfo indirectRelationshipInfo, string invoiceRecipient, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Currency = currency;
             Channel = channel;
             Language = language;
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The start date of the enrollment. </summary>
         [WirePath("startDate")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> The end date of the enrollment. </summary>
         [WirePath("endDate")]
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> The billing currency for the enrollment. </summary>
         [WirePath("currency")]

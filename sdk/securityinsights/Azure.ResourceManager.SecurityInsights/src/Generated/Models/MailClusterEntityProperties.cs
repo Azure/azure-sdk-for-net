@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="source"> The source of the mail cluster (default is 'O365 ATP'). </param>
         /// <param name="clusterSourceIdentifier"> The id of the cluster source. </param>
         /// <param name="clusterSourceType"> The type of the cluster source. </param>
-        /// <param name="clusterQueryStartOn"> The cluster query start time. </param>
-        /// <param name="clusterQueryEndOn"> The cluster query end time. </param>
+        /// <param name="clusterQueryStartsOn"> The cluster query start time. </param>
+        /// <param name="clusterQueryEndsOn"> The cluster query end time. </param>
         /// <param name="clusterGroup"> The cluster group. </param>
-        internal MailClusterEntityProperties(IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<string> networkMessageIds, BinaryData countByDeliveryStatus, BinaryData countByThreatType, BinaryData countByProtectionStatus, IReadOnlyList<string> threats, string query, DateTimeOffset? queryOn, int? mailCount, bool? isVolumeAnomaly, string source, string clusterSourceIdentifier, string clusterSourceType, DateTimeOffset? clusterQueryStartOn, DateTimeOffset? clusterQueryEndOn, string clusterGroup) : base(additionalData, friendlyName, additionalBinaryDataProperties)
+        internal MailClusterEntityProperties(IReadOnlyDictionary<string, BinaryData> additionalData, string friendlyName, IDictionary<string, BinaryData> additionalBinaryDataProperties, IReadOnlyList<string> networkMessageIds, BinaryData countByDeliveryStatus, BinaryData countByThreatType, BinaryData countByProtectionStatus, IReadOnlyList<string> threats, string query, DateTimeOffset? queryOn, int? mailCount, bool? isVolumeAnomaly, string source, string clusterSourceIdentifier, string clusterSourceType, DateTimeOffset? clusterQueryStartsOn, DateTimeOffset? clusterQueryEndsOn, string clusterGroup) : base(additionalData, friendlyName, additionalBinaryDataProperties)
         {
             NetworkMessageIds = networkMessageIds;
             CountByDeliveryStatus = countByDeliveryStatus;
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             Source = source;
             ClusterSourceIdentifier = clusterSourceIdentifier;
             ClusterSourceType = clusterSourceType;
-            ClusterQueryStartOn = clusterQueryStartOn;
-            ClusterQueryEndOn = clusterQueryEndOn;
+            ClusterQueryStartsOn = clusterQueryStartsOn;
+            ClusterQueryEndsOn = clusterQueryEndsOn;
             ClusterGroup = clusterGroup;
         }
 
@@ -185,11 +185,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The cluster query start time. </summary>
         [WirePath("clusterQueryStartTime")]
-        public DateTimeOffset? ClusterQueryStartOn { get; }
+        public DateTimeOffset? ClusterQueryStartsOn { get; }
 
         /// <summary> The cluster query end time. </summary>
         [WirePath("clusterQueryEndTime")]
-        public DateTimeOffset? ClusterQueryEndOn { get; }
+        public DateTimeOffset? ClusterQueryEndsOn { get; }
 
         /// <summary> The cluster group. </summary>
         [WirePath("clusterGroup")]

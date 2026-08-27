@@ -77,20 +77,20 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> The start time of the job. </summary>
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
         /// <summary> The end time of the job. </summary>
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
         }
 

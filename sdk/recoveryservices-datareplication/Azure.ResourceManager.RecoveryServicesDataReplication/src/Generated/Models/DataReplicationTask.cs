@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Initializes a new instance of <see cref="DataReplicationTask"/>. </summary>
         /// <param name="taskName"> Gets or sets the task name. </param>
         /// <param name="state"> Gets or sets the task state. </param>
-        /// <param name="startOn"> Gets or sets the start time. </param>
-        /// <param name="endOn"> Gets or sets the end time. </param>
+        /// <param name="startsOn"> Gets or sets the start time. </param>
+        /// <param name="endsOn"> Gets or sets the end time. </param>
         /// <param name="customProperties"> Task model custom properties. </param>
         /// <param name="childrenJobs"> Gets or sets the list of children job models. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationTask(string taskName, DataReplicationTaskState? state, DateTimeOffset? startOn, DateTimeOffset? endOn, DataReplicationTaskCustomProperties customProperties, IReadOnlyList<DataReplicationJobData> childrenJobs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataReplicationTask(string taskName, DataReplicationTaskState? state, DateTimeOffset? startsOn, DateTimeOffset? endsOn, DataReplicationTaskCustomProperties customProperties, IReadOnlyList<DataReplicationJobData> childrenJobs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TaskName = taskName;
             State = state;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             CustomProperties = customProperties;
             ChildrenJobs = childrenJobs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public DataReplicationTaskState? State { get; }
 
         /// <summary> Gets or sets the start time. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> Gets or sets the end time. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Task model custom properties. </summary>
         internal DataReplicationTaskCustomProperties CustomProperties { get; }

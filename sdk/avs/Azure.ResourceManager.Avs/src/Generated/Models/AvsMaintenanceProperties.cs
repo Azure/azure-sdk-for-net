@@ -31,13 +31,13 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="impact"> Impact on the resource during maintenance period. </param>
         /// <param name="isScheduledByMicrosoft"> If maintenance is scheduled by Microsoft. </param>
         /// <param name="state"> The state of the maintenance. </param>
-        /// <param name="scheduledStartOn"> Scheduled maintenance start time. </param>
+        /// <param name="scheduledStartsOn"> Scheduled maintenance start time. </param>
         /// <param name="estimatedDurationInMinutes"> Estimated time maintenance will take in minutes. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <param name="operations"> Operations on  maintenance. </param>
         /// <param name="maintenanceReadiness"> Indicates whether the maintenance is ready to proceed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvsMaintenanceProperties(AvsMaintenanceType? component, string displayName, int? clusterId, string infoLink, string impact, bool? isScheduledByMicrosoft, AvsMaintenanceState state, DateTimeOffset? scheduledStartOn, long? estimatedDurationInMinutes, AvsMaintenanceProvisioningState? provisioningState, IReadOnlyList<AvsMaintenanceManagementOperation> operations, AvsMaintenanceReadiness maintenanceReadiness, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvsMaintenanceProperties(AvsMaintenanceType? component, string displayName, int? clusterId, string infoLink, string impact, bool? isScheduledByMicrosoft, AvsMaintenanceState state, DateTimeOffset? scheduledStartsOn, long? estimatedDurationInMinutes, AvsMaintenanceProvisioningState? provisioningState, IReadOnlyList<AvsMaintenanceManagementOperation> operations, AvsMaintenanceReadiness maintenanceReadiness, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Component = component;
             DisplayName = displayName;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Avs.Models
             Impact = impact;
             IsScheduledByMicrosoft = isScheduledByMicrosoft;
             State = state;
-            ScheduledStartOn = scheduledStartOn;
+            ScheduledStartsOn = scheduledStartsOn;
             EstimatedDurationInMinutes = estimatedDurationInMinutes;
             ProvisioningState = provisioningState;
             Operations = operations;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Avs.Models
         public AvsMaintenanceState State { get; }
 
         /// <summary> Scheduled maintenance start time. </summary>
-        public DateTimeOffset? ScheduledStartOn { get; }
+        public DateTimeOffset? ScheduledStartsOn { get; }
 
         /// <summary> Estimated time maintenance will take in minutes. </summary>
         public long? EstimatedDurationInMinutes { get; }

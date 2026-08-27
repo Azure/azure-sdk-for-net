@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("hierarchyIdentifier"u8);
                 writer.WriteStringValue(HierarchyIdentifier);
             }
-            if (options.Format != "W" && Optional.IsDefined(HierarchyIdentifierTrialEndOn))
+            if (options.Format != "W" && Optional.IsDefined(HierarchyIdentifierTrialEndsOn))
             {
                 writer.WritePropertyName("hierarchyIdentifierTrialEndDate"u8);
-                writer.WriteStringValue(HierarchyIdentifierTrialEndOn.Value, "O");
+                writer.WriteStringValue(HierarchyIdentifierTrialEndsOn.Value, "O");
             }
             if (Optional.IsDefined(EnvironmentName))
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             string hierarchyIdentifier = default;
-            DateTimeOffset? hierarchyIdentifierTrialEndOn = default;
+            DateTimeOffset? hierarchyIdentifierTrialEndsOn = default;
             SecurityCenterCloudName? environmentName = default;
             IList<SecurityCenterCloudOffering> offerings = default;
             SecurityConnectorEnvironment environmentData = default;
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    hierarchyIdentifierTrialEndOn = prop.Value.GetDateTimeOffset("O");
+                    hierarchyIdentifierTrialEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("environmentName"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             return new SecurityConnectorProperties(
                 hierarchyIdentifier,
-                hierarchyIdentifierTrialEndOn,
+                hierarchyIdentifierTrialEndsOn,
                 environmentName,
                 offerings ?? new ChangeTrackingList<SecurityCenterCloudOffering>(),
                 environmentData,

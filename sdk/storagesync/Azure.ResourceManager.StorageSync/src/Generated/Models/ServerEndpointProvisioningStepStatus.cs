@@ -26,21 +26,21 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <summary> Initializes a new instance of <see cref="ServerEndpointProvisioningStepStatus"/>. </summary>
         /// <param name="name"> Name of the provisioning step. </param>
         /// <param name="status"> Status of the provisioning step. </param>
-        /// <param name="startOn"> Start time of the provisioning step. </param>
+        /// <param name="startsOn"> Start time of the provisioning step. </param>
         /// <param name="minutesLeft"> Estimated completion time of the provisioning step in minutes. </param>
         /// <param name="progressPercentage"> Estimated progress percentage. </param>
-        /// <param name="endOn"> End time of the provisioning step. </param>
+        /// <param name="endsOn"> End time of the provisioning step. </param>
         /// <param name="errorCode"> Error code (HResult) for the provisioning step. </param>
         /// <param name="additionalInformation"> Additional information for the provisioning step. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServerEndpointProvisioningStepStatus(string name, string status, DateTimeOffset? startOn, int? minutesLeft, int? progressPercentage, DateTimeOffset? endOn, int? errorCode, IReadOnlyDictionary<string, string> additionalInformation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServerEndpointProvisioningStepStatus(string name, string status, DateTimeOffset? startsOn, int? minutesLeft, int? progressPercentage, DateTimeOffset? endsOn, int? errorCode, IReadOnlyDictionary<string, string> additionalInformation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Status = status;
-            StartOn = startOn;
+            StartsOn = startsOn;
             MinutesLeft = minutesLeft;
             ProgressPercentage = progressPercentage;
-            EndOn = endOn;
+            EndsOn = endsOn;
             ErrorCode = errorCode;
             AdditionalInformation = additionalInformation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         public string Status { get; }
 
         /// <summary> Start time of the provisioning step. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> Estimated completion time of the provisioning step in minutes. </summary>
         public int? MinutesLeft { get; }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.StorageSync.Models
         public int? ProgressPercentage { get; }
 
         /// <summary> End time of the provisioning step. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Error code (HResult) for the provisioning step. </summary>
         public int? ErrorCode { get; }

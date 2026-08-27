@@ -108,20 +108,20 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The UTC time of the first event or activity included in the alert in ISO8601 format. </summary>
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
         /// <summary> The UTC time of the last event or activity included in the alert in ISO8601 format. </summary>
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
         }
 
@@ -210,11 +210,11 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The UTC processing end time of the alert in ISO8601 format. </summary>
-        public DateTimeOffset? ProcessingEndOn
+        public DateTimeOffset? ProcessingEndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.ProcessingEndOn;
+                return Properties is null ? default : Properties.ProcessingEndsOn;
             }
         }
 

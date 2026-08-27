@@ -60,20 +60,20 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> The billing period start date. </summary>
-        public DateTimeOffset? BillingPeriodStartOn
+        public DateTimeOffset? BillingPeriodStartsOn
         {
             get
             {
-                return Properties.BillingPeriodStartOn;
+                return Properties.BillingPeriodStartsOn;
             }
         }
 
         /// <summary> The billing period end date. </summary>
-        public DateTimeOffset? BillingPeriodEndOn
+        public DateTimeOffset? BillingPeriodEndsOn
         {
             get
             {
-                return Properties.BillingPeriodEndOn;
+                return Properties.BillingPeriodEndsOn;
             }
         }
 

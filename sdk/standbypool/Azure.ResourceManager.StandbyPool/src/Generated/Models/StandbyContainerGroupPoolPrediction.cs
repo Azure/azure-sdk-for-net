@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.StandbyPool.Models
 
         /// <summary> Initializes a new instance of <see cref="StandbyContainerGroupPoolPrediction"/>. </summary>
         /// <param name="forecastValues"> Displays the forecast information of the standby pool. </param>
-        /// <param name="forecastStartOn"> Displays the UTC timestamp of when the prediction was retrieved for the standby pool. </param>
+        /// <param name="forecastStartsOn"> Displays the UTC timestamp of when the prediction was retrieved for the standby pool. </param>
         /// <param name="forecastInfo"> Displays additional information for the prediction of the standby pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StandbyContainerGroupPoolPrediction(StandbyContainerGroupPoolForecastValues forecastValues, DateTimeOffset forecastStartOn, string forecastInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StandbyContainerGroupPoolPrediction(StandbyContainerGroupPoolForecastValues forecastValues, DateTimeOffset forecastStartsOn, string forecastInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ForecastValues = forecastValues;
-            ForecastStartOn = forecastStartOn;
+            ForecastStartsOn = forecastStartsOn;
             ForecastInfo = forecastInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.StandbyPool.Models
         internal StandbyContainerGroupPoolForecastValues ForecastValues { get; }
 
         /// <summary> Displays the UTC timestamp of when the prediction was retrieved for the standby pool. </summary>
-        public DateTimeOffset ForecastStartOn { get; }
+        public DateTimeOffset ForecastStartsOn { get; }
 
         /// <summary> Displays additional information for the prediction of the standby pool. </summary>
         public string ForecastInfo { get; }

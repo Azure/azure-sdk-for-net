@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="SpendingLimitDetails"/>. </summary>
         /// <param name="amount"> The initial amount for the billing profile. </param>
         /// <param name="currency"> The currency in which the charges for the billing profile are billed. </param>
-        /// <param name="startOn"> The date when this spending limit goes into effect. </param>
-        /// <param name="endOn"> The date when this spending limit is no longer in effect. </param>
+        /// <param name="startsOn"> The date when this spending limit goes into effect. </param>
+        /// <param name="endsOn"> The date when this spending limit is no longer in effect. </param>
         /// <param name="limitType"> The type of spending limit. </param>
         /// <param name="status"> The status of current spending limit. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SpendingLimitDetails(float? amount, string currency, DateTimeOffset? startOn, DateTimeOffset? endOn, SpendingLimitType? limitType, SpendingLimitStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SpendingLimitDetails(float? amount, string currency, DateTimeOffset? startsOn, DateTimeOffset? endsOn, SpendingLimitType? limitType, SpendingLimitStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Amount = amount;
             Currency = currency;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             LimitType = limitType;
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The date when this spending limit goes into effect. </summary>
         [WirePath("startDate")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The date when this spending limit is no longer in effect. </summary>
         [WirePath("endDate")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> The type of spending limit. </summary>
         [WirePath("type")]

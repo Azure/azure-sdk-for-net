@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="resyncTotalTransferredBytes"> The resync total transferred bytes. </param>
         /// <param name="resyncLast15MinutesTransferredBytes"> The resync last 15 minutes transferred bytes. </param>
         /// <param name="resyncLastDataTransferTimeUTC"> The last data transfer time in UTC. </param>
-        /// <param name="resyncStartOn"> The resync start time. </param>
+        /// <param name="resyncStartsOn"> The resync start time. </param>
         /// <param name="progressHealth"> The Progress Health. </param>
         /// <param name="progressStatus"> The Progress Status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InMageProtectedDiskDetails(string diskId, string diskName, string protectionStage, string healthErrorCode, long? rpoInSeconds, string resyncRequired, int? resyncProgressPercentage, long? resyncDurationInSeconds, long? diskCapacityInBytes, long? fileSystemCapacityInBytes, double? sourceDataInMB, double? psDataInMB, double? targetDataInMB, string diskResized, DateTimeOffset? lastRpoCalculatedOn, long? resyncProcessedBytes, long? resyncTotalTransferredBytes, long? resyncLast15MinutesTransferredBytes, DateTimeOffset? resyncLastDataTransferTimeUTC, DateTimeOffset? resyncStartOn, string progressHealth, string progressStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InMageProtectedDiskDetails(string diskId, string diskName, string protectionStage, string healthErrorCode, long? rpoInSeconds, string resyncRequired, int? resyncProgressPercentage, long? resyncDurationInSeconds, long? diskCapacityInBytes, long? fileSystemCapacityInBytes, double? sourceDataInMB, double? psDataInMB, double? targetDataInMB, string diskResized, DateTimeOffset? lastRpoCalculatedOn, long? resyncProcessedBytes, long? resyncTotalTransferredBytes, long? resyncLast15MinutesTransferredBytes, DateTimeOffset? resyncLastDataTransferTimeUTC, DateTimeOffset? resyncStartsOn, string progressHealth, string progressStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DiskId = diskId;
             DiskName = diskName;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResyncTotalTransferredBytes = resyncTotalTransferredBytes;
             ResyncLast15MinutesTransferredBytes = resyncLast15MinutesTransferredBytes;
             ResyncLastDataTransferTimeUTC = resyncLastDataTransferTimeUTC;
-            ResyncStartOn = resyncStartOn;
+            ResyncStartsOn = resyncStartsOn;
             ProgressHealth = progressHealth;
             ProgressStatus = progressStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public DateTimeOffset? ResyncLastDataTransferTimeUTC { get; }
 
         /// <summary> The resync start time. </summary>
-        public DateTimeOffset? ResyncStartOn { get; }
+        public DateTimeOffset? ResyncStartsOn { get; }
 
         /// <summary> The Progress Health. </summary>
         public string ProgressHealth { get; }

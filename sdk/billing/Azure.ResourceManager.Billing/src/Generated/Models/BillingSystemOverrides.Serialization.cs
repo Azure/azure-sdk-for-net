@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("cancellation"u8);
                 writer.WriteStringValue(Cancellation.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(CancellationAllowedEndOn))
+            if (options.Format != "W" && Optional.IsDefined(CancellationAllowedEndsOn))
             {
                 writer.WritePropertyName("cancellationAllowedEndDate"u8);
-                writer.WriteStringValue(CancellationAllowedEndOn.Value, "O");
+                writer.WriteStringValue(CancellationAllowedEndsOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Billing.Models
                 return null;
             }
             PolicyOverrideCancellation? cancellation = default;
-            DateTimeOffset? cancellationAllowedEndOn = default;
+            DateTimeOffset? cancellationAllowedEndsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    cancellationAllowedEndOn = prop.Value.GetDateTimeOffset("O");
+                    cancellationAllowedEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Billing.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BillingSystemOverrides(cancellation, cancellationAllowedEndOn, additionalBinaryDataProperties);
+            return new BillingSystemOverrides(cancellation, cancellationAllowedEndsOn, additionalBinaryDataProperties);
         }
     }
 }

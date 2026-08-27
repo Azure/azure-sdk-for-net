@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedIntegrationRuntimeOperationResult"/>. </summary>
         /// <param name="managedIntegrationRuntimeOperationResultType"> The operation type. Could be start or stop. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="startsOn"> The start time of the operation. </param>
         /// <param name="result"> The operation result. </param>
         /// <param name="errorCode"> The error code. </param>
         /// <param name="parameters"> Managed integration runtime error parameters. </param>
         /// <param name="activityId"> The activity id for the operation request. </param>
         /// <param name="additionalProperties"></param>
-        internal ManagedIntegrationRuntimeOperationResult(string managedIntegrationRuntimeOperationResultType, DateTimeOffset? startOn, string result, string errorCode, IReadOnlyList<string> parameters, string activityId, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal ManagedIntegrationRuntimeOperationResult(string managedIntegrationRuntimeOperationResultType, DateTimeOffset? startsOn, string result, string errorCode, IReadOnlyList<string> parameters, string activityId, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             ManagedIntegrationRuntimeOperationResultType = managedIntegrationRuntimeOperationResultType;
-            StartOn = startOn;
+            StartsOn = startsOn;
             Result = result;
             ErrorCode = errorCode;
             Parameters = parameters;
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public string ManagedIntegrationRuntimeOperationResultType { get; }
 
         /// <summary> The start time of the operation. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The operation result. </summary>
         public string Result { get; }

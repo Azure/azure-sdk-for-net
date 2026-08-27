@@ -160,25 +160,25 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(NextNotificationOn))
             {
                 writer.WritePropertyName("nextNotificationTime"u8);
                 writer.WriteStringValue(NextNotificationOn.Value, "O");
             }
-            if (Optional.IsDefined(NotificationExpirationOn))
+            if (Optional.IsDefined(NotificationExpiresOn))
             {
                 writer.WritePropertyName("notificationExpirationTime"u8);
-                writer.WriteStringValue(NotificationExpirationOn.Value, "O");
+                writer.WriteStringValue(NotificationExpiresOn.Value, "O");
             }
             if (Optional.IsDefined(NotifiedOn))
             {
@@ -265,10 +265,10 @@ namespace Azure.ResourceManager.AppService.Models
             string actionName = default;
             int? enabled = default;
             IList<string> states = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             DateTimeOffset? nextNotificationOn = default;
-            DateTimeOffset? notificationExpirationOn = default;
+            DateTimeOffset? notificationExpiresOn = default;
             DateTimeOffset? notifiedOn = default;
             double? score = default;
             bool? isDynamic = default;
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("nextNotificationTime"u8))
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    notificationExpirationOn = prop.Value.GetDateTimeOffset("O");
+                    notificationExpiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("notifiedTime"u8))
@@ -500,10 +500,10 @@ namespace Azure.ResourceManager.AppService.Models
                 actionName,
                 enabled,
                 states ?? new ChangeTrackingList<string>(),
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 nextNotificationOn,
-                notificationExpirationOn,
+                notificationExpiresOn,
                 notifiedOn,
                 score,
                 isDynamic,

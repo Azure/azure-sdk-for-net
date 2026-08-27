@@ -118,15 +118,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("scheduledTime"u8);
                 writer.WriteStringValue(ScheduledOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(TrackingId))
             {
@@ -220,8 +220,8 @@ namespace Azure.ResourceManager.AppService.Models
             BinaryData outputs = default;
             WebAppContentLink outputsLink = default;
             DateTimeOffset? scheduledOn = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             string trackingId = default;
             Correlation correlation = default;
             string code = default;
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("trackingId"u8))
@@ -357,8 +357,8 @@ namespace Azure.ResourceManager.AppService.Models
                 outputs,
                 outputsLink,
                 scheduledOn,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 trackingId,
                 correlation,
                 code,

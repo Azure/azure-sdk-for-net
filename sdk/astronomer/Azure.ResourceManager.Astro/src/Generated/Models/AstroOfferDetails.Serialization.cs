@@ -105,10 +105,10 @@ namespace Azure.ResourceManager.Astro.Models
                 writer.WritePropertyName("renewalMode"u8);
                 writer.WriteStringValue(RenewalMode.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endDate"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Astro.Models
             string termUnit = default;
             string termId = default;
             AstroRenewalMode? renewalMode = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? endsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Astro.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Astro.Models
                 termUnit,
                 termId,
                 renewalMode,
-                endOn,
+                endsOn,
                 additionalBinaryDataProperties);
         }
     }

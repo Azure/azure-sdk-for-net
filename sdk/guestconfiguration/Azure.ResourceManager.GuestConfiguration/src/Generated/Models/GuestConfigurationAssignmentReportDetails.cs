@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationAssignmentReportDetails"/>. </summary>
         /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
-        /// <param name="startOn"> Start date and time of the guest configuration assignment compliance status check. </param>
-        /// <param name="endOn"> End date and time of the guest configuration assignment compliance status check. </param>
+        /// <param name="startsOn"> Start date and time of the guest configuration assignment compliance status check. </param>
+        /// <param name="endsOn"> End date and time of the guest configuration assignment compliance status check. </param>
         /// <param name="jobId"> GUID of the report. </param>
         /// <param name="operationType"> Type of report, Consistency or Initial. </param>
         /// <param name="resources"> The list of resources for which guest configuration assignment compliance is checked. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GuestConfigurationAssignmentReportDetails(AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, DateTimeOffset? startOn, DateTimeOffset? endOn, Guid? jobId, GuestConfigurationAssignmentReportType? operationType, IReadOnlyList<AssignmentReportResourceInfo> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GuestConfigurationAssignmentReportDetails(AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, DateTimeOffset? startsOn, DateTimeOffset? endsOn, Guid? jobId, GuestConfigurationAssignmentReportType? operationType, IReadOnlyList<AssignmentReportResourceInfo> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ComplianceStatus = complianceStatus;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             JobId = jobId;
             OperationType = operationType;
             Resources = resources;
@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> Start date and time of the guest configuration assignment compliance status check. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> End date and time of the guest configuration assignment compliance status check. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> GUID of the report. </summary>
         [WirePath("jobId")]

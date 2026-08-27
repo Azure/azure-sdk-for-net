@@ -113,9 +113,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             writer.WritePropertyName("grain"u8);
             writer.WriteStringValue(Grain.ToString());
             writer.WritePropertyName("startDate"u8);
-            writer.WriteStringValue(StartOn, "O");
+            writer.WriteStringValue(StartsOn, "O");
             writer.WritePropertyName("endDate"u8);
-            writer.WriteStringValue(EndOn, "O");
+            writer.WriteStringValue(EndsOn, "O");
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
@@ -168,8 +168,6 @@ namespace Azure.ResourceManager.CostManagement.Models
             string benefitOrderId = default;
             string benefitId = default;
             BenefitRecommendationUsageGrain grain = default;
-            DateTimeOffset startOn = default;
-            DateTimeOffset endOn = default;
             BillingAccountBenefitKind? kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -229,8 +227,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                 benefitOrderId,
                 benefitId,
                 grain,
-                startOn,
-                endOn,
+                default,
+                default,
                 kind,
                 additionalBinaryDataProperties);
         }

@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             EdgeOrderStageStatus? stageStatus = default;
             EdgeOrderStageName? stageName = default;
             string displayName = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EdgeOrderStageDetails(stageStatus, stageName, displayName, startOn, additionalBinaryDataProperties);
+            return new EdgeOrderStageDetails(stageStatus, stageName, displayName, startsOn, additionalBinaryDataProperties);
         }
     }
 }

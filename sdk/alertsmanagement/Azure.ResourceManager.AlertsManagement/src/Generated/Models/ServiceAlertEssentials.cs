@@ -35,14 +35,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="sourceCreatedId"> Unique Id created by monitor service for each alert instance. This could be used to track the issue at the monitor service, in case of Nagios, Zabbix, SCOM etc. </param>
         /// <param name="smartGroupId"> Unique Id of the smart group. </param>
         /// <param name="smartGroupingReason"> Verbose reason describing the reason why this alert instance is added to a smart group. </param>
-        /// <param name="startOn"> Creation time(ISO-8601 format) of alert instance. </param>
+        /// <param name="startsOn"> Creation time(ISO-8601 format) of alert instance. </param>
         /// <param name="lastModifiedOn"> Last modification time(ISO-8601 format) of alert instance. </param>
         /// <param name="monitorConditionResolvedOn"> Resolved time(ISO-8601 format) of alert instance. This will be updated when monitor service resolves the alert instance because the rule condition is no longer met. </param>
         /// <param name="lastModifiedBy"> User who last modified the alert, in case of monitor service updates user would be 'system', otherwise name of the user. </param>
         /// <param name="actionStatus"> Action status. </param>
         /// <param name="description"> Alert description. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceAlertEssentials(ServiceAlertSeverity? severity, ServiceAlertSignalType? signalType, ServiceAlertState? alertState, MonitorCondition? monitorCondition, string targetResource, string targetResourceName, string targetResourceGroup, string targetResourceType, MonitorServiceSourceForAlert? monitorService, string alertRule, string sourceCreatedId, Guid? smartGroupId, string smartGroupingReason, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, DateTimeOffset? monitorConditionResolvedOn, string lastModifiedBy, ServiceAlertActionStatus actionStatus, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceAlertEssentials(ServiceAlertSeverity? severity, ServiceAlertSignalType? signalType, ServiceAlertState? alertState, MonitorCondition? monitorCondition, string targetResource, string targetResourceName, string targetResourceGroup, string targetResourceType, MonitorServiceSourceForAlert? monitorService, string alertRule, string sourceCreatedId, Guid? smartGroupId, string smartGroupingReason, DateTimeOffset? startsOn, DateTimeOffset? lastModifiedOn, DateTimeOffset? monitorConditionResolvedOn, string lastModifiedBy, ServiceAlertActionStatus actionStatus, string description, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Severity = severity;
             SignalType = signalType;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             SourceCreatedId = sourceCreatedId;
             SmartGroupId = smartGroupId;
             SmartGroupingReason = smartGroupingReason;
-            StartOn = startOn;
+            StartsOn = startsOn;
             LastModifiedOn = lastModifiedOn;
             MonitorConditionResolvedOn = monitorConditionResolvedOn;
             LastModifiedBy = lastModifiedBy;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         public string SmartGroupingReason { get; }
 
         /// <summary> Creation time(ISO-8601 format) of alert instance. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> Last modification time(ISO-8601 format) of alert instance. </summary>
         public DateTimeOffset? LastModifiedOn { get; }

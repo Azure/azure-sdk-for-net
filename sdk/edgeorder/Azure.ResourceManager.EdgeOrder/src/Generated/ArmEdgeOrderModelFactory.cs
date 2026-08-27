@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default);
         }
 
+        /// <summary> Address Properties. </summary>
         /// <param name="addressClassification"> Type of address based on its usage context. </param>
         /// <param name="shippingAddress"> Shipping details for the address. </param>
         /// <param name="contactDetails"> Contact details for the address. </param>
@@ -71,6 +72,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default);
         }
 
+        /// <summary> Shipping address where customer wishes to receive the device. </summary>
         /// <param name="streetAddress1"> Street Address line 1. </param>
         /// <param name="streetAddress2"> Street Address line 2. </param>
         /// <param name="streetAddress3"> Street Address line 3. </param>
@@ -98,6 +100,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default);
         }
 
+        /// <summary> Contact Details. </summary>
         /// <param name="contactName"> Contact name of the person. </param>
         /// <param name="phone"> Phone number of the contact person. </param>
         /// <param name="phoneExtension"> Phone extension number of the contact person. </param>
@@ -209,6 +212,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default);
         }
 
+        /// <summary> Represents product details. </summary>
         /// <param name="displayInfo"> Display details of the product. </param>
         /// <param name="hierarchyInformation"> Hierarchy of the product which uniquely identifies the product. </param>
         /// <param name="productDoubleEncryptionStatus"> Double encryption status of the configuration. Read-only field. </param>
@@ -239,6 +243,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default);
         }
 
+        /// <summary> Describes product display information. </summary>
         /// <param name="productFamilyDisplayName"> Product family display name. </param>
         /// <param name="configurationDisplayName"> Configuration display name. </param>
         /// <returns> A new <see cref="Models.ProductDisplayInfo"/> instance for mocking. </returns>
@@ -247,6 +252,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ProductDisplayInfo(productFamilyDisplayName, configurationDisplayName, default);
         }
 
+        /// <summary> Holds details about product hierarchy information. </summary>
         /// <param name="productFamilyName"> Represents product family name that uniquely identifies product family. </param>
         /// <param name="productLineName"> Represents product line name that uniquely identifies product line. </param>
         /// <param name="productName"> Represents product name that uniquely identifies product. </param>
@@ -264,6 +270,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default);
         }
 
+        /// <summary> Device details. </summary>
         /// <param name="serialNumber"> Device serial number. </param>
         /// <param name="displaySerialNumber"> Device serial number to be displayed. </param>
         /// <param name="managementResourceId"> Management Resource Id. </param>
@@ -283,6 +290,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default);
         }
 
+        /// <summary> Details Related To Provision Resource. </summary>
         /// <param name="quantity"> Quantity of the devices. </param>
         /// <param name="provisioningArmId"> Provisioning Resource Arm ID. </param>
         /// <param name="provisioningEndPoint"> Provisioning End Point. </param>
@@ -310,6 +318,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default);
         }
 
+        /// <summary> Proof of possession details. </summary>
         /// <param name="status"> Proof of possession status. </param>
         /// <param name="message"> Insights on current status. </param>
         /// <returns> A new <see cref="Models.DevicePresenceVerificationDetails"/> instance for mocking. </returns>
@@ -318,6 +327,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new DevicePresenceVerificationDetails(status, message, default);
         }
 
+        /// <summary> Additional Configuration details. </summary>
         /// <param name="hierarchyInformation"> Hierarchy of the product which uniquely identifies the configuration. </param>
         /// <param name="quantity"> Quantity of the product. </param>
         /// <param name="provisioningDetails"> List Provisioning Details for Devices in Additional Config. </param>
@@ -329,6 +339,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderAdditionalConfiguration(hierarchyInformation, quantity, (provisioningDetails ?? new ChangeTrackingList<EdgeOrderProvisioningDetails>()).ToList(), default);
         }
 
+        /// <summary> Device details for configuration. </summary>
         /// <param name="displayInfo"> Display details of the product. </param>
         /// <param name="hierarchyInformation"> Hierarchy of the product which uniquely identifies the configuration. </param>
         /// <param name="quantity"> Quantity of the product. </param>
@@ -350,6 +361,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default);
         }
 
+        /// <summary> Term Commitment Information. </summary>
         /// <param name="termCommitmentType"> Term Commitment Type. </param>
         /// <param name="termCommitmentTypeDuration"> Term Commitment Duration. Currently Supporting P365D, P1095D. </param>
         /// <param name="pendingDaysForTerm"> Number of Days Pending for Term Commitment. </param>
@@ -366,7 +378,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <returns> A new <see cref="Models.EdgeOrderStageDetails"/> instance for mocking. </returns>
         public static EdgeOrderStageDetails EdgeOrderStageDetails(EdgeOrderStageStatus? stageStatus = default, EdgeOrderStageName? stageName = default, string displayName = default, DateTimeOffset? startOn = default)
         {
-            return new EdgeOrderStageDetails(stageStatus, stageName, displayName, startOn, default);
+            return new EdgeOrderStageDetails(stageStatus, stageName, displayName, default, default);
         }
 
         /// <param name="notificationPreferences"> Notification preferences. </param>
@@ -388,6 +400,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default);
         }
 
+        /// <summary> Notification preference for a job stage. </summary>
         /// <param name="stageName"> Name of the stage. </param>
         /// <param name="isNotificationRequired"> Notification is required or not. </param>
         /// <returns> A new <see cref="Models.NotificationPreference"/> instance for mocking. </returns>
@@ -396,6 +409,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new NotificationPreference(stageName, isNotificationRequired, default);
         }
 
+        /// <summary> Term Commitment preference received from customer. </summary>
         /// <param name="preferredTermCommitmentType"> Term Commitment Type. </param>
         /// <param name="preferredTermCommitmentDuration"> Customer preferred Term Duration. </param>
         /// <returns> A new <see cref="Models.EdgeOrderTermCommitmentPreferences"/> instance for mocking. </returns>
@@ -404,6 +418,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderTermCommitmentPreferences(preferredTermCommitmentType, preferredTermCommitmentDuration, default);
         }
 
+        /// <summary> Forward shipment details. </summary>
         /// <param name="carrierName"> Name of the carrier. </param>
         /// <param name="carrierDisplayName"> Carrier Name for display purpose. Not to be used for any processing. </param>
         /// <param name="trackingId"> TrackingId of the package. </param>
@@ -414,6 +429,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ForwardShippingDetails(carrierName, carrierDisplayName, trackingId, trackingUri, default);
         }
 
+        /// <summary> Reverse shipment details. </summary>
         /// <param name="sasKeyForLabel"> SAS key to download the reverse shipment label of the package. </param>
         /// <param name="carrierName"> Name of the carrier. </param>
         /// <param name="carrierDisplayName"> Carrier Name for display purpose. Not to be used for any processing. </param>
@@ -431,6 +447,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default);
         }
 
+        /// <summary> Management RP details. </summary>
         /// <param name="resourceProviderNamespace"> Resource provider namespace. </param>
         /// <returns> A new <see cref="Models.ResourceProviderDetails"/> instance for mocking. </returns>
         public static ResourceProviderDetails ResourceProviderDetails(string resourceProviderNamespace = default)
@@ -438,6 +455,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ResourceProviderDetails(resourceProviderNamespace, default);
         }
 
+        /// <summary> Address details for an order item. </summary>
         /// <param name="forwardAddress"> Customer address and contact details. </param>
         /// <param name="returnAddress"> Return shipping address. </param>
         /// <returns> A new <see cref="Models.EdgeOrderItemAddressDetails"/> instance for mocking. </returns>
@@ -446,6 +464,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderItemAddressDetails(forwardAddress, returnAddress, default);
         }
 
+        /// <summary> Msi identity details of the resource. </summary>
         /// <param name="type"> Identity type. </param>
         /// <param name="principalId"> Service Principal Id backing the Msi. </param>
         /// <param name="tenantId"> Home Tenant Id. </param>
@@ -480,6 +499,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderItemDetailsPatch(parentProvisioningDetails is null ? default : new ProductDetailsUpdateParameter(parentProvisioningDetails, default), siteId is null ? default : new SiteDetails(siteId.GetValueOrDefault(), default), default);
         }
 
+        /// <summary> Reason for cancellation. </summary>
         /// <param name="reason"> Reason for cancellation. </param>
         /// <returns> A new <see cref="Models.EdgeOrderItemCancellationReason"/> instance for mocking. </returns>
         public static EdgeOrderItemCancellationReason EdgeOrderItemCancellationReason(string reason = default)
@@ -487,6 +507,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderItemCancellationReason(reason, default);
         }
 
+        /// <summary> Return order item request body. </summary>
         /// <param name="returnAddress"> Customer return address. </param>
         /// <param name="returnReason"> Return Reason. </param>
         /// <param name="serviceTag"> Service tag (located on the bottom-right corner of the device). </param>
@@ -517,6 +538,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default);
         }
 
+        /// <summary> Configuration request object. </summary>
         /// <param name="configurationFilter"> Holds details about product hierarchy information and filterable property. </param>
         /// <param name="customerSubscriptionDetails"> Customer subscription properties. Clients can display available products to unregistered customers by explicitly passing subscription details. </param>
         /// <returns> A new <see cref="Models.ConfigurationsContent"/> instance for mocking. </returns>
@@ -525,6 +547,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ConfigurationsContent(configurationFilter, customerSubscriptionDetails, default);
         }
 
+        /// <summary> Configuration filters. </summary>
         /// <param name="hierarchyInformation"> Product hierarchy information. </param>
         /// <param name="filterableProperty"> Filters specific to product. </param>
         /// <param name="childConfigurationFilter"> Filter to fetch specific child configurations that exist in the configuration. This must be passed to either fetch a list of specific child configurations, or all child configurations of specific types of child configurations. </param>
@@ -536,6 +559,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ConfigurationFilters(hierarchyInformation, (filterableProperty ?? new ChangeTrackingList<FilterableProperty>()).ToList(), childConfigurationFilter, default);
         }
 
+        /// <summary> Different types of filters supported and its values. </summary>
         /// <param name="supportedFilterType"> Type of product filter. </param>
         /// <param name="supportedValues"> Values to be filtered. </param>
         /// <returns> A new <see cref="Models.FilterableProperty"/> instance for mocking. </returns>
@@ -546,6 +570,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new FilterableProperty(supportedFilterType, (supportedValues ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Child configuration filter. </summary>
         /// <param name="hierarchyInformations"> The list of child configuration hierarchy customer wants to filter for the given configuration. </param>
         /// <param name="childConfigurationTypes"> Filter to fetch all child configurations belonging to the given list of configuration types. </param>
         /// <returns> A new <see cref="Models.EdgeOrderChildConfigurationFilter"/> instance for mocking. </returns>
@@ -557,6 +582,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderChildConfigurationFilter((hierarchyInformations ?? new ChangeTrackingList<HierarchyInformation>()).ToList(), (childConfigurationTypes ?? new ChangeTrackingList<EdgeOrderChildConfigurationType>()).ToList(), default);
         }
 
+        /// <summary> Holds Customer subscription details. Clients can display available products to unregistered customers by explicitly passing subscription details. </summary>
         /// <param name="registeredFeatures"> List of registered feature flags for subscription. </param>
         /// <param name="locationPlacementId"> Location placement Id of a subscription. </param>
         /// <param name="quotaId"> Quota ID of a subscription. </param>
@@ -568,6 +594,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new CustomerSubscriptionDetails((registeredFeatures ?? new ChangeTrackingList<CustomerSubscriptionRegisteredFeatures>()).ToList(), locationPlacementId, quotaId, default);
         }
 
+        /// <summary> Represents subscription registered features. </summary>
         /// <param name="name"> Name of subscription registered feature. </param>
         /// <param name="state"> State of subscription registered feature. </param>
         /// <returns> A new <see cref="Models.CustomerSubscriptionRegisteredFeatures"/> instance for mocking. </returns>
@@ -611,6 +638,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 (supportedTermCommitmentDurations ?? new ChangeTrackingList<TimeSpan>()).ToList()), default);
         }
 
+        /// <summary> Specification of the configurations. </summary>
         /// <param name="name"> Name of the specification. </param>
         /// <param name="value"> Value of the specification. </param>
         /// <returns> A new <see cref="Models.ProductSpecification"/> instance for mocking. </returns>
@@ -619,6 +647,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ProductSpecification(name, value, default);
         }
 
+        /// <summary> Dimensions of a configuration. </summary>
         /// <param name="length"> Length of the device. </param>
         /// <param name="height"> Height of the device. </param>
         /// <param name="width"> Width of the device. </param>
@@ -640,6 +669,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default);
         }
 
+        /// <summary> Grouped child configuration object. </summary>
         /// <param name="categoryInformation"> Category information. </param>
         /// <param name="childConfigurations"> List of child configurations. </param>
         /// <returns> A new <see cref="Models.EdgeOrderGroupedChildConfigurations"/> instance for mocking. </returns>
@@ -650,6 +680,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderGroupedChildConfigurations(categoryInformation, (childConfigurations ?? new ChangeTrackingList<EdgeOrderChildConfiguration>()).ToList(), default);
         }
 
+        /// <summary> Category related properties of a child configuration. </summary>
         /// <param name="categoryName"> Category name of the child configuration. </param>
         /// <param name="categoryDisplayName"> Category display name of the child configuration. </param>
         /// <param name="description"> Description text for the category. </param>
@@ -662,6 +693,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderCategoryInformation(categoryName, categoryDisplayName, description, (links ?? new ChangeTrackingList<ProductLink>()).ToList(), default);
         }
 
+        /// <summary> Returns link related to the product. </summary>
         /// <param name="linkType"> Type of link. </param>
         /// <param name="linkUri"> Url of the link. </param>
         /// <returns> A new <see cref="Models.ProductLink"/> instance for mocking. </returns>
@@ -713,6 +745,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default), default);
         }
 
+        /// <summary> Description related properties of a product system. </summary>
         /// <param name="descriptionType"> Type of description. </param>
         /// <param name="shortDescription"> Short description of the product system. </param>
         /// <param name="longDescription"> Long description of the product system. </param>
@@ -736,6 +769,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default);
         }
 
+        /// <summary> Image for the product. </summary>
         /// <param name="imageType"> Type of the image. </param>
         /// <param name="imageUri"> Url of the image. </param>
         /// <returns> A new <see cref="Models.EdgeOrderProductImageInformation"/> instance for mocking. </returns>
@@ -744,6 +778,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderProductImageInformation(imageType, imageUri, default);
         }
 
+        /// <summary> Cost information for the product system. </summary>
         /// <param name="billingMeterDetails"> Details on the various billing aspects for the product system. </param>
         /// <param name="billingInfoUri"> Default url to display billing information. </param>
         /// <returns> A new <see cref="Models.EdgeOrderProductCostInformation"/> instance for mocking. </returns>
@@ -754,6 +789,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderProductCostInformation((billingMeterDetails ?? new ChangeTrackingList<EdgeOrderProductBillingMeterDetails>()).ToList(), billingInfoUri, default);
         }
 
+        /// <summary> Holds billing meter details for each type of billing. </summary>
         /// <param name="name"> Represents Billing type name. </param>
         /// <param name="meterDetails"> Represents MeterDetails. </param>
         /// <param name="meteringType"> Represents Metering type (eg one-time or recurrent). </param>
@@ -771,6 +807,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default);
         }
 
+        /// <summary>
+        /// Holds details about billing type and its meter guids.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.Pav2MeterDetails"/> and <see cref="Models.PurchaseMeterDetails"/>.
+        /// </summary>
         /// <param name="billingType"> Represents billing type. </param>
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>
@@ -780,6 +820,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new UnknownMeterDetails(default, multiplier, chargingType, default);
         }
 
+        /// <summary> Billing type PAV2 meter details. </summary>
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>
         /// <param name="meterGuid"> Validation status of requested data center and transport. </param>
@@ -789,6 +830,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new Pav2MeterDetails(default, multiplier, chargingType, default, meterGuid);
         }
 
+        /// <summary> Billing type Purchase meter details. </summary>
         /// <param name="multiplier"> Billing unit applicable for Pav2 billing. </param>
         /// <param name="chargingType"> Charging type. </param>
         /// <param name="productId"> Product Id. </param>
@@ -807,6 +849,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 termId);
         }
 
+        /// <summary> Holds details about term type and duration. </summary>
         /// <param name="termType"> Term Commitment Type. </param>
         /// <param name="termTypeDuration"> Duration for the term type. </param>
         /// <returns> A new <see cref="Models.EdgeOrderTermTypeDetails"/> instance for mocking. </returns>
@@ -815,6 +858,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new EdgeOrderTermTypeDetails(termType, termTypeDuration, default);
         }
 
+        /// <summary> Availability information of a product system. </summary>
         /// <param name="availabilityStage"> Current availability stage of the product. </param>
         /// <param name="disabledReason"> Reason why the product is disabled. </param>
         /// <param name="disabledReasonMessage"> Message for why the product is disabled. </param>
@@ -824,6 +868,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ProductAvailabilityInformation(availabilityStage, disabledReason, disabledReasonMessage, default);
         }
 
+        /// <summary> The filters for showing the product families. </summary>
         /// <param name="filterableProperties"> Dictionary of filterable properties on product family. </param>
         /// <param name="customerSubscriptionDetails"> Customer subscription properties. Clients can display available products to unregistered customers by explicitly passing subscription details. </param>
         /// <returns> A new <see cref="Models.ProductFamiliesContent"/> instance for mocking. </returns>
@@ -938,13 +983,13 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 (resourceProviderDetailsList ?? new ChangeTrackingList<ResourceProviderDetails>()).ToList()), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="EdgeOrder.EdgeOrderAddressData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Address Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="shippingAddress"> Shipping details for the address. </param>
         /// <param name="contactDetails"> Contact details for the address. </param>
         /// <param name="addressValidationStatus"> Status of address validation. </param>
@@ -969,7 +1014,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderItemAddressProperties"/>. </summary>
+        /// <summary> Address Properties. </summary>
         /// <param name="shippingAddress"> Shipping details for the address. </param>
         /// <param name="contactDetails"> Contact details for the address. </param>
         /// <param name="addressValidationStatus"> Status of address validation. </param>
@@ -986,16 +1031,16 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProductFamily"/>. </summary>
+        /// <summary> Product Family. </summary>
         /// <param name="displayName"> Display Name for the product system. </param>
         /// <param name="description"> Description related to the product system. </param>
         /// <param name="imageInformation"> Image information for the product system. </param>
         /// <param name="costInformation"> Cost information for the product system. </param>
         /// <param name="availabilityInformation"> Availability information of the product system. </param>
         /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
-        /// <param name="filterableProperties"> list of filters supported for a product. </param>
+        /// <param name="filterableProperties"> List of filters supported for a product. </param>
         /// <param name="productLines"> List of product lines supported in the product family. </param>
-        /// <param name="resourceProviderDetails"> Contains details related to resource provider. </param>
+        /// <param name="resourceProviderDetails"></param>
         /// <returns> A new <see cref="Models.ProductFamily"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProductFamily ProductFamily(string displayName, ProductDescription description, IEnumerable<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IEnumerable<FilterableProperty> filterableProperties, IEnumerable<ProductLine> productLines, IEnumerable<ResourceProviderDetails> resourceProviderDetails)
@@ -1014,14 +1059,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProductLine"/>. </summary>
+        /// <summary> Product line. </summary>
         /// <param name="displayName"> Display Name for the product system. </param>
         /// <param name="description"> Description related to the product system. </param>
         /// <param name="imageInformation"> Image information for the product system. </param>
         /// <param name="costInformation"> Cost information for the product system. </param>
         /// <param name="availabilityInformation"> Availability information of the product system. </param>
         /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
-        /// <param name="filterableProperties"> list of filters supported for a product. </param>
+        /// <param name="filterableProperties"> List of filters supported for a product. </param>
         /// <param name="products"> List of products in the product line. </param>
         /// <returns> A new <see cref="Models.ProductLine"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -1040,14 +1085,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 (products ?? new ChangeTrackingList<EdgeOrderProduct>()).ToList()), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderProduct"/>. </summary>
+        /// <summary> Represents a product. </summary>
         /// <param name="displayName"> Display Name for the product system. </param>
         /// <param name="description"> Description related to the product system. </param>
         /// <param name="imageInformation"> Image information for the product system. </param>
         /// <param name="costInformation"> Cost information for the product system. </param>
         /// <param name="availabilityInformation"> Availability information of the product system. </param>
         /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
-        /// <param name="filterableProperties"> list of filters supported for a product. </param>
+        /// <param name="filterableProperties"> List of filters supported for a product. </param>
         /// <param name="configurations"> List of configurations for the product. </param>
         /// <returns> A new <see cref="Models.EdgeOrderProduct"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -1066,14 +1111,14 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 (configurations ?? new ChangeTrackingList<ProductConfiguration>()).ToList()), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProductConfiguration"/>. </summary>
+        /// <summary> Configuration object. </summary>
         /// <param name="displayName"> Display Name for the product system. </param>
         /// <param name="description"> Description related to the product system. </param>
         /// <param name="imageInformation"> Image information for the product system. </param>
         /// <param name="costInformation"> Cost information for the product system. </param>
         /// <param name="availabilityInformation"> Availability information of the product system. </param>
         /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
-        /// <param name="filterableProperties"> list of filters supported for a product. </param>
+        /// <param name="filterableProperties"> List of filters supported for a product. </param>
         /// <param name="specifications"> Specifications of the configuration. </param>
         /// <param name="dimensions"> Dimensions of the configuration. </param>
         /// <returns> A new <see cref="Models.ProductConfiguration"/> instance for mocking. </returns>
@@ -1098,13 +1143,9 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderProductBillingMeterDetails"/>. </summary>
+        /// <summary> Holds billing meter details for each type of billing. </summary>
         /// <param name="name"> Represents Billing type name. </param>
-        /// <param name="meterDetails">
-        /// Represents MeterDetails
-        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///                         The available derived classes include  and .
-        /// </param>
+        /// <param name="meterDetails"> Represents MeterDetails. </param>
         /// <param name="meteringType"> Represents Metering type (eg one-time or recurrent). </param>
         /// <param name="frequency"> Frequency of recurrence. </param>
         /// <returns> A new <see cref="Models.EdgeOrderProductBillingMeterDetails"/> instance for mocking. </returns>
@@ -1120,7 +1161,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConfigurationFilters"/>. </summary>
+        /// <summary> Configuration filters. </summary>
         /// <param name="hierarchyInformation"> Product hierarchy information. </param>
         /// <param name="filterableProperty"> Filters specific to product. </param>
         /// <returns> A new <see cref="Models.ConfigurationFilters"/> instance for mocking. </returns>
@@ -1130,16 +1171,16 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             return new ConfigurationFilters(hierarchyInformation, (filterableProperty ?? new ChangeTrackingList<FilterableProperty>()).ToList(), default, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProductFamiliesMetadata"/>. </summary>
+        /// <summary> Product families metadata details. </summary>
         /// <param name="displayName"> Display Name for the product system. </param>
         /// <param name="description"> Description related to the product system. </param>
         /// <param name="imageInformation"> Image information for the product system. </param>
         /// <param name="costInformation"> Cost information for the product system. </param>
         /// <param name="availabilityInformation"> Availability information of the product system. </param>
         /// <param name="hierarchyInformation"> Hierarchy information of a product. </param>
-        /// <param name="filterableProperties"> list of filters supported for a product. </param>
+        /// <param name="filterableProperties"> List of filters supported for a product. </param>
         /// <param name="productLines"> List of product lines supported in the product family. </param>
-        /// <param name="resourceProviderDetails"> Contains details related to resource provider. </param>
+        /// <param name="resourceProviderDetails"></param>
         /// <returns> A new <see cref="Models.ProductFamiliesMetadata"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProductFamiliesMetadata ProductFamiliesMetadata(string displayName, ProductDescription description, IEnumerable<EdgeOrderProductImageInformation> imageInformation, EdgeOrderProductCostInformation costInformation, ProductAvailabilityInformation availabilityInformation, HierarchyInformation hierarchyInformation, IEnumerable<FilterableProperty> filterableProperties, IEnumerable<ProductLine> productLines, IEnumerable<ResourceProviderDetails> resourceProviderDetails)
@@ -1158,11 +1199,11 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="EdgeOrder.EdgeOrderData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Specifies the properties or parameters for an order. Order is a grouping of one or more order items. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="orderItemIds"> List of order item ARM Ids which are part of an order. </param>
         /// <param name="currentStage"> Order current status. </param>
         /// <param name="orderStageHistory"> Order status history. </param>
@@ -1179,16 +1220,16 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="EdgeOrder.EdgeOrderItemData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Represents order item resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="orderItemDetails"> Represents order item details. </param>
         /// <param name="addressDetails"> Represents shipping and return address for order item. </param>
-        /// <param name="startOn"> Start time of order item. </param>
+        /// <param name="startOn"></param>
         /// <param name="orderId"> Id of the order to which order item belongs to. </param>
         /// <returns> A new <see cref="EdgeOrder.EdgeOrderItemData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -1201,10 +1242,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                orderItemDetails is null && addressDetails is null && startOn is null && orderId is null ? default : new OrderItemProperties(
+                orderItemDetails is null && addressDetails is null && orderId is null ? default : new OrderItemProperties(
                     orderItemDetails,
                     addressDetails,
-                    startOn,
+                    default,
                     orderId,
                     default,
                     default),
@@ -1212,8 +1253,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderItemDetails"/>. </summary>
-        /// <param name="productDetails"> Unique identifier for configuration. </param>
+        /// <summary> Order item details. </summary>
+        /// <param name="productDetails"> Represents product details. </param>
         /// <param name="orderItemType"> Order item type. </param>
         /// <param name="currentStage"> Current Order item Status. </param>
         /// <param name="orderItemStageHistory"> Order item status history. </param>
@@ -1226,7 +1267,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <param name="deletionStatus"> Describes whether the order item is deletable or not. </param>
         /// <param name="returnReason"> Return reason. </param>
         /// <param name="returnStatus"> Describes whether the order item is returnable or not. </param>
-        /// <param name="firstOrDefaultManagementResourceProviderNamespace"> Parent RP details - this returns only the first or default parent RP from the entire list. </param>
+        /// <param name="firstOrDefaultManagementResourceProviderNamespace"></param>
         /// <param name="managementRPDetailsList"> List of parent RP details supported for configuration. </param>
         /// <param name="error"> Top level error for the job. </param>
         /// <returns> A new <see cref="Models.EdgeOrderItemDetails"/> instance for mocking. </returns>
@@ -1254,12 +1295,12 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProductDetails"/>. </summary>
+        /// <summary> Represents product details. </summary>
         /// <param name="displayInfo"> Display details of the product. </param>
         /// <param name="hierarchyInformation"> Hierarchy of the product which uniquely identifies the product. </param>
-        /// <param name="count"> Quantity of the product. </param>
+        /// <param name="count"></param>
         /// <param name="productDoubleEncryptionStatus"> Double encryption status of the configuration. Read-only field. </param>
-        /// <param name="deviceDetails"> list of device details. </param>
+        /// <param name="deviceDetails"></param>
         /// <returns> A new <see cref="Models.ProductDetails"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProductDetails ProductDetails(ProductDisplayInfo displayInfo, HierarchyInformation hierarchyInformation, int? count, DoubleEncryptionStatus? productDoubleEncryptionStatus, IEnumerable<EdgeOrderProductDeviceDetails> deviceDetails)
@@ -1278,8 +1319,8 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EdgeOrderProductDeviceDetails"/>. </summary>
-        /// <param name="serialNumber"> device serial number. </param>
+        /// <summary> Device details. </summary>
+        /// <param name="serialNumber"> Device serial number. </param>
         /// <param name="managementResourceId"> Management Resource Id. </param>
         /// <param name="managementResourceTenantId"> Management Resource Tenant ID. </param>
         /// <returns> A new <see cref="Models.EdgeOrderProductDeviceDetails"/> instance for mocking. </returns>

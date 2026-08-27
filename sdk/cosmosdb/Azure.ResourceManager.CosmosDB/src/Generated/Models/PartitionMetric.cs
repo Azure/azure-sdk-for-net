@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="PartitionMetric"/>. </summary>
-        /// <param name="startOn"> The start time for the metric (ISO-8601 format). </param>
-        /// <param name="endOn"> The end time for the metric (ISO-8601 format). </param>
+        /// <param name="startsOn"> The start time for the metric (ISO-8601 format). </param>
+        /// <param name="endsOn"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="timeGrain"> The time grain to be used to summarize the metric values. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="name"> The name information for the metric. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="partitionId"> The partition id (GUID identifier) of the metric values. </param>
         /// <param name="partitionKeyRangeId"> The partition key range id (integer identifier) of the metric values. </param>
-        internal PartitionMetric(DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, CosmosDBMetricUnitType? unit, CosmosDBMetricName name, IReadOnlyList<CosmosDBMetricValue> metricValues, IDictionary<string, BinaryData> additionalBinaryDataProperties, Guid? partitionId, string partitionKeyRangeId) : base(startOn, endOn, timeGrain, unit, name, metricValues, additionalBinaryDataProperties)
+        internal PartitionMetric(DateTimeOffset? startsOn, DateTimeOffset? endsOn, string timeGrain, CosmosDBMetricUnitType? unit, CosmosDBMetricName name, IReadOnlyList<CosmosDBMetricValue> metricValues, IDictionary<string, BinaryData> additionalBinaryDataProperties, Guid? partitionId, string partitionKeyRangeId) : base(startsOn, endsOn, timeGrain, unit, name, metricValues, additionalBinaryDataProperties)
         {
             PartitionId = partitionId;
             PartitionKeyRangeId = partitionKeyRangeId;

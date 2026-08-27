@@ -102,15 +102,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(PercentComplete))
             {
@@ -166,8 +166,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             BackupAndExportResponseProperties properties = default;
             ResponseError error = default;
             MySqlFlexibleServerBackupAndExportOperationStatus? status = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             double? percentComplete = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("percentComplete"u8))
@@ -271,8 +271,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 properties,
                 error,
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 percentComplete,
                 additionalBinaryDataProperties);
         }

@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="RollingUpgradeRunningStatus"/>. </summary>
         /// <param name="code"> Code indicating the current status of the upgrade. </param>
-        /// <param name="startOn"> Start time of the upgrade. </param>
+        /// <param name="startsOn"> Start time of the upgrade. </param>
         /// <param name="lastAction"> The last action performed on the rolling upgrade. </param>
         /// <param name="lastActionOn"> Last action time of the upgrade. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RollingUpgradeRunningStatus(RollingUpgradeStatusCode? code, DateTimeOffset? startOn, RollingUpgradeActionType? lastAction, DateTimeOffset? lastActionOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RollingUpgradeRunningStatus(RollingUpgradeStatusCode? code, DateTimeOffset? startsOn, RollingUpgradeActionType? lastAction, DateTimeOffset? lastActionOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
-            StartOn = startOn;
+            StartsOn = startsOn;
             LastAction = lastAction;
             LastActionOn = lastActionOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Compute.Models
         public RollingUpgradeStatusCode? Code { get; }
 
         /// <summary> Start time of the upgrade. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The last action performed on the rolling upgrade. </summary>
         public RollingUpgradeActionType? LastAction { get; }

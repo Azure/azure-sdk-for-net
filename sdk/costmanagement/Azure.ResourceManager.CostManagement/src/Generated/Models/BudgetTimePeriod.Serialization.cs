@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.CostManagement.Models
                 throw new FormatException($"The model {nameof(BudgetTimePeriod)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("startDate"u8);
-            writer.WriteStringValue(StartOn, "O");
-            if (Optional.IsDefined(EndOn))
+            writer.WriteStringValue(StartsOn, "O");
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endDate"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,8 +132,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            DateTimeOffset startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? endsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,7 +147,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +155,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BudgetTimePeriod(startOn, endOn, additionalBinaryDataProperties);
+            return new BudgetTimePeriod(default, endsOn, additionalBinaryDataProperties);
         }
     }
 }

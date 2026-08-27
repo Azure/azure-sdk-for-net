@@ -135,10 +135,10 @@ namespace Azure.ResourceManager.Reservations.Models
                 writer.WritePropertyName("effectiveDateTime"u8);
                 writer.WriteStringValue(EffectOn.Value, "O");
             }
-            if (Optional.IsDefined(BenefitStartOn))
+            if (Optional.IsDefined(BenefitStartsOn))
             {
                 writer.WritePropertyName("benefitStartTime"u8);
-                writer.WriteStringValue(BenefitStartOn.Value, "O");
+                writer.WriteStringValue(BenefitStartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Reservations.Models
             int? quantity = default;
             ReservationProvisioningState? provisioningState = default;
             DateTimeOffset? effectOn = default;
-            DateTimeOffset? benefitStartOn = default;
+            DateTimeOffset? benefitStartsOn = default;
             DateTimeOffset? lastUpdatedOn = default;
             DateTimeOffset? reservationExpireOn = default;
             DateTimeOffset? expireOn = default;
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     {
                         continue;
                     }
-                    benefitStartOn = prop.Value.GetDateTimeOffset("O");
+                    benefitStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastUpdatedDateTime"u8))
@@ -647,7 +647,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 quantity,
                 provisioningState,
                 effectOn,
-                benefitStartOn,
+                benefitStartsOn,
                 lastUpdatedOn,
                 reservationExpireOn,
                 expireOn,

@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.DevTestLabs.Models
 
         /// <summary> Initializes a new instance of <see cref="DevTestLabExportResourceUsageContent"/>. </summary>
         /// <param name="blobStorageAbsoluteSasUri"> The blob storage absolute sas uri with write permission to the container which the usage data needs to be uploaded to. </param>
-        /// <param name="usageStartOn"> The start time of the usage. If not provided, usage will be reported since the beginning of data collection. </param>
+        /// <param name="usageStartsOn"> The start time of the usage. If not provided, usage will be reported since the beginning of data collection. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabExportResourceUsageContent(Uri blobStorageAbsoluteSasUri, DateTimeOffset? usageStartOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevTestLabExportResourceUsageContent(Uri blobStorageAbsoluteSasUri, DateTimeOffset? usageStartsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BlobStorageAbsoluteSasUri = blobStorageAbsoluteSasUri;
-            UsageStartOn = usageStartOn;
+            UsageStartsOn = usageStartsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public Uri BlobStorageAbsoluteSasUri { get; set; }
 
         /// <summary> The start time of the usage. If not provided, usage will be reported since the beginning of data collection. </summary>
-        public DateTimeOffset? UsageStartOn { get; set; }
+        public DateTimeOffset? UsageStartsOn { get; set; }
     }
 }

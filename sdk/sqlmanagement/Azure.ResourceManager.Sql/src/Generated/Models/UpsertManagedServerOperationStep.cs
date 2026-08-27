@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="UpsertManagedServerOperationStep"/>. </summary>
-        /// <param name="stepStartOn"></param>
-        /// <param name="stepEndOn"></param>
+        /// <param name="stepStartsOn"></param>
+        /// <param name="stepEndsOn"></param>
         /// <param name="timeElapsed"></param>
         /// <param name="order"></param>
         /// <param name="name"></param>
         /// <param name="status"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpsertManagedServerOperationStep(DateTimeOffset? stepStartOn, DateTimeOffset? stepEndOn, string timeElapsed, int? order, string name, UpsertManagedServerOperationStepStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpsertManagedServerOperationStep(DateTimeOffset? stepStartsOn, DateTimeOffset? stepEndsOn, string timeElapsed, int? order, string name, UpsertManagedServerOperationStepStatus? status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StepStartOn = stepStartOn;
-            StepEndOn = stepEndOn;
+            StepStartsOn = stepStartsOn;
+            StepEndsOn = stepEndsOn;
             TimeElapsed = timeElapsed;
             Order = order;
             Name = name;
@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.Sql.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the StepStartOn. </summary>
+        /// <summary> Gets the StepStartsOn. </summary>
         [WirePath("stepStartTime")]
-        public DateTimeOffset? StepStartOn { get; }
+        public DateTimeOffset? StepStartsOn { get; }
 
-        /// <summary> Gets the StepEndOn. </summary>
+        /// <summary> Gets the StepEndsOn. </summary>
         [WirePath("stepEndTime")]
-        public DateTimeOffset? StepEndOn { get; }
+        public DateTimeOffset? StepEndsOn { get; }
 
         /// <summary> Gets the TimeElapsed. </summary>
         [WirePath("timeElapsed")]

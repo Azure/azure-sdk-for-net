@@ -29,19 +29,19 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="exitCode"> Exit code returned from script execution. </param>
         /// <param name="output"> Script output stream. </param>
         /// <param name="error"> Script error stream. </param>
-        /// <param name="startOn"> Script start time. </param>
-        /// <param name="endOn"> Script end time. </param>
+        /// <param name="startsOn"> Script start time. </param>
+        /// <param name="endsOn"> Script end time. </param>
         /// <param name="statuses"> The  status information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineRunCommandInstanceView(HybridComputeExecutionState? executionState, string executionMessage, int? exitCode, string output, string error, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<ExtensionsResourceStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineRunCommandInstanceView(HybridComputeExecutionState? executionState, string executionMessage, int? exitCode, string output, string error, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IReadOnlyList<ExtensionsResourceStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExecutionState = executionState;
             ExecutionMessage = executionMessage;
             ExitCode = exitCode;
             Output = output;
             Error = error;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Statuses = statuses;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -68,10 +68,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Script start time. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> Script end time. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
     }
 }

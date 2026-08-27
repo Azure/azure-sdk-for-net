@@ -118,9 +118,9 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("startTime"u8);
-            writer.WriteStringValue(StartOn, "O");
+            writer.WriteStringValue(StartsOn, "O");
             writer.WritePropertyName("endTime"u8);
-            writer.WriteStringValue(EndOn, "O");
+            writer.WriteStringValue(EndsOn, "O");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -166,8 +166,6 @@ namespace Azure.ResourceManager.Network.Models
             AzureReachabilityReportLocation providerLocation = default;
             IList<string> providers = default;
             IList<AzureLocation> azureLocations = default;
-            DateTimeOffset startOn = default;
-            DateTimeOffset endOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -230,8 +228,8 @@ namespace Azure.ResourceManager.Network.Models
                 providerLocation,
                 providers ?? new ChangeTrackingList<string>(),
                 azureLocations ?? new ChangeTrackingList<AzureLocation>(),
-                startOn,
-                endOn,
+                default,
+                default,
                 additionalBinaryDataProperties);
         }
     }
