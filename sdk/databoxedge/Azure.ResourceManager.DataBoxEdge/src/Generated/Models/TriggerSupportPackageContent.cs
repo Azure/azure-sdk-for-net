@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         internal SupportPackageRequestProperties Properties { get; set; }
 
         /// <summary> MinimumTimeStamp from where logs need to be collected. </summary>
-        public DateTimeOffset? MinimumTimeStamp
+        public DateTimeOffset? MinimumOn
         {
             get
             {
-                return Properties is null ? default : Properties.MinimumTimeStamp;
+                return Properties is null ? default : Properties.MinimumOn;
             }
             set
             {
@@ -53,16 +53,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     Properties = new SupportPackageRequestProperties();
                 }
-                Properties.MinimumTimeStamp = value;
+                Properties.MinimumOn = value;
             }
         }
 
         /// <summary> Start of the timespan of the log collection. </summary>
-        public DateTimeOffset? MaximumTimeStamp
+        public DateTimeOffset? MaximumOn
         {
             get
             {
-                return Properties is null ? default : Properties.MaximumTimeStamp;
+                return Properties is null ? default : Properties.MaximumOn;
             }
             set
             {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 {
                     Properties = new SupportPackageRequestProperties();
                 }
-                Properties.MaximumTimeStamp = value;
+                Properties.MaximumOn = value;
             }
         }
 

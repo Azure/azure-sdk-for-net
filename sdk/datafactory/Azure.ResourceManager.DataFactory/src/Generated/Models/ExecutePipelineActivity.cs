@@ -44,10 +44,27 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> Execute pipeline activity policy. </summary>
-        public ExecutePipelineActivityPolicy Policy { get; set; }
+        internal ExecutePipelineActivityPolicy Policy { get; set; }
 
         /// <summary> Execute pipeline activity properties. </summary>
         internal ExecutePipelineActivityTypeProperties TypeProperties { get; set; }
+
+        /// <summary> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </summary>
+        public bool? IsSecureInputEnabled
+        {
+            get
+            {
+                return Policy is null ? default : Policy.IsSecureInputEnabled;
+            }
+            set
+            {
+                if (Policy is null)
+                {
+                    Policy = new ExecutePipelineActivityPolicy();
+                }
+                Policy.IsSecureInputEnabled = value;
+            }
+        }
 
         /// <summary> Pipeline reference. </summary>
         public DataFactoryPipelineReference Pipeline

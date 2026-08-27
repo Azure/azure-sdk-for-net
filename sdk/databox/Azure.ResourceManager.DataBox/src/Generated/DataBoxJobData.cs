@@ -151,11 +151,11 @@ namespace Azure.ResourceManager.DataBox
         }
 
         /// <summary> Time at which the job was started in UTC ISO 8601 format. </summary>
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 

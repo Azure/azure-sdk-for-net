@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <summary> Initializes a new instance of <see cref="ScheduleTriggerRecurrence"/>. </summary>
         /// <param name="frequency"> The frequency. </param>
         /// <param name="interval"> The interval. </param>
-        /// <param name="startOn"> The start time. </param>
-        /// <param name="endOn"> The end time. </param>
+        /// <param name="startsOn"> The start time. </param>
+        /// <param name="endsOn"> The end time. </param>
         /// <param name="timeZone"> The time zone. </param>
         /// <param name="schedule"> The recurrence schedule. </param>
         /// <param name="additionalProperties"></param>
-        internal ScheduleTriggerRecurrence(DataFactoryRecurrenceFrequency? frequency, int? interval, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeZone, DataFactoryRecurrenceSchedule schedule, IDictionary<string, BinaryData> additionalProperties)
+        internal ScheduleTriggerRecurrence(DataFactoryRecurrenceFrequency? frequency, int? interval, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string timeZone, DataFactoryRecurrenceSchedule schedule, IDictionary<string, BinaryData> additionalProperties)
         {
             Frequency = frequency;
             Interval = interval;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             TimeZone = timeZone;
             Schedule = schedule;
             _additionalBinaryDataProperties = additionalProperties;
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.DataFactory.Models
         public int? Interval { get; set; }
 
         /// <summary> The start time. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> The end time. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> The time zone. </summary>
         public string TimeZone { get; set; }

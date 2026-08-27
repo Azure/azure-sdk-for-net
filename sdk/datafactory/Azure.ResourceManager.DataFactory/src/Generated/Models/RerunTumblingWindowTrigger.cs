@@ -60,11 +60,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The start time for the time period for which restatement is initiated. Only UTC time is currently supported. </summary>
-        public DateTimeOffset RequestedStartOn
+        public DateTimeOffset RequestedStartsOn
         {
             get
             {
-                return TypeProperties is null ? default : TypeProperties.RequestedStartOn;
+                return TypeProperties is null ? default : TypeProperties.RequestedStartsOn;
             }
             set
             {
@@ -72,16 +72,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     TypeProperties = new RerunTumblingWindowTriggerTypeProperties();
                 }
-                TypeProperties.RequestedStartOn = value;
+                TypeProperties.RequestedStartsOn = value;
             }
         }
 
         /// <summary> The end time for the time period for which restatement is initiated. Only UTC time is currently supported. </summary>
-        public DateTimeOffset RequestedEndOn
+        public DateTimeOffset RequestedEndsOn
         {
             get
             {
-                return TypeProperties is null ? default : TypeProperties.RequestedEndOn;
+                return TypeProperties is null ? default : TypeProperties.RequestedEndsOn;
             }
             set
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     TypeProperties = new RerunTumblingWindowTriggerTypeProperties();
                 }
-                TypeProperties.RequestedEndOn = value;
+                TypeProperties.RequestedEndsOn = value;
             }
         }
 
