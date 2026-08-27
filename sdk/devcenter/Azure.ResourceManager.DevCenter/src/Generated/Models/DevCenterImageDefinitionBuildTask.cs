@@ -28,19 +28,19 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="parameters"> Parameters for the task. </param>
         /// <param name="displayName"> Display name to help differentiate multiple instances of the same task. </param>
         /// <param name="id"> ID of the task instance. </param>
-        /// <param name="startOn"> Start time of the task. </param>
-        /// <param name="endOn"> End time of the task. </param>
+        /// <param name="startsOn"> Start time of the task. </param>
+        /// <param name="endsOn"> End time of the task. </param>
         /// <param name="status"> The status of the task. </param>
         /// <param name="logUri"> The URI for retrieving logs for the task execution. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterImageDefinitionBuildTask(string name, IList<DevCenterImageDefinitionBuildTaskParametersItem> parameters, string displayName, string id, DateTimeOffset? startOn, DateTimeOffset? endOn, DevCenterImageDefinitionBuildStatus? status, Uri logUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevCenterImageDefinitionBuildTask(string name, IList<DevCenterImageDefinitionBuildTaskParametersItem> parameters, string displayName, string id, DateTimeOffset? startsOn, DateTimeOffset? endsOn, DevCenterImageDefinitionBuildStatus? status, Uri logUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Parameters = parameters;
             DisplayName = displayName;
             Id = id;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Status = status;
             LogUri = logUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.DevCenter.Models
         public string Id { get; }
 
         /// <summary> Start time of the task. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> End time of the task. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> The status of the task. </summary>
         public DevCenterImageDefinitionBuildStatus? Status { get; }

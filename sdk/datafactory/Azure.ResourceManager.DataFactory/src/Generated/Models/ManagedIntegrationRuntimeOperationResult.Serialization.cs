@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ManagedIntegrationRuntimeOperationResultType);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Result))
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 return null;
             }
             string managedIntegrationRuntimeOperationResultType = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             string result = default;
             string errorCode = default;
             IReadOnlyList<string> parameters = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("result"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             return new ManagedIntegrationRuntimeOperationResult(
                 managedIntegrationRuntimeOperationResultType,
-                startOn,
+                startsOn,
                 result,
                 errorCode,
                 parameters ?? new ChangeTrackingList<string>(),

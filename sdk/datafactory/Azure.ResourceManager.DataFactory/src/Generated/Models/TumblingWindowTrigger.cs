@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         }
 
         /// <summary> The start time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported. </summary>
-        public DateTimeOffset StartOn
+        public DateTimeOffset StartsOn
         {
             get
             {
-                return TypeProperties is null ? default : TypeProperties.StartOn;
+                return TypeProperties is null ? default : TypeProperties.StartsOn;
             }
             set
             {
@@ -97,16 +97,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     TypeProperties = new TumblingWindowTriggerTypeProperties();
                 }
-                TypeProperties.StartOn = value;
+                TypeProperties.StartsOn = value;
             }
         }
 
         /// <summary> The end time for the time period for the trigger during which events are fired for windows that are ready. Only UTC time is currently supported. </summary>
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return TypeProperties is null ? default : TypeProperties.EndOn;
+                return TypeProperties is null ? default : TypeProperties.EndsOn;
             }
             set
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     TypeProperties = new TumblingWindowTriggerTypeProperties();
                 }
-                TypeProperties.EndOn = value;
+                TypeProperties.EndsOn = value;
             }
         }
 

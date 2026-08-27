@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Optional.IsDefined(BackupStartOn))
+            if (Optional.IsDefined(BackupStartsOn))
             {
                 writer.WritePropertyName("backupStartDate"u8);
-                writer.WriteStringValue(BackupStartOn.Value, "O");
+                writer.WriteStringValue(BackupStartsOn.Value, "O");
             }
             if (Optional.IsDefined(BackupFinishedOn))
             {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             DataMigrationBackupType? backupType = default;
             IReadOnlyList<DataMigrationBackupFileInfo> listOfBackupFiles = default;
             string databaseName = default;
-            DateTimeOffset? backupStartOn = default;
+            DateTimeOffset? backupStartsOn = default;
             DateTimeOffset? backupFinishedOn = default;
             bool? isBackupRestored = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    backupStartOn = prop.Value.GetDateTimeOffset("O");
+                    backupStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("backupFinishedDate"u8))
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 backupType,
                 listOfBackupFiles ?? new ChangeTrackingList<DataMigrationBackupFileInfo>(),
                 databaseName,
-                backupStartOn,
+                backupStartsOn,
                 backupFinishedOn,
                 isBackupRestored,
                 additionalBinaryDataProperties);

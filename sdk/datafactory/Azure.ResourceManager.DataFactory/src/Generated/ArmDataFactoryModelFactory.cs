@@ -67,6 +67,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary>
+        /// Factory's git repo information.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FactoryVstsConfiguration"/> and <see cref="Models.FactoryGitHubConfiguration"/>.
+        /// </summary>
         /// <param name="factoryRepoConfigurationType"> Type of repo configuration. </param>
         /// <param name="accountName"> Account name. </param>
         /// <param name="repositoryName"> Repository name. </param>
@@ -88,6 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Factory's VSTS repo information. </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="repositoryName"> Repository name. </param>
         /// <param name="collaborationBranch"> Collaboration branch. </param>
@@ -112,6 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 tenantId);
         }
 
+        /// <summary> Factory's GitHub repo information. </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="repositoryName"> Repository name. </param>
         /// <param name="collaborationBranch"> Collaboration branch. </param>
@@ -138,6 +144,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 clientSecret);
         }
 
+        /// <summary> Client secret information for factory's bring your own app repository configuration. </summary>
         /// <param name="byoaSecretAkvUri"> Bring your own app client secret AKV URL. </param>
         /// <param name="byoaSecretName"> Bring your own app client secret name in AKV. </param>
         /// <returns> A new <see cref="Models.FactoryGitHubClientSecret"/> instance for mocking. </returns>
@@ -146,6 +153,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new FactoryGitHubClientSecret(byoaSecretAkvUri, byoaSecretName, default);
         }
 
+        /// <summary> Definition of a single parameter for an entity. </summary>
         /// <param name="globalParameterType"> Global Parameter type. </param>
         /// <param name="value"> Value of parameter. </param>
         /// <returns> A new <see cref="Models.DataFactoryGlobalParameterProperties"/> instance for mocking. </returns>
@@ -175,6 +183,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, publicNetworkAccess is null ? default : new FactoryUpdateProperties(publicNetworkAccess, default), default);
         }
 
+        /// <summary> Get GitHub access token request definition. </summary>
         /// <param name="gitHubAccessCode"> GitHub access code. </param>
         /// <param name="gitHubClientId"> GitHub application client ID. </param>
         /// <param name="gitHubClientSecret"> GitHub bring your own app client secret information. </param>
@@ -185,6 +194,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new GitHubAccessTokenContent(gitHubAccessCode, gitHubClientId, gitHubClientSecret, gitHubAccessTokenBaseUri, default);
         }
 
+        /// <summary> Get GitHub access token response definition. </summary>
         /// <param name="gitHubAccessToken"> GitHub access token. </param>
         /// <returns> A new <see cref="Models.GitHubAccessTokenResult"/> instance for mocking. </returns>
         public static GitHubAccessTokenResult GitHubAccessTokenResult(string gitHubAccessToken = default)
@@ -192,6 +202,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new GitHubAccessTokenResult(gitHubAccessToken, default);
         }
 
+        /// <summary> Get Data Plane read only token request definition. </summary>
         /// <param name="permissions"> The string with permissions for Data Plane access. Currently only 'r' is supported which grants read only access. </param>
         /// <param name="accessResourcePath"> The resource path to get access relative to factory. Currently only empty string is supported which corresponds to the factory resource. </param>
         /// <param name="profileName"> The name of the profile. Currently only the default is supported. The default value is DefaultProfile. </param>
@@ -209,6 +220,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Get Data Plane read only token response definition. </summary>
         /// <param name="policy"> The user access policy. </param>
         /// <param name="accessToken"> Data Plane read only access token. </param>
         /// <param name="dataPlaneUri"> Data Plane service base URL. </param>
@@ -218,6 +230,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryDataPlaneAccessPolicyResult(policy, accessToken, dataPlaneUri, default);
         }
 
+        /// <summary> Query parameters for listing runs. </summary>
         /// <param name="continuationToken"> The continuation token for getting the next page of results. Null for first page. </param>
         /// <param name="lastUpdatedAfter"> The time at or after which the run event was updated in 'ISO 8601' format. </param>
         /// <param name="lastUpdatedBefore"> The time at or before which the run event was updated in 'ISO 8601' format. </param>
@@ -238,6 +251,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Query filter option for listing runs. </summary>
         /// <param name="operand"> Parameter name to be used for filter. The allowed operands to query pipeline runs are PipelineName, RunStart, RunEnd and Status; to query activity runs are ActivityName, ActivityRunStart, ActivityRunEnd, ActivityType and Status, and to query trigger runs are TriggerName, TriggerRunTimestamp and Status. </param>
         /// <param name="operator"> Operator to be used for filter. </param>
         /// <param name="values"> List of filter values. </param>
@@ -249,6 +263,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new RunQueryFilter(operand, @operator, (values ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> An object to provide order by options for listing runs. </summary>
         /// <param name="orderBy"> Parameter name to be used for order by. The allowed parameters to order by for pipeline runs are PipelineName, RunStart, RunEnd and Status; for activity runs are ActivityName, ActivityRunStart, ActivityRunEnd and Status; for trigger runs are TriggerName, TriggerRunTimestamp and Status. </param>
         /// <param name="order"> Sorting order of the parameter. </param>
         /// <returns> A new <see cref="Models.RunQueryOrderBy"/> instance for mocking. </returns>
@@ -257,6 +272,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new RunQueryOrderBy(orderBy, order, default);
         }
 
+        /// <summary> Information about a pipeline run. </summary>
         /// <param name="runId"> Identifier of a run. </param>
         /// <param name="runGroupId"> Identifier that correlates all the recovery runs of a pipeline run. </param>
         /// <param name="isLatest"> Indicates if the recovered pipeline run is the latest in its group. </param>
@@ -295,6 +311,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Provides entity name and id that started the pipeline run. </summary>
         /// <param name="name"> Name of the entity that started the pipeline run. </param>
         /// <param name="id"> The ID of the entity that started the run. </param>
         /// <param name="invokedByType"> The type of the entity that started the run. </param>
@@ -312,6 +329,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Information about an activity run in a pipeline. </summary>
         /// <param name="pipelineName"> The name of the pipeline. </param>
         /// <param name="pipelineRunId"> The id of the pipeline run. </param>
         /// <param name="activityName"> The name of the activity. </param>
@@ -348,6 +366,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Query parameters for triggers. </summary>
         /// <param name="continuationToken"> The continuation token for getting the next page of results. Null for first page. </param>
         /// <param name="parentTriggerName"> The name of the parent TumblingWindowTrigger to get the child rerun triggers. </param>
         /// <returns> A new <see cref="Models.TriggerFilterContent"/> instance for mocking. </returns>
@@ -356,6 +375,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new TriggerFilterContent(continuationToken, parentTriggerName, default);
         }
 
+        /// <summary> Trigger resource type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -375,6 +395,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary>
+        /// Azure data factory nested object which contains information about creating pipeline run
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MultiplePipelineTrigger"/>, <see cref="Models.DataFactoryScheduleTrigger"/>, <see cref="Models.DataFactoryBlobTrigger"/>, <see cref="Models.DataFactoryBlobEventsTrigger"/>, <see cref="Models.CustomEventsTrigger"/>, <see cref="Models.TumblingWindowTrigger"/>, <see cref="Models.RerunTumblingWindowTrigger"/>, and <see cref="Models.ChainingTrigger"/>.
+        /// </summary>
         /// <param name="triggerType"> Trigger type. </param>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
@@ -389,6 +413,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new UnknownTrigger(triggerType, description, runtimeState, (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(), additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Base class for all triggers that support one to many model for trigger to pipeline. </summary>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
@@ -410,6 +435,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (pipelines ?? new ChangeTrackingList<TriggerPipelineReference>()).ToList());
         }
 
+        /// <summary> Pipeline that needs to be triggered with the given parameters. </summary>
         /// <param name="pipelineReference"> Pipeline reference. </param>
         /// <param name="parameters"> Pipeline parameters. </param>
         /// <returns> A new <see cref="Models.TriggerPipelineReference"/> instance for mocking. </returns>
@@ -420,6 +446,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new TriggerPipelineReference(pipelineReference, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), default);
         }
 
+        /// <summary> Pipeline reference type. </summary>
         /// <param name="referenceType"> Pipeline reference type. </param>
         /// <param name="referenceName"> Reference pipeline name. </param>
         /// <param name="name"> Reference name. </param>
@@ -435,7 +462,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="pipelines"> Pipelines that need to be started. </param>
         /// <param name="recurrence"> Recurrence schedule configuration. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="recurrence"/> is null. </exception>
         /// <returns> A new <see cref="Models.DataFactoryScheduleTrigger"/> instance for mocking. </returns>
         public static DataFactoryScheduleTrigger DataFactoryScheduleTrigger(string description = default, DataFactoryTriggerRuntimeState? runtimeState = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, IEnumerable<TriggerPipelineReference> pipelines = default, ScheduleTriggerRecurrence recurrence = default)
         {
@@ -453,28 +479,30 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> The workflow trigger recurrence. </summary>
         /// <param name="frequency"> The frequency. </param>
         /// <param name="interval"> The interval. </param>
-        /// <param name="startOn"> The start time. </param>
-        /// <param name="endOn"> The end time. </param>
+        /// <param name="startsOn"> The start time. </param>
+        /// <param name="endsOn"> The end time. </param>
         /// <param name="timeZone"> The time zone. </param>
         /// <param name="schedule"> The recurrence schedule. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.ScheduleTriggerRecurrence"/> instance for mocking. </returns>
-        public static ScheduleTriggerRecurrence ScheduleTriggerRecurrence(DataFactoryRecurrenceFrequency? frequency = default, int? interval = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string timeZone = default, DataFactoryRecurrenceSchedule schedule = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static ScheduleTriggerRecurrence ScheduleTriggerRecurrence(DataFactoryRecurrenceFrequency? frequency = default, int? interval = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, string timeZone = default, DataFactoryRecurrenceSchedule schedule = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new ScheduleTriggerRecurrence(
                 frequency,
                 interval,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 timeZone,
                 schedule,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> The recurrence schedule. </summary>
         /// <param name="minutes"> The minutes. </param>
         /// <param name="hours"> The hours. </param>
         /// <param name="weekDays"> The days of the week. </param>
@@ -500,6 +528,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> The recurrence schedule occurrence. </summary>
         /// <param name="day"> The day of the week. </param>
         /// <param name="occurrence"> The occurrence. </param>
         /// <param name="additionalProperties"></param>
@@ -520,7 +549,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="maxConcurrency"> The max number of parallel files to handle when it is triggered. </param>
         /// <param name="linkedService"> The Azure Storage linked service reference. </param>
         /// <param name="linkedService0"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="folderPath"/> or <paramref name="linkedService"/> is null. </exception>
         /// <returns> A new <see cref="Models.DataFactoryBlobTrigger"/> instance for mocking. </returns>
         public static DataFactoryBlobTrigger DataFactoryBlobTrigger(string description = default, DataFactoryTriggerRuntimeState? runtimeState = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, IEnumerable<TriggerPipelineReference> pipelines = default, string folderPath = default, int maxConcurrency = default, DataFactoryLinkedServiceReference linkedService = default, DataFactoryLinkedServiceReference linkedService0 = default)
         {
@@ -549,7 +577,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="ignoreEmptyBlobs"> If set to true, blobs with zero bytes will be ignored. </param>
         /// <param name="events"> The type of events that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Storage Account. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="events"/> or <paramref name="scope"/> is null. </exception>
         /// <returns> A new <see cref="Models.DataFactoryBlobEventsTrigger"/> instance for mocking. </returns>
         public static DataFactoryBlobEventsTrigger DataFactoryBlobEventsTrigger(string description = default, DataFactoryTriggerRuntimeState? runtimeState = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, IEnumerable<TriggerPipelineReference> pipelines = default, string blobPathBeginsWith = default, string blobPathEndsWith = default, bool? ignoreEmptyBlobs = default, IEnumerable<DataFactoryBlobEventType> events = default, string scope = default)
         {
@@ -582,7 +609,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="subjectEndsWith"> The event subject must end with the pattern provided for trigger to fire. At least one of these must be provided: subjectBeginsWith, subjectEndsWith. </param>
         /// <param name="events"> The list of event types that cause this trigger to fire. </param>
         /// <param name="scope"> The ARM resource ID of the Azure Event Grid Topic. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="events"/> or <paramref name="scope"/> is null. </exception>
         /// <returns> A new <see cref="Models.CustomEventsTrigger"/> instance for mocking. </returns>
         public static CustomEventsTrigger CustomEventsTrigger(string description = default, DataFactoryTriggerRuntimeState? runtimeState = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, IEnumerable<TriggerPipelineReference> pipelines = default, string subjectBeginsWith = default, string subjectEndsWith = default, IEnumerable<BinaryData> events = default, string scope = default)
         {
@@ -629,6 +655,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Execution policy for an activity. </summary>
         /// <param name="count"> Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="intervalInSeconds"> Interval between retries in seconds. Default is 30. </param>
         /// <returns> A new <see cref="Models.RetryPolicy"/> instance for mocking. </returns>
@@ -637,6 +664,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new RetryPolicy(count, intervalInSeconds, default);
         }
 
+        /// <summary>
+        /// Referenced dependency.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.TriggerDependencyReference"/>, <see cref="Models.TumblingWindowTriggerDependencyReference"/>, and <see cref="Models.SelfDependencyTumblingWindowTriggerReference"/>.
+        /// </summary>
         /// <param name="dependencyReferenceType"> The type of dependency reference. </param>
         /// <returns> A new <see cref="Models.DependencyReference"/> instance for mocking. </returns>
         public static DependencyReference DependencyReference(string dependencyReferenceType = default)
@@ -644,6 +675,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new UnknownDependencyReference(dependencyReferenceType, default);
         }
 
+        /// <summary> Trigger referenced dependency. </summary>
         /// <param name="referenceTrigger"> Referenced trigger. </param>
         /// <returns> A new <see cref="Models.TriggerDependencyReference"/> instance for mocking. </returns>
         public static TriggerDependencyReference TriggerDependencyReference(DataFactoryTriggerReference referenceTrigger = default)
@@ -651,6 +683,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new TriggerDependencyReference(default, default, referenceTrigger);
         }
 
+        /// <summary> Trigger reference type. </summary>
         /// <param name="referenceType"> Trigger reference type. </param>
         /// <param name="referenceName"> Reference trigger name. </param>
         /// <returns> A new <see cref="Models.DataFactoryTriggerReference"/> instance for mocking. </returns>
@@ -659,6 +692,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryTriggerReference(referenceType, referenceName, default);
         }
 
+        /// <summary> Referenced tumbling window trigger dependency. </summary>
         /// <param name="referenceTrigger"> Referenced trigger. </param>
         /// <param name="offset"> Timespan applied to the start time of a tumbling window when evaluating dependency. </param>
         /// <param name="size"> The size of the window when evaluating the dependency. If undefined the frequency of the tumbling window will be used. </param>
@@ -668,6 +702,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new TumblingWindowTriggerDependencyReference(default, default, referenceTrigger, offset, size);
         }
 
+        /// <summary> Self referenced tumbling window trigger dependency. </summary>
         /// <param name="offset"> Timespan applied to the start time of a tumbling window when evaluating dependency. </param>
         /// <param name="size"> The size of the window when evaluating the dependency. If undefined the frequency of the tumbling window will be used. </param>
         /// <returns> A new <see cref="Models.SelfDependencyTumblingWindowTriggerReference"/> instance for mocking. </returns>
@@ -707,7 +742,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="pipeline"> Pipeline for which runs are created when all upstream pipelines complete successfully. </param>
         /// <param name="dependsOn"> Upstream Pipelines. </param>
         /// <param name="runDimension"> Run Dimension property that needs to be emitted by upstream pipelines. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dependsOn"/> or <paramref name="runDimension"/> is null. </exception>
         /// <returns> A new <see cref="Models.ChainingTrigger"/> instance for mocking. </returns>
         public static ChainingTrigger ChainingTrigger(string description = default, DataFactoryTriggerRuntimeState? runtimeState = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, TriggerPipelineReference pipeline = default, IEnumerable<DataFactoryPipelineReference> dependsOn = default, string runDimension = default)
         {
@@ -724,6 +758,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Trigger runs. </summary>
         /// <param name="triggerRunId"> Trigger run id. </param>
         /// <param name="triggerName"> Trigger name. </param>
         /// <param name="triggerType"> Trigger type. </param>
@@ -758,6 +793,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> A private link resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -777,6 +813,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Properties of a private link resource. </summary>
         /// <param name="groupId"> GroupId of a private link resource. </param>
         /// <param name="requiredMembers"> RequiredMembers of a private link resource. </param>
         /// <param name="requiredZoneNames"> RequiredZoneNames of a private link resource. </param>
@@ -789,6 +826,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Factory's git repo information. </summary>
         /// <param name="factoryResourceId"> The factory resource id. </param>
         /// <param name="repoConfiguration"> Git repo information of the factory. </param>
         /// <returns> A new <see cref="Models.FactoryRepoContent"/> instance for mocking. </returns>
@@ -797,6 +835,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new FactoryRepoContent(factoryResourceId, repoConfiguration, default);
         }
 
+        /// <summary> Azure-SSIS integration runtime outbound network dependency endpoints for one category. </summary>
         /// <param name="category"> The category of outbound network dependency. </param>
         /// <param name="endpoints"> The endpoints for outbound network dependency. </param>
         /// <returns> A new <see cref="Models.IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint"/> instance for mocking. </returns>
@@ -807,6 +846,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new IntegrationRuntimeOutboundNetworkDependenciesCategoryEndpoint(category, (endpoints ?? new ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesEndpoint>()).ToList(), default);
         }
 
+        /// <summary> The endpoint for Azure-SSIS integration runtime outbound network dependency. </summary>
         /// <param name="domainName"> The domain name of endpoint. </param>
         /// <param name="endpointDetails"> The details of endpoint. </param>
         /// <returns> A new <see cref="Models.IntegrationRuntimeOutboundNetworkDependenciesEndpoint"/> instance for mocking. </returns>
@@ -817,6 +857,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new IntegrationRuntimeOutboundNetworkDependenciesEndpoint(domainName, (endpointDetails ?? new ChangeTrackingList<IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails>()).ToList(), default);
         }
 
+        /// <summary> The details of Azure-SSIS integration runtime outbound network dependency endpoint. </summary>
         /// <param name="port"> The port of endpoint. </param>
         /// <returns> A new <see cref="Models.IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails"/> instance for mocking. </returns>
         public static IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(int? port = default)
@@ -824,6 +865,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new IntegrationRuntimeOutboundNetworkDependenciesEndpointDetails(port, default);
         }
 
+        /// <summary> The request payload of get SSIS object metadata. </summary>
         /// <param name="metadataPath"> Metadata path. </param>
         /// <returns> A new <see cref="Models.GetSsisObjectMetadataContent"/> instance for mocking. </returns>
         public static GetSsisObjectMetadataContent GetSsisObjectMetadataContent(string metadataPath = default)
@@ -831,6 +873,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new GetSsisObjectMetadataContent(metadataPath, default);
         }
 
+        /// <summary>
+        /// SSIS object metadata.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SsisFolder"/>, <see cref="Models.SsisProject"/>, <see cref="Models.SsisPackage"/>, and <see cref="Models.SsisEnvironment"/>.
+        /// </summary>
         /// <param name="metadataType"> Type of metadata. </param>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
@@ -841,6 +887,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new UnknownSsisObjectMetadata(default, id, name, description, default);
         }
 
+        /// <summary> Ssis folder. </summary>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
@@ -850,6 +897,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SsisFolder(default, id, name, description, default);
         }
 
+        /// <summary> Ssis project. </summary>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
@@ -875,6 +923,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (parameters ?? new ChangeTrackingList<SsisParameterInfo>()).ToList());
         }
 
+        /// <summary> Ssis environment reference. </summary>
         /// <param name="id"> Environment reference id. </param>
         /// <param name="environmentFolderName"> Environment folder name. </param>
         /// <param name="environmentName"> Environment name. </param>
@@ -885,6 +934,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SsisEnvironmentReference(id, environmentFolderName, environmentName, referenceType, default);
         }
 
+        /// <summary> Ssis parameter. </summary>
         /// <param name="id"> Parameter id. </param>
         /// <param name="name"> Parameter name. </param>
         /// <param name="description"> Parameter description. </param>
@@ -916,6 +966,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Ssis Package. </summary>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
@@ -940,6 +991,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (parameters ?? new ChangeTrackingList<SsisParameterInfo>()).ToList());
         }
 
+        /// <summary> Ssis environment. </summary>
         /// <param name="id"> Metadata id. </param>
         /// <param name="name"> Metadata name. </param>
         /// <param name="description"> Metadata description. </param>
@@ -960,6 +1012,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (variables ?? new ChangeTrackingList<SsisVariable>()).ToList());
         }
 
+        /// <summary> Ssis variable. </summary>
         /// <param name="id"> Variable id. </param>
         /// <param name="name"> Variable name. </param>
         /// <param name="description"> Variable description. </param>
@@ -981,6 +1034,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> The exposure control request. </summary>
         /// <param name="featureName"> The feature name. </param>
         /// <param name="featureType"> The feature type. </param>
         /// <returns> A new <see cref="Models.ExposureControlContent"/> instance for mocking. </returns>
@@ -989,6 +1043,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new ExposureControlContent(featureName, featureType, default);
         }
 
+        /// <summary> The exposure control response. </summary>
         /// <param name="featureName"> The feature name. </param>
         /// <param name="value"> The feature value. </param>
         /// <returns> A new <see cref="Models.ExposureControlResult"/> instance for mocking. </returns>
@@ -997,6 +1052,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new ExposureControlResult(featureName, value, default);
         }
 
+        /// <summary> A list of exposure control features. </summary>
         /// <param name="exposureControlRequests"> List of exposure control features. </param>
         /// <returns> A new <see cref="Models.ExposureControlBatchContent"/> instance for mocking. </returns>
         public static ExposureControlBatchContent ExposureControlBatchContent(IEnumerable<ExposureControlContent> exposureControlRequests = default)
@@ -1006,6 +1062,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new ExposureControlBatchContent((exposureControlRequests ?? new ChangeTrackingList<ExposureControlContent>()).ToList(), default);
         }
 
+        /// <summary> A list of exposure control feature values. </summary>
         /// <param name="exposureControlResults"> List of exposure control feature values. </param>
         /// <returns> A new <see cref="Models.ExposureControlBatchResult"/> instance for mocking. </returns>
         public static ExposureControlBatchResult ExposureControlBatchResult(IEnumerable<ExposureControlResult> exposureControlResults = default)
@@ -1015,6 +1072,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new ExposureControlBatchResult((exposureControlResults ?? new ChangeTrackingList<ExposureControlResult>()).ToList(), default);
         }
 
+        /// <summary> Request body structure for creating data flow debug session. </summary>
         /// <param name="computeType"> Compute type of the cluster. The value will be overwritten by the same setting in integration runtime if provided. </param>
         /// <param name="coreCount"> Core count of the cluster. The value will be overwritten by the same setting in integration runtime if provided. </param>
         /// <param name="timeToLiveInMinutes"> Time to live setting of the cluster in minutes. </param>
@@ -1025,6 +1083,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryDataFlowDebugSessionContent(computeType, coreCount, timeToLiveInMinutes, integrationRuntime, default);
         }
 
+        /// <summary> Integration runtime debug resource. </summary>
         /// <param name="name"> The resource name. </param>
         /// <param name="properties"> Integration runtime properties. </param>
         /// <returns> A new <see cref="Models.DataFactoryIntegrationRuntimeDebugInfo"/> instance for mocking. </returns>
@@ -1033,6 +1092,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryIntegrationRuntimeDebugInfo(name, default, properties);
         }
 
+        /// <summary>
+        /// Azure Data Factory nested object which serves as a compute resource for activities.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ManagedIntegrationRuntime"/> and <see cref="Models.SelfHostedIntegrationRuntime"/>.
+        /// </summary>
         /// <param name="integrationRuntimeType"> Type of integration runtime. </param>
         /// <param name="description"> Integration runtime description. </param>
         /// <param name="additionalProperties"></param>
@@ -1066,6 +1129,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 managedVirtualNetwork);
         }
 
+        /// <summary> The compute resource properties for managed integration runtime. </summary>
         /// <param name="location"> The location for managed integration runtime. The supported regions could be found on https://docs.microsoft.com/en-us/azure/data-factory/data-factory-data-movement-activities. </param>
         /// <param name="nodeSize"> The node size requirement to managed integration runtime. </param>
         /// <param name="numberOfNodes"> The required number of nodes for managed integration runtime. </param>
@@ -1092,6 +1156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Data flow properties for managed integration runtime. </summary>
         /// <param name="computeType"> Compute type of the cluster which will execute data flow job. </param>
         /// <param name="coreCount"> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. </param>
         /// <param name="timeToLiveInMinutes"> Time to live (in minutes) setting of the cluster which will execute data flow job. </param>
@@ -1113,6 +1178,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> The IntegrationRuntimeDataFlowCustomItem. </summary>
         /// <param name="name"> Name of custom property. </param>
         /// <param name="value"> Value of custom property. </param>
         /// <returns> A new <see cref="Models.IntegrationRuntimeDataFlowCustomItem"/> instance for mocking. </returns>
@@ -1121,6 +1187,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new IntegrationRuntimeDataFlowCustomItem(name, value, default);
         }
 
+        /// <summary> VNet properties for managed integration runtime. </summary>
         /// <param name="vnetId"> The ID of the VNet that this integration runtime will join. </param>
         /// <param name="subnet"> The name of the subnet this integration runtime will join. </param>
         /// <param name="publicIPs"> Resource IDs of the public IP addresses that this integration runtime will use. </param>
@@ -1135,6 +1202,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new IntegrationRuntimeVnetProperties(vnetId, subnet, (publicIPs ?? new ChangeTrackingList<string>()).ToList(), subnetId, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> CopyComputeScale properties for managed integration runtime. </summary>
         /// <param name="dataIntegrationUnit"> DIU number setting reserved for copy activity execution. Supported values are multiples of 4 in range 4-256. </param>
         /// <param name="timeToLive"> Time to live (in minutes) setting of integration runtime which will execute copy activity. </param>
         /// <param name="additionalProperties"></param>
@@ -1146,6 +1214,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new CopyComputeScaleProperties(dataIntegrationUnit, timeToLive, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> PipelineExternalComputeScale properties for managed integration runtime. </summary>
         /// <param name="timeToLive"> Time to live (in minutes) setting of integration runtime which will execute pipeline and external activity. </param>
         /// <param name="numberOfPipelineNodes"> Number of the pipeline nodes, which should be greater than 0 and less than 11. </param>
         /// <param name="numberOfExternalNodes"> Number of the the external nodes, which should be greater than 0 and less than 11. </param>
@@ -1158,6 +1227,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new PipelineExternalComputeScaleProperties(timeToLive, numberOfPipelineNodes, numberOfExternalNodes, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> SSIS properties for managed integration runtime. </summary>
         /// <param name="catalogInfo"> Catalog information for managed dedicated integration runtime. </param>
         /// <param name="licenseType"> License type for bringing your own license scenario. </param>
         /// <param name="customSetupScriptProperties"> Custom setup script properties for a managed dedicated integration runtime. </param>
@@ -1186,6 +1256,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Catalog information for managed dedicated integration runtime. </summary>
         /// <param name="catalogServerEndpoint"> The catalog database server URL. </param>
         /// <param name="catalogAdminUserName"> The administrator user name of catalog database. </param>
         /// <param name="catalogAdminPassword"> The password of the administrator user account of the catalog database. </param>
@@ -1206,6 +1277,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Custom setup script properties for a managed dedicated integration runtime. </summary>
         /// <param name="blobContainerUri"> The URI of the Azure blob container that contains the custom setup script. </param>
         /// <param name="sasToken"> The SAS token of the Azure blob container. </param>
         /// <returns> A new <see cref="Models.IntegrationRuntimeCustomSetupScriptProperties"/> instance for mocking. </returns>
@@ -1214,6 +1286,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new IntegrationRuntimeCustomSetupScriptProperties(blobContainerUri, sasToken, default);
         }
 
+        /// <summary> Data proxy properties for a managed dedicated integration runtime. </summary>
         /// <param name="connectVia"> The self-hosted integration runtime reference. </param>
         /// <param name="stagingLinkedService"> The staging linked service reference. </param>
         /// <param name="path"> The path to contain the staged data in the Blob storage. </param>
@@ -1223,6 +1296,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new IntegrationRuntimeDataProxyProperties(connectVia, stagingLinkedService, path, default);
         }
 
+        /// <summary> The entity reference. </summary>
         /// <param name="integrationRuntimeEntityReferenceType"> The type of this referenced entity. </param>
         /// <param name="referenceName"> The name of this referenced entity. </param>
         /// <returns> A new <see cref="Models.EntityReference"/> instance for mocking. </returns>
@@ -1231,6 +1305,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new EntityReference(integrationRuntimeEntityReferenceType, referenceName, default);
         }
 
+        /// <summary>
+        /// The base definition of the custom setup.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CmdkeySetup"/>, <see cref="Models.EnvironmentVariableSetup"/>, <see cref="Models.ComponentSetup"/>, and <see cref="Models.AzPowerShellSetup"/>.
+        /// </summary>
         /// <param name="customSetupBaseType"> The type of custom setup. </param>
         /// <returns> A new <see cref="Models.CustomSetupBase"/> instance for mocking. </returns>
         public static CustomSetupBase CustomSetupBase(string customSetupBaseType = default)
@@ -1264,6 +1342,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new AzPowerShellSetup(default, default, default);
         }
 
+        /// <summary> Package store for the SSIS integration runtime. </summary>
         /// <param name="name"> The name of the package store. </param>
         /// <param name="packageStoreLinkedService"> The package store linked service reference. </param>
         /// <returns> A new <see cref="Models.DataFactoryPackageStore"/> instance for mocking. </returns>
@@ -1272,6 +1351,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryPackageStore(name, packageStoreLinkedService, default);
         }
 
+        /// <summary> Credential reference type. </summary>
         /// <param name="referenceType"> Credential reference type. </param>
         /// <param name="referenceName"> Reference credential name. </param>
         /// <param name="additionalProperties"></param>
@@ -1283,6 +1363,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryCredentialReference(referenceType, referenceName, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Interactive authoring capability type properties. </summary>
         /// <param name="status"> The interactive authoring capability status. Must be one of InteractiveCapabilityStatus. The default value is 'Enabling'. </param>
         /// <param name="autoTerminationMinutes"> The allowed idle time for interactive authoring. </param>
         /// <returns> A new <see cref="Models.InteractiveQueryProperties"/> instance for mocking. </returns>
@@ -1291,6 +1372,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new InteractiveQueryProperties(status, autoTerminationMinutes, default);
         }
 
+        /// <summary> Managed Virtual Network reference type. </summary>
         /// <param name="referenceType"> Managed Virtual Network reference type. </param>
         /// <param name="referenceName"> Reference ManagedVirtualNetwork name. </param>
         /// <returns> A new <see cref="Models.ManagedVirtualNetworkReference"/> instance for mocking. </returns>
@@ -1311,6 +1393,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SelfHostedIntegrationRuntime(default, description, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), linkedInfo is null && isSelfContainedInteractiveAuthoringEnabled is null ? default : new SelfHostedIntegrationRuntimeTypeProperties(linkedInfo, isSelfContainedInteractiveAuthoringEnabled, default));
         }
 
+        /// <summary>
+        /// The base definition of a linked integration runtime.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.LinkedIntegrationRuntimeKeyAuthorization"/> and <see cref="Models.LinkedIntegrationRuntimeRbacAuthorization"/>.
+        /// </summary>
         /// <param name="authorizationType"> The authorization type for integration runtime sharing. </param>
         /// <returns> A new <see cref="Models.LinkedIntegrationRuntimeType"/> instance for mocking. </returns>
         public static LinkedIntegrationRuntimeType LinkedIntegrationRuntimeType(string authorizationType = default)
@@ -1318,6 +1404,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new UnknownLinkedIntegrationRuntimeType(authorizationType, default);
         }
 
+        /// <summary> The key authorization type integration runtime. </summary>
         /// <param name="key"> The key used for authorization. </param>
         /// <returns> A new <see cref="Models.LinkedIntegrationRuntimeKeyAuthorization"/> instance for mocking. </returns>
         public static LinkedIntegrationRuntimeKeyAuthorization LinkedIntegrationRuntimeKeyAuthorization(DataFactorySecretString key = default)
@@ -1325,6 +1412,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new LinkedIntegrationRuntimeKeyAuthorization(default, default, key);
         }
 
+        /// <summary> The role based access control (RBAC) authorization type integration runtime. </summary>
         /// <param name="resourceId"> The resource identifier of the integration runtime to be shared. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <returns> A new <see cref="Models.LinkedIntegrationRuntimeRbacAuthorization"/> instance for mocking. </returns>
@@ -1333,6 +1421,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new LinkedIntegrationRuntimeRbacAuthorization(default, default, resourceId, credential);
         }
 
+        /// <summary> Azure Data Factory nested debug resource. </summary>
         /// <param name="name"> The resource name. </param>
         /// <returns> A new <see cref="Models.DataFactoryDebugInfo"/> instance for mocking. </returns>
         public static DataFactoryDebugInfo DataFactoryDebugInfo(string name = default)
@@ -1340,6 +1429,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryDebugInfo(name, default);
         }
 
+        /// <summary> Response body structure for creating data flow debug session. </summary>
         /// <param name="status"> The state of the debug session. </param>
         /// <param name="sessionId"> The ID of data flow debug session. </param>
         /// <returns> A new <see cref="Models.DataFactoryDataFlowCreateDebugSessionResult"/> instance for mocking. </returns>
@@ -1348,6 +1438,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryDataFlowCreateDebugSessionResult(status, sessionId, default);
         }
 
+        /// <summary> Data flow debug session info. </summary>
         /// <param name="dataFlowName"> The name of the data flow. </param>
         /// <param name="computeType"> Compute type of the cluster. </param>
         /// <param name="coreCount"> Core count of the cluster. </param>
@@ -1376,6 +1467,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Request body structure for starting data flow debug session. </summary>
         /// <param name="sessionId"> The ID of data flow debug session. </param>
         /// <param name="dataFlow"> Data flow instance. </param>
         /// <param name="dataFlows"> List of Data flows. </param>
@@ -1403,6 +1495,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Data flow debug resource. </summary>
         /// <param name="name"> The resource name. </param>
         /// <param name="properties"> Data flow properties. </param>
         /// <returns> A new <see cref="Models.DataFactoryDataFlowDebugInfo"/> instance for mocking. </returns>
@@ -1451,6 +1544,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     default));
         }
 
+        /// <summary> Transformation for data flow source. </summary>
         /// <param name="name"> Transformation name. </param>
         /// <param name="description"> Transformation description. </param>
         /// <param name="dataset"> Dataset reference. </param>
@@ -1470,6 +1564,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 schemaLinkedService);
         }
 
+        /// <summary> A data flow transformation. </summary>
         /// <param name="name"> Transformation name. </param>
         /// <param name="description"> Transformation description. </param>
         /// <param name="dataset"> Dataset reference. </param>
@@ -1487,6 +1582,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Dataset reference type. </summary>
         /// <param name="referenceType"> Dataset reference type. </param>
         /// <param name="referenceName"> Reference dataset name. </param>
         /// <param name="parameters"> Arguments for dataset. </param>
@@ -1498,6 +1594,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DatasetReference(referenceType, referenceName, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), default);
         }
 
+        /// <summary> Data flow reference type. </summary>
         /// <param name="referenceType"> Data flow reference type. </param>
         /// <param name="referenceName"> Reference data flow name. </param>
         /// <param name="datasetParameters"> Reference data flow parameters from dataset. </param>
@@ -1512,6 +1609,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFlowReference(referenceType, referenceName, datasetParameters, parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Transformation for data flow sink. </summary>
         /// <param name="name"> Transformation name. </param>
         /// <param name="description"> Transformation description. </param>
         /// <param name="dataset"> Dataset reference. </param>
@@ -1581,6 +1679,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 sources is null && script is null && documentLocale is null ? default : new PowerQueryTypeProperties((sources ?? new ChangeTrackingList<PowerQuerySource>()).ToList(), script, documentLocale, default));
         }
 
+        /// <summary> Power query source. </summary>
         /// <param name="name"> Transformation name. </param>
         /// <param name="description"> Transformation description. </param>
         /// <param name="dataset"> Dataset reference. </param>
@@ -1602,6 +1701,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 script);
         }
 
+        /// <summary> Dataset debug resource. </summary>
         /// <param name="name"> The resource name. </param>
         /// <param name="properties"> Dataset properties. </param>
         /// <returns> A new <see cref="Models.DataFactoryDatasetDebugInfo"/> instance for mocking. </returns>
@@ -1638,6 +1738,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Columns that define the structure of the dataset. </summary>
         /// <param name="columnName"> Name of the column. Type: string (or Expression with resultType string). </param>
         /// <param name="columnType"> Type of the column. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.DatasetDataElement"/> instance for mocking. </returns>
@@ -1646,6 +1747,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DatasetDataElement(columnName, columnType, default);
         }
 
+        /// <summary> Columns that define the physical type schema of the dataset. </summary>
         /// <param name="schemaColumnName"> Name of the schema column. Type: string (or Expression with resultType string). </param>
         /// <param name="schemaColumnType"> Type of the schema column. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -1657,6 +1759,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DatasetSchemaDataElement(schemaColumnName, schemaColumnType, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Definition of a single parameter for an entity. </summary>
         /// <param name="parameterType"> Parameter type. </param>
         /// <param name="defaultValue"> Default value of parameter. </param>
         /// <returns> A new <see cref="Models.EntityParameterSpecification"/> instance for mocking. </returns>
@@ -1665,6 +1768,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new EntityParameterSpecification(parameterType, defaultValue, default);
         }
 
+        /// <summary>
+        /// The format definition of a storage.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DatasetTextFormat"/>, <see cref="Models.DatasetJsonFormat"/>, <see cref="Models.DatasetAvroFormat"/>, <see cref="Models.DatasetOrcFormat"/>, and <see cref="Models.DatasetParquetFormat"/>.
+        /// </summary>
         /// <param name="datasetStorageFormatType"> Type of dataset storage format. </param>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
@@ -1677,6 +1784,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new UnknownDatasetStorageFormat(datasetStorageFormatType, serializer, deserializer, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> The data stored in text format. </summary>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -1710,6 +1818,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 firstRowAsHeader);
         }
 
+        /// <summary> The data stored in JSON format. </summary>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -1735,6 +1844,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 jsonPathDefinition);
         }
 
+        /// <summary> The data stored in Avro format. </summary>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -1746,6 +1856,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DatasetAvroFormat(default, serializer, deserializer, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> The data stored in Optimized Row Columnar (ORC) format. </summary>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -1757,6 +1868,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DatasetOrcFormat(default, serializer, deserializer, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> The data stored in Parquet format. </summary>
         /// <param name="serializer"> Serializer. Type: string (or Expression with resultType string). </param>
         /// <param name="deserializer"> Deserializer. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -1768,6 +1880,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DatasetParquetFormat(default, serializer, deserializer, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> The compression method used on a dataset. </summary>
         /// <param name="datasetCompressionType"> Type of dataset compression. Type: string (or Expression with resultType string). </param>
         /// <param name="level"> The dataset compression level. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -1810,6 +1923,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 dataLocation is null && avroCompressionCodec is null && avroCompressionLevel is null ? default : new AvroDatasetTypeProperties(dataLocation, avroCompressionCodec, avroCompressionLevel, default));
         }
 
+        /// <summary>
+        /// Dataset location.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureBlobStorageLocation"/>, <see cref="Models.AzureBlobFSLocation"/>, <see cref="Models.AzureDataLakeStoreLocation"/>, <see cref="Models.AmazonS3Location"/>, <see cref="Models.FileServerLocation"/>, <see cref="Models.AzureFileStorageLocation"/>, <see cref="Models.AmazonS3CompatibleLocation"/>, <see cref="Models.OracleCloudStorageLocation"/>, <see cref="Models.GoogleCloudStorageLocation"/>, <see cref="Models.FtpServerLocation"/>, <see cref="Models.SftpLocation"/>, <see cref="Models.HttpServerLocation"/>, <see cref="Models.HdfsLocation"/>, and <see cref="Models.LakeHouseLocation"/>.
+        /// </summary>
         /// <param name="datasetLocationType"> Type of dataset storage location. </param>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
@@ -1822,6 +1939,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new UnknownDatasetLocation(datasetLocationType, folderPath, fileName, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> The location of azure blob dataset. </summary>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -1834,6 +1952,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new AzureBlobStorageLocation(default, folderPath, fileName, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), container);
         }
 
+        /// <summary> The location of azure blobFS dataset. </summary>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -1846,6 +1965,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new AzureBlobFSLocation(default, folderPath, fileName, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), fileSystem);
         }
 
+        /// <summary> The location of azure data lake store dataset. </summary>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -1857,6 +1977,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new AzureDataLakeStoreLocation(default, folderPath, fileName, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> The location of amazon S3 dataset. </summary>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -1876,6 +1997,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 version);
         }
 
+        /// <summary> The location of file server dataset. </summary>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -1887,6 +2009,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new FileServerLocation(default, folderPath, fileName, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> The location of file server dataset. </summary>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -1898,6 +2021,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new AzureFileStorageLocation(default, folderPath, fileName, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> The location of Amazon S3 Compatible dataset. </summary>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -1917,6 +2041,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 version);
         }
 
+        /// <summary> The location of Oracle Cloud Storage dataset. </summary>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -1936,6 +2061,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 version);
         }
 
+        /// <summary> The location of Google Cloud Storage dataset. </summary>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -1955,6 +2081,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 version);
         }
 
+        /// <summary> The location of ftp server dataset. </summary>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -1966,6 +2093,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new FtpServerLocation(default, folderPath, fileName, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> The location of SFTP dataset. </summary>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -1977,6 +2105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SftpLocation(default, folderPath, fileName, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> The location of http server. </summary>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -1989,6 +2118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new HttpServerLocation(default, folderPath, fileName, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), relativeUri);
         }
 
+        /// <summary> The location of HDFS. </summary>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -2000,6 +2130,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new HdfsLocation(default, folderPath, fileName, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> The location of Microsoft Fabric Lakehouse Files dataset. </summary>
         /// <param name="folderPath"> Specify the folder path of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="fileName"> Specify the file name of dataset. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -2139,7 +2270,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The table name of the Azure Table storage. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         /// <returns> A new <see cref="Models.AzureTableDataset"/> instance for mocking. </returns>
         public static AzureTableDataset AzureTableDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
@@ -2321,7 +2451,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="collectionName"> CosmosDB (SQL API) collection name. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
         /// <returns> A new <see cref="Models.CosmosDBSqlApiCollectionDataset"/> instance for mocking. </returns>
         public static CosmosDBSqlApiCollectionDataset CosmosDBSqlApiCollectionDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> collectionName = default)
         {
@@ -2351,7 +2480,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="collectionName"> Document Database collection name. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
         /// <returns> A new <see cref="Models.DocumentDBCollectionDataset"/> instance for mocking. </returns>
         public static DocumentDBCollectionDataset DocumentDBCollectionDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> collectionName = default)
         {
@@ -2469,7 +2597,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> Name of the dataset to extract from Office 365. Type: string (or Expression with resultType string). </param>
         /// <param name="predicate"> A predicate expression that can be used to filter the specific rows to extract from Office 365. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         /// <returns> A new <see cref="Models.Office365Dataset"/> instance for mocking. </returns>
         public static Office365Dataset Office365Dataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default, DataFactoryElement<string> predicate = default)
         {
@@ -2499,7 +2626,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="collectionName"> The table name of the MongoDB database. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionName"/> is null. </exception>
         /// <returns> A new <see cref="Models.MongoDBCollectionDataset"/> instance for mocking. </returns>
         public static MongoDBCollectionDataset MongoDBCollectionDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> collectionName = default)
         {
@@ -2529,7 +2655,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="collection"> The collection name of the MongoDB Atlas database. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collection"/> is null. </exception>
         /// <returns> A new <see cref="Models.MongoDBAtlasCollectionDataset"/> instance for mocking. </returns>
         public static MongoDBAtlasCollectionDataset MongoDBAtlasCollectionDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> collection = default)
         {
@@ -2559,7 +2684,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="collection"> The collection name of the MongoDB database. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collection"/> is null. </exception>
         /// <returns> A new <see cref="Models.MongoDBV2CollectionDataset"/> instance for mocking. </returns>
         public static MongoDBV2CollectionDataset MongoDBV2CollectionDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> collection = default)
         {
@@ -2589,7 +2713,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="collection"> The collection name of the CosmosDB (MongoDB API) database. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collection"/> is null. </exception>
         /// <returns> A new <see cref="Models.CosmosDBMongoDBApiCollectionDataset"/> instance for mocking. </returns>
         public static CosmosDBMongoDBApiCollectionDataset CosmosDBMongoDBApiCollectionDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> collection = default)
         {
@@ -3213,7 +3336,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="tableName"> The name of the SAP Table. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         /// <returns> A new <see cref="Models.SapTableResourceDataset"/> instance for mocking. </returns>
         public static SapTableResourceDataset SapTableResourceDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> tableName = default)
         {
@@ -3244,7 +3366,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="context"> The context of the SAP ODP Object. Type: string (or Expression with resultType string). </param>
         /// <param name="objectName"> The name of the SAP ODP Object. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="context"/> or <paramref name="objectName"/> is null. </exception>
         /// <returns> A new <see cref="Models.SapOdpResourceDataset"/> instance for mocking. </returns>
         public static SapOdpResourceDataset SapOdpResourceDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> context = default, DataFactoryElement<string> objectName = default)
         {
@@ -3274,7 +3395,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folderName"> The name of the folder that this Dataset is in. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="indexName"> The name of the Azure Search Index. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="indexName"/> is null. </exception>
         /// <returns> A new <see cref="Models.AzureSearchIndexDataset"/> instance for mocking. </returns>
         public static AzureSearchIndexDataset AzureSearchIndexDataset(string description = default, DataFactoryElement<IList<DatasetDataElement>> structure = default, DataFactoryElement<IList<DatasetSchemaDataElement>> schema = default, DataFactoryLinkedServiceReference linkedServiceName = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, string folderName = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> indexName = default)
         {
@@ -4604,6 +4724,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 tableName is null && valueType is null ? default : new ServiceNowV2DatasetTypeProperties(tableName, valueType, default));
         }
 
+        /// <summary> Linked service debug resource. </summary>
         /// <param name="name"> The resource name. </param>
         /// <param name="properties"> Properties of linked service. </param>
         /// <returns> A new <see cref="Models.DataFactoryLinkedServiceDebugInfo"/> instance for mocking. </returns>
@@ -4612,6 +4733,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryLinkedServiceDebugInfo(name, default, properties);
         }
 
+        /// <summary>
+        /// The nested object which contains the information and credential which can be used to connect with related store or compute resource.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureStorageLinkedService"/>, <see cref="AzureBlobStorageLinkedService"/>, <see cref="Models.AzureTableStorageLinkedService"/>, <see cref="AzureSqlDWLinkedService"/>, <see cref="SqlServerLinkedService"/>, <see cref="AmazonRdsForSqlServerLinkedService"/>, <see cref="AzureSqlDatabaseLinkedService"/>, <see cref="AzureSqlMILinkedService"/>, <see cref="Models.AzureBatchLinkedService"/>, <see cref="Models.AzureKeyVaultLinkedService"/>, <see cref="CosmosDBLinkedService"/>, <see cref="DynamicsLinkedService"/>, <see cref="DynamicsCrmLinkedService"/>, <see cref="CommonDataServiceForAppsLinkedService"/>, <see cref="HDInsightLinkedService"/>, <see cref="Models.FileServerLinkedService"/>, <see cref="Models.AzureFileStorageLinkedService"/>, <see cref="Models.AmazonS3CompatibleLinkedService"/>, <see cref="Models.OracleCloudStorageLinkedService"/>, <see cref="Models.GoogleCloudStorageLinkedService"/>, <see cref="OracleLinkedService"/>, <see cref="AmazonRdsForOracleLinkedService"/>, <see cref="Models.AzureMySqlLinkedService"/>, <see cref="MySqlLinkedService"/>, <see cref="Models.PostgreSqlLinkedService"/>, <see cref="PostgreSqlV2LinkedService"/>, <see cref="SybaseLinkedService"/>, <see cref="Db2LinkedService"/>, <see cref="TeradataLinkedService"/>, <see cref="AzureMLLinkedService"/>, <see cref="AzureMLServiceLinkedService"/>, <see cref="OdbcLinkedService"/>, <see cref="InformixLinkedService"/>, <see cref="MicrosoftAccessLinkedService"/>, <see cref="HdfsLinkedService"/>, <see cref="ODataLinkedService"/>, <see cref="Models.WebLinkedService"/>, <see cref="CassandraLinkedService"/>, <see cref="MongoDBLinkedService"/>, <see cref="Models.MongoDBAtlasLinkedService"/>, <see cref="Models.MongoDBV2LinkedService"/>, <see cref="Models.CosmosDBMongoDBApiLinkedService"/>, <see cref="AzureDataLakeStoreLinkedService"/>, <see cref="AzureBlobFSLinkedService"/>, <see cref="Office365LinkedService"/>, <see cref="SalesforceLinkedService"/>, <see cref="SalesforceServiceCloudLinkedService"/>, <see cref="SapCloudForCustomerLinkedService"/>, <see cref="SapEccLinkedService"/>, <see cref="SapOpenHubLinkedService"/>, <see cref="SapOdpLinkedService"/>, <see cref="RestServiceLinkedService"/>, <see cref="TeamDeskLinkedService"/>, <see cref="QuickbaseLinkedService"/>, <see cref="Models.SmartsheetLinkedService"/>, <see cref="ZendeskLinkedService"/>, <see cref="Models.DataworldLinkedService"/>, <see cref="AppFiguresLinkedService"/>, <see cref="Models.AsanaLinkedService"/>, <see cref="TwilioLinkedService"/>, <see cref="Models.GoogleSheetsLinkedService"/>, <see cref="Models.AmazonS3LinkedService"/>, <see cref="AmazonRedshiftLinkedService"/>, <see cref="Models.CustomDataSourceLinkedService"/>, <see cref="AzureSearchLinkedService"/>, <see cref="HttpLinkedService"/>, <see cref="FtpServerLinkedService"/>, <see cref="SftpServerLinkedService"/>, <see cref="SapBWLinkedService"/>, <see cref="Models.SapHanaLinkedService"/>, <see cref="Models.AmazonMwsLinkedService"/>, <see cref="AzurePostgreSqlLinkedService"/>, <see cref="ConcurLinkedService"/>, <see cref="Models.CouchbaseLinkedService"/>, <see cref="Models.DrillLinkedService"/>, <see cref="EloquaLinkedService"/>, <see cref="GoogleBigQueryLinkedService"/>, <see cref="Models.GoogleBigQueryV2LinkedService"/>, <see cref="GreenplumLinkedService"/>, <see cref="HBaseLinkedService"/>, <see cref="HiveLinkedService"/>, <see cref="Models.HubspotLinkedService"/>, <see cref="ImpalaLinkedService"/>, <see cref="JiraLinkedService"/>, <see cref="Models.MagentoLinkedService"/>, <see cref="MariaDBLinkedService"/>, <see cref="Models.AzureMariaDBLinkedService"/>, <see cref="Models.MarketoLinkedService"/>, <see cref="Models.PaypalLinkedService"/>, <see cref="PhoenixLinkedService"/>, <see cref="PrestoLinkedService"/>, <see cref="Models.QuickBooksLinkedService"/>, <see cref="ServiceNowLinkedService"/>, <see cref="Models.ShopifyLinkedService"/>, <see cref="SparkLinkedService"/>, <see cref="Models.SquareLinkedService"/>, <see cref="Models.XeroLinkedService"/>, <see cref="Models.ZohoLinkedService"/>, <see cref="Models.VerticaLinkedService"/>, <see cref="Models.NetezzaLinkedService"/>, <see cref="Models.SalesforceMarketingCloudLinkedService"/>, <see cref="HDInsightOnDemandLinkedService"/>, <see cref="AzureDataLakeAnalyticsLinkedService"/>, <see cref="AzureDatabricksLinkedService"/>, <see cref="AzureDatabricksDeltaLakeLinkedService"/>, <see cref="Models.ResponsysLinkedService"/>, <see cref="DynamicsAXLinkedService"/>, <see cref="OracleServiceCloudLinkedService"/>, <see cref="Models.GoogleAdWordsLinkedService"/>, <see cref="SapTableLinkedService"/>, <see cref="AzureDataExplorerLinkedService"/>, <see cref="Models.AzureFunctionLinkedService"/>, <see cref="Models.SnowflakeLinkedService"/>, <see cref="SnowflakeV2LinkedService"/>, <see cref="SharePointOnlineListLinkedService"/>, <see cref="Models.AzureSynapseArtifactsLinkedService"/>, <see cref="LakeHouseLinkedService"/>, <see cref="Models.SalesforceV2LinkedService"/>, <see cref="Models.SalesforceServiceCloudV2LinkedService"/>, <see cref="WarehouseLinkedService"/>, and <see cref="ServiceNowV2LinkedService"/>.
+        /// </summary>
         /// <param name="linkedServiceType"> Type of linked service. </param>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
@@ -4636,6 +4761,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Integration runtime reference type. </summary>
         /// <param name="referenceType"> Type of integration runtime. </param>
         /// <param name="referenceName"> Reference integration runtime name. </param>
         /// <param name="parameters"> Arguments for integration runtime. </param>
@@ -4707,6 +4833,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Sql always encrypted properties. </summary>
         /// <param name="alwaysEncryptedAkvAuthType"> Sql always encrypted AKV authentication type. Type: string. </param>
         /// <param name="servicePrincipalId"> The client ID of the application in Azure Active Directory used for Azure Key Vault authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="servicePrincipalKey"> The key of the service principal used to authenticate against Azure Key Vault. </param>
@@ -4731,7 +4858,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="linkedServiceName0"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="batchUri"/>, <paramref name="poolName"/> or <paramref name="linkedServiceName"/> is null. </exception>
         /// <returns> A new <see cref="Models.AzureBatchLinkedService"/> instance for mocking. </returns>
         public static AzureBatchLinkedService AzureBatchLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> accountName = default, DataFactorySecret accessKey = default, DataFactoryElement<string> batchUri = default, DataFactoryElement<string> poolName = default, DataFactoryLinkedServiceReference linkedServiceName = default, string encryptedCredential = default, DataFactoryCredentialReference credential = default, DataFactoryLinkedServiceReference linkedServiceName0 = default)
         {
@@ -4759,7 +4885,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="baseUri"> The base URL of the Azure Key Vault. e.g. https://myakv.vault.azure.net Type: string (or Expression with resultType string). </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="baseUri"/> is null. </exception>
         /// <returns> A new <see cref="Models.AzureKeyVaultLinkedService"/> instance for mocking. </returns>
         public static AzureKeyVaultLinkedService AzureKeyVaultLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> baseUri = default, DataFactoryCredentialReference credential = default)
         {
@@ -4789,7 +4914,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="password"> Password to logon the server. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="password0"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         /// <returns> A new <see cref="Models.FileServerLinkedService"/> instance for mocking. </returns>
         public static FileServerLinkedService FileServerLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> host = default, DataFactoryElement<string> userId = default, DataFactorySecret password = default, string encryptedCredential = default, DataFactorySecret password0 = default)
         {
@@ -4941,7 +5065,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         /// <returns> A new <see cref="Models.AzureMySqlLinkedService"/> instance for mocking. </returns>
         public static AzureMySqlLinkedService AzureMySqlLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, DataFactoryKeyVaultSecret password = default, string encryptedCredential = default)
         {
@@ -4969,7 +5092,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="connectionString"> The connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         /// <returns> A new <see cref="Models.PostgreSqlLinkedService"/> instance for mocking. </returns>
         public static PostgreSqlLinkedService PostgreSqlLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, DataFactoryKeyVaultSecret password = default, string encryptedCredential = default)
         {
@@ -4988,6 +5110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Web linked service. </summary>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -5013,6 +5136,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 typeProperties);
         }
 
+        /// <summary>
+        /// Base definition of WebLinkedServiceTypeProperties, this typeProperties is polymorphic based on authenticationType, so not flattened in SDK models.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.WebAnonymousAuthentication"/>, <see cref="Models.WebBasicAuthentication"/>, and <see cref="Models.WebClientCertificateAuthentication"/>.
+        /// </summary>
         /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> Type of authentication used to connect to the web table source. </param>
         /// <returns> A new <see cref="Models.WebLinkedServiceTypeProperties"/> instance for mocking. </returns>
@@ -5021,6 +5148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new UnknownWebLinkedServiceTypeProperties(uri, default, default);
         }
 
+        /// <summary> A WebLinkedService that uses anonymous authentication to communicate with an HTTP endpoint. </summary>
         /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.WebAnonymousAuthentication"/> instance for mocking. </returns>
         public static WebAnonymousAuthentication WebAnonymousAuthentication(DataFactoryElement<string> uri = default)
@@ -5028,6 +5156,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new WebAnonymousAuthentication(uri, default, default);
         }
 
+        /// <summary> A WebLinkedService that uses basic authentication to communicate with an HTTP endpoint. </summary>
         /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="username"> User name for Basic authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> The password for Basic authentication. </param>
@@ -5037,6 +5166,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new WebBasicAuthentication(uri, default, default, username, password);
         }
 
+        /// <summary> A WebLinkedService that uses client certificate based authentication to communicate with an HTTP endpoint. This scheme follows mutual authentication; the server must also provide valid credentials to the client. </summary>
         /// <param name="uri"> The URL of the web service endpoint, e.g. https://www.microsoft.com . Type: string (or Expression with resultType string). </param>
         /// <param name="pfx"> Base64-encoded contents of a PFX file. </param>
         /// <param name="password"> Password for the PFX file. </param>
@@ -5055,7 +5185,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="connectionString"> The MongoDB Atlas connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="database"> The name of the MongoDB Atlas database that you want to access. Type: string (or Expression with resultType string). </param>
         /// <param name="driverVersion"> The driver version that you want to choose. Allowed value are v1 and v2. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="database"/> is null. </exception>
         /// <returns> A new <see cref="Models.MongoDBAtlasLinkedService"/> instance for mocking. </returns>
         public static MongoDBAtlasLinkedService MongoDBAtlasLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, DataFactoryElement<string> database = default, DataFactoryElement<string> driverVersion = default)
         {
@@ -5082,7 +5211,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="connectionString"> The MongoDB connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="database"> The name of the MongoDB database that you want to access. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="database"/> is null. </exception>
         /// <returns> A new <see cref="Models.MongoDBV2LinkedService"/> instance for mocking. </returns>
         public static MongoDBV2LinkedService MongoDBV2LinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, DataFactoryElement<string> database = default)
         {
@@ -5110,7 +5238,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="isServerVersionAbove32"> Whether the CosmosDB (MongoDB API) server version is higher than 3.2. The default value is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="connectionString"> The CosmosDB (MongoDB API) connection string. Type: string, SecureString or AzureKeyVaultSecretReference. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="database"> The name of the CosmosDB (MongoDB API) database that you want to access. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> or <paramref name="database"/> is null. </exception>
         /// <returns> A new <see cref="Models.CosmosDBMongoDBApiLinkedService"/> instance for mocking. </returns>
         public static CosmosDBMongoDBApiLinkedService CosmosDBMongoDBApiLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<bool> isServerVersionAbove32 = default, DataFactoryElement<string> connectionString = default, DataFactoryElement<string> database = default)
         {
@@ -5137,7 +5264,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="apiToken"> The api token for the Smartsheet source. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiToken"/> is null. </exception>
         /// <returns> A new <see cref="Models.SmartsheetLinkedService"/> instance for mocking. </returns>
         public static SmartsheetLinkedService SmartsheetLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactorySecret apiToken = default, string encryptedCredential = default)
         {
@@ -5164,7 +5290,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="apiToken"> The api token for the Dataworld source. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiToken"/> is null. </exception>
         /// <returns> A new <see cref="Models.DataworldLinkedService"/> instance for mocking. </returns>
         public static DataworldLinkedService DataworldLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactorySecret apiToken = default, string encryptedCredential = default)
         {
@@ -5191,7 +5316,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="apiToken"> The api token for the Asana source. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiToken"/> is null. </exception>
         /// <returns> A new <see cref="Models.AsanaLinkedService"/> instance for mocking. </returns>
         public static AsanaLinkedService AsanaLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactorySecret apiToken = default, string encryptedCredential = default)
         {
@@ -5218,7 +5342,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="apiToken"> The api token for the GoogleSheets source. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiToken"/> is null. </exception>
         /// <returns> A new <see cref="Models.GoogleSheetsLinkedService"/> instance for mocking. </returns>
         public static GoogleSheetsLinkedService GoogleSheetsLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactorySecret apiToken = default, string encryptedCredential = default)
         {
@@ -5274,6 +5397,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     default));
         }
 
+        /// <summary> Custom linked service. </summary>
         /// <param name="linkedServiceVersion"> Version of the linked service. </param>
         /// <param name="connectVia"> The integration runtime reference. </param>
         /// <param name="description"> Linked service description. </param>
@@ -5338,6 +5462,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 password0);
         }
 
+        /// <summary> Properties specific to this linked service type. </summary>
         /// <param name="connectionString"> SAP HANA ODBC connection string. Type: string, SecureString or AzureKeyVaultSecretReference. </param>
         /// <param name="server"> Host name of the SAP HANA server. Type: string (or Expression with resultType string). </param>
         /// <param name="authenticationType"> The authentication type to be used to connect to the SAP HANA server. </param>
@@ -5373,7 +5498,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/>, <paramref name="marketplaceId"/>, <paramref name="sellerId"/> or <paramref name="accessKeyId"/> is null. </exception>
         /// <returns> A new <see cref="Models.AmazonMwsLinkedService"/> instance for mocking. </returns>
         public static AmazonMwsLinkedService AmazonMwsLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> endpoint = default, DataFactoryElement<string> marketplaceId = default, DataFactoryElement<string> sellerId = default, DataFactorySecret mwsAuthToken = default, DataFactoryElement<string> accessKeyId = default, DataFactorySecret secretKey = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
         {
@@ -5459,7 +5583,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="refreshToken"> The refresh token obtained from Google for authorizing access to BigQuery for UserAuthentication. </param>
         /// <param name="keyFileContent"> The content of the .json key file that is used to authenticate the service account. Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectId"/> is null. </exception>
         /// <returns> A new <see cref="Models.GoogleBigQueryV2LinkedService"/> instance for mocking. </returns>
         public static GoogleBigQueryV2LinkedService GoogleBigQueryV2LinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> projectId = default, GoogleBigQueryV2AuthenticationType authenticationType = default, DataFactoryElement<string> clientId = default, DataFactorySecret clientSecret = default, DataFactorySecret refreshToken = default, DataFactorySecret keyFileContent = default, string encryptedCredential = default)
         {
@@ -5500,7 +5623,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientId"/> is null. </exception>
         /// <returns> A new <see cref="Models.HubspotLinkedService"/> instance for mocking. </returns>
         public static HubspotLinkedService HubspotLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> clientId = default, DataFactorySecret clientSecret = default, DataFactorySecret accessToken = default, DataFactorySecret refreshToken = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
         {
@@ -5531,7 +5653,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         /// <returns> A new <see cref="Models.MagentoLinkedService"/> instance for mocking. </returns>
         public static MagentoLinkedService MagentoLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> host = default, DataFactorySecret accessToken = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
         {
@@ -5590,7 +5711,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="clientId"/> is null. </exception>
         /// <returns> A new <see cref="Models.MarketoLinkedService"/> instance for mocking. </returns>
         public static MarketoLinkedService MarketoLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> endpoint = default, DataFactoryElement<string> clientId = default, DataFactorySecret clientSecret = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
         {
@@ -5622,7 +5742,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="host"/> or <paramref name="clientId"/> is null. </exception>
         /// <returns> A new <see cref="Models.PaypalLinkedService"/> instance for mocking. </returns>
         public static PaypalLinkedService PaypalLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> host = default, DataFactoryElement<string> clientId = default, DataFactorySecret clientSecret = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
         {
@@ -5687,7 +5806,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="host"/> is null. </exception>
         /// <returns> A new <see cref="Models.ShopifyLinkedService"/> instance for mocking. </returns>
         public static ShopifyLinkedService ShopifyLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> host = default, DataFactorySecret accessToken = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
         {
@@ -5899,6 +6017,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Custom script action to run on HDI ondemand cluster once it's up. </summary>
         /// <param name="name"> The user provided name of the script action. </param>
         /// <param name="uri"> The URI for the script action. </param>
         /// <param name="roles"> The node types on which the script action should be executed. </param>
@@ -5922,7 +6041,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="useHostVerification"> Specifies whether to require the host name in the server's certificate to match the host name of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="usePeerVerification"> Specifies whether to verify the identity of the server when connecting over SSL. The default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="clientId"/> is null. </exception>
         /// <returns> A new <see cref="Models.ResponsysLinkedService"/> instance for mocking. </returns>
         public static ResponsysLinkedService ResponsysLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> endpoint = default, DataFactoryElement<string> clientId = default, DataFactorySecret clientSecret = default, DataFactoryElement<bool> useEncryptedEndpoints = default, DataFactoryElement<bool> useHostVerification = default, DataFactoryElement<bool> usePeerVerification = default, string encryptedCredential = default)
         {
@@ -6010,7 +6128,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="credential"> The credential reference containing authentication information. </param>
         /// <param name="resourceId"> Allowed token audiences for azure function. Type: string (or Expression with resultType string). </param>
         /// <param name="authentication"> Type of authentication (Required to specify MSI) used to connect to AzureFunction. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="functionAppUri"/> is null. </exception>
         /// <returns> A new <see cref="Models.AzureFunctionLinkedService"/> instance for mocking. </returns>
         public static AzureFunctionLinkedService AzureFunctionLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> functionAppUri = default, DataFactorySecret functionKey = default, string encryptedCredential = default, DataFactoryCredentialReference credential = default, DataFactoryElement<string> resourceId = default, DataFactoryElement<string> authentication = default)
         {
@@ -6038,7 +6155,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="connectionString"> The connection string of snowflake. Type: string, SecureString. </param>
         /// <param name="password"> The Azure key vault secret reference of password in connection string. </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         /// <returns> A new <see cref="Models.SnowflakeLinkedService"/> instance for mocking. </returns>
         public static SnowflakeLinkedService SnowflakeLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> connectionString = default, DataFactoryKeyVaultSecret password = default, string encryptedCredential = default)
         {
@@ -6066,7 +6182,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="endpoint"> https://&lt;workspacename&gt;.dev.azuresynapse.net, Azure Synapse Analytics workspace URL. Type: string (or Expression with resultType string). </param>
         /// <param name="authentication"> Required to specify MSI, if using system assigned managed identity as authentication method. Type: string (or Expression with resultType string). </param>
         /// <param name="workspaceResourceId"> The resource ID of the Synapse workspace. The format should be: /subscriptions/{subscriptionID}/resourceGroups/{resourceGroup}/providers/Microsoft.Synapse/workspaces/{workspaceName}. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         /// <returns> A new <see cref="Models.AzureSynapseArtifactsLinkedService"/> instance for mocking. </returns>
         public static AzureSynapseArtifactsLinkedService AzureSynapseArtifactsLinkedService(string linkedServiceVersion = default, IntegrationRuntimeReference connectVia = default, string description = default, IDictionary<string, EntityParameterSpecification> parameters = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> endpoint = default, DataFactoryElement<string> authentication = default, DataFactoryElement<string> workspaceResourceId = default)
         {
@@ -6159,6 +6274,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     default));
         }
 
+        /// <summary> Staging info for execute data flow activity. </summary>
         /// <param name="linkedService"> Staging linked service reference. </param>
         /// <param name="folderPath"> Folder path for staging blob. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.DataFlowStagingInfo"/> instance for mocking. </returns>
@@ -6167,6 +6283,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFlowStagingInfo(linkedService, folderPath, default);
         }
 
+        /// <summary> Data flow debug settings. </summary>
         /// <param name="sourceSettings"> Source setting for data flow debug. </param>
         /// <param name="parameters"> Data flow parameters. </param>
         /// <param name="datasetParameters"> Parameters for dataset. </param>
@@ -6179,6 +6296,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFlowDebugPackageDebugSettings((sourceSettings ?? new ChangeTrackingList<DataFlowSourceSetting>()).ToList(), parameters ?? new ChangeTrackingDictionary<string, BinaryData>(), datasetParameters, default);
         }
 
+        /// <summary> Definition of data flow source setting for debug. </summary>
         /// <param name="sourceName"> The data flow source name. </param>
         /// <param name="rowLimit"> Defines the row limit of data flow source in debug. </param>
         /// <param name="additionalProperties"></param>
@@ -6190,6 +6308,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFlowSourceSetting(sourceName, rowLimit, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Response body structure for starting data flow debug session. </summary>
         /// <param name="jobVersion"> The ID of data flow debug job version. </param>
         /// <returns> A new <see cref="Models.DataFactoryDataFlowStartDebugSessionResult"/> instance for mocking. </returns>
         public static DataFactoryDataFlowStartDebugSessionResult DataFactoryDataFlowStartDebugSessionResult(string jobVersion = default)
@@ -6197,6 +6316,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryDataFlowStartDebugSessionResult(jobVersion, default);
         }
 
+        /// <summary> Request body structure for deleting data flow debug session. </summary>
         /// <param name="sessionId"> The ID of data flow debug session. </param>
         /// <returns> A new <see cref="Models.DeleteDataFlowDebugSessionContent"/> instance for mocking. </returns>
         public static DeleteDataFlowDebugSessionContent DeleteDataFlowDebugSessionContent(Guid? sessionId = default)
@@ -6204,6 +6324,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DeleteDataFlowDebugSessionContent(sessionId, default);
         }
 
+        /// <summary> Request body structure for data flow debug command. </summary>
         /// <param name="sessionId"> The ID of data flow debug session. </param>
         /// <param name="command"> The command type. </param>
         /// <param name="commandPayload"> The command payload object. </param>
@@ -6213,6 +6334,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFlowDebugCommandContent(sessionId, command, commandPayload, default);
         }
 
+        /// <summary> Structure of command payload. </summary>
         /// <param name="streamName"> The stream name which is used for preview. </param>
         /// <param name="rowLimits"> Row limits for preview response. </param>
         /// <param name="columns"> Array of column names. </param>
@@ -6225,6 +6347,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFlowDebugCommandPayload(streamName, rowLimits, (columns ?? new ChangeTrackingList<string>()).ToList(), expression, default);
         }
 
+        /// <summary> Response body structure of data flow result for data preview, statistics or expression preview. </summary>
         /// <param name="status"> The run status of data preview, statistics or expression preview. </param>
         /// <param name="data"> The result data of data preview, statistics or expression preview. </param>
         /// <returns> A new <see cref="Models.DataFactoryDataFlowDebugCommandResult"/> instance for mocking. </returns>
@@ -6233,6 +6356,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryDataFlowDebugCommandResult(status, data, default);
         }
 
+        /// <summary> Integration runtime resource type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -6252,6 +6376,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Update integration runtime request. </summary>
         /// <param name="autoUpdate"> Enables or disables the auto-update feature of the self-hosted integration runtime. See https://go.microsoft.com/fwlink/?linkid=854189. </param>
         /// <param name="updateDelayOffset"> The time offset (in hours) in the day, e.g., PT03H is 3 hours. The integration runtime auto update will happen on that time. </param>
         /// <returns> A new <see cref="Models.DataFactoryIntegrationRuntimePatch"/> instance for mocking. </returns>
@@ -6260,6 +6385,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryIntegrationRuntimePatch(autoUpdate, updateDelayOffset, default);
         }
 
+        /// <summary> Integration runtime status response. </summary>
         /// <param name="name"> The integration runtime name. </param>
         /// <param name="properties"> Integration runtime properties. </param>
         /// <returns> A new <see cref="Models.DataFactoryIntegrationRuntimeStatusResult"/> instance for mocking. </returns>
@@ -6268,6 +6394,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryIntegrationRuntimeStatusResult(name, properties, default);
         }
 
+        /// <summary>
+        /// Integration runtime status.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ManagedIntegrationRuntimeStatus"/> and <see cref="Models.SelfHostedIntegrationRuntimeStatus"/>.
+        /// </summary>
         /// <param name="runtimeType"> Type of integration runtime. </param>
         /// <param name="dataFactoryName"> The data factory name which the integration runtime belong to. </param>
         /// <param name="state"> The state of integration runtime. </param>
@@ -6295,6 +6425,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new ManagedIntegrationRuntimeStatus(default, dataFactoryName, state, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), default);
         }
 
+        /// <summary> Properties of integration runtime node. </summary>
         /// <param name="nodeId"> The managed integration runtime node id. </param>
         /// <param name="status"> The managed integration runtime node status. </param>
         /// <param name="errors"> The errors that occurred on this integration runtime node. </param>
@@ -6308,6 +6439,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new ManagedIntegrationRuntimeNode(nodeId, status, (errors ?? new ChangeTrackingList<ManagedIntegrationRuntimeError>()).ToList(), additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Error definition for managed integration runtime. </summary>
         /// <param name="time"> The time when the error occurred. </param>
         /// <param name="code"> Error code. </param>
         /// <param name="parameters"> Managed integration runtime error parameters. </param>
@@ -6337,7 +6469,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             return new ManagedIntegrationRuntimeOperationResult(
                 managedIntegrationRuntimeOperationResultType,
-                startOn,
+                default,
                 result,
                 errorCode,
                 (parameters ?? new ChangeTrackingList<string>()).ToList(),
@@ -6427,7 +6559,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 registerOn,
                 lastConnectOn,
                 expireOn,
-                lastStartOn,
+                default,
                 lastStopOn,
                 lastUpdateResult,
                 lastStartUpdateOn,
@@ -6438,6 +6570,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> The linked integration runtime information. </summary>
         /// <param name="name"> The name of the linked integration runtime. </param>
         /// <param name="subscriptionId"> The subscription ID for which the linked integration runtime belong to. </param>
         /// <param name="dataFactoryName"> The name of the data factory for which the linked integration runtime belong to. </param>
@@ -6455,6 +6588,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Connection information for encrypting the on-premises data source credentials. </summary>
         /// <param name="serviceToken"> The token generated in service. Callers use this token to authenticate to integration runtime. </param>
         /// <param name="identityCertThumbprint"> The integration runtime SSL certificate thumbprint. Click-Once application uses it to do server validation. </param>
         /// <param name="hostServiceUri"> The on-premises integration runtime host URL. </param>
@@ -6477,6 +6611,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Parameters to regenerate the authentication key. </summary>
         /// <param name="keyName"> The name of the authentication key to regenerate. </param>
         /// <returns> A new <see cref="Models.IntegrationRuntimeRegenerateKeyContent"/> instance for mocking. </returns>
         public static IntegrationRuntimeRegenerateKeyContent IntegrationRuntimeRegenerateKeyContent(IntegrationRuntimeAuthKeyName? keyName = default)
@@ -6484,6 +6619,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new IntegrationRuntimeRegenerateKeyContent(keyName, default);
         }
 
+        /// <summary> The integration runtime authentication keys. </summary>
         /// <param name="authKey1"> The primary integration runtime authentication key. </param>
         /// <param name="authKey2"> The secondary integration runtime authentication key. </param>
         /// <returns> A new <see cref="Models.IntegrationRuntimeAuthKeys"/> instance for mocking. </returns>
@@ -6492,6 +6628,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new IntegrationRuntimeAuthKeys(authKey1, authKey2, default);
         }
 
+        /// <summary> Get monitoring data response. </summary>
         /// <param name="name"> Integration runtime name. </param>
         /// <param name="nodes"> Integration runtime node monitoring data. </param>
         /// <returns> A new <see cref="Models.IntegrationRuntimeMonitoringData"/> instance for mocking. </returns>
@@ -6502,6 +6639,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new IntegrationRuntimeMonitoringData(name, (nodes ?? new ChangeTrackingList<IntegrationRuntimeNodeMonitoringData>()).ToList(), default);
         }
 
+        /// <summary> Monitoring data for integration runtime node. </summary>
         /// <param name="nodeName"> Name of the integration runtime node. </param>
         /// <param name="availableMemoryInMB"> Available memory (MB) on the integration runtime node. </param>
         /// <param name="cpuUtilization"> CPU percentage on the integration runtime node. </param>
@@ -6528,6 +6666,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Data factory name for linked integration runtime request. </summary>
         /// <param name="linkedFactoryName"> The data factory name for linked integration runtime. </param>
         /// <returns> A new <see cref="Models.LinkedIntegrationRuntimeContent"/> instance for mocking. </returns>
         public static LinkedIntegrationRuntimeContent LinkedIntegrationRuntimeContent(string linkedFactoryName = default)
@@ -6535,6 +6674,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new LinkedIntegrationRuntimeContent(linkedFactoryName, default);
         }
 
+        /// <summary> The linked integration runtime information. </summary>
         /// <param name="name"> The name of the linked integration runtime. </param>
         /// <param name="subscriptionId"> The ID of the subscription that the linked integration runtime belongs to. </param>
         /// <param name="dataFactoryName"> The name of the data factory that the linked integration runtime belongs to. </param>
@@ -6545,6 +6685,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new CreateLinkedIntegrationRuntimeContent(name, subscriptionId, dataFactoryName, dataFactoryLocation, default);
         }
 
+        /// <summary> The status of the operation. </summary>
         /// <param name="status"> The status of the operation. </param>
         /// <param name="name"> The operation name. </param>
         /// <param name="properties"> The operation properties. </param>
@@ -6555,6 +6696,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SsisObjectMetadataStatusResult(status, name, properties, error, default);
         }
 
+        /// <summary> Update integration runtime node request. </summary>
         /// <param name="concurrentJobsLimit"> The number of concurrent jobs permitted to run on the integration runtime node. Values between 1 and maxConcurrentJobs(inclusive) are allowed. </param>
         /// <returns> A new <see cref="Models.UpdateIntegrationRuntimeNodeContent"/> instance for mocking. </returns>
         public static UpdateIntegrationRuntimeNodeContent UpdateIntegrationRuntimeNodeContent(int? concurrentJobsLimit = default)
@@ -6562,6 +6704,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new UpdateIntegrationRuntimeNodeContent(concurrentJobsLimit, default);
         }
 
+        /// <summary> The IP address of self-hosted integration runtime node. </summary>
         /// <param name="ipAddress"> The IP address of self-hosted integration runtime node. </param>
         /// <returns> A new <see cref="Models.IntegrationRuntimeNodeIPAddress"/> instance for mocking. </returns>
         public static IntegrationRuntimeNodeIPAddress IntegrationRuntimeNodeIPAddress(IPAddress ipAddress = default)
@@ -6569,6 +6712,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new IntegrationRuntimeNodeIPAddress(ipAddress, default);
         }
 
+        /// <summary> The enable the interactive authoring information. </summary>
         /// <param name="autoTerminationMinutes"> The allowed idle time for interactive authoring. </param>
         /// <returns> A new <see cref="Models.EnableInteractiveQueryContent"/> instance for mocking. </returns>
         public static EnableInteractiveQueryContent EnableInteractiveQueryContent(int? autoTerminationMinutes = default)
@@ -6576,6 +6720,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new EnableInteractiveQueryContent(autoTerminationMinutes, default);
         }
 
+        /// <summary> Linked service resource type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -6595,6 +6740,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Dataset resource type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -6654,6 +6800,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary>
+        /// A pipeline activity.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ControlActivity"/>, <see cref="Models.ExecutionActivity"/>, <see cref="Models.CopyActivity"/>, <see cref="Models.HDInsightHiveActivity"/>, <see cref="Models.HDInsightPigActivity"/>, <see cref="Models.HDInsightMapReduceActivity"/>, <see cref="Models.HDInsightStreamingActivity"/>, <see cref="Models.HDInsightSparkActivity"/>, <see cref="Models.ExecuteSsisPackageActivity"/>, <see cref="CustomActivity"/>, <see cref="Models.SqlServerStoredProcedureActivity"/>, <see cref="Models.ExecutePipelineActivity"/>, <see cref="DeleteActivity"/>, <see cref="Models.AzureDataExplorerCommandActivity"/>, <see cref="Models.LookupActivity"/>, <see cref="WebActivity"/>, <see cref="Models.GetDatasetMetadataActivity"/>, <see cref="Models.IfConditionActivity"/>, <see cref="Models.SwitchActivity"/>, <see cref="Models.ForEachActivity"/>, <see cref="Models.AzureMLBatchExecutionActivity"/>, <see cref="Models.AzureMLUpdateResourceActivity"/>, <see cref="AzureMLExecutePipelineActivity"/>, <see cref="Models.DataLakeAnalyticsUsqlActivity"/>, <see cref="Models.WaitActivity"/>, <see cref="Models.FailActivity"/>, <see cref="UntilActivity"/>, <see cref="ValidationActivity"/>, <see cref="Models.FilterActivity"/>, <see cref="Models.DatabricksNotebookActivity"/>, <see cref="Models.DatabricksSparkJarActivity"/>, <see cref="Models.DatabricksSparkPythonActivity"/>, <see cref="Models.DatabricksJobActivity"/>, <see cref="SetVariableActivity"/>, <see cref="AppendVariableActivity"/>, <see cref="Models.AzureFunctionActivity"/>, <see cref="WebHookActivity"/>, <see cref="Models.ExecuteDataFlowActivity"/>, <see cref="Models.ExecuteWranglingDataflowActivity"/>, <see cref="Models.DataFactoryScriptActivity"/>, <see cref="Models.SynapseNotebookActivity"/>, and <see cref="Models.SynapseSparkJobDefinitionActivity"/>.
+        /// </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="activityType"> Type of activity. </param>
         /// <param name="description"> Activity description. </param>
@@ -6680,6 +6830,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Activity dependency information. </summary>
         /// <param name="activity"> Activity name. </param>
         /// <param name="dependencyConditions"> Match-Condition for the dependency. </param>
         /// <param name="additionalProperties"></param>
@@ -6692,6 +6843,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new PipelineActivityDependency(activity, (dependencyConditions ?? new ChangeTrackingList<DependencyCondition>()).ToList(), additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> User property. </summary>
         /// <param name="name"> User property name. </param>
         /// <param name="value"> User property value. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.PipelineActivityUserProperty"/> instance for mocking. </returns>
@@ -6700,6 +6852,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new PipelineActivityUserProperty(name, value, default);
         }
 
+        /// <summary> Base class for all control activities like IfCondition, ForEach , Until. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="description"> Activity description. </param>
         /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
@@ -6736,7 +6889,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="pipeline"> Pipeline reference. </param>
         /// <param name="parameters"> Pipeline parameters. </param>
         /// <param name="waitOnCompletion"> Defines whether activity execution will wait for the dependent pipeline execution to finish. Default is false. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> is null. </exception>
         /// <returns> A new <see cref="Models.ExecutePipelineActivity"/> instance for mocking. </returns>
         public static ExecutePipelineActivity ExecutePipelineActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, ExecutePipelineActivityPolicy policy = default, DataFactoryPipelineReference pipeline = default, IDictionary<string, BinaryData> parameters = default, bool? waitOnCompletion = default)
         {
@@ -6757,6 +6909,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 waitOnCompletion is null ? default : new ExecutePipelineActivityTypeProperties(default, default, waitOnCompletion, default));
         }
 
+        /// <summary> Execution policy for an execute pipeline activity. </summary>
         /// <param name="isSecureInputEnabled"> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.ExecutePipelineActivityPolicy"/> instance for mocking. </returns>
@@ -6777,7 +6930,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="expression"> An expression that would evaluate to Boolean. This is used to determine the block of activities (ifTrueActivities or ifFalseActivities) that will be executed. </param>
         /// <param name="ifTrueActivities"> List of activities to execute if expression is evaluated to true. This is an optional property and if not provided, the activity will exit without any action. </param>
         /// <param name="ifFalseActivities"> List of activities to execute if expression is evaluated to false. This is an optional property and if not provided, the activity will exit without any action. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="expression"/> is null. </exception>
         /// <returns> A new <see cref="Models.IfConditionActivity"/> instance for mocking. </returns>
         public static IfConditionActivity IfConditionActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryExpression expression = default, IEnumerable<PipelineActivity> ifTrueActivities = default, IEnumerable<PipelineActivity> ifFalseActivities = default)
         {
@@ -6797,6 +6949,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Azure Data Factory expression definition. </summary>
         /// <param name="expressionType"> Expression type. </param>
         /// <param name="value"> Expression value. </param>
         /// <returns> A new <see cref="Models.DataFactoryExpression"/> instance for mocking. </returns>
@@ -6815,7 +6968,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="on"> An expression that would evaluate to a string or integer. This is used to determine the block of activities in cases that will be executed. </param>
         /// <param name="cases"> List of cases that correspond to expected values of the 'on' property. This is an optional property and if not provided, the activity will execute activities provided in defaultActivities. </param>
         /// <param name="defaultActivities"> List of activities to execute if no case condition is satisfied. This is an optional property and if not provided, the activity will exit without any action. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="on"/> is null. </exception>
         /// <returns> A new <see cref="Models.SwitchActivity"/> instance for mocking. </returns>
         public static SwitchActivity SwitchActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryExpression @on = default, IEnumerable<SwitchCaseActivity> cases = default, IEnumerable<PipelineActivity> defaultActivities = default)
         {
@@ -6835,6 +6987,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Switch cases with have a value and corresponding activities. </summary>
         /// <param name="value"> Expected value that satisfies the expression result of the 'on' property. </param>
         /// <param name="activities"> List of activities to execute for satisfied case condition. </param>
         /// <returns> A new <see cref="Models.SwitchCaseActivity"/> instance for mocking. </returns>
@@ -6856,7 +7009,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="batchCount"> Batch count to be used for controlling the number of parallel execution (when isSequential is set to false). </param>
         /// <param name="items"> Collection to iterate. </param>
         /// <param name="activities"> List of activities to execute . </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="items"/> or <paramref name="activities"/> is null. </exception>
         /// <returns> A new <see cref="Models.ForEachActivity"/> instance for mocking. </returns>
         public static ForEachActivity ForEachActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, bool? isSequential = default, int? batchCount = default, DataFactoryExpression items = default, IEnumerable<PipelineActivity> activities = default)
         {
@@ -6884,7 +7036,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="userProperties"> Activity user properties. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="waitTimeInSeconds"> Duration in seconds. Type: integer (or Expression with resultType integer). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="waitTimeInSeconds"/> is null. </exception>
         /// <returns> A new <see cref="Models.WaitActivity"/> instance for mocking. </returns>
         public static WaitActivity WaitActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<int> waitTimeInSeconds = default)
         {
@@ -6913,7 +7064,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="message"> The error message that surfaced in the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
         /// <param name="errorCode"> The error code that categorizes the error type of the Fail activity. It can be dynamic content that's evaluated to a non empty/blank string at runtime. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="message"/> or <paramref name="errorCode"/> is null. </exception>
         /// <returns> A new <see cref="Models.FailActivity"/> instance for mocking. </returns>
         public static FailActivity FailActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryElement<string> message = default, DataFactoryElement<string> errorCode = default)
         {
@@ -6942,7 +7092,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="additionalProperties"></param>
         /// <param name="items"> Input array on which filter should be applied. </param>
         /// <param name="condition"> Condition to be used for filtering the input. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="items"/> or <paramref name="condition"/> is null. </exception>
         /// <returns> A new <see cref="Models.FilterActivity"/> instance for mocking. </returns>
         public static FilterActivity FilterActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryExpression items = default, DataFactoryExpression condition = default)
         {
@@ -6962,6 +7111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Execution policy for an activity that supports secure input and output. </summary>
         /// <param name="isSecureInputEnabled"> When set to true, Input from activity is considered as secure and will not be logged to monitoring. </param>
         /// <param name="isSecureOutputEnabled"> When set to true, Output from activity is considered as secure and will not be logged to monitoring. </param>
         /// <returns> A new <see cref="Models.SecureInputOutputPolicy"/> instance for mocking. </returns>
@@ -6970,6 +7120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SecureInputOutputPolicy(isSecureInputEnabled, isSecureOutputEnabled, default);
         }
 
+        /// <summary> Web activity authentication properties. </summary>
         /// <param name="webActivityAuthenticationType"> Web activity authentication (Basic/ClientCertificate/MSI/ServicePrincipal). </param>
         /// <param name="pfx"> Base64-encoded contents of a PFX file or Certificate when used for ServicePrincipal. </param>
         /// <param name="username"> Web activity authentication user name for basic authentication or ClientID when used for ServicePrincipal. Type: string (or Expression with resultType string). </param>
@@ -6991,6 +7142,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Base class for all execution activities. </summary>
         /// <param name="name"> Activity name. </param>
         /// <param name="description"> Activity description. </param>
         /// <param name="state"> Activity state. This is an optional property and if not provided, the state will be Active by default. </param>
@@ -7020,6 +7172,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 policy);
         }
 
+        /// <summary> Execution policy for an activity. </summary>
         /// <param name="timeout"> Specifies the timeout for the activity to run. The default timeout is 7 days. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="retry"> Maximum ordinary retry attempts. Default is 0. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="retryIntervalInSeconds"> Interval between each retry attempt (in seconds). The default is 30 sec. </param>
@@ -7066,7 +7219,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="skipErrorFile"> Specify the fault tolerance for data consistency. </param>
         /// <param name="inputs"> List of inputs for the activity. </param>
         /// <param name="outputs"> List of outputs for the activity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="sink"/> is null. </exception>
         /// <returns> A new <see cref="Models.CopyActivity"/> instance for mocking. </returns>
         public static CopyActivity CopyActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, CopyActivitySource source = default, CopySink sink = default, BinaryData translator = default, DataFactoryElement<bool> enableStaging = default, StagingSettings stagingSettings = default, DataFactoryElement<int> parallelCopies = default, DataFactoryElement<int> dataIntegrationUnits = default, DataFactoryElement<bool> enableSkipIncompatibleRow = default, RedirectIncompatibleRowSettings redirectIncompatibleRowSettings = default, LogStorageSettings logStorageSettings = default, DataFactoryLogSettings logSettings = default, IEnumerable<BinaryData> preserveRules = default, IEnumerable<BinaryData> preserve = default, DataFactoryElement<bool> validateDataConsistency = default, SkipErrorFile skipErrorFile = default, IEnumerable<DatasetReference> inputs = default, IEnumerable<DatasetReference> outputs = default)
         {
@@ -7092,6 +7244,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (outputs ?? new ChangeTrackingList<DatasetReference>()).ToList());
         }
 
+        /// <summary>
+        /// A copy activity source.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AvroSource"/>, <see cref="Models.ExcelSource"/>, <see cref="Models.ParquetSource"/>, <see cref="Models.DelimitedTextSource"/>, <see cref="Models.JsonSource"/>, <see cref="Models.XmlSource"/>, <see cref="Models.OrcSource"/>, <see cref="Models.BinarySource"/>, <see cref="Models.TabularSource"/>, <see cref="Models.AzureTableSource"/>, <see cref="Models.DataFactoryBlobSource"/>, <see cref="Models.DocumentDBCollectionSource"/>, <see cref="Models.CosmosDBSqlApiSource"/>, <see cref="Models.DynamicsSource"/>, <see cref="Models.DynamicsCrmSource"/>, <see cref="Models.CommonDataServiceForAppsSource"/>, <see cref="Models.RelationalSource"/>, <see cref="Models.InformixSource"/>, <see cref="Models.MicrosoftAccessSource"/>, <see cref="Models.Db2Source"/>, <see cref="Models.OdbcSource"/>, <see cref="Models.MySqlSource"/>, <see cref="Models.PostgreSqlSource"/>, <see cref="Models.PostgreSqlV2Source"/>, <see cref="Models.SybaseSource"/>, <see cref="Models.SapBWSource"/>, <see cref="Models.ODataSource"/>, <see cref="Models.SalesforceSource"/>, <see cref="Models.SalesforceServiceCloudSource"/>, <see cref="Models.SapCloudForCustomerSource"/>, <see cref="Models.SapEccSource"/>, <see cref="Models.SapHanaSource"/>, <see cref="Models.SapOpenHubSource"/>, <see cref="Models.SapOdpSource"/>, <see cref="Models.SapTableSource"/>, <see cref="Models.RestSource"/>, <see cref="Models.SqlSource"/>, <see cref="Models.SqlServerSource"/>, <see cref="Models.AmazonRdsForSqlServerSource"/>, <see cref="Models.AzureSqlSource"/>, <see cref="Models.SqlMISource"/>, <see cref="Models.SqlDWSource"/>, <see cref="Models.FileSystemSource"/>, <see cref="Models.HdfsSource"/>, <see cref="Models.AzureMySqlSource"/>, <see cref="Models.AzureDataExplorerSource"/>, <see cref="Models.OracleSource"/>, <see cref="Models.AmazonRdsForOracleSource"/>, <see cref="Models.TeradataSource"/>, <see cref="Models.WebSource"/>, <see cref="Models.CassandraSource"/>, <see cref="Models.MongoDBSource"/>, <see cref="Models.MongoDBAtlasSource"/>, <see cref="Models.MongoDBV2Source"/>, <see cref="Models.CosmosDBMongoDBApiSource"/>, <see cref="Models.Office365Source"/>, <see cref="Models.AzureDataLakeStoreSource"/>, <see cref="Models.AzureBlobFSSource"/>, <see cref="Models.DataFactoryHttpFileSource"/>, <see cref="Models.AmazonMwsSource"/>, <see cref="Models.AzurePostgreSqlSource"/>, <see cref="Models.ConcurSource"/>, <see cref="Models.CouchbaseSource"/>, <see cref="Models.DrillSource"/>, <see cref="Models.EloquaSource"/>, <see cref="Models.GoogleBigQuerySource"/>, <see cref="Models.GoogleBigQueryV2Source"/>, <see cref="Models.GreenplumSource"/>, <see cref="Models.HBaseSource"/>, <see cref="Models.HiveSource"/>, <see cref="Models.HubspotSource"/>, <see cref="Models.ImpalaSource"/>, <see cref="Models.JiraSource"/>, <see cref="Models.MagentoSource"/>, <see cref="Models.MariaDBSource"/>, <see cref="Models.AzureMariaDBSource"/>, <see cref="Models.MarketoSource"/>, <see cref="Models.PaypalSource"/>, <see cref="Models.PhoenixSource"/>, <see cref="Models.PrestoSource"/>, <see cref="Models.QuickBooksSource"/>, <see cref="Models.ServiceNowSource"/>, <see cref="Models.ShopifySource"/>, <see cref="Models.SparkSource"/>, <see cref="Models.SquareSource"/>, <see cref="Models.XeroSource"/>, <see cref="Models.ZohoSource"/>, <see cref="Models.NetezzaSource"/>, <see cref="Models.VerticaSource"/>, <see cref="Models.SalesforceMarketingCloudSource"/>, <see cref="Models.ResponsysSource"/>, <see cref="Models.DynamicsAXSource"/>, <see cref="Models.OracleServiceCloudSource"/>, <see cref="Models.GoogleAdWordsSource"/>, <see cref="Models.AmazonRedshiftSource"/>, <see cref="Models.LakeHouseTableSource"/>, <see cref="Models.SnowflakeSource"/>, <see cref="Models.SnowflakeV2Source"/>, <see cref="Models.AzureDatabricksDeltaLakeSource"/>, <see cref="Models.WarehouseSource"/>, <see cref="Models.SharePointOnlineListSource"/>, <see cref="Models.SalesforceV2Source"/>, <see cref="Models.SalesforceServiceCloudV2Source"/>, and <see cref="Models.ServiceNowV2Source"/>.
+        /// </summary>
         /// <param name="copySourceType"> Copy source type. </param>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
@@ -7112,6 +7268,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> A copy activity Avro source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -7135,6 +7292,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary>
+        /// Connector read setting.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureBlobStorageReadSettings"/>, <see cref="Models.AzureBlobFSReadSettings"/>, <see cref="Models.AzureDataLakeStoreReadSettings"/>, <see cref="Models.AmazonS3ReadSettings"/>, <see cref="Models.FileServerReadSettings"/>, <see cref="Models.AzureFileStorageReadSettings"/>, <see cref="Models.AmazonS3CompatibleReadSettings"/>, <see cref="Models.OracleCloudStorageReadSettings"/>, <see cref="Models.GoogleCloudStorageReadSettings"/>, <see cref="Models.FtpReadSettings"/>, <see cref="Models.SftpReadSettings"/>, <see cref="Models.HttpReadSettings"/>, <see cref="Models.HdfsReadSettings"/>, and <see cref="Models.LakeHouseReadSettings"/>.
+        /// </summary>
         /// <param name="storeReadSettingsType"> The read setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
@@ -7147,6 +7308,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new UnknownStoreReadSettings(storeReadSettingsType, maxConcurrentConnections, disableMetricsCollection, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Azure blob read settings. </summary>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
@@ -7182,6 +7344,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 modifiedDatetimeEnd);
         }
 
+        /// <summary> Azure blobFS read settings. </summary>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
@@ -7215,6 +7378,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 modifiedDatetimeEnd);
         }
 
+        /// <summary> Azure data lake store read settings. </summary>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
@@ -7252,6 +7416,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 modifiedDatetimeEnd);
         }
 
+        /// <summary> Amazon S3 read settings. </summary>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
@@ -7287,6 +7452,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 modifiedDatetimeEnd);
         }
 
+        /// <summary> File server read settings. </summary>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
@@ -7322,6 +7488,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 fileFilter);
         }
 
+        /// <summary> Azure File Storage read settings. </summary>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
@@ -7357,6 +7524,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 modifiedDatetimeEnd);
         }
 
+        /// <summary> Amazon S3 Compatible read settings. </summary>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
@@ -7392,6 +7560,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 modifiedDatetimeEnd);
         }
 
+        /// <summary> Oracle Cloud Storage read settings. </summary>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
@@ -7427,6 +7596,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 modifiedDatetimeEnd);
         }
 
+        /// <summary> Google Cloud Storage read settings. </summary>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
@@ -7462,6 +7632,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 modifiedDatetimeEnd);
         }
 
+        /// <summary> Ftp read settings. </summary>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
@@ -7495,6 +7666,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 disableChunking);
         }
 
+        /// <summary> Sftp read settings. </summary>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
@@ -7530,6 +7702,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 disableChunking);
         }
 
+        /// <summary> Http read settings. </summary>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
@@ -7555,6 +7728,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> HDFS read settings. </summary>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
@@ -7590,6 +7764,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 deleteFilesAfterCompletion);
         }
 
+        /// <summary> Distcp settings. </summary>
         /// <param name="resourceManagerEndpoint"> Specifies the Yarn ResourceManager endpoint. Type: string (or Expression with resultType string). </param>
         /// <param name="tempScriptPath"> Specifies an existing folder path which will be used to store temp Distcp command script. The script file is generated by ADF and will be removed after Copy job finished. Type: string (or Expression with resultType string). </param>
         /// <param name="distcpOptions"> Specifies the Distcp options. Type: string (or Expression with resultType string). </param>
@@ -7599,6 +7774,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DistcpSettings(resourceManagerEndpoint, tempScriptPath, distcpOptions, default);
         }
 
+        /// <summary> Microsoft Fabric Lakehouse Files read settings. </summary>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="additionalProperties"></param>
@@ -7632,6 +7808,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 modifiedDatetimeEnd);
         }
 
+        /// <summary> A copy activity excel source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -7655,6 +7832,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity Parquet source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -7680,6 +7858,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> Parquet read settings. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="compressionProperties"> Compression settings. </param>
         /// <returns> A new <see cref="Models.ParquetReadSettings"/> instance for mocking. </returns>
@@ -7690,6 +7869,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new ParquetReadSettings(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), compressionProperties);
         }
 
+        /// <summary>
+        /// Compression read settings.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ZipDeflateReadSettings"/>, <see cref="Models.TarReadSettings"/>, and <see cref="Models.TarGzipReadSettings"/>.
+        /// </summary>
         /// <param name="compressionReadSettingsType"> The Compression setting type. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.CompressionReadSettings"/> instance for mocking. </returns>
@@ -7700,6 +7883,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new UnknownCompressionReadSettings(compressionReadSettingsType, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> The ZipDeflate compression read settings. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="preserveZipFileNameAsFolder"> Preserve the zip file name as folder path. Type: boolean (or Expression with resultType boolean). </param>
         /// <returns> A new <see cref="Models.ZipDeflateReadSettings"/> instance for mocking. </returns>
@@ -7710,6 +7894,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new ZipDeflateReadSettings(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), preserveZipFileNameAsFolder);
         }
 
+        /// <summary> The Tar compression read settings. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="preserveCompressionFileNameAsFolder"> Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean). </param>
         /// <returns> A new <see cref="Models.TarReadSettings"/> instance for mocking. </returns>
@@ -7720,6 +7905,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new TarReadSettings(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), preserveCompressionFileNameAsFolder);
         }
 
+        /// <summary> The TarGZip compression read settings. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="preserveCompressionFileNameAsFolder"> Preserve the compression file name as folder path. Type: boolean (or Expression with resultType boolean). </param>
         /// <returns> A new <see cref="Models.TarGzipReadSettings"/> instance for mocking. </returns>
@@ -7730,6 +7916,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new TarGzipReadSettings(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), preserveCompressionFileNameAsFolder);
         }
 
+        /// <summary>
+        /// Format read settings.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ParquetReadSettings"/>, <see cref="Models.DelimitedTextReadSettings"/>, <see cref="Models.JsonReadSettings"/>, <see cref="Models.XmlReadSettings"/>, and <see cref="Models.BinaryReadSettings"/>.
+        /// </summary>
         /// <param name="formatReadSettingsType"> The read setting type. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.FormatReadSettings"/> instance for mocking. </returns>
@@ -7740,6 +7930,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new UnknownFormatReadSettings(formatReadSettingsType, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Delimited text read settings. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="skipLineCount"> Indicates the number of non-empty rows to skip when reading data from input files. Type: integer (or Expression with resultType integer). </param>
         /// <param name="compressionProperties"> Compression settings. </param>
@@ -7751,6 +7942,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DelimitedTextReadSettings(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), skipLineCount, compressionProperties);
         }
 
+        /// <summary> Json read settings. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="compressionProperties"> Compression settings. </param>
         /// <returns> A new <see cref="Models.JsonReadSettings"/> instance for mocking. </returns>
@@ -7761,6 +7953,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new JsonReadSettings(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), compressionProperties);
         }
 
+        /// <summary> Xml read settings. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="compressionProperties"> Compression settings. </param>
         /// <param name="validationMode"> Indicates what validation method is used when reading the xml files. Allowed values: 'none', 'xsd', or 'dtd'. Type: string (or Expression with resultType string). </param>
@@ -7782,6 +7975,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 namespacePrefixes);
         }
 
+        /// <summary> Binary read settings. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="compressionProperties"> Compression settings. </param>
         /// <returns> A new <see cref="Models.BinaryReadSettings"/> instance for mocking. </returns>
@@ -7792,6 +7986,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new BinaryReadSettings(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), compressionProperties);
         }
 
+        /// <summary> A copy activity DelimitedText source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -7817,6 +8012,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity Json source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -7842,6 +8038,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity Xml source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -7867,6 +8064,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity ORC source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -7890,6 +8088,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity Binary source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -7913,6 +8112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 formatSettings);
         }
 
+        /// <summary> Copy activity sources of tabular type. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -7936,6 +8136,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity Azure Table source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -7963,6 +8164,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 azureTableSourceIgnoreTableNotFound);
         }
 
+        /// <summary> A copy activity source for Informix. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -7988,6 +8190,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity source for Db2 databases. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8013,6 +8216,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity source for ODBC databases. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8038,6 +8242,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity source for MySQL databases. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8063,6 +8268,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity source for PostgreSQL databases. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8088,6 +8294,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity source for PostgreSQL databases. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8113,6 +8320,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity source for Sybase databases. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8138,6 +8346,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity source for SapBW server via MDX. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8163,6 +8372,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Salesforce source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8190,6 +8400,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 readBehavior);
         }
 
+        /// <summary> A copy activity source for SAP Cloud for Customer source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8217,6 +8428,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 httpRequestTimeout);
         }
 
+        /// <summary> A copy activity source for SAP ECC source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8275,6 +8487,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 partitionColumnName is null ? default : new SapHanaPartitionSettings(partitionColumnName, default));
         }
 
+        /// <summary> The settings that will be leveraged for SAP HANA source partitioning. </summary>
         /// <param name="partitionColumnName"> The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.SapHanaPartitionSettings"/> instance for mocking. </returns>
         public static SapHanaPartitionSettings SapHanaPartitionSettings(DataFactoryElement<string> partitionColumnName = default)
@@ -8282,6 +8495,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SapHanaPartitionSettings(partitionColumnName, default);
         }
 
+        /// <summary> A copy activity source for SAP Business Warehouse Open Hub Destination source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8313,6 +8527,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 sapDataColumnDelimiter);
         }
 
+        /// <summary> A copy activity source for SAP ODP source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8344,6 +8559,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 projection);
         }
 
+        /// <summary> A copy activity source for SAP Table source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8385,6 +8601,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 partitionSettings);
         }
 
+        /// <summary> The settings that will be leveraged for SAP table source partitioning. </summary>
         /// <param name="partitionColumnName"> The name of the column that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionUpperBound"> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionLowerBound"> The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
@@ -8395,6 +8612,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SapTablePartitionSettings(partitionColumnName, partitionUpperBound, partitionLowerBound, maxPartitionsNumber, default);
         }
 
+        /// <summary> A copy activity SQL source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8430,6 +8648,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 partitionSettings);
         }
 
+        /// <summary> The settings that will be leveraged for Sql source partitioning. </summary>
         /// <param name="partitionColumnName"> The name of the column in integer or datetime type that will be used for proceeding partitioning. If not specified, the primary key of the table is auto-detected and used as the partition column. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionUpperBound"> The maximum value of the partition column for partition range splitting. This value is used to decide the partition stride, not for filtering the rows in table. All rows in the table or query result will be partitioned and copied. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionLowerBound"> The minimum value of the partition column for partition range splitting. This value is used to decide the partition stride, not for filtering the rows in table. All rows in the table or query result will be partitioned and copied. Type: string (or Expression with resultType string). </param>
@@ -8439,6 +8658,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SqlPartitionSettings(partitionColumnName, partitionUpperBound, partitionLowerBound, default);
         }
 
+        /// <summary> A copy activity SQL server source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8476,6 +8696,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 partitionSettings);
         }
 
+        /// <summary> A copy activity Amazon RDS for SQL Server source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8513,6 +8734,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 partitionSettings);
         }
 
+        /// <summary> A copy activity Azure SQL source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8550,6 +8772,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 partitionSettings);
         }
 
+        /// <summary> A copy activity Azure SQL Managed Instance source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8587,6 +8810,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 partitionSettings);
         }
 
+        /// <summary> A copy activity SQL Data Warehouse source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8622,6 +8846,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 partitionSettings);
         }
 
+        /// <summary> A copy activity Azure MySQL source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8647,6 +8872,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Teradata source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8676,6 +8902,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 partitionSettings);
         }
 
+        /// <summary> The settings that will be leveraged for teradata source partitioning. </summary>
         /// <param name="partitionColumnName"> The name of the column that will be used for proceeding range or hash partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionUpperBound"> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionLowerBound"> The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
@@ -8685,6 +8912,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new TeradataPartitionSettings(partitionColumnName, partitionUpperBound, partitionLowerBound, default);
         }
 
+        /// <summary> A copy activity source for a Cassandra database. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8712,6 +8940,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 consistencyLevel);
         }
 
+        /// <summary> A copy activity Amazon Marketplace Web Service source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8737,6 +8966,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Azure Database for PostgreSQL source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8762,6 +8992,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Concur Service source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8787,6 +9018,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Couchbase server source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8812,6 +9044,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Drill server source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8837,6 +9070,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Eloqua server source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8862,6 +9096,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Google BigQuery service source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8887,6 +9122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Google BigQuery service source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8912,6 +9148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Greenplum Database source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8937,6 +9174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity HBase server source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8962,6 +9200,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Hive Server source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -8987,6 +9226,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Hubspot Service source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9012,6 +9252,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Impala server source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9037,6 +9278,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Jira Service source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9062,6 +9304,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Magento server source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9087,6 +9330,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity MariaDB server source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9112,6 +9356,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Azure MariaDB source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9137,6 +9382,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Marketo server source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9162,6 +9408,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Paypal Service source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9187,6 +9434,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Phoenix server source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9212,6 +9460,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Presto server source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9237,6 +9486,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity QuickBooks server source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9262,6 +9512,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity ServiceNow server source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9287,6 +9538,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Shopify Service source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9312,6 +9564,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Spark Server source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9337,6 +9590,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Square Service source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9362,6 +9616,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Xero Service source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9387,6 +9642,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Zoho server source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9412,6 +9668,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Netezza source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9441,6 +9698,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 partitionSettings);
         }
 
+        /// <summary> The settings that will be leveraged for Netezza source partitioning. </summary>
         /// <param name="partitionColumnName"> The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionUpperBound"> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionLowerBound"> The minimum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
@@ -9450,6 +9708,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new NetezzaPartitionSettings(partitionColumnName, partitionUpperBound, partitionLowerBound, default);
         }
 
+        /// <summary> A copy activity Vertica source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9475,6 +9734,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Salesforce Marketing Cloud source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9500,6 +9760,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Responsys source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9525,6 +9786,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Dynamics AX source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9552,6 +9814,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 httpRequestTimeout);
         }
 
+        /// <summary> A copy activity Oracle Service Cloud source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9577,6 +9840,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity Google AdWords service source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9602,6 +9866,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 query);
         }
 
+        /// <summary> A copy activity source for Amazon Redshift Source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9629,6 +9894,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 redshiftUnloadSettings);
         }
 
+        /// <summary> The Amazon S3 settings needed for the interim Amazon S3 when copying from Amazon Redshift with unload. With this, data from Amazon Redshift source will be unloaded into S3 first and then copied into the targeted sink from the interim S3. </summary>
         /// <param name="s3LinkedServiceName"> The name of the Amazon S3 linked service which will be used for the unload operation when copying from the Amazon Redshift source. </param>
         /// <param name="bucketName"> The bucket of the interim Amazon S3 which will be used to store the unloaded data from Amazon Redshift source. The bucket must be in the same region as the Amazon Redshift source. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.RedshiftUnloadSettings"/> instance for mocking. </returns>
@@ -9637,6 +9903,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new RedshiftUnloadSettings(s3LinkedServiceName, bucketName, default);
         }
 
+        /// <summary> A copy activity Microsoft Fabric Warehouse source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9672,6 +9939,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 partitionSettings);
         }
 
+        /// <summary> A copy activity Salesforce V2 source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9705,6 +9973,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 partitionOption);
         }
 
+        /// <summary> A copy activity ServiceNowV2 server source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9732,6 +10001,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 pageSize);
         }
 
+        /// <summary> Nested representation of a complex expression. </summary>
         /// <param name="v2Type"> Type of expressions supported by the system. Type: string. </param>
         /// <param name="v2Value"> Value for Constant/Field Type: object. </param>
         /// <param name="operators"> Expression operator value Type: list of strings. </param>
@@ -9745,6 +10015,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryExpressionV2(v2Type, v2Value, (operators ?? new ChangeTrackingList<DataFactoryElement<string>>()).ToList(), (operands ?? new ChangeTrackingList<DataFactoryExpressionV2>()).ToList(), default);
         }
 
+        /// <summary> A copy activity Azure Blob source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9770,6 +10041,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 recursive);
         }
 
+        /// <summary> A copy activity Document Database Collection source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9797,6 +10069,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity Azure CosmosDB (SQL API) Collection source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9826,6 +10099,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity Dynamics source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9849,6 +10123,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity Dynamics CRM source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9872,6 +10147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity Common Data Service for Apps source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9895,6 +10171,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity source for various relational databases. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9918,6 +10195,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity source for Microsoft Access. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9941,6 +10219,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity source for OData source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9966,6 +10245,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity Salesforce Service Cloud source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -9991,6 +10271,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity Rest service source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -10024,6 +10305,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity file system source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -10047,6 +10329,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity HDFS source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -10070,6 +10353,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 distcpSettings);
         }
 
+        /// <summary> A copy activity Azure Data Explorer (Kusto) source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -10097,6 +10381,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity Oracle source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -10130,6 +10415,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 numberScale);
         }
 
+        /// <summary> The settings that will be leveraged for Oracle source partitioning. </summary>
         /// <param name="partitionNames"> Names of the physical partitions of Oracle table. </param>
         /// <param name="partitionColumnName"> The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionUpperBound"> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
@@ -10140,6 +10426,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new OraclePartitionSettings(partitionNames, partitionColumnName, partitionUpperBound, partitionLowerBound, default);
         }
 
+        /// <summary> A copy activity AmazonRdsForOracle source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -10173,6 +10460,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 numberScale);
         }
 
+        /// <summary> The settings that will be leveraged for AmazonRdsForOracle source partitioning. </summary>
         /// <param name="partitionNames"> Names of the physical partitions of AmazonRdsForOracle table. </param>
         /// <param name="partitionColumnName"> The name of the column in integer type that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
         /// <param name="partitionUpperBound"> The maximum value of column specified in partitionColumnName that will be used for proceeding range partitioning. Type: string (or Expression with resultType string). </param>
@@ -10183,6 +10471,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new AmazonRdsForOraclePartitionSettings(partitionNames, partitionColumnName, partitionUpperBound, partitionLowerBound, default);
         }
 
+        /// <summary> A copy activity source for web page table. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -10204,6 +10493,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity source for a MongoDB database. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -10227,6 +10517,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity source for a MongoDB Atlas database. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -10256,6 +10547,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> Cursor methods for Mongodb query. </summary>
         /// <param name="project"> Specifies the fields to return in the documents that match the query filter. To return all fields in the matching documents, omit this parameter. Type: string (or Expression with resultType string). </param>
         /// <param name="sort"> Specifies the order in which the query returns matching documents. Type: string (or Expression with resultType string). Type: string (or Expression with resultType string). </param>
         /// <param name="skip"> Specifies the how many documents skipped and where MongoDB begins returning results. This approach may be useful in implementing paginated results. Type: integer (or Expression with resultType integer). </param>
@@ -10269,6 +10561,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new MongoDBCursorMethodsProperties(project, sort, skip, limit, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> A copy activity source for a MongoDB database. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -10298,6 +10591,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity source for a CosmosDB (MongoDB API) database. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -10327,6 +10621,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity source for an Office 365 service. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -10358,6 +10653,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 outputColumns);
         }
 
+        /// <summary> The columns to be read out from the Office 365 table. </summary>
         /// <param name="name"> Name of the table column. Type: string. </param>
         /// <returns> A new <see cref="Models.Office365TableOutputColumn"/> instance for mocking. </returns>
         public static Office365TableOutputColumn Office365TableOutputColumn(string name = default)
@@ -10365,6 +10661,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new Office365TableOutputColumn(name, default);
         }
 
+        /// <summary> A copy activity Azure Data Lake source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -10386,6 +10683,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 recursive);
         }
 
+        /// <summary> A copy activity Azure BlobFS source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -10411,6 +10709,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 recursive);
         }
 
+        /// <summary> A copy activity source for an HTTP file. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -10432,6 +10731,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 httpRequestTimeout);
         }
 
+        /// <summary> A copy activity source for Microsoft Fabric Lakehouse Table. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -10457,6 +10757,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary> A copy activity snowflake source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -10480,6 +10781,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 exportSettings);
         }
 
+        /// <summary> Snowflake export command settings. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="additionalCopyOptions"> Additional copy options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalCopyOptions": { "DATE_FORMAT": "MM/DD/YYYY", "TIME_FORMAT": "'HH24:MI:SS.FF'" }. </param>
         /// <param name="additionalFormatOptions"> Additional format options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalFormatOptions": { "OVERWRITE": "TRUE", "MAX_FILE_SIZE": "'FALSE'" }. </param>
@@ -10494,6 +10796,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SnowflakeExportCopyCommand(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalCopyOptions ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalFormatOptions ?? new ChangeTrackingDictionary<string, BinaryData>(), storageIntegration);
         }
 
+        /// <summary>
+        /// Export command settings.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SnowflakeExportCopyCommand"/> and <see cref="Models.AzureDatabricksDeltaLakeExportCommand"/>.
+        /// </summary>
         /// <param name="exportSettingsType"> The export setting type. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.ExportSettings"/> instance for mocking. </returns>
@@ -10504,6 +10810,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new UnknownExportSettings(exportSettingsType, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Azure Databricks Delta Lake export command settings. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="dateFormat"> Specify the date format for the csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string). </param>
         /// <param name="timestampFormat"> Specify the timestamp format for the csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string). </param>
@@ -10515,6 +10822,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new AzureDatabricksDeltaLakeExportCommand(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), dateFormat, timestampFormat);
         }
 
+        /// <summary> A copy activity snowflake source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -10538,6 +10846,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 exportSettings);
         }
 
+        /// <summary> A copy activity Azure Databricks Delta Lake source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -10561,6 +10870,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 exportSettings);
         }
 
+        /// <summary> A copy activity source for sharePoint online list source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -10584,6 +10894,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 httpRequestTimeout);
         }
 
+        /// <summary> A copy activity Salesforce Service Cloud V2 source. </summary>
         /// <param name="sourceRetryCount"> Source retry count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="sourceRetryWait"> Source retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
@@ -10611,6 +10922,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalColumns);
         }
 
+        /// <summary>
+        /// A copy activity sink.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DelimitedTextSink"/>, <see cref="Models.JsonSink"/>, <see cref="Models.OrcSink"/>, <see cref="Models.RestSink"/>, <see cref="Models.TeradataSink"/>, <see cref="Models.AzurePostgreSqlSink"/>, <see cref="Models.AzureMySqlSink"/>, <see cref="Models.AzureDatabricksDeltaLakeSink"/>, <see cref="Models.WarehouseSink"/>, <see cref="Models.SapCloudForCustomerSink"/>, <see cref="Models.AzureQueueSink"/>, <see cref="Models.AzureTableSink"/>, <see cref="Models.AvroSink"/>, <see cref="Models.ParquetSink"/>, <see cref="Models.BinarySink"/>, <see cref="Models.IcebergSink"/>, <see cref="Models.DataFactoryBlobSink"/>, <see cref="Models.FileSystemSink"/>, <see cref="Models.DocumentDBCollectionSink"/>, <see cref="Models.CosmosDBSqlApiSink"/>, <see cref="Models.SqlSink"/>, <see cref="Models.SqlServerSink"/>, <see cref="Models.AzureSqlSink"/>, <see cref="Models.SqlMISink"/>, <see cref="Models.SqlDWSink"/>, <see cref="Models.SnowflakeSink"/>, <see cref="Models.SnowflakeV2Sink"/>, <see cref="Models.OracleSink"/>, <see cref="Models.AzureDataLakeStoreSink"/>, <see cref="Models.AzureBlobFSSink"/>, <see cref="Models.AzureSearchIndexSink"/>, <see cref="Models.OdbcSink"/>, <see cref="Models.InformixSink"/>, <see cref="Models.MicrosoftAccessSink"/>, <see cref="Models.DynamicsSink"/>, <see cref="Models.DynamicsCrmSink"/>, <see cref="Models.CommonDataServiceForAppsSink"/>, <see cref="Models.AzureDataExplorerSink"/>, <see cref="Models.SalesforceSink"/>, <see cref="Models.SalesforceServiceCloudSink"/>, <see cref="Models.MongoDBAtlasSink"/>, <see cref="Models.MongoDBV2Sink"/>, <see cref="Models.CosmosDBMongoDBApiSink"/>, <see cref="Models.LakeHouseTableSink"/>, <see cref="Models.SalesforceV2Sink"/>, and <see cref="Models.SalesforceServiceCloudV2Sink"/>.
+        /// </summary>
         /// <param name="copySinkType"> Copy sink type. </param>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
@@ -10635,6 +10950,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> A copy activity DelimitedText sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -10662,6 +10978,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 formatSettings);
         }
 
+        /// <summary>
+        /// Connector write settings.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SftpWriteSettings"/>, <see cref="Models.AzureBlobStorageWriteSettings"/>, <see cref="Models.AzureBlobFSWriteSettings"/>, <see cref="Models.AzureDataLakeStoreWriteSettings"/>, <see cref="Models.FileServerWriteSettings"/>, <see cref="Models.AzureFileStorageWriteSettings"/>, and <see cref="Models.LakeHouseWriteSettings"/>.
+        /// </summary>
         /// <param name="storeWriteSettingsType"> The write setting type. </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
@@ -10683,6 +11003,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Specify the name and value of custom metadata item. </summary>
         /// <param name="name"> Metadata item key name. Type: string (or Expression with resultType string). </param>
         /// <param name="value"> Metadata item value. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.DataFactoryMetadataItemInfo"/> instance for mocking. </returns>
@@ -10691,6 +11012,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryMetadataItemInfo(name, value, default);
         }
 
+        /// <summary> Sftp write settings. </summary>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
@@ -10715,6 +11037,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 useTempFileRename);
         }
 
+        /// <summary> Azure blob write settings. </summary>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
@@ -10737,6 +11060,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 blockSizeInMB);
         }
 
+        /// <summary> Azure blobFS write settings. </summary>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
@@ -10759,6 +11083,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 blockSizeInMB);
         }
 
+        /// <summary> Azure data lake store write settings. </summary>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
@@ -10781,6 +11106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 expiryDateTime);
         }
 
+        /// <summary> File server write settings. </summary>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
@@ -10801,6 +11127,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Azure File Storage write settings. </summary>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
@@ -10821,6 +11148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Microsoft Fabric Lakehouse Files write settings. </summary>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the source data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
@@ -10841,6 +11169,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Delimited text write settings. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="quoteAllText"> Indicates whether string values should always be enclosed with quotes. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="fileExtension"> The file extension used to create the files. Type: string (or Expression with resultType string). </param>
@@ -10860,6 +11189,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 fileNamePrefix);
         }
 
+        /// <summary>
+        /// Format write settings.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AvroWriteSettings"/>, <see cref="Models.OrcWriteSettings"/>, <see cref="Models.ParquetWriteSettings"/>, <see cref="Models.DelimitedTextWriteSettings"/>, <see cref="Models.JsonWriteSettings"/>, and <see cref="Models.IcebergWriteSettings"/>.
+        /// </summary>
         /// <param name="formatWriteSettingsType"> The write setting type. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.FormatWriteSettings"/> instance for mocking. </returns>
@@ -10870,6 +11203,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new UnknownFormatWriteSettings(formatWriteSettingsType, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Avro write settings. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="recordName"> Top level record name in write result, which is required in AVRO spec. </param>
         /// <param name="recordNamespace"> Record namespace in the write result. </param>
@@ -10889,6 +11223,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 fileNamePrefix);
         }
 
+        /// <summary> Orc write settings. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="maxRowsPerFile"> Limit the written file's row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="fileNamePrefix"> Specifies the file name pattern &lt;fileNamePrefix&gt;_&lt;fileIndex&gt;.&lt;fileExtension&gt; when copy from non-file based store without partitionOptions. Type: string (or Expression with resultType string). </param>
@@ -10900,6 +11235,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new OrcWriteSettings(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), maxRowsPerFile, fileNamePrefix);
         }
 
+        /// <summary> Parquet write settings. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="maxRowsPerFile"> Limit the written file's row count to be smaller than or equal to the specified count. Type: integer (or Expression with resultType integer). </param>
         /// <param name="fileNamePrefix"> Specifies the file name pattern &lt;fileNamePrefix&gt;_&lt;fileIndex&gt;.&lt;fileExtension&gt; when copy from non-file based store without partitionOptions. Type: string (or Expression with resultType string). </param>
@@ -10911,6 +11247,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new ParquetWriteSettings(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), maxRowsPerFile, fileNamePrefix);
         }
 
+        /// <summary> Json write settings. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="filePattern"> File pattern of JSON. This setting controls the way a collection of JSON objects will be treated. The default value is 'setOfObjects'. It is case-sensitive. </param>
         /// <returns> A new <see cref="Models.JsonWriteSettings"/> instance for mocking. </returns>
@@ -10921,6 +11258,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new JsonWriteSettings(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), filePattern);
         }
 
+        /// <summary> Iceberg write settings. </summary>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.IcebergWriteSettings"/> instance for mocking. </returns>
         public static IcebergWriteSettings IcebergWriteSettings(IDictionary<string, BinaryData> additionalProperties = default)
@@ -10930,6 +11268,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new IcebergWriteSettings(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> A copy activity Json sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -10957,6 +11296,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 formatSettings);
         }
 
+        /// <summary> A copy activity ORC sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -10984,6 +11324,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 formatSettings);
         }
 
+        /// <summary> A copy activity Rest service Sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11017,6 +11358,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 httpCompressionType);
         }
 
+        /// <summary> A copy activity Teradata sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11042,6 +11384,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 importSettings);
         }
 
+        /// <summary> Teradata import command settings. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="additionalFormatOptions"> Additional format options for Teradata Copy Command. The format options only applies to direct copy from CSV source. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalFormatOptions": { "timeFormat": "HHhMImSSs" }. </param>
         /// <returns> A new <see cref="Models.TeradataImportCommand"/> instance for mocking. </returns>
@@ -11052,6 +11395,10 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new TeradataImportCommand(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), additionalFormatOptions);
         }
 
+        /// <summary>
+        /// Import command settings.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.TeradataImportCommand"/>, <see cref="Models.AzureDatabricksDeltaLakeImportCommand"/>, and <see cref="Models.SnowflakeImportCopyCommand"/>.
+        /// </summary>
         /// <param name="importSettingsType"> The import setting type. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.ImportSettings"/> instance for mocking. </returns>
@@ -11062,6 +11409,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new UnknownImportSettings(importSettingsType, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Azure Databricks Delta Lake import command settings. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="dateFormat"> Specify the date format for csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string). </param>
         /// <param name="timestampFormat"> Specify the timestamp format for csv in Azure Databricks Delta Lake Copy. Type: string (or Expression with resultType string). </param>
@@ -11073,6 +11421,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new AzureDatabricksDeltaLakeImportCommand(default, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), dateFormat, timestampFormat);
         }
 
+        /// <summary> Snowflake import command settings. </summary>
         /// <param name="additionalProperties"></param>
         /// <param name="additionalCopyOptions"> Additional copy options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalCopyOptions": { "DATE_FORMAT": "MM/DD/YYYY", "TIME_FORMAT": "'HH24:MI:SS.FF'" }. </param>
         /// <param name="additionalFormatOptions"> Additional format options directly passed to snowflake Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalFormatOptions": { "FORCE": "TRUE", "LOAD_UNCERTAIN_FILES": "'FALSE'" }. </param>
@@ -11116,6 +11465,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 upsertKeys is null ? default : new AzurePostgreSqlSinkUpsertSettings(upsertKeys, default));
         }
 
+        /// <summary> Azure Database for PostgreSQL upsert option settings. </summary>
         /// <param name="keys"> Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings). </param>
         /// <returns> A new <see cref="Models.AzurePostgreSqlSinkUpsertSettings"/> instance for mocking. </returns>
         public static AzurePostgreSqlSinkUpsertSettings AzurePostgreSqlSinkUpsertSettings(DataFactoryElement<IList<string>> keys = default)
@@ -11123,6 +11473,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new AzurePostgreSqlSinkUpsertSettings(keys, default);
         }
 
+        /// <summary> A copy activity Azure MySql sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11148,6 +11499,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 preCopyScript);
         }
 
+        /// <summary> A copy activity Azure Databricks Delta Lake sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11175,6 +11527,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 importSettings);
         }
 
+        /// <summary> A copy activity Microsoft Fabric Warehouse sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11208,6 +11561,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writeBehavior);
         }
 
+        /// <summary> DW Copy Command settings. </summary>
         /// <param name="defaultValues"> Specifies the default values for each target column in SQL DW. The default values in the property overwrite the DEFAULT constraint set in the DB, and identity column cannot have a default value. Type: array of objects (or Expression with resultType array of objects). </param>
         /// <param name="additionalOptions"> Additional options directly passed to SQL DW in Copy Command. Type: key value pairs (value should be string type) (or Expression with resultType object). Example: "additionalOptions": { "MAXERRORS": "1000", "DATEFORMAT": "'ymd'" }. </param>
         /// <returns> A new <see cref="Models.DWCopyCommandSettings"/> instance for mocking. </returns>
@@ -11219,6 +11573,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DWCopyCommandSettings((defaultValues ?? new ChangeTrackingList<DWCopyCommandDefaultValue>()).ToList(), additionalOptions ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Default value. </summary>
         /// <param name="columnName"> Column name. Type: object (or Expression with resultType string). </param>
         /// <param name="defaultValue"> The default value of the column. Type: object (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.DWCopyCommandDefaultValue"/> instance for mocking. </returns>
@@ -11227,6 +11582,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DWCopyCommandDefaultValue(columnName, defaultValue, default);
         }
 
+        /// <summary> A copy activity SAP Cloud for Customer sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11254,6 +11610,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 httpRequestTimeout);
         }
 
+        /// <summary> A copy activity Azure Queue sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11277,6 +11634,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> A copy activity Azure Table sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11308,6 +11666,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 azureTableInsertType);
         }
 
+        /// <summary> A copy activity Avro sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11335,6 +11694,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 formatSettings);
         }
 
+        /// <summary> A copy activity Parquet sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11362,6 +11722,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 formatSettings);
         }
 
+        /// <summary> A copy activity Binary sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11387,6 +11748,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 storeSettings);
         }
 
+        /// <summary> A copy activity Iceberg sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11414,6 +11776,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 formatSettings);
         }
 
+        /// <summary> A copy activity Azure Blob sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11448,6 +11811,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (metadata ?? new ChangeTrackingList<DataFactoryMetadataItemInfo>()).ToList());
         }
 
+        /// <summary> A copy activity file system sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11473,6 +11837,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 copyBehavior);
         }
 
+        /// <summary> A copy activity Document Database Collection sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11500,6 +11865,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writeBehavior);
         }
 
+        /// <summary> A copy activity Azure CosmosDB (SQL API) Collection sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11525,6 +11891,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writeBehavior);
         }
 
+        /// <summary> A copy activity SQL sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11566,6 +11933,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 upsertSettings);
         }
 
+        /// <summary> Sql upsert option settings. </summary>
         /// <param name="useTempDB"> Specifies whether to use temp db for upsert interim table. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="interimSchemaName"> Schema name for interim table. Type: string (or Expression with resultType string). </param>
         /// <param name="keys"> Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings). </param>
@@ -11575,6 +11943,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SqlUpsertSettings(useTempDB, interimSchemaName, keys, default);
         }
 
+        /// <summary> A copy activity SQL server sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11616,6 +11985,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 upsertSettings);
         }
 
+        /// <summary> A copy activity Azure SQL sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11657,6 +12027,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 upsertSettings);
         }
 
+        /// <summary> A copy activity Azure SQL Managed Instance sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11698,6 +12069,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 upsertSettings);
         }
 
+        /// <summary> A copy activity SQL Data Warehouse sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11739,6 +12111,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 upsertSettings);
         }
 
+        /// <summary> PolyBase settings. </summary>
         /// <param name="rejectType"> Reject type. </param>
         /// <param name="rejectValue"> Specifies the value or the percentage of rows that can be rejected before the query fails. Type: number (or Expression with resultType number), minimum: 0. </param>
         /// <param name="rejectSampleValue"> Determines the number of rows to attempt to retrieve before the PolyBase recalculates the percentage of rejected rows. Type: integer (or Expression with resultType integer), minimum: 0. </param>
@@ -11752,6 +12125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new PolybaseSettings(rejectType, rejectValue, rejectSampleValue, useTypeDefault, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Sql DW upsert option settings. </summary>
         /// <param name="interimSchemaName"> Schema name for interim table. Type: string (or Expression with resultType string). </param>
         /// <param name="keys"> Key column names for unique row identification. Type: array of strings (or Expression with resultType array of strings). </param>
         /// <returns> A new <see cref="Models.SqlDWUpsertSettings"/> instance for mocking. </returns>
@@ -11760,6 +12134,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SqlDWUpsertSettings(interimSchemaName, keys, default);
         }
 
+        /// <summary> A copy activity snowflake sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11787,6 +12162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 importSettings);
         }
 
+        /// <summary> A copy activity snowflake sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11814,6 +12190,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 importSettings);
         }
 
+        /// <summary> A copy activity Oracle sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11839,6 +12216,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 preCopyScript);
         }
 
+        /// <summary> A copy activity Azure Data Lake Store sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11866,6 +12244,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 enableAdlsSingleFileParallel);
         }
 
+        /// <summary> A copy activity Azure Data Lake Storage Gen2 sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11894,6 +12273,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 (metadata ?? new ChangeTrackingList<DataFactoryMetadataItemInfo>()).ToList());
         }
 
+        /// <summary> A copy activity Azure Search Index sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11919,6 +12299,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writeBehavior);
         }
 
+        /// <summary> A copy activity ODBC sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11944,6 +12325,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 preCopyScript);
         }
 
+        /// <summary> A copy activity Informix sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11969,6 +12351,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 preCopyScript);
         }
 
+        /// <summary> A copy activity Microsoft Access sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -11994,6 +12377,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 preCopyScript);
         }
 
+        /// <summary> A copy activity Dynamics sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -12027,6 +12411,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 bypassPowerAutomateFlows);
         }
 
+        /// <summary> A copy activity Dynamics CRM sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -12060,6 +12445,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 bypassPowerAutomateFlows);
         }
 
+        /// <summary> A copy activity Common Data Service for Apps sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -12093,6 +12479,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 bypassPowerAutomateFlows);
         }
 
+        /// <summary> A copy activity Azure Data Explorer sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -12122,6 +12509,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 flushImmediately);
         }
 
+        /// <summary> A copy activity Salesforce sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -12151,6 +12539,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 ignoreNullValues);
         }
 
+        /// <summary> A copy activity Salesforce Service Cloud sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -12180,6 +12569,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 ignoreNullValues);
         }
 
+        /// <summary> A copy activity MongoDB Atlas sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -12205,6 +12595,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writeBehavior);
         }
 
+        /// <summary> A copy activity MongoDB sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -12230,6 +12621,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writeBehavior);
         }
 
+        /// <summary> A copy activity sink for a CosmosDB (MongoDB API) database. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -12255,6 +12647,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writeBehavior);
         }
 
+        /// <summary> A copy activity for Microsoft Fabric Lakehouse Table sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -12284,6 +12677,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 partitionNameList);
         }
 
+        /// <summary> A copy activity Salesforce V2 sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -12313,6 +12707,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 ignoreNullValues);
         }
 
+        /// <summary> A copy activity Salesforce Service Cloud V2 sink. </summary>
         /// <param name="writeBatchSize"> Write batch size. Type: integer (or Expression with resultType integer), minimum: 0. </param>
         /// <param name="writeBatchTimeout"> Write batch timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="sinkRetryCount"> Sink retry count. Type: integer (or Expression with resultType integer). </param>
@@ -12342,6 +12737,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 ignoreNullValues);
         }
 
+        /// <summary> Staging settings. </summary>
         /// <param name="linkedServiceName"> Staging linked service reference. </param>
         /// <param name="path"> The path to storage for storing the interim data. Type: string (or Expression with resultType string). </param>
         /// <param name="enableCompression"> Specifies whether to use compression when copying data via an interim staging. Default value is false. Type: boolean (or Expression with resultType boolean). </param>
@@ -12354,6 +12750,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new StagingSettings(linkedServiceName, path, enableCompression, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Redirect incompatible row settings. </summary>
         /// <param name="linkedServiceName"> Name of the Azure Storage, Storage SAS, or Azure Data Lake Store linked service used for redirecting incompatible row. Must be specified if redirectIncompatibleRowSettings is specified. Type: string (or Expression with resultType string). </param>
         /// <param name="path"> The path for storing the redirect incompatible row data. Type: string (or Expression with resultType string). </param>
         /// <param name="additionalProperties"></param>
@@ -12365,6 +12762,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new RedirectIncompatibleRowSettings(linkedServiceName, path, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> (Deprecated. Please use LogSettings) Log storage settings. </summary>
         /// <param name="linkedServiceName"> Log storage linked service reference. </param>
         /// <param name="path"> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </param>
         /// <param name="logLevel"> Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string). </param>
@@ -12378,6 +12776,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new LogStorageSettings(linkedServiceName, path, logLevel, enableReliableLogging, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Log settings. </summary>
         /// <param name="enableCopyActivityLog"> Specifies whether to enable copy activity log. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyActivityLogSettings"> Specifies settings for copy activity log. </param>
         /// <param name="logLocationSettings"> Log location settings customer needs to provide when enabling log. </param>
@@ -12387,6 +12786,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryLogSettings(enableCopyActivityLog, copyActivityLogSettings, logLocationSettings, default);
         }
 
+        /// <summary> Settings for copy activity log. </summary>
         /// <param name="logLevel"> Gets or sets the log level, support: Info, Warning. Type: string (or Expression with resultType string). </param>
         /// <param name="enableReliableLogging"> Specifies whether to enable reliable logging. Type: boolean (or Expression with resultType boolean). </param>
         /// <returns> A new <see cref="Models.CopyActivityLogSettings"/> instance for mocking. </returns>
@@ -12395,6 +12795,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new CopyActivityLogSettings(logLevel, enableReliableLogging, default);
         }
 
+        /// <summary> Log location settings. </summary>
         /// <param name="linkedServiceName"> Log storage linked service reference. </param>
         /// <param name="path"> The path to storage for storing detailed logs of activity execution. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.LogLocationSettings"/> instance for mocking. </returns>
@@ -12403,6 +12804,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new LogLocationSettings(linkedServiceName, path, default);
         }
 
+        /// <summary> Skip error file. </summary>
         /// <param name="fileMissing"> Skip if file is deleted by other client during copy. Default is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="dataInconsistency"> Skip if source/sink file changed by other concurrent write. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <returns> A new <see cref="Models.SkipErrorFile"/> instance for mocking. </returns>
@@ -12502,7 +12904,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="jarLinkedService"> Jar linked service reference. </param>
         /// <param name="jarLibs"> Jar libs. </param>
         /// <param name="defines"> Allows user to specify defines for the MapReduce job request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="className"/> or <paramref name="jarFilePath"/> is null. </exception>
         /// <returns> A new <see cref="Models.HDInsightMapReduceActivity"/> instance for mocking. </returns>
         public static HDInsightMapReduceActivity HDInsightMapReduceActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, IEnumerable<DataFactoryLinkedServiceReference> storageLinkedServices = default, IEnumerable<BinaryData> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, DataFactoryElement<string> className = default, DataFactoryElement<string> jarFilePath = default, DataFactoryLinkedServiceReference jarLinkedService = default, IEnumerable<BinaryData> jarLibs = default, IDictionary<string, BinaryData> defines = default)
         {
@@ -12545,7 +12946,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="combiner"> Combiner executable name. Type: string (or Expression with resultType string). </param>
         /// <param name="commandEnvironment"> Command line environment values. </param>
         /// <param name="defines"> Allows user to specify defines for streaming job request. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mapper"/>, <paramref name="reducer"/>, <paramref name="input"/>, <paramref name="output"/> or <paramref name="filePaths"/> is null. </exception>
         /// <returns> A new <see cref="Models.HDInsightStreamingActivity"/> instance for mocking. </returns>
         public static HDInsightStreamingActivity HDInsightStreamingActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, IEnumerable<DataFactoryLinkedServiceReference> storageLinkedServices = default, IEnumerable<BinaryData> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, DataFactoryElement<string> mapper = default, DataFactoryElement<string> reducer = default, DataFactoryElement<string> input = default, DataFactoryElement<string> output = default, IEnumerable<BinaryData> filePaths = default, DataFactoryLinkedServiceReference fileLinkedService = default, DataFactoryElement<string> combiner = default, IEnumerable<BinaryData> commandEnvironment = default, IDictionary<string, BinaryData> defines = default)
         {
@@ -12584,7 +12984,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="className"> The application's Java/Spark main class. </param>
         /// <param name="proxyUser"> The user to impersonate that will execute the job. Type: string (or Expression with resultType string). </param>
         /// <param name="sparkConfig"> Spark configuration property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="rootPath"/> or <paramref name="entryFilePath"/> is null. </exception>
         /// <returns> A new <see cref="Models.HDInsightSparkActivity"/> instance for mocking. </returns>
         public static HDInsightSparkActivity HDInsightSparkActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> rootPath = default, DataFactoryElement<string> entryFilePath = default, IEnumerable<BinaryData> arguments = default, HDInsightActivityDebugInfoOptionSetting? getDebugInfo = default, DataFactoryLinkedServiceReference sparkJobLinkedService = default, string className = default, DataFactoryElement<string> proxyUser = default, IDictionary<string, BinaryData> sparkConfig = default)
         {
@@ -12627,7 +13026,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="packageConnectionManagers"> The package level connection managers to execute the SSIS package. </param>
         /// <param name="propertyOverrides"> The property overrides to execute the SSIS package. </param>
         /// <param name="logLocation"> SSIS package execution log location. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="packageLocation"/> or <paramref name="connectVia"/> is null. </exception>
         /// <returns> A new <see cref="Models.ExecuteSsisPackageActivity"/> instance for mocking. </returns>
         public static ExecuteSsisPackageActivity ExecuteSsisPackageActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, SsisPackageLocation packageLocation = default, DataFactoryElement<string> runtime = default, DataFactoryElement<string> loggingLevel = default, DataFactoryElement<string> environmentPath = default, SsisExecutionCredential executionCredential = default, IntegrationRuntimeReference connectVia = default, IDictionary<string, SsisExecutionParameter> projectParameters = default, IDictionary<string, SsisExecutionParameter> packageParameters = default, IDictionary<string, IDictionary<string, SsisExecutionParameter>> projectConnectionManagers = default, IDictionary<string, IDictionary<string, SsisExecutionParameter>> packageConnectionManagers = default, IDictionary<string, SsisPropertyOverride> propertyOverrides = default, SsisLogLocation logLocation = default)
         {
@@ -12649,6 +13047,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> SSIS access credential. </summary>
         /// <param name="domain"> Domain for windows authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="userName"> UseName for windows authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> Password for windows authentication. </param>
@@ -12658,6 +13057,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SsisAccessCredential(domain, userName, password, default);
         }
 
+        /// <summary> SSIS embedded child package. </summary>
         /// <param name="packagePath"> Path for embedded child package. Type: string (or Expression with resultType string). </param>
         /// <param name="packageName"> Name for embedded child package. </param>
         /// <param name="packageContent"> Content for embedded child package. Type: string (or Expression with resultType string). </param>
@@ -12668,6 +13068,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SsisChildPackage(packagePath, packageName, packageContent, packageLastModifiedDate, default);
         }
 
+        /// <summary> SSIS package execution credential. </summary>
         /// <param name="domain"> Domain for windows authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="userName"> UseName for windows authentication. Type: string (or Expression with resultType string). </param>
         /// <param name="password"> Password for windows authentication. </param>
@@ -12677,6 +13078,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SsisExecutionCredential(domain, userName, password, default);
         }
 
+        /// <summary> SSIS execution parameter. </summary>
         /// <param name="value"> SSIS package execution parameter value. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.SsisExecutionParameter"/> instance for mocking. </returns>
         public static SsisExecutionParameter SsisExecutionParameter(DataFactoryElement<string> value = default)
@@ -12684,6 +13086,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SsisExecutionParameter(value, default);
         }
 
+        /// <summary> SSIS property override. </summary>
         /// <param name="value"> SSIS package property override value. Type: string (or Expression with resultType string). </param>
         /// <param name="isSensitive"> Whether SSIS package property override value is sensitive data. Value will be encrypted in SSISDB if it is true. </param>
         /// <returns> A new <see cref="Models.SsisPropertyOverride"/> instance for mocking. </returns>
@@ -12702,6 +13105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SsisLogLocation(logPath, locationType, default, default);
         }
 
+        /// <summary> Reference objects for custom activity. </summary>
         /// <param name="linkedServices"> Linked service references. </param>
         /// <param name="datasets"> Dataset references. </param>
         /// <returns> A new <see cref="Models.CustomActivityReferenceObject"/> instance for mocking. </returns>
@@ -12724,7 +13128,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="policy"> Activity policy. </param>
         /// <param name="storedProcedureName"> Stored procedure name. Type: string (or Expression with resultType string). </param>
         /// <param name="storedProcedureParameters"> Value and type setting for stored procedure parameters. Example: "{Parameter1: {value: "1", type: "int"}}". </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="storedProcedureName"/> is null. </exception>
         /// <returns> A new <see cref="Models.SqlServerStoredProcedureActivity"/> instance for mocking. </returns>
         public static SqlServerStoredProcedureActivity SqlServerStoredProcedureActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> storedProcedureName = default, BinaryData storedProcedureParameters = default)
         {
@@ -12757,7 +13160,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="policy"> Activity policy. </param>
         /// <param name="command"> A control command, according to the Azure Data Explorer command syntax. Type: string (or Expression with resultType string). </param>
         /// <param name="commandTimeout"> Control command timeout. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9]))..). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="command"/> is null. </exception>
         /// <returns> A new <see cref="Models.AzureDataExplorerCommandActivity"/> instance for mocking. </returns>
         public static AzureDataExplorerCommandActivity AzureDataExplorerCommandActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> command = default, DataFactoryElement<string> commandTimeout = default)
         {
@@ -12792,7 +13194,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="dataset"> Lookup activity dataset reference. </param>
         /// <param name="firstRowOnly"> Whether to return first row or all rows. Default value is true. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="treatDecimalAsString"> Indicates whether to treat decimal values as strings to avoid value overflow issue. This option is enabled for SnowflakeV2 connector only. Type: boolean (or Expression with resultType boolean). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="source"/> or <paramref name="dataset"/> is null. </exception>
         /// <returns> A new <see cref="Models.LookupActivity"/> instance for mocking. </returns>
         public static LookupActivity LookupActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, CopyActivitySource source = default, DatasetReference dataset = default, DataFactoryElement<bool> firstRowOnly = default, DataFactoryElement<bool> treatDecimalAsString = default)
         {
@@ -12827,7 +13228,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="fieldList"> Fields of metadata to get from dataset. </param>
         /// <param name="storeSettings"> GetMetadata activity store settings. </param>
         /// <param name="formatSettings"> GetMetadata activity format settings. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataset"/> is null. </exception>
         /// <returns> A new <see cref="Models.GetDatasetMetadataActivity"/> instance for mocking. </returns>
         public static GetDatasetMetadataActivity GetDatasetMetadataActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DatasetReference dataset = default, IEnumerable<BinaryData> fieldList = default, StoreReadSettings storeSettings = default, FormatReadSettings formatSettings = default)
         {
@@ -12882,6 +13282,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Azure ML WebService Input/Output file. </summary>
         /// <param name="filePath"> The relative file path, including container name, in the Azure Blob Storage specified by the LinkedService. Type: string (or Expression with resultType string). </param>
         /// <param name="linkedServiceName"> Reference to an Azure Storage LinkedService, where Azure ML WebService Input/Output file located. </param>
         /// <returns> A new <see cref="Models.AzureMLWebServiceFile"/> instance for mocking. </returns>
@@ -12902,7 +13303,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="trainedModelName"> Name of the Trained Model module in the Web Service experiment to be updated. Type: string (or Expression with resultType string). </param>
         /// <param name="trainedModelLinkedServiceName"> Name of Azure Storage linked service holding the .ilearner file that will be uploaded by the update operation. </param>
         /// <param name="trainedModelFilePath"> The relative file path in trainedModelLinkedService to represent the .ilearner file that will be uploaded by the update operation.  Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="trainedModelName"/>, <paramref name="trainedModelLinkedServiceName"/> or <paramref name="trainedModelFilePath"/> is null. </exception>
         /// <returns> A new <see cref="Models.AzureMLUpdateResourceActivity"/> instance for mocking. </returns>
         public static AzureMLUpdateResourceActivity AzureMLUpdateResourceActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> trainedModelName = default, DataFactoryLinkedServiceReference trainedModelLinkedServiceName = default, DataFactoryElement<string> trainedModelFilePath = default)
         {
@@ -12940,7 +13340,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="parameters"> Parameters for U-SQL job request. </param>
         /// <param name="runtimeVersion"> Runtime version of the U-SQL engine to use. Type: string (or Expression with resultType string). </param>
         /// <param name="compilationMode"> Compilation mode of U-SQL. Must be one of these values : Semantic, Full and SingleBox. Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scriptPath"/> or <paramref name="scriptLinkedService"/> is null. </exception>
         /// <returns> A new <see cref="Models.DataLakeAnalyticsUsqlActivity"/> instance for mocking. </returns>
         public static DataLakeAnalyticsUsqlActivity DataLakeAnalyticsUsqlActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> scriptPath = default, DataFactoryLinkedServiceReference scriptLinkedService = default, DataFactoryElement<int> degreeOfParallelism = default, DataFactoryElement<int> priority = default, IDictionary<string, BinaryData> parameters = default, DataFactoryElement<string> runtimeVersion = default, DataFactoryElement<string> compilationMode = default)
         {
@@ -12974,7 +13373,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="notebookPath"> The absolute path of the notebook to be run in the Databricks Workspace. This path must begin with a slash. Type: string (or Expression with resultType string). </param>
         /// <param name="baseParameters"> Base parameters to be used for each run of this job.If the notebook takes a parameter that is not specified, the default value from the notebook will be used. </param>
         /// <param name="libraries"> A list of libraries to be installed on the cluster that will execute the job. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notebookPath"/> is null. </exception>
         /// <returns> A new <see cref="Models.DatabricksNotebookActivity"/> instance for mocking. </returns>
         public static DatabricksNotebookActivity DatabricksNotebookActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> notebookPath = default, IDictionary<string, BinaryData> baseParameters = default, IEnumerable<IDictionary<string, BinaryData>> libraries = default)
         {
@@ -13008,7 +13406,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="mainClassName"> The full name of the class containing the main method to be executed. This class must be contained in a JAR provided as a library. Type: string (or Expression with resultType string). </param>
         /// <param name="parameters"> Parameters that will be passed to the main method. </param>
         /// <param name="libraries"> A list of libraries to be installed on the cluster that will execute the job. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="mainClassName"/> is null. </exception>
         /// <returns> A new <see cref="Models.DatabricksSparkJarActivity"/> instance for mocking. </returns>
         public static DatabricksSparkJarActivity DatabricksSparkJarActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> mainClassName = default, IEnumerable<BinaryData> parameters = default, IEnumerable<IDictionary<string, BinaryData>> libraries = default)
         {
@@ -13042,7 +13439,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="pythonFile"> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </param>
         /// <param name="parameters"> Command line parameters that will be passed to the Python file. </param>
         /// <param name="libraries"> A list of libraries to be installed on the cluster that will execute the job. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pythonFile"/> is null. </exception>
         /// <returns> A new <see cref="Models.DatabricksSparkPythonActivity"/> instance for mocking. </returns>
         public static DatabricksSparkPythonActivity DatabricksSparkPythonActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> pythonFile = default, IEnumerable<BinaryData> parameters = default, IEnumerable<IDictionary<string, BinaryData>> libraries = default)
         {
@@ -13075,7 +13471,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="policy"> Activity policy. </param>
         /// <param name="jobId"> The Id of the Databricks Job to be executed. Type: string (or Expression with resultType string). </param>
         /// <param name="jobParameters"> Job parameters to be used for each run of this job. If the job takes a parameter that is not specified, the default value from the job will be used. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <returns> A new <see cref="Models.DatabricksJobActivity"/> instance for mocking. </returns>
         public static DatabricksJobActivity DatabricksJobActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFactoryElement<string> jobId = default, IDictionary<string, BinaryData> jobParameters = default)
         {
@@ -13110,7 +13505,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="functionName"> Name of the Function that the Azure Function Activity will call. Type: string (or Expression with resultType string). </param>
         /// <param name="requestHeaders"> Represents the headers that will be sent to the request. For example, to set the language and type on a request: "headers" : { "Accept-Language": "en-us", "Content-Type": "application/json" }. Type: string (or Expression with resultType string). </param>
         /// <param name="body"> Represents the payload that will be sent to the endpoint. Required for POST/PUT method, not allowed for GET method Type: string (or Expression with resultType string). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
         /// <returns> A new <see cref="Models.AzureFunctionActivity"/> instance for mocking. </returns>
         public static AzureFunctionActivity AzureFunctionActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, AzureFunctionActivityMethod @method = default, DataFactoryElement<string> functionName = default, IDictionary<string, BinaryData> requestHeaders = default, DataFactoryElement<string> body = default)
         {
@@ -13150,7 +13544,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="continueOnError"> Continue on error setting used for data flow execution. Enables processing to continue if a sink fails. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="runConcurrently"> Concurrent run setting used for data flow execution. Allows sinks with the same save order to be processed concurrently. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="sourceStagingConcurrency"> Specify number of parallel staging for sources applicable to the sink. Type: integer (or Expression with resultType integer). </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataFlow"/> is null. </exception>
         /// <returns> A new <see cref="Models.ExecuteDataFlowActivity"/> instance for mocking. </returns>
         public static ExecuteDataFlowActivity ExecuteDataFlowActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, DataFlowReference dataFlow = default, DataFlowStagingInfo staging = default, IntegrationRuntimeReference integrationRuntime = default, ContinuationSettingsReference continuationSettings = default, ExecuteDataFlowActivityComputeType compute = default, DataFactoryElement<string> traceLevel = default, DataFactoryElement<bool> continueOnError = default, DataFactoryElement<bool> runConcurrently = default, DataFactoryElement<int> sourceStagingConcurrency = default)
         {
@@ -13172,6 +13565,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Continuation settings for execute data flow activity. </summary>
         /// <param name="continuationTtlInMinutes"> Continuation TTL in minutes. </param>
         /// <param name="idleCondition"> Idle condition. </param>
         /// <param name="customizedCheckpointKey"> Customized checkpoint key. </param>
@@ -13181,6 +13575,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new ContinuationSettingsReference(continuationTtlInMinutes, idleCondition, customizedCheckpointKey, default);
         }
 
+        /// <summary> Compute properties for data flow activity. </summary>
         /// <param name="computeType"> Compute type of the cluster which will execute data flow job. Possible values include: 'General', 'MemoryOptimized', 'ComputeOptimized'. Type: string (or Expression with resultType string). </param>
         /// <param name="coreCount"> Core count of the cluster which will execute data flow job. Supported values are: 8, 16, 32, 48, 80, 144 and 272. Type: integer (or Expression with resultType integer). </param>
         /// <returns> A new <see cref="Models.ExecuteDataFlowActivityComputeType"/> instance for mocking. </returns>
@@ -13224,6 +13619,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Script block of scripts. </summary>
         /// <param name="text"> The query text. Type: string (or Expression with resultType string). </param>
         /// <param name="queryType"> The type of the query. Please refer to the ScriptType for valid options. Type: string (or Expression with resultType string). </param>
         /// <param name="parameters"> Array of script parameters. Type: array. </param>
@@ -13235,6 +13631,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new ScriptActivityScriptBlock(text, queryType, (parameters ?? new ChangeTrackingList<ScriptActivityParameter>()).ToList(), default);
         }
 
+        /// <summary> Parameters of a script block. </summary>
         /// <param name="name"> The name of the parameter. Type: string (or Expression with resultType string). </param>
         /// <param name="parameterType"> The type of the parameter. </param>
         /// <param name="value"> The value of the parameter. Type: string (or Expression with resultType string). </param>
@@ -13252,6 +13649,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Log settings of script activity. </summary>
         /// <param name="logDestination"> The destination of logs. Type: string. </param>
         /// <param name="logLocationSettings"> Log location settings customer needs to provide when enabling log. </param>
         /// <returns> A new <see cref="Models.ScriptActivityTypeLogSettings"/> instance for mocking. </returns>
@@ -13279,7 +13677,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="configurationType"> The type of the spark config. </param>
         /// <param name="targetSparkConfiguration"> The spark configuration of the spark job. </param>
         /// <param name="sparkConfig"> Spark configuration property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="notebook"/> is null. </exception>
         /// <returns> A new <see cref="Models.SynapseNotebookActivity"/> instance for mocking. </returns>
         public static SynapseNotebookActivity SynapseNotebookActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, SynapseNotebookReference notebook = default, BigDataPoolParametrizationReference sparkPool = default, IDictionary<string, NotebookParameter> parameters = default, DataFactoryElement<string> executorSize = default, BinaryData conf = default, DataFactoryElement<string> driverSize = default, DataFactoryElement<int> numExecutors = default, DataFactorySparkConfigurationType? configurationType = default, SparkConfigurationParametrizationReference targetSparkConfiguration = default, IDictionary<string, BinaryData> sparkConfig = default)
         {
@@ -13312,6 +13709,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     default));
         }
 
+        /// <summary> Synapse notebook reference type. </summary>
         /// <param name="notebookReferenceType"> Synapse notebook reference type. </param>
         /// <param name="referenceName"> Reference notebook name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.SynapseNotebookReference"/> instance for mocking. </returns>
@@ -13320,6 +13718,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new SynapseNotebookReference(notebookReferenceType, referenceName, default);
         }
 
+        /// <summary> Big data pool reference type. </summary>
         /// <param name="referenceType"> Big data pool reference type. </param>
         /// <param name="referenceName"> Reference big data pool name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.BigDataPoolParametrizationReference"/> instance for mocking. </returns>
@@ -13328,6 +13727,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new BigDataPoolParametrizationReference(referenceType, referenceName, default);
         }
 
+        /// <summary> Notebook parameter. </summary>
         /// <param name="value"> Notebook parameter value. Type: string (or Expression with resultType string). </param>
         /// <param name="parameterType"> Notebook parameter type. </param>
         /// <returns> A new <see cref="Models.NotebookParameter"/> instance for mocking. </returns>
@@ -13336,6 +13736,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new NotebookParameter(value, parameterType, default);
         }
 
+        /// <summary> Spark configuration reference. </summary>
         /// <param name="referenceType"> Spark configuration reference type. </param>
         /// <param name="referenceName"> Reference spark configuration name. Type: string (or Expression with resultType string). </param>
         /// <returns> A new <see cref="Models.SparkConfigurationParametrizationReference"/> instance for mocking. </returns>
@@ -13369,7 +13770,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="configurationType"> The type of the spark config. </param>
         /// <param name="targetSparkConfiguration"> The spark configuration of the spark job. </param>
         /// <param name="sparkConfig"> Spark configuration property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sparkJob"/> is null. </exception>
         /// <returns> A new <see cref="Models.SynapseSparkJobDefinitionActivity"/> instance for mocking. </returns>
         public static SynapseSparkJobDefinitionActivity SynapseSparkJobDefinitionActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFactoryLinkedServiceReference linkedServiceName = default, PipelineActivityPolicy policy = default, SynapseSparkJobReference sparkJob = default, IEnumerable<BinaryData> arguments = default, DataFactoryElement<string> @file = default, DataFactoryElement<bool> scanFolder = default, DataFactoryElement<string> className = default, IEnumerable<BinaryData> files = default, IEnumerable<BinaryData> pythonCodeReference = default, IEnumerable<BinaryData> filesV2 = default, BigDataPoolParametrizationReference targetBigDataPool = default, DataFactoryElement<string> executorSize = default, BinaryData conf = default, DataFactoryElement<string> driverSize = default, DataFactoryElement<int> numExecutors = default, DataFactorySparkConfigurationType? configurationType = default, SparkConfigurationParametrizationReference targetSparkConfiguration = default, IDictionary<string, BinaryData> sparkConfig = default)
         {
@@ -13408,6 +13808,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     default));
         }
 
+        /// <summary> Synapse spark job reference type. </summary>
         /// <param name="sparkJobReferenceType"> Synapse spark job reference type. </param>
         /// <param name="referenceName"> Reference spark job name. Expression with resultType string. </param>
         /// <returns> A new <see cref="Models.SynapseSparkJobReference"/> instance for mocking. </returns>
@@ -13435,7 +13836,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sinks"> (Deprecated. Please use Queries). List of Power Query activity sinks mapped to a queryName. </param>
         /// <param name="queries"> List of mapping for Power Query mashup query to sink dataset(s). </param>
         /// <param name="policy"> Activity policy. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="dataFlow"/> is null. </exception>
         /// <returns> A new <see cref="Models.ExecuteWranglingDataflowActivity"/> instance for mocking. </returns>
         public static ExecuteWranglingDataflowActivity ExecuteWranglingDataflowActivity(string name = default, string description = default, PipelineActivityState? state = default, ActivityOnInactiveMarkAs? onInactiveMarkAs = default, IEnumerable<PipelineActivityDependency> dependsOn = default, IEnumerable<PipelineActivityUserProperty> userProperties = default, IDictionary<string, BinaryData> additionalProperties = default, DataFlowReference dataFlow = default, DataFlowStagingInfo staging = default, IntegrationRuntimeReference integrationRuntime = default, ContinuationSettingsReference continuationSettings = default, ExecuteDataFlowActivityComputeType compute = default, DataFactoryElement<string> traceLevel = default, DataFactoryElement<bool> continueOnError = default, DataFactoryElement<bool> runConcurrently = default, DataFactoryElement<int> sourceStagingConcurrency = default, IDictionary<string, PowerQuerySink> sinks = default, IEnumerable<PowerQuerySinkMapping> queries = default, PipelineActivityPolicy policy = default)
         {
@@ -13456,6 +13856,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 policy);
         }
 
+        /// <summary> Power query sink. </summary>
         /// <param name="name"> Transformation name. </param>
         /// <param name="description"> Transformation description. </param>
         /// <param name="dataset"> Dataset reference. </param>
@@ -13479,6 +13880,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 script);
         }
 
+        /// <summary> Map Power Query mashup query to sink dataset(s). </summary>
         /// <param name="queryName"> Name of the query in Power Query mashup document. </param>
         /// <param name="dataflowSinks"> List of sinks mapped to Power Query mashup query. </param>
         /// <returns> A new <see cref="Models.PowerQuerySinkMapping"/> instance for mocking. </returns>
@@ -13489,6 +13891,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new PowerQuerySinkMapping(queryName, (dataflowSinks ?? new ChangeTrackingList<PowerQuerySink>()).ToList(), default);
         }
 
+        /// <summary> Definition of a single variable for a Pipeline. </summary>
         /// <param name="variableType"> Variable type. </param>
         /// <param name="defaultValue"> Default value of variable. </param>
         /// <returns> A new <see cref="Models.PipelineVariableSpecification"/> instance for mocking. </returns>
@@ -13497,6 +13900,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new PipelineVariableSpecification(variableType, defaultValue, default);
         }
 
+        /// <summary> Response body with a run identifier. </summary>
         /// <param name="runId"> Identifier of a run. </param>
         /// <returns> A new <see cref="Models.PipelineCreateRunResult"/> instance for mocking. </returns>
         public static PipelineCreateRunResult PipelineCreateRunResult(Guid runId = default)
@@ -13504,6 +13908,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new PipelineCreateRunResult(runId, default);
         }
 
+        /// <summary> Defines the response of a trigger subscription operation. </summary>
         /// <param name="triggerName"> Trigger name. </param>
         /// <param name="status"> Event Subscription Status. </param>
         /// <returns> A new <see cref="Models.DataFactoryTriggerSubscriptionOperationResult"/> instance for mocking. </returns>
@@ -13512,6 +13917,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryTriggerSubscriptionOperationResult(triggerName, status, default);
         }
 
+        /// <summary> Data flow resource type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -13531,6 +13937,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Managed Virtual Network resource type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -13550,6 +13957,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> A managed Virtual Network associated with the Azure Data Factory. </summary>
         /// <param name="vnetId"> Managed Virtual Network ID. </param>
         /// <param name="alias"> Managed Virtual Network alias. </param>
         /// <param name="additionalProperties"></param>
@@ -13561,6 +13969,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryManagedVirtualNetworkProperties(vnetId, @alias, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> Managed private endpoint resource type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -13580,6 +13989,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Properties of a managed private endpoint. </summary>
         /// <param name="connectionState"> The managed private endpoint connection state. </param>
         /// <param name="fqdns"> Fully qualified domain names. </param>
         /// <param name="groupId"> The groupId to which the managed private endpoint is created. </param>
@@ -13603,6 +14013,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> The connection state of a managed private endpoint. </summary>
         /// <param name="actionsRequired"> The actions required on the managed private endpoint. </param>
         /// <param name="description"> The managed private endpoint description. </param>
         /// <param name="status"> The approval status. </param>
@@ -13612,6 +14023,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new ConnectionStateProperties(actionsRequired, description, status, default);
         }
 
+        /// <summary> Credential resource type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -13631,6 +14043,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary>
+        /// The Azure Data Factory nested object which contains the information and credential which can be used to connect with related store or compute resource.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ServicePrincipalCredential"/> and <see cref="Models.DataFactoryManagedIdentityCredentialProperties"/>.
+        /// </summary>
         /// <param name="credentialType"> Type of credential. </param>
         /// <param name="description"> Credential description. </param>
         /// <param name="annotations"> List of tags that can be used for describing the Credential. </param>
@@ -13657,6 +14073,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryManagedIdentityCredentialProperties(default, description, (annotations ?? new ChangeTrackingList<BinaryData>()).ToList(), additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>(), resourceId is null ? default : new ManagedIdentityTypeProperties(resourceId, default));
         }
 
+        /// <summary> Private Endpoint Connection ARM resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -13685,6 +14102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new DataFactoryPrivateEndpointConnectionProperties(provisioningState, privateEndpointId is null ? default : new ArmIdWrapper(privateEndpointId, default), privateLinkServiceConnectionState, default);
         }
 
+        /// <summary> The state of a private link connection. </summary>
         /// <param name="status"> Status of a private link connection. </param>
         /// <param name="description"> Description of a private link connection. </param>
         /// <param name="actionsRequired"> ActionsRequired for a private link connection. </param>
@@ -13694,6 +14112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new PrivateLinkConnectionState(status, description, actionsRequired, default);
         }
 
+        /// <summary> Private Endpoint Connection Approval ARM resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -13721,6 +14140,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new PrivateLinkConnectionApprovalRequest(privateLinkServiceConnectionState, privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), default);
         }
 
+        /// <summary> Global parameters resource type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -13755,7 +14175,6 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folderName"> The name of the folder that this CDC is in. </param>
         /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
         /// <param name="additionalProperties"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="sourceConnectionsInfo"/>, <paramref name="targetConnectionsInfo"/> or <paramref name="policy"/> is null. </exception>
         /// <returns> A new <see cref="DataFactory.DataFactoryChangeDataCaptureData"/> instance for mocking. </returns>
         public static DataFactoryChangeDataCaptureData DataFactoryChangeDataCaptureData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string description = default, IEnumerable<MapperSourceConnectionsInfo> sourceConnectionsInfo = default, IEnumerable<MapperTargetConnectionsInfo> targetConnectionsInfo = default, MapperPolicy policy = default, bool? allowVnetOverride = default, string status = default, string folderName = default, ETag? eTag = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
@@ -13779,6 +14198,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> A object which contains list of tables and connection details for a source connection. </summary>
         /// <param name="sourceEntities"> List of source tables for a source connection. </param>
         /// <param name="connection"> Source connection details. </param>
         /// <returns> A new <see cref="Models.MapperSourceConnectionsInfo"/> instance for mocking. </returns>
@@ -13798,6 +14218,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new MapperTable(name, schema is null && dslConnectorProperties is null ? default : new MapperTableProperties((schema ?? new ChangeTrackingList<MapperTableSchema>()).ToList(), (dslConnectorProperties ?? new ChangeTrackingList<MapperDslConnectorProperties>()).ToList(), default), default);
         }
 
+        /// <summary> Schema of a CDC table in terms of column names and their corresponding data types. </summary>
         /// <param name="name"> Name of the column. </param>
         /// <param name="dataType"> Data type of the column. </param>
         /// <returns> A new <see cref="Models.MapperTableSchema"/> instance for mocking. </returns>
@@ -13806,6 +14227,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new MapperTableSchema(name, dataType, default);
         }
 
+        /// <summary> Connector properties of a CDC table in terms of name / value pairs. </summary>
         /// <param name="name"> Name of the property. </param>
         /// <param name="value"> Value of the property. </param>
         /// <returns> A new <see cref="Models.MapperDslConnectorProperties"/> instance for mocking. </returns>
@@ -13814,6 +14236,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new MapperDslConnectorProperties(name, value, default);
         }
 
+        /// <summary> Source connection details. </summary>
         /// <param name="linkedService"> Linked service reference. </param>
         /// <param name="linkedServiceType"> Type of the linked service e.g.: AzureBlobFS. </param>
         /// <param name="connectionType"> Type of connection via linked service or dataset. </param>
@@ -13833,6 +14256,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> A object which contains list of tables and connection details for a target connection. </summary>
         /// <param name="targetEntities"> List of source tables for a target connection. </param>
         /// <param name="connection"> Source connection details. </param>
         /// <param name="dataMapperMappings"> List of table mappings. </param>
@@ -13864,6 +14288,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Source or target connection reference details. </summary>
         /// <param name="connectionName"> Name of the connection. </param>
         /// <param name="connectionType"> Type of connection via linked service or dataset. </param>
         /// <returns> A new <see cref="Models.MapperConnectionReference"/> instance for mocking. </returns>
@@ -13872,6 +14297,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new MapperConnectionReference(connectionName, connectionType, default);
         }
 
+        /// <summary> Source and target column mapping details. </summary>
         /// <param name="name"> Name of the target column. </param>
         /// <param name="mappingType"> Type of the CDC attribute mapping. Note: 'Advanced' mapping type is also saved as 'Derived'. </param>
         /// <param name="functionName"> Name of the function used for 'Aggregate' and 'Derived' (except 'Advanced') type mapping. </param>
@@ -13893,6 +14319,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 default);
         }
 
+        /// <summary> Attribute reference details for the referred column. </summary>
         /// <param name="name"> Name of the column. </param>
         /// <param name="entity"> Name of the table. </param>
         /// <param name="entityConnectionReference"> The connection reference for the connection. </param>
@@ -13902,6 +14329,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new MapperAttributeReference(name, entity, entityConnectionReference, default);
         }
 
+        /// <summary> CDC Policy. </summary>
         /// <param name="mode"> Mode of running the CDC: batch vs continuous. </param>
         /// <param name="recurrence"> Defines the frequency and interval for running the CDC for batch mode. </param>
         /// <returns> A new <see cref="Models.MapperPolicy"/> instance for mocking. </returns>
@@ -13910,6 +14338,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new MapperPolicy(mode, recurrence, default);
         }
 
+        /// <summary> CDC policy recurrence details. </summary>
         /// <param name="frequency"> Frequency of period in terms of 'Hour', 'Minute' or 'Second'. </param>
         /// <param name="interval"> Actual interval value as per chosen frequency. </param>
         /// <returns> A new <see cref="Models.MapperPolicyRecurrence"/> instance for mocking. </returns>
@@ -13918,28 +14347,24 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new MapperPolicyRecurrence(frequency, interval, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataFactory.DataFactoryData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity"> Managed service identity of the factory. Current supported identity types: SystemAssigned, UserAssigned, SystemAssigned,UserAssigned. </param>
+        /// <summary> Factory resource type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Managed service identity of the factory. </param>
         /// <param name="provisioningState"> Factory provisioning state, example Succeeded. </param>
         /// <param name="createdOn"> Time the factory was created in ISO8601 format. </param>
         /// <param name="version"> Version of the factory. </param>
-        /// <param name="purviewResourceId"> Purview information of the factory. </param>
-        /// <param name="repoConfiguration">
-        /// Git repo information of the factory.
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include  and .
-        /// </param>
+        /// <param name="purviewResourceId"> Purview resource id. </param>
+        /// <param name="repoConfiguration"> Git repo information of the factory. </param>
         /// <param name="globalParameters"> List of parameters for factory. </param>
         /// <param name="encryption"> Properties to enable Customer Managed Key for the factory. </param>
         /// <param name="publicNetworkAccess"> Whether or not public network access is allowed for the data factory. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
+        /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="DataFactory.DataFactoryData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataFactoryData DataFactoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, string provisioningState = default, DateTimeOffset? createdOn = default, string version = default, ResourceIdentifier purviewResourceId = default, FactoryRepoConfiguration repoConfiguration = default, IDictionary<string, DataFactoryGlobalParameterProperties> globalParameters = default, DataFactoryEncryptionConfiguration encryption = default, DataFactoryPublicNetworkAccess? publicNetworkAccess = default, ETag? eTag = default, IDictionary<string, BinaryData> additionalProperties = default)
@@ -13966,20 +14391,20 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataFactory.DataFactoryChangeDataCaptureData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="folderName"> The folder that this CDC is in. If not specified, CDC will appear at the root level. </param>
+        /// <summary> Change data capture resource type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="folderName"> The name of the folder that this CDC is in. </param>
         /// <param name="description"> The description of the change data capture. </param>
         /// <param name="sourceConnectionsInfo"> List of sources connections that can be used as sources in the CDC. </param>
         /// <param name="targetConnectionsInfo"> List of target connections that can be used as sources in the CDC. </param>
         /// <param name="policy"> CDC policy. </param>
         /// <param name="allowVnetOverride"> A boolean to determine if the vnet configuration needs to be overwritten. </param>
         /// <param name="status"> Status of the CDC as to if it is running or stopped. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="DataFactory.DataFactoryChangeDataCaptureData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataFactoryChangeDataCaptureData DataFactoryChangeDataCaptureData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string folderName = default, string description = default, IEnumerable<MapperSourceConnectionsInfo> sourceConnectionsInfo = default, IEnumerable<MapperTargetConnectionsInfo> targetConnectionsInfo = default, MapperPolicy policy = default, bool? allowVnetOverride = default, string status = default, ETag? eTag = default, IDictionary<string, BinaryData> additionalProperties = default)
@@ -14002,14 +14427,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedIntegrationRuntime"/>. </summary>
+        /// <summary> Managed integration runtime, including managed elastic and managed dedicated integration runtimes. </summary>
         /// <param name="description"> Integration runtime description. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="state"> Integration runtime state, only valid for managed dedicated integration runtime. </param>
         /// <param name="managedVirtualNetwork"> Managed Virtual Network reference. </param>
         /// <param name="computeProperties"> The compute resource for managed integration runtime. </param>
         /// <param name="ssisProperties"> SSIS properties for managed integration runtime. </param>
-        /// <param name="customerVirtualNetworkSubnetId"> The name of virtual network to which Azure-SSIS integration runtime will join. </param>
+        /// <param name="customerVirtualNetworkSubnetId"> The ID of subnet to which Azure-SSIS integration runtime will join. </param>
         /// <param name="interactiveQuery"> Interactive authoring capability reference. </param>
         /// <returns> A new <see cref="Models.ManagedIntegrationRuntime"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -14024,15 +14449,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                 managedVirtualNetwork);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataFactoryBlobTrigger"/>. </summary>
+        /// <summary> Trigger that runs every time the selected Blob container changes. </summary>
         /// <param name="description"> Trigger description. </param>
         /// <param name="runtimeState"> Indicates if trigger is running or not. Updated when Start/Stop APIs are called on the Trigger. </param>
         /// <param name="annotations"> List of tags that can be used for describing the trigger. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="pipelines"> Pipelines that need to be started. </param>
         /// <param name="folderPath"> The path of the container/folder that will trigger the pipeline. </param>
         /// <param name="maxConcurrency"> The max number of parallel files to handle when it is triggered. </param>
-        /// <param name="linkedService"> The Azure Storage linked service reference. </param>
+        /// <param name="linkedService"></param>
         /// <returns> A new <see cref="Models.DataFactoryBlobTrigger"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DataFactoryBlobTrigger DataFactoryBlobTrigger(string description = default, DataFactoryTriggerRuntimeState? runtimeState = default, IEnumerable<BinaryData> annotations = default, IDictionary<string, BinaryData> additionalProperties = default, IEnumerable<TriggerPipelineReference> pipelines = default, string folderPath = default, int maxConcurrency = 0, DataFactoryLinkedServiceReference linkedService = default)
@@ -14048,14 +14473,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 linkedService);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ManagedIntegrationRuntime"/>. </summary>
+        /// <summary> Managed integration runtime, including managed elastic and managed dedicated integration runtimes. </summary>
         /// <param name="description"> Integration runtime description. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="state"> Integration runtime state, only valid for managed dedicated integration runtime. </param>
         /// <param name="managedVirtualNetwork"> Managed Virtual Network reference. </param>
         /// <param name="computeProperties"> The compute resource for managed integration runtime. </param>
         /// <param name="ssisProperties"> SSIS properties for managed integration runtime. </param>
-        /// <param name="customerVirtualNetworkSubnetId"> The name of virtual network to which Azure-SSIS integration runtime will join. </param>
+        /// <param name="customerVirtualNetworkSubnetId"> The ID of subnet to which Azure-SSIS integration runtime will join. </param>
         /// <returns> A new <see cref="Models.ManagedIntegrationRuntime"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ManagedIntegrationRuntime ManagedIntegrationRuntime(string description, IDictionary<string, BinaryData> additionalProperties, IntegrationRuntimeState? state, ManagedVirtualNetworkReference managedVirtualNetwork, IntegrationRuntimeComputeProperties computeProperties, IntegrationRuntimeSsisProperties ssisProperties, ResourceIdentifier customerVirtualNetworkSubnetId)

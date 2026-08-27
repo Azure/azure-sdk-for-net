@@ -108,10 +108,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(Duration.Value, "P");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(JobErrorDetails))
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WritePropertyName("sourceSubscriptionID"u8);
             writer.WriteStringValue(SourceSubscriptionId);
             writer.WritePropertyName("startTime"u8);
-            writer.WriteStringValue(StartOn, "O");
+            writer.WriteStringValue(StartsOn, "O");
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status);
             writer.WritePropertyName("subscriptionId"u8);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string dataSourceSetName = default;
             string dataSourceType = default;
             TimeSpan? duration = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? endsOn = default;
             IReadOnlyList<DataProtectionBackupUserFacingError> jobErrorDetails = default;
             BackupJobExtendedInfo extendedInfo = default;
             bool isUserTriggered = default;
@@ -265,7 +265,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             string restoreType = default;
             string sourceResourceGroup = default;
             string sourceSubscriptionId = default;
-            DateTimeOffset startOn = default;
             string status = default;
             string subscriptionId = default;
             IList<string> supportedActions = default;
@@ -335,7 +334,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("errorDetails"u8))
@@ -495,7 +494,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 dataSourceSetName,
                 dataSourceType,
                 duration,
-                endOn,
+                endsOn,
                 jobErrorDetails ?? new ChangeTrackingList<DataProtectionBackupUserFacingError>(),
                 extendedInfo,
                 isUserTriggered,
@@ -509,7 +508,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 restoreType,
                 sourceResourceGroup,
                 sourceSubscriptionId,
-                startOn,
+                default,
                 status,
                 subscriptionId,
                 supportedActions,

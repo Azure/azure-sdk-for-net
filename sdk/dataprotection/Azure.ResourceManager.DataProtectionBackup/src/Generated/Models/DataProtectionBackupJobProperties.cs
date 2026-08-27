@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             IsProgressEnabled = isProgressEnabled;
             SourceResourceGroup = sourceResourceGroup;
             SourceSubscriptionId = sourceSubscriptionId;
-            StartOn = startOn;
+            StartsOn = startOn;
             Status = status;
             SubscriptionId = subscriptionId;
             SupportedActions = supportedActions.ToList();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="dataSourceSetName"> Data Source Set Name of the DataSource. </param>
         /// <param name="dataSourceType"> Type of DataSource. </param>
         /// <param name="duration"> Total run time of the job. ISO 8601 format. </param>
-        /// <param name="endOn"> EndTime of the job(in UTC). </param>
+        /// <param name="endsOn"> EndTime of the job(in UTC). </param>
         /// <param name="jobErrorDetails"> A List, detailing the errors related to the job. </param>
         /// <param name="extendedInfo"> Extended Information about the job. </param>
         /// <param name="isUserTriggered"> Indicated that whether the job is adhoc(true) or scheduled(false). </param>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="sourceDataStoreName"></param>
         /// <param name="destinationDataStoreName"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupJobProperties(string activityId, string backupInstanceFriendlyName, ResourceIdentifier backupInstanceId, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceSetName, string dataSourceType, TimeSpan? duration, DateTimeOffset? endOn, IReadOnlyList<DataProtectionBackupUserFacingError> jobErrorDetails, BackupJobExtendedInfo extendedInfo, bool isUserTriggered, string operation, string operationCategory, ResourceIdentifier policyId, string policyName, bool isProgressEnabled, Uri progressUri, string rehydrationPriority, string restoreType, string sourceResourceGroup, string sourceSubscriptionId, DateTimeOffset startOn, string status, string subscriptionId, IList<string> supportedActions, string vaultName, ETag? eTag, string sourceDataStoreName, string destinationDataStoreName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataProtectionBackupJobProperties(string activityId, string backupInstanceFriendlyName, ResourceIdentifier backupInstanceId, ResourceIdentifier dataSourceId, AzureLocation dataSourceLocation, string dataSourceName, string dataSourceSetName, string dataSourceType, TimeSpan? duration, DateTimeOffset? endsOn, IReadOnlyList<DataProtectionBackupUserFacingError> jobErrorDetails, BackupJobExtendedInfo extendedInfo, bool isUserTriggered, string operation, string operationCategory, ResourceIdentifier policyId, string policyName, bool isProgressEnabled, Uri progressUri, string rehydrationPriority, string restoreType, string sourceResourceGroup, string sourceSubscriptionId, DateTimeOffset startOn, string status, string subscriptionId, IList<string> supportedActions, string vaultName, ETag? eTag, string sourceDataStoreName, string destinationDataStoreName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActivityId = activityId;
             BackupInstanceFriendlyName = backupInstanceFriendlyName;
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             DataSourceSetName = dataSourceSetName;
             DataSourceType = dataSourceType;
             Duration = duration;
-            EndOn = endOn;
+            EndsOn = endsOn;
             JobErrorDetails = jobErrorDetails;
             ExtendedInfo = extendedInfo;
             IsUserTriggered = isUserTriggered;
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             RestoreType = restoreType;
             SourceResourceGroup = sourceResourceGroup;
             SourceSubscriptionId = sourceSubscriptionId;
-            StartOn = startOn;
+            StartsOn = startOn;
             Status = status;
             SubscriptionId = subscriptionId;
             SupportedActions = supportedActions;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public TimeSpan? Duration { get; set; }
 
         /// <summary> EndTime of the job(in UTC). </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> A List, detailing the errors related to the job. </summary>
         public IReadOnlyList<DataProtectionBackupUserFacingError> JobErrorDetails { get; }
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public string SourceSubscriptionId { get; set; }
 
         /// <summary> StartTime of the job(in UTC). </summary>
-        public DateTimeOffset StartOn { get; set; }
+        public DateTimeOffset StartsOn { get; set; }
 
         /// <summary> Status of the job like InProgress/Completed/Failed/Cancelled/CompletedWithWarnings/Cancelling/Paused. </summary>
         public string Status { get; set; }
