@@ -494,7 +494,7 @@ namespace Azure.Generator.Management.Utilities
                     }
 
                     var parameter = parameters[parameterIndex];
-                    if (parameter.Type.AreNamesEqual(currentParameter.Type))
+                    if (ParameterTypesMatch(parameter, currentParameter))
                     {
                         value = parameter;
                     }
