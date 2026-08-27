@@ -12,7 +12,6 @@ namespace Azure.Generator.Management.Visitors;
 internal sealed class MtgDateTimePropertyMatcher
 {
     private readonly Dictionary<PropertyProvider, InputProperty> _sourceProperties = new(ReferenceEqualityComparer.Instance);
-    private readonly Dictionary<VariableExpression, InputProperty> _sourcePropertiesByVariable = new(ReferenceEqualityComparer.Instance);
 
     private static readonly HashSet<string> _mtgDateTimeVerbPrefixes = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -39,7 +38,6 @@ internal sealed class MtgDateTimePropertyMatcher
     internal void RegisterSourceProperty(PropertyProvider propertyProvider, InputProperty inputProperty)
     {
         _sourceProperties[propertyProvider] = inputProperty;
-        _sourcePropertiesByVariable[propertyProvider.AsVariableExpression] = inputProperty;
     }
 
     internal bool IsMtgRenamedDateTimeProperty(PropertyProvider? property)
@@ -86,10 +84,24 @@ internal sealed class MtgDateTimePropertyMatcher
             ReferenceEquals(expectedInput, candidateInput);
 
     internal bool HasSameSourceProperty(PropertyProvider expectedProperty, ValueExpression candidate)
-        => candidate is VariableExpression variable &&
-            _sourceProperties.TryGetValue(expectedProperty, out var expectedInput) &&
-            _sourcePropertiesByVariable.TryGetValue(variable, out var candidateInput) &&
-            ReferenceEquals(expectedInput, candidateInput);
+    {
+        if (candidate is not VariableExpression variable ||
+            !_sourceProperties.TryGetValue(expectedProperty, out var expectedInput))
+        {
+            return false;
+        }
+
+        foreach (var (property, inputProperty) in _sourceProperties)
+        {
+            if (ReferenceEquals(expectedInput, inputProperty) &&
+                ReferenceEquals(property.AsVariableExpression, variable))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     private static bool IsDateTimeInputType(InputType inputType) => inputType switch
     {

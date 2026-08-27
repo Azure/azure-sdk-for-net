@@ -5,6 +5,7 @@ using Azure.Generator.Management;
 using Azure.Generator.Management.Tests.Common;
 using Azure.Generator.Management.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator.Input;
+using Microsoft.TypeSpec.Generator.Primitives;
 using NUnit.Framework;
 
 namespace Azure.Generator.Mgmt.Tests
@@ -61,6 +62,20 @@ namespace Azure.Generator.Mgmt.Tests
             var property = plugin.Object.TypeFactory.CreateModel(inputModel)!.Properties.Single();
 
             Assert.That(plugin.Object.DateTimePropertyMatcher.IsMtgRenamedDateTimeProperty(property), Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void SourcePropertyRegistrationDoesNotFreezeParameterType()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var property = plugin.Object.TypeFactory.CreateModel(inputModel)!.Properties.Single();
+
+            property.Update(type: typeof(int));
+
+            Assert.That(property.AsParameter.Type, Is.EqualTo(new CSharpType(typeof(int))));
         }
 
         [Test]
