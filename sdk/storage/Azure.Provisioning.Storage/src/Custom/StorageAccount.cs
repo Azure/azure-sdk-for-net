@@ -99,7 +99,6 @@ public partial class StorageAccount : ProvisionableResource
     /// <summary> Gets the status of the storage account at the time the operation was called. </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     [Obsolete("This property is obsoleted and will be removed in a future version. Please use StorageAccountProvisioningState instead.")]
-    [CodeGenMember("ProvisioningState")]
 #pragma warning disable CS0618 // Compatibility property intentionally uses the obsolete shipped enum.
     public BicepValue<StorageProvisioningState> ProvisioningState
 #pragma warning restore CS0618
@@ -112,6 +111,7 @@ public partial class StorageAccount : ProvisionableResource
     }
 
     /// <summary> Gets the status of the storage account at the time the operation was called. </summary>
+    [CodeGenMember("ProvisioningState")]
     public BicepValue<StorageAccountProvisioningState> StorageAccountProvisioningState
     {
         get
