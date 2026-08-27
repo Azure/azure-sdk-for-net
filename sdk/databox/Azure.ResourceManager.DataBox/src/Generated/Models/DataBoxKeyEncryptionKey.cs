@@ -43,12 +43,29 @@ namespace Azure.ResourceManager.DataBox.Models
         public DataBoxKeyEncryptionKeyType KekType { get; set; }
 
         /// <summary> Managed identity properties used for key encryption. </summary>
-        public DataBoxManagedIdentity ManagedIdentity { get; set; }
+        internal DataBoxManagedIdentity ManagedIdentity { get; set; }
 
         /// <summary> Key encryption key. It is required in case of Customer managed KekType. </summary>
         public Uri KekUri { get; set; }
 
         /// <summary> Kek vault resource id. It is required in case of Customer managed KekType. </summary>
         public ResourceIdentifier KekVaultResourceId { get; set; }
+
+        /// <summary> Managed service identity type. </summary>
+        public string IdentityType
+        {
+            get
+            {
+                return ManagedIdentity is null ? default : ManagedIdentity.IdentityType;
+            }
+            set
+            {
+                if (ManagedIdentity is null)
+                {
+                    ManagedIdentity = new DataBoxManagedIdentity();
+                }
+                ManagedIdentity.IdentityType = value;
+            }
+        }
     }
 }

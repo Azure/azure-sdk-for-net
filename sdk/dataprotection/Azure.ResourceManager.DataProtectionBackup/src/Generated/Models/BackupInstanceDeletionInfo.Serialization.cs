@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("deletionTime"u8);
                 writer.WriteStringValue(DeleteOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(BillingEndOn))
+            if (options.Format != "W" && Optional.IsDefined(BillingEndsOn))
             {
                 writer.WritePropertyName("billingEndDate"u8);
-                writer.WriteStringValue(BillingEndOn.Value, "O");
+                writer.WriteStringValue(BillingEndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ScheduledPurgeOn))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             DateTimeOffset? deleteOn = default;
-            DateTimeOffset? billingEndOn = default;
+            DateTimeOffset? billingEndsOn = default;
             DateTimeOffset? scheduledPurgeOn = default;
             string deleteActivityId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     {
                         continue;
                     }
-                    billingEndOn = prop.Value.GetDateTimeOffset("O");
+                    billingEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("scheduledPurgeTime"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BackupInstanceDeletionInfo(deleteOn, billingEndOn, scheduledPurgeOn, deleteActivityId, additionalBinaryDataProperties);
+            return new BackupInstanceDeletionInfo(deleteOn, billingEndsOn, scheduledPurgeOn, deleteActivityId, additionalBinaryDataProperties);
         }
     }
 }
