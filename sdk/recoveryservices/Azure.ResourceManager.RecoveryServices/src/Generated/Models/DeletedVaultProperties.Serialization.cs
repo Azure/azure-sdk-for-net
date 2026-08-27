@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 writer.WritePropertyName("vaultId"u8);
                 writer.WriteStringValue(VaultId);
             }
-            if (options.Format != "W" && Optional.IsDefined(VaultDeletionOn))
+            if (options.Format != "W" && Optional.IsDefined(VaultDeletedOn))
             {
                 writer.WritePropertyName("vaultDeletionTime"u8);
-                writer.WriteStringValue(VaultDeletionOn.Value, "O");
+                writer.WriteStringValue(VaultDeletedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(PurgeOn))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 return null;
             }
             string vaultId = default;
-            DateTimeOffset? vaultDeletionOn = default;
+            DateTimeOffset? vaultDeletedOn = default;
             DateTimeOffset? purgeOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     {
                         continue;
                     }
-                    vaultDeletionOn = prop.Value.GetDateTimeOffset("O");
+                    vaultDeletedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("purgeAt"u8))
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DeletedVaultProperties(vaultId, vaultDeletionOn, purgeOn, additionalBinaryDataProperties);
+            return new DeletedVaultProperties(vaultId, vaultDeletedOn, purgeOn, additionalBinaryDataProperties);
         }
     }
 }
