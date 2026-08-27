@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed `DefaultAzureCredential` taking up to a minute to continue past managed identity on hosts where IMDS is unavailable. Ordinary chained requests now use the short Azure.Core IMDS probe, while proof-of-possession requests continue to use MSAL host capability discovery.
+
 ### Other Changes
 
 ## 1.62.0 (2026-08-20)
