@@ -82,6 +82,8 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
         $checkoutGraph.sourceCommit | Should -Be $sourceCommit
         @($checkoutGraph.artifacts.'Azure.A').Count | Should -Be 2
         @($checkoutGraph.alwaysIncludedPaths) | Should -Be @('/*', '!/*/', '/eng', '/.config')
+        @($checkoutGraph.paths.PSObject.Properties.Name | Where-Object { $_ -like 'package:*' }) |
+            Should -BeNullOrEmpty
 
         $paths = @(& $script:ResolvePathsPath -GraphPath $checkoutGraphPath -ArtifactNames 'Azure.A' `
             -ExpectedSourceCommit $sourceCommit)
