@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The profile for Linux VMs in the Managed Cluster. </summary>
         [WirePath("linuxProfile")]
-        public ContainerServiceLinuxProfile LinuxProfile { get; set; }
+        internal ContainerServiceLinuxProfile LinuxProfile { get; set; }
 
         /// <summary> The profile for Windows VMs in the Managed Cluster. </summary>
         [WirePath("windowsProfile")]
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Workload Auto-scaler profile for the managed cluster. </summary>
         [WirePath("workloadAutoScalerProfile")]
-        public ManagedClusterWorkloadAutoScalerProfile WorkloadAutoScalerProfile { get; set; }
+        internal ManagedClusterWorkloadAutoScalerProfile WorkloadAutoScalerProfile { get; set; }
 
         /// <summary> Azure Monitor addon profiles for monitoring the managed cluster. </summary>
         [WirePath("azureMonitorProfile")]
@@ -327,6 +327,20 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
         }
 
+        /// <summary> The administrator username to use for Linux VMs. </summary>
+        [WirePath("linuxProfile.adminUsername")]
+        public string LinuxAdminUsername
+        {
+            get
+            {
+                return LinuxProfile is null ? default : LinuxProfile.AdminUsername;
+            }
+            set
+            {
+                LinuxProfile = new ContainerServiceLinuxProfile(value);
+            }
+        }
+
         /// <summary> The restriction level applied to the cluster's node resource group. If not specified, the default is 'Unrestricted'. </summary>
         [WirePath("nodeResourceGroupProfile.restrictionLevel")]
         public ManagedClusterNodeResourceGroupRestrictionLevel? NodeResourceGroupRestrictionLevel
@@ -360,6 +374,24 @@ namespace Azure.ResourceManager.ContainerService.Models
                     UpgradeSettings = new ClusterUpgradeSettings();
                 }
                 UpgradeSettings.OverrideSettings = value;
+            }
+        }
+
+        /// <summary> Whether to enable KEDA. </summary>
+        [WirePath("workloadAutoScalerProfile.keda.enabled")]
+        public bool? IsKedaEnabled
+        {
+            get
+            {
+                return WorkloadAutoScalerProfile is null ? default : WorkloadAutoScalerProfile.IsKedaEnabled;
+            }
+            set
+            {
+                if (WorkloadAutoScalerProfile is null)
+                {
+                    WorkloadAutoScalerProfile = new ManagedClusterWorkloadAutoScalerProfile();
+                }
+                WorkloadAutoScalerProfile.IsKedaEnabled = value;
             }
         }
 
