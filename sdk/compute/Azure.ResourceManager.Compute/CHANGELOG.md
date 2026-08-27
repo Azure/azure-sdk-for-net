@@ -1,14 +1,14 @@
 # Release History
 
-## 1.17.0-beta.1 (Unreleased)
+## 1.17.0 (Unreleased)
 
 ### Features Added
 
+- Upgraded Compute API version to `2026-04-01`.
+
 ### Breaking Changes
 
-### Bugs Fixed
-
-### Other Changes
+- Changed the type of `CapacityReservationGroupData.ReservationType` and `CapacityReservationGroupPatch.ReservationType` from `CapacityReservationType?` to `ReservationType?`.
 
 ## 1.16.0 (2026-07-01)
 
