@@ -109,7 +109,7 @@ seed job catches graph/projection failures and publishes an explicit incomplete
 - `REPOSITORY_PROJECT_GRAPH_RESULT=reused|generated` in the seed job;
 - `SPARSE_CHECKOUT_RESULT=narrowed pathCount=<n>|full` in each test job; and
 - graph/project/configuration/edge/input/artifact counts, projection bytes, phase times,
-  peak working set,
+  peak working set, isolated MSBuild process time, and PowerShell record parsing/model/write times,
   plus each query's artifact, reachable-node, and path counts.
 
 The fallback is intentionally broad. A known-partial graph is never used to narrow
