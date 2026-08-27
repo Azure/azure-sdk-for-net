@@ -18,27 +18,27 @@ namespace Azure.ResourceManager.EventHubs.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EventHubsExceptionWindow"/>. </summary>
-        /// <param name="date"> The UTC date on which the exception starts. </param>
+        /// <param name="dateOn"> The UTC date on which the exception starts. </param>
         /// <param name="action"> Whether the exception blocks or allows upgrades. </param>
         /// <param name="startTimeOfDay"> The UTC time of day at which the exception starts, represented as an ISO 8601 duration since midnight. </param>
         /// <param name="durationMinutes"> The exception duration in minutes. Allow exceptions must be between 480 and 1440 minutes in 60-minute increments. Block exceptions must be 1440 minutes. </param>
-        public EventHubsExceptionWindow(DateTimeOffset date, EventHubsExceptionWindowAction action, TimeSpan startTimeOfDay, int durationMinutes)
+        public EventHubsExceptionWindow(DateTimeOffset dateOn, EventHubsExceptionWindowAction action, TimeSpan startTimeOfDay, int durationMinutes)
         {
-            Date = date;
+            DateOn = dateOn;
             Action = action;
             StartTimeOfDay = startTimeOfDay;
             DurationMinutes = durationMinutes;
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubsExceptionWindow"/>. </summary>
-        /// <param name="date"> The UTC date on which the exception starts. </param>
+        /// <param name="dateOn"> The UTC date on which the exception starts. </param>
         /// <param name="action"> Whether the exception blocks or allows upgrades. </param>
         /// <param name="startTimeOfDay"> The UTC time of day at which the exception starts, represented as an ISO 8601 duration since midnight. </param>
         /// <param name="durationMinutes"> The exception duration in minutes. Allow exceptions must be between 480 and 1440 minutes in 60-minute increments. Block exceptions must be 1440 minutes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsExceptionWindow(DateTimeOffset date, EventHubsExceptionWindowAction action, TimeSpan startTimeOfDay, int durationMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventHubsExceptionWindow(DateTimeOffset dateOn, EventHubsExceptionWindowAction action, TimeSpan startTimeOfDay, int durationMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Date = date;
+            DateOn = dateOn;
             Action = action;
             StartTimeOfDay = startTimeOfDay;
             DurationMinutes = durationMinutes;
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.EventHubs.Models
 
         /// <summary> The UTC date on which the exception starts. </summary>
         [WirePath("date")]
-        public DateTimeOffset Date { get; set; }
+        public DateTimeOffset DateOn { get; set; }
 
         /// <summary> Whether the exception blocks or allows upgrades. </summary>
         [WirePath("action")]

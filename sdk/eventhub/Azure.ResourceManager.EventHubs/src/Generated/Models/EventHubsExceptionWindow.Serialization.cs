@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 throw new FormatException($"The model {nameof(EventHubsExceptionWindow)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("date"u8);
-            writer.WriteStringValue(Date, "D");
+            writer.WriteStringValue(DateOn, "D");
             writer.WritePropertyName("action"u8);
             writer.WriteStringValue(Action.ToSerialString());
             writer.WritePropertyName("startTimeOfDay"u8);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            DateTimeOffset date = default;
+            DateTimeOffset dateOn = default;
             EventHubsExceptionWindowAction action = default;
             TimeSpan startTimeOfDay = default;
             int durationMinutes = default;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 if (prop.NameEquals("date"u8))
                 {
-                    date = prop.Value.GetDateTimeOffset("D");
+                    dateOn = prop.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (prop.NameEquals("action"u8))
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EventHubsExceptionWindow(date, action, startTimeOfDay, durationMinutes, additionalBinaryDataProperties);
+            return new EventHubsExceptionWindow(dateOn, action, startTimeOfDay, durationMinutes, additionalBinaryDataProperties);
         }
     }
 }

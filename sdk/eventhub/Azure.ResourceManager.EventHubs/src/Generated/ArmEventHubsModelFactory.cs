@@ -536,23 +536,23 @@ namespace Azure.ResourceManager.EventHubs.Models
             return new EventHubsMaintenanceWindow(dayOfWeek, startTimeOfDay, durationMinutes, default);
         }
 
-        /// <param name="date"> The UTC date on which the exception starts. </param>
+        /// <param name="dateOn"> The UTC date on which the exception starts. </param>
         /// <param name="action"> Whether the exception blocks or allows upgrades. </param>
         /// <param name="startTimeOfDay"> The UTC time of day at which the exception starts, represented as an ISO 8601 duration since midnight. </param>
         /// <param name="durationMinutes"> The exception duration in minutes. Allow exceptions must be between 480 and 1440 minutes in 60-minute increments. Block exceptions must be 1440 minutes. </param>
         /// <returns> A new <see cref="Models.EventHubsExceptionWindow"/> instance for mocking. </returns>
-        public static EventHubsExceptionWindow EventHubsExceptionWindow(DateTimeOffset date = default, EventHubsExceptionWindowAction action = default, TimeSpan startTimeOfDay = default, int durationMinutes = default)
+        public static EventHubsExceptionWindow EventHubsExceptionWindow(DateTimeOffset dateOn = default, EventHubsExceptionWindowAction action = default, TimeSpan startTimeOfDay = default, int durationMinutes = default)
         {
-            return new EventHubsExceptionWindow(date, action, startTimeOfDay, durationMinutes, default);
+            return new EventHubsExceptionWindow(dateOn, action, startTimeOfDay, durationMinutes, default);
         }
 
-        /// <param name="pendingUpgrade"> Whether at least one deferred upgrade is waiting for the cluster. </param>
-        /// <param name="inProgress"> Whether an upgrade-now override is currently active. </param>
+        /// <param name="hasPendingUpgrade"> Whether at least one deferred upgrade is waiting for the cluster. </param>
+        /// <param name="isInProgress"> Whether an upgrade-now override is currently active. </param>
         /// <param name="completesOn"> The estimated UTC time when the current upgrade will complete. </param>
         /// <returns> A new <see cref="Models.EventHubsUpgradeStatus"/> instance for mocking. </returns>
-        public static EventHubsUpgradeStatus EventHubsUpgradeStatus(bool pendingUpgrade = default, bool inProgress = default, DateTimeOffset? completesOn = default)
+        public static EventHubsUpgradeStatus EventHubsUpgradeStatus(bool hasPendingUpgrade = default, bool isInProgress = default, DateTimeOffset? completesOn = default)
         {
-            return new EventHubsUpgradeStatus(pendingUpgrade, inProgress, completesOn, default);
+            return new EventHubsUpgradeStatus(hasPendingUpgrade, isInProgress, completesOn, default);
         }
 
         /// <param name="settings"> All possible Cluster settings - a collection of key/value paired settings which apply to quotas and configurations imposed on the cluster. </param>

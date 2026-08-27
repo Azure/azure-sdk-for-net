@@ -18,34 +18,34 @@ namespace Azure.ResourceManager.EventHubs.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EventHubsUpgradeStatus"/>. </summary>
-        /// <param name="pendingUpgrade"> Whether at least one deferred upgrade is waiting for the cluster. </param>
-        /// <param name="inProgress"> Whether an upgrade-now override is currently active. </param>
-        internal EventHubsUpgradeStatus(bool pendingUpgrade, bool inProgress)
+        /// <param name="hasPendingUpgrade"> Whether at least one deferred upgrade is waiting for the cluster. </param>
+        /// <param name="isInProgress"> Whether an upgrade-now override is currently active. </param>
+        internal EventHubsUpgradeStatus(bool hasPendingUpgrade, bool isInProgress)
         {
-            PendingUpgrade = pendingUpgrade;
-            InProgress = inProgress;
+            HasPendingUpgrade = hasPendingUpgrade;
+            IsInProgress = isInProgress;
         }
 
         /// <summary> Initializes a new instance of <see cref="EventHubsUpgradeStatus"/>. </summary>
-        /// <param name="pendingUpgrade"> Whether at least one deferred upgrade is waiting for the cluster. </param>
-        /// <param name="inProgress"> Whether an upgrade-now override is currently active. </param>
+        /// <param name="hasPendingUpgrade"> Whether at least one deferred upgrade is waiting for the cluster. </param>
+        /// <param name="isInProgress"> Whether an upgrade-now override is currently active. </param>
         /// <param name="completesOn"> The estimated UTC time when the current upgrade will complete. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EventHubsUpgradeStatus(bool pendingUpgrade, bool inProgress, DateTimeOffset? completesOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EventHubsUpgradeStatus(bool hasPendingUpgrade, bool isInProgress, DateTimeOffset? completesOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PendingUpgrade = pendingUpgrade;
-            InProgress = inProgress;
+            HasPendingUpgrade = hasPendingUpgrade;
+            IsInProgress = isInProgress;
             CompletesOn = completesOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Whether at least one deferred upgrade is waiting for the cluster. </summary>
         [WirePath("pendingUpgrade")]
-        public bool PendingUpgrade { get; }
+        public bool HasPendingUpgrade { get; }
 
         /// <summary> Whether an upgrade-now override is currently active. </summary>
         [WirePath("inProgress")]
-        public bool InProgress { get; }
+        public bool IsInProgress { get; }
 
         /// <summary> The estimated UTC time when the current upgrade will complete. </summary>
         [WirePath("completesAt")]

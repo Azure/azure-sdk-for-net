@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.EventHubs.Models
                 throw new FormatException($"The model {nameof(EventHubsUpgradeStatus)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("pendingUpgrade"u8);
-            writer.WriteBooleanValue(PendingUpgrade);
+            writer.WriteBooleanValue(HasPendingUpgrade);
             writer.WritePropertyName("inProgress"u8);
-            writer.WriteBooleanValue(InProgress);
+            writer.WriteBooleanValue(IsInProgress);
             if (Optional.IsDefined(CompletesOn))
             {
                 writer.WritePropertyName("completesAt"u8);
@@ -130,20 +130,20 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 return null;
             }
-            bool pendingUpgrade = default;
-            bool inProgress = default;
+            bool hasPendingUpgrade = default;
+            bool isInProgress = default;
             DateTimeOffset? completesOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("pendingUpgrade"u8))
                 {
-                    pendingUpgrade = prop.Value.GetBoolean();
+                    hasPendingUpgrade = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("inProgress"u8))
                 {
-                    inProgress = prop.Value.GetBoolean();
+                    isInProgress = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("completesAt"u8))
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EventHubsUpgradeStatus(pendingUpgrade, inProgress, completesOn, additionalBinaryDataProperties);
+            return new EventHubsUpgradeStatus(hasPendingUpgrade, isInProgress, completesOn, additionalBinaryDataProperties);
         }
     }
 }
