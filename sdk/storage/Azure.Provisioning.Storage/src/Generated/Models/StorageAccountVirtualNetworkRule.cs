@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Storage
@@ -13,28 +12,15 @@ namespace Azure.Provisioning.Storage
     /// <summary> Virtual Network rule. </summary>
     public partial class StorageAccountVirtualNetworkRule : ProvisionableConstruct
     {
-        private BicepValue<StorageAccountNetworkRuleState> _state;
-
         /// <summary> Creates a new StorageAccountVirtualNetworkRule. </summary>
         public StorageAccountVirtualNetworkRule()
         {
-        }
-
-        /// <summary> Gets the State. </summary>
-        public BicepValue<StorageAccountNetworkRuleState> State
-        {
-            get
-            {
-                Initialize();
-                return _state;
-            }
         }
 
         /// <summary> Define all the provisionable properties for StorageAccountVirtualNetworkRule. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _state = DefineProperty<StorageAccountNetworkRuleState>(nameof(State), new string[] { "state" });
             DefineAdditionalProperties();
         }
 
