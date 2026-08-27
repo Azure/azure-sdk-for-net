@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Grafana.Models
 
         /// <summary> Initializes a new instance of <see cref="SubscriptionTerm"/>. </summary>
         /// <param name="termUnit"> The unit of the billing term. </param>
-        /// <param name="startOn"> The date and time in UTC of when the billing term starts. </param>
-        /// <param name="endOn"> The date and time in UTC of when the billing term ends. </param>
+        /// <param name="startsOn"> The date and time in UTC of when the billing term starts. </param>
+        /// <param name="endsOn"> The date and time in UTC of when the billing term ends. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionTerm(string termUnit, DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SubscriptionTerm(string termUnit, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TermUnit = termUnit;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Grafana.Models
         public string TermUnit { get; }
 
         /// <summary> The date and time in UTC of when the billing term starts. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The date and time in UTC of when the billing term ends. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
     }
 }

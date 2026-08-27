@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <summary> Initializes a new instance of <see cref="MarketplaceTrialQuota"/>. </summary>
         /// <param name="availablePromotion"> Available enterprise promotion for the subscription. </param>
         /// <param name="grafanaResourceId"> Resource Id of the Grafana resource which is doing the trial. </param>
-        /// <param name="trialStartOn"> The date and time in UTC of when the trial starts. </param>
-        /// <param name="trialEndOn"> The date and time in UTC of when the trial ends. </param>
+        /// <param name="trialStartsOn"> The date and time in UTC of when the trial starts. </param>
+        /// <param name="trialEndsOn"> The date and time in UTC of when the trial ends. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceTrialQuota(AvailablePromotion? availablePromotion, ResourceIdentifier grafanaResourceId, DateTimeOffset? trialStartOn, DateTimeOffset? trialEndOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MarketplaceTrialQuota(AvailablePromotion? availablePromotion, ResourceIdentifier grafanaResourceId, DateTimeOffset? trialStartsOn, DateTimeOffset? trialEndsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AvailablePromotion = availablePromotion;
             GrafanaResourceId = grafanaResourceId;
-            TrialStartOn = trialStartOn;
-            TrialEndOn = trialEndOn;
+            TrialStartsOn = trialStartsOn;
+            TrialEndsOn = trialEndsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -44,9 +44,9 @@ namespace Azure.ResourceManager.Grafana.Models
         public ResourceIdentifier GrafanaResourceId { get; }
 
         /// <summary> The date and time in UTC of when the trial starts. </summary>
-        public DateTimeOffset? TrialStartOn { get; }
+        public DateTimeOffset? TrialStartsOn { get; }
 
         /// <summary> The date and time in UTC of when the trial ends. </summary>
-        public DateTimeOffset? TrialEndOn { get; }
+        public DateTimeOffset? TrialEndsOn { get; }
     }
 }
