@@ -25,7 +25,7 @@ model KeyValueProperties {
 
 @armResourceOperations
 interface KeyValues {
-  createOrUpdate is ArmResourceCreateOrUpdateSync<KeyValue>;
+  createOrUpdate is ArmResourceCreateOrReplaceSync<KeyValue>;
   get is ArmResourceRead<KeyValue>;
   delete is ArmResourceDeleteSync<KeyValue>;
   list is ArmResourceListByParent<KeyValue>;

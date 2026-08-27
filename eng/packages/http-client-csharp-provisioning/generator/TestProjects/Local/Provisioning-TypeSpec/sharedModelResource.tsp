@@ -9,22 +9,7 @@ using Azure.Core;
 
 namespace ProvisioningTypeSpec;
 
-// ---- Shared input model across multiple resources (regression test for
-// issue #56733 + ContainerInstance ContainerGroupProfile/Revision pattern) ----
-//
-// `Profile` is a proxy resource. A virtual `ProfileRevision` sub-resource
-// is defined via `Azure.ResourceManager.Legacy.LegacyOperations` reusing
-// the SAME `Profile` model (with `ResourceName = "ProfileRevision"`).
-//
-// Two ProvisioningResourceProvider instances are created off the same
-// InputModelType — this exercises:
-//   * `ProvisioningResourceProvider.BuildName` returning the resource
-//     metadata name (so files/types are `Profile.cs` and
-//     `ProfileRevision.cs` instead of two `Profile.cs` colliding).
-//   * `ProvisioningTypeFactory.CreateModelCore` preferring the canonical
-//     provider whose `ResourceMetadata.ResourceName == model.Name`,
-//     so the flattened properties from `@@Legacy.flattenProperty(Profile.properties)`
-//     land on the parent `Profile` resource and not on the child revision.
+// A parent and virtual child resource share the same input model.
 
 /** A profile resource. */
 @parentResource(ConfigurationStore)
@@ -58,10 +43,8 @@ interface Profiles {
   list is ArmResourceListByParent<Profile>;
 }
 
-// Virtual sub-resource that REUSES the `Profile` input model under a
-// `revisions/{revisionNumber}` segment, but is published as a distinct
-// resource named `ProfileRevision`.
-alias ProfileRevisionOps = Azure.ResourceManager.Legacy.LegacyOperations<
+// Publish the shared model as a distinct virtual child resource.
+alias ProfileRevisionReadOps = Azure.ResourceManager.Legacy.LegacyOperations<
   {
     ...ApiVersionParameter;
     ...SubscriptionIdParameter;
@@ -94,5 +77,5 @@ alias ProfileRevisionOps = Azure.ResourceManager.Legacy.LegacyOperations<
 @armResourceOperations(#{ omitTags: true })
 interface ProfileRevisions {
   /** Get a specific revision of a profile. */
-  getByRevisionNumber is ProfileRevisionOps.Read<Profile>;
+  getByRevisionNumber is ProfileRevisionReadOps.Read<Profile>;
 }

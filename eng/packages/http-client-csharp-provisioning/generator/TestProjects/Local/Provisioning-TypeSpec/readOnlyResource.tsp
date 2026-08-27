@@ -7,8 +7,7 @@ using Azure.ResourceManager;
 
 namespace ProvisioningTypeSpec;
 
-// Distinct read-only child resource used to verify that resources with no
-// writable operations remain non-settable even when their parent is settable.
+// Resources without writable operations remain read-only.
 
 /** A private link resource for a configuration store. */
 model ConfigurationStorePrivateLinkResource is PrivateLink;
