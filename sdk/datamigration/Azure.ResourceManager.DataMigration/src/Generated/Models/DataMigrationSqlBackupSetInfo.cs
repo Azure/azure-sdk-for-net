@@ -30,21 +30,21 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="lastLSN"> Last LSN of the backup set. </param>
         /// <param name="backupType"> Backup type. </param>
         /// <param name="listOfBackupFiles"> List of files in the backup set. </param>
-        /// <param name="backupStartOn"> Backup start date. </param>
+        /// <param name="backupStartsOn"> Backup start date. </param>
         /// <param name="backupFinishOn"> Backup end time. </param>
         /// <param name="isBackupRestored"> Whether this backup set has been restored or not. </param>
         /// <param name="hasBackupChecksums"> Has Backup Checksums. </param>
         /// <param name="familyCount"> Media family count. </param>
         /// <param name="ignoreReasons"> The reasons why the backup set is ignored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationSqlBackupSetInfo(Guid? backupSetId, string firstLSN, string lastLSN, string backupType, IReadOnlyList<DataMigrationSqlBackupFileInfo> listOfBackupFiles, DateTimeOffset? backupStartOn, DateTimeOffset? backupFinishOn, bool? isBackupRestored, bool? hasBackupChecksums, int? familyCount, IReadOnlyList<string> ignoreReasons, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataMigrationSqlBackupSetInfo(Guid? backupSetId, string firstLSN, string lastLSN, string backupType, IReadOnlyList<DataMigrationSqlBackupFileInfo> listOfBackupFiles, DateTimeOffset? backupStartsOn, DateTimeOffset? backupFinishOn, bool? isBackupRestored, bool? hasBackupChecksums, int? familyCount, IReadOnlyList<string> ignoreReasons, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackupSetId = backupSetId;
             FirstLSN = firstLSN;
             LastLSN = lastLSN;
             BackupType = backupType;
             ListOfBackupFiles = listOfBackupFiles;
-            BackupStartOn = backupStartOn;
+            BackupStartsOn = backupStartsOn;
             BackupFinishOn = backupFinishOn;
             IsBackupRestored = isBackupRestored;
             HasBackupChecksums = hasBackupChecksums;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public IReadOnlyList<DataMigrationSqlBackupFileInfo> ListOfBackupFiles { get; }
 
         /// <summary> Backup start date. </summary>
-        public DateTimeOffset? BackupStartOn { get; }
+        public DateTimeOffset? BackupStartsOn { get; }
 
         /// <summary> Backup end time. </summary>
         public DateTimeOffset? BackupFinishOn { get; }

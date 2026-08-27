@@ -31,17 +31,17 @@ namespace Azure.ResourceManager.DataBoxEdge
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The properties of the job. </param>
         /// <param name="status"> The current status of the job. </param>
-        /// <param name="startOn"> The UTC date and time at which the job started. </param>
-        /// <param name="endOn"> The UTC date and time at which the job completed. </param>
+        /// <param name="startsOn"> The UTC date and time at which the job started. </param>
+        /// <param name="endsOn"> The UTC date and time at which the job completed. </param>
         /// <param name="percentComplete"> The percentage of the job that is complete. </param>
         /// <param name="error"> The error details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataBoxEdgeJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobProperties properties, DataBoxEdgeJobStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, int? percentComplete, DataBoxEdgeJobErrorDetails error, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal DataBoxEdgeJobData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, JobProperties properties, DataBoxEdgeJobStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, int? percentComplete, DataBoxEdgeJobErrorDetails error, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             PercentComplete = percentComplete;
             Error = error;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -54,10 +54,10 @@ namespace Azure.ResourceManager.DataBoxEdge
         public DataBoxEdgeJobStatus? Status { get; }
 
         /// <summary> The UTC date and time at which the job started. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The UTC date and time at which the job completed. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> The percentage of the job that is complete. </summary>
         public int? PercentComplete { get; }

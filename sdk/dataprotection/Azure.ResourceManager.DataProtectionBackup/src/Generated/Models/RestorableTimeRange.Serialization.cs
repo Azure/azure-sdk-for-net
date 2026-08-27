@@ -80,9 +80,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 throw new FormatException($"The model {nameof(RestorableTimeRange)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("startTime"u8);
-            writer.WriteStringValue(StartOn, "O");
+            writer.WriteStringValue(StartsOn, "O");
             writer.WritePropertyName("endTime"u8);
-            writer.WriteStringValue(EndOn, "O");
+            writer.WriteStringValue(EndsOn, "O");
             if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType"u8);
@@ -130,8 +130,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            DateTimeOffset startOn = default;
-            DateTimeOffset endOn = default;
             string objectType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -156,7 +154,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RestorableTimeRange(startOn, endOn, objectType, additionalBinaryDataProperties);
+            return new RestorableTimeRange(default, default, objectType, additionalBinaryDataProperties);
         }
     }
 }

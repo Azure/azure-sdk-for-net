@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="status"> Status of notification. </param>
         /// <param name="errorCode"> Delay Error code. </param>
         /// <param name="description"> Description of the delay. </param>
-        /// <param name="startOn"> Timestamp when the delay notification was created. </param>
+        /// <param name="startsOn"> Timestamp when the delay notification was created. </param>
         /// <param name="resolutionOn"> Timestamp when the delay notification was resolved. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobDelayDetails(DelayNotificationStatus? status, PortalDelayErrorCode? errorCode, string description, DateTimeOffset? startOn, DateTimeOffset? resolutionOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobDelayDetails(DelayNotificationStatus? status, PortalDelayErrorCode? errorCode, string description, DateTimeOffset? startsOn, DateTimeOffset? resolutionOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             ErrorCode = errorCode;
             Description = description;
-            StartOn = startOn;
+            StartsOn = startsOn;
             ResolutionOn = resolutionOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataBox.Models
         public string Description { get; }
 
         /// <summary> Timestamp when the delay notification was created. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> Timestamp when the delay notification was resolved. </summary>
         public DateTimeOffset? ResolutionOn { get; }
