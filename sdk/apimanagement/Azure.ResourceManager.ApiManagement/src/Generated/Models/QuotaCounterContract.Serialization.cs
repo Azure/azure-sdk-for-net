@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WritePropertyName("periodKey"u8);
             writer.WriteStringValue(PeriodKey);
             writer.WritePropertyName("periodStartTime"u8);
-            writer.WriteStringValue(PeriodStartOn, "O");
+            writer.WriteStringValue(PeriodStartsOn, "O");
             writer.WritePropertyName("periodEndTime"u8);
-            writer.WriteStringValue(PeriodEndOn, "O");
+            writer.WriteStringValue(PeriodEndsOn, "O");
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
@@ -144,8 +144,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             string counterKey = default;
             string periodKey = default;
-            DateTimeOffset periodStartOn = default;
-            DateTimeOffset periodEndOn = default;
+            DateTimeOffset periodStartsOn = default;
+            DateTimeOffset periodEndsOn = default;
             QuotaCounterValueContractProperties value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -162,12 +162,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 if (prop.NameEquals("periodStartTime"u8))
                 {
-                    periodStartOn = prop.Value.GetDateTimeOffset("O");
+                    periodStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("periodEndTime"u8))
                 {
-                    periodEndOn = prop.Value.GetDateTimeOffset("O");
+                    periodEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new QuotaCounterContract(
                 counterKey,
                 periodKey,
-                periodStartOn,
-                periodEndOn,
+                periodStartsOn,
+                periodEndsOn,
                 value,
                 additionalBinaryDataProperties);
         }
