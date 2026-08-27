@@ -23,6 +23,7 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
             'sdk/gamma/C/src/C.csproj',
             'sdk/delta/D/src/D.csproj',
             'sdk/epsilon/E/src/E.csproj',
+            'common/Perf/Azure.Test.Perf/Azure.Test.Perf.csproj',
             'sdk/shared/Shared/Shared.cs')) {
             $fullPath = Join-Path $repo $path
             New-Item -ItemType Directory -Path (Split-Path $fullPath -Parent) -Force | Out-Null
@@ -42,15 +43,18 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
             repositoryRoot = $repo.Replace('\', '/')
             sourceCommit = $sourceCommit
             nodes = @(
-                @{ projectPath = 'sdk/alpha/A/tests/A.Tests.csproj'; packageRoot = 'sdk/alpha/A'; targetFrameworks = @('net8.0', 'net9.0'); packageId = 'Azure.A.Tests'; isShippingLibrary = $false }
+                # Test projects commonly infer a nested package root rather than the PackageInfo directory.
+                @{ projectPath = 'sdk/alpha/A/tests/A.Tests.csproj'; packageRoot = 'sdk/alpha/A/tests'; targetFrameworks = @('net8.0', 'net9.0'); packageId = 'Azure.A.Tests'; isShippingLibrary = $false }
                 @{ projectPath = 'sdk/beta/B/src/B.csproj'; packageRoot = 'sdk/beta/B'; targetFrameworks = @('net8.0'); packageId = 'Azure.B'; isShippingLibrary = $true }
                 @{ projectPath = 'sdk/gamma/C/src/C.csproj'; packageRoot = 'sdk/gamma/C'; targetFrameworks = @('net9.0'); packageId = 'Azure.C'; isShippingLibrary = $true }
                 @{ projectPath = 'sdk/delta/D/src/D.csproj'; packageRoot = 'sdk/delta/D'; targetFrameworks = @('net8.0'); packageId = 'Azure.D'; isShippingLibrary = $true }
                 @{ projectPath = 'sdk/epsilon/E/src/E.csproj'; packageRoot = 'sdk/epsilon/E'; targetFrameworks = @('net8.0'); packageId = 'Azure.E'; isShippingLibrary = $true }
+                @{ projectPath = 'common/Perf/Azure.Test.Perf/Azure.Test.Perf.csproj'; packageRoot = 'common/Perf'; targetFrameworks = @('net8.0'); packageId = 'Azure.Test.Perf'; isShippingLibrary = $false }
             )
             configurationEdges = @(
                 @{ kind = 'ProjectReference'; fromProject = 'sdk/alpha/A/tests/A.Tests.csproj'; fromTargetFramework = 'net8.0'; to = 'sdk/beta/B/src/B.csproj'; toTargetFramework = 'net8.0' }
                 @{ kind = 'ProjectReference'; fromProject = 'sdk/alpha/A/tests/A.Tests.csproj'; fromTargetFramework = 'net9.0'; to = 'sdk/gamma/C/src/C.csproj'; toTargetFramework = 'net9.0' }
+                @{ kind = 'ProjectReference'; fromProject = 'sdk/alpha/A/tests/A.Tests.csproj'; fromTargetFramework = 'net8.0'; to = 'common/Perf/Azure.Test.Perf/Azure.Test.Perf.csproj'; toTargetFramework = 'net8.0' }
                 @{ kind = 'PackageReference'; fromProject = 'sdk/alpha/A/tests/A.Tests.csproj'; fromTargetFramework = 'net8.0'; to = 'Azure.D'; toTargetFramework = '' }
                 # NuGet identities are case-insensitive; serialized projection keys are not.
                 @{ kind = 'PackageReference'; fromProject = 'sdk/delta/D/src/D.csproj'; fromTargetFramework = 'net8.0'; to = 'azure.e' }
@@ -88,6 +92,7 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
             '/sdk/epsilon/*',
             '/sdk/gamma/*',
             '/sdk/shared/*')
+        $paths | Should -Contain '/common/Perf/Azure.Test.Perf/*'
     }
 
     It 'rejects incomplete and non-NuGet source graphs instead of narrowing' {
