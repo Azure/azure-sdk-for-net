@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="uri"> URL of pull request. </param>
         /// <param name="state"> State of the pull request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PullRequestInfo(string uri, RecommendationState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PullRequestInfo(string uri, PullRequestState? state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Uri = uri;
             State = state;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> State of the pull request. </summary>
         [WirePath("state")]
-        public RecommendationState? State { get; }
+        public PullRequestState? State { get; }
     }
 }

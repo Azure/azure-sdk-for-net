@@ -35,15 +35,16 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
         {
             Versions = { new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "2.0.0") },
             CodeConfiguration = new(
-                runtime: "python_3_14",
-                entryPoint: ["python", "main.py"],
-                dependencyResolution: CodeDependencyResolution.RemoteBuild
+                runtime: "dotnet_10",
+                entryPoint: ["dotnet", "ToolboxSkillAgent.dll"],
+                dependencyResolution: CodeDependencyResolution.Bundled
             ),
             EnvironmentVariables = {
                 { "AGENT_NAME", middlewareAgentName},
                 { "TOOLBOX_NAME", toolboxName},
                 { "FOUNDRY_PROJECT_ENDPOINT", foundryProjectEndpoint},
                 { "FOUNDRY_MODEL_NAME", modelDeploymentName },
+                { "ASPNETCORE_URLS", "http://+:8088"},
             }
         };
         AgentVersionFromCodeMetadata metadata = new(agentDefinition);
@@ -71,11 +72,6 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
         try
         {
             toolboxClient.Delete(name: "mySkillToolbox");
-        }
-        catch { }
-        try
-        {
-            projectClient.AgentAdministrationClient.DeleteAgent("myAgent");
         }
         catch { }
         try
@@ -200,11 +196,6 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
         catch { }
         try
         {
-            projectClient.AgentAdministrationClient.DeleteAgent("myAgent");
-        }
-        catch { }
-        try
-        {
             skillsClient.DeleteSkill(name: "shipping-cost-skill");
         }
         catch { }
@@ -257,6 +248,7 @@ public class Sample_ToolBoxSkill : ProjectsOpenAITestBase
         #endregion
         #region Snippet:Sample_GetResponseFromAgent_ToolBoxSkill_Sync
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
+
         CreateResponseOptions nextResponseOptions = new()
         {
             InputItems = { ResponseItem.CreateUserMessageItem("Compute the shipping cost for a 3 kg package shipped domestically.") }

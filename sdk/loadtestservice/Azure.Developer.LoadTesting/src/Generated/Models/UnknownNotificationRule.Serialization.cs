@@ -109,9 +109,9 @@ namespace Azure.Developer.LoadTesting
             string displayName = default;
             IList<string> actionGroupIds = default;
             NotificationScopeType scope = default;
-            DateTimeOffset? createdDateTime = default;
+            DateTimeOffset? createdOn = default;
             string createdBy = default;
-            DateTimeOffset? lastModifiedDateTime = default;
+            DateTimeOffset? lastModifiedOn = default;
             string lastModifiedBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -154,7 +154,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    createdDateTime = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("createdBy"u8))
@@ -168,7 +168,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    lastModifiedDateTime = prop.Value.GetDateTimeOffset("O");
+                    lastModifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedBy"u8))
@@ -186,9 +186,9 @@ namespace Azure.Developer.LoadTesting
                 displayName,
                 actionGroupIds,
                 scope,
-                createdDateTime,
+                createdOn,
                 createdBy,
-                lastModifiedDateTime,
+                lastModifiedOn,
                 lastModifiedBy,
                 additionalBinaryDataProperties);
         }

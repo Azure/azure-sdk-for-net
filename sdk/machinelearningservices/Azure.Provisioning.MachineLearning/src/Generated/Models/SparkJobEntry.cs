@@ -11,7 +11,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Spark job entry point definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SparkJobPythonEntry"/> and <see cref="SparkJobScalaEntry"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="SparkJobPythonEntry"/> and <see cref="SparkJobScalaEntry"/>.
     /// </summary>
     public partial class SparkJobEntry : ProvisionableConstruct
     {

@@ -239,14 +239,16 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <param name="eventHubs"> The list of Event Hubs endpoints that IoT hub routes messages to, based on the routing rules. This list does not include the built-in Event Hubs endpoint. </param>
         /// <param name="storageContainers"> The list of storage container endpoints that IoT hub routes messages to, based on the routing rules. </param>
         /// <param name="cosmosDBSqlContainers"> The list of Cosmos DB container endpoints that IoT hub routes messages to, based on the routing rules. </param>
+        /// <param name="eventStreams"> The list of event stream endpoints that IoT hub routes messages to, based on the routing rules. </param>
         /// <returns> A new <see cref="Models.RoutingEndpoints"/> instance for mocking. </returns>
-        public static RoutingEndpoints RoutingEndpoints(IEnumerable<RoutingServiceBusQueueEndpointProperties> serviceBusQueues = default, IEnumerable<RoutingServiceBusTopicEndpointProperties> serviceBusTopics = default, IEnumerable<RoutingEventHubProperties> eventHubs = default, IEnumerable<RoutingStorageContainerProperties> storageContainers = default, IEnumerable<RoutingCosmosDBSqlApiProperties> cosmosDBSqlContainers = default)
+        public static RoutingEndpoints RoutingEndpoints(IEnumerable<RoutingServiceBusQueueEndpointProperties> serviceBusQueues = default, IEnumerable<RoutingServiceBusTopicEndpointProperties> serviceBusTopics = default, IEnumerable<RoutingEventHubProperties> eventHubs = default, IEnumerable<RoutingStorageContainerProperties> storageContainers = default, IEnumerable<RoutingCosmosDBSqlApiProperties> cosmosDBSqlContainers = default, IEnumerable<RoutingEventStreamProperties> eventStreams = default)
         {
             serviceBusQueues ??= new ChangeTrackingList<RoutingServiceBusQueueEndpointProperties>();
             serviceBusTopics ??= new ChangeTrackingList<RoutingServiceBusTopicEndpointProperties>();
             eventHubs ??= new ChangeTrackingList<RoutingEventHubProperties>();
             storageContainers ??= new ChangeTrackingList<RoutingStorageContainerProperties>();
             cosmosDBSqlContainers ??= new ChangeTrackingList<RoutingCosmosDBSqlApiProperties>();
+            eventStreams ??= new ChangeTrackingList<RoutingEventStreamProperties>();
 
             return new RoutingEndpoints(
                 (serviceBusQueues ?? new ChangeTrackingList<RoutingServiceBusQueueEndpointProperties>()).ToList(),
@@ -254,6 +256,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 (eventHubs ?? new ChangeTrackingList<RoutingEventHubProperties>()).ToList(),
                 (storageContainers ?? new ChangeTrackingList<RoutingStorageContainerProperties>()).ToList(),
                 (cosmosDBSqlContainers ?? new ChangeTrackingList<RoutingCosmosDBSqlApiProperties>()).ToList(),
+                (eventStreams ?? new ChangeTrackingList<RoutingEventStreamProperties>()).ToList(),
                 default);
         }
 
@@ -395,6 +398,31 @@ namespace Azure.ResourceManager.IotHub.Models
                 containerName,
                 partitionKeyName,
                 partitionKeyTemplate,
+                default);
+        }
+
+        /// <param name="name"> The name that identifies this endpoint. The name can only include alphanumeric characters, periods, underscores, hyphens and has a maximum length of 64 characters. The following names are reserved:  events, fileNotifications, $default. Endpoint names must be unique across endpoint types. </param>
+        /// <param name="id"> Id of the event stream endpoint. </param>
+        /// <param name="endpointUri"> The url of the underlying event hub namespace of the event stream endpoint. It must include the protocol sb://. </param>
+        /// <param name="entityPath"> Event hub name on the event hub namespace. </param>
+        /// <param name="authenticationType"> Method used to authenticate against the event stream endpoint. </param>
+        /// <param name="userAssignedIdentity"> The user assigned identity. </param>
+        /// <param name="workspaceId"> The unique GUID of the target Microsoft Fabric workspace for the event stream endpoint. </param>
+        /// <param name="eventStreamId"> The unique GUID of the target event stream under the workspace. </param>
+        /// <param name="sourceId"> The unique GUID of the custom source for the event stream. </param>
+        /// <returns> A new <see cref="Models.RoutingEventStreamProperties"/> instance for mocking. </returns>
+        public static RoutingEventStreamProperties RoutingEventStreamProperties(string name = default, string id = default, string endpointUri = default, string entityPath = default, EventStreamAuthenticationType? authenticationType = default, ResourceIdentifier userAssignedIdentity = default, string workspaceId = default, string eventStreamId = default, string sourceId = default)
+        {
+            return new RoutingEventStreamProperties(
+                name,
+                id,
+                endpointUri,
+                entityPath,
+                authenticationType,
+                userAssignedIdentity is null ? default : new ManagedIdentity(userAssignedIdentity, default),
+                workspaceId,
+                eventStreamId,
+                sourceId,
                 default);
         }
 

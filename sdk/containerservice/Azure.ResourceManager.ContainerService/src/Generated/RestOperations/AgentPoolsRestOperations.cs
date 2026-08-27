@@ -205,6 +205,31 @@ namespace Azure.ResourceManager.ContainerService
             return message;
         }
 
+        internal HttpMessage CreateCompleteUpgradeRequest(Guid subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/agentPools/", false);
+            uri.AppendPath(agentPoolName, true);
+            uri.AppendPath("/completeUpgrade", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            return message;
+        }
+
         internal HttpMessage CreateDeleteMachinesRequest(Guid subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
@@ -255,6 +280,34 @@ namespace Azure.ResourceManager.ContainerService
             request.Method = RequestMethod.Post;
             _userAgent.Apply(message);
             request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetBootstrapDataRequest(Guid subscriptionId, string resourceGroupName, string resourceName, string agentPoolName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.ContainerService/managedClusters/", false);
+            uri.AppendPath(resourceName, true);
+            uri.AppendPath("/agentPools/", false);
+            uri.AppendPath(agentPoolName, true);
+            uri.AppendPath("/listBootstrapData", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
         }
     }

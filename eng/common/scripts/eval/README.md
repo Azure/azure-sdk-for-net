@@ -30,7 +30,7 @@ prints a harmless `ExperimentalWarning`. Relative imports use explicit `.ts` spe
 ## Updating the Vally CLI version
 
 1. Bump `@microsoft/vally-cli` in `package.json`.
-2. Run `npm install` locally to refresh `package-lock.json`.
+2. Run `npm install --global npm@11.11.1`, then `npm install --package-lock-only --registry https://registry.npmjs.org/` to refresh `package-lock.json`.
 3. Commit both files in the same PR. The eval pipelines' path triggers include
    `eng/common/scripts/eval/**`, so CI re-runs against the new version automatically.
 
@@ -40,6 +40,7 @@ Reproduce what CI does by installing from the same lockfile and invoking the loc
 
 ```sh
 cd eng/common/scripts/eval
+npm install --global npm@11.11.1
 npm ci
 cd ../../../..
 ./eng/common/scripts/eval/node_modules/.bin/vally lint .

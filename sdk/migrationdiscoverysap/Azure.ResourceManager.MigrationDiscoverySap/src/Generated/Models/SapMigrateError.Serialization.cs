@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MigrationDiscoverySap;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
-    public partial class SapMigrateError : IUtf8JsonSerializable, IJsonModel<SapMigrateError>
+    /// <summary> An error response from the SAP migrate resources. </summary>
+    public partial class SapMigrateError : IJsonModel<SapMigrateError>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SapMigrateError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SapMigrateError PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SapMigrateError>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSapMigrateError(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SapMigrateError)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SapMigrateError>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMigrationDiscoverySapContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SapMigrateError)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SapMigrateError>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SapMigrateError IPersistableModel<SapMigrateError>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SapMigrateError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SapMigrateError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,49 +69,25 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SapMigrateError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapMigrateError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapMigrateError)} does not support writing '{format}' format.");
             }
-
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(Code))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("code"u8);
-                writer.WriteStringValue(Code);
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(Message))
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("message"u8);
-                writer.WriteStringValue(Message);
-            }
-            if (options.Format != "W" && Optional.IsDefined(Recommendation))
-            {
-                writer.WritePropertyName("recommendation"u8);
-                writer.WriteStringValue(Recommendation);
-            }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Details))
-            {
-                writer.WritePropertyName("details"u8);
-                writer.WriteStartArray();
-                foreach (var item in Details)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            writer.WriteEndObject();
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -79,113 +96,50 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
             }
         }
 
-        SapMigrateError IJsonModel<SapMigrateError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SapMigrateError IJsonModel<SapMigrateError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SapMigrateError JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SapMigrateError>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapMigrateError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SapMigrateError)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSapMigrateError(document.RootElement, options);
         }
 
-        internal static SapMigrateError DeserializeSapMigrateError(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SapMigrateError DeserializeSapMigrateError(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string code = default;
-            string message = default;
-            string recommendation = default;
-            IReadOnlyList<SapDiscoveryErrorDetail> details = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            SapDiscoveryErrorDetail properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("properties"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("code"u8))
-                        {
-                            code = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("message"u8))
-                        {
-                            message = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("recommendation"u8))
-                        {
-                            recommendation = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("details"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<SapDiscoveryErrorDetail> array = new List<SapDiscoveryErrorDetail>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(SapDiscoveryErrorDetail.DeserializeSapDiscoveryErrorDetail(item, options));
-                            }
-                            details = array;
-                            continue;
-                        }
-                    }
+                    properties = SapDiscoveryErrorDetail.DeserializeSapDiscoveryErrorDetail(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new SapMigrateError(code, message, recommendation, details ?? new ChangeTrackingList<SapDiscoveryErrorDetail>(), serializedAdditionalRawData);
+            return new SapMigrateError(properties, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<SapMigrateError>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SapMigrateError>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMigrationDiscoverySapContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SapMigrateError)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SapMigrateError IPersistableModel<SapMigrateError>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SapMigrateError>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSapMigrateError(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SapMigrateError)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SapMigrateError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

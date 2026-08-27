@@ -11,7 +11,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Forecasting target rolling window size.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AutoTargetRollingWindowSize"/> and <see cref="CustomTargetRollingWindowSize"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AutoTargetRollingWindowSize"/> and <see cref="CustomTargetRollingWindowSize"/>.
     /// </summary>
     public partial class TargetRollingWindowSize : ProvisionableConstruct
     {

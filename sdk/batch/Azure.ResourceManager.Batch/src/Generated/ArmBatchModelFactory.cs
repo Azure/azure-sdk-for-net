@@ -984,11 +984,11 @@ namespace Azure.ResourceManager.Batch.Models
                 default);
         }
 
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> Provisioning state of the network security perimeter configuration. </param>
         /// <param name="provisioningIssues"> List of provisioning issues, if any. </param>
-        /// <param name="networkSecurityPerimeter"></param>
-        /// <param name="resourceAssociation"></param>
-        /// <param name="profile"></param>
+        /// <param name="networkSecurityPerimeter"> Information about the network security perimeter (NSP). </param>
+        /// <param name="resourceAssociation"> Information about the resource association. </param>
+        /// <param name="profile"> Network security perimeter configuration profile. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfigurationProperties"/> instance for mocking. </returns>
         public static NetworkSecurityPerimeterConfigurationProperties NetworkSecurityPerimeterConfigurationProperties(NetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default, IEnumerable<BatchProvisioningIssue> provisioningIssues = default, NetworkSecurityPerimeter networkSecurityPerimeter = default, BatchResourceAssociation resourceAssociation = default, NetworkSecurityProfile profile = default)
         {
@@ -1004,7 +1004,7 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <param name="name"> Name of the issue. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Details of the provisioning issue. </param>
         /// <returns> A new <see cref="Models.BatchProvisioningIssue"/> instance for mocking. </returns>
         public static BatchProvisioningIssue BatchProvisioningIssue(string name = default, BatchProvisioningIssueProperties properties = default)
         {
@@ -1032,14 +1032,14 @@ namespace Azure.ResourceManager.Batch.Models
         }
 
         /// <param name="name"> Name of the access rule. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Properties of the access rule. </param>
         /// <returns> A new <see cref="Models.BatchAccessRule"/> instance for mocking. </returns>
         public static BatchAccessRule BatchAccessRule(string name = default, BatchAccessRuleProperties properties = default)
         {
             return new BatchAccessRule(name, properties, default);
         }
 
-        /// <param name="direction"></param>
+        /// <param name="direction"> Direction of the access rule. </param>
         /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
         /// <param name="networkSecurityPerimeters"> Network security perimeters for inbound rules. </param>

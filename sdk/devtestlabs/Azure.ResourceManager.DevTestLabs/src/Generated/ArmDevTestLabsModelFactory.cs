@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 dnsName,
                 rdpAuthority,
                 sshAuthority,
-                sharedPublicIPAddressInboundNatRules is null ? default : new SharedPublicIpAddressConfiguration((sharedPublicIPAddressInboundNatRules ?? new ChangeTrackingList<DevTestLabInboundNatRule>()).ToList(), default),
+                sharedPublicIPAddressInboundNatRules is null ? default : new SharedPublicIPAddressConfiguration((sharedPublicIPAddressInboundNatRules ?? new ChangeTrackingList<DevTestLabInboundNatRule>()).ToList(), default),
                 default);
         }
 

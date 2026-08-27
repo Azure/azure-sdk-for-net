@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="startOn"> The time the job started. </param>
         /// <param name="errorMessage"> Message to describe error, if an error exists. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobProperties(DateTimeOffset? endOn, IList<SecurityInsightsContentJobItem> items, TriggeredAnalyticsRuleRunProvisioningState? provisioningState, DateTimeOffset? startOn, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobProperties(DateTimeOffset? endOn, IList<SecurityInsightsContentJobItem> items, JobProvisioningState? provisioningState, DateTimeOffset? startOn, string errorMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndOn = endOn;
             Items = items;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> State of the job. </summary>
         [WirePath("provisioningState")]
-        public TriggeredAnalyticsRuleRunProvisioningState? ProvisioningState { get; }
+        public JobProvisioningState? ProvisioningState { get; }
 
         /// <summary> The time the job started. </summary>
         [WirePath("startTime")]

@@ -36,7 +36,6 @@
     "cspell.yaml",
     "assets.json",
     "eng/centralpackagemanagement/**",
-    "eng/NoWarnSkipValidation.txt",
     "sdk/confidentialledger/Azure.Security.CodeTransparency/tests/TestFiles/*",
     // These services are opted out of public API surface spell checking.
     // Spelling issues must be addressed before adding these back in.
@@ -145,7 +144,6 @@
     "otel",
     "overridden",
     "parallelization",
-    "personalizer",
     "petabit",
     "picometer",
     "pids",
@@ -774,13 +772,6 @@
       "filename": "**/sdk/iothub/**/*.cs",
       "words": [
         "fqdns"
-      ]
-    },
-    {
-      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
-      "words": [
-        "kustomization",
-        "kustomizations"
       ]
     },
     {

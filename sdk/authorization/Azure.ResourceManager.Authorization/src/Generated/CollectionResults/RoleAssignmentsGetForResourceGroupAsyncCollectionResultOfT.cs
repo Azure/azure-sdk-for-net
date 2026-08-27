@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Authorization
     internal partial class RoleAssignmentsGetForResourceGroupAsyncCollectionResultOfT : AsyncPageable<RoleAssignmentData>
     {
         private readonly RoleAssignments _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _filter;
         private readonly string _tenantId;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="tenantId"> Tenant ID for cross-tenant request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public RoleAssignmentsGetForResourceGroupAsyncCollectionResultOfT(RoleAssignments client, string subscriptionId, string resourceGroupName, string filter, string tenantId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public RoleAssignmentsGetForResourceGroupAsyncCollectionResultOfT(RoleAssignments client, Guid subscriptionId, string resourceGroupName, string filter, string tenantId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

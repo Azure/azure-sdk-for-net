@@ -73,23 +73,23 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Description for Get available Function app frameworks and their versions for location. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOsType = null, CancellationToken cancellationToken = default)
-            => GetMockableAppServiceTenantResource(tenantResource).GetFunctionAppStacksForLocationProvidersAsync(location, stackOsType, cancellationToken);
+        public static AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
+            => GetMockableAppServiceTenantResource(tenantResource).GetFunctionAppStacksForLocationProvidersAsync(location, stackOSType, cancellationToken);
 
         /// <summary> Description for Get available Function app frameworks and their versions for location. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOsType = null, CancellationToken cancellationToken = default)
-            => GetMockableAppServiceTenantResource(tenantResource).GetFunctionAppStacksForLocationProviders(location, stackOsType, cancellationToken);
+        public static Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
+            => GetMockableAppServiceTenantResource(tenantResource).GetFunctionAppStacksForLocationProviders(location, stackOSType, cancellationToken);
 
         /// <summary> Description for Get available Web app frameworks and their versions for location. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static AsyncPageable<WebAppStack> GetWebAppStacksByLocationAsync(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOsType = null, CancellationToken cancellationToken = default)
-            => GetMockableAppServiceTenantResource(tenantResource).GetWebAppStacksByLocationAsync(location, stackOsType, cancellationToken);
+        public static AsyncPageable<WebAppStack> GetWebAppStacksByLocationAsync(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
+            => GetMockableAppServiceTenantResource(tenantResource).GetWebAppStacksByLocationAsync(location, stackOSType, cancellationToken);
 
         /// <summary> Description for Get available Web app frameworks and their versions for location. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static Pageable<WebAppStack> GetWebAppStacksByLocation(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOsType = null, CancellationToken cancellationToken = default)
-            => GetMockableAppServiceTenantResource(tenantResource).GetWebAppStacksByLocation(location, stackOsType, cancellationToken);
+        public static Pageable<WebAppStack> GetWebAppStacksByLocation(this TenantResource tenantResource, AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
+            => GetMockableAppServiceTenantResource(tenantResource).GetWebAppStacksByLocation(location, stackOSType, cancellationToken);
 
         /// <summary> Description for Gets all available operations for the Microsoft.Web resource provider. NOTE: No longer supported in the underlying REST API. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]

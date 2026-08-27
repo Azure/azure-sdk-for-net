@@ -117,8 +117,8 @@ namespace Azure.Provisioning.Compute
             _exitCode = DefineProperty<int>(nameof(ExitCode), new string[] { "exitCode" });
             _output = DefineProperty<string>(nameof(Output), new string[] { "output" });
             _error = DefineProperty<string>(nameof(Error), new string[] { "error" });
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" });
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endTime" });
+            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, format: "O");
+            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endTime" }, format: "O");
             _statuses = DefineListProperty<InstanceViewStatus>(nameof(Statuses), new string[] { "statuses" });
             DefineAdditionalProperties();
         }

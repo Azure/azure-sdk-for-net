@@ -8770,7 +8770,7 @@
                 "discriminator": false,
                 "flatten": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.PrivateEndpointConnectionProperties.privateEndpoint",
+                "crossLanguageDefinitionId": "Azure.ResourceManager.Models.SubResource",
                 "serializationOptions": {
                   "json": {
                     "name": "privateEndpoint"
@@ -9446,6 +9446,10 @@
           "arguments": {}
         },
         {
+          "name": "TypeSpec.HttpClient.CSharp.@dynamicModel",
+          "arguments": {}
+        },
+        {
           "name": "Azure.ClientGenerator.Core.@clientOption",
           "arguments": {
             "name": "resource-rbac-roles",
@@ -9541,7 +9545,7 @@
                 "discriminator": false,
                 "flatten": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "MgmtTypeSpec.FooProperties.something",
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ManagedServiceIdentity",
                 "serializationOptions": {
                   "json": {
                     "name": "something"
@@ -9985,7 +9989,7 @@
                 "discriminator": false,
                 "flatten": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "MgmtTypeSpec.FooProperties.writableSubResourceProp",
+                "crossLanguageDefinitionId": "Azure.ResourceManager.Models.WritableSubResource",
                 "serializationOptions": {
                   "json": {
                     "name": "writableSubResourceProp"
@@ -10211,6 +10215,7 @@
           "kind": "property",
           "name": "extendedLocation",
           "serializedName": "extendedLocation",
+          "doc": "The extended location of the resource.",
           "type": {
             "$id": "932",
             "kind": "model",
@@ -13645,6 +13650,7 @@
           "kind": "property",
           "name": "extendedLocation",
           "serializedName": "extendedLocation",
+          "doc": "The extended location of the resource.",
           "type": {
             "$ref": "932"
           },
@@ -14015,7 +14021,7 @@
           "discriminator": false,
           "flatten": false,
           "decorators": [],
-          "crossLanguageDefinitionId": "MgmtTypeSpec.ZooAddressListListResult.value",
+          "crossLanguageDefinitionId": "TypeSpec.Array",
           "serializationOptions": {
             "json": {
               "name": "value"
@@ -17397,6 +17403,7 @@
           "kind": "property",
           "name": "extendedLocation",
           "serializedName": "extendedLocation",
+          "doc": "The extended location of the resource.",
           "type": {
             "$id": "1343",
             "kind": "model",
@@ -22133,10 +22140,20 @@
             "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "MgmtTypeSpec.MultiFlattenProperties",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
-            "doc": "Properties model with a safe-flattened sub-model and a customized property.",
+            "doc": "Properties model with a safe-flattened sub-model and a customized property.\nAlso marked with",
             "decorators": [
               {
                 "name": "Azure.ResourceManager.@armProviderNamespace",
+                "arguments": {}
+              },
+              {
+                "name": "Azure.ClientGenerator.Core.@useSystemTextJsonConverter",
+                "arguments": {
+                  "scope": "csharp"
+                }
+              },
+              {
+                "name": "TypeSpec.HttpClient.CSharp.@dynamicModel",
                 "arguments": {}
               }
             ],

@@ -22,14 +22,15 @@
     ApiCompat is entirely gated on a non-empty ApiCompatVersion (see the '$(ApiCompatVersion)' != '' conditions below),
     so simply deleting the auto-managed <ApiCompatVersion> element from a project's .csproj would silently disable all
     ApiCompat enforcement without touching the CODEOWNERS-protected eng/apicompatbaselines files. This target requires
-    the version to be present for GA (non-preview) shipping client libraries so that removal fails the build.
+    the version to be present for shipping client libraries with a prior stable release so that removal fails the build,
+    including while preparing a new preview release.
 
-    A first GA (1.0.0) has no prior stable release to compare against, so ApiCompatVersion is legitimately absent there.
+    A first stable release has no prior stable release to compare against, so ApiCompatVersion is legitimately absent there.
     In the rare case the core team approves running without ApiCompat for an already-GA'd package, add the project name
     to eng/apicompatbaselines/ApiCompatVersionOptOut.txt, which is CODEOWNERS-protected and therefore requires core team review.
   -->
   <Target Name="ValidateApiCompatVersionPresent" BeforeTargets="Build"
-          Condition="'$(ValidateRunApiCompat)' == 'true' and '$(ApiCompatVersion)' == '' and '$(IsShippingClientLibrary)' == 'true' and '$(HasReleaseVersion)' != 'false' and '$(IncludeBuildOutput)' != 'false' and '$(_VersionInProject)' != '1.0.0'">
+          Condition="'$(ValidateRunApiCompat)' == 'true' and '$(ApiCompatVersion)' == '' and '$(IsShippingClientLibrary)' == 'true' and '$(IncludeBuildOutput)' != 'false'">
     <ReadLinesFromFile File="$(MSBuildThisFileDirectory)apicompatbaselines\ApiCompatVersionOptOut.txt"
                        Condition="Exists('$(MSBuildThisFileDirectory)apicompatbaselines\ApiCompatVersionOptOut.txt')">
       <Output TaskParameter="Lines" ItemName="_ApiCompatVersionOptOutLine" />
@@ -38,9 +39,59 @@
       <_ApiCompatVersionOptOutMatch Include="@(_ApiCompatVersionOptOutLine)"
                                     Condition="'%(Identity)' == '$(MSBuildProjectName)'" />
     </ItemGroup>
-    <Error Condition="'@(_ApiCompatVersionOptOutMatch)' == ''"
-           Text="ApiCompatVersion is missing from $(MSBuildProjectName). It is required for GA (non-preview) libraries and is managed automatically by eng/scripts/Update-PkgVersion.ps1 - do not delete it. If the core team has approved shipping this package without ApiCompat, add '$(MSBuildProjectName)' to eng/apicompatbaselines/ApiCompatVersionOptOut.txt (CODEOWNERS-protected)." />
+    <PropertyGroup>
+      <_ApiCompatChangelogPath>$(PackageRootDirectory)/CHANGELOG.md</_ApiCompatChangelogPath>
+      <_ApiCompatChangelogPath Condition="!$(MSBuildProjectDirectory.EndsWith('\src')) and !$(MSBuildProjectDirectory.EndsWith('/src'))">$(MSBuildProjectDirectory)/CHANGELOG.md</_ApiCompatChangelogPath>
+    </PropertyGroup>
+    <Error Condition="'@(_ApiCompatVersionOptOutMatch)' == '' and !Exists('$(_ApiCompatChangelogPath)')"
+           Text="ApiCompat validation cannot determine release history for $(MSBuildProjectName): CHANGELOG.md was not found at $(_ApiCompatChangelogPath)." />
+    <CheckApiCompatStableRelease ChangelogPath="$(_ApiCompatChangelogPath)"
+                                 CurrentVersion="$(_VersionInProject)"
+                                 Condition="'@(_ApiCompatVersionOptOutMatch)' == '' and Exists('$(_ApiCompatChangelogPath)')">
+      <Output TaskParameter="HasStableRelease" PropertyName="_ApiCompatHasStableRelease" />
+      <Output TaskParameter="ReadError" PropertyName="_ApiCompatChangelogReadError" />
+    </CheckApiCompatStableRelease>
+    <Error Condition="'@(_ApiCompatVersionOptOutMatch)' == '' and '$(_ApiCompatChangelogReadError)' != ''"
+           Text="ApiCompat validation could not read $(_ApiCompatChangelogPath): $(_ApiCompatChangelogReadError)" />
+    <Error Condition="'@(_ApiCompatVersionOptOutMatch)' == '' and '$(_ApiCompatHasStableRelease)' == 'true'"
+           Text="ApiCompatVersion is missing from $(MSBuildProjectName). It is required for libraries with a prior stable release and is managed automatically by eng/scripts/Update-PkgVersion.ps1 - do not delete it. If the core team has approved shipping this package without ApiCompat, add '$(MSBuildProjectName)' to eng/apicompatbaselines/ApiCompatVersionOptOut.txt (CODEOWNERS-protected)." />
   </Target>
+
+  <UsingTask
+    TaskName="CheckApiCompatStableRelease"
+    TaskFactory="RoslynCodeTaskFactory"
+    AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.Core.dll">
+    <ParameterGroup>
+      <ChangelogPath ParameterType="System.String" Required="true" />
+      <CurrentVersion ParameterType="System.String" Required="true" />
+      <HasStableRelease ParameterType="System.Boolean" Output="true" />
+      <ReadError ParameterType="System.String" Output="true" />
+    </ParameterGroup>
+    <Task>
+      <Code Type="Fragment" Language="cs"><![CDATA[
+        try
+        {
+          var releaseHeading = new System.Text.RegularExpressions.Regex(
+              @"^#+\s+(?<version>\d+\.\d+\.\d+)\s+\(\d{4}-\d{2}-\d{2}\)",
+              System.Text.RegularExpressions.RegexOptions.CultureInvariant);
+
+          foreach (string line in System.IO.File.ReadLines(ChangelogPath))
+          {
+            System.Text.RegularExpressions.Match match = releaseHeading.Match(line);
+            if (match.Success && match.Groups["version"].Value != CurrentVersion)
+            {
+              HasStableRelease = true;
+              break;
+            }
+          }
+        }
+        catch (System.Exception ex)
+        {
+          ReadError = ex.Message;
+        }
+      ]]></Code>
+    </Task>
+  </UsingTask>
 
   <PropertyGroup>
     <PackageRootDirectory>$([MSBuild]::NormalizeDirectory($(MSBuildProjectDirectory)/../).TrimEnd("/").TrimEnd("\\"))</PackageRootDirectory>
@@ -322,11 +373,12 @@
 
   <!--TODO: end-->
 
-  <!-- *********** Files needed for System.ClientModel distributed tracing ************* -->
+  <!-- *********** Files needed for System.ClientModel shared client features ************* -->
   <ItemGroup Condition="'$(IncludeSystemClientModelSharedSourceForTracing)' == 'true'">
     <Compile Include="$(SystemClientModelSharedSource)ClientDiagnostics.cs" LinkBase="Shared/SystemClientModel" />
     <Compile Include="$(SystemClientModelSharedSource)DiagnosticScope.cs" LinkBase="Shared/SystemClientModel" />
     <Compile Include="$(SystemClientModelSharedSource)DiagnosticScopeFactory.cs" LinkBase="Shared/SystemClientModel" />
+    <Compile Include="$(SystemClientModelSharedSource)OperationResultHelpers.cs" LinkBase="Shared/SystemClientModel" />
   </ItemGroup>
 
   <!-- *********** Files needed for LRO ************* -->

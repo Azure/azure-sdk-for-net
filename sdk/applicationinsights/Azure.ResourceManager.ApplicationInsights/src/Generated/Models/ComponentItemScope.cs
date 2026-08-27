@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
     public readonly partial struct ComponentItemScope : IEquatable<ComponentItemScope>
     {
         private readonly string _value;
+        /// <summary> shared. </summary>
+        private const string SharedValue = "shared";
+        /// <summary> user. </summary>
+        private const string UserValue = "user";
 
         /// <summary> Initializes a new instance of <see cref="ComponentItemScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ComponentItemScope(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SharedValue = "shared";
-        private const string UserValue = "user";
+            _value = value;
+        }
 
         /// <summary> shared. </summary>
         public static ComponentItemScope Shared { get; } = new ComponentItemScope(SharedValue);
+
         /// <summary> user. </summary>
         public static ComponentItemScope User { get; } = new ComponentItemScope(UserValue);
+
         /// <summary> Determines if two <see cref="ComponentItemScope"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ComponentItemScope left, ComponentItemScope right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ComponentItemScope"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ComponentItemScope left, ComponentItemScope right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ComponentItemScope"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ComponentItemScope"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ComponentItemScope(string value) => new ComponentItemScope(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ComponentItemScope"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ComponentItemScope?(string value) => value == null ? null : new ComponentItemScope(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ComponentItemScope other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ComponentItemScope other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

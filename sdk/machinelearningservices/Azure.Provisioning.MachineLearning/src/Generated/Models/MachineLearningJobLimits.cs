@@ -13,7 +13,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// The MachineLearningJobLimits.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningCommandJobLimits"/> and <see cref="MachineLearningSweepJobLimits"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningCommandJobLimits"/> and <see cref="MachineLearningSweepJobLimits"/>.
     /// </summary>
     public partial class MachineLearningJobLimits : ProvisionableConstruct
     {
@@ -43,7 +43,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _timeout = DefineProperty<TimeSpan>(nameof(Timeout), new string[] { "timeout" });
+            _timeout = DefineProperty<TimeSpan>(nameof(Timeout), new string[] { "timeout" }, format: "P");
             DefineAdditionalProperties();
         }
 

@@ -11,7 +11,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Base definition for datastore secrets.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: 
+    /// Please note this is the base class. The derived classes available for instantiation are: 
     /// </summary>
     internal partial class MachineLearningDatastoreSecrets : ProvisionableConstruct
     {

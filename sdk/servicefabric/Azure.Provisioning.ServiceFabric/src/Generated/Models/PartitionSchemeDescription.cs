@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary>
     /// Describes how the service is partitioned.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="NamedPartitionSchemeDescription"/>, <see cref="SingletonPartitionSchemeDescription"/>, and <see cref="UniformInt64RangePartitionSchemeDescription"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="NamedPartitionSchemeDescription"/>, <see cref="SingletonPartitionSchemeDescription"/>, and <see cref="UniformInt64RangePartitionSchemeDescription"/>.
     /// </summary>
     public partial class PartitionSchemeDescription : ProvisionableConstruct
     {

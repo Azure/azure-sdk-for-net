@@ -1054,8 +1054,9 @@ private EvaluatorVersion GetPromptVersion()
                 new
                 {
                     required = new[] { "query", "response", "ground_truth" },
-                    type ="object",
-                    properties = new {
+                    type = "object",
+                    properties = new
+                    {
                         query = new { type = "string" },
                         response = new { type = "string" },
                         ground_truth = new { type = "string" },
@@ -1347,7 +1348,7 @@ ProjectsInsight clusterInsight = await projectClient.Insights.GenerateAsync(
         displayName: "Cluster analysis",
         request: new EvaluationRunClusterInsightRequest(
             evalId: evaluationId,
-            runIds: [ runId ])
+            runIds: [runId])
         {
             ModelConfiguration = new InsightModelConfiguration(modelDeploymentName)
         }));

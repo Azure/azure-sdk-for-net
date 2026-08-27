@@ -153,8 +153,8 @@ namespace Azure.Provisioning.Compute
             _pendingPatchCount = DefineProperty<int>(nameof(PendingPatchCount), new string[] { "pendingPatchCount" }, isOutput: true);
             _installedPatchCount = DefineProperty<int>(nameof(InstalledPatchCount), new string[] { "installedPatchCount" }, isOutput: true);
             _failedPatchCount = DefineProperty<int>(nameof(FailedPatchCount), new string[] { "failedPatchCount" }, isOutput: true);
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, isOutput: true);
-            _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "lastModifiedTime" }, isOutput: true);
+            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, isOutput: true, format: "O");
+            _lastModifiedOn = DefineProperty<DateTimeOffset>(nameof(LastModifiedOn), new string[] { "lastModifiedTime" }, isOutput: true, format: "O");
             _error = DefineModelProperty<ComputeApiError>(nameof(Error), new string[] { "error" }, isOutput: true);
             DefineAdditionalProperties();
         }

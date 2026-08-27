@@ -11,7 +11,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Base definition for identity configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/>, and <see cref="MachineLearningUserIdentity"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/>, and <see cref="MachineLearningUserIdentity"/>.
     /// </summary>
     public partial class MachineLearningIdentityConfiguration : ProvisionableConstruct
     {

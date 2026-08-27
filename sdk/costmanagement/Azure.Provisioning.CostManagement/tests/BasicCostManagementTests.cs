@@ -56,10 +56,6 @@ public class BasicCostManagementTests
             resource export 'Microsoft.CostManagement/exports@2025-03-01' = {
               name: take('export${uniqueString(resourceGroup().id)}', 24)
               properties: {
-                schedule: {
-                  status: 'Active'
-                  recurrence: 'Weekly'
-                }
                 deliveryInfo: {
                   destination: {
                     container: 'exports'
@@ -69,6 +65,10 @@ public class BasicCostManagementTests
                 definition: {
                   type: 'ActualCost'
                   timeframe: 'MonthToDate'
+                }
+                schedule: {
+                  status: 'Active'
+                  recurrence: 'Weekly'
                 }
               }
               location: location

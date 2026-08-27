@@ -83,17 +83,17 @@ namespace Azure.ResourceManager.DomainServices.Models
         /// <param name="location"> Virtual network location. </param>
         /// <param name="vnetSiteId"> Virtual network site id. </param>
         /// <param name="subnetId"> The name of the virtual network that Domain Services will be deployed on. The id of the subnet that Domain Services will be deployed on. /virtualNetwork/vnetName/subnets/subnetName. </param>
-        /// <param name="domainControllerIpAddress"> List of Domain Controller IP Address. </param>
-        /// <param name="externalAccessIpAddress"> External access ip address. </param>
+        /// <param name="domainControllerIPAddress"> List of Domain Controller IP Address. </param>
+        /// <param name="externalAccessIPAddress"> External access ip address. </param>
         /// <param name="serviceStatus"> Status of Domain Service instance. </param>
         /// <param name="selfUnsuspendCounter"> Number of times the customer has self-resumed the domain service. Valid values range from 0 to 5, where 5 is the maximum allowed count before further self-resume is denied and support intervention is required. </param>
         /// <param name="healthLastEvaluatedOn"> Last domain evaluation run DateTime. </param>
         /// <param name="healthMonitors"> List of Domain Health Monitors. </param>
         /// <param name="healthAlerts"> List of Domain Health Alerts. </param>
         /// <returns> A new <see cref="Models.DomainServiceReplicaSet"/> instance for mocking. </returns>
-        public static DomainServiceReplicaSet DomainServiceReplicaSet(string replicaSetId = default, AzureLocation? location = default, string vnetSiteId = default, ResourceIdentifier subnetId = default, IEnumerable<string> domainControllerIpAddress = default, string externalAccessIpAddress = default, string serviceStatus = default, int? selfUnsuspendCounter = default, DateTimeOffset? healthLastEvaluatedOn = default, IEnumerable<DomainServiceHealthMonitor> healthMonitors = default, IEnumerable<DomainServiceHealthAlert> healthAlerts = default)
+        public static DomainServiceReplicaSet DomainServiceReplicaSet(string replicaSetId = default, AzureLocation? location = default, string vnetSiteId = default, ResourceIdentifier subnetId = default, IEnumerable<string> domainControllerIPAddress = default, string externalAccessIPAddress = default, string serviceStatus = default, int? selfUnsuspendCounter = default, DateTimeOffset? healthLastEvaluatedOn = default, IEnumerable<DomainServiceHealthMonitor> healthMonitors = default, IEnumerable<DomainServiceHealthAlert> healthAlerts = default)
         {
-            domainControllerIpAddress ??= new ChangeTrackingList<string>();
+            domainControllerIPAddress ??= new ChangeTrackingList<string>();
             healthMonitors ??= new ChangeTrackingList<DomainServiceHealthMonitor>();
             healthAlerts ??= new ChangeTrackingList<DomainServiceHealthAlert>();
 
@@ -102,8 +102,8 @@ namespace Azure.ResourceManager.DomainServices.Models
                 location,
                 vnetSiteId,
                 subnetId,
-                (domainControllerIpAddress ?? new ChangeTrackingList<string>()).ToList(),
-                externalAccessIpAddress,
+                (domainControllerIPAddress ?? new ChangeTrackingList<string>()).ToList(),
+                externalAccessIPAddress,
                 serviceStatus,
                 selfUnsuspendCounter,
                 healthLastEvaluatedOn,

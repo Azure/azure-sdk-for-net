@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceFabricManagedClusters.Models;
@@ -77,6 +78,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
     [ModelReaderWriterBuildable(typeof(NodeTypeVmssExtension))]
     [ModelReaderWriterBuildable(typeof(PartitionInstanceCountScalingMechanism))]
     [ModelReaderWriterBuildable(typeof(ResourceAzStatus))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(RestartDeployedCodePackageContent))]
     [ModelReaderWriterBuildable(typeof(RollingUpgradeMonitoringPolicy))]
     [ModelReaderWriterBuildable(typeof(RuntimeApplicationHealthPolicy))]

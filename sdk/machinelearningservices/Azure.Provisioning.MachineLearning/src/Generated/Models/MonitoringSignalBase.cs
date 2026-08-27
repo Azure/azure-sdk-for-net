@@ -12,7 +12,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// The MonitoringSignalBase.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CustomMonitoringSignal"/>, <see cref="DataDriftMonitoringSignal"/>, <see cref="DataQualityMonitoringSignal"/>, <see cref="FeatureAttributionDriftMonitoringSignal"/>, and <see cref="PredictionDriftMonitoringSignal"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CustomMonitoringSignal"/>, <see cref="DataDriftMonitoringSignal"/>, <see cref="DataQualityMonitoringSignal"/>, <see cref="FeatureAttributionDriftMonitoringSignal"/>, and <see cref="PredictionDriftMonitoringSignal"/>.
     /// </summary>
     public partial class MonitoringSignalBase : ProvisionableConstruct
     {

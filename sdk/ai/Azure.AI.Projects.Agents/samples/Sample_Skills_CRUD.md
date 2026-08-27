@@ -1,41 +1,18 @@
 # Sample for skills Administration (create, retrieve, update and delete) in Azure.AI.Projects.Agents
 
 In this example we will demonstrate how to create, update and delete [skills](https://learn.microsoft.com/agent-framework/agents/skills).
-To use skills, we need to provide the `Foundry-Features` header in our REST requests. It can be done using `PipelinePolicy`.
-
-```C# Snippet:Sample_Agents_ExperimentalHeader
-internal class FeaturePolicy(string feature) : PipelinePolicy
-{
-    private const string _FEATURE_HEADER = "Foundry-Features";
-
-    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        ProcessNext(message, pipeline, currentIndex);
-    }
-
-    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        await ProcessNextAsync(message, pipeline, currentIndex);
-    }
-}
-```
-
-We also need to ignore the `AAIP001` warning.
+To use skills, we need to ignore the `AAIP001` warning.
 
 ```C#
 #pragma warning disable AAIP001
 ```
 
-1. First, we need to create `AgentSkills` client and read the environment variables, which will be used in the next steps. We also will add the experimental header policy to the client.
+1. First, we need to create `AgentSkills` client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateClient_SkillsCRUD
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-AgentAdministrationClientOptions options = new();
-options.AddPolicy(new FeaturePolicy("Skills=V1Preview"), PipelinePosition.PerCall);
-AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ProjectAgentSkills skillsClient = agentsClient.GetAgentSkills();
 ```
 

@@ -45,6 +45,8 @@ namespace Azure.ResourceManager.Network.Mocking
         private ExpressRouteCrossConnections _expressRouteCrossConnectionsRestClient;
         private ClientDiagnostics _expressRoutePortsClientDiagnostics;
         private ExpressRoutePorts _expressRoutePortsRestClient;
+        private ClientDiagnostics _expressRouteLagsClientDiagnostics;
+        private ExpressRouteLags _expressRouteLagsRestClient;
         private ClientDiagnostics _firewallPoliciesClientDiagnostics;
         private FirewallPolicies _firewallPoliciesRestClient;
         private ClientDiagnostics _networkManagersClientDiagnostics;
@@ -105,6 +107,8 @@ namespace Azure.ResourceManager.Network.Mocking
         private ServiceGateways _serviceGatewaysRestClient;
         private ClientDiagnostics _interconnectGroupsClientDiagnostics;
         private InterconnectGroups _interconnectGroupsRestClient;
+        private ClientDiagnostics _firstPartyServiceTagsClientDiagnostics;
+        private FirstPartyServiceTags _firstPartyServiceTagsRestClient;
         private ClientDiagnostics _customIPPrefixesClientDiagnostics;
         private CustomIPPrefixes _customIPPrefixesRestClient;
         private ClientDiagnostics _dscpConfigurationClientDiagnostics;
@@ -158,243 +162,251 @@ namespace Azure.ResourceManager.Network.Mocking
 
         private ClientDiagnostics ApplicationGatewaysClientDiagnostics => _applicationGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ApplicationGateways ApplicationGatewaysRestClient => _applicationGatewaysRestClient ??= new ApplicationGateways(ApplicationGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private ApplicationGateways ApplicationGatewaysRestClient => _applicationGatewaysRestClient ??= new ApplicationGateways(ApplicationGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics ApplicationSecurityGroupsClientDiagnostics => _applicationSecurityGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ApplicationSecurityGroups ApplicationSecurityGroupsRestClient => _applicationSecurityGroupsRestClient ??= new ApplicationSecurityGroups(ApplicationSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private ApplicationSecurityGroups ApplicationSecurityGroupsRestClient => _applicationSecurityGroupsRestClient ??= new ApplicationSecurityGroups(ApplicationSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics AzureFirewallsClientDiagnostics => _azureFirewallsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AzureFirewalls AzureFirewallsRestClient => _azureFirewallsRestClient ??= new AzureFirewalls(AzureFirewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private AzureFirewalls AzureFirewallsRestClient => _azureFirewallsRestClient ??= new AzureFirewalls(AzureFirewallsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics BastionHostsClientDiagnostics => _bastionHostsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BastionHosts BastionHostsRestClient => _bastionHostsRestClient ??= new BastionHosts(BastionHostsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private BastionHosts BastionHostsRestClient => _bastionHostsRestClient ??= new BastionHosts(BastionHostsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics NetworkInterfacesClientDiagnostics => _networkInterfacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkInterfaces NetworkInterfacesRestClient => _networkInterfacesRestClient ??= new NetworkInterfaces(NetworkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private NetworkInterfaces NetworkInterfacesRestClient => _networkInterfacesRestClient ??= new NetworkInterfaces(NetworkInterfacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics PublicIPAddressesClientDiagnostics => _publicIPAddressesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PublicIPAddresses PublicIPAddressesRestClient => _publicIPAddressesRestClient ??= new PublicIPAddresses(PublicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private PublicIPAddresses PublicIPAddressesRestClient => _publicIPAddressesRestClient ??= new PublicIPAddresses(PublicIPAddressesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics DdosCustomPoliciesClientDiagnostics => _ddosCustomPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DdosCustomPolicies DdosCustomPoliciesRestClient => _ddosCustomPoliciesRestClient ??= new DdosCustomPolicies(DdosCustomPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private DdosCustomPolicies DdosCustomPoliciesRestClient => _ddosCustomPoliciesRestClient ??= new DdosCustomPolicies(DdosCustomPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics DdosProtectionPlansClientDiagnostics => _ddosProtectionPlansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DdosProtectionPlans DdosProtectionPlansRestClient => _ddosProtectionPlansRestClient ??= new DdosProtectionPlans(DdosProtectionPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private DdosProtectionPlans DdosProtectionPlansRestClient => _ddosProtectionPlansRestClient ??= new DdosProtectionPlans(DdosProtectionPlansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics ExpressRouteCircuitsClientDiagnostics => _expressRouteCircuitsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExpressRouteCircuits ExpressRouteCircuitsRestClient => _expressRouteCircuitsRestClient ??= new ExpressRouteCircuits(ExpressRouteCircuitsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private ExpressRouteCircuits ExpressRouteCircuitsRestClient => _expressRouteCircuitsRestClient ??= new ExpressRouteCircuits(ExpressRouteCircuitsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics ExpressRouteCrossConnectionsClientDiagnostics => _expressRouteCrossConnectionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExpressRouteCrossConnections ExpressRouteCrossConnectionsRestClient => _expressRouteCrossConnectionsRestClient ??= new ExpressRouteCrossConnections(ExpressRouteCrossConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private ExpressRouteCrossConnections ExpressRouteCrossConnectionsRestClient => _expressRouteCrossConnectionsRestClient ??= new ExpressRouteCrossConnections(ExpressRouteCrossConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics ExpressRoutePortsClientDiagnostics => _expressRoutePortsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExpressRoutePorts ExpressRoutePortsRestClient => _expressRoutePortsRestClient ??= new ExpressRoutePorts(ExpressRoutePortsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private ExpressRoutePorts ExpressRoutePortsRestClient => _expressRoutePortsRestClient ??= new ExpressRoutePorts(ExpressRoutePortsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics ExpressRouteLagsClientDiagnostics => _expressRouteLagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private ExpressRouteLags ExpressRouteLagsRestClient => _expressRouteLagsRestClient ??= new ExpressRouteLags(ExpressRouteLagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics FirewallPoliciesClientDiagnostics => _firewallPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private FirewallPolicies FirewallPoliciesRestClient => _firewallPoliciesRestClient ??= new FirewallPolicies(FirewallPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private FirewallPolicies FirewallPoliciesRestClient => _firewallPoliciesRestClient ??= new FirewallPolicies(FirewallPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics NetworkManagersClientDiagnostics => _networkManagersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkManagers NetworkManagersRestClient => _networkManagersRestClient ??= new NetworkManagers(NetworkManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private NetworkManagers NetworkManagersRestClient => _networkManagersRestClient ??= new NetworkManagers(NetworkManagersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics IpAllocationsClientDiagnostics => _ipAllocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IpAllocations IpAllocationsRestClient => _ipAllocationsRestClient ??= new IpAllocations(IpAllocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private IpAllocations IpAllocationsRestClient => _ipAllocationsRestClient ??= new IpAllocations(IpAllocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics IpGroupsClientDiagnostics => _ipGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private IpGroups IpGroupsRestClient => _ipGroupsRestClient ??= new IpGroups(IpGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private IpGroups IpGroupsRestClient => _ipGroupsRestClient ??= new IpGroups(IpGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics LoadBalancersClientDiagnostics => _loadBalancersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private LoadBalancers LoadBalancersRestClient => _loadBalancersRestClient ??= new LoadBalancers(LoadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private LoadBalancers LoadBalancersRestClient => _loadBalancersRestClient ??= new LoadBalancers(LoadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics NatGatewaysClientDiagnostics => _natGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NatGateways NatGatewaysRestClient => _natGatewaysRestClient ??= new NatGateways(NatGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private NatGateways NatGatewaysRestClient => _natGatewaysRestClient ??= new NatGateways(NatGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics NetworkProfilesClientDiagnostics => _networkProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkProfiles NetworkProfilesRestClient => _networkProfilesRestClient ??= new NetworkProfiles(NetworkProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private NetworkProfiles NetworkProfilesRestClient => _networkProfilesRestClient ??= new NetworkProfiles(NetworkProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics NetworkSecurityGroupsClientDiagnostics => _networkSecurityGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkSecurityGroups NetworkSecurityGroupsRestClient => _networkSecurityGroupsRestClient ??= new NetworkSecurityGroups(NetworkSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private NetworkSecurityGroups NetworkSecurityGroupsRestClient => _networkSecurityGroupsRestClient ??= new NetworkSecurityGroups(NetworkSecurityGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics NetworkSecurityPerimetersClientDiagnostics => _networkSecurityPerimetersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkSecurityPerimeters NetworkSecurityPerimetersRestClient => _networkSecurityPerimetersRestClient ??= new NetworkSecurityPerimeters(NetworkSecurityPerimetersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private NetworkSecurityPerimeters NetworkSecurityPerimetersRestClient => _networkSecurityPerimetersRestClient ??= new NetworkSecurityPerimeters(NetworkSecurityPerimetersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics NetworkVirtualAppliancesClientDiagnostics => _networkVirtualAppliancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkVirtualAppliances NetworkVirtualAppliancesRestClient => _networkVirtualAppliancesRestClient ??= new NetworkVirtualAppliances(NetworkVirtualAppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private NetworkVirtualAppliances NetworkVirtualAppliancesRestClient => _networkVirtualAppliancesRestClient ??= new NetworkVirtualAppliances(NetworkVirtualAppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics NetworkWatchersClientDiagnostics => _networkWatchersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkWatchers NetworkWatchersRestClient => _networkWatchersRestClient ??= new NetworkWatchers(NetworkWatchersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private NetworkWatchers NetworkWatchersRestClient => _networkWatchersRestClient ??= new NetworkWatchers(NetworkWatchersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics PrivateEndpointsClientDiagnostics => _privateEndpointsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateEndpoints PrivateEndpointsRestClient => _privateEndpointsRestClient ??= new PrivateEndpoints(PrivateEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private PrivateEndpoints PrivateEndpointsRestClient => _privateEndpointsRestClient ??= new PrivateEndpoints(PrivateEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics PrivateLinkServicesClientDiagnostics => _privateLinkServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PrivateLinkServices PrivateLinkServicesRestClient => _privateLinkServicesRestClient ??= new PrivateLinkServices(PrivateLinkServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private PrivateLinkServices PrivateLinkServicesRestClient => _privateLinkServicesRestClient ??= new PrivateLinkServices(PrivateLinkServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics PublicIPPrefixesClientDiagnostics => _publicIPPrefixesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PublicIPPrefixes PublicIPPrefixesRestClient => _publicIPPrefixesRestClient ??= new PublicIPPrefixes(PublicIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private PublicIPPrefixes PublicIPPrefixesRestClient => _publicIPPrefixesRestClient ??= new PublicIPPrefixes(PublicIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics RouteFiltersClientDiagnostics => _routeFiltersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RouteFilters RouteFiltersRestClient => _routeFiltersRestClient ??= new RouteFilters(RouteFiltersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private RouteFilters RouteFiltersRestClient => _routeFiltersRestClient ??= new RouteFilters(RouteFiltersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics RouteTablesClientDiagnostics => _routeTablesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RouteTables RouteTablesRestClient => _routeTablesRestClient ??= new RouteTables(RouteTablesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private RouteTables RouteTablesRestClient => _routeTablesRestClient ??= new RouteTables(RouteTablesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics SecurityPartnerProvidersClientDiagnostics => _securityPartnerProvidersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SecurityPartnerProviders SecurityPartnerProvidersRestClient => _securityPartnerProvidersRestClient ??= new SecurityPartnerProviders(SecurityPartnerProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private SecurityPartnerProviders SecurityPartnerProvidersRestClient => _securityPartnerProvidersRestClient ??= new SecurityPartnerProviders(SecurityPartnerProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics ServiceEndpointPoliciesClientDiagnostics => _serviceEndpointPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ServiceEndpointPolicies ServiceEndpointPoliciesRestClient => _serviceEndpointPoliciesRestClient ??= new ServiceEndpointPolicies(ServiceEndpointPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private ServiceEndpointPolicies ServiceEndpointPoliciesRestClient => _serviceEndpointPoliciesRestClient ??= new ServiceEndpointPolicies(ServiceEndpointPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics VirtualNetworksClientDiagnostics => _virtualNetworksClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualNetworks VirtualNetworksRestClient => _virtualNetworksRestClient ??= new VirtualNetworks(VirtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private VirtualNetworks VirtualNetworksRestClient => _virtualNetworksRestClient ??= new VirtualNetworks(VirtualNetworksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics VirtualNetworkTapsClientDiagnostics => _virtualNetworkTapsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualNetworkTaps VirtualNetworkTapsRestClient => _virtualNetworkTapsRestClient ??= new VirtualNetworkTaps(VirtualNetworkTapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private VirtualNetworkTaps VirtualNetworkTapsRestClient => _virtualNetworkTapsRestClient ??= new VirtualNetworkTaps(VirtualNetworkTapsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics VirtualRoutersClientDiagnostics => _virtualRoutersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualRouters VirtualRoutersRestClient => _virtualRoutersRestClient ??= new VirtualRouters(VirtualRoutersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private VirtualRouters VirtualRoutersRestClient => _virtualRoutersRestClient ??= new VirtualRouters(VirtualRoutersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics VirtualWansClientDiagnostics => _virtualWansClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualWans VirtualWansRestClient => _virtualWansRestClient ??= new VirtualWans(VirtualWansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private VirtualWans VirtualWansRestClient => _virtualWansRestClient ??= new VirtualWans(VirtualWansClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics VpnSitesClientDiagnostics => _vpnSitesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VpnSites VpnSitesRestClient => _vpnSitesRestClient ??= new VpnSites(VpnSitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private VpnSites VpnSitesRestClient => _vpnSitesRestClient ??= new VpnSites(VpnSitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics VpnServerConfigurationsClientDiagnostics => _vpnServerConfigurationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VpnServerConfigurations VpnServerConfigurationsRestClient => _vpnServerConfigurationsRestClient ??= new VpnServerConfigurations(VpnServerConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private VpnServerConfigurations VpnServerConfigurationsRestClient => _vpnServerConfigurationsRestClient ??= new VpnServerConfigurations(VpnServerConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics VirtualHubsClientDiagnostics => _virtualHubsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualHubs VirtualHubsRestClient => _virtualHubsRestClient ??= new VirtualHubs(VirtualHubsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private VirtualHubs VirtualHubsRestClient => _virtualHubsRestClient ??= new VirtualHubs(VirtualHubsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics VpnGatewaysClientDiagnostics => _vpnGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VpnGateways VpnGatewaysRestClient => _vpnGatewaysRestClient ??= new VpnGateways(VpnGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private VpnGateways VpnGatewaysRestClient => _vpnGatewaysRestClient ??= new VpnGateways(VpnGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics WebApplicationFirewallPoliciesClientDiagnostics => _webApplicationFirewallPoliciesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private WebApplicationFirewallPolicies WebApplicationFirewallPoliciesRestClient => _webApplicationFirewallPoliciesRestClient ??= new WebApplicationFirewallPolicies(WebApplicationFirewallPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private WebApplicationFirewallPolicies WebApplicationFirewallPoliciesRestClient => _webApplicationFirewallPoliciesRestClient ??= new WebApplicationFirewallPolicies(WebApplicationFirewallPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics VirtualNetworkAppliancesClientDiagnostics => _virtualNetworkAppliancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualNetworkAppliances VirtualNetworkAppliancesRestClient => _virtualNetworkAppliancesRestClient ??= new VirtualNetworkAppliances(VirtualNetworkAppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private VirtualNetworkAppliances VirtualNetworkAppliancesRestClient => _virtualNetworkAppliancesRestClient ??= new VirtualNetworkAppliances(VirtualNetworkAppliancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics ServiceGatewaysClientDiagnostics => _serviceGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ServiceGateways ServiceGatewaysRestClient => _serviceGatewaysRestClient ??= new ServiceGateways(ServiceGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private ServiceGateways ServiceGatewaysRestClient => _serviceGatewaysRestClient ??= new ServiceGateways(ServiceGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics InterconnectGroupsClientDiagnostics => _interconnectGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private InterconnectGroups InterconnectGroupsRestClient => _interconnectGroupsRestClient ??= new InterconnectGroups(InterconnectGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private InterconnectGroups InterconnectGroupsRestClient => _interconnectGroupsRestClient ??= new InterconnectGroups(InterconnectGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
+
+        private ClientDiagnostics FirstPartyServiceTagsClientDiagnostics => _firstPartyServiceTagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private FirstPartyServiceTags FirstPartyServiceTagsRestClient => _firstPartyServiceTagsRestClient ??= new FirstPartyServiceTags(FirstPartyServiceTagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics CustomIPPrefixesClientDiagnostics => _customIPPrefixesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CustomIPPrefixes CustomIPPrefixesRestClient => _customIPPrefixesRestClient ??= new CustomIPPrefixes(CustomIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private CustomIPPrefixes CustomIPPrefixesRestClient => _customIPPrefixesRestClient ??= new CustomIPPrefixes(CustomIPPrefixesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics DscpConfigurationClientDiagnostics => _dscpConfigurationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DscpConfiguration DscpConfigurationRestClient => _dscpConfigurationRestClient ??= new DscpConfiguration(DscpConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private DscpConfiguration DscpConfigurationRestClient => _dscpConfigurationRestClient ??= new DscpConfiguration(DscpConfigurationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics P2sVpnGatewaysClientDiagnostics => _p2sVpnGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private P2sVpnGateways P2sVpnGatewaysRestClient => _p2sVpnGatewaysRestClient ??= new P2sVpnGateways(P2sVpnGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private P2sVpnGateways P2sVpnGatewaysRestClient => _p2sVpnGatewaysRestClient ??= new P2sVpnGateways(P2sVpnGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics ExpressRouteGatewaysClientDiagnostics => _expressRouteGatewaysClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExpressRouteGateways ExpressRouteGatewaysRestClient => _expressRouteGatewaysRestClient ??= new ExpressRouteGateways(ExpressRouteGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private ExpressRouteGateways ExpressRouteGatewaysRestClient => _expressRouteGatewaysRestClient ??= new ExpressRouteGateways(ExpressRouteGatewaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics CheckDnsNameAvailabilityClientDiagnostics => _checkDnsNameAvailabilityClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CheckDnsNameAvailability CheckDnsNameAvailabilityRestClient => _checkDnsNameAvailabilityRestClient ??= new CheckDnsNameAvailability(CheckDnsNameAvailabilityClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private CheckDnsNameAvailability CheckDnsNameAvailabilityRestClient => _checkDnsNameAvailabilityRestClient ??= new CheckDnsNameAvailability(CheckDnsNameAvailabilityClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics ExpressRouteProviderPortsLocationClientDiagnostics => _expressRouteProviderPortsLocationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExpressRouteProviderPortsLocation ExpressRouteProviderPortsLocationRestClient => _expressRouteProviderPortsLocationRestClient ??= new ExpressRouteProviderPortsLocation(ExpressRouteProviderPortsLocationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private ExpressRouteProviderPortsLocation ExpressRouteProviderPortsLocationRestClient => _expressRouteProviderPortsLocationRestClient ??= new ExpressRouteProviderPortsLocation(ExpressRouteProviderPortsLocationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics AvailableDelegationsClientDiagnostics => _availableDelegationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailableDelegations AvailableDelegationsRestClient => _availableDelegationsRestClient ??= new AvailableDelegations(AvailableDelegationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private AvailableDelegations AvailableDelegationsRestClient => _availableDelegationsRestClient ??= new AvailableDelegations(AvailableDelegationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics AvailableServiceAliasesClientDiagnostics => _availableServiceAliasesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailableServiceAliases AvailableServiceAliasesRestClient => _availableServiceAliasesRestClient ??= new AvailableServiceAliases(AvailableServiceAliasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private AvailableServiceAliases AvailableServiceAliasesRestClient => _availableServiceAliasesRestClient ??= new AvailableServiceAliases(AvailableServiceAliasesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics AzureFirewallFqdnTagsClientDiagnostics => _azureFirewallFqdnTagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AzureFirewallFqdnTags AzureFirewallFqdnTagsRestClient => _azureFirewallFqdnTagsRestClient ??= new AzureFirewallFqdnTags(AzureFirewallFqdnTagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private AzureFirewallFqdnTags AzureFirewallFqdnTagsRestClient => _azureFirewallFqdnTagsRestClient ??= new AzureFirewallFqdnTags(AzureFirewallFqdnTagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics AvailableEndpointServicesClientDiagnostics => _availableEndpointServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailableEndpointServices AvailableEndpointServicesRestClient => _availableEndpointServicesRestClient ??= new AvailableEndpointServices(AvailableEndpointServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private AvailableEndpointServices AvailableEndpointServicesRestClient => _availableEndpointServicesRestClient ??= new AvailableEndpointServices(AvailableEndpointServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics ExpressRouteServiceProvidersClientDiagnostics => _expressRouteServiceProvidersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ExpressRouteServiceProviders ExpressRouteServiceProvidersRestClient => _expressRouteServiceProvidersRestClient ??= new ExpressRouteServiceProviders(ExpressRouteServiceProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private ExpressRouteServiceProviders ExpressRouteServiceProvidersRestClient => _expressRouteServiceProvidersRestClient ??= new ExpressRouteServiceProviders(ExpressRouteServiceProvidersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics NetworkSecurityPerimeterAssociableResourceTypesClientDiagnostics => _networkSecurityPerimeterAssociableResourceTypesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkSecurityPerimeterAssociableResourceTypes NetworkSecurityPerimeterAssociableResourceTypesRestClient => _networkSecurityPerimeterAssociableResourceTypesRestClient ??= new NetworkSecurityPerimeterAssociableResourceTypes(NetworkSecurityPerimeterAssociableResourceTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private NetworkSecurityPerimeterAssociableResourceTypes NetworkSecurityPerimeterAssociableResourceTypesRestClient => _networkSecurityPerimeterAssociableResourceTypesRestClient ??= new NetworkSecurityPerimeterAssociableResourceTypes(NetworkSecurityPerimeterAssociableResourceTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics NetworkSecurityPerimeterOperationStatusesClientDiagnostics => _networkSecurityPerimeterOperationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkSecurityPerimeterOperationStatuses NetworkSecurityPerimeterOperationStatusesRestClient => _networkSecurityPerimeterOperationStatusesRestClient ??= new NetworkSecurityPerimeterOperationStatuses(NetworkSecurityPerimeterOperationStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private NetworkSecurityPerimeterOperationStatuses NetworkSecurityPerimeterOperationStatusesRestClient => _networkSecurityPerimeterOperationStatusesRestClient ??= new NetworkSecurityPerimeterOperationStatuses(NetworkSecurityPerimeterOperationStatusesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics NetworkSecurityPerimeterServiceTagsClientDiagnostics => _networkSecurityPerimeterServiceTagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private NetworkSecurityPerimeterServiceTags NetworkSecurityPerimeterServiceTagsRestClient => _networkSecurityPerimeterServiceTagsRestClient ??= new NetworkSecurityPerimeterServiceTags(NetworkSecurityPerimeterServiceTagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private NetworkSecurityPerimeterServiceTags NetworkSecurityPerimeterServiceTagsRestClient => _networkSecurityPerimeterServiceTagsRestClient ??= new NetworkSecurityPerimeterServiceTags(NetworkSecurityPerimeterServiceTagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics AvailablePrivateEndpointTypesClientDiagnostics => _availablePrivateEndpointTypesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailablePrivateEndpointTypes AvailablePrivateEndpointTypesRestClient => _availablePrivateEndpointTypesRestClient ??= new AvailablePrivateEndpointTypes(AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private AvailablePrivateEndpointTypes AvailablePrivateEndpointTypesRestClient => _availablePrivateEndpointTypesRestClient ??= new AvailablePrivateEndpointTypes(AvailablePrivateEndpointTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics BgpServiceCommunitiesClientDiagnostics => _bgpServiceCommunitiesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BgpServiceCommunities BgpServiceCommunitiesRestClient => _bgpServiceCommunitiesRestClient ??= new BgpServiceCommunities(BgpServiceCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private BgpServiceCommunities BgpServiceCommunitiesRestClient => _bgpServiceCommunitiesRestClient ??= new BgpServiceCommunities(BgpServiceCommunitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics ServiceTagsClientDiagnostics => _serviceTagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ServiceTags ServiceTagsRestClient => _serviceTagsRestClient ??= new ServiceTags(ServiceTagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private ServiceTags ServiceTagsRestClient => _serviceTagsRestClient ??= new ServiceTags(ServiceTagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics ServiceTagInformationClientDiagnostics => _serviceTagInformationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ServiceTagInformation ServiceTagInformationRestClient => _serviceTagInformationRestClient ??= new ServiceTagInformation(ServiceTagInformationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private ServiceTagInformation ServiceTagInformationRestClient => _serviceTagInformationRestClient ??= new ServiceTagInformation(ServiceTagInformationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         /// <summary>
         /// Lists available Ssl options for configuring Ssl policy.
@@ -409,7 +421,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -443,7 +455,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -472,7 +484,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -508,7 +520,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -537,7 +549,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -566,7 +578,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -600,7 +612,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -630,7 +642,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -667,7 +679,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -696,7 +708,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -732,7 +744,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -761,7 +773,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -790,7 +802,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -818,7 +830,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -846,7 +858,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -874,7 +886,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -902,7 +914,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -930,7 +942,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -958,7 +970,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -986,7 +998,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1014,7 +1026,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1042,7 +1054,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1070,7 +1082,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1098,7 +1110,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1126,7 +1138,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1154,7 +1166,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1182,7 +1194,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1210,7 +1222,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1238,7 +1250,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1266,7 +1278,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1294,7 +1306,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1323,7 +1335,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1352,7 +1364,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1380,7 +1392,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1396,6 +1408,62 @@ namespace Azure.ResourceManager.Network.Mocking
         }
 
         /// <summary>
+        /// List all the ExpressRouteLag resources in the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteLags. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteLags_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ExpressRouteLagResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ExpressRouteLagResource> GetExpressRouteLagsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ExpressRouteLagData, ExpressRouteLagResource>(new ExpressRouteLagsGetAllAsyncCollectionResultOfT(ExpressRouteLagsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetExpressRouteLags"), data => new ExpressRouteLagResource(Client, data));
+        }
+
+        /// <summary>
+        /// List all the ExpressRouteLag resources in the specified subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/expressRouteLags. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ExpressRouteLags_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ExpressRouteLagResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ExpressRouteLagResource> GetExpressRouteLags(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ExpressRouteLagData, ExpressRouteLagResource>(new ExpressRouteLagsGetAllCollectionResultOfT(ExpressRouteLagsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetExpressRouteLags"), data => new ExpressRouteLagResource(Client, data));
+        }
+
+        /// <summary>
         /// Gets all the Firewall Policies in a subscription.
         /// <list type="bullet">
         /// <item>
@@ -1408,7 +1476,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1436,7 +1504,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1464,7 +1532,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1500,7 +1568,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1536,7 +1604,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1564,7 +1632,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1592,7 +1660,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1620,7 +1688,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1648,7 +1716,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1676,7 +1744,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1704,7 +1772,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1732,7 +1800,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1760,7 +1828,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1788,7 +1856,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1816,7 +1884,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1844,7 +1912,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1872,7 +1940,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1908,7 +1976,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1944,7 +2012,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1972,7 +2040,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2000,7 +2068,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2028,7 +2096,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2056,7 +2124,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2084,7 +2152,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2112,7 +2180,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2140,7 +2208,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2168,7 +2236,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2196,7 +2264,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2224,7 +2292,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2252,7 +2320,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2280,7 +2348,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2308,7 +2376,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2336,7 +2404,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2364,7 +2432,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2392,7 +2460,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2420,7 +2488,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2448,7 +2516,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2476,7 +2544,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2504,7 +2572,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2532,7 +2600,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2560,7 +2628,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2588,7 +2656,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2616,7 +2684,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2644,7 +2712,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2672,7 +2740,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2700,7 +2768,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2728,7 +2796,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2756,7 +2824,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2784,7 +2852,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2812,7 +2880,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2840,7 +2908,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2868,7 +2936,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2896,7 +2964,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2924,7 +2992,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2952,7 +3020,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2980,7 +3048,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3008,7 +3076,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3036,7 +3104,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3064,7 +3132,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3092,7 +3160,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3108,6 +3176,62 @@ namespace Azure.ResourceManager.Network.Mocking
         }
 
         /// <summary>
+        /// Gets all the first party service tags in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/firstPartyServiceTags. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FirstPartyServiceTags_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FirstPartyServiceTagResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<FirstPartyServiceTagResource> GetFirstPartyServiceTagsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<FirstPartyServiceTagData, FirstPartyServiceTagResource>(new FirstPartyServiceTagsListAllAsyncCollectionResultOfT(FirstPartyServiceTagsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetFirstPartyServiceTags"), data => new FirstPartyServiceTagResource(Client, data));
+        }
+
+        /// <summary>
+        /// Gets all the first party service tags in a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Network/firstPartyServiceTags. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> FirstPartyServiceTags_ListAll. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2025-09-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="FirstPartyServiceTagResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<FirstPartyServiceTagResource> GetFirstPartyServiceTags(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<FirstPartyServiceTagData, FirstPartyServiceTagResource>(new FirstPartyServiceTagsListAllCollectionResultOfT(FirstPartyServiceTagsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableNetworkSubscriptionResource.GetFirstPartyServiceTags"), data => new FirstPartyServiceTagResource(Client, data));
+        }
+
+        /// <summary>
         /// Gets all the custom IP prefixes in a subscription.
         /// <list type="bullet">
         /// <item>
@@ -3120,7 +3244,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3148,7 +3272,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3176,7 +3300,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3204,7 +3328,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3232,7 +3356,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3260,7 +3384,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3288,7 +3412,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3316,7 +3440,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3344,7 +3468,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3372,7 +3496,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3400,7 +3524,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3428,7 +3552,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3456,7 +3580,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3500,7 +3624,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3544,7 +3668,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3594,7 +3718,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3644,7 +3768,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3700,7 +3824,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3756,7 +3880,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3789,7 +3913,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3822,7 +3946,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3866,7 +3990,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3910,7 +4034,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -3960,7 +4084,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4010,7 +4134,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4055,7 +4179,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4100,7 +4224,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4133,7 +4257,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4166,7 +4290,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4199,7 +4323,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4232,7 +4356,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4260,7 +4384,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4288,7 +4412,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4321,7 +4445,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4354,7 +4478,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4382,7 +4506,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4410,7 +4534,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4443,7 +4567,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4476,7 +4600,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4526,7 +4650,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4576,7 +4700,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4609,7 +4733,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4642,7 +4766,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4675,7 +4799,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4708,7 +4832,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4736,7 +4860,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4764,7 +4888,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4809,7 +4933,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4854,7 +4978,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4896,7 +5020,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4938,7 +5062,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -4971,7 +5095,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>

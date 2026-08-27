@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Authorization
     internal partial class AccessReviewHistoryDefinitionInstancesGetAllCollectionResultOfT : Pageable<AccessReviewHistoryInstance>
     {
         private readonly AccessReviewHistoryDefinitionInstances _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _historyDefinitionId;
         private readonly RequestContext _context;
         private readonly string _diagnosticScope;
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="historyDefinitionId"> The id of the access review history definition. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public AccessReviewHistoryDefinitionInstancesGetAllCollectionResultOfT(AccessReviewHistoryDefinitionInstances client, string subscriptionId, string historyDefinitionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public AccessReviewHistoryDefinitionInstancesGetAllCollectionResultOfT(AccessReviewHistoryDefinitionInstances client, Guid subscriptionId, string historyDefinitionId, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

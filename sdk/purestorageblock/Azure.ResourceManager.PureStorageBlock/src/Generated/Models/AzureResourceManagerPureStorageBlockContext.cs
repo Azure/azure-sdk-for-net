@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PureStorageBlock.Models;
 
@@ -92,6 +93,7 @@ namespace Azure.ResourceManager.PureStorageBlock
     [ModelReaderWriterBuildable(typeof(ReservationListResult))]
     [ModelReaderWriterBuildable(typeof(ReservationUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(SaaSResourceDetailsResponse))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceInitializationHandle))]
     [ModelReaderWriterBuildable(typeof(ServiceInitializationInfo))]
     [ModelReaderWriterBuildable(typeof(SshPlatformConsoleAuthConfig))]

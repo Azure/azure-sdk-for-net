@@ -60,8 +60,8 @@ namespace Azure.Provisioning.CostManagement
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startDate" }, isRequired: true);
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endDate" });
+            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startDate" }, isRequired: true, format: "O");
+            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endDate" }, format: "O");
             DefineAdditionalProperties();
         }
 

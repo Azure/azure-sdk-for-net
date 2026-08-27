@@ -12,7 +12,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// The MachineLearningTriggerBase.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningRecurrenceTrigger"/> and <see cref="CronTrigger"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningRecurrenceTrigger"/> and <see cref="CronTrigger"/>.
     /// </summary>
     public partial class MachineLearningTriggerBase : ProvisionableConstruct
     {

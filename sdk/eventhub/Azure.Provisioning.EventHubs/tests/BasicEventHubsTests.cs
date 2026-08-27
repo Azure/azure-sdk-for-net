@@ -72,7 +72,7 @@ public class BasicEventHubsTests
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource ns 'Microsoft.EventHub/namespaces@2024-01-01' = {
+            resource ns 'Microsoft.EventHub/namespaces@2026-01-01' = {
               name: take('ns-${uniqueString(resourceGroup().id)}', 256)
               location: location
               sku: {
@@ -82,12 +82,12 @@ public class BasicEventHubsTests
               }
             }
 
-            resource hub 'Microsoft.EventHub/namespaces/eventhubs@2024-01-01' = {
+            resource hub 'Microsoft.EventHub/namespaces/eventhubs@2026-01-01' = {
               name: hubName
               parent: ns
             }
 
-            resource group 'Microsoft.EventHub/namespaces/eventhubs/consumergroups@2024-01-01' = {
+            resource group 'Microsoft.EventHub/namespaces/eventhubs/consumergroups@2026-01-01' = {
               name: groupName
               properties: {
                 userMetadata: '{"foo":1,"bar":"hello"}'

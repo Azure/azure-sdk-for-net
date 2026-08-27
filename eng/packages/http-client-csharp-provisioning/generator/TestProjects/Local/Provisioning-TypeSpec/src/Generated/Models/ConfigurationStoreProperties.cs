@@ -26,6 +26,18 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         private BicepValue<ConfigurationStoreSkuTier> _skuTier;
         private BicepValue<ConfigurationStoreCreateMode> _createMode;
         private BicepList<SubResource> _linkedResources;
+        private BicepValue<TimeSpan> _retentionPeriod;
+        private BicepValue<BinaryData> _binaryContent;
+        private BicepValue<BinaryData> _urlSafeBinaryContent;
+        private BicepValue<DateTimeOffset> _lastModified;
+        private BicepList<DateTimeOffset> _auditTimestamps;
+        private BicepValue<DateTimeOffset> _expirationTimestamp;
+        private BicepValue<DateTimeOffset> _activationOn;
+        private BicepValue<TimeSpan> _activationTime;
+        private BicepValue<TimeSpan> _retryAfter;
+        private BicepValue<TimeSpan> _pollingInterval;
+        private BicepValue<long> _encodedInteger;
+        private BicepValue<BinaryData> _jsonMetadata;
 
         /// <summary> Creates a new ConfigurationStoreProperties. </summary>
         public ConfigurationStoreProperties()
@@ -182,6 +194,186 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
+        /// <summary> Gets or sets the RetentionPeriod. </summary>
+        public BicepValue<TimeSpan> RetentionPeriod
+        {
+            get
+            {
+                Initialize();
+                return _retentionPeriod;
+            }
+            set
+            {
+                Initialize();
+                _retentionPeriod.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the BinaryContent. </summary>
+        public BicepValue<BinaryData> BinaryContent
+        {
+            get
+            {
+                Initialize();
+                return _binaryContent;
+            }
+            set
+            {
+                Initialize();
+                _binaryContent.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the UrlSafeBinaryContent. </summary>
+        public BicepValue<BinaryData> UrlSafeBinaryContent
+        {
+            get
+            {
+                Initialize();
+                return _urlSafeBinaryContent;
+            }
+            set
+            {
+                Initialize();
+                _urlSafeBinaryContent.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the LastModified. </summary>
+        public BicepValue<DateTimeOffset> LastModified
+        {
+            get
+            {
+                Initialize();
+                return _lastModified;
+            }
+            set
+            {
+                Initialize();
+                _lastModified.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the AuditTimestamps. </summary>
+        public BicepList<DateTimeOffset> AuditTimestamps
+        {
+            get
+            {
+                Initialize();
+                return _auditTimestamps;
+            }
+            set
+            {
+                Initialize();
+                _auditTimestamps.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the ExpirationTimestamp. </summary>
+        public BicepValue<DateTimeOffset> ExpirationTimestamp
+        {
+            get
+            {
+                Initialize();
+                return _expirationTimestamp;
+            }
+            set
+            {
+                Initialize();
+                _expirationTimestamp.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the ActivationOn. </summary>
+        public BicepValue<DateTimeOffset> ActivationOn
+        {
+            get
+            {
+                Initialize();
+                return _activationOn;
+            }
+            set
+            {
+                Initialize();
+                _activationOn.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the ActivationTime. </summary>
+        public BicepValue<TimeSpan> ActivationTime
+        {
+            get
+            {
+                Initialize();
+                return _activationTime;
+            }
+            set
+            {
+                Initialize();
+                _activationTime.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the RetryAfter. </summary>
+        public BicepValue<TimeSpan> RetryAfter
+        {
+            get
+            {
+                Initialize();
+                return _retryAfter;
+            }
+            set
+            {
+                Initialize();
+                _retryAfter.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the PollingInterval. </summary>
+        public BicepValue<TimeSpan> PollingInterval
+        {
+            get
+            {
+                Initialize();
+                return _pollingInterval;
+            }
+            set
+            {
+                Initialize();
+                _pollingInterval.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the EncodedInteger. </summary>
+        public BicepValue<long> EncodedInteger
+        {
+            get
+            {
+                Initialize();
+                return _encodedInteger;
+            }
+            set
+            {
+                Initialize();
+                _encodedInteger.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the JsonMetadata. </summary>
+        public BicepValue<BinaryData> JsonMetadata
+        {
+            get
+            {
+                Initialize();
+                return _jsonMetadata;
+            }
+            set
+            {
+                Initialize();
+                _jsonMetadata.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the Name. </summary>
         public BicepValue<string> SkuName
         {
@@ -204,7 +396,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         {
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<ConfigurationStoreProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationDate" }, isOutput: true);
+            _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationDate" }, isOutput: true, format: "O");
             _endpoint = DefineProperty<string>(nameof(Endpoint), new string[] { "endpoint" }, isOutput: true);
             _sku = DefineModelProperty<ConfigurationStoreSku>(nameof(Sku), new string[] { "sku" }, isRequired: true);
             _softDeleteRetentionInDays = DefineProperty<int>(nameof(SoftDeleteRetentionInDays), new string[] { "softDeleteRetentionInDays" });
@@ -214,6 +406,18 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _skuTier = DefineProperty<ConfigurationStoreSkuTier>(nameof(SkuTier), new string[] { "skuTier" });
             _createMode = DefineProperty<ConfigurationStoreCreateMode>(nameof(CreateMode), new string[] { "createMode" });
             _linkedResources = DefineListProperty<SubResource>(nameof(LinkedResources), new string[] { "linkedResources" });
+            _retentionPeriod = DefineProperty<TimeSpan>(nameof(RetentionPeriod), new string[] { "retentionPeriod" }, format: "P");
+            _binaryContent = DefineProperty<BinaryData>(nameof(BinaryContent), new string[] { "binaryContent" }, format: "base64");
+            _urlSafeBinaryContent = DefineProperty<BinaryData>(nameof(UrlSafeBinaryContent), new string[] { "urlSafeBinaryContent" }, format: "base64url");
+            _lastModified = DefineProperty<DateTimeOffset>(nameof(LastModified), new string[] { "lastModified" }, format: "R");
+            _auditTimestamps = DefineListProperty<DateTimeOffset>(nameof(AuditTimestamps), new string[] { "auditTimestamps" }, format: "O");
+            _expirationTimestamp = DefineProperty<DateTimeOffset>(nameof(ExpirationTimestamp), new string[] { "expirationTimestamp" }, format: "U");
+            _activationOn = DefineProperty<DateTimeOffset>(nameof(ActivationOn), new string[] { "activationDate" }, format: "D");
+            _activationTime = DefineProperty<TimeSpan>(nameof(ActivationTime), new string[] { "activationTime" }, format: "T");
+            _retryAfter = DefineProperty<TimeSpan>(nameof(RetryAfter), new string[] { "retryAfter" }, format: "seconds-int64");
+            _pollingInterval = DefineProperty<TimeSpan>(nameof(PollingInterval), new string[] { "pollingInterval" }, format: "milliseconds-double");
+            _encodedInteger = DefineProperty<long>(nameof(EncodedInteger), new string[] { "encodedInteger" }, format: "string");
+            _jsonMetadata = DefineProperty<BinaryData>(nameof(JsonMetadata), new string[] { "jsonMetadata" });
             DefineAdditionalProperties();
         }
 

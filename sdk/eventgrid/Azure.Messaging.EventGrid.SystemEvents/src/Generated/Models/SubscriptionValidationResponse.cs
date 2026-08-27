@@ -36,5 +36,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             ValidationResponse = validationResponse;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Initializes a new instance of <see cref="SubscriptionValidationResponse"/>. </summary>
+        public SubscriptionValidationResponse()
+        {
+        }
     }
 }

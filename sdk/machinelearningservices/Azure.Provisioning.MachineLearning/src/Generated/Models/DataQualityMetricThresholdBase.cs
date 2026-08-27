@@ -12,7 +12,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// The DataQualityMetricThresholdBase.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CategoricalDataQualityMetricThreshold"/> and <see cref="NumericalDataQualityMetricThreshold"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CategoricalDataQualityMetricThreshold"/> and <see cref="NumericalDataQualityMetricThreshold"/>.
     /// </summary>
     public partial class DataQualityMetricThresholdBase : ProvisionableConstruct
     {

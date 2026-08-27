@@ -69,9 +69,9 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _code = DefineProperty<RollingUpgradeStatusCode>(nameof(Code), new string[] { "code" }, isOutput: true);
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, isOutput: true);
+            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, isOutput: true, format: "O");
             _lastAction = DefineProperty<RollingUpgradeActionType>(nameof(LastAction), new string[] { "lastAction" }, isOutput: true);
-            _lastActionOn = DefineProperty<DateTimeOffset>(nameof(LastActionOn), new string[] { "lastActionTime" }, isOutput: true);
+            _lastActionOn = DefineProperty<DateTimeOffset>(nameof(LastActionOn), new string[] { "lastActionTime" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }
 

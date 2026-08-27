@@ -13,7 +13,7 @@ namespace Azure.Provisioning.MachineLearning
     /// <summary>
     /// AutoML vertical class.
     /// Base class for AutoML verticals - TableVertical/ImageVertical/NLPVertical
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ClassificationTask"/>, <see cref="MachineLearningForecasting"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="AutoMLVerticalRegression"/>, <see cref="TextClassification"/>, <see cref="TextClassificationMultilabel"/>, and <see cref="TextNer"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="ClassificationTask"/>, <see cref="MachineLearningForecasting"/>, <see cref="ImageClassification"/>, <see cref="ImageClassificationMultilabel"/>, <see cref="ImageInstanceSegmentation"/>, <see cref="ImageObjectDetection"/>, <see cref="AutoMLVerticalRegression"/>, <see cref="TextClassification"/>, <see cref="TextClassificationMultilabel"/>, and <see cref="TextNer"/>.
     /// </summary>
     public partial class AutoMLVertical : ProvisionableConstruct
     {

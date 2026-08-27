@@ -10,9 +10,13 @@ using Azure.AI.OpenAI.Internal;
 
 namespace Azure.AI.OpenAI.Chat;
 
+/// <summary> Provides Azure-specific extension methods for chat completion types, including On Your Data, content filtering, and user security context support. </summary>
 [Experimental("AOAI001")]
 public static partial class AzureChatExtensions
 {
+    /// <summary> Adds a data source to the chat completion options for use with the Azure On Your Data feature. </summary>
+    /// <param name="options"> The <see cref="ChatCompletionOptions"/> to add the data source to. </param>
+    /// <param name="dataSource"> The <see cref="ChatDataSource"/> to add. </param>
     [Experimental("AOAI001")]
     public static void AddDataSource(this ChatCompletionOptions options, ChatDataSource dataSource)
     {
@@ -35,6 +39,9 @@ public static partial class AzureChatExtensions
         options.Patch.Set("$.data_sources"u8, BinaryData.FromStream(stream));
     }
 
+    /// <summary> Gets the list of data sources configured on the chat completion options. </summary>
+    /// <param name="options"> The <see cref="ChatCompletionOptions"/> to retrieve data sources from. </param>
+    /// <returns> A read-only list of configured <see cref="ChatDataSource"/> instances. </returns>
     [Experimental("AOAI001")]
     public static IReadOnlyList<ChatDataSource> GetDataSources(this ChatCompletionOptions options)
     {
@@ -59,6 +66,9 @@ public static partial class AzureChatExtensions
         return dataSources;
     }
 
+    /// <summary> Sets whether the newer <c>max_completion_tokens</c> property should be used instead of the legacy <c>max_tokens</c> property when serializing the request. </summary>
+    /// <param name="options"> The <see cref="ChatCompletionOptions"/> to configure. </param>
+    /// <param name="newPropertyEnabled"> <c>true</c> to use the newer property; <c>false</c> to use the legacy property. </param>
     [Experimental("AOAI001")]
     public static void SetNewMaxCompletionTokensPropertyEnabled(this ChatCompletionOptions options, bool newPropertyEnabled = true)
         => options.SetMaxTokenPatchValues(newPropertyEnabled);
@@ -86,6 +96,9 @@ public static partial class AzureChatExtensions
         options.Patch.Remove(deselectedPath);
     }
 
+    /// <summary> Gets the content filter result applied to the prompt of a chat completion. </summary>
+    /// <param name="chatCompletion"> The <see cref="ChatCompletion"/> to retrieve the filter result from. </param>
+    /// <returns> The <see cref="RequestContentFilterResult"/>, or <c>null</c> if no filter result is available. </returns>
     [Experimental("AOAI001")]
     public static RequestContentFilterResult GetRequestContentFilterResult(this ChatCompletion chatCompletion)
     {
@@ -95,6 +108,9 @@ public static partial class AzureChatExtensions
                 .FirstOrDefault();
     }
 
+    /// <summary> Gets the content filter result applied to the response of a chat completion. </summary>
+    /// <param name="chatCompletion"> The <see cref="ChatCompletion"/> to retrieve the filter result from. </param>
+    /// <returns> The <see cref="ResponseContentFilterResult"/>, or <c>null</c> if no filter result is available. </returns>
     [Experimental("AOAI001")]
     public static ResponseContentFilterResult GetResponseContentFilterResult(this ChatCompletion chatCompletion)
     {
@@ -103,6 +119,9 @@ public static partial class AzureChatExtensions
             ResponseContentFilterResult.DeserializeResponseContentFilterResult);
     }
 
+    /// <summary> Gets the On Your Data message context from a non-streaming chat completion, including citations and intent. </summary>
+    /// <param name="chatCompletion"> The <see cref="ChatCompletion"/> to retrieve the context from. </param>
+    /// <returns> The <see cref="ChatMessageContext"/>, or <c>null</c> if no context is available. </returns>
     [Experimental("AOAI001")]
     public static ChatMessageContext GetMessageContext(this ChatCompletion chatCompletion)
     {
@@ -111,6 +130,9 @@ public static partial class AzureChatExtensions
             ChatMessageContext.DeserializeChatMessageContext);
     }
 
+    /// <summary> Gets the On Your Data message context from a streaming chat completion update, including citations and intent. </summary>
+    /// <param name="chatUpdate"> The <see cref="StreamingChatCompletionUpdate"/> to retrieve the context from. </param>
+    /// <returns> The <see cref="ChatMessageContext"/>, or <c>null</c> if no context is available. </returns>
     [Experimental("AOAI001")]
     public static ChatMessageContext GetMessageContext(this StreamingChatCompletionUpdate chatUpdate)
     {
@@ -119,6 +141,9 @@ public static partial class AzureChatExtensions
             ChatMessageContext.DeserializeChatMessageContext);
     }
 
+    /// <summary> Gets the content filter result applied to the prompt of a streaming chat completion update. </summary>
+    /// <param name="chatUpdate"> The <see cref="StreamingChatCompletionUpdate"/> to retrieve the filter result from. </param>
+    /// <returns> The <see cref="RequestContentFilterResult"/>, or <c>null</c> if no filter result is available. </returns>
     [Experimental("AOAI001")]
     public static RequestContentFilterResult GetRequestContentFilterResult(this StreamingChatCompletionUpdate chatUpdate)
     {
@@ -128,6 +153,9 @@ public static partial class AzureChatExtensions
                 .FirstOrDefault();
     }
 
+    /// <summary> Gets the content filter result applied to the response of a streaming chat completion update. </summary>
+    /// <param name="chatUpdate"> The <see cref="StreamingChatCompletionUpdate"/> to retrieve the filter result from. </param>
+    /// <returns> The <see cref="ResponseContentFilterResult"/>, or <c>null</c> if no filter result is available. </returns>
     [Experimental("AOAI001")]
     public static ResponseContentFilterResult GetResponseContentFilterResult(this StreamingChatCompletionUpdate chatUpdate)
     {
@@ -136,6 +164,9 @@ public static partial class AzureChatExtensions
             ResponseContentFilterResult.DeserializeResponseContentFilterResult);
     }
 
+    /// <summary> Sets the user security context on chat completion options for threat protection scenarios. </summary>
+    /// <param name="options"> The <see cref="ChatCompletionOptions"/> to set the security context on. </param>
+    /// <param name="userSecurityContext"> The <see cref="UserSecurityContext"/> describing the end user and application. </param>
     [Experimental("AOAI001")]
     public static void SetUserSecurityContext(this ChatCompletionOptions options, UserSecurityContext userSecurityContext)
     {
@@ -143,6 +174,9 @@ public static partial class AzureChatExtensions
         options.Patch.Set("$.user_security_context"u8, contextBytes);
     }
 
+    /// <summary> Gets the user security context previously set on chat completion options. </summary>
+    /// <param name="options"> The <see cref="ChatCompletionOptions"/> to retrieve the security context from. </param>
+    /// <returns> The <see cref="UserSecurityContext"/>, or <c>null</c> if none has been set. </returns>
     [Experimental("AOAI001")]
     public static UserSecurityContext GetUserSecurityContext(this ChatCompletionOptions options)
     {
@@ -151,6 +185,9 @@ public static partial class AzureChatExtensions
             UserSecurityContext.DeserializeUserSecurityContext);
     }
 
+    /// <summary> Gets the reasoning content from the first choice message in a chat completion, when available from supported models. </summary>
+    /// <param name="chatCompletion"> The <see cref="ChatCompletion"/> to retrieve reasoning content from. </param>
+    /// <returns> The reasoning content string, or <c>null</c> if none is present. </returns>
     [Experimental("AOAI001")]
     public static string GetMessageReasoningContent(this ChatCompletion chatCompletion)
     {

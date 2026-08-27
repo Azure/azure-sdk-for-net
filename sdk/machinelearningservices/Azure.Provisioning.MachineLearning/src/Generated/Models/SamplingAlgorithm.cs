@@ -12,7 +12,7 @@ namespace Azure.Provisioning.MachineLearning
     /// <summary>
     /// The Sampling Algorithm used to generate hyperparameter values, along with properties to
     /// configure the algorithm
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="BayesianSamplingAlgorithm"/>, <see cref="GridSamplingAlgorithm"/>, and <see cref="RandomSamplingAlgorithm"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="BayesianSamplingAlgorithm"/>, <see cref="GridSamplingAlgorithm"/>, and <see cref="RandomSamplingAlgorithm"/>.
     /// </summary>
     public partial class SamplingAlgorithm : ProvisionableConstruct
     {

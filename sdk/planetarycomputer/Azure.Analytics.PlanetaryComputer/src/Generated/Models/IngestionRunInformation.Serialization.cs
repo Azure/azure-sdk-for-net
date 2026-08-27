@@ -83,23 +83,23 @@ namespace Azure.Analytics.PlanetaryComputer
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             writer.WritePropertyName("creationTime"u8);
-            writer.WriteStringValue(CreationTime, "O");
+            writer.WriteStringValue(CreatedOn, "O");
             writer.WritePropertyName("statusHistory"u8);
             writer.WriteStartArray();
-            foreach (OperationStatusHistoryItem item in StatusHistory)
+            foreach (PlanetaryComputerOperationStatusHistoryItem item in StatusHistory)
             {
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartTime.Value, "O");
+                writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (Optional.IsDefined(FinishTime))
+            if (Optional.IsDefined(FinishedOn))
             {
                 writer.WritePropertyName("finishTime"u8);
-                writer.WriteStringValue(FinishTime.Value, "O");
+                writer.WriteStringValue(FinishedOn.Value, "O");
             }
             writer.WritePropertyName("totalItems"u8);
             writer.WriteNumberValue(TotalItems);
@@ -152,11 +152,11 @@ namespace Azure.Analytics.PlanetaryComputer
                 return null;
             }
             Guid id = default;
-            OperationStatus status = default;
-            DateTimeOffset creationTime = default;
-            IList<OperationStatusHistoryItem> statusHistory = default;
-            DateTimeOffset? startTime = default;
-            DateTimeOffset? finishTime = default;
+            PlanetaryComputerOperationStatus status = default;
+            DateTimeOffset createdOn = default;
+            IList<PlanetaryComputerOperationStatusHistoryItem> statusHistory = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? finishedOn = default;
             int totalItems = default;
             int totalPendingItems = default;
             int totalSuccessfulItems = default;
@@ -171,20 +171,20 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
                 if (prop.NameEquals("status"u8))
                 {
-                    status = new OperationStatus(prop.Value.GetString());
+                    status = new PlanetaryComputerOperationStatus(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("creationTime"u8))
                 {
-                    creationTime = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("statusHistory"u8))
                 {
-                    List<OperationStatusHistoryItem> array = new List<OperationStatusHistoryItem>();
+                    List<PlanetaryComputerOperationStatusHistoryItem> array = new List<PlanetaryComputerOperationStatusHistoryItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(OperationStatusHistoryItem.DeserializeOperationStatusHistoryItem(item, options));
+                        array.Add(PlanetaryComputerOperationStatusHistoryItem.DeserializePlanetaryComputerOperationStatusHistoryItem(item, options));
                     }
                     statusHistory = array;
                     continue;
@@ -195,7 +195,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    startTime = prop.Value.GetDateTimeOffset("O");
+                    startedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("finishTime"u8))
@@ -204,7 +204,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    finishTime = prop.Value.GetDateTimeOffset("O");
+                    finishedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("totalItems"u8))
@@ -235,10 +235,10 @@ namespace Azure.Analytics.PlanetaryComputer
             return new IngestionRunInformation(
                 id,
                 status,
-                creationTime,
+                createdOn,
                 statusHistory,
-                startTime,
-                finishTime,
+                startedOn,
+                finishedOn,
                 totalItems,
                 totalPendingItems,
                 totalSuccessfulItems,

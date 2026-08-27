@@ -159,11 +159,11 @@ namespace Azure.Provisioning.CostManagement
             _executionType = DefineProperty<ExportRunExecutionType>(nameof(ExecutionType), new string[] { "executionType" });
             _status = DefineProperty<ExportRunExecutionStatus>(nameof(Status), new string[] { "status" });
             _submittedBy = DefineProperty<string>(nameof(SubmittedBy), new string[] { "submittedBy" });
-            _submittedOn = DefineProperty<DateTimeOffset>(nameof(SubmittedOn), new string[] { "submittedTime" });
-            _processingStartOn = DefineProperty<DateTimeOffset>(nameof(ProcessingStartOn), new string[] { "processingStartTime" });
-            _processingEndOn = DefineProperty<DateTimeOffset>(nameof(ProcessingEndOn), new string[] { "processingEndTime" });
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startDate" });
-            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endDate" });
+            _submittedOn = DefineProperty<DateTimeOffset>(nameof(SubmittedOn), new string[] { "submittedTime" }, format: "O");
+            _processingStartOn = DefineProperty<DateTimeOffset>(nameof(ProcessingStartOn), new string[] { "processingStartTime" }, format: "O");
+            _processingEndOn = DefineProperty<DateTimeOffset>(nameof(ProcessingEndOn), new string[] { "processingEndTime" }, format: "O");
+            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startDate" }, format: "O");
+            _endOn = DefineProperty<DateTimeOffset>(nameof(EndOn), new string[] { "endDate" }, format: "O");
             _fileName = DefineProperty<string>(nameof(FileName), new string[] { "fileName" });
             _manifestFile = DefineProperty<string>(nameof(ManifestFile), new string[] { "manifestFile" });
             _runSettings = DefineModelProperty<CommonExportProperties>(nameof(RunSettings), new string[] { "runSettings" });

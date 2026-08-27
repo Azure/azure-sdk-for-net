@@ -201,8 +201,9 @@ namespace Azure.Generator.Provisioning
                 if (bicepType == null) return null;
 
                 return ProvisioningPropertyProvider.Create(
-                    resolvedName, bicepType,
+                    inputModelProperty, resolvedName, bicepType,
                     info.IsOutput, info.IsSettable, info.IsRequired, info.BicepPath, info.DefaultValue,
+                    BicepTypeHelpers.GetLiteralFormat(baseProperty?.SerializationFormat),
                     enclosingType);
             }
 

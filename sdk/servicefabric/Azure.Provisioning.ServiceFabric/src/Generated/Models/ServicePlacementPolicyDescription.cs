@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary>
     /// Describes the policy to be used for placement of a Service Fabric service.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: 
+    /// Please note this is the base class. The derived classes available for instantiation are: 
     /// </summary>
     public partial class ServicePlacementPolicyDescription : ProvisionableConstruct
     {

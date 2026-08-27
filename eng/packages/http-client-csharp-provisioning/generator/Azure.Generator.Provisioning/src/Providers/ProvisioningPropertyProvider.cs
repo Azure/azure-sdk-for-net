@@ -3,6 +3,7 @@
 
 using Azure.Generator.Provisioning.Utilities;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -18,6 +19,9 @@ namespace Azure.Generator.Provisioning.Providers
     /// </summary>
     internal class ProvisioningPropertyProvider : PropertyProvider
     {
+        /// <summary>The TypeSpec property declaration represented by this provider.</summary>
+        public InputModelProperty InputProperty { get; }
+
         /// <summary>The Bicep serialization path segments for DefineProperty calls.</summary>
         public string[] BicepPath { get; }
 
@@ -33,7 +37,11 @@ namespace Azure.Generator.Provisioning.Providers
         /// <summary>Optional default value (e.g., for singleton resource names).</summary>
         public string? DefaultValue { get; }
 
+        /// <summary>Optional Bicep literal serialization format.</summary>
+        public string? Format { get; }
+
         private ProvisioningPropertyProvider(
+            InputModelProperty inputProperty,
             FieldProvider backingField,
             CSharpType type,
             string name,
@@ -43,15 +51,18 @@ namespace Azure.Generator.Provisioning.Providers
             bool isOutput,
             bool isSettable,
             bool isRequired,
-            string? defaultValue)
+            string? defaultValue,
+            string? format)
             : base(null, MethodSignatureModifiers.Public, type, name, body, enclosingType)
         {
+            InputProperty = inputProperty;
             BackingField = backingField;
             BicepPath = bicepPath;
             IsOutput = isOutput;
             IsSettable = isSettable;
             IsRequired = isRequired;
             DefaultValue = defaultValue;
+            Format = format;
         }
 
         /// <summary>
@@ -59,6 +70,7 @@ namespace Azure.Generator.Provisioning.Providers
         /// This is the single unified implementation used by both model and resource providers.
         /// </summary>
         internal static ProvisioningPropertyProvider Create(
+            InputModelProperty inputProperty,
             string resolvedName,
             CSharpType bicepType,
             bool isOutput,
@@ -66,6 +78,7 @@ namespace Azure.Generator.Provisioning.Providers
             bool isRequired,
             string[] bicepPath,
             string? defaultValue,
+            string? format,
             TypeProvider enclosingType)
         {
             var field = new FieldProvider(
@@ -105,8 +118,8 @@ namespace Azure.Generator.Provisioning.Providers
             }
 
             return new ProvisioningPropertyProvider(
-                field, bicepType, resolvedName, body, enclosingType,
-                bicepPath, isOutput, isSettable, isRequired, defaultValue);
+                inputProperty, field, bicepType, resolvedName, body, enclosingType,
+                bicepPath, isOutput, isSettable, isRequired, defaultValue, format);
         }
     }
 }
