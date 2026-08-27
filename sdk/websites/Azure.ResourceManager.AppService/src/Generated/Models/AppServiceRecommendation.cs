@@ -275,11 +275,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The beginning time in UTC of a range that the recommendation refers to. </summary>
         [WirePath("properties.startTime")]
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -287,17 +287,17 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new RecommendationProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
         /// <summary> The end time in UTC of a range that the recommendation refers to. </summary>
         [WirePath("properties.endTime")]
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new RecommendationProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 
@@ -329,11 +329,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Date and time in UTC when this notification expires. </summary>
         [WirePath("properties.notificationExpirationTime")]
-        public DateTimeOffset? NotificationExpirationOn
+        public DateTimeOffset? NotificationExpiresOn
         {
             get
             {
-                return Properties is null ? default : Properties.NotificationExpirationOn;
+                return Properties is null ? default : Properties.NotificationExpiresOn;
             }
             set
             {
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new RecommendationProperties();
                 }
-                Properties.NotificationExpirationOn = value;
+                Properties.NotificationExpiresOn = value;
             }
         }
 

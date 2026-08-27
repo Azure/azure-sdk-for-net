@@ -53,7 +53,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="isCreatedFromStandbyPool"> The flag to determine whether the container group is created from standby pool. </param>
         /// <param name="diagnosticsLogAnalytics"> Container group log analytics information. </param>
         /// <param name="confidentialComputeCcePolicy"> The base64 encoded confidential compute enforcement policy. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="containers"/> is null. </exception>
         /// <returns> A new <see cref="ContainerInstance.ContainerGroupData"/> instance for mocking. </returns>
         public static ContainerGroupData ContainerGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, IEnumerable<string> zones = default, ManagedServiceIdentity identity = default, string provisioningState = default, IEnumerable<ContainerGroupSecretReference> secretReferences = default, IEnumerable<ContainerInstanceContainer> containers = default, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default, ContainerGroupRestartPolicy? restartPolicy = default, ContainerGroupIPAddress ipAddress = default, ContainerInstanceOperatingSystemType? containerGroupOSType = default, IEnumerable<ContainerVolume> volumes = default, ContainerGroupInstanceView instanceView = default, IEnumerable<ContainerGroupSubnetId> subnetIds = default, ContainerGroupDnsConfiguration dnsConfig = default, ContainerGroupSku? sku = default, ContainerGroupEncryptionProperties encryptionProperties = default, IEnumerable<InitContainerDefinitionContent> initContainers = default, IEnumerable<DeploymentExtensionSpec> extensions = default, ContainerGroupPriority? priority = default, ContainerGroupIdentityAccessControlLevels identityAcls = default, ContainerGroupProfileReferenceDefinition containerGroupProfile = default, StandbyPoolProfileDefinition standbyPoolProfile = default, bool? isCreatedFromStandbyPool = default, ContainerGroupLogAnalytics diagnosticsLogAnalytics = default, string confidentialComputeCcePolicy = default)
         {
@@ -96,6 +95,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 default);
         }
 
+        /// <summary> A secret reference. </summary>
         /// <param name="name"> The identifier of the secret reference. </param>
         /// <param name="identity"> The ARM resource id of the managed identity that has access to the secret in the key vault. </param>
         /// <param name="secretReferenceUri"> The URI to the secret in key vault. </param>
@@ -135,6 +135,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 default), default);
         }
 
+        /// <summary> The port exposed on the container instance. </summary>
         /// <param name="protocol"> The protocol associated with the port. </param>
         /// <param name="port"> The port number exposed within the container group. </param>
         /// <returns> A new <see cref="Models.ContainerPort"/> instance for mocking. </returns>
@@ -143,6 +144,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerPort(protocol, port, default);
         }
 
+        /// <summary> The environment variable to set within the container instance. </summary>
         /// <param name="name"> The name of the environment variable. </param>
         /// <param name="value"> The value of the environment variable. </param>
         /// <param name="secureValue"> The value of the secure environment variable. </param>
@@ -153,6 +155,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerEnvironmentVariable(name, value, secureValue, secureValueReference, default);
         }
 
+        /// <summary> The instance view of the container instance. Only valid in response. </summary>
         /// <param name="restartCount"> The number of times that the container instance has been restarted. </param>
         /// <param name="currentState"> Current container instance state. </param>
         /// <param name="previousState"> Previous container instance state. </param>
@@ -175,13 +178,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             return new ContainerState(
                 state,
-                startOn,
+                default,
                 exitCode,
                 finishOn,
                 detailStatus,
                 default);
         }
 
+        /// <summary> A container group or container instance event. </summary>
         /// <param name="count"> The count of the event. </param>
         /// <param name="firstTimestamp"> The date-time of the earliest logged event. </param>
         /// <param name="lastTimestamp"> The date-time of the latest logged event. </param>
@@ -201,6 +205,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 default);
         }
 
+        /// <summary> The resource requirements. </summary>
         /// <param name="requests"> The resource requests of this container instance. </param>
         /// <param name="limits"> The resource limits of this container instance. </param>
         /// <returns> A new <see cref="Models.ContainerResourceRequirements"/> instance for mocking. </returns>
@@ -209,6 +214,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerResourceRequirements(requests, limits, default);
         }
 
+        /// <summary> The resource requests. </summary>
         /// <param name="memoryInGB"> The memory request in GB of this container instance. </param>
         /// <param name="cpu"> The CPU request of this container instance. </param>
         /// <param name="gpu"> The GPU request of this container instance. </param>
@@ -218,6 +224,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerResourceRequestsContent(memoryInGB, cpu, gpu, default);
         }
 
+        /// <summary> The GPU resource. </summary>
         /// <param name="count"> The count of the GPU resource. </param>
         /// <param name="sku"> The SKU of the GPU resource. </param>
         /// <returns> A new <see cref="Models.ContainerGpuResourceInfo"/> instance for mocking. </returns>
@@ -226,6 +233,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerGpuResourceInfo(count, sku, default);
         }
 
+        /// <summary> The resource limits. </summary>
         /// <param name="memoryInGB"> The memory limit in GB of this container instance. </param>
         /// <param name="cpu"> The CPU limit of this container instance. </param>
         /// <param name="gpu"> The GPU limit of this container instance. </param>
@@ -235,6 +243,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerResourceLimits(memoryInGB, cpu, gpu, default);
         }
 
+        /// <summary> The properties of the volume mount. </summary>
         /// <param name="name"> The name of the volume mount. </param>
         /// <param name="mountPath"> The path within the container where the volume should be mounted. Must not contain colon (:). </param>
         /// <param name="isReadOnly"> The flag indicating whether the volume mount is read-only. </param>
@@ -265,6 +274,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 default);
         }
 
+        /// <summary> The container Http Get settings, for liveness or readiness probe. </summary>
         /// <param name="path"> The path to probe. </param>
         /// <param name="port"> The port number to probe. </param>
         /// <param name="scheme"> The scheme. </param>
@@ -277,6 +287,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerHttpGet(path, port, scheme, (httpHeaders ?? new ChangeTrackingList<ContainerHttpHeader>()).ToList(), default);
         }
 
+        /// <summary> The HTTP header. </summary>
         /// <param name="name"> The header name. </param>
         /// <param name="value"> The header value. </param>
         /// <returns> A new <see cref="Models.ContainerHttpHeader"/> instance for mocking. </returns>
@@ -285,6 +296,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerHttpHeader(name, value, default);
         }
 
+        /// <summary> The security context for the container. </summary>
         /// <param name="isPrivileged"> The flag to determine if the container permissions is elevated to Privileged. </param>
         /// <param name="allowPrivilegeEscalation"> A boolean value indicating whether the init process can elevate its privileges. </param>
         /// <param name="capabilities"> The capabilities to add or drop from a container. </param>
@@ -304,6 +316,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 default);
         }
 
+        /// <summary> The capabilities to add or drop from a container. </summary>
         /// <param name="add"> The capabilities to add to the container. </param>
         /// <param name="drop"> The capabilities to drop from the container. </param>
         /// <returns> A new <see cref="Models.ContainerSecurityContextCapabilitiesDefinition"/> instance for mocking. </returns>
@@ -315,6 +328,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerSecurityContextCapabilitiesDefinition((@add ?? new ChangeTrackingList<string>()).ToList(), (drop ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Image registry credential. </summary>
         /// <param name="server"> The Docker image registry server without a protocol such as "http" and "https". </param>
         /// <param name="username"> The username for the private registry. </param>
         /// <param name="password"> The password for the private registry. </param>
@@ -334,6 +348,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 default);
         }
 
+        /// <summary> IP address for the container group. </summary>
         /// <param name="ports"> The list of ports exposed on the container group. </param>
         /// <param name="addressType"> Specifies if the IP is exposed to the public internet or private VNET. </param>
         /// <param name="ip"> The IP exposed to the public internet. </param>
@@ -355,6 +370,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 default);
         }
 
+        /// <summary> The port exposed on the container group. </summary>
         /// <param name="protocol"> The protocol associated with the port. </param>
         /// <param name="port"> The port number. </param>
         /// <returns> A new <see cref="Models.ContainerGroupPort"/> instance for mocking. </returns>
@@ -363,6 +379,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerGroupPort(protocol, port, default);
         }
 
+        /// <summary> The properties of the volume. </summary>
         /// <param name="name"> The name of the volume. </param>
         /// <param name="azureFile"> The Azure File volume. </param>
         /// <param name="emptyDir"> The empty directory volume. </param>
@@ -385,6 +402,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 default);
         }
 
+        /// <summary> The properties of the Azure File volume. Azure File shares are mounted as volumes. </summary>
         /// <param name="shareName"> The name of the Azure File share to be mounted as a volume. </param>
         /// <param name="isReadOnly"> The flag indicating whether the Azure File shared mounted as a volume is read-only. </param>
         /// <param name="storageAccountName"> The name of the storage account that contains the Azure File share. </param>
@@ -402,6 +420,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 default);
         }
 
+        /// <summary> Represents a volume that is populated with the contents of a git repository. </summary>
         /// <param name="directory"> Target directory name. Must not contain or start with '..'.  If '.' is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name. </param>
         /// <param name="repository"> Repository URL. </param>
         /// <param name="revision"> Commit hash for the specified revision. </param>
@@ -411,6 +430,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerInstanceGitRepoVolume(directory, repository, revision, default);
         }
 
+        /// <summary> The instance view of the container group. Only valid in response. </summary>
         /// <param name="events"> The events of this container group. </param>
         /// <param name="state"> The state of the container group. Only valid in response. </param>
         /// <returns> A new <see cref="Models.ContainerGroupInstanceView"/> instance for mocking. </returns>
@@ -421,6 +441,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerGroupInstanceView((events ?? new ChangeTrackingList<ContainerEvent>()).ToList(), state, default);
         }
 
+        /// <summary> Container group log analytics information. </summary>
         /// <param name="workspaceId"> The workspace id for log analytics. </param>
         /// <param name="workspaceKey"> The workspace key for log analytics. </param>
         /// <param name="logType"> The log type to be used. </param>
@@ -440,6 +461,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 default);
         }
 
+        /// <summary> Container group subnet information. </summary>
         /// <param name="id"> Resource ID of virtual network and subnet. </param>
         /// <param name="name"> Friendly name for the subnet. </param>
         /// <returns> A new <see cref="Models.ContainerGroupSubnetId"/> instance for mocking. </returns>
@@ -448,6 +470,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerGroupSubnetId(id, name, default);
         }
 
+        /// <summary> DNS configuration for the container group. </summary>
         /// <param name="nameServers"> The DNS servers for the container group. </param>
         /// <param name="searchDomains"> The DNS search domains for hostname lookup in the container group. </param>
         /// <param name="options"> The DNS options for the container group. </param>
@@ -459,6 +482,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerGroupDnsConfiguration((nameServers ?? new ChangeTrackingList<string>()).ToList(), searchDomains, options, default);
         }
 
+        /// <summary> The container group encryption properties. </summary>
         /// <param name="vaultBaseUri"> The keyvault base url. </param>
         /// <param name="keyName"> The encryption key name. </param>
         /// <param name="keyVersion"> The encryption key version. </param>
@@ -482,6 +506,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new InitContainerDefinitionContent(name, default, default);
         }
 
+        /// <summary> The instance view of the init container. Only valid in response. </summary>
         /// <param name="restartCount"> The number of times that the init container has been restarted. </param>
         /// <param name="currentState"> The current state of the init container. </param>
         /// <param name="previousState"> The previous state of the init container. </param>
@@ -505,6 +530,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new DeploymentExtensionSpec(name, extensionType is null && version is null && settings is null && protectedSettings is null ? default : new DeploymentExtensionSpecProperties(extensionType, version, settings, protectedSettings, default), default);
         }
 
+        /// <summary> The access control levels of the identities. </summary>
         /// <param name="defaultAccess"> The default access level. </param>
         /// <param name="acls"> The access control levels for each identity. </param>
         /// <returns> A new <see cref="Models.ContainerGroupIdentityAccessControlLevels"/> instance for mocking. </returns>
@@ -515,6 +541,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerGroupIdentityAccessControlLevels(defaultAccess, (acls ?? new ChangeTrackingList<ContainerGroupIdentityAccessControl>()).ToList(), default);
         }
 
+        /// <summary> The access control for an identity. </summary>
         /// <param name="access"> The access level of the identity. </param>
         /// <param name="identity"> An identity. </param>
         /// <returns> A new <see cref="Models.ContainerGroupIdentityAccessControl"/> instance for mocking. </returns>
@@ -523,6 +550,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerGroupIdentityAccessControl(access, identity, default);
         }
 
+        /// <summary> The container group profile reference. </summary>
         /// <param name="id"> The container group profile reference id.This will be an ARM resource id in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ContainerInstance/containerGroupProfiles/{containerGroupProfileName}'. </param>
         /// <param name="revision"> The container group profile reference revision. </param>
         /// <returns> A new <see cref="Models.ContainerGroupProfileReferenceDefinition"/> instance for mocking. </returns>
@@ -531,6 +559,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerGroupProfileReferenceDefinition(id, revision, default);
         }
 
+        /// <summary> The standby pool profile reference. </summary>
         /// <param name="id"> The standby pool profile reference id.This will be an ARM resource id in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.StandbyPool/standbyContainerGroupPools/{standbyPoolName}'. </param>
         /// <param name="failContainerGroupCreateOnReuseFailure"> The flag to determine whether ACI should fail the create request if the container group can not be obtained from standby pool. </param>
         /// <returns> A new <see cref="Models.StandbyPoolProfileDefinition"/> instance for mocking. </returns>
@@ -539,6 +568,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new StandbyPoolProfileDefinition(id, failContainerGroupCreateOnReuseFailure, default);
         }
 
+        /// <summary> The Resource model definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -635,6 +665,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerGroupNetworkProfile(loadBalancerBackendAddressPools is null ? default : new LoadBalancer((loadBalancerBackendAddressPools ?? new ChangeTrackingList<LoadBalancerBackendAddressPool>()).ToList(), default), applicationGateway, default);
         }
 
+        /// <summary> NGroups load balancer backend address pool. </summary>
         /// <param name="resource"> The Load Balancer backend address pool ARM resource Id. </param>
         /// <returns> A new <see cref="Models.LoadBalancerBackendAddressPool"/> instance for mocking. </returns>
         public static LoadBalancerBackendAddressPool LoadBalancerBackendAddressPool(string resource = default)
@@ -642,6 +673,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new LoadBalancerBackendAddressPool(resource, default);
         }
 
+        /// <summary> Application Gateway the CG profile will use to interact with CGs in a backend pool. </summary>
         /// <param name="resource"> The Application Gateway ARM resource Id. </param>
         /// <param name="backendAddressPools"> List of Application Gateway Backend Address Pools. </param>
         /// <returns> A new <see cref="Models.ApplicationGateway"/> instance for mocking. </returns>
@@ -652,6 +684,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ApplicationGateway(resource, (backendAddressPools ?? new ChangeTrackingList<ApplicationGatewayBackendAddressPool>()).ToList(), default);
         }
 
+        /// <summary> NGroups application gateway backend address pool. </summary>
         /// <param name="resource"> The application gateway backend address pool ARM resource Id. </param>
         /// <returns> A new <see cref="Models.ApplicationGatewayBackendAddressPool"/> instance for mocking. </returns>
         public static ApplicationGatewayBackendAddressPool ApplicationGatewayBackendAddressPool(string resource = default)
@@ -659,6 +692,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ApplicationGatewayBackendAddressPool(resource, default);
         }
 
+        /// <summary> File shares that can be mounted on container groups. </summary>
         /// <param name="name"></param>
         /// <param name="resourceGroupName"></param>
         /// <param name="storageAccountName"></param>
@@ -669,6 +703,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerGroupFileShare(name, resourceGroupName, storageAccountName, properties, default);
         }
 
+        /// <summary> The ContainerGroupFileShareProperties. </summary>
         /// <param name="shareAccessType"> Specifies how Container Groups can access the Azure file share i.e. all CG will share same Azure file share or going to have exclusive file share. </param>
         /// <param name="shareAccessTier"> Access tier for specific share. GpV2 account can choose between TransactionOptimized (default), Hot, and Cool. FileStorage account can choose Premium. Learn more at: https://learn.microsoft.com/en-us/rest/api/storagerp/file-shares/create?tabs=HTTP#shareaccesstier. </param>
         /// <returns> A new <see cref="Models.ContainerGroupFileShareProperties"/> instance for mocking. </returns>
@@ -677,6 +712,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerGroupFileShareProperties(shareAccessType, shareAccessTier, default);
         }
 
+        /// <summary> Container Group properties which can be set while creating or updating the NGroups. </summary>
         /// <param name="subnetIds"> Contains information about Virtual Network Subnet ARM Resource. </param>
         /// <param name="volumes"> Contains information about the volumes that can be mounted by Containers in the Container Groups. </param>
         /// <param name="containers"> Contains information about Container which can be set while creating or updating the NGroups. </param>
@@ -690,6 +726,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new NGroupContainerGroupProperties((subnetIds ?? new ChangeTrackingList<ContainerGroupSubnetId>()).ToList(), (volumes ?? new ChangeTrackingList<NGroupContainerGroupPropertyVolume>()).ToList(), (containers ?? new ChangeTrackingList<NGroupContainerGroupPropertyContainer>()).ToList(), default);
         }
 
+        /// <summary> Contains information about the volumes that can be mounted by Containers in the Container Groups. </summary>
         /// <param name="name"> The name of the volume. </param>
         /// <param name="azureFile"> The Azure File volume. </param>
         /// <returns> A new <see cref="Models.NGroupContainerGroupPropertyVolume"/> instance for mocking. </returns>
@@ -706,6 +743,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new NGroupContainerGroupPropertyContainer(name, nGroupCGPropertyContainerVolumeMounts is null ? default : new NGroupCGPropertyContainerProperties((nGroupCGPropertyContainerVolumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>()).ToList(), default), default);
         }
 
+        /// <summary> Used by the customer to specify the way to update the Container Groups in NGroup. </summary>
         /// <param name="updateMode"></param>
         /// <param name="rollingUpdateProfile"> This profile allows the customers to customize the rolling update. </param>
         /// <returns> A new <see cref="Models.NGroupUpdateProfile"/> instance for mocking. </returns>
@@ -714,6 +752,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new NGroupUpdateProfile(updateMode, rollingUpdateProfile, default);
         }
 
+        /// <summary> This profile allows the customers to customize the rolling update. </summary>
         /// <param name="maxBatchPercent"> Maximum percentage of total Container Groups which can be updated simultaneously by rolling update in one batch. </param>
         /// <param name="maxUnhealthyPercent"> Maximum percentage of the updated Container Groups which can be in unhealthy state after each batch is updated. </param>
         /// <param name="pauseTimeBetweenBatches"> The wait time between batches after completing the one batch of the rolling update and starting the next batch. The time duration should be specified in ISO 8601 format for duration. </param>
@@ -821,6 +860,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 default);
         }
 
+        /// <summary> Properties of container group profile that need to be patched. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ContainerGroupProfilePatch"/> instance for mocking. </returns>
         public static ContainerGroupProfilePatch ContainerGroupProfilePatch(IDictionary<string, string> tags = default)
@@ -830,6 +870,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerGroupProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> The logs. </summary>
         /// <param name="content"> The content of the log. </param>
         /// <returns> A new <see cref="Models.ContainerLogs"/> instance for mocking. </returns>
         public static ContainerLogs ContainerLogs(string content = default)
@@ -837,6 +878,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerLogs(content, default);
         }
 
+        /// <summary> The container exec request. </summary>
         /// <param name="command"> The command to be executed. </param>
         /// <param name="terminalSize"> The size of the terminal. </param>
         /// <returns> A new <see cref="Models.ContainerExecContent"/> instance for mocking. </returns>
@@ -845,6 +887,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerExecContent(command, terminalSize, default);
         }
 
+        /// <summary> The size of the terminal. </summary>
         /// <param name="rows"> The row size of the terminal. </param>
         /// <param name="cols"> The column size of the terminal. </param>
         /// <returns> A new <see cref="Models.ContainerExecRequestTerminalSize"/> instance for mocking. </returns>
@@ -853,6 +896,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerExecRequestTerminalSize(rows, cols, default);
         }
 
+        /// <summary> The information for the container exec command. </summary>
         /// <param name="webSocketUri"> The uri for the exec websocket. </param>
         /// <param name="password"> The password to start the exec command. </param>
         /// <returns> A new <see cref="Models.ContainerExecResult"/> instance for mocking. </returns>
@@ -861,6 +905,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerExecResult(webSocketUri, password, default);
         }
 
+        /// <summary> The information for the output stream from container attach. </summary>
         /// <param name="webSocketUri"> The uri for the output stream from the attach. </param>
         /// <param name="password"> The password to the output stream from the attach. Send as an Authorization header value when connecting to the websocketUri. </param>
         /// <returns> A new <see cref="Models.ContainerAttachResult"/> instance for mocking. </returns>
@@ -869,6 +914,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerAttachResult(webSocketUri, password, default);
         }
 
+        /// <summary> A single usage result. </summary>
         /// <param name="id"> Id of the usage result. </param>
         /// <param name="unit"> Unit of the usage result. </param>
         /// <param name="currentValue"> The current usage of the resource. </param>
@@ -886,6 +932,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 default);
         }
 
+        /// <summary> The name object of the resource. </summary>
         /// <param name="value"> The name of the resource. </param>
         /// <param name="localizedValue"> The localized name of the resource. </param>
         /// <returns> A new <see cref="Models.ContainerInstanceUsageName"/> instance for mocking. </returns>
@@ -894,6 +941,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerInstanceUsageName(value, localizedValue, default);
         }
 
+        /// <summary> The cached image and OS type. </summary>
         /// <param name="osType"> The OS type of the cached image. </param>
         /// <param name="image"> The cached image name. </param>
         /// <returns> A new <see cref="Models.CachedImages"/> instance for mocking. </returns>
@@ -902,6 +950,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new CachedImages(osType, image, default);
         }
 
+        /// <summary> The regional capabilities. </summary>
         /// <param name="resourceType"> The resource type that this capability describes. </param>
         /// <param name="osType"> The OS type that this capability describes. </param>
         /// <param name="location"> The resource location. </param>
@@ -921,6 +970,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 default);
         }
 
+        /// <summary> The supported capabilities. </summary>
         /// <param name="maxMemoryInGB"> The maximum allowed memory request in GB. </param>
         /// <param name="maxCpu"> The maximum allowed CPU request in cores. </param>
         /// <param name="maxGpuCount"> The maximum allowed GPU count. </param>
@@ -930,36 +980,34 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerSupportedCapabilities(maxMemoryInGB, maxCpu, maxGpuCount, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerInstance.ContainerGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="zones"> The zones for the container group. </param>
+        /// <summary> A container group. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="zones"> The availability zones. </param>
         /// <param name="identity"> The identity of the container group, if configured. </param>
         /// <param name="provisioningState"> The provisioning state of the container group. This only appears in the response. </param>
         /// <param name="containers"> The containers within the container group. </param>
         /// <param name="imageRegistryCredentials"> The image registry credentials by which the container group is created from. </param>
         /// <param name="restartPolicy">
         /// Restart policy for all containers within the container group.
-        ///                          - `Always` Always restart
-        ///                          - `OnFailure` Restart on failure
-        ///                          - `Never` Never restart
+        /// <list type="bullet"><item><description>`Always` Always restart</description></item><item><description>`OnFailure` Restart on failure</description></item><item><description>`Never` Never restart</description></item></list>
         /// </param>
         /// <param name="ipAddress"> The IP address type of the container group. </param>
-        /// <param name="osType"> The operating system type required by the containers in the container group. </param>
+        /// <param name="osType"></param>
         /// <param name="volumes"> The list of volumes that can be mounted by containers in this container group. </param>
         /// <param name="instanceView"> The instance view of the container group. Only valid in response. </param>
-        /// <param name="diagnosticsLogAnalytics"> The diagnostic information for a container group. </param>
+        /// <param name="diagnosticsLogAnalytics"> Container group log analytics information. </param>
         /// <param name="subnetIds"> The subnet resource IDs for a container group. </param>
         /// <param name="dnsConfig"> The DNS config information for a container group. </param>
         /// <param name="sku"> The SKU for a container group. </param>
         /// <param name="encryptionProperties"> The encryption properties for a container group. </param>
         /// <param name="initContainers"> The init containers for a container group. </param>
         /// <param name="extensions"> extensions used by virtual kubelet. </param>
-        /// <param name="confidentialComputeCcePolicy"> The properties for confidential container group. </param>
+        /// <param name="confidentialComputeCcePolicy"> The base64 encoded confidential compute enforcement policy. </param>
         /// <param name="priority"> The priority of the container group. </param>
         /// <returns> A new <see cref="ContainerInstance.ContainerGroupData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -1001,42 +1049,40 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerInstance.ContainerGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> A container group. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> The identity of the container group, if configured. </param>
-        /// <param name="containerGroupProvisioningState"> The provisioning state of the container group. This only appears in the response. </param>
+        /// <param name="containerGroupProvisioningState"></param>
         /// <param name="secretReferences"> The secret references that will be referenced within the container group. </param>
         /// <param name="containers"> The containers within the container group. </param>
         /// <param name="imageRegistryCredentials"> The image registry credentials by which the container group is created from. </param>
         /// <param name="restartPolicy">
         /// Restart policy for all containers within the container group.
-        ///                          - `Always` Always restart
-        ///                          - `OnFailure` Restart on failure
-        ///                          - `Never` Never restart
+        /// <list type="bullet"><item><description>`Always` Always restart</description></item><item><description>`OnFailure` Restart on failure</description></item><item><description>`Never` Never restart</description></item></list>
         /// </param>
         /// <param name="ipAddress"> The IP address type of the container group. </param>
         /// <param name="containerGroupOSType"> The operating system type required by the containers in the container group. </param>
         /// <param name="volumes"> The list of volumes that can be mounted by containers in this container group. </param>
         /// <param name="instanceView"> The instance view of the container group. Only valid in response. </param>
-        /// <param name="diagnosticsLogAnalytics"> The diagnostic information for a container group. </param>
+        /// <param name="diagnosticsLogAnalytics"> Container group log analytics information. </param>
         /// <param name="subnetIds"> The subnet resource IDs for a container group. </param>
         /// <param name="dnsConfig"> The DNS config information for a container group. </param>
         /// <param name="sku"> The SKU for a container group. </param>
         /// <param name="encryptionProperties"> The encryption properties for a container group. </param>
         /// <param name="initContainers"> The init containers for a container group. </param>
         /// <param name="extensions"> extensions used by virtual kubelet. </param>
-        /// <param name="confidentialComputeCcePolicy"> The properties for confidential container group. </param>
+        /// <param name="confidentialComputeCcePolicy"> The base64 encoded confidential compute enforcement policy. </param>
         /// <param name="priority"> The priority of the container group. </param>
         /// <param name="identityAcls"> The access control levels of the identities. </param>
         /// <param name="containerGroupProfile"> The reference container group profile properties. </param>
         /// <param name="standbyPoolProfile"> The reference standby pool profile properties. </param>
         /// <param name="isCreatedFromStandbyPool"> The flag to determine whether the container group is created from standby pool. </param>
-        /// <param name="zones"> The zones for the container group. </param>
+        /// <param name="zones"> The availability zones. </param>
         /// <returns> A new <see cref="ContainerInstance.ContainerGroupData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerGroupData ContainerGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, ContainerGroupProvisioningState? containerGroupProvisioningState = default, IEnumerable<ContainerGroupSecretReference> secretReferences = default, IEnumerable<ContainerInstanceContainer> containers = default, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default, ContainerGroupRestartPolicy? restartPolicy = default, ContainerGroupIPAddress ipAddress = default, ContainerInstanceOperatingSystemType? containerGroupOSType = default, IEnumerable<ContainerVolume> volumes = default, ContainerGroupInstanceView instanceView = default, ContainerGroupLogAnalytics diagnosticsLogAnalytics = default, IEnumerable<ContainerGroupSubnetId> subnetIds = default, ContainerGroupDnsConfiguration dnsConfig = default, ContainerGroupSku? sku = default, ContainerGroupEncryptionProperties encryptionProperties = default, IEnumerable<InitContainerDefinitionContent> initContainers = default, IEnumerable<DeploymentExtensionSpec> extensions = default, string confidentialComputeCcePolicy = default, ContainerGroupPriority? priority = default, ContainerGroupIdentityAccessControlLevels identityAcls = default, ContainerGroupProfileReferenceDefinition containerGroupProfile = default, StandbyPoolProfileDefinition standbyPoolProfile = default, bool? isCreatedFromStandbyPool = default, IEnumerable<string> zones = default)
@@ -1077,20 +1123,20 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerInstance.NGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Describes the NGroups resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> The identity of the NGroup, if configured. </param>
         /// <param name="elasticProfile"> The elastic profile. </param>
-        /// <param name="placementFaultDomainCount"> Provides options w.r.t allocation and management w.r.t certain placement policies. These utilize capabilities provided by the underlying Azure infrastructure. They are typically used for high availability scenarios. E.g., distributing CGs across fault domains. </param>
+        /// <param name="placementFaultDomainCount"> The number of fault domains to be used to spread CGs in the NGroups resource. This can only be specified during NGroup creation and is immutable after that. </param>
         /// <param name="containerGroupProfiles"> The Container Group Profiles that could be used in the NGroups resource. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="updateProfile"> Used by the customer to specify the way to update the Container Groups in NGroup. </param>
-        /// <param name="zones"> The zones for the container group. </param>
+        /// <param name="zones"> The availability zones. </param>
         /// <returns> A new <see cref="ContainerInstance.NGroupData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NGroupData NGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, ContainerGroupElasticProfile elasticProfile = default, int? placementFaultDomainCount = default, IEnumerable<ContainerGroupProfileStub> containerGroupProfiles = default, NGroupProvisioningState? provisioningState = default, NGroupUpdateProfile updateProfile = default, IEnumerable<string> zones = default)
@@ -1114,13 +1160,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NGroupPatch"/>. </summary>
+        /// <summary> Describes the NGroups resource. </summary>
         /// <param name="systemData"> Metadata pertaining to creation and last modification of the resource. </param>
         /// <param name="identity"> The identity of the NGroup, if configured. </param>
         /// <param name="tags"> The resource tags. </param>
         /// <param name="zones"> The zones for the NGroup. </param>
         /// <param name="elasticProfile"> The elastic profile. </param>
-        /// <param name="placementFaultDomainCount"> Provides options w.r.t allocation and management w.r.t certain placement policies. These utilize capabilities provided by the underlying Azure infrastructure. They are typically used for high availability scenarios. E.g., distributing CGs across fault domains. </param>
+        /// <param name="placementFaultDomainCount"> The number of fault domains to be used to spread CGs in the NGroups resource. This can only be specified during NGroup creation and is immutable after that. </param>
         /// <param name="containerGroupProfiles"> The Container Group Profiles that could be used in the NGroups resource. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="updateProfile"> Used by the customer to specify the way to update the Container Groups in NGroup. </param>
@@ -1143,13 +1189,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerInstance.ContainerGroupProfileData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> A container group profile object. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> The SKU for a container group. </param>
         /// <param name="encryptionProperties"> The encryption properties for a container group. </param>
         /// <param name="containers"> The containers within the container group. </param>
@@ -1158,23 +1204,21 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="imageRegistryCredentials"> The image registry credentials by which the container group is created from. </param>
         /// <param name="restartPolicy">
         /// Restart policy for all containers within the container group.
-        ///                          - `Always` Always restart
-        ///                          - `OnFailure` Restart on failure
-        ///                          - `Never` Never restart
+        /// <list type="bullet"><item><description>`Always` Always restart</description></item><item><description>`OnFailure` Restart on failure</description></item><item><description>`Never` Never restart</description></item></list>
         /// </param>
         /// <param name="shutdownGracePeriod"> Shutdown grace period for containers in a container group. </param>
         /// <param name="ipAddress"> The IP address type of the container group. </param>
         /// <param name="timeToLive"> Post completion time to live for containers of a CG. </param>
         /// <param name="osType"> The operating system type required by the containers in the container group. </param>
         /// <param name="volumes"> The list of volumes that can be mounted by containers in this container group. </param>
-        /// <param name="diagnosticsLogAnalytics"> The diagnostic information for a container group. </param>
+        /// <param name="diagnosticsLogAnalytics"> Container group log analytics information. </param>
         /// <param name="priority"> The priority of the container group. </param>
-        /// <param name="confidentialComputeCcePolicy"> The properties for confidential container group. </param>
+        /// <param name="confidentialComputeCcePolicy"> The base64 encoded confidential compute enforcement policy. </param>
         /// <param name="securityContext"> The container security properties. </param>
         /// <param name="revision"> Container group profile current revision number. </param>
         /// <param name="registeredRevisions"> Registered revisions are calculated at request time based off the records in the table logs. </param>
         /// <param name="useKrypton"> Gets or sets Krypton use property. </param>
-        /// <param name="zones"> The zones for the container group. </param>
+        /// <param name="zones"> The availability zones. </param>
         /// <returns> A new <see cref="ContainerInstance.ContainerGroupProfileData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContainerGroupProfileData ContainerGroupProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerGroupSku? sku = default, ContainerGroupEncryptionProperties encryptionProperties = default, IEnumerable<ContainerInstanceContainer> containers = default, IEnumerable<InitContainerDefinitionContent> initContainers = default, IEnumerable<DeploymentExtensionSpec> extensions = default, IEnumerable<ContainerGroupImageRegistryCredential> imageRegistryCredentials = default, ContainerGroupRestartPolicy? restartPolicy = default, DateTimeOffset? shutdownGracePeriod = default, ContainerGroupIPAddress ipAddress = default, DateTimeOffset? timeToLive = default, ContainerInstanceOperatingSystemType? osType = default, IEnumerable<ContainerVolume> volumes = default, ContainerGroupLogAnalytics diagnosticsLogAnalytics = default, ContainerGroupPriority? priority = default, string confidentialComputeCcePolicy = default, ContainerSecurityContextDefinition securityContext = default, int? revision = default, IEnumerable<int> registeredRevisions = default, bool? useKrypton = default, IEnumerable<string> zones = default)
@@ -1211,7 +1255,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ContainerInstanceContainer"/>. </summary>
+        /// <summary> A container instance. </summary>
         /// <param name="name"> The user-provided name of the container instance. </param>
         /// <param name="image"> The name of the image used to create the container instance. </param>
         /// <param name="command"> The commands to execute within the container instance in exec form. </param>

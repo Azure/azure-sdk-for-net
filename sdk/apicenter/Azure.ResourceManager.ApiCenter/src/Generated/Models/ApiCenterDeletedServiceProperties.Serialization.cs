@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 writer.WritePropertyName("scheduledPurgeDate"u8);
                 writer.WriteStringValue(ScheduledPurgeOn.Value, "O");
             }
-            if (Optional.IsDefined(SoftDeletionOn))
+            if (Optional.IsDefined(SoftDeletedOn))
             {
                 writer.WritePropertyName("softDeletionDate"u8);
-                writer.WriteStringValue(SoftDeletionOn.Value, "O");
+                writer.WriteStringValue(SoftDeletedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 return null;
             }
             DateTimeOffset? scheduledPurgeOn = default;
-            DateTimeOffset? softDeletionOn = default;
+            DateTimeOffset? softDeletedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                     {
                         continue;
                     }
-                    softDeletionOn = prop.Value.GetDateTimeOffset("O");
+                    softDeletedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ApiCenterDeletedServiceProperties(scheduledPurgeOn, softDeletionOn, additionalBinaryDataProperties);
+            return new ApiCenterDeletedServiceProperties(scheduledPurgeOn, softDeletedOn, additionalBinaryDataProperties);
         }
     }
 }

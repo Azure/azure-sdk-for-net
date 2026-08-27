@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         internal MaintenancePropertiesForUpdate Properties { get; set; }
 
         /// <summary> The start time for a maintenance. </summary>
-        public DateTimeOffset? MaintenanceStartOn
+        public DateTimeOffset? MaintenanceStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.MaintenanceStartOn;
+                return Properties is null ? default : Properties.MaintenanceStartsOn;
             }
             set
             {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 {
                     Properties = new MaintenancePropertiesForUpdate();
                 }
-                Properties.MaintenanceStartOn = value;
+                Properties.MaintenanceStartsOn = value;
             }
         }
     }

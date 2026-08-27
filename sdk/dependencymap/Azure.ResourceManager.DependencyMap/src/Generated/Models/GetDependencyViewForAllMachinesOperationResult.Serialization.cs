@@ -105,15 +105,15 @@ namespace Azure.ResourceManager.DependencyMap.Models
                 writer.WritePropertyName("error"u8);
                 ((IJsonModel<ResponseError>)Error).Write(writer, options);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(Properties))
             {
@@ -166,8 +166,8 @@ namespace Azure.ResourceManager.DependencyMap.Models
             string name = default;
             string status = default;
             ResponseError error = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             GetDependencyViewForAllMachinesResultProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("properties"u8))
@@ -233,8 +233,8 @@ namespace Azure.ResourceManager.DependencyMap.Models
                 name,
                 status,
                 error,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 properties,
                 additionalBinaryDataProperties);
         }

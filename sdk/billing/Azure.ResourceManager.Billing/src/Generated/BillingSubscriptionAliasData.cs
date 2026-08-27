@@ -460,21 +460,21 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary> Start date of the term in UTC time. </summary>
         [WirePath("properties.termStartDate")]
-        public DateTimeOffset? TermStartOn
+        public DateTimeOffset? TermStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.TermStartOn;
+                return Properties is null ? default : Properties.TermStartsOn;
             }
         }
 
         /// <summary> End date of the term in UTC time. </summary>
         [WirePath("properties.termEndDate")]
-        public DateTimeOffset? TermEndOn
+        public DateTimeOffset? TermEndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.TermEndOn;
+                return Properties is null ? default : Properties.TermEndsOn;
             }
         }
 
@@ -566,11 +566,11 @@ namespace Azure.ResourceManager.Billing
 
         /// <summary> The enrollment Account and the subscription association start date. This field is available only for the Enterprise Agreement Type. </summary>
         [WirePath("properties.enrollmentAccountSubscriptionDetails.enrollmentAccountStartDate")]
-        public DateTimeOffset? EnrollmentAccountStartOn
+        public DateTimeOffset? EnrollmentAccountStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EnrollmentAccountStartOn;
+                return Properties is null ? default : Properties.EnrollmentAccountStartsOn;
             }
         }
 

@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 default);
         }
 
+        /// <summary> Geo-physical location to run a WebTest from. You must specify one or more locations for the test to run from. </summary>
         /// <param name="location"> Location ID for the WebTest to run from. </param>
         /// <returns> A new <see cref="Models.WebTestGeolocation"/> instance for mocking. </returns>
         public static WebTestGeolocation WebTestGeolocation(AzureLocation? location = default)
@@ -77,6 +78,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new WebTestGeolocation(location, default);
         }
 
+        /// <summary> The collection of request properties. </summary>
         /// <param name="requestUri"> Url location to test. </param>
         /// <param name="headers"> List of headers and their values to add to the WebTest call. </param>
         /// <param name="httpVerb"> Http verb to use for this web test. </param>
@@ -98,6 +100,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 default);
         }
 
+        /// <summary> A header to add to the WebTest. </summary>
         /// <param name="headerFieldName"> The name of the header. </param>
         /// <param name="headerFieldValue"> The value of the header. </param>
         /// <returns> A new <see cref="Models.WebTestRequestHeaderField"/> instance for mocking. </returns>
@@ -106,6 +109,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new WebTestRequestHeaderField(headerFieldName, headerFieldValue, default);
         }
 
+        /// <summary> The collection of validation rule properties. </summary>
         /// <param name="contentValidation"> The collection of content validation properties. </param>
         /// <param name="checkSsl"> Checks to see if the SSL cert is still valid. </param>
         /// <param name="sslCertRemainingLifetimeCheck"> A number of days to check still remain before the the existing SSL cert expires.  Value must be positive and the SSLCheck must be set to true. </param>
@@ -123,6 +127,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 default);
         }
 
+        /// <summary> The collection of content validation properties. </summary>
         /// <param name="contentMatch"> Content to look for in the return of the WebTest.  Must not be null or empty. </param>
         /// <param name="ignoreCase"> When set, this value makes the ContentMatch validation case insensitive. </param>
         /// <param name="passIfTextFound"> When true, validation will pass if there is a match for the ContentMatch string.  If false, validation will fail if there is a match. </param>
@@ -132,6 +137,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new WebTestContentValidation(contentMatch, ignoreCase, passIfTextFound, default);
         }
 
+        /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on a WebTest instance. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.WebTestComponentTag"/> instance for mocking. </returns>
         public static WebTestComponentTag WebTestComponentTag(IDictionary<string, string> tags = default)
@@ -248,6 +254,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 default);
         }
 
+        /// <summary> Gallery information for a workbook template. </summary>
         /// <param name="name"> Name of the workbook template in the gallery. </param>
         /// <param name="category"> Category for the gallery. </param>
         /// <param name="workbookType"> Type of workbook supported by the workbook template. </param>
@@ -265,6 +272,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 default);
         }
 
+        /// <summary> Localized template data and gallery information. </summary>
         /// <param name="templateData"> Valid JSON object containing workbook template payload. </param>
         /// <param name="galleries"> Workbook galleries supported by the template. </param>
         /// <returns> A new <see cref="Models.WorkbookTemplateLocalizedGallery"/> instance for mocking. </returns>
@@ -320,6 +328,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 default);
         }
 
+        /// <summary> Annotation associated with an application insights resource. </summary>
         /// <param name="annotationName"> Name of annotation. </param>
         /// <param name="category"> Category of annotation, free form. </param>
         /// <param name="eventOccurredOn"> Time when event occurred. </param>
@@ -339,6 +348,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 default);
         }
 
+        /// <summary> Properties that define an API key of an Application Insights Component. </summary>
         /// <param name="id"> The unique ID of the API key inside an Application Insights component. It is auto generated when the API key is created. </param>
         /// <param name="apiKey"> The API key value. It will be only return once when the API Key was created. </param>
         /// <param name="createdOn"> The create date of this API key. </param>
@@ -361,6 +371,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 default);
         }
 
+        /// <summary> An Application Insights component API Key creation request definition. </summary>
         /// <param name="name"> The name of the API Key. </param>
         /// <param name="linkedReadProperties"> The read access rights of this API Key. </param>
         /// <param name="linkedWriteProperties"> The write access rights of this API Key. </param>
@@ -373,6 +384,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ApplicationInsightsApiKeyContent(name, (linkedReadProperties ?? new ChangeTrackingList<string>()).ToList(), (linkedWriteProperties ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Properties that define a Continuous Export configuration. </summary>
         /// <param name="exportId"> The unique ID of the export configuration inside an Application Insights component. It is auto generated when the Continuous Export configuration is created. </param>
         /// <param name="instrumentationKey"> The instrumentation key of the Application Insights component. </param>
         /// <param name="recordTypes"> This comma separated list of document types that will be exported. The possible values include 'Requests', 'Event', 'Exceptions', 'Metrics', 'PageViews', 'PageViewPerformance', 'Rdd', 'PerformanceCounters', 'Availability', 'Messages'. </param>
@@ -418,6 +430,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 default);
         }
 
+        /// <summary> An Application Insights component Continuous Export configuration request definition. </summary>
         /// <param name="recordTypes"> The document types to be exported, as comma separated values. Allowed values include 'Requests', 'Event', 'Exceptions', 'Metrics', 'PageViews', 'PageViewPerformance', 'Rdd', 'PerformanceCounters', 'Availability', 'Messages'. </param>
         /// <param name="destinationType"> The Continuous Export destination type. This has to be 'Blob'. </param>
         /// <param name="destinationAddress"> The SAS URL for the destination storage container. It must grant write permission. </param>
@@ -443,6 +456,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 default);
         }
 
+        /// <summary> An Application Insights component billing features. </summary>
         /// <param name="dataVolumeCap"> An Application Insights component daily data volume cap. </param>
         /// <param name="currentBillingFeatures"> Current enabled pricing plan. When the component is in the Enterprise plan, this will list both 'Basic' and 'Application Insights Enterprise'. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentBillingFeatures"/> instance for mocking. </returns>
@@ -453,6 +467,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ApplicationInsightsComponentBillingFeatures(dataVolumeCap, (currentBillingFeatures ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> An Application Insights component daily data volume cap. </summary>
         /// <param name="cap"> Daily data volume cap in GB. </param>
         /// <param name="resetTime"> Daily data volume cap UTC reset hour. </param>
         /// <param name="warningThreshold"> Reserved, not used for now. </param>
@@ -472,6 +487,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 default);
         }
 
+        /// <summary> An Application Insights component daily data volume cap status. </summary>
         /// <param name="appId"> The Application ID for the Application Insights component. </param>
         /// <param name="shouldBeThrottled"> The daily data volume cap is met, and data ingestion will be stopped. </param>
         /// <param name="expireOn"> Date and time when the daily data volume cap will be reset, and data ingestion will resume. </param>
@@ -481,6 +497,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ApplicationInsightsComponentQuotaStatus(appId, shouldBeThrottled, expireOn, default);
         }
 
+        /// <summary> An Application Insights component feature capabilities. </summary>
         /// <param name="isExportDataSupported"> Whether allow to use continuous export feature. </param>
         /// <param name="burstThrottlePolicy"> Reserved, not used now. </param>
         /// <param name="metadataClass"> Reserved, not used now. </param>
@@ -520,6 +537,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 default);
         }
 
+        /// <summary> An Application Insights component available features. </summary>
         /// <param name="result"> A list of Application Insights component feature. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentAvailableFeatures"/> instance for mocking. </returns>
         public static ApplicationInsightsComponentAvailableFeatures ApplicationInsightsComponentAvailableFeatures(IEnumerable<ApplicationInsightsComponentFeature> result = default)
@@ -529,6 +547,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ApplicationInsightsComponentAvailableFeatures((result ?? new ChangeTrackingList<ApplicationInsightsComponentFeature>()).ToList(), default);
         }
 
+        /// <summary> An Application Insights component daily data volume cap status. </summary>
         /// <param name="featureName"> The pricing feature name. </param>
         /// <param name="meterId"> The meter id used for the feature. </param>
         /// <param name="meterRateFrequency"> The meter rate for the feature's meter. </param>
@@ -556,6 +575,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 default);
         }
 
+        /// <summary> An Application Insights component feature capability. </summary>
         /// <param name="name"> The name of the capability. </param>
         /// <param name="description"> The description of the capability. </param>
         /// <param name="value"> The value of the capability. </param>
@@ -575,6 +595,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 default);
         }
 
+        /// <summary> Properties that define a ProactiveDetection configuration. </summary>
         /// <param name="name"> The rule name. </param>
         /// <param name="isEnabled"> A flag that indicates whether this rule is enabled by the user. </param>
         /// <param name="sendEmailsToSubscriptionOwners"> A flag that indicated whether notifications on this rule should be sent to subscription owners. </param>
@@ -596,6 +617,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 default);
         }
 
+        /// <summary> Static definitions of the ProactiveDetection configuration rule (same values for all components). </summary>
         /// <param name="name"> The rule name. </param>
         /// <param name="displayName"> The rule name as it is displayed in UI. </param>
         /// <param name="description"> The rule description. </param>
@@ -619,6 +641,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 default);
         }
 
+        /// <summary> Work item configuration associated with an application insights resource. </summary>
         /// <param name="connectorId"> Connector identifier where work item is created. </param>
         /// <param name="configDisplayName"> Configuration friendly name. </param>
         /// <param name="isDefault"> Boolean value indicating whether configuration is default. </param>
@@ -636,6 +659,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 default);
         }
 
+        /// <summary> Work item configuration creation payload. </summary>
         /// <param name="connectorId"> Unique connector id. </param>
         /// <param name="connectorDataConfiguration"> Serialized JSON object for detailed properties. </param>
         /// <param name="isValidateOnly"> Boolean indicating validate only. </param>
@@ -749,6 +773,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 default);
         }
 
+        /// <summary> The private link scope resource reference. </summary>
         /// <param name="resourceId"> The full resource Id of the private link scope resource. </param>
         /// <param name="scopeId"> The private link scope unique Identifier. </param>
         /// <returns> A new <see cref="Models.PrivateLinkScopedResourceReference"/> instance for mocking. </returns>
@@ -757,6 +782,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new PrivateLinkScopedResourceReference(resourceId, scopeId, default);
         }
 
+        /// <summary> Describes the body of a purge request for an App Insights component. </summary>
         /// <param name="table"> Table from which to purge data. </param>
         /// <param name="filters"> The set of columns and filters (queries) to run over them to purge the resulting data. </param>
         /// <returns> A new <see cref="Models.ComponentPurgeContent"/> instance for mocking. </returns>
@@ -767,6 +793,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ComponentPurgeContent(table, (filters ?? new ChangeTrackingList<ComponentPurgeFilters>()).ToList(), default);
         }
 
+        /// <summary> User-defined filters to return data which will be purged from the table. </summary>
         /// <param name="column"> The column of the table over which the given query should run. </param>
         /// <param name="operator"> A query operator to evaluate over the provided column and value(s). Supported operators are ==, =~, in, in~, &gt;, &gt;=, &lt;, &lt;=, between, and have the same behavior as they would in a KQL query. </param>
         /// <param name="value"> the value for the operator to function over. This can be a number (e.g., &gt; 100), a string (timestamp &gt;= '2017-09-01') or array of values. </param>
@@ -777,6 +804,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ComponentPurgeFilters(column, @operator, value, key, default);
         }
 
+        /// <summary> Response containing operationId for a specific purge action. </summary>
         /// <param name="operationId"> Id to use when querying for status for a particular purge operation. </param>
         /// <returns> A new <see cref="Models.ComponentPurgeResult"/> instance for mocking. </returns>
         public static ComponentPurgeResult ComponentPurgeResult(string operationId = default)
@@ -784,6 +812,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ComponentPurgeResult(operationId, default);
         }
 
+        /// <summary> Response containing status for a specific purge operation. </summary>
         /// <param name="status"> Status of the operation represented by the requested Id. </param>
         /// <returns> A new <see cref="Models.ComponentPurgeStatusResult"/> instance for mocking. </returns>
         public static ComponentPurgeStatusResult ComponentPurgeStatusResult(ComponentPurgeState status = default)
@@ -840,6 +869,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     default));
         }
 
+        /// <summary> An azure resource object. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -865,6 +895,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 default);
         }
 
+        /// <summary> Properties that define a favorite that is associated to an Application Insights component. </summary>
         /// <param name="name"> The user-defined name of the favorite. </param>
         /// <param name="config"> Configuration of this particular favorite, which are driven by the Azure portal UX. Configuration data is a string containing valid JSON. </param>
         /// <param name="version"> This instance's version of the data model. This can change as new features are added that can be marked favorite. Current examples include MetricsExplorer (ME) and Search. </param>
@@ -896,6 +927,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 default);
         }
 
+        /// <summary> The response to a live token query. </summary>
         /// <param name="liveToken"> JWT token for accessing live metrics stream data. </param>
         /// <returns> A new <see cref="Models.LiveTokenResult"/> instance for mocking. </returns>
         public static LiveTokenResult LiveTokenResult(string liveToken = default)
@@ -903,6 +935,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new LiveTokenResult(liveToken, default);
         }
 
+        /// <summary> Properties that define a web test location available to an Application Insights Component. </summary>
         /// <param name="displayName"> The display name of the web test location. </param>
         /// <param name="tag"> Internally defined geographic location tag. </param>
         /// <returns> A new <see cref="Models.ApplicationInsightsComponentWebTestLocation"/> instance for mocking. </returns>
@@ -911,13 +944,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new ApplicationInsightsComponentWebTestLocation(displayName, tag, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationInsights.ApplicationInsightsWebTestData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> An Application Insights WebTest definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="kind"> The kind of WebTest that this web test watches. Choices are ping, multistep and standard. </param>
         /// <param name="syntheticMonitorId"> Unique ID of this WebTest. This is typically the same value as the Name field. </param>
         /// <param name="webTestName"> User defined name if this WebTest. </param>
@@ -928,7 +961,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="webTestKind"> The kind of web test this is, valid choices are ping, multistep and standard. </param>
         /// <param name="isRetryEnabled"> Allow for retries should this WebTest fail. </param>
         /// <param name="locations"> A list of where to physically run the tests from to give global coverage for accessibility of your application. </param>
-        /// <param name="webTest"> An XML configuration specification for a WebTest. </param>
+        /// <param name="webTest"> The XML specification of a WebTest to run against an application. </param>
         /// <param name="provisioningState"> Current state of this component, whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </param>
         /// <param name="request"> The collection of request properties. </param>
         /// <param name="validationRules"> The collection of validation rule properties. </param>
@@ -962,13 +995,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApplicationInsights.ApplicationInsightsWorkbookData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> A workbook definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="displayName"> The user-defined name (display name) of the workbook. </param>
         /// <param name="serializedData"> Configuration of this particular workbook. Configuration data is a string containing valid JSON. </param>
         /// <param name="version"> Workbook schema version format, like 'Notebook/1.0', which should match the workbook in serializedData. </param>

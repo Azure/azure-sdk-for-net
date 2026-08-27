@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         {
             Argument.AssertNotNull(schedule, nameof(schedule));
 
-            StartOn = startOn;
+            StartsOn = startOn;
             Schedule = schedule;
         }
 
@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal PeriodicTimerSourceInfo(DateTimeOffset startOn, string schedule, string topic, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
+            StartsOn = startOn;
             Schedule = schedule;
             Topic = topic;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The time of the day that results in a valid trigger. Schedule is computed with reference to the time specified upto seconds. If timezone is not specified the time will considered to be in device timezone. The value will always be returned as UTC time. </summary>
-        public DateTimeOffset StartOn { get; set; }
+        public DateTimeOffset StartsOn { get; set; }
 
         /// <summary> Periodic frequency at which timer event needs to be raised. Supports daily, hourly, minutes, and seconds. </summary>
         public string Schedule { get; set; }

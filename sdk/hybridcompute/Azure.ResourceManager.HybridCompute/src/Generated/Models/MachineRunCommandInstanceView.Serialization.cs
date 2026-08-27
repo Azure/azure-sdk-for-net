@@ -99,15 +99,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("error"u8);
                 writer.WriteStringValue(Error);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Statuses))
             {
@@ -166,8 +166,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
             int? exitCode = default;
             string output = default;
             string error = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             IReadOnlyList<ExtensionsResourceStatus> statuses = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("statuses"u8))
@@ -248,8 +248,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 exitCode,
                 output,
                 error,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 statuses ?? new ChangeTrackingList<ExtensionsResourceStatus>(),
                 additionalBinaryDataProperties);
         }

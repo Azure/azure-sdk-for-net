@@ -93,15 +93,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStringValue(Notes);
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTimeUtc"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTimeUtc"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (Optional.IsDefined(EventOn))
             {
@@ -160,8 +160,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             ResourceIdentifier azureResourceId = default;
             string displayName = default;
             string notes = default;
-            DateTimeOffset? endOn = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? endsOn = default;
+            DateTimeOffset? startsOn = default;
             DateTimeOffset? eventOn = default;
             SecurityInsightsUserInfo createdBy = default;
             IList<string> labels = default;
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("startTimeUtc"u8))
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("eventTime"u8))
@@ -255,8 +255,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 azureResourceId,
                 displayName,
                 notes,
-                endOn,
-                startOn,
+                endsOn,
+                startsOn,
                 eventOn,
                 createdBy,
                 labels ?? new ChangeTrackingList<string>());

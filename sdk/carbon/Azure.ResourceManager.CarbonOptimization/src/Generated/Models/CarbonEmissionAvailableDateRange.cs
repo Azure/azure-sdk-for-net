@@ -17,29 +17,29 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CarbonEmissionAvailableDateRange"/>. </summary>
-        /// <param name="startOn"> Start date parameter, format is yyyy-MM-dd. </param>
-        /// <param name="endOn"> End date parameter, format is yyyy-MM-dd. </param>
-        internal CarbonEmissionAvailableDateRange(DateTimeOffset startOn, DateTimeOffset endOn)
+        /// <param name="startsOn"> Start date parameter, format is yyyy-MM-dd. </param>
+        /// <param name="endsOn"> End date parameter, format is yyyy-MM-dd. </param>
+        internal CarbonEmissionAvailableDateRange(DateTimeOffset startsOn, DateTimeOffset endsOn)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="CarbonEmissionAvailableDateRange"/>. </summary>
-        /// <param name="startOn"> Start date parameter, format is yyyy-MM-dd. </param>
-        /// <param name="endOn"> End date parameter, format is yyyy-MM-dd. </param>
+        /// <param name="startsOn"> Start date parameter, format is yyyy-MM-dd. </param>
+        /// <param name="endsOn"> End date parameter, format is yyyy-MM-dd. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CarbonEmissionAvailableDateRange(DateTimeOffset startOn, DateTimeOffset endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CarbonEmissionAvailableDateRange(DateTimeOffset startsOn, DateTimeOffset endsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Start date parameter, format is yyyy-MM-dd. </summary>
-        public DateTimeOffset StartOn { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary> End date parameter, format is yyyy-MM-dd. </summary>
-        public DateTimeOffset EndOn { get; }
+        public DateTimeOffset EndsOn { get; }
     }
 }

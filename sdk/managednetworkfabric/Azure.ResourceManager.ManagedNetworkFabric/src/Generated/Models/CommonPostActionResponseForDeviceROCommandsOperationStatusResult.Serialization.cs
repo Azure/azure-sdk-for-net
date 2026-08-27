@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 throw new FormatException($"The model {nameof(CommonPostActionResponseForDeviceROCommandsOperationStatusResult)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Id))
             {
@@ -115,10 +115,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status);
@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             }
             ResponseError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? endsOn = default;
             string id = default;
             string name = default;
             CommonPostActionResponseForDeviceROCommands properties = default;
             ResourceIdentifier resourceId = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             string status = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -228,12 +228,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new CommonPostActionResponseForDeviceROCommandsOperationStatusResult(
                 error,
                 additionalBinaryDataProperties,
-                endOn,
+                endsOn,
                 id,
                 name,
                 properties,
                 resourceId,
-                startOn,
+                startsOn,
                 status);
         }
     }

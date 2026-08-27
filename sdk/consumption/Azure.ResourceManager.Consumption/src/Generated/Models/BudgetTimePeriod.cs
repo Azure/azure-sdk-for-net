@@ -20,24 +20,24 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="startOn"> The start date for the budget. </param>
         public BudgetTimePeriod(DateTimeOffset startOn)
         {
-            StartOn = startOn;
+            StartsOn = startOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="BudgetTimePeriod"/>. </summary>
         /// <param name="startOn"> The start date for the budget. </param>
-        /// <param name="endOn"> The end date for the budget. If not provided, we default this to 10 years from the start date. </param>
+        /// <param name="endsOn"> The end date for the budget. If not provided, we default this to 10 years from the start date. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BudgetTimePeriod(DateTimeOffset startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BudgetTimePeriod(DateTimeOffset startOn, DateTimeOffset? endsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startOn;
+            EndsOn = endsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The start date for the budget. </summary>
-        public DateTimeOffset StartOn { get; set; }
+        public DateTimeOffset StartsOn { get; set; }
 
         /// <summary> The end date for the budget. If not provided, we default this to 10 years from the start date. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
     }
 }

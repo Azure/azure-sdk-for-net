@@ -294,11 +294,11 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Time in UTC (ISO 8601 format) when the problem started. </summary>
-        public DateTimeOffset? ProblemStartOn
+        public DateTimeOffset? ProblemStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.ProblemStartOn;
+                return Properties is null ? default : Properties.ProblemStartsOn;
             }
             set
             {
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Support
                 {
                     Properties = new SupportTicketDetailsProperties();
                 }
-                Properties.ProblemStartOn = value;
+                Properties.ProblemStartsOn = value;
             }
         }
 

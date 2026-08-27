@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="errors"> Any errors associate with the operation. </param>
         /// <param name="createdOn"> Time when operation has started. </param>
         /// <param name="modifiedOn"> Time when operation has been updated. </param>
-        /// <param name="expireOn"> Time when operation will expire. </param>
+        /// <param name="expiresOn"> Time when operation will expire. </param>
         /// <param name="geoMasterOperationId"> Applicable only for stamp operation ids. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceOperation(string id, string name, AppServiceOperationStatus? status, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, DateTimeOffset? expireOn, Guid? geoMasterOperationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AppServiceOperation(string id, string name, AppServiceOperationStatus? status, IReadOnlyList<ResponseError> errors, DateTimeOffset? createdOn, DateTimeOffset? modifiedOn, DateTimeOffset? expiresOn, Guid? geoMasterOperationId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppService.Models
             Errors = errors;
             CreatedOn = createdOn;
             ModifiedOn = modifiedOn;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             GeoMasterOperationId = geoMasterOperationId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Time when operation will expire. </summary>
         [WirePath("expirationTime")]
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpiresOn { get; }
 
         /// <summary> Applicable only for stamp operation ids. </summary>
         [WirePath("geoMasterOperationId")]

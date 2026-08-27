@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("timeGrain"u8);
                 writer.WriteStringValue(TimeGrain);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Value))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Sql.Models
             string metricName = default;
             string unit = default;
             string timeGrain = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             double? value = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("value"u8))
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Sql.Models
                 metricName,
                 unit,
                 timeGrain,
-                startOn,
+                startsOn,
                 value,
                 additionalBinaryDataProperties);
         }

@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(IsComplete))
             {
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.AppService.Models
             }
             string deployer = default;
             MSDeployProvisioningState? provisioningState = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             bool? isComplete = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("complete"u8))
@@ -198,8 +198,8 @@ namespace Azure.ResourceManager.AppService.Models
             return new MSDeployStatusProperties(
                 deployer,
                 provisioningState,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 isComplete,
                 additionalBinaryDataProperties);
         }

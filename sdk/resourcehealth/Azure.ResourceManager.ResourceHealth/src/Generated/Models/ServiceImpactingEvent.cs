@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceImpactingEvent"/>. </summary>
-        /// <param name="eventStartOn"> Timestamp for when the event started. </param>
+        /// <param name="eventStartsOn"> Timestamp for when the event started. </param>
         /// <param name="eventStatusLastModifiedOn"> Timestamp for when event was submitted/detected. </param>
         /// <param name="correlationId"> Correlation id for the event. </param>
         /// <param name="status"> Status of the service impacting event. </param>
         /// <param name="incidentProperties"> Properties of the service impacting event. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceImpactingEvent(DateTimeOffset? eventStartOn, DateTimeOffset? eventStatusLastModifiedOn, string correlationId, ServiceImpactingEventStatus status, ServiceImpactingEventIncidentProperties incidentProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceImpactingEvent(DateTimeOffset? eventStartsOn, DateTimeOffset? eventStatusLastModifiedOn, string correlationId, ServiceImpactingEventStatus status, ServiceImpactingEventIncidentProperties incidentProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EventStartOn = eventStartOn;
+            EventStartsOn = eventStartsOn;
             EventStatusLastModifiedOn = eventStatusLastModifiedOn;
             CorrelationId = correlationId;
             Status = status;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         }
 
         /// <summary> Timestamp for when the event started. </summary>
-        public DateTimeOffset? EventStartOn { get; }
+        public DateTimeOffset? EventStartsOn { get; }
 
         /// <summary> Timestamp for when event was submitted/detected. </summary>
         public DateTimeOffset? EventStatusLastModifiedOn { get; }

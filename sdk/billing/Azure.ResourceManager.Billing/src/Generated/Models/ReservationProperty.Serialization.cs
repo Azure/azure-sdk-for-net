@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("effectiveDateTime"u8);
                 writer.WriteStringValue(EffectiveOn.Value, "O");
             }
-            if (Optional.IsDefined(BenefitStartOn))
+            if (Optional.IsDefined(BenefitStartsOn))
             {
                 writer.WritePropertyName("benefitStartTime"u8);
-                writer.WriteStringValue(BenefitStartOn.Value, "O");
+                writer.WriteStringValue(BenefitStartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Billing.Models
             float? quantity = default;
             string provisioningState = default;
             DateTimeOffset? effectiveOn = default;
-            DateTimeOffset? benefitStartOn = default;
+            DateTimeOffset? benefitStartsOn = default;
             DateTimeOffset? lastUpdatedOn = default;
             DateTimeOffset? expireOn = default;
             DateTimeOffset? reservationExpireOn = default;
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    benefitStartOn = prop.Value.GetDateTimeOffset("O");
+                    benefitStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastUpdatedDateTime"u8))
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.Billing.Models
                 quantity,
                 provisioningState,
                 effectiveOn,
-                benefitStartOn,
+                benefitStartsOn,
                 lastUpdatedOn,
                 expireOn,
                 reservationExpireOn,

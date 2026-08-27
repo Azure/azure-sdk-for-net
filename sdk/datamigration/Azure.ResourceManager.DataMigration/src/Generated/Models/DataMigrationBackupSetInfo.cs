@@ -31,11 +31,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="backupType"> Enum of the different backup types. </param>
         /// <param name="listOfBackupFiles"> List of files in the backup set. </param>
         /// <param name="databaseName"> Name of the database to which the backup set belongs. </param>
-        /// <param name="backupStartOn"> Date and time that the backup operation began. </param>
+        /// <param name="backupStartsOn"> Date and time that the backup operation began. </param>
         /// <param name="backupFinishedOn"> Date and time that the backup operation finished. </param>
         /// <param name="isBackupRestored"> Whether the backup set is restored or not. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataMigrationBackupSetInfo(string backupSetId, string firstLsn, string lastLsn, DateTimeOffset? lastModifiedOn, DataMigrationBackupType? backupType, IReadOnlyList<DataMigrationBackupFileInfo> listOfBackupFiles, string databaseName, DateTimeOffset? backupStartOn, DateTimeOffset? backupFinishedOn, bool? isBackupRestored, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataMigrationBackupSetInfo(string backupSetId, string firstLsn, string lastLsn, DateTimeOffset? lastModifiedOn, DataMigrationBackupType? backupType, IReadOnlyList<DataMigrationBackupFileInfo> listOfBackupFiles, string databaseName, DateTimeOffset? backupStartsOn, DateTimeOffset? backupFinishedOn, bool? isBackupRestored, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BackupSetId = backupSetId;
             FirstLsn = firstLsn;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             BackupType = backupType;
             ListOfBackupFiles = listOfBackupFiles;
             DatabaseName = databaseName;
-            BackupStartOn = backupStartOn;
+            BackupStartsOn = backupStartsOn;
             BackupFinishedOn = backupFinishedOn;
             IsBackupRestored = isBackupRestored;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         public string DatabaseName { get; }
 
         /// <summary> Date and time that the backup operation began. </summary>
-        public DateTimeOffset? BackupStartOn { get; }
+        public DateTimeOffset? BackupStartsOn { get; }
 
         /// <summary> Date and time that the backup operation finished. </summary>
         public DateTimeOffset? BackupFinishedOn { get; }

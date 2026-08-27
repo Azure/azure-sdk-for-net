@@ -459,11 +459,11 @@ namespace Azure.ResourceManager.ServiceFabric
         }
 
         /// <summary> Indicates the start date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC). </summary>
-        public DateTimeOffset? UpgradePauseStartOn
+        public DateTimeOffset? UpgradePauseStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.UpgradePauseStartOn;
+                return Properties is null ? default : Properties.UpgradePauseStartsOn;
             }
             set
             {
@@ -471,16 +471,16 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.UpgradePauseStartOn = value;
+                Properties.UpgradePauseStartsOn = value;
             }
         }
 
         /// <summary> Indicates the end date and time to pause automatic runtime version upgrades on the cluster for an specific period of time on the cluster (UTC). </summary>
-        public DateTimeOffset? UpgradePauseEndOn
+        public DateTimeOffset? UpgradePauseEndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.UpgradePauseEndOn;
+                return Properties is null ? default : Properties.UpgradePauseEndsOn;
             }
             set
             {
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.ServiceFabric
                 {
                     Properties = new ClusterProperties();
                 }
-                Properties.UpgradePauseEndOn = value;
+                Properties.UpgradePauseEndsOn = value;
             }
         }
 
