@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesDataReplication.Models;
 
@@ -121,6 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
     [ModelReaderWriterBuildable(typeof(RemotePrivateEndpointConnection))]
     [ModelReaderWriterBuildable(typeof(RemotePrivateEndpointConnectionDetails))]
     [ModelReaderWriterBuildable(typeof(ReplicationExtensionModelListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StorageContainerProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TestFailoverCleanupJobCustomProperties))]

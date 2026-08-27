@@ -17,7 +17,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="id"> Ingestion source id. </param>
         /// <param name="connectionInfo"> Managed identity connection information. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionInfo"/> is null. </exception>
-        public ManagedIdentityIngestionSource(Guid id, ManagedIdentityConnection connectionInfo) : base(id, IngestionSourceType.BlobManagedIdentity)
+        public ManagedIdentityIngestionSource(Guid id, ManagedIdentityConnection connectionInfo) : base(id, IngestionSourceKind.BlobManagedIdentity)
         {
             Argument.AssertNotNull(connectionInfo, nameof(connectionInfo));
 
@@ -26,11 +26,11 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Initializes a new instance of <see cref="ManagedIdentityIngestionSource"/>. </summary>
         /// <param name="id"> Ingestion source id. </param>
-        /// <param name="created"> Created time in UTC format. </param>
+        /// <param name="createdOn"> Created time in UTC format. </param>
         /// <param name="kind"> Discriminator for the ingestion source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="connectionInfo"> Managed identity connection information. </param>
-        internal ManagedIdentityIngestionSource(Guid id, DateTimeOffset? created, IngestionSourceType kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedIdentityConnection connectionInfo) : base(id, created, kind, additionalBinaryDataProperties)
+        internal ManagedIdentityIngestionSource(Guid id, DateTimeOffset? createdOn, IngestionSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, ManagedIdentityConnection connectionInfo) : base(id, createdOn, kind, additionalBinaryDataProperties)
         {
             ConnectionInfo = connectionInfo;
         }

@@ -597,7 +597,7 @@ namespace Azure.Storage.Files.Shares
             return message;
         }
 
-        internal HttpMessage CreateUploadRangeFromUrlRequest(string range, string copySource, long contentLength, string sourceRange, int? timeout, BinaryData sourceContentCrc64, BinaryData sourceIfMatchCrc64, BinaryData sourceIfNoneMatchCrc64, string leaseId, string copySourceAuthorization, string fileLastWrittenMode, RequestContext context)
+        internal HttpMessage CreateUploadRangeFromUriRequest(string range, string copySource, long contentLength, string sourceRange, int? timeout, BinaryData sourceContentCrc64, BinaryData sourceIfMatchCrc64, BinaryData sourceIfNoneMatchCrc64, string leaseId, string copySourceAuthorization, string fileLastWrittenMode, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

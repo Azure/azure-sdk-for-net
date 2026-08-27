@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.IotOperations.Models;
 using Azure.ResourceManager.Models;
 
@@ -210,6 +211,7 @@ namespace Azure.ResourceManager.IotOperations
     [ModelReaderWriterBuildable(typeof(RegistryEndpointTrustedSigningKeySecret))]
     [ModelReaderWriterBuildable(typeof(RegistryEndpointUserAssignedIdentityAuthentication))]
     [ModelReaderWriterBuildable(typeof(RegistryEndpointUserAssignedManagedIdentitySettings))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SanForCert))]
     [ModelReaderWriterBuildable(typeof(SchemaRegistryRef))]
     [ModelReaderWriterBuildable(typeof(SecretProviderClassRef))]

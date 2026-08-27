@@ -11,7 +11,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Base definition for datastore credentials.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/>, and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningAccountKeyDatastoreCredentials"/>, <see cref="MachineLearningCertificateDatastoreCredentials"/>, <see cref="MachineLearningNoneDatastoreCredentials"/>, <see cref="MachineLearningSasDatastoreCredentials"/>, and <see cref="MachineLearningServicePrincipalDatastoreCredentials"/>.
     /// </summary>
     public partial class MachineLearningDatastoreCredentials : ProvisionableConstruct
     {

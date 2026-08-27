@@ -11,7 +11,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// The number of past periods to lag from the target column.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AutoTargetLags"/> and <see cref="CustomTargetLags"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AutoTargetLags"/> and <see cref="CustomTargetLags"/>.
     /// </summary>
     public partial class TargetLags : ProvisionableConstruct
     {

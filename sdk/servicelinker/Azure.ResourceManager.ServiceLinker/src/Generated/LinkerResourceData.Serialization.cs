@@ -10,16 +10,75 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceLinker.Models;
 
 namespace Azure.ResourceManager.ServiceLinker
 {
-    public partial class LinkerResourceData : IUtf8JsonSerializable, IJsonModel<LinkerResourceData>
+    /// <summary> Linker of source and target resource. </summary>
+    public partial class LinkerResourceData : ResourceData, IJsonModel<LinkerResourceData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<LinkerResourceData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LinkerResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeLinkerResourceData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(LinkerResourceData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<LinkerResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(LinkerResourceData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<LinkerResourceData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LinkerResourceData IPersistableModel<LinkerResourceData>.Create(BinaryData data, ModelReaderWriterOptions options) => (LinkerResourceData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LinkerResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="linkerResourceData"> The <see cref="LinkerResourceData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(LinkerResourceData linkerResourceData)
+        {
+            if (linkerResourceData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(linkerResourceData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="LinkerResourceData"/> from. </param>
+        internal static LinkerResourceData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeLinkerResourceData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LinkerResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -31,257 +90,113 @@ namespace Azure.ResourceManager.ServiceLinker
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LinkerResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkerResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LinkerResourceData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(TargetService))
+            writer.WriteObjectValue(Properties, options);
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                writer.WritePropertyName("targetService"u8);
-                writer.WriteObjectValue(TargetService, options);
-            }
-            if (Optional.IsDefined(AuthInfo))
-            {
-                writer.WritePropertyName("authInfo"u8);
-                writer.WriteObjectValue(AuthInfo, options);
-            }
-            if (Optional.IsDefined(ClientType))
-            {
-                writer.WritePropertyName("clientType"u8);
-                writer.WriteStringValue(ClientType.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState);
-            }
-            if (Optional.IsDefined(VnetSolution))
-            {
-                if (VnetSolution != null)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
-                    writer.WritePropertyName("vNetSolution"u8);
-                    writer.WriteObjectValue(VnetSolution, options);
-                }
-                else
-                {
-                    writer.WriteNull("vNetSolution");
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
                 }
             }
-            if (Optional.IsDefined(SecretStore))
-            {
-                if (SecretStore != null)
-                {
-                    writer.WritePropertyName("secretStore"u8);
-                    writer.WriteObjectValue(SecretStore, options);
-                }
-                else
-                {
-                    writer.WriteNull("secretStore");
-                }
-            }
-            if (Optional.IsDefined(Scope))
-            {
-                if (Scope != null)
-                {
-                    writer.WritePropertyName("scope"u8);
-                    writer.WriteStringValue(Scope);
-                }
-                else
-                {
-                    writer.WriteNull("scope");
-                }
-            }
-            writer.WriteEndObject();
         }
 
-        LinkerResourceData IJsonModel<LinkerResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LinkerResourceData IJsonModel<LinkerResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (LinkerResourceData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<LinkerResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<LinkerResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(LinkerResourceData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeLinkerResourceData(document.RootElement, options);
         }
 
-        internal static LinkerResourceData DeserializeLinkerResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static LinkerResourceData DeserializeLinkerResourceData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ResourceIdentifier id = default;
             string name = default;
-            ResourceType type = default;
+            ResourceType resourceType = default;
             SystemData systemData = default;
-            TargetServiceBaseInfo targetService = default;
-            AuthBaseInfo authInfo = default;
-            LinkerClientType? clientType = default;
-            string provisioningState = default;
-            VnetSolution vnetSolution = default;
-            LinkerSecretStore secretStore = default;
-            string scope = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            LinkerProperties properties = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    id = new ResourceIdentifier(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("systemData"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(property.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceLinkerContext.Default);
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    resourceType = new ResourceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("systemData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        if (property0.NameEquals("targetService"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            targetService = TargetServiceBaseInfo.DeserializeTargetServiceBaseInfo(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("authInfo"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            authInfo = AuthBaseInfo.DeserializeAuthBaseInfo(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("clientType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            clientType = new LinkerClientType(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            provisioningState = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("vNetSolution"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                vnetSolution = null;
-                                continue;
-                            }
-                            vnetSolution = VnetSolution.DeserializeVnetSolution(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("secretStore"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                secretStore = null;
-                                continue;
-                            }
-                            secretStore = LinkerSecretStore.DeserializeLinkerSecretStore(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("scope"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                scope = null;
-                                continue;
-                            }
-                            scope = property0.Value.GetString();
-                            continue;
-                        }
+                        continue;
                     }
+                    systemData = ModelReaderWriter.Read<SystemData>(new BinaryData(Encoding.UTF8.GetBytes(prop.Value.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceLinkerContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    properties = LinkerProperties.DeserializeLinkerProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new LinkerResourceData(
                 id,
                 name,
-                type,
+                resourceType,
                 systemData,
-                targetService,
-                authInfo,
-                clientType,
-                provisioningState,
-                vnetSolution,
-                secretStore,
-                scope,
-                serializedAdditionalRawData);
+                properties,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<LinkerResourceData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LinkerResourceData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(LinkerResourceData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        LinkerResourceData IPersistableModel<LinkerResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<LinkerResourceData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeLinkerResourceData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(LinkerResourceData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<LinkerResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

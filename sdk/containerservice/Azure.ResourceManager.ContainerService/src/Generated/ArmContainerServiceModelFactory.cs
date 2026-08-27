@@ -392,14 +392,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="nodePublicIPTags"> IPTags of instance-level public IPs. </param>
         /// <param name="allowedHostPorts"> The port ranges that are allowed to access. The specified ranges are allowed to overlap. </param>
         /// <param name="applicationSecurityGroups"> The IDs of the application security groups which agent pool will associate when created. </param>
+        /// <param name="dranetMode"> The DRANET mode for the agent pool. </param>
         /// <returns> A new <see cref="Models.AgentPoolNetworkProfile"/> instance for mocking. </returns>
-        public static AgentPoolNetworkProfile AgentPoolNetworkProfile(IEnumerable<ContainerServiceIPTag> nodePublicIPTags = default, IEnumerable<AgentPoolNetworkPortRange> allowedHostPorts = default, IEnumerable<ResourceIdentifier> applicationSecurityGroups = default)
+        public static AgentPoolNetworkProfile AgentPoolNetworkProfile(IEnumerable<ContainerServiceIPTag> nodePublicIPTags = default, IEnumerable<AgentPoolNetworkPortRange> allowedHostPorts = default, IEnumerable<ResourceIdentifier> applicationSecurityGroups = default, DranetMode? dranetMode = default)
         {
             nodePublicIPTags ??= new ChangeTrackingList<ContainerServiceIPTag>();
             allowedHostPorts ??= new ChangeTrackingList<AgentPoolNetworkPortRange>();
             applicationSecurityGroups ??= new ChangeTrackingList<ResourceIdentifier>();
 
-            return new AgentPoolNetworkProfile((nodePublicIPTags ?? new ChangeTrackingList<ContainerServiceIPTag>()).ToList(), (allowedHostPorts ?? new ChangeTrackingList<AgentPoolNetworkPortRange>()).ToList(), (applicationSecurityGroups ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
+            return new AgentPoolNetworkProfile((nodePublicIPTags ?? new ChangeTrackingList<ContainerServiceIPTag>()).ToList(), (allowedHostPorts ?? new ChangeTrackingList<AgentPoolNetworkPortRange>()).ToList(), (applicationSecurityGroups ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), dranetMode is null ? default : new DRANETProfile(dranetMode, default), default);
         }
 
         /// <param name="ipTagType"> The IP tag type. Example: RoutingPreference. </param>
@@ -992,6 +993,35 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterLoadBalancerProfileManagedOutboundIPs(count, countIPv6, default);
         }
 
+        /// <param name="sku"> The SKU of the managed cluster NAT Gateway. Defaults to 'StandardV2' where available in the region, otherwise 'Standard'. </param>
+        /// <param name="managedOutboundIPProfile"> Profile of the managed outbound IP resources of the cluster NAT gateway. </param>
+        /// <param name="effectiveOutboundIPs"> The effective outbound IP resources of the cluster NAT gateway. </param>
+        /// <param name="outboundPublicIPPrefixes"> A list of public IP prefix resources. </param>
+        /// <param name="outboundPublicIPs"> A list of public IP resources. </param>
+        /// <param name="idleTimeoutInMinutes"> Desired outbound flow idle timeout in minutes. Allowed values are in the range of 4 to 120 (inclusive). The default value is 4 minutes. </param>
+        /// <returns> A new <see cref="Models.ManagedClusterNatGatewayProfile"/> instance for mocking. </returns>
+        public static ManagedClusterNatGatewayProfile ManagedClusterNatGatewayProfile(ManagedClusterNatGatewaySku? sku = default, ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile = default, IEnumerable<WritableSubResource> effectiveOutboundIPs = default, IEnumerable<ResourceIdentifier> outboundPublicIPPrefixes = default, IEnumerable<ResourceIdentifier> outboundPublicIPs = default, int? idleTimeoutInMinutes = default)
+        {
+            effectiveOutboundIPs ??= new ChangeTrackingList<WritableSubResource>();
+
+            return new ManagedClusterNatGatewayProfile(
+                sku,
+                managedOutboundIPProfile,
+                (effectiveOutboundIPs ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                outboundPublicIPPrefixes is null ? default : new ManagedClusterNATGatewayProfileOutboundIPPrefixes((outboundPublicIPPrefixes ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default),
+                outboundPublicIPs is null ? default : new ManagedClusterNATGatewayProfileOutboundIPs((outboundPublicIPs ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default),
+                idleTimeoutInMinutes,
+                default);
+        }
+
+        /// <param name="count"> The desired number of outbound IPs created/managed by Azure. Allowed values must be in the range of 1 to 16 (inclusive). The default value is 1. </param>
+        /// <param name="countIPv6"> The desired number of IPv6 outbound IPs created/managed by Azure. Allowed values must be in the range of 1 to 16 (inclusive). </param>
+        /// <returns> A new <see cref="Models.ManagedClusterManagedOutboundIPProfile"/> instance for mocking. </returns>
+        public static ManagedClusterManagedOutboundIPProfile ManagedClusterManagedOutboundIPProfile(int? count = default, int? countIPv6 = default)
+        {
+            return new ManagedClusterManagedOutboundIPProfile(count, countIPv6, default);
+        }
+
         /// <param name="isManagedAadEnabled"> Whether to enable managed AAD. </param>
         /// <param name="isAzureRbacEnabled"> Whether to enable Azure RBAC for Kubernetes authorization. </param>
         /// <param name="adminGroupObjectIds"> The list of AAD group object IDs that will have admin role of the cluster. </param>
@@ -1216,6 +1246,15 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new ManagedClusterStorageProfile(isDiskCsiDriverEnabled is null ? default : new ManagedClusterStorageProfileDiskCsiDriver(isDiskCsiDriverEnabled, default), isFileCsiDriverEnabled is null ? default : new ManagedClusterStorageProfileFileCsiDriver(isFileCsiDriverEnabled, default), isSnapshotControllerEnabled is null ? default : new ManagedClusterStorageProfileSnapshotController(isSnapshotControllerEnabled, default), isBlobCsiDriverEnabled is null ? default : new ManagedClusterStorageProfileBlobCsiDriver(isBlobCsiDriverEnabled, default), default);
         }
 
+        /// <param name="metrics"> Metrics profile for the Azure Monitor managed service for Prometheus addon. Collect out-of-the-box Kubernetes infrastructure metrics to send to an Azure Monitor Workspace and configure additional scraping for custom targets. See aka.ms/AzureManagedPrometheus for an overview. </param>
+        /// <param name="containerInsights"> Set this to enable and configure Azure Monitor Container Insights for the cluster, which collects Kubernetes events, inventory, and container stdout &amp; stderr logs. See aka.ms/AzureMonitorContainerInsights for an overview. </param>
+        /// <param name="appMonitoring"> Application Monitoring Profile for Kubernetes Application Container. Collects application logs, metrics and traces through auto-instrumentation of the application using Azure Monitor OpenTelemetry based SDKs. See aka.ms/AzureMonitorApplicationMonitoring for an overview. </param>
+        /// <returns> A new <see cref="Models.ManagedClusterAzureMonitorProfile"/> instance for mocking. </returns>
+        public static ManagedClusterAzureMonitorProfile ManagedClusterAzureMonitorProfile(ManagedClusterMonitorProfileMetrics metrics = default, ManagedClusterAzureMonitorProfileContainerInsights containerInsights = default, ManagedClusterAzureMonitorProfileAppMonitoring appMonitoring = default)
+        {
+            return new ManagedClusterAzureMonitorProfile(metrics, containerInsights, appMonitoring, default);
+        }
+
         /// <param name="isEnabled"> Whether to enable or disable the Azure Managed Prometheus addon for Prometheus monitoring. See aka.ms/AzureManagedPrometheus-aks-enable for details on enabling and disabling. </param>
         /// <param name="kubeStateMetrics"> Kube State Metrics profile for the Azure Managed Prometheus addon. These optional settings are for the kube-state-metrics pod that is deployed with the addon. See aka.ms/AzureManagedPrometheus-optional-parameters for details. </param>
         /// <param name="isControlPlaneEnabled"> Whether to enable or disable collection of control plane metrics by the Azure Managed Prometheus addon. Defaults to disabled. See aka.ms/aks/controlplane-metrics for details. </param>
@@ -1231,6 +1270,50 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static ManagedClusterMonitorProfileKubeStateMetrics ManagedClusterMonitorProfileKubeStateMetrics(string metricLabelsAllowlist = default, string metricAnnotationsAllowList = default)
         {
             return new ManagedClusterMonitorProfileKubeStateMetrics(metricLabelsAllowlist, metricAnnotationsAllowList, default);
+        }
+
+        /// <param name="isContainerInsightsEnabled"> Indicates if Azure Monitor Container Insights Logs Addon is enabled or not. </param>
+        /// <param name="logAnalyticsWorkspaceResourceId"> Fully Qualified ARM Resource Id of Azure Log Analytics Workspace for storing Azure Monitor Container Insights Logs. </param>
+        /// <param name="syslogPort"> The syslog host port. If not specified, the default port is 28330. </param>
+        /// <param name="isPrometheusMetricsScrapingDisabled"> Indicates whether prometheus metrics scraping is disabled or not. If not specified the default is false i.e. the prometheus scraping is enabled. </param>
+        /// <param name="containerNetworkLogs"> Configures container network logs ingestion with Azure Monitor. The log types ingested are controlled by the associated CRD; if unspecified, defaults to `Disabled`. See https://aka.ms/ContainerNetworkLogsDoc and https://aka.ms/acns/howtoenablecnl for details. </param>
+        /// <returns> A new <see cref="Models.ManagedClusterAzureMonitorProfileContainerInsights"/> instance for mocking. </returns>
+        public static ManagedClusterAzureMonitorProfileContainerInsights ManagedClusterAzureMonitorProfileContainerInsights(bool? isContainerInsightsEnabled = default, ResourceIdentifier logAnalyticsWorkspaceResourceId = default, long? syslogPort = default, bool? isPrometheusMetricsScrapingDisabled = default, ContainerNetworkLogs? containerNetworkLogs = default)
+        {
+            return new ManagedClusterAzureMonitorProfileContainerInsights(
+                isContainerInsightsEnabled,
+                logAnalyticsWorkspaceResourceId,
+                syslogPort,
+                isPrometheusMetricsScrapingDisabled,
+                containerNetworkLogs,
+                default);
+        }
+
+        /// <param name="isAppMonitoringAutoInstrumentationEnabled"> Indicates if Application Monitoring Auto-instrumentation is enabled or not. </param>
+        /// <param name="openTelemetryMetrics"> Application Monitoring OpenTelemetry Metrics Profile for AKS. Collects OpenTelemetry metrics of the application using Azure Monitor OpenTelemetry based SDKs. See https://aka.ms/AKSAppMonitoringDocs and https://aka.ms/AzureMonitorApplicationMonitoring for an overview. </param>
+        /// <param name="openTelemetryLogsAndTraces"> Application Monitoring OpenTelemetry logs and traces profile for AKS. Collects OpenTelemetry logs and traces of the application using Azure Monitor OpenTelemetry based SDKs. See https://aka.ms/AKSAppMonitoringDocs and https://aka.ms/AzureMonitorApplicationMonitoring for an overview. </param>
+        /// <returns> A new <see cref="Models.ManagedClusterAzureMonitorProfileAppMonitoring"/> instance for mocking. </returns>
+        public static ManagedClusterAzureMonitorProfileAppMonitoring ManagedClusterAzureMonitorProfileAppMonitoring(bool? isAppMonitoringAutoInstrumentationEnabled = default, ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics openTelemetryMetrics = default, ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces openTelemetryLogsAndTraces = default)
+        {
+            return new ManagedClusterAzureMonitorProfileAppMonitoring(isAppMonitoringAutoInstrumentationEnabled is null ? default : new ManagedClusterAzureMonitorProfileAppMonitoringAutoInstrumentation(isAppMonitoringAutoInstrumentationEnabled, default), openTelemetryMetrics, openTelemetryLogsAndTraces, default);
+        }
+
+        /// <param name="isAppMonitoringOpenTelemetryMetricsEnabled"> Indicates if Application Monitoring OpenTelemetry Metrics is enabled or not. </param>
+        /// <param name="httpPort"> The host port for OpenTelemetry HTTP/PROTOBUF metrics. If not specified, the default port is 28333. </param>
+        /// <param name="grpcPort"> The host port for OpenTelemetry GRPC metrics. If not specified, the default port is 28334. </param>
+        /// <returns> A new <see cref="Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics"/> instance for mocking. </returns>
+        public static ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics(bool? isAppMonitoringOpenTelemetryMetricsEnabled = default, long? httpPort = default, long? grpcPort = default)
+        {
+            return new ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics(isAppMonitoringOpenTelemetryMetricsEnabled, httpPort, grpcPort, default);
+        }
+
+        /// <param name="isAppMonitoringOpenTelemetryLogsAndTracesEnabled"> Indicates if Application Monitoring OpenTelemetry Logs and traces is enabled or not. </param>
+        /// <param name="httpPort"> The host port for OpenTelemetry HTTP/PROTOBUF logs and traces. If not specified, the default port is 28331. </param>
+        /// <param name="grpcPort"> The host port for OpenTelemetry GRPC logs and traces. If not specified, the default port is 28332. </param>
+        /// <returns> A new <see cref="Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces"/> instance for mocking. </returns>
+        public static ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces(bool? isAppMonitoringOpenTelemetryLogsAndTracesEnabled = default, long? httpPort = default, long? grpcPort = default)
+        {
+            return new ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces(isAppMonitoringOpenTelemetryLogsAndTracesEnabled, httpPort, grpcPort, default);
         }
 
         /// <param name="mode"> Mode of the service mesh. </param>
@@ -1999,6 +2082,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                 default);
         }
 
+        /// <param name="nodePublicIPTags"> IPTags of instance-level public IPs. </param>
+        /// <param name="allowedHostPorts"> The port ranges that are allowed to access. The specified ranges are allowed to overlap. </param>
+        /// <param name="applicationSecurityGroups"> The IDs of the application security groups which agent pool will associate when created. </param>
+        /// <returns> A new <see cref="Models.AgentPoolNetworkProfile"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AgentPoolNetworkProfile AgentPoolNetworkProfile(IEnumerable<ContainerServiceIPTag> nodePublicIPTags = default, IEnumerable<AgentPoolNetworkPortRange> allowedHostPorts = default, IEnumerable<ResourceIdentifier> applicationSecurityGroups = default)
+        {
+            return new AgentPoolNetworkProfile((nodePublicIPTags ?? new ChangeTrackingList<ContainerServiceIPTag>()).ToList(), (allowedHostPorts ?? new ChangeTrackingList<AgentPoolNetworkPortRange>()).ToList(), (applicationSecurityGroups ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default, default);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -2355,7 +2448,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     new ManagedClusterIngressProfile(ingressWebAppRouting, default, default),
                     publicNetworkAccess,
                     workloadAutoScalerProfile,
-                    new ManagedClusterAzureMonitorProfile(azureMonitorMetrics, default, default),
+                    new ManagedClusterAzureMonitorProfile(azureMonitorMetrics, default, default, default),
                     serviceMeshProfile,
                     resourceId,
                     new ManagedClusterMetricsProfile(new ManagedClusterCostAnalysis(isCostAnalysisEnabled, default), default),
@@ -2636,7 +2729,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         default), default, default),
                     publicNetworkAccess,
                     workloadAutoScalerProfile,
-                    new ManagedClusterAzureMonitorProfile(azureMonitorMetrics, default, default),
+                    new ManagedClusterAzureMonitorProfile(azureMonitorMetrics, default, default, default),
                     serviceMeshProfile,
                     resourceId,
                     default,
@@ -2761,7 +2854,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     new ManagedClusterIngressProfile(ingressWebAppRouting, default, default),
                     publicNetworkAccess,
                     workloadAutoScalerProfile,
-                    new ManagedClusterAzureMonitorProfile(azureMonitorMetrics, default, default),
+                    new ManagedClusterAzureMonitorProfile(azureMonitorMetrics, default, default, default),
                     serviceMeshProfile,
                     resourceId,
                     new ManagedClusterMetricsProfile(new ManagedClusterCostAnalysis(isCostAnalysisEnabled, default), default),

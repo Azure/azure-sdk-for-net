@@ -1123,6 +1123,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public AgentPoolNetworkProfile() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerService.Models.AgentPoolNetworkPortRange> AllowedHostPorts { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> ApplicationSecurityGroups { get { throw null; } }
+        public Azure.ResourceManager.ContainerService.Models.DranetMode? DranetMode { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.ContainerService.Models.ContainerServiceIPTag> NodePublicIPTags { get { throw null; } }
         protected virtual Azure.ResourceManager.ContainerService.Models.AgentPoolNetworkProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1188,6 +1189,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         private readonly int _dummyPrimitive;
         public AgentPoolSshAccess(string value) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.AgentPoolSshAccess Disabled { get { throw null; } }
+        public static Azure.ResourceManager.ContainerService.Models.AgentPoolSshAccess EntraId { get { throw null; } }
         public static Azure.ResourceManager.ContainerService.Models.AgentPoolSshAccess LocalUser { get { throw null; } }
         public bool Equals(Azure.ResourceManager.ContainerService.Models.AgentPoolSshAccess other) { throw null; }
         public override bool Equals(object obj) { throw null; }
@@ -1272,6 +1274,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static Azure.ResourceManager.ContainerService.Models.AgentPoolDeleteMachinesContent AgentPoolDeleteMachinesContent(System.Collections.Generic.IEnumerable<string> machineNames = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.AgentPoolNetworkPortRange AgentPoolNetworkPortRange(int? portStart = default(int?), int? portEnd = default(int?), Azure.ResourceManager.ContainerService.Models.AgentPoolNetworkPortProtocol? protocol = default(Azure.ResourceManager.ContainerService.Models.AgentPoolNetworkPortProtocol?)) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.AgentPoolNetworkProfile AgentPoolNetworkProfile(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.ContainerServiceIPTag> nodePublicIPTags = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.AgentPoolNetworkPortRange> allowedHostPorts = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> applicationSecurityGroups = null) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.AgentPoolNetworkProfile AgentPoolNetworkProfile(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.ContainerServiceIPTag> nodePublicIPTags = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.AgentPoolNetworkPortRange> allowedHostPorts = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> applicationSecurityGroups = null, Azure.ResourceManager.ContainerService.Models.DranetMode? dranetMode = default(Azure.ResourceManager.ContainerService.Models.DranetMode?)) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.AgentPoolRecentlyUsedVersion AgentPoolRecentlyUsedVersion(string orchestratorVersion = null, string nodeImageVersion = null, System.DateTimeOffset? lastUsedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.AgentPoolScaleProfile AgentPoolScaleProfile(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.ManualScaleProfile> manual = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.AgentPoolAutoScaleProfile> autoscale = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.AgentPoolSecurityProfile AgentPoolSecurityProfile(bool? isVtpmEnabled = default(bool?), bool? isSecureBootEnabled = default(bool?), Azure.ResourceManager.ContainerService.Models.AgentPoolSshAccess? sshAccess = default(Azure.ResourceManager.ContainerService.Models.AgentPoolSshAccess?)) { throw null; }
@@ -1356,7 +1359,12 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterApiServerAccessProfile ManagedClusterApiServerAccessProfile(System.Collections.Generic.IEnumerable<string> authorizedIPRanges = null, bool? isPrivateClusterEnabled = default(bool?), string privateDnsZone = null, bool? isPrivateClusterPublicFqdnEnabled = default(bool?), bool? isRunCommandDisabled = default(bool?), bool? isVnetIntegrationEnabled = default(bool?), Azure.Core.ResourceIdentifier subnetId = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterAutoScalerProfile ManagedClusterAutoScalerProfile(string balanceSimilarNodeGroups = null, bool? isDaemonsetEvictionForEmptyNodesEnabled = default(bool?), bool? isDaemonsetEvictionForOccupiedNodesEnabled = default(bool?), bool? isDaemonsetsUtilizationIgnored = default(bool?), Azure.ResourceManager.ContainerService.Models.AutoScaleExpander? expander = default(Azure.ResourceManager.ContainerService.Models.AutoScaleExpander?), string maxEmptyBulkDelete = null, string maxGracefulTerminationSec = null, string maxNodeProvisionTime = null, string maxTotalUnreadyPercentage = null, string newPodScaleUpDelay = null, string okTotalUnreadyCount = null, string scanIntervalInSeconds = null, string scaleDownDelayAfterAdd = null, string scaleDownDelayAfterDelete = null, string scaleDownDelayAfterFailure = null, string scaleDownUnneededTime = null, string scaleDownUnreadyTime = null, string scaleDownUtilizationThreshold = null, string skipNodesWithLocalStorage = null, string skipNodesWithSystemPods = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterAutoUpgradeProfile ManagedClusterAutoUpgradeProfile(Azure.ResourceManager.ContainerService.Models.UpgradeChannel? upgradeChannel = default(Azure.ResourceManager.ContainerService.Models.UpgradeChannel?), Azure.ResourceManager.ContainerService.Models.ManagedClusterNodeOSUpgradeChannel? nodeOSUpgradeChannel = default(Azure.ResourceManager.ContainerService.Models.ManagedClusterNodeOSUpgradeChannel?)) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfile ManagedClusterAzureMonitorProfile(Azure.ResourceManager.ContainerService.Models.ManagedClusterMonitorProfileMetrics metrics = null, Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileContainerInsights containerInsights = null, Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoring appMonitoring = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfile ManagedClusterAzureMonitorProfile(Azure.ResourceManager.ContainerService.Models.ManagedClusterMonitorProfileMetrics metrics = null, bool? isAppMonitoringAutoInstrumentationEnabled = default(bool?)) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoring ManagedClusterAzureMonitorProfileAppMonitoring(bool? isAppMonitoringAutoInstrumentationEnabled = default(bool?), Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics openTelemetryMetrics = null, Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces openTelemetryLogsAndTraces = null) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces(bool? isAppMonitoringOpenTelemetryLogsAndTracesEnabled = default(bool?), long? httpPort = default(long?), long? grpcPort = default(long?)) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics(bool? isAppMonitoringOpenTelemetryMetricsEnabled = default(bool?), long? httpPort = default(long?), long? grpcPort = default(long?)) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileContainerInsights ManagedClusterAzureMonitorProfileContainerInsights(bool? isContainerInsightsEnabled = default(bool?), Azure.Core.ResourceIdentifier logAnalyticsWorkspaceResourceId = null, long? syslogPort = default(long?), bool? isPrometheusMetricsScrapingDisabled = default(bool?), Azure.ResourceManager.ContainerService.Models.ContainerNetworkLogs? containerNetworkLogs = default(Azure.ResourceManager.ContainerService.Models.ContainerNetworkLogs?)) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterBootstrapProfile ManagedClusterBootstrapProfile(Azure.ResourceManager.ContainerService.Models.ContainerServiceArtifactSource? artifactSource = default(Azure.ResourceManager.ContainerService.Models.ContainerServiceArtifactSource?), Azure.Core.ResourceIdentifier containerRegistryId = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterCredential ManagedClusterCredential(string name = null, byte[] value = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterCredentials ManagedClusterCredentials(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ContainerService.Models.ManagedClusterCredential> kubeconfigs = null) { throw null; }
@@ -1371,11 +1379,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterIngressProfileWebAppRouting ManagedClusterIngressProfileWebAppRouting(bool? isEnabled = default(bool?), Azure.ResourceManager.ContainerService.Models.GatewayApiIstioMode? gatewayApiImplementationsIstioMode = default(Azure.ResourceManager.ContainerService.Models.GatewayApiIstioMode?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> dnsZoneResourceIds = null, Azure.ResourceManager.ContainerService.Models.NginxIngressControllerType? nginxDefaultIngressControllerType = default(Azure.ResourceManager.ContainerService.Models.NginxIngressControllerType?), Azure.ResourceManager.ContainerService.Models.ContainerServiceUserAssignedIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerProfile ManagedClusterLoadBalancerProfile(Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerProfileManagedOutboundIPs managedOutboundIPs = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> outboundPublicIPPrefixes = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> outboundPublicIPs = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> effectiveOutboundIPs = null, int? allocatedOutboundPorts = default(int?), int? idleTimeoutInMinutes = default(int?), bool? isMultipleStandardLoadBalancersEnabled = default(bool?), Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerBackendPoolType? backendPoolType = default(Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerBackendPoolType?)) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerProfileManagedOutboundIPs ManagedClusterLoadBalancerProfileManagedOutboundIPs(int? count = default(int?), int? countIPv6 = default(int?)) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterManagedOutboundIPProfile ManagedClusterManagedOutboundIPProfile(int? count = default(int?), int? countIPv6 = default(int?)) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterMonitorProfileKubeStateMetrics ManagedClusterMonitorProfileKubeStateMetrics(string metricLabelsAllowlist = null, string metricAnnotationsAllowList = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterMonitorProfileMetrics ManagedClusterMonitorProfileMetrics(bool isEnabled = false, Azure.ResourceManager.ContainerService.Models.ManagedClusterMonitorProfileKubeStateMetrics kubeStateMetrics = null, bool? isControlPlaneEnabled = default(bool?)) { throw null; }
         public static Azure.ResourceManager.ContainerService.ManagedClusterNamespaceData ManagedClusterNamespaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ContainerService.Models.ManagedClusterNamespaceProperties properties = null, Azure.ETag? eTag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.ContainerService.ManagedClusterNamespaceData ManagedClusterNamespaceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ETag? etag = default(Azure.ETag?), Azure.ResourceManager.ContainerService.Models.ManagedClusterNamespaceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterNamespaceProperties ManagedClusterNamespaceProperties(Azure.ResourceManager.ContainerService.Models.ManagedClusterNamespaceProvisioningState? provisioningState = default(Azure.ResourceManager.ContainerService.Models.ManagedClusterNamespaceProvisioningState?), System.Collections.Generic.IDictionary<string, string> labels = null, System.Collections.Generic.IDictionary<string, string> annotations = null, string portalFqdn = null, Azure.ResourceManager.ContainerService.Models.NamespaceResourceQuota defaultResourceQuota = null, Azure.ResourceManager.ContainerService.Models.NamespaceNetworkPolicies defaultNetworkPolicy = null, Azure.ResourceManager.ContainerService.Models.NamespaceAdoptionPolicy? adoptionPolicy = default(Azure.ResourceManager.ContainerService.Models.NamespaceAdoptionPolicy?), Azure.ResourceManager.ContainerService.Models.NamespaceDeletePolicy? deletePolicy = default(Azure.ResourceManager.ContainerService.Models.NamespaceDeletePolicy?)) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterNatGatewayProfile ManagedClusterNatGatewayProfile(Azure.ResourceManager.ContainerService.Models.ManagedClusterNatGatewaySku? sku = default(Azure.ResourceManager.ContainerService.Models.ManagedClusterNatGatewaySku?), Azure.ResourceManager.ContainerService.Models.ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> effectiveOutboundIPs = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> outboundPublicIPPrefixes = null, System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> outboundPublicIPs = null, int? idleTimeoutInMinutes = default(int?)) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterNatGatewayProfile ManagedClusterNatGatewayProfile(int? managedOutboundIPCount = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WritableSubResource> effectiveOutboundIPs = null, int? idleTimeoutInMinutes = default(int?)) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterNodeProvisioningProfile ManagedClusterNodeProvisioningProfile(Azure.ResourceManager.ContainerService.Models.NodeProvisioningMode? mode = default(Azure.ResourceManager.ContainerService.Models.NodeProvisioningMode?), Azure.ResourceManager.ContainerService.Models.NodeProvisioningDefaultNodePool? defaultNodePools = default(Azure.ResourceManager.ContainerService.Models.NodeProvisioningDefaultNodePool?)) { throw null; }
         public static Azure.ResourceManager.ContainerService.Models.ManagedClusterOidcIssuerProfile ManagedClusterOidcIssuerProfile(string issuerUriInfo = null, bool? isEnabled = default(bool?)) { throw null; }
@@ -1448,6 +1458,23 @@ namespace Azure.ResourceManager.ContainerService.Models
         Azure.ResourceManager.ContainerService.Models.CompatibleVersions System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.CompatibleVersions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.CompatibleVersions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.CompatibleVersions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ContainerNetworkLogs : System.IEquatable<Azure.ResourceManager.ContainerService.Models.ContainerNetworkLogs>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ContainerNetworkLogs(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ContainerNetworkLogs Disabled { get { throw null; } }
+        public static Azure.ResourceManager.ContainerService.Models.ContainerNetworkLogs Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerService.Models.ContainerNetworkLogs other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerService.Models.ContainerNetworkLogs left, Azure.ResourceManager.ContainerService.Models.ContainerNetworkLogs right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerService.Models.ContainerNetworkLogs (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerService.Models.ContainerNetworkLogs? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerService.Models.ContainerNetworkLogs left, Azure.ResourceManager.ContainerService.Models.ContainerNetworkLogs right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ContainerServiceArtifactSource : System.IEquatable<Azure.ResourceManager.ContainerService.Models.ContainerServiceArtifactSource>
@@ -2189,6 +2216,23 @@ namespace Azure.ResourceManager.ContainerService.Models
         public static implicit operator Azure.ResourceManager.ContainerService.Models.ContainerServiceWeekDay (string value) { throw null; }
         public static implicit operator Azure.ResourceManager.ContainerService.Models.ContainerServiceWeekDay? (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.ContainerService.Models.ContainerServiceWeekDay left, Azure.ResourceManager.ContainerService.Models.ContainerServiceWeekDay right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct DranetMode : System.IEquatable<Azure.ResourceManager.ContainerService.Models.DranetMode>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public DranetMode(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.DranetMode Managed { get { throw null; } }
+        public static Azure.ResourceManager.ContainerService.Models.DranetMode Unmanaged { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerService.Models.DranetMode other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerService.Models.DranetMode left, Azure.ResourceManager.ContainerService.Models.DranetMode right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerService.Models.DranetMode (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerService.Models.DranetMode? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerService.Models.DranetMode left, Azure.ResourceManager.ContainerService.Models.DranetMode right) { throw null; }
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
@@ -2963,6 +3007,8 @@ namespace Azure.ResourceManager.ContainerService.Models
     public partial class ManagedClusterAzureMonitorProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfile>
     {
         public ManagedClusterAzureMonitorProfile() { }
+        public Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoring AppMonitoring { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileContainerInsights ContainerInsights { get { throw null; } set { } }
         public bool? IsAppMonitoringAutoInstrumentationEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.ContainerService.Models.ManagedClusterMonitorProfileMetrics Metrics { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2974,6 +3020,72 @@ namespace Azure.ResourceManager.ContainerService.Models
         Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ManagedClusterAzureMonitorProfileAppMonitoring : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoring>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoring>
+    {
+        public ManagedClusterAzureMonitorProfileAppMonitoring() { }
+        public bool? IsAppMonitoringAutoInstrumentationEnabled { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces OpenTelemetryLogsAndTraces { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics OpenTelemetryMetrics { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoring JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoring PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoring System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoring>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoring>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoring System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoring>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoring>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoring>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces>
+    {
+        public ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces() { }
+        public long? GrpcPort { get { throw null; } set { } }
+        public long? HttpPort { get { throw null; } set { } }
+        public bool? IsAppMonitoringOpenTelemetryLogsAndTracesEnabled { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryLogsAndTraces>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics>
+    {
+        public ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics() { }
+        public long? GrpcPort { get { throw null; } set { } }
+        public long? HttpPort { get { throw null; } set { } }
+        public bool? IsAppMonitoringOpenTelemetryMetricsEnabled { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileAppMonitoringOpenTelemetryMetrics>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ManagedClusterAzureMonitorProfileContainerInsights : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileContainerInsights>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileContainerInsights>
+    {
+        public ManagedClusterAzureMonitorProfileContainerInsights() { }
+        public Azure.ResourceManager.ContainerService.Models.ContainerNetworkLogs? ContainerNetworkLogs { get { throw null; } set { } }
+        public bool? IsContainerInsightsEnabled { get { throw null; } set { } }
+        public bool? IsPrometheusMetricsScrapingDisabled { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier LogAnalyticsWorkspaceResourceId { get { throw null; } set { } }
+        public long? SyslogPort { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileContainerInsights JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileContainerInsights PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileContainerInsights System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileContainerInsights>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileContainerInsights>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileContainerInsights System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileContainerInsights>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileContainerInsights>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterAzureMonitorProfileContainerInsights>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ManagedClusterBootstrapProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterBootstrapProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterBootstrapProfile>
     {
@@ -3232,6 +3344,21 @@ namespace Azure.ResourceManager.ContainerService.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerProfileManagedOutboundIPs>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterLoadBalancerProfileManagedOutboundIPs>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ManagedClusterManagedOutboundIPProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterManagedOutboundIPProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterManagedOutboundIPProfile>
+    {
+        public ManagedClusterManagedOutboundIPProfile() { }
+        public int? Count { get { throw null; } set { } }
+        public int? CountIPv6 { get { throw null; } set { } }
+        protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterManagedOutboundIPProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterManagedOutboundIPProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.ContainerService.Models.ManagedClusterManagedOutboundIPProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterManagedOutboundIPProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterManagedOutboundIPProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ContainerService.Models.ManagedClusterManagedOutboundIPProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterManagedOutboundIPProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterManagedOutboundIPProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterManagedOutboundIPProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ManagedClusterMonitorProfileKubeStateMetrics : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterMonitorProfileKubeStateMetrics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterMonitorProfileKubeStateMetrics>
     {
         public ManagedClusterMonitorProfileKubeStateMetrics() { }
@@ -3311,6 +3438,10 @@ namespace Azure.ResourceManager.ContainerService.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.WritableSubResource> EffectiveOutboundIPs { get { throw null; } }
         public int? IdleTimeoutInMinutes { get { throw null; } set { } }
         public int? ManagedOutboundIPCount { get { throw null; } set { } }
+        public Azure.ResourceManager.ContainerService.Models.ManagedClusterManagedOutboundIPProfile ManagedOutboundIPProfile { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> OutboundPublicIPPrefixes { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Core.ResourceIdentifier> OutboundPublicIPs { get { throw null; } }
+        public Azure.ResourceManager.ContainerService.Models.ManagedClusterNatGatewaySku? Sku { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterNatGatewayProfile JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ContainerService.Models.ManagedClusterNatGatewayProfile PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -3320,6 +3451,23 @@ namespace Azure.ResourceManager.ContainerService.Models
         Azure.ResourceManager.ContainerService.Models.ManagedClusterNatGatewayProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterNatGatewayProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterNatGatewayProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerService.Models.ManagedClusterNatGatewayProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ManagedClusterNatGatewaySku : System.IEquatable<Azure.ResourceManager.ContainerService.Models.ManagedClusterNatGatewaySku>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ManagedClusterNatGatewaySku(string value) { throw null; }
+        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterNatGatewaySku Standard { get { throw null; } }
+        public static Azure.ResourceManager.ContainerService.Models.ManagedClusterNatGatewaySku StandardV2 { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ContainerService.Models.ManagedClusterNatGatewaySku other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ContainerService.Models.ManagedClusterNatGatewaySku left, Azure.ResourceManager.ContainerService.Models.ManagedClusterNatGatewaySku right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerService.Models.ManagedClusterNatGatewaySku (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.ContainerService.Models.ManagedClusterNatGatewaySku? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ContainerService.Models.ManagedClusterNatGatewaySku left, Azure.ResourceManager.ContainerService.Models.ManagedClusterNatGatewaySku right) { throw null; }
+        public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedClusterNodeOSUpgradeChannel : System.IEquatable<Azure.ResourceManager.ContainerService.Models.ManagedClusterNodeOSUpgradeChannel>

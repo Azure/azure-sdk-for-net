@@ -73,8 +73,8 @@ namespace Azure.Provisioning.MachineLearning
             base.DefineProvisionableProperties();
             DefineProperty<string>("inputDataType", new string[] { "inputDataType" }, defaultValue: "Static");
             _preprocessingComponentId = DefineProperty<string>(nameof(PreprocessingComponentId), new string[] { "preprocessingComponentId" });
-            _windowEnd = DefineProperty<DateTimeOffset>(nameof(WindowEnd), new string[] { "windowEnd" }, isRequired: true);
-            _windowStart = DefineProperty<DateTimeOffset>(nameof(WindowStart), new string[] { "windowStart" }, isRequired: true);
+            _windowEnd = DefineProperty<DateTimeOffset>(nameof(WindowEnd), new string[] { "windowEnd" }, isRequired: true, format: "O");
+            _windowStart = DefineProperty<DateTimeOffset>(nameof(WindowStart), new string[] { "windowStart" }, isRequired: true, format: "O");
             DefineAdditionalProperties();
         }
 

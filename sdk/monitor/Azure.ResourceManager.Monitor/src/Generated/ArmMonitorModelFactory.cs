@@ -43,18 +43,19 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="privateEndpointId"> The resource identifier of the private endpoint. </param>
         /// <returns> A new <see cref="Monitor.MonitorPrivateEndpointConnectionData"/> instance for mocking. </returns>
-        public static MonitorPrivateEndpointConnectionData MonitorPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorPrivateLinkServiceConnectionState connectionState = default, MonitorPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
+        public static MonitorPrivateEndpointConnectionData MonitorPrivateEndpointConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> groupIds = default, MonitorPrivateLinkServiceConnectionState connectionState = default, MonitorPrivateEndpointConnectionProvisioningState? provisioningState = default, ResourceIdentifier privateEndpointId = default)
         {
             return new MonitorPrivateEndpointConnectionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                groupIds is null && privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 
@@ -220,7 +221,7 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Network security configuration properties. </param>
         /// <returns> A new <see cref="Models.MonitorNetworkSecurityPerimeterConfigurationData"/> instance for mocking. </returns>
         public static MonitorNetworkSecurityPerimeterConfigurationData MonitorNetworkSecurityPerimeterConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MonitorNetworkSecurityPerimeterConfigurationProperties properties = default)
         {
@@ -233,11 +234,11 @@ namespace Azure.ResourceManager.Monitor.Models
                 default);
         }
 
-        /// <param name="provisioningState"></param>
+        /// <param name="provisioningState"> Provisioning state of the network security perimeter configuration. </param>
         /// <param name="provisioningIssues"> List of provisioning issues, if any. </param>
-        /// <param name="networkSecurityPerimeter"></param>
-        /// <param name="resourceAssociation"></param>
-        /// <param name="profile"></param>
+        /// <param name="networkSecurityPerimeter"> Information about the network security perimeter (NSP). </param>
+        /// <param name="resourceAssociation"> Information about the resource association. </param>
+        /// <param name="profile"> Network security perimeter configuration profile. </param>
         /// <returns> A new <see cref="Models.MonitorNetworkSecurityPerimeterConfigurationProperties"/> instance for mocking. </returns>
         public static MonitorNetworkSecurityPerimeterConfigurationProperties MonitorNetworkSecurityPerimeterConfigurationProperties(MonitorNetworkSecurityPerimeterConfigurationProvisioningState? provisioningState = default, IEnumerable<MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue> provisioningIssues = default, MonitorNetworkSecurityPerimeter networkSecurityPerimeter = default, MonitorNetworkSecurityPerimeterConfigurationResourceAssociation resourceAssociation = default, MonitorNetworkSecurityProfile profile = default)
         {
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <param name="name"> Name of the issue. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Details of the provisioning issue. </param>
         /// <returns> A new <see cref="Models.MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue"/> instance for mocking. </returns>
         public static MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue MonitorNetworkSecurityPerimeterConfigurationProvisioningIssue(string name = default, MonitorNetworkSecurityPerimeterConfigurationProvisioningIssueProperties properties = default)
         {
@@ -281,14 +282,14 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <param name="name"> Name of the access rule. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> Properties of the access rule. </param>
         /// <returns> A new <see cref="Models.MonitorNetworkSecurityPerimeterConfigurationAccessRule"/> instance for mocking. </returns>
         public static MonitorNetworkSecurityPerimeterConfigurationAccessRule MonitorNetworkSecurityPerimeterConfigurationAccessRule(string name = default, MonitorNetworkSecurityPerimeterConfigurationAccessRuleProperties properties = default)
         {
             return new MonitorNetworkSecurityPerimeterConfigurationAccessRule(name, properties, default);
         }
 
-        /// <param name="direction"></param>
+        /// <param name="direction"> Direction of the access rule. </param>
         /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
         /// <param name="networkSecurityPerimeters"> Network security perimeters for inbound rules. </param>
@@ -333,7 +334,7 @@ namespace Azure.ResourceManager.Monitor.Models
         }
 
         /// <param name="name"> Name of the resource association. </param>
-        /// <param name="accessMode"></param>
+        /// <param name="accessMode"> Access mode of the resource association. </param>
         /// <returns> A new <see cref="Models.MonitorNetworkSecurityPerimeterConfigurationResourceAssociation"/> instance for mocking. </returns>
         public static MonitorNetworkSecurityPerimeterConfigurationResourceAssociation MonitorNetworkSecurityPerimeterConfigurationResourceAssociation(string name = default, MonitorNetworkSecurityPerimeterConfigurationResourceAssociationAccessMode? accessMode = default)
         {
@@ -3512,7 +3513,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 name,
                 resourceType,
                 systemData,
-                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
+                privateEndpointId is null && connectionState is null && provisioningState is null ? default : new PrivateEndpointConnectionProperties(default, new PrivateEndpoint(privateEndpointId, default), connectionState, provisioningState, default),
                 default);
         }
 

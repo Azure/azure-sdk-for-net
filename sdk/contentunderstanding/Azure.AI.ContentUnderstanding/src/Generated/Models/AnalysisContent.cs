@@ -27,6 +27,7 @@ namespace Azure.AI.ContentUnderstanding
             Kind = kind;
             MimeType = mimeType;
             Fields = new ChangeTrackingDictionary<string, ContentField>();
+            Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AnalysisContent"/>. </summary>
@@ -37,8 +38,9 @@ namespace Azure.AI.ContentUnderstanding
         /// <param name="path"> The path of the content in the input. </param>
         /// <param name="markdown"> Markdown representation of the content. </param>
         /// <param name="fields"> Extracted fields from the content. </param>
+        /// <param name="metadata"> Metadata extracted from the input as string key/value pairs, such as author, title, creation date, or media properties. Keys and values are strings. Only keys with extracted values are present. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalysisContent(AnalysisContentKind kind, string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalysisContent(AnalysisContentKind kind, string mimeType, string analyzerId, string category, string path, string markdown, IDictionary<string, ContentField> fields, IDictionary<string, string> metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             MimeType = mimeType;
@@ -47,6 +49,7 @@ namespace Azure.AI.ContentUnderstanding
             Path = path;
             Markdown = markdown;
             Fields = fields;
+            Metadata = metadata;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -70,5 +73,8 @@ namespace Azure.AI.ContentUnderstanding
 
         /// <summary> Extracted fields from the content. </summary>
         public IDictionary<string, ContentField> Fields { get; }
+
+        /// <summary> Metadata extracted from the input as string key/value pairs, such as author, title, creation date, or media properties. Keys and values are strings. Only keys with extracted values are present. </summary>
+        public IDictionary<string, string> Metadata { get; }
     }
 }

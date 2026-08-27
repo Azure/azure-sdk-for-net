@@ -12,7 +12,7 @@ namespace Azure.Analytics.PlanetaryComputer
 {
     /// <summary>
     /// Base type for STAC items and collections with discriminator.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StacItemCollectionResource"/> and <see cref="StacItemResource"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="StacItemCollection"/> and <see cref="StacItem"/>.
     /// </summary>
     public abstract partial class StacItemOrStacItemCollection
     {
@@ -20,16 +20,16 @@ namespace Azure.Analytics.PlanetaryComputer
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StacItemOrStacItemCollection"/>. </summary>
-        /// <param name="type"> Discriminator property for StacItemOrStacItemCollection. </param>
-        private protected StacItemOrStacItemCollection(StacModelType @type)
+        /// <param name="kind"> Discriminator property for StacItemOrStacItemCollection. </param>
+        private protected StacItemOrStacItemCollection(StacModelKind kind)
         {
-            Type = @type;
+            Kind = kind;
             Links = new ChangeTrackingList<StacLink>();
             StacExtensions = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StacItemOrStacItemCollection"/>. </summary>
-        /// <param name="type"> Discriminator property for StacItemOrStacItemCollection. </param>
+        /// <param name="kind"> Discriminator property for StacItemOrStacItemCollection. </param>
         /// <param name="stacVersion"> Stac Version. </param>
         /// <param name="links"> Links to related resources and endpoints. </param>
         /// <param name="createdOn"> MSFT Created. </param>
@@ -37,9 +37,9 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="shortDescription"> MSFT Short Description. </param>
         /// <param name="stacExtensions"> URLs to STAC extensions implemented by this STAC resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StacItemOrStacItemCollection(StacModelType @type, string stacVersion, IList<StacLink> links, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string shortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StacItemOrStacItemCollection(StacModelKind kind, string stacVersion, IList<StacLink> links, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string shortDescription, IList<string> stacExtensions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Type = @type;
+            Kind = kind;
             StacVersion = stacVersion;
             Links = links;
             CreatedOn = createdOn;
@@ -50,7 +50,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> Discriminator property for StacItemOrStacItemCollection. </summary>
-        internal StacModelType Type { get; set; }
+        internal StacModelKind Kind { get; set; }
 
         /// <summary> Stac Version. </summary>
         public string StacVersion { get; set; }

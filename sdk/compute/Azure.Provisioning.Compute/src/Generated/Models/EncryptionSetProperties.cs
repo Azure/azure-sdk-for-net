@@ -137,7 +137,7 @@ namespace Azure.Provisioning.Compute
             _previousKeys = DefineListProperty<KeyForDiskEncryptionSet>(nameof(PreviousKeys), new string[] { "previousKeys" }, isOutput: true);
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _rotationToLatestKeyVersionEnabled = DefineProperty<bool>(nameof(RotationToLatestKeyVersionEnabled), new string[] { "rotationToLatestKeyVersionEnabled" });
-            _lastKeyRotationTimestamp = DefineProperty<DateTimeOffset>(nameof(LastKeyRotationTimestamp), new string[] { "lastKeyRotationTimestamp" }, isOutput: true);
+            _lastKeyRotationTimestamp = DefineProperty<DateTimeOffset>(nameof(LastKeyRotationTimestamp), new string[] { "lastKeyRotationTimestamp" }, isOutput: true, format: "O");
             _autoKeyRotationError = DefineModelProperty<ComputeApiError>(nameof(AutoKeyRotationError), new string[] { "autoKeyRotationError" }, isOutput: true);
             _federatedClientId = DefineProperty<string>(nameof(FederatedClientId), new string[] { "federatedClientId" });
             DefineAdditionalProperties();

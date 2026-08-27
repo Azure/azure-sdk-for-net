@@ -55,12 +55,13 @@ namespace Azure.Generator.Provisioning.Providers
         /// with their resolved isOutput/isRequired/bicepPath metadata.
         /// Used to build the C# Properties, Fields, and DefineProvisionableProperties() method.
         /// </summary>
-        private readonly List<ResourcePropertyInfo> _allProperties;
+        private readonly Lazy<List<ResourcePropertyInfo>> _allProperties;
         /// <summary>
         /// Lookup from InputModelProperty to ResourcePropertyInfo for O(1) access in
         /// <see cref="IProvisioningPropertyInfo.GetProvisioningPropertyInfo"/>.
         /// </summary>
-        private readonly Dictionary<InputModelProperty, ResourcePropertyInfo> _propertyLookup;
+        private readonly Lazy<Dictionary<InputModelProperty, ResourcePropertyInfo>> _propertyLookup;
+        private readonly Lazy<ProvisioningResourceProvider?> _immediateParentResource;
         /// <summary>
         /// Serialized property names that are writable in the create/update request body model.
         /// When the resource model is output-only (e.g., a ProxyResource with a separate create body),
@@ -82,17 +83,44 @@ namespace Azure.Generator.Provisioning.Providers
         internal ProvisioningResourceProjection? ResourceProjection => _resourceProjection;
 
         /// <summary>
-        /// Gets the parent resource's CSharpType via the output library, or null for top-level resources.
+        /// Gets the resolved parent only when its resource type is the immediate structural parent type.
         /// </summary>
-        private CSharpType? ParentResourceType
-            => _resourceProjection is { IsExtensionResource: false, ParentResourceId: { } parentId }
-                ? ProvisioningGenerator.Instance.OutputLibrary.GetResourceByIdPattern(parentId)?.Type
+        private ProvisioningResourceProvider? ImmediateParentResource => _immediateParentResource.Value;
+
+        private ProvisioningResourceProvider? ResolveImmediateParentResource()
+        {
+            if (_resourceProjection is not { IsExtensionResource: false, ParentResourceId: { } parentId } resourceProjection)
+                return null;
+
+            var parent = ProvisioningGenerator.Instance.OutputLibrary.GetResourceByIdPattern(parentId);
+            if (parent?.ResourceProjection is not { } parentProjection)
+                return null;
+
+            return IsImmediateParentResourceType(resourceProjection.ResourceType, parentProjection.ResourceType)
+                ? parent
                 : null;
+        }
+
+        private bool CanUseSingletonDefaultName()
+        {
+            if (_resourceProjection is null)
+                return false;
+
+            if (ImmediateParentResource is not null)
+                return true;
+
+            // The first segment is the provider namespace.
+            return _resourceProjection.ResourceType.Count == 2;
+        }
+
+        private static bool IsImmediateParentResourceType(ResourceTypePattern resourceType, ResourceTypePattern parentResourceType)
+            => resourceType.Count == parentResourceType.Count + 1
+                && resourceType.Take(parentResourceType.Count).SequenceEqual(parentResourceType);
 
         /// <inheritdoc/>
         ProvisioningPropertyInfo? IProvisioningPropertyInfo.GetProvisioningPropertyInfo(InputModelProperty inputProp)
         {
-            if (!_propertyLookup.TryGetValue(inputProp, out var propInfo))
+            if (!_propertyLookup.Value.TryGetValue(inputProp, out var propInfo))
                 return null;
 
             return new ProvisioningPropertyInfo(
@@ -118,8 +146,9 @@ namespace Azure.Generator.Provisioning.Providers
                 : null;
             _isSettableResource = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(projection.ResourceModel);
             _createBodyWritableProperties = BuildCreateBodyWritableProperties();
-            _allProperties = CollectAllProperties();
-            _propertyLookup = _allProperties.ToDictionary(p => p.Property);
+            _immediateParentResource = new(ResolveImmediateParentResource);
+            _allProperties = new(CollectAllProperties);
+            _propertyLookup = new(() => _allProperties.Value.ToDictionary(p => p.Property));
             ProvisioningGenerator.Instance.AddTypeToKeep(this);
         }
 
@@ -134,8 +163,9 @@ namespace Azure.Generator.Provisioning.Providers
             _defaultApiVersion = null;
             _isSettableResource = ProvisioningGenerator.Instance.InputLibrary.IsModelSettable(inputModel);
             _createBodyWritableProperties = [];
-            _allProperties = CollectAllProperties();
-            _propertyLookup = _allProperties.ToDictionary(p => p.Property);
+            _immediateParentResource = new(ResolveImmediateParentResource);
+            _allProperties = new(CollectAllProperties);
+            _propertyLookup = new(() => _allProperties.Value.ToDictionary(p => p.Property));
             ProvisioningGenerator.Instance.AddTypeToKeep(this);
         }
 
@@ -195,15 +225,15 @@ namespace Azure.Generator.Provisioning.Providers
         protected override PropertyProvider[] BuildProperties()
         {
             var properties = new List<PropertyProvider>();
-            foreach (var propInfo in _allProperties)
+            foreach (var propInfo in _allProperties.Value)
             {
                 var property = ProvisioningGenerator.Instance.TypeFactory.CreateProvisioningProperty(propInfo.Property, this);
                 if (property != null)
                     properties.Add(property);
             }
 
-            // Create parent property for child resources
-            _parentType = ParentResourceType;
+            // Create a parent property only for resources whose immediate structural parent is generated
+            _parentType = ImmediateParentResource?.Type;
             if (_parentType != null)
             {
                 _parentField = new FieldProvider(
@@ -306,7 +336,7 @@ namespace Azure.Generator.Provisioning.Providers
                 true,
                 [
                     bicepIdentifierParam,
-                    Literal(_resourceProjection!.ResourceType),
+                    Literal(_resourceProjection!.ResourceType.SerializedResourceType),
                     resourceVersionArg
                 ]);
 
@@ -502,10 +532,12 @@ namespace Azure.Generator.Provisioning.Providers
                 var isRequired = isResourceName || (prop.IsRequired && _isSettableResource);
 
                 var propertyName = prop.Name.ToIdentifierName();
-                // For singleton resources, the "name" property has one fixed default value and is not settable.
+                // Keep the singleton name fixed only when it is one resource-type level below
+                // its generated parent, or when it is a top-level resource without a parent.
                 string? defaultValue = null;
                 if (isResourceName
-                    && _resourceProjection?.SingletonResourceName is string singletonResourceName)
+                    && _resourceProjection?.SingletonResourceName is string singletonResourceName
+                    && CanUseSingletonDefaultName())
                 {
                     defaultValue = singletonResourceName;
                     isSettable = false;
@@ -583,20 +615,20 @@ namespace Azure.Generator.Provisioning.Providers
                 statements.Add(field.Assign(
                     This.Invoke(
                         methodName,
-                        BicepTypeHelpers.BuildDefinePropertyArgs(field.Type, provProp.Name, provProp.BicepPath, provProp.IsOutput, provProp.IsRequired, provProp.DefaultValue),
+                        BicepTypeHelpers.BuildDefinePropertyArgs(field.Type, provProp.Name, provProp.BicepPath, provProp.IsOutput, provProp.IsRequired, provProp.DefaultValue, provProp.Format),
                         typeArgs,
                         false)
                 ).Terminate());
             }
 
-            // Add DefineResource call for parent on child resources
+            // Add DefineResource call only for an immediate structural parent
             if (_parentField != null && _parentType != null)
             {
                 statements.Add(_parentField.Assign(
                     This.Invoke(
                         "DefineResource",
                         [
-                            Literal("Parent"),
+                            Nameof(Identifier("Parent")),
                             New.Array(typeof(string), [Literal("parent")]),
                             new PositionalParameterReferenceExpression("isRequired", Literal(true))
                         ],

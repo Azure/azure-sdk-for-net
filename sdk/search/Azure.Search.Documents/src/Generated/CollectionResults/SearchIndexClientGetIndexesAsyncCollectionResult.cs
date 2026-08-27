@@ -63,7 +63,7 @@ namespace Azure.Search.Documents.Indexes
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Indexes)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureSearchDocumentsContext.Default));
+                    items.Add(ModelReaderWriter.Write(item, ModelReaderWriterOptions.Json, AzureSearchDocumentsContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

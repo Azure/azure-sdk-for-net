@@ -75,13 +75,18 @@ namespace Azure.Provisioning.Batch
         public Azure.Provisioning.BicepValue<string> Formula { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class BatchAccountAutoStorageConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class BatchAccountAutoStorageBaseConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public BatchAccountAutoStorageConfiguration() { }
+        public BatchAccountAutoStorageBaseConfiguration() { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Batch.BatchAutoStorageAuthenticationMode> AuthenticationMode { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastKeySyncedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> NodeIdentityResourceId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> StorageAccountId { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class BatchAccountAutoStorageConfiguration : Azure.Provisioning.Batch.BatchAccountAutoStorageBaseConfiguration
+    {
+        public BatchAccountAutoStorageConfiguration() { }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastKeySyncedOn { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class BatchAccountDetector : Azure.Provisioning.Primitives.ProvisionableResource

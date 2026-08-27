@@ -11,7 +11,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Online deployment scaling configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningDefaultScaleSettings"/> and <see cref="MachineLearningTargetUtilizationScaleSettings"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningDefaultScaleSettings"/> and <see cref="MachineLearningTargetUtilizationScaleSettings"/>.
     /// </summary>
     public partial class MachineLearningOnlineScaleSettings : ProvisionableConstruct
     {

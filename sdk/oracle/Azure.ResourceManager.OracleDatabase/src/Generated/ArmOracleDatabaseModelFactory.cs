@@ -2860,7 +2860,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             zones ??= new ChangeTrackingList<string>();
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new OracleDBSystemPatch((zones ?? new ChangeTrackingList<string>()).ToList(), tags ?? new ChangeTrackingDictionary<string, string>(), dbSystemUpdateSource is null ? default : new DbSystemUpdateProperties(dbSystemUpdateSource, default), default);
+            return new OracleDBSystemPatch((zones ?? new ChangeTrackingList<string>()).ToList(), tags ?? new ChangeTrackingDictionary<string, string>(), dbSystemUpdateSource is null ? default : new DBSystemUpdateProperties(dbSystemUpdateSource, default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

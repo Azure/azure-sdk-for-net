@@ -1562,12 +1562,6 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
 
-                    if (conditions?.IfMatch != default ||
-                        conditions?.IfNoneMatch != default)
-                    {
-                        throw BlobErrors.BlobConditionsMustBeDefault(nameof(RequestConditions.IfMatch), nameof(RequestConditions.IfNoneMatch));
-                    }
-
                     Response response;
 
                     if (async)
@@ -2429,12 +2423,6 @@ namespace Azure.Storage.Blobs
                 {
                     scope.Start();
 
-                    if (conditions?.IfMatch != default ||
-                        conditions?.IfNoneMatch != default)
-                    {
-                        throw BlobErrors.BlobConditionsMustBeDefault(nameof(RequestConditions.IfMatch), nameof(RequestConditions.IfNoneMatch));
-                    }
-
                     List<BlobSignedIdentifier> sanitizedPermissions = null;
                     if (permissions != null)
                     {
@@ -2983,7 +2971,7 @@ namespace Azure.Storage.Blobs
                     byte[] contentMD5 = contentMD5Str != null ? Convert.FromBase64String(contentMD5Str) : null;
 
                     var properties = new BlobPropertiesInternal(
-                        creationTime: creationTimeCol?.GetTimestamp(i),
+                        createdOn: creationTimeCol?.GetTimestamp(i),
                         lastModified: lastModifiedCol?.GetTimestamp(i) ?? default,
                         eTag: etagCol?.GetString(i),
                         contentLength: ReadNullableLong(contentLengthCol, i),
@@ -3002,12 +2990,12 @@ namespace Azure.Storage.Blobs
                         copyStatus: ReadEnum(copyStatusCol, i, s => s.ToCopyStatus()),
                         copySource: copySourceCol?.GetString(i),
                         copyProgress: copyProgressCol?.GetString(i),
-                        copyCompletionTime: copyCompletionTimeCol?.GetTimestamp(i),
+                        copyCompletionOn: copyCompletionTimeCol?.GetTimestamp(i),
                         copyStatusDescription: copyStatusDescriptionCol?.GetString(i),
                         serverEncrypted: ReadNullableBool(serverEncryptedCol, i),
                         incrementalCopy: ReadNullableBool(incrementalCopyCol, i),
                         destinationSnapshot: destinationSnapshotCol?.GetString(i),
-                        deletedTime: deletedTimeCol?.GetTimestamp(i),
+                        deletedOn: deletedTimeCol?.GetTimestamp(i),
                         remainingRetentionDays: ReadNullableInt(remainingRetentionDaysCol, i),
                         accessTier: ReadEnum(accessTierCol, i, s => new AccessTier(s)),
                         accessTierInferred: ReadNullableBool(accessTierInferredCol, i),
@@ -3015,7 +3003,7 @@ namespace Azure.Storage.Blobs
                         smartAccessTier: ReadEnum(smartAccessTierCol, i, s => new AccessTier(s)),
                         customerProvidedKeySha256: customerProvidedKeySha256Col?.GetString(i),
                         encryptionScope: encryptionScopeCol?.GetString(i),
-                        accessTierChangeTime: accessTierChangeTimeCol?.GetTimestamp(i),
+                        accessTierChangedOn: accessTierChangeTimeCol?.GetTimestamp(i),
                         tagCount: ReadNullableInt(tagCountCol, i),
                         expiresOn: null,
                         isSealed: ReadNullableBool(sealedCol, i),

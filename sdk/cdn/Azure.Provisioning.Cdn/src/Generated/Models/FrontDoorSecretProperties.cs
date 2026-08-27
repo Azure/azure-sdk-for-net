@@ -11,7 +11,7 @@ namespace Azure.Provisioning.Cdn
 {
     /// <summary>
     /// The json object containing secret parameters
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UriSigningKeyProperties"/>, <see cref="ManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, and <see cref="AzureFirstPartyManagedCertificateProperties"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="UriSigningKeyProperties"/>, <see cref="ManagedCertificateProperties"/>, <see cref="CustomerCertificateProperties"/>, and <see cref="AzureFirstPartyManagedCertificateProperties"/>.
     /// </summary>
     public partial class FrontDoorSecretProperties : ProvisionableConstruct
     {

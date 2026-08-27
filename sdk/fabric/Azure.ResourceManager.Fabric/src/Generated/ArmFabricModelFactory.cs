@@ -44,12 +44,21 @@ namespace Azure.ResourceManager.Fabric.Models
 
         /// <param name="provisioningState"> The current deployment state of Microsoft Fabric resource. The provisioningState is to indicate states for resource provisioning. </param>
         /// <param name="state"> The current state of Microsoft Fabric resource. The state is to indicate more states outside of resource provisioning. </param>
+        /// <param name="overage"> The capacity overage properties of the Fabric capacity resource. </param>
         /// <param name="administrationMembers"> An array of administrator user identities. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="administrationMembers"/> is null. </exception>
         /// <returns> A new <see cref="Models.FabricCapacityProperties"/> instance for mocking. </returns>
-        public static FabricCapacityProperties FabricCapacityProperties(FabricProvisioningState? provisioningState = default, FabricResourceState? state = default, IEnumerable<string> administrationMembers = default)
+        public static FabricCapacityProperties FabricCapacityProperties(FabricProvisioningState? provisioningState = default, FabricResourceState? state = default, CapacityOverageProperties overage = default, IEnumerable<string> administrationMembers = default)
         {
-            return new FabricCapacityProperties(provisioningState, state, administrationMembers is null ? default : new FabricCapacityAdministration((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), default), default);
+            return new FabricCapacityProperties(provisioningState, state, overage, administrationMembers is null ? default : new FabricCapacityAdministration((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), default), default);
+        }
+
+        /// <param name="state"> The capacity overage state for the Fabric capacity resource. </param>
+        /// <param name="thresholdCapacityUnitHours"> 24-hour rolling threshold for capacity overage. Reaching this threshold results in capacity throttling. </param>
+        /// <returns> A new <see cref="Models.CapacityOverageProperties"/> instance for mocking. </returns>
+        public static CapacityOverageProperties CapacityOverageProperties(CapacityOverageState? state = default, int? thresholdCapacityUnitHours = default)
+        {
+            return new CapacityOverageProperties(state, thresholdCapacityUnitHours, default);
         }
 
         /// <param name="members"> An array of administrator user identities. </param>
@@ -69,22 +78,12 @@ namespace Azure.ResourceManager.Fabric.Models
             return new FabricSku(name, tier, default);
         }
 
-        /// <param name="sku"> The SKU details. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="fabricCapacityUpdateAdministrationMembers"> Gets the AdministrationMembers. </param>
-        /// <returns> A new <see cref="Models.FabricCapacityPatch"/> instance for mocking. </returns>
-        public static FabricCapacityPatch FabricCapacityPatch(FabricSku sku = default, IDictionary<string, string> tags = default, IEnumerable<string> fabricCapacityUpdateAdministrationMembers = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new FabricCapacityPatch(sku, tags ?? new ChangeTrackingDictionary<string, string>(), fabricCapacityUpdateAdministrationMembers is null ? default : new FabricCapacityUpdateProperties(new FabricCapacityAdministration((fabricCapacityUpdateAdministrationMembers ?? new ChangeTrackingList<string>()).ToList(), default), default), default);
-        }
-
+        /// <param name="overage"> The capacity overage properties of the Fabric capacity resource. </param>
         /// <param name="administrationMembers"> An array of administrator user identities. </param>
         /// <returns> A new <see cref="Models.FabricCapacityUpdateProperties"/> instance for mocking. </returns>
-        public static FabricCapacityUpdateProperties FabricCapacityUpdateProperties(IEnumerable<string> administrationMembers = default)
+        public static FabricCapacityUpdateProperties FabricCapacityUpdateProperties(CapacityOverageProperties overage = default, IEnumerable<string> administrationMembers = default)
         {
-            return new FabricCapacityUpdateProperties(administrationMembers is null ? default : new FabricCapacityAdministration((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), default), default);
+            return new FabricCapacityUpdateProperties(overage, administrationMembers is null ? default : new FabricCapacityAdministration((administrationMembers ?? new ChangeTrackingList<string>()).ToList(), default), default);
         }
 
         /// <param name="name"> The name of the resource for which availability needs to be checked. </param>

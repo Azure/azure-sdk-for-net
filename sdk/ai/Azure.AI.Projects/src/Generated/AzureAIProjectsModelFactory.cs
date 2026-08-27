@@ -1100,11 +1100,11 @@ namespace Azure.AI.Projects
         /// <param name="agentId"> The unique agent ID used to filter traces. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentName"> The agent name to fetch traces for. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
-        /// <param name="startAt"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
-        /// <param name="endAt"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
+        /// <param name="startsOn"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
+        /// <param name="endsOn"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
         /// <returns> A new <see cref="Projects.TracesEvaluatorGenerationJobSource"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startAt = default, DateTimeOffset? endAt = default)
+        public static TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default)
         {
             return new TracesEvaluatorGenerationJobSource(
                 EvaluatorGenerationJobSourceType.Traces,
@@ -1113,8 +1113,8 @@ namespace Azure.AI.Projects
                 agentId,
                 agentName,
                 agentVersion,
-                startAt,
-                endAt);
+                startsOn,
+                endsOn);
         }
 
         /// <summary> Dataset source for evaluator generation jobs — reference to a dataset. </summary>
@@ -2095,11 +2095,11 @@ namespace Azure.AI.Projects
         /// <param name="isEnabled"> Whether the routine is enabled. </param>
         /// <param name="triggers"> The triggers configured for the routine. </param>
         /// <param name="action"> The action executed when the routine fires. </param>
-        /// <param name="createdAt"> The time when the routine was created. </param>
-        /// <param name="updatedAt"> The time when the routine was last updated. </param>
+        /// <param name="createdOn"> The time when the routine was created. </param>
+        /// <param name="updatedOn"> The time when the routine was last updated. </param>
         /// <returns> A new <see cref="Projects.ProjectsRoutine"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ProjectsRoutine ProjectsRoutine(string name = default, string description = default, bool isEnabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, DateTimeOffset? createdAt = default, DateTimeOffset? updatedAt = default)
+        public static ProjectsRoutine ProjectsRoutine(string name = default, string description = default, bool isEnabled = default, IDictionary<string, RoutineTrigger> triggers = default, RoutineAction action = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default)
         {
             triggers ??= new ChangeTrackingDictionary<string, RoutineTrigger>();
 
@@ -2109,8 +2109,8 @@ namespace Azure.AI.Projects
                 isEnabled,
                 triggers,
                 action,
-                createdAt,
-                updatedAt,
+                createdOn,
+                updatedOn,
                 additionalBinaryDataProperties: null);
         }
 
@@ -2127,10 +2127,10 @@ namespace Azure.AI.Projects
         /// <param name="agentEndpointId"> The legacy endpoint-scoped agent identifier recorded for the routine attempt. </param>
         /// <param name="conversationId"> The conversation identifier used by a responses API dispatch. </param>
         /// <param name="sessionId"> The hosted-agent session identifier used by an invocations API dispatch. </param>
-        /// <param name="triggeredAt"> The logical trigger time recorded for the routine attempt. </param>
-        /// <param name="scheduledFireAt"> The scheduled fire time recorded for timer and schedule deliveries. </param>
-        /// <param name="startedAt"> The time when the underlying run started. </param>
-        /// <param name="endedAt"> The time when the underlying run reached a terminal state. </param>
+        /// <param name="triggeredOn"> The logical trigger time recorded for the routine attempt. </param>
+        /// <param name="scheduledFireOn"> The scheduled fire time recorded for timer and schedule deliveries. </param>
+        /// <param name="startedOn"> The time when the underlying run started. </param>
+        /// <param name="endedOn"> The time when the underlying run reached a terminal state. </param>
         /// <param name="dispatchId"> The dispatch identifier associated with the routine attempt. </param>
         /// <param name="actionCorrelationId"> The downstream action correlation identifier, when available. </param>
         /// <param name="responseId"> The downstream response or invocation identifier, when available. </param>
@@ -2140,7 +2140,7 @@ namespace Azure.AI.Projects
         /// <param name="errorMessage"> The truncated failure message captured for a failed attempt, when available. </param>
         /// <returns> A new <see cref="Projects.RoutineRun"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static RoutineRun RoutineRun(string id = default, BinaryData statusInternal = default, RoutineRunPhase? phase = default, RoutineTriggerKind? triggerType = default, string triggerName = default, IDictionary<string, BinaryData> triggerEventPayload = default, RoutineAttemptSource? attemptSource = default, RoutineActionKind? actionType = default, string agentId = default, string agentEndpointId = default, string conversationId = default, string sessionId = default, DateTimeOffset? triggeredAt = default, DateTimeOffset? scheduledFireAt = default, DateTimeOffset? startedAt = default, DateTimeOffset? endedAt = default, string dispatchId = default, string actionCorrelationId = default, string responseId = default, string taskId = default, int? errorStatusCode = default, string errorType = default, string errorMessage = default)
+        public static RoutineRun RoutineRun(string id = default, BinaryData statusInternal = default, RoutineRunPhase? phase = default, RoutineTriggerKind? triggerType = default, string triggerName = default, IDictionary<string, BinaryData> triggerEventPayload = default, RoutineAttemptSource? attemptSource = default, RoutineActionKind? actionType = default, string agentId = default, string agentEndpointId = default, string conversationId = default, string sessionId = default, DateTimeOffset? triggeredOn = default, DateTimeOffset? scheduledFireOn = default, DateTimeOffset? startedOn = default, DateTimeOffset? endedOn = default, string dispatchId = default, string actionCorrelationId = default, string responseId = default, string taskId = default, int? errorStatusCode = default, string errorType = default, string errorMessage = default)
         {
             triggerEventPayload ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -2157,10 +2157,10 @@ namespace Azure.AI.Projects
                 agentEndpointId,
                 conversationId,
                 sessionId,
-                triggeredAt,
-                scheduledFireAt,
-                startedAt,
-                endedAt,
+                triggeredOn,
+                scheduledFireOn,
+                startedOn,
+                endedOn,
                 dispatchId,
                 actionCorrelationId,
                 responseId,
@@ -2272,11 +2272,11 @@ namespace Azure.AI.Projects
         /// <param name="agentId"> The unique agent ID used to filter traces. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentName"> The agent name to fetch traces for. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
-        /// <param name="startAt"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
-        /// <param name="endAt"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
+        /// <param name="startsOn"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
+        /// <param name="endsOn"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
         /// <returns> A new <see cref="Projects.TracesDataGenerationJobSource"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startAt = default, DateTimeOffset? endAt = default)
+        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default)
         {
             return new TracesDataGenerationJobSource(
                 DataGenerationJobSourceType.Traces,
@@ -2285,8 +2285,8 @@ namespace Azure.AI.Projects
                 agentId,
                 agentName,
                 agentVersion,
-                startAt,
-                endAt);
+                startsOn,
+                endsOn);
         }
 
         /// <summary> File source for data generation jobs — Azure OpenAI file input. </summary>
@@ -2301,7 +2301,7 @@ namespace Azure.AI.Projects
 
         /// <summary>
         /// Options for managing data generation jobs.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.SimpleQnADataGenerationJobOptions"/>, <see cref="Projects.TracesDataGenerationJobOptions"/>, <see cref="Projects.TaskGenerationDataGenerationJobOptions"/>, and <see cref="Projects.ToolUseFineTuningDataGenerationJobOptions"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.SimpleQnADataGenerationJobOptions"/>, <see cref="Projects.TracesDataGenerationJobOptions"/>, <see cref="Projects.SimulationSeedDataGenerationJobOptions"/>, and <see cref="Projects.ToolUseFineTuningDataGenerationJobOptions"/>.
         /// </summary>
         /// <param name="type"> The data generation job type. </param>
         /// <param name="maxSamples"> Maximum number of samples to generate. </param>
@@ -2347,22 +2347,29 @@ namespace Azure.AI.Projects
         /// <param name="maxSamples"> Maximum number of samples to generate. </param>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
+        /// <param name="redactPrivateContent"> Whether to redact private content from traces. When omitted or set to true, private content is redacted. Set to false to opt out of redaction. </param>
         /// <returns> A new <see cref="Projects.TracesDataGenerationJobOptions"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TracesDataGenerationJobOptions TracesDataGenerationJobOptions(int maxSamples = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
+        public static TracesDataGenerationJobOptions TracesDataGenerationJobOptions(int maxSamples = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default, bool? redactPrivateContent = default)
         {
-            return new TracesDataGenerationJobOptions(DataGenerationJobKind.Traces, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties: null);
+            return new TracesDataGenerationJobOptions(
+                DataGenerationJobKind.Traces,
+                maxSamples,
+                trainSplit,
+                modelOptions,
+                additionalBinaryDataProperties: null,
+                redactPrivateContent);
         }
 
-        /// <summary> The options for a task generation data generation job. Use with multiturn evaluation scenarios and with prompt, file, or agent sources. Generated dataset rows include fields such as `id`, `category`, `test_case_description`, and `desired_num_turns`. </summary>
+        /// <summary> The options for a simulation seed data generation job. Use with multiturn evaluation scenarios and with prompt, file, or agent sources. Generated dataset rows include fields such as `id`, `category`, `test_case_description`, and `desired_num_turns`. </summary>
         /// <param name="maxSamples"> Maximum number of samples to generate. </param>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
-        /// <returns> A new <see cref="Projects.TaskGenerationDataGenerationJobOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="Projects.SimulationSeedDataGenerationJobOptions"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TaskGenerationDataGenerationJobOptions TaskGenerationDataGenerationJobOptions(int maxSamples = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
+        public static SimulationSeedDataGenerationJobOptions SimulationSeedDataGenerationJobOptions(int maxSamples = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
         {
-            return new TaskGenerationDataGenerationJobOptions(DataGenerationJobKind.TaskGeneration, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties: null);
+            return new SimulationSeedDataGenerationJobOptions(DataGenerationJobKind.SimulationSeed, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The options for a data generation job with ToolUse type. Used only for fine-tuning scenarios. </summary>

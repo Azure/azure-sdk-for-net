@@ -11,7 +11,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Forecasting seasonality.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AutoSeasonality"/> and <see cref="CustomSeasonality"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AutoSeasonality"/> and <see cref="CustomSeasonality"/>.
     /// </summary>
     public partial class ForecastingSeasonality : ProvisionableConstruct
     {

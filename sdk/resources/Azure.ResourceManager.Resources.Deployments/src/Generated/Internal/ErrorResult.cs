@@ -7,7 +7,7 @@
 
 using Azure;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     internal partial class ErrorResult<T> : Response<T>
     {

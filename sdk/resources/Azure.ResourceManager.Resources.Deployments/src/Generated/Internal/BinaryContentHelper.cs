@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     internal static partial class BinaryContentHelper
     {

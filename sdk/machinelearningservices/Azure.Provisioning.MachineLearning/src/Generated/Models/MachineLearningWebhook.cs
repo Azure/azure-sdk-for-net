@@ -12,7 +12,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Webhook base
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AzureDevOpsWebhook"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AzureDevOpsWebhook"/>.
     /// </summary>
     public partial class MachineLearningWebhook : ProvisionableConstruct
     {

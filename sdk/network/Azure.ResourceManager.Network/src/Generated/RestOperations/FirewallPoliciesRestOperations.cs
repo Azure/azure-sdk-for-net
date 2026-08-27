@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string firewallPolicyName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string firewallPolicyName, RequestContent content, bool? afcManagedSync, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -84,6 +84,10 @@ namespace Azure.ResourceManager.Network
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (afcManagedSync != null)
+            {
+                uri.AppendQuery("afcManagedSync", TypeFormatters.ConvertToString(afcManagedSync), true);
             }
             HttpMessage message = Pipeline.CreateMessage();
             Request request = message.Request;

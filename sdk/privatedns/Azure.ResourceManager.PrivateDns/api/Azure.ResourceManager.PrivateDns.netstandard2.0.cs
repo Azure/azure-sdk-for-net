@@ -643,8 +643,8 @@ namespace Azure.ResourceManager.PrivateDns.Models
 {
     public static partial class ArmPrivateDnsModelFactory
     {
-        public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsAaaaRecordInfo PrivateDnsAaaaRecordInfo(System.Net.IPAddress iPv6Address = null) { throw null; }
-        public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsARecordInfo PrivateDnsARecordInfo(System.Net.IPAddress iPv4Address = null) { throw null; }
+        public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsAaaaRecordInfo PrivateDnsAaaaRecordInfo(System.Net.IPAddress ipv6Address = null) { throw null; }
+        public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsARecordInfo PrivateDnsARecordInfo(System.Net.IPAddress ipv4Address = null) { throw null; }
         public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsMXRecordInfo PrivateDnsMXRecordInfo(int? preference = default(int?), string exchange = null) { throw null; }
         public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsPtrRecordInfo PrivateDnsPtrRecordInfo(string ptrDomainName = null) { throw null; }
         public static Azure.ResourceManager.PrivateDns.Models.PrivateDnsSoaRecordInfo PrivateDnsSoaRecordInfo(string host = null, string email = null, long? serialNumber = default(long?), long? refreshTimeInSeconds = default(long?), long? retryTimeInSeconds = default(long?), long? expireTimeInSeconds = default(long?), long? minimumTtlInSeconds = default(long?)) { throw null; }

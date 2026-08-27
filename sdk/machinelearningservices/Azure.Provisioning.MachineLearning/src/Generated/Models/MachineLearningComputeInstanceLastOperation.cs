@@ -69,7 +69,7 @@ namespace Azure.Provisioning.MachineLearning
         {
             base.DefineProvisionableProperties();
             _operationName = DefineProperty<MachineLearningOperationName>(nameof(OperationName), new string[] { "operationName" });
-            _operationOn = DefineProperty<DateTimeOffset>(nameof(OperationOn), new string[] { "operationTime" });
+            _operationOn = DefineProperty<DateTimeOffset>(nameof(OperationOn), new string[] { "operationTime" }, format: "O");
             _operationStatus = DefineProperty<MachineLearningOperationStatus>(nameof(OperationStatus), new string[] { "operationStatus" });
             _operationTrigger = DefineProperty<MachineLearningOperationTrigger>(nameof(OperationTrigger), new string[] { "operationTrigger" });
             DefineAdditionalProperties();

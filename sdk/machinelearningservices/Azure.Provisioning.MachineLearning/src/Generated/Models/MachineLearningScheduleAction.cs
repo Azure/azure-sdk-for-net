@@ -11,7 +11,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// The MachineLearningScheduleAction.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CreateMonitorAction"/>, <see cref="MachineLearningEndpointScheduleAction"/>, and <see cref="MachineLearningJobScheduleAction"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CreateMonitorAction"/>, <see cref="MachineLearningEndpointScheduleAction"/>, and <see cref="MachineLearningJobScheduleAction"/>.
     /// </summary>
     public partial class MachineLearningScheduleAction : ProvisionableConstruct
     {

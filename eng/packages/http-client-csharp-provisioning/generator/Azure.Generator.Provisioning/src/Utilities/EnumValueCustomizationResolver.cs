@@ -92,6 +92,8 @@ namespace Azure.Generator.Provisioning.Utilities
                 && attributeData.ConstructorArguments[2].Value is int ordinalValue)
             {
                 string? wireName = null;
+                bool editorBrowsableNever = false;
+                string? obsoleteMessage = null;
                 foreach (var namedArgument in attributeData.NamedArguments)
                 {
                     if (namedArgument.Key == nameof(EnumValueCustomization.WireName)
@@ -100,9 +102,27 @@ namespace Azure.Generator.Provisioning.Utilities
                     {
                         wireName = wireNameValue;
                     }
+                    else if (namedArgument.Key == nameof(EnumValueCustomization.EditorBrowsableNever)
+                        && namedArgument.Value.Kind == TypedConstantKind.Primitive
+                        && namedArgument.Value.Value is bool editorBrowsableNeverValue)
+                    {
+                        editorBrowsableNever = editorBrowsableNeverValue;
+                    }
+                    else if (namedArgument.Key == nameof(EnumValueCustomization.ObsoleteMessage)
+                        && namedArgument.Value.Kind == TypedConstantKind.Primitive
+                        && namedArgument.Value.Value is string obsoleteMessageValue)
+                    {
+                        obsoleteMessage = obsoleteMessageValue;
+                    }
                 }
 
-                value = new EnumValueCustomization(enumNameValue, memberNameValue, ordinalValue, wireName);
+                value = new EnumValueCustomization(
+                    enumNameValue,
+                    memberNameValue,
+                    ordinalValue,
+                    wireName,
+                    editorBrowsableNever,
+                    obsoleteMessage);
                 return true;
             }
 
@@ -110,6 +130,12 @@ namespace Azure.Generator.Provisioning.Utilities
             return false;
         }
 
-        internal sealed record EnumValueCustomization(string EnumName, string MemberName, int Value, string? WireName);
+        internal sealed record EnumValueCustomization(
+            string EnumName,
+            string MemberName,
+            int Value,
+            string? WireName,
+            bool EditorBrowsableNever,
+            string? ObsoleteMessage);
     }
 }

@@ -1,16 +1,22 @@
 # Release History
 
-## 12.12.0-beta.1 (Unreleased)
+## 12.13.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 12.12.0 (2026-08-21)
 
 ### Acknowledgments
 
 Thank you to our developer community members who helped to make Azure Tables better with their contributions to this release:
 
 - Marco Studerus _([GitHub](https://github.com/e-i-n-s))_
-
-### Features Added
-
-### Breaking Changes
 
 ### Bugs Fixed
 - Fixed an error handling issue where `GetEntityAsync` and `GetEntityIfExistsAsync` could throw an
@@ -23,6 +29,7 @@ Thank you to our developer community members who helped to make Azure Tables bet
 - Fixed duplicated diagnostic scopes in `TableClient.Query` and `TableServiceClient.Query` (A community contribution, courtesy of _[e-i-n-s](https://github.com/e-i-n-s)_)
 
 ### Other Changes
+- Updated the minimum `Azure.Core` dependency to 1.61.0 and added .NET 10 target framework support. ([#62244](https://github.com/Azure/azure-sdk-for-net/issues/62244))
 - Use precedence rules to reduce the parenthesis nesting in OData filters generated from LINQ expressions.
  
 ## 12.11.0 (2025-05-06)

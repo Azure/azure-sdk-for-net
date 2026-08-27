@@ -16,7 +16,7 @@ namespace Azure.AI.Projects
             FoundryFeaturesOptInKeys.RedTeamsV1Preview => "RedTeams=V1Preview",
             FoundryFeaturesOptInKeys.InsightsV1Preview => "Insights=V1Preview",
             FoundryFeaturesOptInKeys.MemoryStoresV1Preview => "MemoryStores=V1Preview",
-            FoundryFeaturesOptInKeys.RoutinesV1Preview => "Routines=V1Preview",
+            FoundryFeaturesOptInKeys.RoutinesV2Preview => "Routines=V2Preview",
             FoundryFeaturesOptInKeys.SkillsV1Preview => "Skills=V1Preview",
             FoundryFeaturesOptInKeys.DataGenerationJobsV1Preview => "DataGenerationJobs=V1Preview",
             FoundryFeaturesOptInKeys.ModelsV1Preview => "Models=V1Preview",
@@ -47,9 +47,9 @@ namespace Azure.AI.Projects
             {
                 return FoundryFeaturesOptInKeys.MemoryStoresV1Preview;
             }
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Routines=V1Preview"))
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Routines=V2Preview"))
             {
-                return FoundryFeaturesOptInKeys.RoutinesV1Preview;
+                return FoundryFeaturesOptInKeys.RoutinesV2Preview;
             }
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "Skills=V1Preview"))
             {

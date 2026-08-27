@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -23,22 +22,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceConnectivityEndpoints"/>. </summary>
-        /// <param name="publicIpAddress"> Public IP Address of this ComputeInstance. </param>
-        /// <param name="privateIpAddress"> Private IP Address of this ComputeInstance (local to the VNET in which the compute instance is deployed). </param>
+        /// <param name="publicIPAddress"> Public IP Address of this ComputeInstance. </param>
+        /// <param name="privateIPAddress"> Private IP Address of this ComputeInstance (local to the VNET in which the compute instance is deployed). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningComputeInstanceConnectivityEndpoints(string publicIpAddress, string privateIpAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineLearningComputeInstanceConnectivityEndpoints(string publicIPAddress, string privateIPAddress, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PublicIpAddress = publicIpAddress;
-            PrivateIpAddress = privateIpAddress;
+            PublicIPAddress = publicIPAddress;
+            PrivateIPAddress = privateIPAddress;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Public IP Address of this ComputeInstance. </summary>
-        [WirePath("publicIpAddress")]
-        public string PublicIpAddress { get; }
-
-        /// <summary> Private IP Address of this ComputeInstance (local to the VNET in which the compute instance is deployed). </summary>
-        [WirePath("privateIpAddress")]
-        public string PrivateIpAddress { get; }
     }
 }

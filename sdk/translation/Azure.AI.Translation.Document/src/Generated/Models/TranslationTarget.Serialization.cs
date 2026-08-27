@@ -85,6 +85,11 @@ namespace Azure.AI.Translation.Document
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(CategoryId);
             }
+            if (Optional.IsDefined(DeploymentName))
+            {
+                writer.WritePropertyName("deploymentName"u8);
+                writer.WriteStringValue(DeploymentName);
+            }
             writer.WritePropertyName("language"u8);
             writer.WriteStringValue(LanguageCode);
             if (Optional.IsCollectionDefined(Glossaries))
@@ -146,6 +151,7 @@ namespace Azure.AI.Translation.Document
             }
             Uri targetUri = default;
             string categoryId = default;
+            string deploymentName = default;
             string languageCode = default;
             IList<TranslationGlossary> glossaries = default;
             TranslationStorageSource? storageSource = default;
@@ -160,6 +166,11 @@ namespace Azure.AI.Translation.Document
                 if (prop.NameEquals("category"u8))
                 {
                     categoryId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("deploymentName"u8))
+                {
+                    deploymentName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("language"u8))
@@ -198,6 +209,7 @@ namespace Azure.AI.Translation.Document
             return new TranslationTarget(
                 targetUri,
                 categoryId,
+                deploymentName,
                 languageCode,
                 glossaries ?? new ChangeTrackingList<TranslationGlossary>(),
                 storageSource,

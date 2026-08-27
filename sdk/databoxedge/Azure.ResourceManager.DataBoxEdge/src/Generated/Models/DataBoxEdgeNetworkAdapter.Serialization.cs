@@ -212,9 +212,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             DataBoxEdgeNetworkAdapterStatus? status = default;
             DataBoxEdgeNetworkAdapterRdmaStatus? rdmaStatus = default;
             DataBoxEdgeNetworkAdapterDhcpStatus? dhcpStatus = default;
-            DataBoxEdgeIPv4Config iPv4Configuration = default;
-            DataBoxEdgeIPv6Config iPv6Configuration = default;
-            string iPv6LinkLocalAddress = default;
+            DataBoxEdgeIPv4Config ipv4Configuration = default;
+            DataBoxEdgeIPv6Config ipv6Configuration = default;
+            string ipv6LinkLocalAddress = default;
             IReadOnlyList<string> dnsServers = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    iPv4Configuration = DataBoxEdgeIPv4Config.DeserializeDataBoxEdgeIPv4Config(prop.Value, options);
+                    ipv4Configuration = DataBoxEdgeIPv4Config.DeserializeDataBoxEdgeIPv4Config(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("ipv6Configuration"u8))
@@ -317,12 +317,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    iPv6Configuration = DataBoxEdgeIPv6Config.DeserializeDataBoxEdgeIPv6Config(prop.Value, options);
+                    ipv6Configuration = DataBoxEdgeIPv6Config.DeserializeDataBoxEdgeIPv6Config(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("ipv6LinkLocalAddress"u8))
                 {
-                    iPv6LinkLocalAddress = prop.Value.GetString();
+                    ipv6LinkLocalAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("dnsServers"u8))
@@ -363,9 +363,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 status,
                 rdmaStatus,
                 dhcpStatus,
-                iPv4Configuration,
-                iPv6Configuration,
-                iPv6LinkLocalAddress,
+                ipv4Configuration,
+                ipv6Configuration,
+                ipv6LinkLocalAddress,
                 dnsServers ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }

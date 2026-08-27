@@ -211,6 +211,7 @@ internal class SampleTests
 
             resource acr 'Microsoft.ContainerRegistry/registries@2023-07-01' = {
               name: take('acr${uniqueString(resourceGroup().id)}', 50)
+              tags: tags
               location: location
               sku: {
                 name: 'Basic'
@@ -221,7 +222,6 @@ internal class SampleTests
                   '${mi.id}': { }
                 }
               }
-              tags: tags
             }
 
             resource acr_mi_AcrPull 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
@@ -236,13 +236,13 @@ internal class SampleTests
 
             resource law 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
               name: take('law-${uniqueString(resourceGroup().id)}', 63)
+              tags: tags
               location: location
               properties: {
                 sku: {
                   name: 'PerGB2018'
                 }
               }
-              tags: tags
             }
 
             resource cae 'Microsoft.App/managedEnvironments@2024-03-01' = {

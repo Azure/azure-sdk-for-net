@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.AI.ContentUnderstanding
 {
     /// <summary> Usage details. </summary>
-    internal partial class UsageDetails : IJsonModel<UsageDetails>
+    public partial class UsageDetails : IJsonModel<UsageDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -88,6 +88,21 @@ namespace Azure.AI.ContentUnderstanding
                 writer.WritePropertyName("documentPagesStandard"u8);
                 writer.WriteNumberValue(DocumentPagesStandard.Value);
             }
+            if (Optional.IsDefined(DocumentPagesMinimalInline))
+            {
+                writer.WritePropertyName("documentPagesMinimalInline"u8);
+                writer.WriteNumberValue(DocumentPagesMinimalInline.Value);
+            }
+            if (Optional.IsDefined(DocumentPagesBasicInline))
+            {
+                writer.WritePropertyName("documentPagesBasicInline"u8);
+                writer.WriteNumberValue(DocumentPagesBasicInline.Value);
+            }
+            if (Optional.IsDefined(DocumentPagesStandardInline))
+            {
+                writer.WritePropertyName("documentPagesStandardInline"u8);
+                writer.WriteNumberValue(DocumentPagesStandardInline.Value);
+            }
             if (Optional.IsDefined(AudioHours))
             {
                 writer.WritePropertyName("audioHours"u8);
@@ -102,6 +117,11 @@ namespace Azure.AI.ContentUnderstanding
             {
                 writer.WritePropertyName("contextualizationTokens"u8);
                 writer.WriteNumberValue(ContextualizationTokens.Value);
+            }
+            if (Optional.IsDefined(AdvancedContextualizationTokens))
+            {
+                writer.WritePropertyName("advancedContextualizationTokens"u8);
+                writer.WriteNumberValue(AdvancedContextualizationTokens.Value);
             }
             if (Optional.IsCollectionDefined(Tokens))
             {
@@ -159,9 +179,13 @@ namespace Azure.AI.ContentUnderstanding
             int? documentPagesMinimal = default;
             int? documentPagesBasic = default;
             int? documentPagesStandard = default;
+            int? documentPagesMinimalInline = default;
+            int? documentPagesBasicInline = default;
+            int? documentPagesStandardInline = default;
             float? audioHours = default;
             float? videoHours = default;
             int? contextualizationTokens = default;
+            int? advancedContextualizationTokens = default;
             IDictionary<string, int> tokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -193,6 +217,33 @@ namespace Azure.AI.ContentUnderstanding
                     documentPagesStandard = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("documentPagesMinimalInline"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    documentPagesMinimalInline = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("documentPagesBasicInline"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    documentPagesBasicInline = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("documentPagesStandardInline"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    documentPagesStandardInline = prop.Value.GetInt32();
+                    continue;
+                }
                 if (prop.NameEquals("audioHours"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -220,6 +271,15 @@ namespace Azure.AI.ContentUnderstanding
                     contextualizationTokens = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("advancedContextualizationTokens"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    advancedContextualizationTokens = prop.Value.GetInt32();
+                    continue;
+                }
                 if (prop.NameEquals("tokens"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -243,9 +303,13 @@ namespace Azure.AI.ContentUnderstanding
                 documentPagesMinimal,
                 documentPagesBasic,
                 documentPagesStandard,
+                documentPagesMinimalInline,
+                documentPagesBasicInline,
+                documentPagesStandardInline,
                 audioHours,
                 videoHours,
                 contextualizationTokens,
+                advancedContextualizationTokens,
                 tokens ?? new ChangeTrackingDictionary<string, int>(),
                 additionalBinaryDataProperties);
         }

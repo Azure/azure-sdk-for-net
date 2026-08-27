@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("pickHostNameFromBackendAddress"u8);
                 writer.WriteBooleanValue(PickHostNameFromBackendAddress.Value);
             }
-            if (Optional.IsDefined(EnableL4ClientIpPreservation))
+            if (Optional.IsDefined(EnableL4ClientIPPreservation))
             {
                 writer.WritePropertyName("enableL4ClientIpPreservation"u8);
-                writer.WriteBooleanValue(EnableL4ClientIpPreservation.Value);
+                writer.WriteBooleanValue(EnableL4ClientIPPreservation.Value);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Network.Models
             IList<WritableSubResource> trustedRootCertificates = default;
             string hostName = default;
             bool? pickHostNameFromBackendAddress = default;
-            bool? enableL4ClientIpPreservation = default;
+            bool? enableL4ClientIPPreservation = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    enableL4ClientIpPreservation = prop.Value.GetBoolean();
+                    enableL4ClientIPPreservation = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Network.Models
                 trustedRootCertificates ?? new ChangeTrackingList<WritableSubResource>(),
                 hostName,
                 pickHostNameFromBackendAddress,
-                enableL4ClientIpPreservation,
+                enableL4ClientIPPreservation,
                 provisioningState,
                 additionalBinaryDataProperties);
         }

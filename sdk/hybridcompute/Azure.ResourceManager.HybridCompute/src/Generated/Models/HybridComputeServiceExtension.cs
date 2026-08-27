@@ -39,16 +39,6 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <para> To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, JsonSerializerOptions?)"/>. </para>
         /// <para> To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>. </para>
         /// <para>
-        /// <remarks>
-        /// Supported types:
-        /// <list type="bullet">
-        /// <item>
-        /// <description> <see cref="string"/>. </description>
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// </para>
-        /// <para>
         /// Examples:
         /// <list type="bullet">
         /// <item>

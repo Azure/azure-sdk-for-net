@@ -212,7 +212,7 @@ namespace Azure.Provisioning.CostManagement
             _dataOverwriteBehavior = DefineProperty<DataOverwriteBehaviorType>(nameof(DataOverwriteBehavior), new string[] { "dataOverwriteBehavior" });
             _compressionMode = DefineProperty<CompressionModeType>(nameof(CompressionMode), new string[] { "compressionMode" });
             _exportDescription = DefineProperty<string>(nameof(ExportDescription), new string[] { "exportDescription" });
-            _nextRunTimeEstimate = DefineProperty<DateTimeOffset>(nameof(NextRunTimeEstimate), new string[] { "nextRunTimeEstimate" }, isOutput: true);
+            _nextRunTimeEstimate = DefineProperty<DateTimeOffset>(nameof(NextRunTimeEstimate), new string[] { "nextRunTimeEstimate" }, isOutput: true, format: "O");
             _systemSuspensionContext = DefineModelProperty<ExportSuspensionContext>(nameof(SystemSuspensionContext), new string[] { "systemSuspensionContext" }, isOutput: true);
             DefineAdditionalProperties();
         }

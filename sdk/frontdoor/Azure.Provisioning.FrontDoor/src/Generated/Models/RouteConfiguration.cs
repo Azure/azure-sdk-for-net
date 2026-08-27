@@ -11,7 +11,7 @@ namespace Azure.Provisioning.FrontDoor
 {
     /// <summary>
     /// Base class for all types of Route.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ForwardingConfiguration"/> and <see cref="RedirectConfiguration"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="ForwardingConfiguration"/> and <see cref="RedirectConfiguration"/>.
     /// </summary>
     public partial class RouteConfiguration : ProvisionableConstruct
     {

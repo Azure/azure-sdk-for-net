@@ -11,7 +11,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// N-Cross validations value.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AutoNCrossValidations"/> and <see cref="CustomNCrossValidations"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AutoNCrossValidations"/> and <see cref="CustomNCrossValidations"/>.
     /// </summary>
     public partial class NCrossValidations : ProvisionableConstruct
     {

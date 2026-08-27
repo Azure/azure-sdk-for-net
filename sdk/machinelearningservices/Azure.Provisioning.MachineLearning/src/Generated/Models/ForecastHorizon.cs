@@ -11,7 +11,7 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// The desired maximum forecast horizon in units of time-series frequency.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AutoForecastHorizon"/> and <see cref="CustomForecastHorizon"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AutoForecastHorizon"/> and <see cref="CustomForecastHorizon"/>.
     /// </summary>
     public partial class ForecastHorizon : ProvisionableConstruct
     {

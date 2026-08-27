@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     IsAppMonitoringAutoInstrumentationEnabled = isAppMonitoringAutoInstrumentationEnabled
                 };
             }
-            return new ManagedClusterAzureMonitorProfile(metrics, appMonitoring, null);
+            return new ManagedClusterAzureMonitorProfile(metrics, null, appMonitoring, null);
         }
 
         // This factory method is retained for backward compatibility. The generated factory now exposes
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile = managedOutboundIPCount.HasValue
                 ? new ManagedClusterManagedOutboundIPProfile { Count = managedOutboundIPCount }
                 : null;
-            return new ManagedClusterNatGatewayProfile(managedOutboundIPProfile, effectiveOutboundIPs?.ToList(), idleTimeoutInMinutes, null);
+            return new ManagedClusterNatGatewayProfile(null, managedOutboundIPProfile, effectiveOutboundIPs?.ToList(), null, null, idleTimeoutInMinutes, null);
         }
 
         // This factory method is retained for backward compatibility. The generated factory added the

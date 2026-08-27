@@ -46,13 +46,13 @@ public class BasicOperationalInsightsTests
             resource workspace 'Microsoft.OperationalInsights/workspaces@2023-09-01' = {
               name: take('workspace-${uniqueString(resourceGroup().id)}', 63)
               location: location
-              identity: {
-                type: 'SystemAssigned'
-              }
               properties: {
                 sku: {
                   name: 'PerGB2018'
                 }
+              }
+              identity: {
+                type: 'SystemAssigned'
               }
             }
             """);

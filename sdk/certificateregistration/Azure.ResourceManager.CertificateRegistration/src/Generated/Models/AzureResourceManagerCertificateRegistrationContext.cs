@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.CertificateRegistration.Models;
 using Azure.ResourceManager.Models;
 
@@ -50,6 +51,7 @@ namespace Azure.ResourceManager.CertificateRegistration
     [ModelReaderWriterBuildable(typeof(ReissueCertificateOrderRequestProperties))]
     [ModelReaderWriterBuildable(typeof(RenewCertificateOrderContent))]
     [ModelReaderWriterBuildable(typeof(RenewCertificateOrderRequestProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SampleUtterance))]
     [ModelReaderWriterBuildable(typeof(SiteSeal))]
     [ModelReaderWriterBuildable(typeof(SiteSealContent))]

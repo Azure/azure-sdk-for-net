@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.ContainerService.Mocking
 
         private ClientDiagnostics ManagedClustersClientDiagnostics => _managedClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedClusters ManagedClustersRestClient => _managedClustersRestClient ??= new ManagedClusters(ManagedClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01");
+        private ManagedClusters ManagedClustersRestClient => _managedClustersRestClient ??= new ManagedClusters(ManagedClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics SnapshotsClientDiagnostics => _snapshotsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Snapshots SnapshotsRestClient => _snapshotsRestClient ??= new Snapshots(SnapshotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01");
+        private Snapshots SnapshotsRestClient => _snapshotsRestClient ??= new Snapshots(SnapshotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics ManagedClustersOperationGroupClientDiagnostics => _managedClustersOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ManagedClustersOperationGroup ManagedClustersOperationGroupRestClient => _managedClustersOperationGroupRestClient ??= new ManagedClustersOperationGroup(ManagedClustersOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01");
+        private ManagedClustersOperationGroup ManagedClustersOperationGroupRestClient => _managedClustersOperationGroupRestClient ??= new ManagedClustersOperationGroup(ManagedClustersOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics TrustedAccessRolesOperationGroupClientDiagnostics => _trustedAccessRolesOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ContainerService.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private TrustedAccessRolesOperationGroup TrustedAccessRolesOperationGroupRestClient => _trustedAccessRolesOperationGroupRestClient ??= new TrustedAccessRolesOperationGroup(TrustedAccessRolesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01");
+        private TrustedAccessRolesOperationGroup TrustedAccessRolesOperationGroupRestClient => _trustedAccessRolesOperationGroupRestClient ??= new TrustedAccessRolesOperationGroup(TrustedAccessRolesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         /// <summary> Gets a collection of MeshRevisionProfiles in the <see cref="SubscriptionResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.ContainerService.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-05-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>

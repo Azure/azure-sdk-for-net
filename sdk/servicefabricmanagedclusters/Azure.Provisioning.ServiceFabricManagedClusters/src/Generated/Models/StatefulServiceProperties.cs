@@ -139,10 +139,10 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
             _hasPersistedState = DefineProperty<bool>(nameof(HasPersistedState), new string[] { "hasPersistedState" });
             _targetReplicaSetSize = DefineProperty<int>(nameof(TargetReplicaSetSize), new string[] { "targetReplicaSetSize" });
             _minReplicaSetSize = DefineProperty<int>(nameof(MinReplicaSetSize), new string[] { "minReplicaSetSize" });
-            _replicaRestartWaitDuration = DefineProperty<TimeSpan>(nameof(ReplicaRestartWaitDuration), new string[] { "replicaRestartWaitDuration" });
-            _quorumLossWaitDuration = DefineProperty<TimeSpan>(nameof(QuorumLossWaitDuration), new string[] { "quorumLossWaitDuration" });
-            _standByReplicaKeepDuration = DefineProperty<TimeSpan>(nameof(StandByReplicaKeepDuration), new string[] { "standByReplicaKeepDuration" });
-            _servicePlacementTimeLimit = DefineProperty<TimeSpan>(nameof(ServicePlacementTimeLimit), new string[] { "servicePlacementTimeLimit" });
+            _replicaRestartWaitDuration = DefineProperty<TimeSpan>(nameof(ReplicaRestartWaitDuration), new string[] { "replicaRestartWaitDuration" }, format: "c");
+            _quorumLossWaitDuration = DefineProperty<TimeSpan>(nameof(QuorumLossWaitDuration), new string[] { "quorumLossWaitDuration" }, format: "c");
+            _standByReplicaKeepDuration = DefineProperty<TimeSpan>(nameof(StandByReplicaKeepDuration), new string[] { "standByReplicaKeepDuration" }, format: "c");
+            _servicePlacementTimeLimit = DefineProperty<TimeSpan>(nameof(ServicePlacementTimeLimit), new string[] { "servicePlacementTimeLimit" }, format: "c");
             DefineAdditionalProperties();
         }
 

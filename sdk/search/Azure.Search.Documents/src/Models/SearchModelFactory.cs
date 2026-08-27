@@ -646,19 +646,6 @@ namespace Azure.Search.Documents.Models
             return new FacetResult(count, avg: null, min: null, max: null, sum: null, cardinality: null, facets: null, additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of VectorQuery. </summary>
-        /// <param name="kNearestNeighborsCount"> Number of nearest neighbors to return as top hits. </param>
-        /// <param name="fieldsRaw"> Vector Fields of type Collection(Edm.Single) to be included in the vector searched. </param>
-        /// <param name="exhaustive"> When true, triggers an exhaustive k-nearest neighbor search across all vectors within the vector index. </param>
-        /// <param name="oversampling"> Oversampling factor. </param>
-        /// <param name="weight"> Relative weight of the vector query when compared to other vector query and/or the text query within the same search request. </param>
-        /// <param name="filterOverride"> The OData filter expression to apply to this specific vector query. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static VectorQuery VectorQuery(int? kNearestNeighborsCount, string fieldsRaw, bool? exhaustive, double? oversampling, float? weight, string filterOverride)
-        {
-            return VectorQuery(kNearestNeighborsCount: kNearestNeighborsCount, fieldsRaw: fieldsRaw, exhaustive: exhaustive, oversampling: oversampling, weight: weight, threshold: default, filterOverride: filterOverride);
-        }
-
         /// <summary> Initializes a new instance of KnowledgeBaseActivityRecord. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>

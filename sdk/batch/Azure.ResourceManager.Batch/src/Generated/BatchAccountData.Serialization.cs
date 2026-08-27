@@ -112,11 +112,8 @@ namespace Azure.ResourceManager.Batch
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Location))
-            {
-                writer.WritePropertyName("location"u8);
-                writer.WriteStringValue(Location.Value);
-            }
+            writer.WritePropertyName("location"u8);
+            SerializeLocation(writer, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -243,10 +240,6 @@ namespace Azure.ResourceManager.Batch
                 }
                 if (prop.NameEquals("location"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
                     location = new AzureLocation(prop.Value.GetString());
                     continue;
                 }

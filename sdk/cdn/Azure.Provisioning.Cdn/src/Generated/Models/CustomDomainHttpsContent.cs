@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Cdn
 {
     /// <summary>
     /// The JSON object that contains the properties to secure a custom domain.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CdnManagedHttpsContent"/> and <see cref="UserManagedHttpsContent"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CdnManagedHttpsContent"/> and <see cref="UserManagedHttpsContent"/>.
     /// </summary>
     public partial class CustomDomainHttpsContent : ProvisionableConstruct
     {

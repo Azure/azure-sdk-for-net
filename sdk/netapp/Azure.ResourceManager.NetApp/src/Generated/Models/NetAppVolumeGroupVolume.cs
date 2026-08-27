@@ -20,7 +20,11 @@ namespace Azure.ResourceManager.NetApp.Models
 
         /// <summary> Initializes a new instance of <see cref="NetAppVolumeGroupVolume"/>. </summary>
         /// <param name="creationToken"> A unique file path for the volume. Used when creating mount targets. </param>
-        /// <param name="usageThreshold"> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB. For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB. Values expressed in bytes as multiples of 1 GiB. </param>
+        /// <param name="usageThreshold">
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
+        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
+        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// </param>
         /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="creationToken"/> or <paramref name="subnetId"/> is null. </exception>
         public NetAppVolumeGroupVolume(string creationToken, long usageThreshold, ResourceIdentifier subnetId)
@@ -113,7 +117,11 @@ namespace Azure.ResourceManager.NetApp.Models
             }
         }
 
-        /// <summary> Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB. For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB. Values expressed in bytes as multiples of 1 GiB. </summary>
+        /// <summary>
+        /// Maximum storage quota allowed for a file system in bytes. This is a soft quota used for alerting only. For regular volumes, valid values are in the range 50GiB to 100TiB.
+        /// For large volumes, valid values are in the range 100TiB to 500TiB, and on an exceptional basis, from to 2400GiB to 2400TiB.
+        /// For extra large volumes, valid values are in the range 2400GiB to 7200TiB. Values expressed in bytes as multiples of 1 GiB.
+        /// </summary>
         public long UsageThreshold
         {
             get

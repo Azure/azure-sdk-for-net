@@ -231,7 +231,7 @@ namespace Azure.Provisioning.FrontDoor
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _properties = DefineModelProperty<ExperimentProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<FrontDoorNetworkExperimentProfile>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<FrontDoorNetworkExperimentProfile>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

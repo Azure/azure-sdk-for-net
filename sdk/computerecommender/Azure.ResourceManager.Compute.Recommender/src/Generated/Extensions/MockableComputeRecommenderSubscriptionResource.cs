@@ -28,6 +28,33 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         }
 
         /// <summary>
+        /// Gets SkuMixPlacement scoring metadata.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/skuMixPlacementScores/recommendations. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SkuMixPlacementScores_Get. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-05-preview. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ComputeSkuMixPlacementResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <returns> Returns a <see cref="ComputeSkuMixPlacementResource"/> object. </returns>
+        public virtual ComputeSkuMixPlacementResource GetComputeSkuMixPlacement()
+        {
+            return new ComputeSkuMixPlacementResource(Client, Id.AppendProviderResource("Microsoft.Compute", "locations", "recommendations"));
+        }
+
+        /// <summary>
         /// Gets Spot Placement Scores metadata.
         /// <list type="bullet">
         /// <item>
@@ -40,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Recommender.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-06-05. </description>
+        /// <description> 2026-05-05-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

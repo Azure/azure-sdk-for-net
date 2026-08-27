@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Network
         {
             TryGetApiVersion(InterconnectGroupResource.ResourceType, out string interconnectGroupApiVersion);
             _interconnectGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Network", InterconnectGroupResource.ResourceType.Namespace, Diagnostics);
-            _interconnectGroupsRestClient = new InterconnectGroups(_interconnectGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, interconnectGroupApiVersion ?? "2025-07-01");
+            _interconnectGroupsRestClient = new InterconnectGroups(_interconnectGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, interconnectGroupApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -507,7 +507,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>

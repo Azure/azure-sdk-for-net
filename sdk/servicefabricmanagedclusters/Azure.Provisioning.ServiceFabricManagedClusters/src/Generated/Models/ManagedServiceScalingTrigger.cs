@@ -11,7 +11,7 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
 {
     /// <summary>
     /// Describes the trigger for performing a scaling operation.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AveragePartitionLoadScalingTrigger"/> and <see cref="AverageServiceLoadScalingTrigger"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AveragePartitionLoadScalingTrigger"/> and <see cref="AverageServiceLoadScalingTrigger"/>.
     /// </summary>
     public partial class ManagedServiceScalingTrigger : ProvisionableConstruct
     {

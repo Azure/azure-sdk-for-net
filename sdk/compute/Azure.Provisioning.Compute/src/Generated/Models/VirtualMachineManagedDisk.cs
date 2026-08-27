@@ -7,17 +7,15 @@
 
 using Azure.Core;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Compute
 {
     /// <summary> The parameters of a managed disk. </summary>
-    public partial class VirtualMachineManagedDisk : ProvisionableConstruct
+    public partial class VirtualMachineManagedDisk : ComputeWriteableSubResourceData
     {
         private BicepValue<StorageAccountType> _storageAccountType;
         private DiskEncryptionSetParameters _diskEncryptionSet;
         private VirtualMachineDiskSecurityProfile _securityProfile;
-        private BicepValue<ResourceIdentifier> _id;
 
         /// <summary> Creates a new VirtualMachineManagedDisk. </summary>
         public VirtualMachineManagedDisk()
@@ -70,21 +68,6 @@ namespace Azure.Provisioning.Compute
         }
 
         /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> Id
-        {
-            get
-            {
-                Initialize();
-                return _id;
-            }
-            set
-            {
-                Initialize();
-                _id.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> DiskEncryptionSetId
         {
             get
@@ -108,7 +91,6 @@ namespace Azure.Provisioning.Compute
             _storageAccountType = DefineProperty<StorageAccountType>(nameof(StorageAccountType), new string[] { "storageAccountType" });
             _diskEncryptionSet = DefineModelProperty<DiskEncryptionSetParameters>(nameof(DiskEncryptionSet), new string[] { "diskEncryptionSet" });
             _securityProfile = DefineModelProperty<VirtualMachineDiskSecurityProfile>(nameof(SecurityProfile), new string[] { "securityProfile" });
-            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" });
             DefineAdditionalProperties();
         }
 
