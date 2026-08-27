@@ -27,12 +27,12 @@ public class BasicSignalRTests
 
                 SignalRService signalr =
                     new(nameof(signalr), "2022-02-01")
-                  {
-                      Sku = new SignalRResourceSku { Name = "Standard_S1", Capacity = 1 },
-                      Kind = SignalRServiceKind.SignalR,
-                      Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
-                      IsClientCertEnabled = false,
-                      Features =
+                    {
+                        Sku = new SignalRResourceSku { Name = "Standard_S1", Capacity = 1 },
+                        Kind = SignalRServiceKind.SignalR,
+                        Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
+                        IsClientCertEnabled = false,
+                        Features =
                         {
                             new SignalRFeature
                             {
@@ -50,8 +50,8 @@ public class BasicSignalRTests
                                 Value = "true"
                             },
                         },
-                      CorsAllowedOrigins = { "*" },
-                      NetworkACLs =
+                        CorsAllowedOrigins = { "*" },
+                        NetworkACLs =
                             new SignalRNetworkAcls
                             {
                                 DefaultAction = SignalRNetworkAclAction.Deny,
@@ -69,7 +69,7 @@ public class BasicSignalRTests
                                     }
                                 },
                             },
-                      UpstreamTemplates =
+                        UpstreamTemplates =
                         {
                             new SignalRUpstreamTemplate
                             {
@@ -79,7 +79,7 @@ public class BasicSignalRTests
                                 UrlTemplate = "https://example.com/chat/api/connect"
                             }
                         }
-                  };
+                    };
                 infra.Add(signalr);
                 #endregion
 

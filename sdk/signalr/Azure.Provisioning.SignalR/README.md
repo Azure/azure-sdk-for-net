@@ -40,12 +40,12 @@ infra.Add(endpointName);
 
 SignalRService signalr =
     new(nameof(signalr), "2022-02-01")
-  {
-      Sku = new SignalRResourceSku { Name = "Standard_S1", Capacity = 1 },
-      Kind = SignalRServiceKind.SignalR,
-      Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
-      IsClientCertEnabled = false,
-      Features =
+    {
+        Sku = new SignalRResourceSku { Name = "Standard_S1", Capacity = 1 },
+        Kind = SignalRServiceKind.SignalR,
+        Identity = new ManagedServiceIdentity { ManagedServiceIdentityType = ManagedServiceIdentityType.SystemAssigned },
+        IsClientCertEnabled = false,
+        Features =
         {
             new SignalRFeature
             {
@@ -63,8 +63,8 @@ SignalRService signalr =
                 Value = "true"
             },
         },
-      CorsAllowedOrigins = { "*" },
-      NetworkACLs =
+        CorsAllowedOrigins = { "*" },
+        NetworkACLs =
             new SignalRNetworkAcls
             {
                 DefaultAction = SignalRNetworkAclAction.Deny,
@@ -82,7 +82,7 @@ SignalRService signalr =
                     }
                 },
             },
-      UpstreamTemplates =
+        UpstreamTemplates =
         {
             new SignalRUpstreamTemplate
             {
@@ -92,7 +92,7 @@ SignalRService signalr =
                 UrlTemplate = "https://example.com/chat/api/connect"
             }
         }
-  };
+    };
 infra.Add(signalr);
 ```
 

@@ -1,5 +1,7 @@
 import:
   - ../../../.vscode/cspell.json
+words:
+  - azprovision
 overrides:
   - filename: '**/sdk/signalr/Azure.Provisioning.SignalR/tests/**/*.cs'
     words:
