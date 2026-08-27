@@ -143,7 +143,8 @@ namespace Azure.Provisioning.CosmosDB
         }
 
         /// <summary> Gets or sets the Resource. </summary>
-        public ExtendedCassandraTableResourceInfo Resource
+        [CodeGenMember("Resource")]
+        public CassandraTableResourceInfo Resource
         {
             get
             {

@@ -143,7 +143,8 @@ namespace Azure.Provisioning.CosmosDB
         }
 
         /// <summary> Gets or sets the Resource. </summary>
-        public ExtendedGremlinGraphResourceInfo Resource
+        [CodeGenMember("Resource")]
+        public GremlinGraphResourceInfo Resource
         {
             get
             {

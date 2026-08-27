@@ -11,33 +11,15 @@ namespace Azure.Provisioning.CosmosDB
 {
     internal partial class MongoDBDatabaseProperties : ProvisionableConstruct
     {
-        private ExtendedMongoDBDatabaseResourceInfo _resource;
-
         /// <summary> Creates a new MongoDBDatabaseProperties. </summary>
         public MongoDBDatabaseProperties()
         {
-        }
-
-        /// <summary> Gets or sets the Resource. </summary>
-        public ExtendedMongoDBDatabaseResourceInfo Resource
-        {
-            get
-            {
-                Initialize();
-                return _resource;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _resource, value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for MongoDBDatabaseProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _resource = DefineModelProperty<ExtendedMongoDBDatabaseResourceInfo>(nameof(Resource), new string[] { "resource" });
             DefineAdditionalProperties();
         }
 

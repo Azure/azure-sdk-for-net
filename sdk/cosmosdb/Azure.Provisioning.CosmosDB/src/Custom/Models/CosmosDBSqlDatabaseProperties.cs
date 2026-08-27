@@ -11,7 +11,27 @@ namespace Azure.Provisioning.CosmosDB;
 /// </summary>
 internal partial class CosmosDBSqlDatabaseProperties
 {
+    private CosmosDBSqlDatabaseResourceInfo _resource;
     private CosmosDBCreateUpdateConfig _options;
+
+    // CUSTOMIZATION: The TypeSpec GET response uses ExtendedCosmosDBSqlDatabaseResourceInfo, but
+    // the released CosmosDBSqlDatabase.Resource property used CosmosDBSqlDatabaseResourceInfo.
+    // Preserve the released type temporarily to avoid a breaking change while response model flattening is fixed.
+    /// <summary> Gets or sets the Resource. </summary>
+    [CodeGenMember("Resource")]
+    public global::Azure.Provisioning.CosmosDB.CosmosDBSqlDatabaseResourceInfo Resource
+    {
+        get
+        {
+            Initialize();
+            return _resource;
+        }
+        set
+        {
+            Initialize();
+            AssignOrReplace(ref _resource, value);
+        }
+    }
 
     /// <summary> Gets or sets the Options. </summary>
     [CodeGenMember("Options")]
@@ -31,6 +51,7 @@ internal partial class CosmosDBSqlDatabaseProperties
 
     partial void DefineAdditionalProperties()
     {
+        _resource = DefineModelProperty<CosmosDBSqlDatabaseResourceInfo>(nameof(Resource), new string[] { "resource" });
         _options = DefineModelProperty<CosmosDBCreateUpdateConfig>(nameof(Options), new string[] { "options" });
     }
 }

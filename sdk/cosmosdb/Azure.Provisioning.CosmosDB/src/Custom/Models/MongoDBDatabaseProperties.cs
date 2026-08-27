@@ -11,7 +11,27 @@ namespace Azure.Provisioning.CosmosDB;
 /// </summary>
 internal partial class MongoDBDatabaseProperties
 {
+    private MongoDBDatabaseResourceInfo _resource;
     private CosmosDBCreateUpdateConfig _options;
+
+    // CUSTOMIZATION: The TypeSpec GET response uses ExtendedMongoDBDatabaseResourceInfo, but the
+    // released MongoDBDatabase.Resource property used MongoDBDatabaseResourceInfo. Preserve the
+    // released type temporarily to avoid a breaking change while response model flattening is fixed.
+    /// <summary> Gets or sets the Resource. </summary>
+    [CodeGenMember("Resource")]
+    public global::Azure.Provisioning.CosmosDB.MongoDBDatabaseResourceInfo Resource
+    {
+        get
+        {
+            Initialize();
+            return _resource;
+        }
+        set
+        {
+            Initialize();
+            AssignOrReplace(ref _resource, value);
+        }
+    }
 
     /// <summary> Gets or sets the Options. </summary>
     [CodeGenMember("Options")]
@@ -31,6 +51,7 @@ internal partial class MongoDBDatabaseProperties
 
     partial void DefineAdditionalProperties()
     {
+        _resource = DefineModelProperty<MongoDBDatabaseResourceInfo>(nameof(Resource), new string[] { "resource" });
         _options = DefineModelProperty<CosmosDBCreateUpdateConfig>(nameof(Options), new string[] { "options" });
     }
 }

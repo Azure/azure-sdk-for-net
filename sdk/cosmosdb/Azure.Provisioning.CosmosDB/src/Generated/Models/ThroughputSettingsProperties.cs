@@ -9,36 +9,17 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
 {
-    /// <summary> The properties of an Azure Cosmos DB resource throughput. </summary>
     internal partial class ThroughputSettingsProperties : ProvisionableConstruct
     {
-        private ExtendedThroughputSettingsResourceInfo _resource;
-
         /// <summary> Creates a new ThroughputSettingsProperties. </summary>
         public ThroughputSettingsProperties()
         {
-        }
-
-        /// <summary> Gets or sets the Resource. </summary>
-        public ExtendedThroughputSettingsResourceInfo Resource
-        {
-            get
-            {
-                Initialize();
-                return _resource;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _resource, value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for ThroughputSettingsProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _resource = DefineModelProperty<ExtendedThroughputSettingsResourceInfo>(nameof(Resource), new string[] { "resource" });
             DefineAdditionalProperties();
         }
 

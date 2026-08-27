@@ -11,33 +11,15 @@ namespace Azure.Provisioning.CosmosDB
 {
     internal partial class GremlinGraphProperties : ProvisionableConstruct
     {
-        private ExtendedGremlinGraphResourceInfo _resource;
-
         /// <summary> Creates a new GremlinGraphProperties. </summary>
         public GremlinGraphProperties()
         {
-        }
-
-        /// <summary> Gets or sets the Resource. </summary>
-        public ExtendedGremlinGraphResourceInfo Resource
-        {
-            get
-            {
-                Initialize();
-                return _resource;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _resource, value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for GremlinGraphProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _resource = DefineModelProperty<ExtendedGremlinGraphResourceInfo>(nameof(Resource), new string[] { "resource" });
             DefineAdditionalProperties();
         }
 

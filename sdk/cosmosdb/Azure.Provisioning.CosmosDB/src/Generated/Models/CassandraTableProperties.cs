@@ -11,33 +11,15 @@ namespace Azure.Provisioning.CosmosDB
 {
     internal partial class CassandraTableProperties : ProvisionableConstruct
     {
-        private ExtendedCassandraTableResourceInfo _resource;
-
         /// <summary> Creates a new CassandraTableProperties. </summary>
         public CassandraTableProperties()
         {
-        }
-
-        /// <summary> Gets or sets the Resource. </summary>
-        public ExtendedCassandraTableResourceInfo Resource
-        {
-            get
-            {
-                Initialize();
-                return _resource;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _resource, value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for CassandraTableProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _resource = DefineModelProperty<ExtendedCassandraTableResourceInfo>(nameof(Resource), new string[] { "resource" });
             DefineAdditionalProperties();
         }
 

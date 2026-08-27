@@ -11,33 +11,15 @@ namespace Azure.Provisioning.CosmosDB
 {
     internal partial class CosmosDBSqlTriggerProperties : ProvisionableConstruct
     {
-        private ExtendedCosmosDBSqlTriggerResourceInfo _resource;
-
         /// <summary> Creates a new CosmosDBSqlTriggerProperties. </summary>
         public CosmosDBSqlTriggerProperties()
         {
-        }
-
-        /// <summary> Gets or sets the Resource. </summary>
-        public ExtendedCosmosDBSqlTriggerResourceInfo Resource
-        {
-            get
-            {
-                Initialize();
-                return _resource;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _resource, value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for CosmosDBSqlTriggerProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _resource = DefineModelProperty<ExtendedCosmosDBSqlTriggerResourceInfo>(nameof(Resource), new string[] { "resource" });
             DefineAdditionalProperties();
         }
 

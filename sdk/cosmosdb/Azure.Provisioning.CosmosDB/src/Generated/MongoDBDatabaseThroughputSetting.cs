@@ -9,6 +9,7 @@ using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.CosmosDB
 {
@@ -137,7 +138,8 @@ namespace Azure.Provisioning.CosmosDB
         }
 
         /// <summary> Gets or sets the Resource. </summary>
-        public ExtendedThroughputSettingsResourceInfo Resource
+        [CodeGenMember("Resource")]
+        public ThroughputSettingsResourceInfo Resource
         {
             get
             {

@@ -11,33 +11,15 @@ namespace Azure.Provisioning.CosmosDB
 {
     internal partial class CosmosDBSqlUserDefinedFunctionProperties : ProvisionableConstruct
     {
-        private ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo _resource;
-
         /// <summary> Creates a new CosmosDBSqlUserDefinedFunctionProperties. </summary>
         public CosmosDBSqlUserDefinedFunctionProperties()
         {
-        }
-
-        /// <summary> Gets or sets the Resource. </summary>
-        public ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo Resource
-        {
-            get
-            {
-                Initialize();
-                return _resource;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _resource, value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for CosmosDBSqlUserDefinedFunctionProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _resource = DefineModelProperty<ExtendedCosmosDBSqlUserDefinedFunctionResourceInfo>(nameof(Resource), new string[] { "resource" });
             DefineAdditionalProperties();
         }
 

@@ -9,36 +9,17 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
 {
-    /// <summary> The properties of a ClientEncryptionKey resource. </summary>
     internal partial class ClientEncryptionKeyGetProperties : ProvisionableConstruct
     {
-        private CosmosDBSqlClientEncryptionKeyProperties _resource;
-
         /// <summary> Creates a new ClientEncryptionKeyGetProperties. </summary>
         public ClientEncryptionKeyGetProperties()
         {
-        }
-
-        /// <summary> Gets or sets the Resource. </summary>
-        public CosmosDBSqlClientEncryptionKeyProperties Resource
-        {
-            get
-            {
-                Initialize();
-                return _resource;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _resource, value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for ClientEncryptionKeyGetProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _resource = DefineModelProperty<CosmosDBSqlClientEncryptionKeyProperties>(nameof(Resource), new string[] { "resource" });
             DefineAdditionalProperties();
         }
 

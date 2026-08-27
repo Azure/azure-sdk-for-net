@@ -11,33 +11,15 @@ namespace Azure.Provisioning.CosmosDB
 {
     internal partial class CosmosDBSqlStoredProcedureProperties : ProvisionableConstruct
     {
-        private ExtendedCosmosDBSqlStoredProcedureResourceInfo _resource;
-
         /// <summary> Creates a new CosmosDBSqlStoredProcedureProperties. </summary>
         public CosmosDBSqlStoredProcedureProperties()
         {
-        }
-
-        /// <summary> Gets or sets the Resource. </summary>
-        public ExtendedCosmosDBSqlStoredProcedureResourceInfo Resource
-        {
-            get
-            {
-                Initialize();
-                return _resource;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _resource, value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for CosmosDBSqlStoredProcedureProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _resource = DefineModelProperty<ExtendedCosmosDBSqlStoredProcedureResourceInfo>(nameof(Resource), new string[] { "resource" });
             DefineAdditionalProperties();
         }
 

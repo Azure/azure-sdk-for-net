@@ -143,7 +143,8 @@ namespace Azure.Provisioning.CosmosDB
         }
 
         /// <summary> Gets or sets the Resource. </summary>
-        public CosmosDBTablePropertiesResource Resource
+        [CodeGenMember("Resource")]
+        public CosmosDBTableResourceInfo Resource
         {
             get
             {

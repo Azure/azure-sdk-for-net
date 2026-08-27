@@ -11,7 +11,27 @@ namespace Azure.Provisioning.CosmosDB;
 /// </summary>
 internal partial class GremlinDatabaseProperties
 {
+    private GremlinDatabaseResourceInfo _resource;
     private CosmosDBCreateUpdateConfig _options;
+
+    // CUSTOMIZATION: The TypeSpec GET response uses ExtendedGremlinDatabaseResourceInfo, but the
+    // released GremlinDatabase.Resource property used GremlinDatabaseResourceInfo. Preserve the
+    // released type temporarily to avoid a breaking change while response model flattening is fixed.
+    /// <summary> Gets or sets the Resource. </summary>
+    [CodeGenMember("Resource")]
+    public global::Azure.Provisioning.CosmosDB.GremlinDatabaseResourceInfo Resource
+    {
+        get
+        {
+            Initialize();
+            return _resource;
+        }
+        set
+        {
+            Initialize();
+            AssignOrReplace(ref _resource, value);
+        }
+    }
 
     /// <summary> Gets or sets the Options. </summary>
     [CodeGenMember("Options")]
@@ -31,6 +51,7 @@ internal partial class GremlinDatabaseProperties
 
     partial void DefineAdditionalProperties()
     {
+        _resource = DefineModelProperty<GremlinDatabaseResourceInfo>(nameof(Resource), new string[] { "resource" });
         _options = DefineModelProperty<CosmosDBCreateUpdateConfig>(nameof(Options), new string[] { "options" });
     }
 }
