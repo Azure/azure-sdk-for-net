@@ -152,6 +152,7 @@ foreach ($path in $alwaysIncludedPaths) {
 # Build direct indexes once. Test jobs will traverse only the configurations for their batch.
 $nodesByPath = @{}
 $configurationsByPackageRoot = @{}
+$configurationsByProjectPath = @{}
 $configurationsByRepositoryPackage = @{}
 $repositoryPackageKeys = [System.Collections.Generic.Dictionary[string, string]]::new(
   [System.StringComparer]::OrdinalIgnoreCase)
@@ -172,6 +173,7 @@ foreach ($node in $graph.nodes) {
     $configurationCount++
     $configuration = Get-ConfigurationKey $projectPath ([string] $targetFramework)
     $null = $allConfigurations.Add($configuration)
+    Add-TableValue $configurationsByProjectPath $projectPath $configuration
     if ($packageRoot) {
       Add-TableValue $configurationsByPackageRoot $packageRoot $configuration
     }
@@ -305,8 +307,20 @@ foreach ($packageInfoFile in $packageInfoFiles) {
     continue
   }
 
-  $seeds = $configurationsByPackageRoot[$directoryPath]
-  if ($null -eq $seeds -or $seeds.Count -eq 0) {
+  $seeds = New-StringSet
+  if ($configurationsByPackageRoot.ContainsKey($directoryPath)) {
+    $null = $seeds.UnionWith($configurationsByPackageRoot[$directoryPath])
+  }
+  # service.proj tests every project below the package directory. Seed those projects even when
+  # their inferred PackageRootDirectory is a nested tests/perf directory; otherwise dependencies
+  # outside the package's SDK directory can be omitted from the checkout.
+  $directoryPrefix = "$directoryPath/"
+  foreach ($projectPath in $configurationsByProjectPath.Keys) {
+    if ($projectPath.StartsWith($directoryPrefix, [System.StringComparison]::OrdinalIgnoreCase)) {
+      $null = $seeds.UnionWith($configurationsByProjectPath[$projectPath])
+    }
+  }
+  if ($seeds.Count -eq 0) {
     Write-Warning "Artifact '$artifactName' has no configurations in the repository graph; it will use a full checkout."
     $null = $unavailableArtifacts.Add($artifactName)
     $null = $artifactSeeds.Remove($artifactName)
