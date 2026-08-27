@@ -112,6 +112,99 @@ internal class NameVisitor : ScmLibraryVisitor
         return base.PreVisitProperty(property, propertyProvider);
     }
 
+    private static readonly HashSet<string> _mtgDateTimeVerbPrefixes = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "Change",
+        "Creation",
+        "Deletion",
+        "End",
+        "Expiration",
+        "Expire",
+        "Modification",
+        "Start",
+    };
+
+    internal static bool IsMtgRenamedDateTimeProperty(PropertyProvider? property)
+    {
+        if (property?.WireInfo is not { } wireInfo ||
+            wireInfo.SerializationFormat is not (
+                SerializationFormat.DateTime_RFC1123 or
+                SerializationFormat.DateTime_RFC3339 or
+                SerializationFormat.DateTime_RFC7231 or
+                SerializationFormat.DateTime_ISO8601 or
+                SerializationFormat.DateTime_Unix or
+                SerializationFormat.Date_ISO8601))
+        {
+            return false;
+        }
+
+        var name = wireInfo.SerializedName;
+        var suffixLength = GetMtgDateTimeSuffixLength(name);
+        if (suffixLength == 0 || suffixLength == name.Length || HasExcludedMtgDateTimeComponent(name, suffixLength))
+        {
+            return false;
+        }
+
+        if (name.EndsWith("Timestamp", StringComparison.OrdinalIgnoreCase) ||
+            name.EndsWith("TimeStamp", StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        var prefix = name[..^suffixLength];
+        foreach (var key in _mtgDateTimeVerbPrefixes)
+        {
+            if (prefix.Equals(key, StringComparison.OrdinalIgnoreCase) ||
+                (prefix.Length > key.Length &&
+                 prefix.EndsWith(key, StringComparison.OrdinalIgnoreCase) &&
+                 char.IsUpper(prefix[^key.Length])))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static int GetMtgDateTimeSuffixLength(string name)
+    {
+        if (name.EndsWith("Timestamp", StringComparison.OrdinalIgnoreCase) ||
+            name.EndsWith("TimeStamp", StringComparison.OrdinalIgnoreCase))
+        {
+            return "Timestamp".Length;
+        }
+
+        if (name.EndsWith("DateTime", StringComparison.OrdinalIgnoreCase))
+        {
+            return "DateTime".Length;
+        }
+
+        if (name.EndsWith("Time", StringComparison.OrdinalIgnoreCase) ||
+            name.EndsWith("Date", StringComparison.OrdinalIgnoreCase))
+        {
+            return "Time".Length;
+        }
+
+        if (name.EndsWith("On", StringComparison.OrdinalIgnoreCase))
+        {
+            return "On".Length;
+        }
+
+        return name.EndsWith("At", StringComparison.OrdinalIgnoreCase) ? "At".Length : 0;
+    }
+
+    private static bool HasExcludedMtgDateTimeComponent(string name, int suffixLength)
+    {
+        var prefix = name[..^suffixLength];
+        return prefix.Equals("First", StringComparison.OrdinalIgnoreCase) ||
+            prefix.Equals("Last", StringComparison.OrdinalIgnoreCase) ||
+            name.StartsWith("From", StringComparison.OrdinalIgnoreCase) ||
+            name.StartsWith("To", StringComparison.OrdinalIgnoreCase) ||
+            name.EndsWith("PointInTime", StringComparison.OrdinalIgnoreCase) ||
+            name.Equals("StatusTimestamp", StringComparison.OrdinalIgnoreCase) ||
+            name.Equals("StatusTimeStamp", StringComparison.OrdinalIgnoreCase);
+    }
+
     private void DoPreVisitPropertyForResourceTypeName(InputProperty property, PropertyProvider? propertyProvider)
     {
         if (propertyProvider == null || property is not InputModelProperty)

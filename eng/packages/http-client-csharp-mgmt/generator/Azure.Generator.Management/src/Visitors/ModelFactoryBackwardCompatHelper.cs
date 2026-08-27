@@ -3,7 +3,6 @@
 
 using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.Expressions;
-using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -25,18 +24,6 @@ namespace Azure.Generator.Management.Visitors
     /// </summary>
     internal static class ModelFactoryBackwardCompatHelper
     {
-        private static readonly HashSet<string> _mtgDateTimeVerbPrefixes = new(StringComparer.OrdinalIgnoreCase)
-        {
-            "Change",
-            "Creation",
-            "Deletion",
-            "End",
-            "Expiration",
-            "Expire",
-            "Modification",
-            "Start",
-        };
-
         internal static void FixModelFactoryConstructorCalls(IReadOnlyList<MethodProvider> methods)
         {
             foreach (var method in methods)
@@ -647,7 +634,7 @@ namespace Azure.Generator.Management.Visitors
                 return true;
             }
 
-            if (positionalFallback is not null && IsMtgRenamedDateTimeProperty(constructorParameter.Property))
+            if (positionalFallback is not null && NameVisitor.IsMtgRenamedDateTimeProperty(constructorParameter.Property))
             {
                 argument = positionalFallback;
                 return true;
@@ -855,7 +842,7 @@ namespace Azure.Generator.Management.Visitors
                 // the writer disambiguates them. Prefer the parameter from the same source property when available.
                 matches = matches.Where(p => ReferenceEquals(p.Property, expectedProperty)).ToArray();
             }
-            else if (matches.Length == 0 && expectedProperty is not null && IsMtgRenamedDateTimeProperty(expectedProperty))
+            else if (matches.Length == 0 && expectedProperty is not null && NameVisitor.IsMtgRenamedDateTimeProperty(expectedProperty))
             {
                 matches = method.Signature.Parameters.Where(p =>
                     ReferenceEquals(p.Property, expectedProperty)
@@ -875,76 +862,6 @@ namespace Azure.Generator.Management.Visitors
                 && AreCompatibleParameterTypes(p.Type, nestedParameter.Type)).ToArray();
             parameter = matches.Length == 1 ? matches[0] : null;
             return parameter is not null;
-        }
-
-        private static bool IsMtgRenamedDateTimeProperty(PropertyProvider? property)
-        {
-            if (property?.WireInfo is not { } wireInfo ||
-                wireInfo.SerializationFormat is not (
-                    SerializationFormat.DateTime_RFC1123 or
-                    SerializationFormat.DateTime_RFC3339 or
-                    SerializationFormat.DateTime_RFC7231 or
-                    SerializationFormat.DateTime_ISO8601 or
-                    SerializationFormat.DateTime_Unix or
-                    SerializationFormat.Date_ISO8601))
-            {
-                return false;
-            }
-
-            var name = wireInfo.SerializedName;
-            var suffixLength = GetMtgDateTimeSuffixLength(name);
-            if (suffixLength == 0 || suffixLength == name.Length || HasExcludedMtgDateTimeComponent(name, suffixLength))
-            {
-                return false;
-            }
-
-            var prefix = name[..^suffixLength];
-            return name.EndsWith("Timestamp", StringComparison.OrdinalIgnoreCase) ||
-                name.EndsWith("TimeStamp", StringComparison.OrdinalIgnoreCase) ||
-                _mtgDateTimeVerbPrefixes.Any(key =>
-                prefix.Equals(key, StringComparison.OrdinalIgnoreCase) ||
-                (prefix.Length > key.Length &&
-                 prefix.EndsWith(key, StringComparison.OrdinalIgnoreCase) &&
-                 char.IsUpper(prefix[^key.Length])));
-        }
-
-        private static int GetMtgDateTimeSuffixLength(string name)
-        {
-            if (name.EndsWith("Timestamp", StringComparison.OrdinalIgnoreCase) ||
-                name.EndsWith("TimeStamp", StringComparison.OrdinalIgnoreCase))
-            {
-                return "Timestamp".Length;
-            }
-
-            if (name.EndsWith("DateTime", StringComparison.OrdinalIgnoreCase))
-            {
-                return "DateTime".Length;
-            }
-
-            if (name.EndsWith("Time", StringComparison.OrdinalIgnoreCase) ||
-                name.EndsWith("Date", StringComparison.OrdinalIgnoreCase))
-            {
-                return "Time".Length;
-            }
-
-            if (name.EndsWith("On", StringComparison.OrdinalIgnoreCase))
-            {
-                return "On".Length;
-            }
-
-            return name.EndsWith("At", StringComparison.OrdinalIgnoreCase) ? "At".Length : 0;
-        }
-
-        private static bool HasExcludedMtgDateTimeComponent(string name, int suffixLength)
-        {
-            var prefix = name[..^suffixLength];
-            return prefix.Equals("First", StringComparison.OrdinalIgnoreCase) ||
-                prefix.Equals("Last", StringComparison.OrdinalIgnoreCase) ||
-                name.StartsWith("From", StringComparison.OrdinalIgnoreCase) ||
-                name.StartsWith("To", StringComparison.OrdinalIgnoreCase) ||
-                name.EndsWith("PointInTime", StringComparison.OrdinalIgnoreCase) ||
-                name.Equals("StatusTimestamp", StringComparison.OrdinalIgnoreCase) ||
-                name.Equals("StatusTimeStamp", StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
