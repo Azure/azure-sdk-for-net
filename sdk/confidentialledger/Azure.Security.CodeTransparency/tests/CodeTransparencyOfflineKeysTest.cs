@@ -13,7 +13,7 @@ namespace Azure.Security.CodeTransparency.Tests
 {
     public class CodeTransparencyOfflineKeysTest
     {
-        private sealed class DummyJwksDocument : JwksDocument
+        private sealed class DummyJwksDocument : CodeTransparencyJwksDocument
         {
             private readonly string _id;
 
@@ -112,7 +112,7 @@ namespace Azure.Security.CodeTransparency.Tests
             // IReadOnlyDictionary is read-only by design
             Assert.Throws<NotSupportedException>(() =>
             {
-                var cast = (IDictionary<string, JwksDocument>)byIssuer;
+                var cast = (IDictionary<string, CodeTransparencyJwksDocument>)byIssuer;
                 cast["ledger2"] = doc;
             });
         }
@@ -126,8 +126,8 @@ namespace Azure.Security.CodeTransparency.Tests
                 ""ledger2.contoso.com"": {}
             }";
 
-            // We only care that JwksDocument.DeserializeJwksDocument is called for each entry.
-            // Since we cannot easily assert the internal JwksDocument instances without
+            // We only care that CodeTransparencyJwksDocument.DeserializeCodeTransparencyJwksDocument is called for each entry.
+            // Since we cannot easily assert the internal CodeTransparencyJwksDocument instances without
             // relying on its implementation, we focus on the key count.
             var binary = new BinaryData(json);
 

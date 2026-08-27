@@ -102,7 +102,7 @@ namespace Azure.Security.CodeTransparency
                 return OperationState.Pending(response);
             }
 
-            string status = CborUtils.GetStringValueFromCborMapByKey(response.Content.ToArray(), "Status");
+            string status = CodeTransparencyCbor.GetStringValueFromCborMapByKey(response.Content.ToArray(), "Status");
 
             if (!Enum.TryParse(status, true, out CodeTransparencyOperationStatus parsedStatus))
             {

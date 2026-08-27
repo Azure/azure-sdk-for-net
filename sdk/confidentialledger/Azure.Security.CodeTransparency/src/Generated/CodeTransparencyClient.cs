@@ -201,19 +201,19 @@ namespace Azure.Security.CodeTransparency
         /// <summary> Get the public keys used by the service to sign receipts, mentioned in IETF SCITT draft as part of jwks_uri implementation. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<JwksDocument> GetPublicKeys(CancellationToken cancellationToken = default)
+        public virtual Response<CodeTransparencyJwksDocument> GetPublicKeys(CancellationToken cancellationToken = default)
         {
             Response result = GetPublicKeys(cancellationToken.ToRequestContext());
-            return Response.FromValue((JwksDocument)result, result);
+            return Response.FromValue((CodeTransparencyJwksDocument)result, result);
         }
 
         /// <summary> Get the public keys used by the service to sign receipts, mentioned in IETF SCITT draft as part of jwks_uri implementation. </summary>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<JwksDocument>> GetPublicKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CodeTransparencyJwksDocument>> GetPublicKeysAsync(CancellationToken cancellationToken = default)
         {
             Response result = await GetPublicKeysAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((JwksDocument)result, result);
+            return Response.FromValue((CodeTransparencyJwksDocument)result, result);
         }
 
         /// <summary>

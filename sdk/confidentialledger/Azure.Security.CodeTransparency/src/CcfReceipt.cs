@@ -14,7 +14,7 @@ namespace Azure.Security.CodeTransparency
     /// This class encapsulates the representation and the available operations of CBOR encoded CCF SCITT receipts.
     /// This is a reference implementation for a proposed draft IETF specification: https://datatracker.ietf.org/doc/draft-birkholz-scitt-receipts/03/ .
     /// </summary>
-    internal class CcfReceipt
+    public class CcfReceipt
     {
         /// <summary>
         /// Expected tree algorithm value in the receipt.

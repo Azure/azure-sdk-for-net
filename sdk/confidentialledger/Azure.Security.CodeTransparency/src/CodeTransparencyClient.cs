@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Formats.Cbor;
 using System.Security.Cryptography.Cose;
 using System.Security.Cryptography.X509Certificates;
@@ -31,7 +32,7 @@ namespace Azure.Security.CodeTransparency
         /// <summary>
         /// Public key storage used to verify receipts. The value can be set through the verification options.
         /// </summary>
-        private IReadOnlyDictionary<string, JwksDocument> _offlineKeys = null;
+        private IReadOnlyDictionary<string, CodeTransparencyJwksDocument> _offlineKeys = null;
 
         /// <summary>
         /// Indicates whether offline keys can fallback to network retrieval when a key is not found locally.
@@ -165,7 +166,7 @@ namespace Azure.Security.CodeTransparency
             {
                 throw new InvalidOperationException("CWT Claims map not found in receipt.");
             }
-            string issuer = CborUtils.GetStringValueFromCborMapByKey(cwtMap.EncodedValue.ToArray(), CcfReceipt.CoseReceiptCwtIssLabel);
+            string issuer = CodeTransparencyCbor.GetStringValueFromCborMapByKey(cwtMap.EncodedValue.ToArray(), CcfReceipt.CoseReceiptCwtIssLabel);
             if (string.IsNullOrEmpty(issuer))
             {
                 throw new InvalidOperationException("Issuer not found in receipt.");
@@ -234,6 +235,8 @@ namespace Azure.Security.CodeTransparency
         /// <param name="body"> CoseSign1 signature envelope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        [Obsolete("Use CreateEntry(BinaryData, bool, CancellationToken) instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual CreateEntryOperation CreateEntry(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
@@ -256,6 +259,8 @@ namespace Azure.Security.CodeTransparency
         /// <param name="body"> CoseSign1 signature envelope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        [Obsolete("Use CreateEntryAsync(BinaryData, bool, CancellationToken) instead.")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<CreateEntryOperation> CreateEntryAsync(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
@@ -360,7 +365,7 @@ namespace Azure.Security.CodeTransparency
         /// Verify the receipt integrity against the COSE_Sign1 envelope
         /// and check if receipt was endorsed by the service public keys.
         /// This method expects the issuer in the receipt to match the CodeTransparencyClient client endpoint.
-        /// Calls <!-- see cref="CcfReceiptVerifier.VerifyTransparentStatementReceipt(JsonWebKey, byte[], byte[])"/> for each receipt found in the transparent statement.-->
+        /// Calls <!-- see cref="CcfReceiptVerifier.VerifyTransparentStatementReceipt(CodeTransparencyJsonWebKey, byte[], byte[])"/> for each receipt found in the transparent statement.-->
         /// </summary>
         /// <param name="signedStatementCoseSign1Bytes">Signed statement in Cose_Sign1 cbor bytes.</param>
         /// <param name="receiptCoseSign1Bytes">Receipt in COSE_Sign1 cbor bytes.</param>
@@ -369,7 +374,7 @@ namespace Azure.Security.CodeTransparency
         {
             CoseSign1Message inputSignedStatement = CoseMessage.DecodeSign1(signedStatementCoseSign1Bytes);
             inputSignedStatement.UnprotectedHeaders.Clear();
-            JsonWebKey jsonWebKey = GetServiceCertificateKey(receiptCoseSign1Bytes);
+            CodeTransparencyJsonWebKey jsonWebKey = GetServiceCertificateKey(receiptCoseSign1Bytes);
             CcfReceiptVerifier.VerifyTransparentStatementReceipt(jsonWebKey, receiptCoseSign1Bytes, inputSignedStatement.Encode());
         }
 
@@ -563,7 +568,7 @@ namespace Azure.Security.CodeTransparency
         /// <param name="receiptBytes">the COSE receipt bytes,
         /// see https://www.ietf.org/archive/id/draft-ietf-cose-merkle-tree-proofs-08.html#name-verifiable-data-structures-</param>
         /// <returns>The service certificate key (JWK)</returns>
-        private JsonWebKey GetServiceCertificateKey(byte[] receiptBytes)
+        private CodeTransparencyJsonWebKey GetServiceCertificateKey(byte[] receiptBytes)
         {
             string issuer = GetReceiptIssuerHostStatic(receiptBytes);
 
@@ -573,7 +578,7 @@ namespace Azure.Security.CodeTransparency
                 throw new InvalidOperationException("Issuer and service instance name are not matching.");
             }
 
-            JwksDocument jwksDocument = null;
+            CodeTransparencyJwksDocument jwksDocument = null;
             // Check if we have offline keys for this domain
             if (_offlineKeys?.TryGetValue(issuer, out jwksDocument) != true && _offlineKeysAllowNetworkFallback)
             {
@@ -594,8 +599,8 @@ namespace Azure.Security.CodeTransparency
             }
 
             // Store all the keys in a new Dictionary to simplify lookup
-            var keysDict = new Dictionary<string, JsonWebKey>();
-            foreach (JsonWebKey jsonWebKey in jwksDocument.Keys)
+            var keysDict = new Dictionary<string, CodeTransparencyJsonWebKey>();
+            foreach (CodeTransparencyJsonWebKey jsonWebKey in jwksDocument.Keys)
             {
                 keysDict[jsonWebKey.Kid] = jsonWebKey;
             }
@@ -608,7 +613,7 @@ namespace Azure.Security.CodeTransparency
             }
 
             string kidAsString = Encoding.UTF8.GetString(receiptKid.GetValueAsBytes());
-            if (!keysDict.TryGetValue(kidAsString, out JsonWebKey matchingKey))
+            if (!keysDict.TryGetValue(kidAsString, out CodeTransparencyJsonWebKey matchingKey))
             {
                 throw new InvalidOperationException($"Key with ID '{kidAsString}' not found.");
             }

@@ -66,10 +66,10 @@ catch (Exception e)
 
 ### Using a receipt and a signed statement
 
-Alternatively, you can provide separate files for the receipt and the signed statement, plus a `JsonWebKey` obtained from the service:
+Alternatively, you can provide separate files for the receipt and the signed statement, plus a `CodeTransparencyJsonWebKey` obtained from the service:
 
 ```C# Snippet:CodeTransparencyVerification_VerifyReceiptAndInputSignedStatement
-JsonWebKey jsonWebKey = new JsonWebKey(<.....>);
+CodeTransparencyJsonWebKey jsonWebKey = new CodeTransparencyJsonWebKey(<.....>);
 byte[] inputSignedStatement = readFileBytes("<input_signed_claims>");
 byte[] inputReceipt = readFileBytes("<input_receipt>");
 try
@@ -97,7 +97,7 @@ Response<BinaryData> transparentStatementResponse = client.GetEntryStatement("4.
 string filePath = Path.Combine(Path.GetTempPath(), "transparent_statement.cose");
 File.WriteAllBytes(filePath, transparentStatementResponse.Value.ToArray());
 // Download and store the public keys for offline verification
-Response<JwksDocument> ledgerKeys = client.GetPublicKeys();
+Response<CodeTransparencyJwksDocument> ledgerKeys = client.GetPublicKeys();
 CodeTransparencyOfflineKeys allKeys = new();
 allKeys.Add("<< service name >>.confidential-ledger.azure.com", ledgerKeys.Value);
 string keysFilePath = Path.Combine(Path.GetTempPath(), "ledger_keys.json");

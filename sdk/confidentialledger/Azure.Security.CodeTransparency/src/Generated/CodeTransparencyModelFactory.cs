@@ -15,12 +15,12 @@ namespace Azure.Security.CodeTransparency
     {
         /// <summary> A JWKS like document. </summary>
         /// <param name="keys"> List of public keys used for receipt verification. </param>
-        /// <returns> A new <see cref="CodeTransparency.JwksDocument"/> instance for mocking. </returns>
-        public static JwksDocument JwksDocument(IEnumerable<JsonWebKey> keys = default)
+        /// <returns> A new <see cref="CodeTransparency.CodeTransparencyJwksDocument"/> instance for mocking. </returns>
+        public static CodeTransparencyJwksDocument CodeTransparencyJwksDocument(IEnumerable<CodeTransparencyJsonWebKey> keys = default)
         {
-            keys ??= new ChangeTrackingList<JsonWebKey>();
+            keys ??= new ChangeTrackingList<CodeTransparencyJsonWebKey>();
 
-            return new JwksDocument("application/json", keys.ToList(), additionalBinaryDataProperties: null);
+            return new CodeTransparencyJwksDocument("application/json", keys.ToList(), additionalBinaryDataProperties: null);
         }
 
         /// <summary> rfc7517 JSON Web Key representation adapted from a shared swagger definition in the common types. </summary>
@@ -76,12 +76,12 @@ namespace Azure.Security.CodeTransparency
         /// certificate.
         /// </param>
         /// <param name="y"> Y coordinate for the Elliptic Curve point. </param>
-        /// <returns> A new <see cref="CodeTransparency.JsonWebKey"/> instance for mocking. </returns>
-        public static JsonWebKey JsonWebKey(string alg = default, string crv = default, string d = default, string dp = default, string dq = default, string e = default, string k = default, string kid = default, string kty = default, string n = default, string p = default, string q = default, string qi = default, string use = default, string x = default, IEnumerable<string> x5c = default, string y = default)
+        /// <returns> A new <see cref="CodeTransparency.CodeTransparencyJsonWebKey"/> instance for mocking. </returns>
+        public static CodeTransparencyJsonWebKey CodeTransparencyJsonWebKey(string alg = default, string crv = default, string d = default, string dp = default, string dq = default, string e = default, string k = default, string kid = default, string kty = default, string n = default, string p = default, string q = default, string qi = default, string use = default, string x = default, IEnumerable<string> x5c = default, string y = default)
         {
             x5c ??= new ChangeTrackingList<string>();
 
-            return new JsonWebKey(
+            return new CodeTransparencyJsonWebKey(
                 alg,
                 crv,
                 d,

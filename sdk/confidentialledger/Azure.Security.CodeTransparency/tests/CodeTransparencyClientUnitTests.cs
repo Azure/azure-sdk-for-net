@@ -281,7 +281,7 @@ namespace Azure.Security.CodeTransparency.Tests
             Assert.AreEqual("123.23", result.Id);
 
             Response<BinaryData> response = await result.WaitForCompletionAsync();
-            string entryId = CborUtils.GetStringValueFromCborMapByKey(response.Value.ToArray(), "EntryId");
+            string entryId = CodeTransparencyCbor.GetStringValueFromCborMapByKey(response.Value.ToArray(), "EntryId");
             Assert.AreEqual("123.23", entryId);
 
             Assert.AreEqual(1, mockTransport.Requests.Count);
@@ -870,7 +870,7 @@ namespace Azure.Security.CodeTransparency.Tests
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
 
-            Response<JwksDocument> result = client.GetPublicKeys();
+            Response<CodeTransparencyJwksDocument> result = client.GetPublicKeys();
 
             Assert.NotNull(result);
             Assert.AreEqual(2, mockTransport.Requests.Count);
@@ -925,7 +925,7 @@ namespace Azure.Security.CodeTransparency.Tests
 #else
             var (_, options) = createClientOptionsWithValidPublicKeyResponse();
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
-            Response<JwksDocument> keys = client.GetPublicKeys();
+            Response<CodeTransparencyJwksDocument> keys = client.GetPublicKeys();
             var statement = createStatementWithEmptyInclusionProof();
 
             var exception = Assert.Throws<InvalidOperationException>(() =>

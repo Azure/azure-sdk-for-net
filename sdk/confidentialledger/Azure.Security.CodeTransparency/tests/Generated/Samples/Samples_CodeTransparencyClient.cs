@@ -101,7 +101,7 @@ namespace Azure.Security.CodeTransparency.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
-            Response<JwksDocument> response = client.GetPublicKeys();
+            Response<CodeTransparencyJwksDocument> response = client.GetPublicKeys();
         }
 
         [Test]
@@ -112,7 +112,7 @@ namespace Azure.Security.CodeTransparency.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
 
-            Response<JwksDocument> response = await client.GetPublicKeysAsync();
+            Response<CodeTransparencyJwksDocument> response = await client.GetPublicKeysAsync();
         }
 
         [Test]

@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.Security.CodeTransparency
 {
     /// <summary> rfc7517 JSON Web Key representation adapted from a shared swagger definition in the common types. </summary>
-    public partial class JsonWebKey
+    public partial class CodeTransparencyJsonWebKey
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="JsonWebKey"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CodeTransparencyJsonWebKey"/>. </summary>
         /// <param name="kty">
         /// The "kty" (key type) parameter identifies the cryptographic algorithm
         /// family used with the key, such as "RSA" or "EC". "kty" values should
@@ -24,13 +24,13 @@ namespace Azure.Security.CodeTransparency
         /// established by [JWA] or be a value that contains a Collision-
         /// Resistant Name.  The "kty" value is a case-sensitive string.
         /// </param>
-        internal JsonWebKey(string kty)
+        internal CodeTransparencyJsonWebKey(string kty)
         {
             Kty = kty;
             X5c = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="JsonWebKey"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CodeTransparencyJsonWebKey"/>. </summary>
         /// <param name="alg">
         /// The "alg" (algorithm) parameter identifies the algorithm intended for
         /// use with the key.  The values used should either be registered in the
@@ -84,7 +84,7 @@ namespace Azure.Security.CodeTransparency
         /// </param>
         /// <param name="y"> Y coordinate for the Elliptic Curve point. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JsonWebKey(string alg, string crv, string d, string dp, string dq, string e, string k, string kid, string kty, string n, string p, string q, string qi, string use, string x, IList<string> x5c, string y, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CodeTransparencyJsonWebKey(string alg, string crv, string d, string dp, string dq, string e, string k, string kid, string kty, string n, string p, string q, string qi, string use, string x, IList<string> x5c, string y, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Alg = alg;
             Crv = crv;

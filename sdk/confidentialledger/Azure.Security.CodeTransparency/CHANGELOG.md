@@ -7,8 +7,9 @@
 ### Breaking Changes
 
 - Replaced the optional `CodeTransparencyClientOptions` constructor parameter with separate endpoint-only and endpoint-plus-options constructors.
-- Changed the long-running `CreateEntry` overloads to return the concrete `CreateEntryOperation` type.
-- Made the implementation-only `CborUtils` and `CcfReceipt` types internal.
+- Changed the long-running `CreateEntry` overloads to return the concrete `CreateEntryOperation` type and hid the retained obsolete overloads from IntelliSense.
+- Renamed `CborUtils` to the service-specific `CodeTransparencyCbor`.
+- Renamed `JsonWebKey` and `JwksDocument` to `CodeTransparencyJsonWebKey` and `CodeTransparencyJwksDocument` in the .NET SDK.
 
 ### Bugs Fixed
 

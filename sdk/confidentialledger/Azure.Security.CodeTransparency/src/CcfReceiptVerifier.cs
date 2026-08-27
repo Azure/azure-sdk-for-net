@@ -36,7 +36,7 @@ namespace Azure.Security.CodeTransparency
         /// <param name="receiptBytes">Receipt in COSE_Sign1 cbor bytes.</param>
         /// <param name="signedStatementBytes">The input signed statement bytes.</param>
         /// <exception cref="InvalidOperationException">Thrown when the verification fails.</exception>
-        public static void VerifyTransparentStatementReceipt(JsonWebKey jsonWebKey, byte[] receiptBytes, byte[] signedStatementBytes)
+        public static void VerifyTransparentStatementReceipt(CodeTransparencyJsonWebKey jsonWebKey, byte[] receiptBytes, byte[] signedStatementBytes)
         {
             using SHA256 sha256 = SHA256.Create();
             byte[] claimsDigest = sha256.ComputeHash(signedStatementBytes);

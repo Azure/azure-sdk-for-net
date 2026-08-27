@@ -14,63 +14,63 @@ using Azure;
 namespace Azure.Security.CodeTransparency
 {
     /// <summary> A JWKS like document. </summary>
-    public partial class JwksDocument : IJsonModel<JwksDocument>
+    public partial class CodeTransparencyJwksDocument : IJsonModel<CodeTransparencyJwksDocument>
     {
-        /// <summary> Initializes a new instance of <see cref="JwksDocument"/> for deserialization. </summary>
-        internal JwksDocument()
+        /// <summary> Initializes a new instance of <see cref="CodeTransparencyJwksDocument"/> for deserialization. </summary>
+        internal CodeTransparencyJwksDocument()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual JwksDocument PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CodeTransparencyJwksDocument PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JwksDocument>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CodeTransparencyJwksDocument>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeJwksDocument(document.RootElement, options);
+                        return DeserializeCodeTransparencyJwksDocument(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JwksDocument)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CodeTransparencyJwksDocument)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JwksDocument>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CodeTransparencyJwksDocument>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSecurityCodeTransparencyContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(JwksDocument)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CodeTransparencyJwksDocument)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<JwksDocument>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CodeTransparencyJwksDocument>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        JwksDocument IPersistableModel<JwksDocument>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CodeTransparencyJwksDocument IPersistableModel<CodeTransparencyJwksDocument>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<JwksDocument>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CodeTransparencyJwksDocument>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="JwksDocument"/> from. </param>
-        public static explicit operator JwksDocument(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CodeTransparencyJwksDocument"/> from. </param>
+        public static explicit operator CodeTransparencyJwksDocument(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeJwksDocument(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeCodeTransparencyJwksDocument(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<JwksDocument>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CodeTransparencyJwksDocument>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -81,14 +81,14 @@ namespace Azure.Security.CodeTransparency
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JwksDocument>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CodeTransparencyJwksDocument>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JwksDocument)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CodeTransparencyJwksDocument)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("keys"u8);
             writer.WriteStartArray();
-            foreach (JsonWebKey item in Keys)
+            foreach (CodeTransparencyJsonWebKey item in Keys)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -112,40 +112,40 @@ namespace Azure.Security.CodeTransparency
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        JwksDocument IJsonModel<JwksDocument>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CodeTransparencyJwksDocument IJsonModel<CodeTransparencyJwksDocument>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual JwksDocument JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CodeTransparencyJwksDocument JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<JwksDocument>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CodeTransparencyJwksDocument>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JwksDocument)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CodeTransparencyJwksDocument)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeJwksDocument(document.RootElement, options);
+            return DeserializeCodeTransparencyJwksDocument(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static JwksDocument DeserializeJwksDocument(JsonElement element, ModelReaderWriterOptions options)
+        internal static CodeTransparencyJwksDocument DeserializeCodeTransparencyJwksDocument(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string contentType = default;
-            IList<JsonWebKey> keys = default;
+            IList<CodeTransparencyJsonWebKey> keys = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("keys"u8))
                 {
-                    List<JsonWebKey> array = new List<JsonWebKey>();
+                    List<CodeTransparencyJsonWebKey> array = new List<CodeTransparencyJsonWebKey>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(JsonWebKey.DeserializeJsonWebKey(item, options));
+                        array.Add(CodeTransparencyJsonWebKey.DeserializeCodeTransparencyJsonWebKey(item, options));
                     }
                     keys = array;
                     continue;
@@ -155,7 +155,7 @@ namespace Azure.Security.CodeTransparency
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new JwksDocument(contentType, keys, additionalBinaryDataProperties);
+            return new CodeTransparencyJwksDocument(contentType, keys, additionalBinaryDataProperties);
         }
     }
 }

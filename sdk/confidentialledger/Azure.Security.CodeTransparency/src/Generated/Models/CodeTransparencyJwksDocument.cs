@@ -12,23 +12,23 @@ using System.Linq;
 namespace Azure.Security.CodeTransparency
 {
     /// <summary> A JWKS like document. </summary>
-    public partial class JwksDocument
+    public partial class CodeTransparencyJwksDocument
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="JwksDocument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CodeTransparencyJwksDocument"/>. </summary>
         /// <param name="keys"> List of public keys used for receipt verification. </param>
-        internal JwksDocument(IEnumerable<JsonWebKey> keys)
+        internal CodeTransparencyJwksDocument(IEnumerable<CodeTransparencyJsonWebKey> keys)
         {
             Keys = keys.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="JwksDocument"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CodeTransparencyJwksDocument"/>. </summary>
         /// <param name="contentType"> Content type header. </param>
         /// <param name="keys"> List of public keys used for receipt verification. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JwksDocument(string contentType, IList<JsonWebKey> keys, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CodeTransparencyJwksDocument(string contentType, IList<CodeTransparencyJsonWebKey> keys, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ContentType = contentType;
             Keys = keys;
@@ -39,6 +39,6 @@ namespace Azure.Security.CodeTransparency
         public string ContentType { get; } = "application/json";
 
         /// <summary> List of public keys used for receipt verification. </summary>
-        public IList<JsonWebKey> Keys { get; }
+        public IList<CodeTransparencyJsonWebKey> Keys { get; }
     }
 }

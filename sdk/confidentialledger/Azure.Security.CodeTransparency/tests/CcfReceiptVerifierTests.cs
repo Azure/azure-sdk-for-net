@@ -67,7 +67,7 @@ namespace Azure.Security.CodeTransparency.Tests
             byte[] receiptBytes = readFileBytes("receipt.cose");
             byte[] inputSignedPayloadBytes = readFileBytes("input_signed_claims");
 
-            Response<JwksDocument> key = client.GetPublicKeys();
+            Response<CodeTransparencyJwksDocument> key = client.GetPublicKeys();
 
             var exception = Assert.Throws<InvalidOperationException>(() => CcfReceiptVerifier.VerifyTransparentStatementReceipt(key.Value.Keys[0], receiptBytes, inputSignedPayloadBytes));
             StringAssert.Contains(expected: "KID mismatch", exception.Message);
@@ -100,7 +100,7 @@ namespace Azure.Security.CodeTransparency.Tests
             byte[] receiptBytes = readFileBytes("receipt.cose");
             byte[] inputSignedPayloadBytes = readFileBytes("input_signed_claims");
 
-            Response<JwksDocument> key = client.GetPublicKeys();
+            Response<CodeTransparencyJwksDocument> key = client.GetPublicKeys();
 
             var exception = Assert.Throws<InvalidOperationException>(() => CcfReceiptVerifier.VerifyTransparentStatementReceipt(key.Value.Keys[0], receiptBytes, inputSignedPayloadBytes));
             StringAssert.Contains(expected: "Claim digest mismatch", exception.Message);

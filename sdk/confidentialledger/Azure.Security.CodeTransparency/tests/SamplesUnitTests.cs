@@ -87,7 +87,7 @@ namespace Azure.Security.CodeTransparency.Tests
 
             #region Snippet:CodeTransparencyDownloadTransparentStatement
             Response<BinaryData> operationResult = await operation.WaitForCompletionAsync();
-            string entryId = CborUtils.GetStringValueFromCborMapByKey(operationResult.Value.ToArray(), "EntryId");
+            string entryId = CodeTransparencyCbor.GetStringValueFromCborMapByKey(operationResult.Value.ToArray(), "EntryId");
             Console.WriteLine($"The entry ID to use to retrieve the receipt and transparent statement is {{{entryId}}}");
             #region Snippet:CodeTransparencySample2_GetEntryStatement
             Response<BinaryData> transparentStatementResponse = await client.GetEntryStatementAsync(entryId);
@@ -213,7 +213,7 @@ namespace Azure.Security.CodeTransparency.Tests
             string filePath = Path.Combine(Path.GetTempPath(), "transparent_statement.cose");
             File.WriteAllBytes(filePath, transparentStatementResponse.Value.ToArray());
             // Download and store the public keys for offline verification
-            Response<JwksDocument> ledgerKeys = client.GetPublicKeys();
+            Response<CodeTransparencyJwksDocument> ledgerKeys = client.GetPublicKeys();
             CodeTransparencyOfflineKeys allKeys = new();
 #if !SNIPPET
             allKeys.Add("foo.bar.com", ledgerKeys.Value);
@@ -353,14 +353,14 @@ namespace Azure.Security.CodeTransparency.Tests
                 IdentityClientEndpoint = "https://foo.bar.com"
             };
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
-            Response<JwksDocument> jwksDoc = client.GetPublicKeys();
-            JsonWebKey jsonWebKey = jwksDoc.Value.Keys[0];
+            Response<CodeTransparencyJwksDocument> jwksDoc = client.GetPublicKeys();
+            CodeTransparencyJsonWebKey jsonWebKey = jwksDoc.Value.Keys[0];
             byte[] inputReceipt = readFileBytes("receipt.cose");
             byte[] inputSignedStatement = readFileBytes("input_signed_claims");
 
             #region Snippet:CodeTransparencyVerification_VerifyReceiptAndInputSignedStatement
 #if SNIPPET
-            JsonWebKey jsonWebKey = new JsonWebKey(<.....>);
+            CodeTransparencyJsonWebKey jsonWebKey = new CodeTransparencyJsonWebKey(<.....>);
             byte[] inputSignedStatement = readFileBytes("<input_signed_claims>");
             byte[] inputReceipt = readFileBytes("<input_receipt>");
 #endif

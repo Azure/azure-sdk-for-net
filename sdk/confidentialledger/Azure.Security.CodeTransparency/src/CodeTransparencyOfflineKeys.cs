@@ -15,25 +15,25 @@ namespace Azure.Security.CodeTransparency
     /// </summary>
     public sealed class CodeTransparencyOfflineKeys
     {
-        private IDictionary<string, JwksDocument> _keysByIssuer;
+        private IDictionary<string, CodeTransparencyJwksDocument> _keysByIssuer;
 
         /// <summary>
         /// Initializes a new instance of CodeTransparencyOfflineKeys.
         /// </summary>
         public CodeTransparencyOfflineKeys()
         {
-            _keysByIssuer = new Dictionary<string, JwksDocument>(StringComparer.OrdinalIgnoreCase);
+            _keysByIssuer = new Dictionary<string, CodeTransparencyJwksDocument>(StringComparer.OrdinalIgnoreCase);
         }
 
         /// <summary>
         /// Gets the dictionary of ledger domains to their JWKS documents.
         /// </summary>
-        public IReadOnlyDictionary<string, JwksDocument> ByIssuer => new ReadOnlyDictionary<string, JwksDocument>(_keysByIssuer);
+        public IReadOnlyDictionary<string, CodeTransparencyJwksDocument> ByIssuer => new ReadOnlyDictionary<string, CodeTransparencyJwksDocument>(_keysByIssuer);
 
         /// <summary>
         /// Adds or updates a JWKS document for the specified ledger domain.
         /// </summary>
-        public void Add(string ledgerDomain, JwksDocument jwksDocument)
+        public void Add(string ledgerDomain, CodeTransparencyJwksDocument jwksDocument)
         {
             Argument.AssertNotNullOrEmpty(ledgerDomain, nameof(ledgerDomain));
             Argument.AssertNotNull(jwksDocument, nameof(jwksDocument));
@@ -83,7 +83,7 @@ namespace Azure.Security.CodeTransparency
             foreach (var property in element.EnumerateObject())
             {
                 var ledgerDomain = property.Name;
-                var jwksDocument = JwksDocument.DeserializeJwksDocument(property.Value, options);
+                var jwksDocument = CodeTransparencyJwksDocument.DeserializeCodeTransparencyJwksDocument(property.Value, options);
                 keys.Add(ledgerDomain, jwksDocument);
             }
 
