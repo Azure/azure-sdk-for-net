@@ -1,5 +1,5 @@
 directory: specification/cognitiveservices/CognitiveServices.Management
-commit: 3644d9bb0870c79641abbd0caa6f440051afb727
+commit: 6e058a0a22c828ca0ebfd5a4826a72addc44f909
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 

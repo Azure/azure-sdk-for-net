@@ -2717,7 +2717,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="skuName"> The name of the Arc deployment SKU. Must be Arc. </param>
         /// <param name="eTag"> Resource Etag. </param>
         /// <returns> A new <see cref="CognitiveServices.ArcDeploymentData"/> instance for mocking. </returns>
-        public static ArcDeploymentData ArcDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ArcDeploymentProperties properties = default, ArcDeploymentSkuName skuName = default, string eTag = default)
+        public static ArcDeploymentData ArcDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ArcDeploymentProperties properties = default, ArcDeploymentSkuName skuName = default, ETag? eTag = default)
         {
             return new ArcDeploymentData(
                 id,
@@ -2784,11 +2784,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="tensorParallelSize"> Number of GPUs used for tensor parallelism. </param>
         /// <param name="maxModelLen"> Maximum model context length. </param>
         /// <param name="gpuMemoryUtilization"> Fraction of GPU memory reserved for model execution. </param>
-        /// <param name="enforceEager"> Whether eager execution is enforced for the vLLM runtime. </param>
+        /// <param name="isEagerExecutionEnforced"> Whether eager execution is enforced for the vLLM runtime. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesArcDeploymentVllmProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesArcDeploymentVllmProperties CognitiveServicesArcDeploymentVllmProperties(int? tensorParallelSize = default, int? maxModelLen = default, float? gpuMemoryUtilization = default, bool? enforceEager = default)
+        public static CognitiveServicesArcDeploymentVllmProperties CognitiveServicesArcDeploymentVllmProperties(int? tensorParallelSize = default, int? maxModelLen = default, float? gpuMemoryUtilization = default, bool? isEagerExecutionEnforced = default)
         {
-            return new CognitiveServicesArcDeploymentVllmProperties(tensorParallelSize, maxModelLen, gpuMemoryUtilization, enforceEager, default);
+            return new CognitiveServicesArcDeploymentVllmProperties(tensorParallelSize, maxModelLen, gpuMemoryUtilization, isEagerExecutionEnforced, default);
         }
 
         /// <param name="requests"> Kubernetes CPU and memory resource requests for each deployment replica. </param>
@@ -2826,11 +2826,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <param name="message"> A human-readable status message from the last provisioning operation. </param>
-        /// <param name="lastOperationTimestamp"> Timestamp of the last provisioning operation. </param>
+        /// <param name="lastOperationOn"> Timestamp of the last provisioning operation. </param>
         /// <returns> A new <see cref="Models.ArcDeploymentProvisioningDetails"/> instance for mocking. </returns>
-        public static ArcDeploymentProvisioningDetails ArcDeploymentProvisioningDetails(string message = default, DateTimeOffset? lastOperationTimestamp = default)
+        public static ArcDeploymentProvisioningDetails ArcDeploymentProvisioningDetails(string message = default, DateTimeOffset? lastOperationOn = default)
         {
-            return new ArcDeploymentProvisioningDetails(message, lastOperationTimestamp, default);
+            return new ArcDeploymentProvisioningDetails(message, lastOperationOn, default);
         }
 
         /// <param name="properties"> Properties that can be updated on an Arc deployment. </param>

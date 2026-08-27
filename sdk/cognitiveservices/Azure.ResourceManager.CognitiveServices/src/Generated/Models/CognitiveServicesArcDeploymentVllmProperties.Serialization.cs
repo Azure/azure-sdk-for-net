@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("gpuMemoryUtilization"u8);
                 writer.WriteNumberValue(GpuMemoryUtilization.Value);
             }
-            if (Optional.IsDefined(EnforceEager))
+            if (Optional.IsDefined(IsEagerExecutionEnforced))
             {
                 writer.WritePropertyName("enforceEager"u8);
-                writer.WriteBooleanValue(EnforceEager.Value);
+                writer.WriteBooleanValue(IsEagerExecutionEnforced.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             int? tensorParallelSize = default;
             int? maxModelLen = default;
             float? gpuMemoryUtilization = default;
-            bool? enforceEager = default;
+            bool? isEagerExecutionEnforced = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    enforceEager = prop.Value.GetBoolean();
+                    isEagerExecutionEnforced = prop.Value.GetBoolean();
                     continue;
                 }
                 if (options.Format != "W")
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CognitiveServicesArcDeploymentVllmProperties(tensorParallelSize, maxModelLen, gpuMemoryUtilization, enforceEager, additionalBinaryDataProperties);
+            return new CognitiveServicesArcDeploymentVllmProperties(tensorParallelSize, maxModelLen, gpuMemoryUtilization, isEagerExecutionEnforced, additionalBinaryDataProperties);
         }
     }
 }

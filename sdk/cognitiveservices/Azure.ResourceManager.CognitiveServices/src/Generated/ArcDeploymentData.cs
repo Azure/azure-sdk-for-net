@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
@@ -40,7 +41,7 @@ namespace Azure.ResourceManager.CognitiveServices
         /// <param name="sku"> The Arc deployment SKU. Only the SKU name is required for Arc deployments. </param>
         /// <param name="eTag"> Resource Etag. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArcDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArcDeploymentProperties properties, ArcDeploymentSku sku, string eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ArcDeploymentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ArcDeploymentProperties properties, ArcDeploymentSku sku, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Properties = properties;
             Sku = sku;
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.CognitiveServices
 
         /// <summary> Resource Etag. </summary>
         [WirePath("etag")]
-        public string ETag { get; }
+        public ETag? ETag { get; }
 
         /// <summary> The name of the Arc deployment SKU. Must be Arc. </summary>
         [WirePath("sku.name")]

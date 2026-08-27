@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="tensorParallelSize"> Number of GPUs used for tensor parallelism. </param>
         /// <param name="maxModelLen"> Maximum model context length. </param>
         /// <param name="gpuMemoryUtilization"> Fraction of GPU memory reserved for model execution. </param>
-        /// <param name="enforceEager"> Whether eager execution is enforced for the vLLM runtime. </param>
+        /// <param name="isEagerExecutionEnforced"> Whether eager execution is enforced for the vLLM runtime. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesArcDeploymentVllmProperties(int? tensorParallelSize, int? maxModelLen, float? gpuMemoryUtilization, bool? enforceEager, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesArcDeploymentVllmProperties(int? tensorParallelSize, int? maxModelLen, float? gpuMemoryUtilization, bool? isEagerExecutionEnforced, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TensorParallelSize = tensorParallelSize;
             MaxModelLen = maxModelLen;
             GpuMemoryUtilization = gpuMemoryUtilization;
-            EnforceEager = enforceEager;
+            IsEagerExecutionEnforced = isEagerExecutionEnforced;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Whether eager execution is enforced for the vLLM runtime. </summary>
         [WirePath("enforceEager")]
-        public bool? EnforceEager { get; }
+        public bool? IsEagerExecutionEnforced { get; }
     }
 }
