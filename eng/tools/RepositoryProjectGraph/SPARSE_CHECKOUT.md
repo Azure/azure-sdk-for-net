@@ -9,16 +9,16 @@ classification, batching, and each job's `ProjectNames` remain unchanged.
 1. During package selection, `Language-Settings.ps1` constructs the reverse-dependency
    graph at the canonical service.proj path
    `artifacts/obj/RepositoryProjectGraph/repository-project-graph.reader.json`.
-   When checkout narrowing is enabled, it requests the `Debug`, input-enabled
+   When checkout narrowing is enabled, it requests the `Debug`, input-checkout-root-enabled
    NuGet graph needed by both dependency analysis and sparse checkout.
 2. The matrix seed reuses that artifact when its commit, generation policy, schema,
    and completeness diagnostics match. Passes that skip dependency analysis construct
    the same canonical graph once as a fallback.
-3. `RepositoryProjectGraphTask` emits deduplicated checkout-root records alongside exact
-   input records, and schema 6 groups them into a compact configuration index.
-   `CreateSparseCheckoutGraphTask` then uses a typed `System.Text.Json` stream to skip the
-   large exact `inputs` value and publishes artifact seeds, configuration/package adjacency,
-   and checkout roots.
+3. `RepositoryProjectGraphTask` evaluates explicit inputs but emits only deduplicated
+   `/sdk/<service>/*` checkout-root records. Schema 7 groups them into a compact
+   configuration index; exact file paths and generated output paths never enter the artifact.
+   `CreateSparseCheckoutGraphTask` publishes artifact seeds, configuration/package adjacency,
+   and those SDK roots.
 4. Each fanned-out test job runs `Resolve-SparseCheckoutPaths.ps1`. The resolver
    traverses only its comma-separated `ProjectNames` batch and extracts the path
    union before the existing sparse checkout step.
@@ -44,8 +44,8 @@ test batch
 The previous implementations either rescanned every graph node and input for every
 artifact, at a cost of `artifacts × (nodes + inputs)`, or allocated the complete
 186,000-record input collection in PowerShell before regrouping it. The current design
-coarsens each input as the canonical artifact is built, skips exact inputs during typed
-projection, and makes each test job pay only for its reachable subgraph.
+reduces an evaluated input directly to an SDK service root, emits no exact input record,
+and makes each test job pay only for its reachable subgraph.
 
 ## Correctness boundary
 
@@ -53,7 +53,7 @@ This is conservative repository identity reachability, not proof of normal
 restore/build equivalence. The source graph continues to report
 `restoreEquivalent=false`.
 
-- **Target frameworks:** schema 6 preserves source-TFM to destination-TFM edges.
+- **Target frameworks:** schema 7 preserves source-TFM to destination-TFM edges.
   When MSBuild exposes an outer-build project reference, every concrete destination
   inner build is retained. Checkout may over-select incompatible destination TFMs,
   but it does not invent a nearest-framework policy that could omit source.
@@ -72,25 +72,26 @@ restore/build equivalence. The source graph continues to report
   commonly infer nested roots such as `tests`; using only exact package-root matches
   would omit test-only dependencies outside the artifact's SDK directory.
 - **Repository packages:** direct and NuGet-derived repository package identity edges
-  are retained. `ReferenceOutputAssembly=false` P2P edges remain in the source/input
+  are retained. `ReferenceOutputAssembly=false` P2P edges remain in the source/build
   graph but are excluded from synthetic NuGet restore metadata.
-- **Inputs:** captured inputs include imports, `Compile`, `None`, `Content`,
+- **Input-derived roots:** evaluated inputs include imports, `Compile`, `None`, `Content`,
   `EmbeddedResource`, `AdditionalFiles`, local `Reference` hint paths, analyzers,
   analyzer config files, Protobuf, TypeScript, application/page/resource items,
-  splash screens, and native references. Repository-relative inputs are conservatively
-  coarsened while their exact records are emitted. Graph evaluation disables SDK default
-  items because every configuration already contributes its project checkout root; only
-  explicit items and imports need to add roots outside that directory. Roots that contain
-  only generated or otherwise untracked files simply match no files during Git sparse checkout.
+  splash screens, and native references. An input under `sdk` contributes its whole
+  service root. Inputs under `common`, `eng`, `.config`, or the repository root are already
+  covered unconditionally; generated `artifacts` inputs and paths outside the repository
+  are not Git checkout dependencies. Any other repository directory fails closed. Graph
+  evaluation disables SDK default items because every SDK configuration already contributes
+  its service root; only explicit items and imports can add a cross-service SDK root.
 - **Checkout roots:** selected or reached SDK projects become
-  `/sdk/<service>/*`. Non-SDK linked inputs retain a narrower containing-directory
-  root. Only repository root files, `/eng`, and `/.config` are unconditional; SDK
-  services are selected by graph reachability rather than a hard-coded allowlist.
+  `/sdk/<service>/*`. Dynamic roots outside `/sdk` are rejected. Repository root files,
+  `/eng`, `/.config`, and all of `/common` are unconditional; SDK services are selected
+  by graph reachability rather than a hard-coded allowlist.
 - **Provenance:** the source artifact records its Git commit and generation policy.
   Projection requires the same `Build.SourceVersion`, `Debug`, and evaluated
-  inputs, verifies `HEAD`, and rejects tracked worktree changes. Every test job verifies
+  input checkout roots, verifies `HEAD`, and rejects tracked worktree changes. Every test job verifies
   the same commit before using the projected graph.
-- **Identity:** schema 6 rejects dependency-only global-property nodes and
+- **Identity:** schema 7 rejects dependency-only global-property nodes and
   fails rather than silently dropping an alternate MSBuild node that its path/TFM
   identity cannot represent.
 
@@ -108,7 +109,7 @@ seed job catches graph/projection failures and publishes an explicit incomplete
 - `SPARSE_CHECKOUT_GRAPH_RESULT=available|fallback` in the seed job;
 - `REPOSITORY_PROJECT_GRAPH_RESULT=reused|generated` in the seed job;
 - `SPARSE_CHECKOUT_RESULT=narrowed pathCount=<n>|full` in each test job; and
-- graph/project/configuration/edge/input/artifact counts, projection bytes, phase times,
+- graph/project/configuration/edge/checkout-root/artifact counts, projection bytes, phase times,
   peak working set, isolated MSBuild process time, and PowerShell record parsing/model/write times,
   plus each query's artifact, reachable-node, and path counts.
 
@@ -128,7 +129,7 @@ the same path/TFM model. That doubled entry points, increased a complete local r
 about 6.2 GiB peak RSS, and diverged from the established dependency-selection query.
 The configuration-list support and cross-configuration merge were removed. The
 current graph evaluates one Debug entry point per physical project and still expands
-every declared TFM; a fresh hosted input-enabled benchmark is required after this change.
+every declared TFM; a fresh hosted checkout-root-enabled benchmark is required after this change.
 
 An earlier representative four-artifact projection over the full graph completed in 33.26
 seconds, used about 1.64 GiB peak RSS, and produced a 3,305,237-byte checkout graph.
@@ -139,9 +140,18 @@ Representative closures were:
 - `Microsoft.Azure.WebJobs.Extensions.EventHubs`: 57 reachable keys, 11 paths; and
 - `Azure.Template`: 28 reachable keys, 8 paths.
 
-The projected paths included linked `common` inputs and graph-derived `core`,
-`identity`, `resourcemanager`, `tools`, and cross-service SDK roots without keeping
-those services in the unconditional checkout cone.
+The projected paths included graph-derived `core`, `identity`, `resourcemanager`,
+`tools`, and cross-service SDK roots without keeping those services in the unconditional
+checkout cone. `common` is now unconditional and no longer contributes graph paths.
+
+A schema-7 local full-repository run on 2026-08-27 evaluated 989 projects and 2,954
+configurations. ProjectGraph construction took 69.40 seconds, the NuGet closure took
+6.31 seconds, the isolated process completed in 81.15 seconds at 2.65 GiB peak RSS,
+and PowerShell built the canonical artifact in 7.92 seconds. Removing exact input
+records reduced the handoff to 52,858 records (13.3 MB) and the canonical JSON to
+7.8 MB. Its 5,936 configuration roots collapsed to 273 distinct `/sdk/<service>/*`
+paths with zero non-SDK roots. A full typed projection then took 0.14 seconds and
+179 MiB peak RSS. These are warm local measurements; hosted CI remains authoritative.
 
 Focused validation also showed:
 
@@ -159,7 +169,7 @@ Focused validation also showed:
   result reached zero missing edges.
 - the task build and focused Pester suites cover configuration conflicts,
   dependency-only nodes, `ReferenceOutputAssembly=false`, all-inner destination
-  edges, analyzer inputs, case-insensitive repository package expansion, transitive
+  edges, analyzer-derived SDK roots, case-insensitive repository package expansion, transitive
   package edges, stale provenance, duplicate artifacts, and full-checkout fallback.
   The graph suite passed 14/14 and the sparse projection suite passed 5/5.
 - a local sparse clone using the Schema Registry closure restored and built the full
@@ -192,7 +202,7 @@ hosted rerun.
 - The manually assembled NuGet spec is deliberately not authoritative static-restore
   output. Missing roots fail closed; indirect package closure may conservatively
   over-select.
-- The Debug input-enabled graph still has a substantial fixed memory cost. Hosted
+- The Debug checkout-root-enabled graph still has a substantial fixed memory cost. Hosted
   validation should establish its current runtime and agent headroom before enabling
   this optimization outside the PR test path.
 - The hosted matrix has exercised Windows, Linux, and macOS net8/net9/net10 plus

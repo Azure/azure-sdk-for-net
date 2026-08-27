@@ -12,7 +12,6 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $testProject = Join-Path $repoRoot "sdk/example/A/tests/A.Tests.csproj"
         $projectA = Join-Path $repoRoot "sdk/example/A/src/A.csproj"
         $projectB = Join-Path $repoRoot "sdk/example/B/src/B.csproj"
-        $inputA = Join-Path $repoRoot "sdk/shared/A.cs"
         $packageA = Split-Path (Split-Path $projectA -Parent) -Parent
         $packageB = Split-Path (Split-Path $projectB -Parent) -Parent
         $testPackage = Split-Path (Split-Path $testProject -Parent) -Parent
@@ -27,7 +26,6 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
             "CheckoutRoot|$projectA|net8.0|/sdk/example/*"
             "CheckoutRoot|$projectA|net9.0|/sdk/example/*"
             "PackageReference|$projectA|net9.0|Azure.B|||"
-            "Input|$projectA|net8.0|$inputA"
             "CheckoutRoot|$projectA|net8.0|/sdk/shared/*"
             "Node|$projectB|net8.0|Azure.B|$packageB|true||true"
             "CheckoutRoot|$projectB|net8.0|/sdk/example/*"
@@ -50,7 +48,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
 
     It "builds a versioned artifact that unions evaluated target frameworks" {
         $graph = Get-Content -Raw $graphPath | ConvertFrom-Json -Depth 100
-        $graph.schemaVersion | Should -Be 6
+        $graph.schemaVersion | Should -Be 7
         $graph.sourceCommit | Should -Be $sourceCommit
         $graph.diagnostics.isComplete | Should -BeTrue
         $graph.diagnostics.configurationCount | Should -Be 5
@@ -72,7 +70,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $configurationEdge.toTargetFramework | Should -Be "net9.0"
         $graph.diagnostics.unmappedRepositoryPackageReferences | Should -Contain "Azure.External"
         $graph.diagnostics.hasUnresolvedExternalPackageClosure | Should -BeTrue
-        $graph.inputs[0].path | Should -Be "sdk/shared/A.cs"
+        $graph.PSObject.Properties.Name | Should -Not -Contain "inputs"
         @($graph.checkoutRoots.'configuration:sdk/example/A/src/A.csproj|net8.0') |
             Should -Be @('/sdk/example/*', '/sdk/shared/*')
         $graph.diagnostics.checkoutRoots.isComplete | Should -BeTrue
@@ -153,14 +151,13 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         Get-Content $configurationOutputPath | Should -Be '$(RepoRoot)sdk/example/A/tests/A.Tests.csproj'
     }
 
-    It "returns the transitive project and optional input closure in the forward query" {
+    It "returns the transitive project closure in the forward query" {
         $outputPath = Join-Path $TestDrive "forward.txt"
-        & $scriptPath -Operation Forward -GraphPath $graphPath -RootProjects "sdk/example/A/tests/A.Tests.csproj" -ForwardOutputKind All -OutputPath $outputPath
+        & $scriptPath -Operation Forward -GraphPath $graphPath -RootProjects "sdk/example/A/tests/A.Tests.csproj" -OutputPath $outputPath
         if ($LASTEXITCODE) { throw "Forward query failed with exit code $LASTEXITCODE" }
         $result = Get-Content $outputPath
         $result | Should -Contain "Project|sdk/example/A/src/A.csproj"
         $result | Should -Contain "Project|sdk/example/B/src/B.csproj"
-        $result | Should -Contain "Input|sdk/shared/A.cs"
     }
 
     It "marks missing repository project references in diagnostics" {
@@ -342,14 +339,17 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $implicitCompile = Join-Path (Split-Path $fixtureA -Parent) "Implicit.cs"
         $hintAssembly = Join-Path $fixtureRoot "sdk/shared/lib/Shared.dll"
         $analyzerAssembly = Join-Path $fixtureRoot "sdk/shared/analyzers/Shared.Analyzer.dll"
+        $generatedAnalyzer = Join-Path $fixtureRoot "artifacts/obj/Generated.Analyzer.dll"
         $driverPath = Join-Path $fixtureRoot "driver.proj"
         $taskRecordsPath = Join-Path $fixtureRoot "task.records"
         $taskGraphPath = Join-Path $fixtureRoot "task.json"
         New-Item -ItemType Directory -Path (Split-Path $fixtureA -Parent), (Split-Path $fixtureB -Parent), `
-            (Split-Path $hintAssembly -Parent), (Split-Path $analyzerAssembly -Parent) -Force | Out-Null
+            (Split-Path $hintAssembly -Parent), (Split-Path $analyzerAssembly -Parent), `
+            (Split-Path $generatedAnalyzer -Parent) -Force | Out-Null
         Set-Content $implicitCompile "internal class Implicit {}"
         Set-Content $hintAssembly "fixture"
         Set-Content $analyzerAssembly "fixture"
+        Set-Content $generatedAnalyzer "generated"
 
         @'
 <Project Sdk="Microsoft.NET.Sdk">
@@ -375,6 +375,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
     <ProjectReference Include="../../B/src/B.csproj" ReferenceOutputAssembly="false" Condition="'$(TargetFramework)' == 'net9.0'" />
     <Reference Include="Shared" HintPath="../../../shared/lib/Shared.dll" />
     <Analyzer Include="../../../shared/analyzers/Shared.Analyzer.dll" />
+    <Analyzer Include="../../../../artifacts/obj/Generated.Analyzer.dll" />
   </ItemGroup>
 </Project>
 '@ | Set-Content $fixtureA
@@ -405,7 +406,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
                                 RootProjects="@(GraphRoot)"
                                 RecordsPath="$taskRecordsPath"
                                 RepositoryRoot="$fixtureRoot"
-                                IncludeInputs="true"
+                                IncludeInputCheckoutRoots="true"
                                 DegreeOfParallelism="2" />
   </Target>
 </Project>
@@ -422,7 +423,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $taskGraph.diagnostics.isComplete | Should -BeTrue
         $taskGraph.diagnostics.configurationGraph.isExact | Should -BeTrue
         $taskGraph.diagnostics.generation.configuration | Should -Be "Debug"
-        $taskGraph.diagnostics.generation.includesInputs | Should -BeTrue
+        $taskGraph.diagnostics.generation.includesInputCheckoutRoots | Should -BeTrue
         Get-Content $taskRecordsPath | Should -Contain "GraphGeneration|Debug|True"
         $taskNodeRecord = Get-Content $taskRecordsPath | Where-Object { $_ -like "Node|$fixtureA|net8.0|*" }
         $taskNodeFields = $taskNodeRecord.Split('|')
@@ -443,14 +444,10 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         @($taskProjectEdges.fromTargetFramework | Select-Object -Unique) | Should -Be @("net9.0")
         @($taskProjectEdges.toTargetFramework | Sort-Object) | Should -Be @("net8.0", "netstandard2.0")
         Get-Content $taskRecordsPath | Should -Contain "ProjectReference|$fixtureA|net9.0|$fixtureB|false||||net8.0"
-        $hintInput = $taskGraph.inputs | Where-Object path -eq "sdk/shared/lib/Shared.dll"
-        $hintInput.targetFrameworks | Should -Be @("net8.0", "net9.0")
-        $analyzerInput = $taskGraph.inputs | Where-Object {
-            $_.path -eq "sdk/shared/analyzers/Shared.Analyzer.dll"
-        }
-        $analyzerInput.path | Should -Be "sdk/shared/analyzers/Shared.Analyzer.dll"
-        $analyzerInput.targetFrameworks | Should -Be @("net8.0", "net9.0")
-        @($taskGraph.inputs | Where-Object path -eq "sdk/example/A/tests/Implicit.cs") | Should -BeNullOrEmpty
+        @($taskGraph.PSObject.Properties.Name) | Should -Not -Contain "inputs"
+        @(Get-Content $taskRecordsPath | Where-Object { $_ -like 'Input|*' }) | Should -BeNullOrEmpty
+        @(Get-Content $taskRecordsPath | Where-Object { $_ -like 'CheckoutRoot|*|/artifacts/*' }) |
+            Should -BeNullOrEmpty
         @($taskGraph.checkoutRoots.'configuration:sdk/example/A/tests/A.Tests.csproj|net8.0') |
             Should -Contain '/sdk/example/*'
         @($taskGraph.checkoutRoots.'configuration:sdk/example/A/tests/A.Tests.csproj|net8.0') |
@@ -551,7 +548,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $LASTEXITCODE | Should -Be 0
         $output = & dotnet msbuild -nologo -v:minimal -t:BuildGraph $driverPath 2>&1
         $LASTEXITCODE | Should -Not -Be 0
-        $output | Out-String | Should -Match "dependency-only configurations that schema 6 cannot represent"
+        $output | Out-String | Should -Match "dependency-only configurations that schema 7 cannot represent"
         Test-Path $recordsPath | Should -BeFalse
     }
 }

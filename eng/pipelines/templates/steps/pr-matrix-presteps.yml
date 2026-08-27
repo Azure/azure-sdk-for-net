@@ -108,7 +108,7 @@ steps:
               /t:GenerateRepositoryProjectGraphWithProjectGraph ./eng/service.proj `
               /p:RepositoryProjectGraphReaderPath="$graphPath" `
               /p:SkipServiceProjectImports=true `
-              /p:IncludeRepositoryProjectGraphInputs=true `
+              /p:IncludeRepositoryProjectGraphInputCheckoutRoots=true `
               /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false `
               /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false
             if ($LASTEXITCODE -ne 0) {

@@ -18,7 +18,7 @@ public sealed class RepositoryProjectGraphTask : Task
     private const string GraphConfiguration = "Debug";
     private string _repositoryRoot = string.Empty;
 
-    private static readonly string[] s_inputItemTypes =
+    private static readonly string[] s_checkoutInputItemTypes =
     {
         "Compile",
         "None",
@@ -48,7 +48,7 @@ public sealed class RepositoryProjectGraphTask : Task
     [Required]
     public string RepositoryRoot { get; set; } = string.Empty;
 
-    public bool IncludeInputs { get; set; }
+    public bool IncludeInputCheckoutRoots { get; set; }
 
     public int DegreeOfParallelism { get; set; } = 1;
 
@@ -262,7 +262,7 @@ public sealed class RepositoryProjectGraphTask : Task
                 ", ",
                 dependencyOnlyNodes.Take(5).Select(FormatConfiguration));
             throw new InvalidOperationException(
-                $"ProjectGraph contains {dependencyOnlyNodes.Length} dependency-only configurations that schema 6 cannot represent: {examples}. " +
+                $"ProjectGraph contains {dependencyOnlyNodes.Length} dependency-only configurations that schema 7 cannot represent: {examples}. " +
                 "Preserve the complete global-property identity before using this graph for dependency selection.");
         }
 
@@ -317,7 +317,7 @@ public sealed class RepositoryProjectGraphTask : Task
                     RepositoryProjectGraphRecord.Format(
                         RepositoryProjectGraphRecord.GraphGenerationKind,
                         GraphConfiguration,
-                        IncludeInputs.ToString()));
+                        IncludeInputCheckoutRoots.ToString()));
                 foreach (string project in declaredProjects)
                 {
                     WriteRecord(
@@ -381,9 +381,15 @@ public sealed class RepositoryProjectGraphTask : Task
                     projectCheckoutRoot).Serialize());
         }
 
-        if (IncludeInputs)
+        if (IncludeInputCheckoutRoots)
         {
-            AddInputRecords(writer, ref recordCount, emittedRecords, project, projectPath, targetFramework);
+            AddInputCheckoutRootRecords(
+                writer,
+                ref recordCount,
+                emittedRecords,
+                project,
+                projectPath,
+                targetFramework);
         }
     }
 
@@ -504,7 +510,7 @@ public sealed class RepositoryProjectGraphTask : Task
         return result.OrderBy(value => value, StringComparer.OrdinalIgnoreCase).ToArray();
     }
 
-    private void AddInputRecords(
+    private void AddInputCheckoutRootRecords(
         TextWriter writer,
         ref long recordCount,
         HashSet<string> emittedRecords,
@@ -515,15 +521,15 @@ public sealed class RepositoryProjectGraphTask : Task
         foreach (string import in project.GetPropertyValue("MSBuildAllProjects")
             .Split(';', StringSplitOptions.RemoveEmptyEntries))
         {
-            WriteInputRecord(
+            WriteCheckoutRootRecord(
                 writer, ref recordCount, emittedRecords, projectPath, targetFramework, Path.GetFullPath(import));
         }
 
-        foreach (string itemType in s_inputItemTypes)
+        foreach (string itemType in s_checkoutInputItemTypes)
         {
             foreach (ProjectItemInstance item in project.GetItems(itemType))
             {
-                WriteInputRecord(
+                WriteCheckoutRootRecord(
                     writer, ref recordCount, emittedRecords, projectPath, targetFramework, GetItemFullPath(project, item));
             }
         }
@@ -533,7 +539,7 @@ public sealed class RepositoryProjectGraphTask : Task
             string hintPath = reference.GetMetadataValue("HintPath");
             if (!string.IsNullOrEmpty(hintPath))
             {
-                WriteInputRecord(
+                WriteCheckoutRootRecord(
                     writer,
                     ref recordCount,
                     emittedRecords,
@@ -544,7 +550,7 @@ public sealed class RepositoryProjectGraphTask : Task
         }
     }
 
-    private void WriteInputRecord(
+    private void WriteCheckoutRootRecord(
         TextWriter writer,
         ref long recordCount,
         HashSet<string> emittedRecords,
@@ -552,15 +558,6 @@ public sealed class RepositoryProjectGraphTask : Task
         string targetFramework,
         string inputPath)
     {
-        if (!WriteRecord(
-            writer,
-            ref recordCount,
-            emittedRecords,
-            new RepositoryProjectGraphRecord.Input(projectPath, targetFramework, inputPath).Serialize()))
-        {
-            return;
-        }
-
         string checkoutRoot = GetCheckoutRoot(inputPath);
         if (!string.IsNullOrEmpty(checkoutRoot))
         {
@@ -576,8 +573,10 @@ public sealed class RepositoryProjectGraphTask : Task
     }
 
     /// <summary>
-    /// Coarsens an absolute project or input path to a repository sparse-checkout root.
-    /// Root files, always-included directories, and paths outside the repository return empty.
+    /// Maps an absolute project or evaluated input to its SDK service checkout root.
+    /// Repository root files, build infrastructure, common sources, generated artifacts, and
+    /// paths outside the repository are already available or are not Git checkout inputs.
+    /// Any other repository directory fails closed because sparse checkout cannot represent it.
     /// </summary>
     private string GetCheckoutRoot(string inputPath)
     {
@@ -596,16 +595,16 @@ public sealed class RepositoryProjectGraphTask : Task
         {
             return segments.Length < 3 ? string.Empty : $"/sdk/{segments[1]}/*";
         }
-        if (segments[0].Equals("eng", StringComparison.OrdinalIgnoreCase) ||
-            segments[0].Equals(".config", StringComparison.OrdinalIgnoreCase))
+        if (segments[0].Equals("common", StringComparison.OrdinalIgnoreCase) ||
+            segments[0].Equals("eng", StringComparison.OrdinalIgnoreCase) ||
+            segments[0].Equals(".config", StringComparison.OrdinalIgnoreCase) ||
+            segments[0].Equals("artifacts", StringComparison.OrdinalIgnoreCase))
         {
             return string.Empty;
         }
 
-        string directory = Path.GetDirectoryName(path)?.Replace('\\', '/');
-        return string.IsNullOrWhiteSpace(directory) || directory == "."
-            ? string.Empty
-            : $"/{directory.Trim('/')}/*";
+        throw new InvalidOperationException(
+            $"Repository input '{path}' is outside the supported sparse-checkout directories.");
     }
 
     private static bool WriteRecord(
