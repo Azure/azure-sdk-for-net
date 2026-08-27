@@ -117,24 +117,31 @@ public sealed class RepositoryProjectGraphTask : Task
             Process process = Process.GetCurrentProcess();
             process.Refresh();
             long workingSetBefore = process.WorkingSet64;
-            var stopwatch = Stopwatch.StartNew();
+            var totalStopwatch = Stopwatch.StartNew();
+            var graphStopwatch = Stopwatch.StartNew();
             var graph = new ProjectGraph(options, CancellationToken.None);
-            stopwatch.Stop();
+            graphStopwatch.Stop();
             process.Refresh();
 
+            var canonicalizationStopwatch = Stopwatch.StartNew();
             IReadOnlyCollection<ProjectGraphNode> canonicalNodes = GetCanonicalNodes(graph, out GraphStatistics statistics);
+            canonicalizationStopwatch.Stop();
             var recordsStopwatch = Stopwatch.StartNew();
             long recordCount = WriteRecords(projectPaths, rootProjectPaths, canonicalNodes);
             recordsStopwatch.Stop();
+            totalStopwatch.Stop();
 
             Log.LogMessage(
                 MessageImportance.High,
-                "Repository ProjectGraph: entries={0}, entryNodes={1}, graphProjects={2}, graphNodes={3}, graphConstruction={4:F2}s, degreeOfParallelism={5}.",
+                "Repository ProjectGraph: entries={0}, entryNodes={1}, graphProjects={2}, graphNodes={3}, graphConstruction={4:F2}s, canonicalization={5:F2}s, recordEmission={6:F2}s, elapsed={7:F2}s, degreeOfParallelism={8}.",
                 entryPoints.Length,
                 graph.EntryPointNodes.Count,
                 statistics.DistinctGraphProjects,
                 graph.ProjectNodes.Count,
-                stopwatch.Elapsed.TotalSeconds,
+                graphStopwatch.Elapsed.TotalSeconds,
+                canonicalizationStopwatch.Elapsed.TotalSeconds,
+                recordsStopwatch.Elapsed.TotalSeconds,
+                totalStopwatch.Elapsed.TotalSeconds,
                 DegreeOfParallelism);
             Log.LogMessage(
                 MessageImportance.High,

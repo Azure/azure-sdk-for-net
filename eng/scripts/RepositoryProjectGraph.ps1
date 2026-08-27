@@ -177,10 +177,15 @@ function Write-Lines([string] $Path, [string[]] $Lines) {
   [System.IO.File]::WriteAllLines($Path, $Lines)
 }
 
+function Get-PeakWorkingSetMiB {
+  return [long] [Math]::Ceiling([System.Diagnostics.Process]::GetCurrentProcess().PeakWorkingSet64 / 1MB)
+}
+
 function Build-Graph {
   if (!$RepoRoot) { throw 'RepoRoot is required for Build.' }
   if (!$RecordsPath) { throw 'RecordsPath is required for Build.' }
 
+  $totalStopwatch = [System.Diagnostics.Stopwatch]::StartNew()
   $root = Normalize-AbsolutePath $RepoRoot
   $nodes = @{}
   $configurationEdges = @{}
@@ -200,6 +205,8 @@ function Build-Graph {
   $transitivePackageRecordCount = 0
   $packageClosureAttempted = !!$PackageRecordsPath
   $recordPaths = [System.Collections.Generic.List[string]]::new()
+  $recordCount = 0L
+  $recordBytes = 0L
   $recordPaths.Add($RecordsPath)
   if ($PackageRecordsPath) {
     if (!(Test-Path $PackageRecordsPath)) {
@@ -208,9 +215,13 @@ function Build-Graph {
     $recordPaths.Add($PackageRecordsPath)
   }
 
+  # Record parsing is intentionally timed apart from artifact shaping and JSON serialization.
+  $readStopwatch = [System.Diagnostics.Stopwatch]::StartNew()
   foreach ($recordPath in $recordPaths) {
+    $recordBytes += (Get-Item -LiteralPath $recordPath).Length
     foreach ($line in [System.IO.File]::ReadLines($recordPath)) {
       if ([string]::IsNullOrWhiteSpace($line)) { continue }
+      $recordCount++
       $parts = $line.Split('|')
       switch ($parts[0]) {
       'GraphGeneration' {
@@ -369,7 +380,9 @@ function Build-Graph {
       }
     }
   }
+  $readStopwatch.Stop()
 
+  $modelStopwatch = [System.Diagnostics.Stopwatch]::StartNew()
   $unmappedConfigurationEdges = @($configurationEdges.GetEnumerator() | Where-Object {
     $_.Value.kind -eq 'ProjectReference' -and !$_.Value.toTargetFramework
   })
@@ -527,20 +540,33 @@ function Build-Graph {
       hasUnresolvedExternalPackageClosure = $packageClosureHasUnresolved
     }
   }
+  $modelStopwatch.Stop()
 
+  $writeStopwatch = [System.Diagnostics.Stopwatch]::StartNew()
   $parent = Split-Path -Parent $GraphPath
   if ($parent) { New-Item -ItemType Directory -Path $parent -Force | Out-Null }
   $graph | ConvertTo-Json -Depth 100 | Set-Content -Path $GraphPath -Encoding utf8
+  $writeStopwatch.Stop()
+  $totalStopwatch.Stop()
   Write-Host "Repository project graph: $($nodes.Count) projects, $($configurationKeys.Count) configurations, $($repositoryConfigurationEdges.Count) repository configuration edges, $($roots.Count) roots, complete=$($graph.diagnostics.isComplete)"
+  Write-Host ("Repository project graph timing: operation=Build records={0} recordBytes={1} recordParsing={2:F2}s model={3:F2}s write={4:F2}s elapsed={5:F2}s peakWorkingSet={6}MiB" -f `
+    $recordCount, $recordBytes, $readStopwatch.Elapsed.TotalSeconds, $modelStopwatch.Elapsed.TotalSeconds, `
+    $writeStopwatch.Elapsed.TotalSeconds, $totalStopwatch.Elapsed.TotalSeconds, (Get-PeakWorkingSetMiB))
 }
 
 function Invoke-ReverseQuery {
   if (!$OutputPath) { throw 'OutputPath is required for Reverse.' }
+  $totalStopwatch = [System.Diagnostics.Stopwatch]::StartNew()
+  $readStopwatch = [System.Diagnostics.Stopwatch]::StartNew()
   $graph = Read-Graph $GraphPath
+  $readStopwatch.Stop()
   if (!$graph.diagnostics.isComplete) {
     throw "Repository project graph is incomplete. See diagnostics in $GraphPath"
   }
+  $indexStopwatch = [System.Diagnostics.Stopwatch]::StartNew()
   $indexes = New-GraphIndexes $graph
+  $indexStopwatch.Stop()
+  $queryStopwatch = [System.Diagnostics.Stopwatch]::StartNew()
   $requestedDependencies = @($Dependencies -split '\s+' | Where-Object { $_ })
   $knownPackages = New-CaseInsensitiveSet
   foreach ($node in $graph.nodes) {
@@ -567,16 +593,27 @@ function Invoke-ReverseQuery {
     if ($seen.Add($line)) { $lines.Add($line) }
   }
   Write-Lines $OutputPath @($lines)
+  $queryStopwatch.Stop()
+  $totalStopwatch.Stop()
   Write-Host "Reverse query selected $($lines.Count) project/package roots."
+  Write-Host ("Repository project graph timing: operation=Reverse read={0:F2}s index={1:F2}s queryAndWrite={2:F2}s elapsed={3:F2}s peakWorkingSet={4}MiB" -f `
+    $readStopwatch.Elapsed.TotalSeconds, $indexStopwatch.Elapsed.TotalSeconds, $queryStopwatch.Elapsed.TotalSeconds, `
+    $totalStopwatch.Elapsed.TotalSeconds, (Get-PeakWorkingSetMiB))
 }
 
 function Invoke-ForwardQuery {
   if (!$OutputPath) { throw 'OutputPath is required for Forward.' }
+  $totalStopwatch = [System.Diagnostics.Stopwatch]::StartNew()
+  $readStopwatch = [System.Diagnostics.Stopwatch]::StartNew()
   $graph = Read-Graph $GraphPath
+  $readStopwatch.Stop()
   if (!$graph.diagnostics.isComplete) {
     throw "Repository project graph is incomplete. See diagnostics in $GraphPath"
   }
+  $indexStopwatch = [System.Diagnostics.Stopwatch]::StartNew()
   $indexes = New-GraphIndexes $graph
+  $indexStopwatch.Stop()
+  $queryStopwatch = [System.Diagnostics.Stopwatch]::StartNew()
   $requestedRoots = [System.Collections.Generic.List[string]]::new()
   if ($RootProjectsPath) {
     foreach ($line in [System.IO.File]::ReadLines($RootProjectsPath)) {
@@ -630,7 +667,12 @@ function Invoke-ForwardQuery {
     }
   }
   Write-Lines $OutputPath @($lines | Sort-Object -Unique)
+  $queryStopwatch.Stop()
+  $totalStopwatch.Stop()
   Write-Host "Forward query wrote $($lines.Count) records."
+  Write-Host ("Repository project graph timing: operation=Forward read={0:F2}s index={1:F2}s queryAndWrite={2:F2}s elapsed={3:F2}s peakWorkingSet={4}MiB" -f `
+    $readStopwatch.Elapsed.TotalSeconds, $indexStopwatch.Elapsed.TotalSeconds, $queryStopwatch.Elapsed.TotalSeconds, `
+    $totalStopwatch.Elapsed.TotalSeconds, (Get-PeakWorkingSetMiB))
 }
 
 switch ($Operation) {

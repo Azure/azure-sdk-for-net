@@ -56,12 +56,28 @@ public sealed class RunIsolatedRepositoryProjectGraphTask : Task
                     startInfo.ArgumentList.Add($"/p:{name}={ProjectCollection.Escape(value)}");
                 }
             }
+            var stopwatch = Stopwatch.StartNew();
             using var process = Process.Start(startInfo)
                 ?? throw new InvalidOperationException("Failed to start the isolated repository ProjectGraph process.");
             System.Threading.Tasks.Task<string> standardOutput = process.StandardOutput.ReadToEndAsync();
             System.Threading.Tasks.Task<string> standardError = process.StandardError.ReadToEndAsync();
+            long peakWorkingSet = 0;
+            // Sample while the child is alive because Unix process metrics are unavailable after exit.
+            while (!process.WaitForExit(1000))
+            {
+                try
+                {
+                    process.Refresh();
+                    peakWorkingSet = Math.Max(peakWorkingSet, process.WorkingSet64);
+                }
+                catch (InvalidOperationException)
+                {
+                    // The child can exit between WaitForExit's timeout and metric collection.
+                }
+            }
             process.WaitForExit();
             System.Threading.Tasks.Task.WaitAll(standardOutput, standardError);
+            stopwatch.Stop();
 
             if (!string.IsNullOrWhiteSpace(standardOutput.Result))
             {
@@ -78,6 +94,14 @@ public sealed class RunIsolatedRepositoryProjectGraphTask : Task
                     Log.LogError(standardError.Result.TrimEnd());
                 }
             }
+
+            Log.LogMessage(
+                MessageImportance.High,
+                "Repository ProjectGraph isolated process: target={0}, exitCode={1}, elapsed={2:F2}s, peakWorkingSet={3:F1}MiB.",
+                Target,
+                process.ExitCode,
+                stopwatch.Elapsed.TotalSeconds,
+                peakWorkingSet / 1024d / 1024d);
 
             if (process.ExitCode != 0)
             {
