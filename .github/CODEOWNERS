@@ -93,6 +93,7 @@
 
 /sdk/ai/Azure.AI.Projects.Agents/    @rhurey
 
+/sdk/tables/Azure.Data.Tables/    @jorgerangel-msft @jsquire
 
 # PRLabel: %AI Agents
 /sdk/agentserver/    @ankitbko @RaviPidaparthi @Shivakishore14 @vangarp
@@ -111,6 +112,9 @@
 
 # PRLabel: %AI Projects
 /sdk/ai/Azure.AI.Projects/    @dargilco @nick863 @rhurey @trangevi @trrwilson
+
+# ServiceLabel: %AI Model Inference %AI Projects
+# ServiceOwners: @rhurey
 
 # ServiceLabel: %AI Projects
 # ServiceOwners: @dargilco @nick863 @trangevi
@@ -132,9 +136,6 @@
 
 # ServiceLabel: %Azure Load Testing
 # ServiceOwners: @azure/testing-services
-
-# PRLabel: %Azure Projects
-/sdk/cloudmachine/    @KrzysztofCwalina
 
 # PRLabel: %Azure Stack
 /sdk/azurestack*/    @bganapa
@@ -279,6 +280,9 @@
 
 # ServiceLabel: %Defender EASM
 # ServiceOwners: @thang-bit
+
+# PRLabel: %Device Update
+/sdk/deviceregistry/Azure.IoT.DeviceRegistry.SoftwareUpdate/    @devlie @wuqiten
 
 # PRLabel: %Device Update
 /sdk/deviceupdate/Azure.IoT.DeviceUpdate/    @devlie @wuqiten
@@ -442,8 +446,9 @@
 # PRLabel: %Search
 /sdk/search/    @Azure/azure-sdk-write-search
 
+# AzureSdkOwners: @efrainretana @lc48t
 # ServiceLabel: %Search
-# ServiceOwners: @efrainretana @mattgotteiner
+# ServiceOwners: @efrainretana @lc48t @mattgotteiner
 
 # PRLabel: %Service Bus
 /sdk/servicebus/    @EldertGrootenboer @j7nw4r @jsquire @sagar0207 @skarri-microsoft @SwayGom
@@ -523,6 +528,7 @@
 
 # AzureSdkOwners: @jorgerangel-msft
 # ServiceLabel: %Tables
+# ServiceOwners: @jorgerangel-msft @jsquire
 
 # PRLabel: %Voice Live
 /sdk/voicelive/Azure.AI.VoiceLive/    @amber-yujueWang @emilyjiji @pankopon @rhurey @xitzhang
