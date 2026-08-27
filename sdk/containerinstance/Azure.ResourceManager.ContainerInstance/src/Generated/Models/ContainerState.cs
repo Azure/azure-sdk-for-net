@@ -23,15 +23,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerState"/>. </summary>
         /// <param name="state"> The state of the container instance. </param>
-        /// <param name="startOn"> The date-time when the container instance state started. </param>
+        /// <param name="startsOn"> The date-time when the container instance state started. </param>
         /// <param name="exitCode"> The container instance exit codes correspond to those from the `docker run` command. </param>
         /// <param name="finishOn"> The date-time when the container instance state finished. </param>
         /// <param name="detailStatus"> The human-readable status of the container instance state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerState(string state, DateTimeOffset? startOn, int? exitCode, DateTimeOffset? finishOn, string detailStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerState(string state, DateTimeOffset? startsOn, int? exitCode, DateTimeOffset? finishOn, string detailStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
-            StartOn = startOn;
+            StartsOn = startsOn;
             ExitCode = exitCode;
             FinishOn = finishOn;
             DetailStatus = detailStatus;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public string State { get; }
 
         /// <summary> The date-time when the container instance state started. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The container instance exit codes correspond to those from the `docker run` command. </summary>
         public int? ExitCode { get; }

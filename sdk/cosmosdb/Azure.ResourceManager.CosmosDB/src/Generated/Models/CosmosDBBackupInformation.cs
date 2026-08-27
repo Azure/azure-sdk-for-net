@@ -37,11 +37,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The latest restorable timestamp for a resource. </summary>
         [WirePath("continuousBackupInformation.latestRestorableTimestamp")]
-        public DateTimeOffset? ContinuousBackupInformationLatestRestorableTimestamp
+        public DateTimeOffset? ContinuousBackupInformationLatestRestorableOn
         {
             get
             {
-                return ContinuousBackupInformation is null ? default : ContinuousBackupInformation.LatestRestorableTimestamp;
+                return ContinuousBackupInformation is null ? default : ContinuousBackupInformation.LatestRestorableOn;
             }
         }
     }

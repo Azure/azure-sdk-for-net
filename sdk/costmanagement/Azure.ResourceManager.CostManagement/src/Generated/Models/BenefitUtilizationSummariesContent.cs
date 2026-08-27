@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         public BenefitUtilizationSummariesContent(BenefitRecommendationUsageGrain grain, DateTimeOffset startOn, DateTimeOffset endOn)
         {
             Grain = grain;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startOn;
+            EndsOn = endOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="BenefitUtilizationSummariesContent"/>. </summary>
@@ -44,8 +44,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             BenefitOrderId = benefitOrderId;
             BenefitId = benefitId;
             Grain = grain;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startOn;
+            EndsOn = endOn;
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         public BenefitRecommendationUsageGrain Grain { get; set; }
 
         /// <summary> The start date of the summaries data that will be served in the report. </summary>
-        public DateTimeOffset StartOn { get; set; }
+        public DateTimeOffset StartsOn { get; set; }
 
         /// <summary> The end date of the summaries data that will be served in the report. </summary>
-        public DateTimeOffset EndOn { get; set; }
+        public DateTimeOffset EndsOn { get; set; }
 
         /// <summary> The type of benefit data requested. Required for billing account and billing profile scopes. Implied and not to be passed at benefit scopes. Supported values are Reservation and SavingsPlan. </summary>
         public BillingAccountBenefitKind? Kind { get; set; }
