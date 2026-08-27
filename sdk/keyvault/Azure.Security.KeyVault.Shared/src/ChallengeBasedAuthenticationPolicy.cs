@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Core;
@@ -21,13 +21,8 @@ namespace Azure.Security.KeyVault
         private readonly bool _verifyChallengeResource;
         private readonly bool _enableProofOfPossession;
 
-        /// <summary>
-        /// Set when applying a Proof-of-Possession binding certificate to the transport fails; read by
-        /// <see cref="AddTokenBoundAuthHeaderIfBound(HttpMessage)"/> to suppress <c>x-ms-tokenboundauth</c> in that
-        /// case. See <see cref="OnTransportOptionsChanged(HttpPipelineTransportOptions)"/> for details and known
-        /// limitations. Volatile only for cross-thread visibility, matching the base class's own best-effort,
-        /// lock-free tracking of <c>_lastBindingCertificate</c> on the same instance.
-        /// </summary>
+        // Set when applying the PoP binding certificate to the transport fails; read to suppress the
+        // x-ms-tokenboundauth header on that request. Volatile for cross-thread visibility.
         private volatile bool _transportUpdateFailed;
 
         /// <summary>
@@ -50,19 +45,10 @@ namespace Azure.Security.KeyVault
             => transport.GetType().GetMethod(nameof(HttpPipelineTransport.Update), s_updateParameterTypes)?.DeclaringType != typeof(HttpPipelineTransport);
 
         /// <summary>
-        /// Applies a Proof-of-Possession binding certificate to the transport when the credential returns one.
+        /// Applies the Proof-of-Possession binding certificate to the transport. Catches transports that cannot
+        /// be updated in place (e.g. HttpClientTransport.Shared) so the request falls back to a plain token
+        /// instead of throwing, and records the failure so the token-bound header is suppressed.
         /// </summary>
-        /// <remarks>
-        /// <see cref="SupportsProofOfPossession(HttpPipelineTransport)"/> can't always predict whether
-        /// <see cref="HttpPipelineTransport.Update"/> will succeed on the actual transport instance: for example
-        /// <see cref="HttpClientTransport.Shared"/> throws <see cref="InvalidOperationException"/> because it can
-        /// never be updated, and a customer-supplied <see cref="HttpClientTransport"/> without a rebuild factory
-        /// silently no-ops. This override catches the former so a request never crashes because of it, and sets
-        /// <see cref="_transportUpdateFailed"/> so the token-bound header isn't sent. The no-op case can't be
-        /// detected the same way -- <c>Update</c> has no way to report that it declined -- so the header may still
-        /// be sent without the certificate actually applied there; that needs a first-class Azure.Core capability
-        /// check as a follow-up.
-        /// </remarks>
         [Experimental("AZID0004")]
         protected override void OnTransportOptionsChanged(HttpPipelineTransportOptions options)
         {
@@ -196,10 +182,8 @@ namespace Azure.Security.KeyVault
             string claims = getDecodedClaimsParameter(error, message.Response);
             if (claims != null)
             {
-                // Reuse the scope from the challenge cached for this authority when one exists. If the authority
-                // has not been challenged before (cache miss), there is no cached scope to reuse - keep the scope
-                // parsed from this response rather than dereferencing a null challenge (which previously threw a
-                // NullReferenceException on a CAE challenge that arrived before any entry was cached).
+                // Reuse the cached scope for this authority when present; on a cache miss keep the scope
+                // parsed from this response instead of dereferencing a null challenge.
                 if (s_challengeCache.TryGetValue(authority, out _challenge))
                 {
                     scope = _challenge.Scopes[0];
@@ -271,17 +255,9 @@ namespace Azure.Security.KeyVault
             return true;
         }
 
-        /// <summary>
-        /// Adds the token-bound auth header only when the token actually acquired for this request is
-        /// Proof-of-Possession (PoP) bound. Requesting PoP via <see cref="TokenRequestContext.IsProofOfPossessionEnabled"/>
-        /// does not guarantee the credential honors it — the credential may not support PoP, or the current
-        /// environment may not support token binding — in which case a normal Bearer token is returned. The header
-        /// must reflect what was actually negotiated, not merely what was requested, so it is set based on the
-        /// scheme of the Authorization header written by <see cref="BearerTokenAuthenticationPolicy"/> rather than
-        /// on the request's <see cref="TokenRequestContext.IsProofOfPossessionEnabled"/> flag. It also checks
-        /// <see cref="_transportUpdateFailed"/> so the header is never sent when the binding certificate could not
-        /// actually be applied to the transport (see <see cref="OnTransportOptionsChanged(HttpPipelineTransportOptions)"/>).
-        /// </summary>
+        // Sends x-ms-tokenboundauth only when the acquired token is actually PoP-bound - decided from the
+        // negotiated Authorization scheme (not the requested flag), and skipped when the certificate could
+        // not be applied to the transport.
         private void AddTokenBoundAuthHeaderIfBound(HttpMessage message)
         {
             if (!_transportUpdateFailed &&
@@ -292,10 +268,8 @@ namespace Azure.Security.KeyVault
             }
             else
             {
-                // The token acquired for this (re-)authorization is not Proof-of-Possession bound - for example a
-                // CAE re-authorization on the same message returned a plain bearer token, or the binding
-                // certificate could not be applied to the transport. Remove any x-ms-tokenboundauth set on an
-                // earlier attempt so the header never outlives the bound token it was meant to signal.
+                // Not PoP-bound (e.g. a CAE re-auth returned a plain token) - drop any stale
+                // x-ms-tokenboundauth so it cannot outlive its bound token.
                 message.Request.Headers.Remove(TokenBoundAuthHeaderName);
             }
         }

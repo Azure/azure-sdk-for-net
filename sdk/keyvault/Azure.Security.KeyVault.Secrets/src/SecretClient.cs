@@ -56,15 +56,9 @@ namespace Azure.Security.KeyVault.Secrets
             _vaultUri    = vaultUri;
             _diagnostics = new ClientDiagnostics(options);
 
-            // Build the HttpPipeline directly from the customer's SecretClientOptions
-            // (which extends ClientOptions) so AddPolicy entries, custom RetryPolicy /
-            // RetryOptions, Transport, Diagnostics allow-lists and ApplicationId all flow
-            // through automatically. The challenge-based auth policy is the same one the
-            // legacy SecretClient used. Transport options are only passed when
-            // Proof-of-Possession (PoP) token binding is enabled: that overload builds a
-            // dedicated, updatable (and therefore disposable) transport instead of the
-            // shared default, so customers who don't opt in keep the default transport
-            // and connection-pooling behavior unchanged.
+            // Build the pipeline from the customer's SecretClientOptions so their policies, retry, transport,
+            // diagnostics and ApplicationId all flow through. A dedicated, updatable transport is used only when
+            // Proof-of-Possession is enabled; otherwise the shared default transport is kept unchanged.
             bool enableProofOfPossession = options.EnableProofOfPossession && ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport);
             ChallengeBasedAuthenticationPolicy authenticationPolicy = new ChallengeBasedAuthenticationPolicy(
                 credential,

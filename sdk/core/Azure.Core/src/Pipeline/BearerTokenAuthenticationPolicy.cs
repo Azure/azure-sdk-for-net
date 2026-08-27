@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -550,16 +550,9 @@ namespace Azure.Core.Pipeline
                     !string.Equals(context.Claims, CurrentContext.Claims) ||
                     (context.TenantId != null && !string.Equals(context.TenantId, CurrentContext.TenantId)) ||
                     context.IsProofOfPossessionEnabled != CurrentContext.IsProofOfPossessionEnabled ||
-                    // Proof-of-Possession tokens are cryptographically bound to a specific request URI and
-                    // HTTP method (see RFC 9449 / MSAL WithProofOfPossession). Reusing a PoP-bound cached
-                    // token across different request targets would send a token whose binding does not
-                    // match the request line, so treat the cache entry as stale when the URI or method
-                    // changes. Gate solely on the *requested* PoP flag matching on both contexts — not on
-                    // the currently cached token being observably PoP-bound — because a concurrent request
-                    // arriving while the initial token acquisition is still in flight would otherwise reuse
-                    // the pending token (task is not yet RanToCompletion, so the cached-token check would
-                    // return false and the URI-based invalidation would be skipped). Bearer callers are
-                    // unaffected because the outer `IsProofOfPossessionEnabled` clause is false for them.
+                    // PoP tokens are bound to a specific request URI + method, so invalidate the single-slot
+                    // cache when either changes. Gated on the requested PoP flag (not on the cached token being
+                    // observably bound) so a still-in-flight acquisition is not reused across a different URI.
                     (context.IsProofOfPossessionEnabled && CurrentContext.IsProofOfPossessionEnabled &&
                         (context.ResourceRequestUri != CurrentContext.ResourceRequestUri ||
                          !string.Equals(context.ResourceRequestMethod, CurrentContext.ResourceRequestMethod, StringComparison.OrdinalIgnoreCase)));

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -100,33 +100,15 @@ namespace Azure.Security.KeyVault.Keys
         public bool DisableChallengeResourceVerification { get; set; }
 
         /// <summary>
-        /// Gets or sets whether to request Proof-of-Possession (PoP) token binding for authenticated requests. When
-        /// enabled, the client asks the credential for a token that is cryptographically bound to a client
-        /// certificate and, only when the credential and transport actually support it, sends the
-        /// <c>x-ms-tokenboundauth</c> header alongside the bound token.
+        /// Gets or sets whether to request Proof-of-Possession (PoP) token binding for authenticated requests.
+        /// Opt-in; defaults to <see langword="false"/>.
         /// </summary>
         /// <remarks>
-        /// This is opt-in and defaults to <see langword="false"/> so existing applications see no change in
-        /// authentication behavior, transport/connection-pooling behavior, or resource usage. The underlying
-        /// Proof-of-Possession support in Azure.Core and Azure.Identity is experimental (see <c>AZID0004</c>);
-        /// enable this only if you understand and accept that.
-        /// <para>
-        /// Setting this to <see langword="true"/> is a request, not a guarantee. It can be silently ignored when
-        /// the effective transport cannot apply the binding certificate — for example when
-        /// <see cref="Azure.Core.ClientOptions.Transport"/> is set to a custom transport whose
-        /// <see cref="System.Net.Http.HttpClient"/> is fixed at construction time, or when the credential does
-        /// not honor <see cref="Azure.Core.TokenRequestContext.IsProofOfPossessionEnabled"/>. In those cases the
-        /// client falls back to a plain bearer token and does not send the <c>x-ms-tokenboundauth</c> header.
-        /// </para>
-        /// <para>
-        /// Throughput profile changes materially when enabled. Proof-of-Possession tokens are bound to a specific
-        /// request URI and HTTP method, so <see cref="Azure.Core.Pipeline.BearerTokenAuthenticationPolicy"/>'s
-        /// single-slot access-token cache is invalidated whenever the request URI or method changes. Because it
-        /// is one slot rather than a per-URI map, alternating requests to different vault resources will each
-        /// drive a fresh credential invocation. That is inherent to binding a token to a request line; MSAL has
-        /// its own inner cache, but callers enabling this should be aware they are trading throughput for
-        /// cryptographic binding.
-        /// </para>
+        /// Requesting PoP is best-effort: it is silently ignored - falling back to a plain token with no
+        /// <c>x-ms-tokenboundauth</c> header - when the transport cannot apply the binding certificate or the
+        /// credential does not honor it. Because PoP tokens are bound per request URI and method, the single-slot
+        /// token cache is invalidated on each new target, so throughput drops for workloads that hit many keys.
+        /// The underlying Azure.Core and Azure.Identity support is experimental (<c>AZID0004</c>).
         /// </remarks>
         public bool EnableProofOfPossession { get; set; }
 
