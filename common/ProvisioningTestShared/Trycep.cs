@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -19,6 +21,18 @@ namespace Azure.Provisioning.Tests;
 
 public class Trycep : IAsyncDisposable
 {
+    public Trycep()
+    {
+    }
+
+    public Trycep(bool orderProperties)
+    {
+        if (orderProperties)
+        {
+            BuildOptions.InfrastructureResolvers.Add(new PropertyOrderingInfrastructureResolver());
+        }
+    }
+
     public bool SkipTools { get; private set; } = true;
     public bool SkipLiveCalls { get; private set; } = true;
     public ProvisioningTestBase? Test { get; private set; }
@@ -386,5 +400,135 @@ public class Trycep : IAsyncDisposable
             TempDir = null;
         }
         GC.SuppressFinalize(this);
+    }
+}
+
+internal sealed class PropertyOrderingInfrastructureResolver : InfrastructureResolver
+{
+    public override void ResolveProperties(
+        ProvisionableConstruct construct,
+        ProvisioningBuildOptions options)
+    {
+        HashSet<ProvisionableConstruct> visited = new(ProvisionableConstructReferenceComparer.Instance);
+        OrderProperties(construct, visited);
+    }
+
+    private static void OrderProperties(
+        ProvisionableConstruct construct,
+        HashSet<ProvisionableConstruct> visited)
+    {
+        if (!visited.Add(construct))
+        {
+            return;
+        }
+
+        KeyValuePair<string, IBicepValue>[] properties =
+        [
+            .. construct.ProvisionableProperties
+                .OrderBy(
+                    pair => pair.Value.Self?.BicepPath,
+                    BicepPathComparer.Instance)
+                .ThenBy(pair => pair.Key, StringComparer.Ordinal)
+        ];
+
+        construct.ProvisionableProperties.Clear();
+        foreach (KeyValuePair<string, IBicepValue> property in properties)
+        {
+            construct.ProvisionableProperties.Add(property);
+            OrderNestedProperties(property.Value, visited);
+        }
+    }
+
+    private static void OrderNestedProperties(
+        IBicepValue value,
+        HashSet<ProvisionableConstruct> visited)
+    {
+        if (value.Kind != BicepValueKind.Literal)
+        {
+            return;
+        }
+
+        if (value is IDictionary<string, IBicepValue> dictionary)
+        {
+            OrderDictionary(dictionary, visited);
+            return;
+        }
+
+        switch (value.LiteralValue)
+        {
+            case ProvisionableConstruct construct:
+                OrderProperties(construct, visited);
+                break;
+            case IEnumerable sequence:
+                foreach (object? item in sequence)
+                {
+                    if (item is IBicepValue nested)
+                    {
+                        OrderNestedProperties(nested, visited);
+                    }
+                }
+                break;
+        }
+    }
+
+    private static void OrderDictionary(
+        IDictionary<string, IBicepValue> dictionary,
+        HashSet<ProvisionableConstruct> visited)
+    {
+        KeyValuePair<string, IBicepValue>[] values =
+        [
+            .. dictionary.OrderBy(pair => pair.Key, StringComparer.Ordinal)
+        ];
+
+        dictionary.Clear();
+        foreach (KeyValuePair<string, IBicepValue> value in values)
+        {
+            dictionary.Add(value);
+            OrderNestedProperties(value.Value, visited);
+        }
+    }
+
+    private sealed class BicepPathComparer : IComparer<IReadOnlyList<string>?>
+    {
+        public static BicepPathComparer Instance { get; } = new();
+
+        public int Compare(IReadOnlyList<string>? x, IReadOnlyList<string>? y)
+        {
+            if (ReferenceEquals(x, y))
+            {
+                return 0;
+            }
+            if (x is null)
+            {
+                return -1;
+            }
+            if (y is null)
+            {
+                return 1;
+            }
+
+            int count = Math.Min(x.Count, y.Count);
+            for (int i = 0; i < count; i++)
+            {
+                int comparison = StringComparer.Ordinal.Compare(x[i], y[i]);
+                if (comparison != 0)
+                {
+                    return comparison;
+                }
+            }
+
+            return x.Count.CompareTo(y.Count);
+        }
+    }
+
+    private sealed class ProvisionableConstructReferenceComparer : IEqualityComparer<ProvisionableConstruct>
+    {
+        public static ProvisionableConstructReferenceComparer Instance { get; } = new();
+
+        public bool Equals(ProvisionableConstruct? x, ProvisionableConstruct? y) =>
+            ReferenceEquals(x, y);
+
+        public int GetHashCode(ProvisionableConstruct obj) =>
+            RuntimeHelpers.GetHashCode(obj);
     }
 }
