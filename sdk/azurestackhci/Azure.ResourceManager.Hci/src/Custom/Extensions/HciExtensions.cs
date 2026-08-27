@@ -12,6 +12,22 @@ namespace Azure.ResourceManager.Hci
 {
     public static partial class HciExtensions
     {
+        // Publisher was removed from stable APIs starting with 2026-02-01 and is now preview-only.
+        // This release targets a stable API, so this resource extension is maintained as customization code.
+        /// <summary>
+        /// Gets an object representing a <see cref="HciClusterPublisherResource"/> along with the instance operations that can be performed on it but with no data.
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="HciClusterPublisherResource"/> object. </returns>
+        public static HciClusterPublisherResource GetHciClusterPublisherResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableHciArmClient(client).GetHciClusterPublisherResource(id);
+        }
+
         /// <summary>
         /// Gets an object representing an <see cref="OfferResource"/> (backward-compat).
         /// </summary>

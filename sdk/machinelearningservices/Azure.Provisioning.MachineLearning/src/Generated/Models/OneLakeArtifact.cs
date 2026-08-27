@@ -12,11 +12,12 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// OneLake artifact (data source) configuration.
-    /// Please note this is the base class. The derived classes available for instantiation are: 
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="LakeHouseArtifact"/>.
     /// </summary>
-    internal partial class OneLakeArtifact : ProvisionableConstruct
+    public partial class OneLakeArtifact : ProvisionableConstruct
     {
         private BicepValue<string> _artifactName;
+        private BicepValue<string> _artifactType;
 
         /// <summary> Creates a new OneLakeArtifact. </summary>
         public OneLakeArtifact()
@@ -38,11 +39,22 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
+        /// <summary> [Required] OneLake artifact type. </summary>
+        internal BicepValue<string> ArtifactType
+        {
+            get
+            {
+                Initialize();
+                return _artifactType;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for OneLakeArtifact. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _artifactName = DefineProperty<string>(nameof(ArtifactName), new string[] { "artifactName" }, isRequired: true);
+            _artifactType = DefineProperty<string>(nameof(ArtifactType), new string[] { "artifactType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

@@ -38,7 +38,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("filterType", new string[] { "filterType" }, defaultValue: "FeatureSubset");
+            FilterType.Assign("FeatureSubset");
             _features = DefineListProperty<string>(nameof(Features), new string[] { "features" }, isRequired: true);
             DefineAdditionalProperties();
         }

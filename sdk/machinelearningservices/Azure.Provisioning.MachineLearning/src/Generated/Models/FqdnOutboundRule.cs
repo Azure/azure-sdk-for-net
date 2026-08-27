@@ -38,7 +38,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "FQDN");
+            Type.Assign("FQDN");
             _destination = DefineProperty<string>(nameof(Destination), new string[] { "destination" });
             DefineAdditionalProperties();
         }

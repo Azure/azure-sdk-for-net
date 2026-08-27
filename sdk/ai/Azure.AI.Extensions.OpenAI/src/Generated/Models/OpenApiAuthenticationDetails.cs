@@ -18,21 +18,11 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="OpenApiAuthenticationDetails"/>. </summary>
         /// <param name="kind"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
-        private protected OpenApiAuthenticationDetails(OpenApiAuthenticationKind kind)
-        {
-            Kind = kind;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenApiAuthenticationDetails"/>. </summary>
-        /// <param name="kind"> The type of authentication, must be anonymous/project_connection/managed_identity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal OpenApiAuthenticationDetails(OpenApiAuthenticationKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The type of authentication, must be anonymous/project_connection/managed_identity. </summary>
-        internal OpenApiAuthenticationKind Kind { get; set; }
     }
 }

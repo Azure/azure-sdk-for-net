@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.MachineLearning
     /// </summary>
     public partial class MonitoringFeatureFilterBase : ProvisionableConstruct
     {
+        private BicepValue<string> _filterType;
+
         /// <summary> Creates a new MonitoringFeatureFilterBase. </summary>
         public MonitoringFeatureFilterBase()
         {
+        }
+
+        /// <summary> [Required] Specifies the feature filter to leverage when selecting features to calculate metrics over. </summary>
+        internal BicepValue<string> FilterType
+        {
+            get
+            {
+                Initialize();
+                return _filterType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for MonitoringFeatureFilterBase. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _filterType = DefineProperty<string>(nameof(FilterType), new string[] { "filterType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

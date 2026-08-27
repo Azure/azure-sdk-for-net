@@ -19,7 +19,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("inputDataType", new string[] { "inputDataType" }, defaultValue: "Fixed");
+            InputDataType.Assign("Fixed");
             DefineAdditionalProperties();
         }
 

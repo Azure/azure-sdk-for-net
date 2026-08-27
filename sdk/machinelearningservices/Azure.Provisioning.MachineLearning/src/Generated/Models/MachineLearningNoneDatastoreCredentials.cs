@@ -19,7 +19,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("credentialsType", new string[] { "credentialsType" }, defaultValue: "None");
+            CredentialsType.Assign("None");
             DefineAdditionalProperties();
         }
 

@@ -5,6 +5,8 @@
 
 #nullable disable
 
+#pragma warning disable CS0618 // Generated sample validates compilation of a legacy compatibility shim.
+
 using System;
 using System.Threading.Tasks;
 using Azure.Core;

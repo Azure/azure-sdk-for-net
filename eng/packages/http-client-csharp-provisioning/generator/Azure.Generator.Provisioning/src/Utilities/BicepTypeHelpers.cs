@@ -7,6 +7,7 @@ using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
+using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,6 +81,31 @@ namespace Azure.Generator.Provisioning.Utilities
             => type.Arguments.Count > 0 ? type.Arguments[0] : typeof(object);
 
         /// <summary>
+        /// Builds the value assigned to an inherited discriminator property.
+        /// </summary>
+        public static ValueExpression BuildDiscriminatorValueExpression(
+            InputModelType model,
+            PropertyProvider discriminatorProperty)
+        {
+            var discriminatorValue = model.DiscriminatorValue
+                ?? throw new InvalidOperationException($"Model {model.Name} does not define a discriminator value.");
+
+            if (model.BaseModel?.DiscriminatorProperty?.Type is InputEnumType inputEnum)
+            {
+                var enumProvider = ProvisioningGenerator.Instance.TypeFactory.CreateEnum(inputEnum)
+                    ?? throw new InvalidOperationException($"Unable to create discriminator enum {inputEnum.Name}.");
+                var enumMember = enumProvider.EnumValues.FirstOrDefault(
+                    member => string.Equals(member.Value?.ToString(), discriminatorValue, StringComparison.Ordinal))
+                    ?? throw new InvalidOperationException(
+                        $"Discriminator value {discriminatorValue} was not found in enum {inputEnum.Name}.");
+                var enumType = GetGenericArgument(discriminatorProperty.Type);
+                return Static(enumType).Property(enumMember.Name);
+            }
+
+            return Literal(discriminatorValue);
+        }
+
+        /// <summary>
         /// Builds the argument list for DefineProperty/DefineModelProperty/DefineListProperty/DefineDictionaryProperty calls.
         /// isOutput and isRequired are independent flags and only emitted when true, using named arguments.
         /// </summary>
@@ -118,11 +144,7 @@ namespace Azure.Generator.Provisioning.Utilities
             {
                 args.Add(new PositionalParameterReferenceExpression("defaultValue", Literal(defaultValue)));
             }
-            // TODO: Emit collection element formats after Azure.Provisioning supports them.
-            // https://github.com/Azure/azure-sdk-for-net/issues/61525
-            if (format is not null &&
-                !IsBicepListType(propertyType) &&
-                !IsBicepDictionaryType(propertyType))
+            if (format is not null)
             {
                 args.Add(new PositionalParameterReferenceExpression("format", Literal(format)));
             }

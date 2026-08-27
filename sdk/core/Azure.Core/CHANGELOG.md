@@ -1,6 +1,16 @@
 # Release History
 
-## 1.62.0-beta.1 (Unreleased)
+## 1.63.0-beta.1 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.62.0 (2026-08-20)
 
 ### Features Added
 
@@ -11,10 +21,6 @@
 
 - `AzureCredentialResolver` now resolves a top-level single source (e.g. `CredentialSource: AzureCliCredential`) to the concrete credential type (`AzureCliCredential`) rather than a `DefaultAzureCredential` wrapper. Construction is unchanged (it uses the same `DefaultAzureCredentialFactory` helpers) — only the returned type differs; callers using `CredentialSettings.TokenProvider` as a `TokenCredential` are unaffected.
 - `AzureCredentialResolver` no longer claims top-level `BrokerCredential` sections (canonical name or `broker` alias); they now require `BrokerCredentialResolver` from `Azure.Identity.Broker` 1.7.0+ (e.g. via `AddBrokerCredentialResolver()`). `BrokerCredential` entries nested inside a `ChainedTokenCredential` continue to resolve. Note: if `BrokerCredentialResolver` from `Azure.Identity.Broker` 1.7.0 is registered ahead of `AzureCredentialResolver`, a nested `BrokerCredential` entry is currently built as non-chained, so it may surface `AuthenticationFailedException` and abort the chain instead of falling through to the next entry. Without a broker resolver registered, the built-in chain path builds the broker entry as chained (correct fall-through). A future `Azure.Identity.Broker` release will make its resolver honor chained semantics for nested entries.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.61.0 (2026-08-04)
 

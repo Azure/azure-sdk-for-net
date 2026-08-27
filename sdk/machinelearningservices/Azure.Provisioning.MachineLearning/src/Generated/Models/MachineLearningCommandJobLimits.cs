@@ -19,7 +19,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("jobLimitsType", new string[] { "jobLimitsType" }, defaultValue: "Command");
+            JobLimitsType.Assign("Command");
             DefineAdditionalProperties();
         }
 

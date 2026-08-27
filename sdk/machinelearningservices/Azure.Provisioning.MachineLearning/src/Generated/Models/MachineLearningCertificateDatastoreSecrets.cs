@@ -10,7 +10,7 @@ using Azure.Provisioning;
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary> Datastore certificate secrets. </summary>
-    internal partial class MachineLearningCertificateDatastoreSecrets : MachineLearningDatastoreSecrets
+    public partial class MachineLearningCertificateDatastoreSecrets : MachineLearningDatastoreSecrets
     {
         private BicepValue<string> _certificate;
 
@@ -38,7 +38,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("secretsType", new string[] { "secretsType" }, defaultValue: "Certificate");
+            SecretsType.Assign("Certificate");
             _certificate = DefineProperty<string>(nameof(Certificate), new string[] { "certificate" });
             DefineAdditionalProperties();
         }

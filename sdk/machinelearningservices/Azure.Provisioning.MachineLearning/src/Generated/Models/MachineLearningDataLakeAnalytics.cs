@@ -55,7 +55,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("computeType", new string[] { "computeType" }, defaultValue: "DataLakeAnalytics");
+            ComputeType.Assign("DataLakeAnalytics");
             _properties = DefineModelProperty<DataLakeAnalyticsSchemaProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

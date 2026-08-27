@@ -54,7 +54,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("referenceType", new string[] { "referenceType" }, defaultValue: "DataPath");
+            ReferenceType.Assign("DataPath");
             _datastoreId = DefineProperty<string>(nameof(DatastoreId), new string[] { "datastoreId" });
             _path = DefineProperty<string>(nameof(Path), new string[] { "path" });
             DefineAdditionalProperties();

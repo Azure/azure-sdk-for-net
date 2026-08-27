@@ -71,7 +71,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("jobLimitsType", new string[] { "jobLimitsType" }, defaultValue: "Sweep");
+            JobLimitsType.Assign("Sweep");
             _maxConcurrentTrials = DefineProperty<int>(nameof(MaxConcurrentTrials), new string[] { "maxConcurrentTrials" });
             _maxTotalTrials = DefineProperty<int>(nameof(MaxTotalTrials), new string[] { "maxTotalTrials" });
             _trialTimeout = DefineProperty<TimeSpan>(nameof(TrialTimeout), new string[] { "trialTimeout" }, format: "P");

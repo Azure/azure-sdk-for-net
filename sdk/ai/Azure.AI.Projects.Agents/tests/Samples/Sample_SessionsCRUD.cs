@@ -75,7 +75,7 @@ public class Sample_SessionsCRUD : SamplesBase
         Console.WriteLine($"Found {sessions.Count} sessions.");
         foreach (ProjectAgentSession item in sessions)
         {
-            Console.WriteLine($"    - Id: {item.AgentSessionId}, last accessed: {item.LastAccessedAt}.");
+            Console.WriteLine($"    - Id: {item.AgentSessionId}, last accessed: {item.LastAccessedOn}.");
         }
         #endregion
         #region Snippet:Sample_Delete_SessionsCRUD_Async
@@ -144,7 +144,7 @@ public class Sample_SessionsCRUD : SamplesBase
         Console.WriteLine($"Found {sessions.Count} sessions.");
         foreach (ProjectAgentSession item in sessions)
         {
-            Console.WriteLine($"    - Id: {item.AgentSessionId}, last accessed: {item.LastAccessedAt}.");
+            Console.WriteLine($"    - Id: {item.AgentSessionId}, last accessed: {item.LastAccessedOn}.");
         }
         #endregion
         #region Snippet:Sample_Delete_SessionsCRUD_Sync

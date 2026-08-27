@@ -12,6 +12,7 @@ using Microsoft.TypeSpec.Generator.Statements;
 using NUnit.Framework;
 using System;
 using System.Reflection;
+using System.Text;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Mgmt.Tests
@@ -149,6 +150,139 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(rendered, Does.Contain("EditorBrowsable"));
             Assert.That(rendered, Does.Contain("EditorBrowsableState.Never"));
             Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel"));
+        }
+
+        [Test]
+        public void RestoredFactoryMethodRegeneratesDocumentationFromCurrentModel()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            model.FullConstructor.Signature.Parameters.Single(parameter => parameter.Name == "value")
+                .Update(description: $"Current parameter summary.\nCurrent parameter details.");
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var previousMethod = CreatePreviousFactoryMethod(
+                modelFactory,
+                model.Type,
+                "value",
+                $"Previous parameter summary.\n            Previous parameter details.");
+
+            Assert.That(
+                Management.Visitors.ModelFactoryBackwardCompatHelper.TryCreateBackwardCompatMethod(
+                    previousMethod,
+                    modelFactory,
+                    out var restoredMethod),
+                Is.True);
+
+            var docs = DescribeDocs(restoredMethod!);
+
+            Assert.That(docs, Does.Contain("TestModel description"));
+            Assert.That(docs, Does.Contain("Current parameter summary."));
+            Assert.That(docs, Does.Contain("Current parameter details."));
+            Assert.That(docs, Does.Not.Contain("Previous model summary."));
+            Assert.That(docs, Does.Not.Contain("Previous parameter summary."));
+            Assert.That(docs, Does.Not.Contain("Previous parameter details."));
+            Assert.That(docs, Does.Contain("A new global::Samples.Models.TestModel instance for mocking."));
+            Assert.That(docs, Does.Not.Contain("Previous return summary."));
+        }
+
+        [Test]
+        public void RestoredFactoryMethodSignatureCarriesCurrentModelDescription()
+        {
+            var restored = BuildRestoredMethodWithUnmatchedParameter(
+                $"Legacy parameter summary.\n            Legacy parameter details.");
+
+            // The signature is the single source of the docs, so it must carry the current model's description.
+            // Leaving it empty is what let a later rebuild silently produce no summary at all.
+            Assert.That(restored.Signature.Description?.ToString(), Is.EqualTo("TestModel description"));
+
+            var docs = DescribeDocs(restored);
+            Assert.That(docs, Does.Contain("TestModel description"));
+            Assert.That(docs, Does.Not.Contain("Legacy parameter details."));
+            Assert.That(docs, Does.Not.Contain("Previous model summary."));
+            Assert.That(docs, Does.Not.Contain("Previous return summary."));
+        }
+
+        [Test]
+        public void RestoredFactoryMethodDocumentationSurvivesBackwardCompatOverloadFixup()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var previousMethod = CreatePreviousFactoryMethod(
+                modelFactory,
+                model.Type,
+                "value",
+                $"Previous parameter summary.\n            Previous parameter details.");
+
+            Assert.That(
+                Management.Visitors.ModelFactoryBackwardCompatHelper.TryCreateBackwardCompatMethod(
+                    previousMethod,
+                    modelFactory,
+                    out var restoredMethod),
+                Is.True);
+
+            var primaryMethod = modelFactory.Methods.Single(
+                method => !Management.Visitors.ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(method)
+                    && method.Signature.Name == "TestModel");
+            var docsBeforeFixup = DescribeDocs(restoredMethod!);
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(
+                [primaryMethod, restoredMethod!]);
+
+            Assert.That(DescribeDocs(restoredMethod!), Is.EqualTo(docsBeforeFixup));
+            Assert.That(docsBeforeFixup, Does.Not.Contain("Previous parameter details."));
+        }
+
+        [Test]
+        public void RestoredFactoryMethodDropsUnmatchedLastContractDocumentation()
+        {
+            var restored = BuildRestoredMethodWithUnmatchedParameter(
+                $"Legacy parameter summary.\n            \n             - First item.\n            Legacy parameter details.");
+            var docs = DescribeDocs(restored);
+
+            // The parameter no longer maps to the model, so there is no current description to regenerate. The
+            // previous one is dropped rather than salvaged: it came back out of generated C# with its cref text
+            // already lost and the writer's indentation baked in.
+            Assert.That(docs, Does.Not.Contain("Legacy parameter"));
+            Assert.That(docs, Does.Contain("<param name=\"legacyValue\">"));
+
+            // Model factory methods are for mocking and never validate, so they must not document exceptions.
+            Assert.That(restored.XmlDocs.Exceptions, Is.Empty);
+        }
+
+        [Test]
+        public void RestoredFactoryMethodDocumentationIsIndependentOfLastContractIndentation()
+        {
+            // The indentation is varied on a parameter that still maps to the model as well as one that does not,
+            // so this cannot pass merely because unmatched text is discarded.
+            var firstDocs = DescribeDocs(BuildRestoredMethodWithIndentedLegacyDocs(
+                $"Previous parameter summary.\n            Previous parameter details.",
+                $"Legacy parameter summary.\n             - First item.\n            Legacy parameter details."));
+            var secondDocs = DescribeDocs(BuildRestoredMethodWithIndentedLegacyDocs(
+                $"Previous parameter summary.\n                        Previous parameter details.",
+                $"Legacy parameter summary.\n                         - First item.\n                        Legacy parameter details."));
+
+            Assert.That(secondDocs, Is.EqualTo(firstDocs));
+
+            // The matched parameter is documented from the current model regardless of how the last contract was
+            // indented, and no rendered line carries the writer's indentation. That growth is the #62444 regression.
+            Assert.That(firstDocs, Does.Contain("Current parameter summary."));
+            Assert.That(firstDocs, Does.Contain("Current parameter details."));
+            Assert.That(firstDocs, Does.Not.Contain("Previous parameter details."));
+            Assert.That(
+                firstDocs.Split('\n').Any(line => line.StartsWith("      ")),
+                Is.False,
+                "regenerated documentation must not carry the last contract's continuation indentation");
         }
 
         [Test]
@@ -368,6 +502,119 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(rendered, Does.Not.Contain("TestModel(vMwareId"));
         }
 
+        private static MethodProvider CreatePreviousFactoryMethod(
+            TypeProvider modelFactory,
+            CSharpType returnType,
+            string parameterName,
+            FormattableString parameterDescription)
+        {
+            var previousSignature = new MethodSignature(
+                "TestModel",
+                $"Previous model summary.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                returnType,
+                $"Previous return summary.",
+                [new ParameterProvider(parameterName, parameterDescription, typeof(string))]);
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            return new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView);
+        }
+
+        private static MethodProvider BuildRestoredMethodWithUnmatchedParameter(
+            FormattableString parameterDescription)
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var previousMethod = CreatePreviousFactoryMethod(
+                modelFactory,
+                model.Type,
+                "legacyValue",
+                parameterDescription);
+
+            Assert.That(
+                Management.Visitors.ModelFactoryBackwardCompatHelper.TryCreateBackwardCompatMethod(
+                    previousMethod,
+                    modelFactory,
+                    out var restoredMethod),
+                Is.True);
+
+            return restoredMethod!;
+        }
+
+        private static MethodProvider BuildRestoredMethodWithIndentedLegacyDocs(
+            FormattableString matchedLegacyDescription,
+            FormattableString unmatchedLegacyDescription)
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            model.FullConstructor.Signature.Parameters.Single(parameter => parameter.Name == "value")
+                .Update(description: $"Current parameter summary.\nCurrent parameter details.");
+
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var previousSignature = new MethodSignature(
+                "TestModel",
+                $"Previous model summary.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"Previous return summary.",
+                [
+                    new ParameterProvider("value", matchedLegacyDescription, typeof(string)),
+                    new ParameterProvider("legacyValue", unmatchedLegacyDescription, typeof(string))
+                ]);
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            var previousMethod = new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView);
+
+            Assert.That(
+                Management.Visitors.ModelFactoryBackwardCompatHelper.TryCreateBackwardCompatMethod(
+                    previousMethod,
+                    modelFactory,
+                    out var restoredMethod),
+                Is.True);
+
+            return restoredMethod!;
+        }
+
+        private static string DescribeDocs(MethodProvider method)
+        {
+            var builder = new StringBuilder();
+            builder.AppendLine("<summary>");
+            foreach (var line in method.XmlDocs.Summary?.Lines ?? [])
+            {
+                builder.AppendLine(line.ToString());
+            }
+
+            foreach (var parameter in method.XmlDocs.Parameters)
+            {
+                builder.AppendLine($"<param name=\"{parameter.Parameter.Name}\">");
+                foreach (var line in parameter.Lines)
+                {
+                    builder.AppendLine(line.ToString());
+                }
+            }
+
+            if (method.XmlDocs.Returns is not null)
+            {
+                builder.AppendLine("<returns>");
+                foreach (var line in method.XmlDocs.Returns.Lines)
+                {
+                    builder.AppendLine(line.ToString());
+                }
+            }
+
+            return builder.ToString().Replace("\r\n", "\n");
+        }
+
         private static void SetLastContractView(TypeProvider typeProvider, TypeProvider lastContractView)
         {
             typeof(TypeProvider).GetField(
@@ -393,5 +640,27 @@ namespace Azure.Generator.Mgmt.Tests
 
             protected override MethodProvider[] BuildMethods() => MethodsToBuild;
         }
-    }
+
+        [Test]
+        public void PrimaryFactoryMethodDocumentationSurvivesConstructorCallFixup()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            _ = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+
+            var before = DescribeDocs(modelFactory.Methods.Single());
+            Assert.That(before, Does.Contain("TestModel description"));
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+
+            // Rebuilding the constructor call only changes the body. The summary that core attached to the primary
+            // factory method lives on the XmlDocProvider, not on the (empty) signature description, so a signature
+            // round-trip would silently erase it.
+            Assert.That(DescribeDocs(modelFactory.Methods.Single()), Is.EqualTo(before));
+        }
+}
 }

@@ -1401,10 +1401,12 @@ To use the OpenAPI tool, we need to Create the `OpenAPIFunctionDefinition` objec
 string filePath = GetFile();
 OpenApiFunctionDefinition toolDefinition = new(
     name: "get_weather",
-    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    specification: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
     authentication: new OpenApiAnonymousAuthenticationDetails()
-);
-toolDefinition.Description = "Retrieve weather information for a location.";
+)
+{
+    Description = "Retrieve weather information for a location."
+};
 OpenApiTool openapiTool = new(toolDefinition);
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -1439,12 +1441,14 @@ string filePath = GetFile();
 AIProjectConnection tripadvisorConnection = projectClient.Connections.GetConnection("tripadvisor");
 OpenApiFunctionDefinition toolDefinition = new(
     name: "tripadvisor",
-    specificationBytes: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
+    specification: BinaryData.FromBytes(File.ReadAllBytes(filePath)),
     authentication: new OpenApiProjectConnectionAuthenticationDetails(new OpenApiProjectConnectionSecurityScheme(
         projectConnectionId: tripadvisorConnection.Id
     ))
-);
-toolDefinition.Description = "Trip Advisor API to get travel information.";
+)
+{
+    Description = "Trip Advisor API to get travel information."
+};
 OpenApiTool openapiTool = new(toolDefinition);
 
 DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)

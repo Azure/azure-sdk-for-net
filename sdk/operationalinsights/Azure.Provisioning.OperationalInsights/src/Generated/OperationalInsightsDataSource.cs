@@ -154,7 +154,7 @@ namespace Azure.Provisioning.OperationalInsights
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
             _kind = DefineProperty<OperationalInsightsDataSourceKind>(nameof(Kind), new string[] { "kind" }, isRequired: true);
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _parent = DefineResource<OperationalInsightsWorkspace>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<OperationalInsightsWorkspace>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

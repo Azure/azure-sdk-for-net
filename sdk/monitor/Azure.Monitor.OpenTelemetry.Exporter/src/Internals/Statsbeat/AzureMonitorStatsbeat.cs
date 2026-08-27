@@ -223,12 +223,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             // long-interval instruments on their native 24 hr cadence. EnableStatsbeat=false
             // avoids a recursive Statsbeat construction inside the transmitter we're about to
             // attach.
-            var exporterOptions = new AzureMonitorExporterOptions
-            {
-                DisableOfflineStorage = true,
-                ConnectionString = connectionString,
-                EnableStatsbeat = false,
-            };
+            var exporterOptions = CreateExporterOptions(connectionString);
 
             _statsbeatMeterProvider = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(StatsbeatConstants.AttachStatsbeatMeterName)
@@ -239,6 +234,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), _networkExportIntervalMilliseconds)
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
+        }
+
+        internal static AzureMonitorExporterOptions CreateExporterOptions(string connectionString)
+        {
+            var exporterOptions = new AzureMonitorExporterOptions
+            {
+                DisableOfflineStorage = true,
+                ConnectionString = connectionString,
+                EnableStatsbeat = false,
+            };
+
+            // Disposing this meter provider exports once more on the process exit path.
+            exporterOptions.Retry.NetworkTimeout = ShutdownPersistence.PersistOnShutdownConfig.InternalTelemetryNetworkTimeout;
+
+            return exporterOptions;
         }
 
         private static int ResolveIntervalMilliseconds(IPlatform platform, string envVarName, int defaultMilliseconds)

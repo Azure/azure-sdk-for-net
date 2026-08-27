@@ -86,7 +86,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("signalType", new string[] { "signalType" }, defaultValue: "Custom");
+            SignalType.Assign("Custom");
             _componentId = DefineProperty<string>(nameof(ComponentId), new string[] { "componentId" }, isRequired: true);
             _inputAssets = DefineDictionaryProperty<MonitoringInputDataBase>(nameof(InputAssets), new string[] { "inputAssets" });
             _inputs = DefineDictionaryProperty<MachineLearningJobInput>(nameof(Inputs), new string[] { "inputs" });

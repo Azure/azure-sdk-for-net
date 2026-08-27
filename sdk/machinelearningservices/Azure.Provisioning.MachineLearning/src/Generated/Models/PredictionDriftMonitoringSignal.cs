@@ -86,7 +86,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("signalType", new string[] { "signalType" }, defaultValue: "PredictionDrift");
+            SignalType.Assign("PredictionDrift");
             _featureDataTypeOverride = DefineDictionaryProperty<MonitoringFeatureDataType>(nameof(FeatureDataTypeOverride), new string[] { "featureDataTypeOverride" });
             _metricThresholds = DefineListProperty<PredictionDriftMetricThresholdBase>(nameof(MetricThresholds), new string[] { "metricThresholds" }, isRequired: true);
             _productionData = DefineModelProperty<MonitoringInputDataBase>(nameof(ProductionData), new string[] { "productionData" }, isRequired: true);

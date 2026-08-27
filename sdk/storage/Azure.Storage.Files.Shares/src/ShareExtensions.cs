@@ -257,8 +257,8 @@ namespace Azure.Storage.Files.Shares
                 sessionId: handleItem.SessionId,
                 clientIp: handleItem.ClientIP,
                 clientName: handleItem.ClientName,
-                openedOn: handleItem.OpenTime,
-                lastReconnectedOn: handleItem.LastReconnectTime,
+                openedOn: handleItem.OpenOn,
+                lastReconnectedOn: handleItem.LastReconnectOn,
                 accessRights: ((IReadOnlyList<AccessRight>)handleItem.AccessRightList).ToShareFileHandleAccessRight());
         }
 
@@ -840,11 +840,11 @@ namespace Azure.Storage.Files.Shares
                 ProvisionedIngressMBps = sharePropertiesInternal.ProvisionedIngressMBps,
                 ProvisionedEgressMBps = sharePropertiesInternal.ProvisionedEgressMBps,
                 ProvisionedBandwidthMiBps = sharePropertiesInternal.ProvisionedBandwidthMiBps,
-                NextAllowedQuotaDowngradeTime = sharePropertiesInternal.NextAllowedQuotaDowngradeTime,
-                DeletedOn = sharePropertiesInternal.DeletedTime,
+                NextAllowedQuotaDowngradeTime = sharePropertiesInternal.NextAllowedQuotaDowngradeOn,
+                DeletedOn = sharePropertiesInternal.DeletedOn,
                 RemainingRetentionDays = sharePropertiesInternal.RemainingRetentionDays,
                 AccessTier = sharePropertiesInternal.AccessTier,
-                AccessTierChangeTime = sharePropertiesInternal.AccessTierChangeTime,
+                AccessTierChangeTime = sharePropertiesInternal.AccessTierChangedOn,
                 AccessTierTransitionState = sharePropertiesInternal.AccessTierTransitionState,
                 LeaseStatus = sharePropertiesInternal.LeaseStatus,
                 LeaseState = sharePropertiesInternal.LeaseState,
@@ -859,8 +859,8 @@ namespace Azure.Storage.Files.Shares
                 PaidBurstingMaxBandwidthMibps = sharePropertiesInternal.PaidBurstingMaxBandwidthMibps,
                 IncludedBurstIops = sharePropertiesInternal.IncludedBurstIops,
                 MaxBurstCreditsForIops = sharePropertiesInternal.MaxBurstCreditsForIops,
-                NextAllowedProvisionedIopsDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedIopsDowngradeTime,
-                NextAllowedProvisionedBandwidthDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedBandwidthDowngradeTime,
+                NextAllowedProvisionedIopsDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedIopsDowngradeOn,
+                NextAllowedProvisionedBandwidthDowngradeTime = sharePropertiesInternal.NextAllowedProvisionedBandwidthDowngradeOn,
                 //EnableDirectoryLease = sharePropertiesInternal.EnableSmbDirectoryLease,
             };
         }
@@ -987,10 +987,10 @@ namespace Azure.Storage.Files.Shares
             }
 
             return new ShareFileItemProperties(
-                createdOn: fileProperty.CreationTime,
-                lastAccessedOn: fileProperty.LastAccessTime,
-                lastWrittenOn: fileProperty.LastWriteTime,
-                changedOn: fileProperty.ChangeTime,
+                createdOn: fileProperty.CreatedOn,
+                lastAccessedOn: fileProperty.LastAccessOn,
+                lastWrittenOn: fileProperty.LastWriteOn,
+                changedOn: fileProperty.ChangedOn,
                 lastModified: fileProperty.LastModified,
                 eTag: fileProperty.ETag == null ? null : new ETag(fileProperty.ETag));
         }

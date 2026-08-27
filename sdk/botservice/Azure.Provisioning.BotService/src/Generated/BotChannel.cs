@@ -201,7 +201,7 @@ namespace Azure.Provisioning.BotService
             _kind = DefineProperty<BotServiceKind>(nameof(Kind), new string[] { "kind" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" });
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" }, isOutput: true);
-            _parent = DefineResource<BotResource>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<BotResource>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

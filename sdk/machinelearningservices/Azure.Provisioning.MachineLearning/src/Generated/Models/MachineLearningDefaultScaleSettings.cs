@@ -19,7 +19,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("scaleType", new string[] { "scaleType" }, defaultValue: "Default");
+            ScaleType.Assign("Default");
             DefineAdditionalProperties();
         }
 

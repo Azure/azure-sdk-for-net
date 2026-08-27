@@ -19,6 +19,7 @@ namespace Azure.Provisioning.MachineLearning
     {
         private BicepDictionary<string> _columns;
         private BicepValue<string> _dataContext;
+        private BicepValue<string> _inputDataType;
         private BicepValue<JobInputType> _jobInputType;
         private BicepValue<Uri> _uri;
 
@@ -54,6 +55,16 @@ namespace Azure.Provisioning.MachineLearning
             {
                 Initialize();
                 _dataContext.Assign(value);
+            }
+        }
+
+        /// <summary> [Required] Specifies the type of signal to monitor. </summary>
+        internal BicepValue<string> InputDataType
+        {
+            get
+            {
+                Initialize();
+                return _inputDataType;
             }
         }
 
@@ -93,6 +104,7 @@ namespace Azure.Provisioning.MachineLearning
             base.DefineProvisionableProperties();
             _columns = DefineDictionaryProperty<string>(nameof(Columns), new string[] { "columns" });
             _dataContext = DefineProperty<string>(nameof(DataContext), new string[] { "dataContext" });
+            _inputDataType = DefineProperty<string>(nameof(InputDataType), new string[] { "inputDataType" }, isRequired: true);
             _jobInputType = DefineProperty<JobInputType>(nameof(JobInputType), new string[] { "jobInputType" }, isRequired: true);
             _uri = DefineProperty<Uri>(nameof(Uri), new string[] { "uri" }, isRequired: true);
             DefineAdditionalProperties();

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.MachineLearning
     /// </summary>
     public partial class NCrossValidations : ProvisionableConstruct
     {
+        private BicepValue<string> _mode;
+
         /// <summary> Creates a new NCrossValidations. </summary>
         public NCrossValidations()
         {
+        }
+
+        /// <summary> [Required] Mode for determining N-Cross validations. </summary>
+        internal BicepValue<string> Mode
+        {
+            get
+            {
+                Initialize();
+                return _mode;
+            }
         }
 
         /// <summary> Define all the provisionable properties for NCrossValidations. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _mode = DefineProperty<string>(nameof(Mode), new string[] { "mode" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

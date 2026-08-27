@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("isSoftDeleted"u8);
                 writer.WriteBooleanValue(IsSoftDeleted.Value);
             }
+            if (Optional.IsDefined(ImmutabilityProperties))
+            {
+                writer.WritePropertyName("immutabilityProperties"u8);
+                writer.WriteObjectValue(ImmutabilityProperties, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,6 +139,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             DateTimeOffset? expireOn = default;
             string ruleName = default;
             bool? isSoftDeleted = default;
+            RecoveryPointImmutabilityProperties immutabilityProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,12 +166,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     isSoftDeleted = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("immutabilityProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    immutabilityProperties = RecoveryPointImmutabilityProperties.DeserializeRecoveryPointImmutabilityProperties(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RecoveryPointProperties(expireOn, ruleName, isSoftDeleted, additionalBinaryDataProperties);
+            return new RecoveryPointProperties(expireOn, ruleName, isSoftDeleted, immutabilityProperties, additionalBinaryDataProperties);
         }
     }
 }

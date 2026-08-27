@@ -207,9 +207,8 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="defaultParameters"> List of OpenAPI spec parameters that will use user-provided defaults. </param>
         /// <param name="functions"> List of function definitions used by OpenApi tool. </param>
         /// <returns> A new <see cref="OpenAI.OpenApiFunctionDefinition"/> instance for mocking. </returns>
-        public static OpenApiFunctionDefinition OpenApiFunctionDefinition(string name = default, string description = default, IDictionary<string, BinaryData> specification = default, OpenApiAuthenticationDetails authentication = default, IEnumerable<string> defaultParameters = default, IEnumerable<OpenApiFunctionDefinitionFunction> functions = default)
+        public static OpenApiFunctionDefinition OpenApiFunctionDefinition(string name = default, string description = default, BinaryData specification = default, OpenApiAuthenticationDetails authentication = default, IEnumerable<string> defaultParameters = default, IEnumerable<OpenApiFunctionDefinitionFunction> functions = default)
         {
-            specification ??= new ChangeTrackingDictionary<string, BinaryData>();
             defaultParameters ??= new ChangeTrackingList<string>();
             functions ??= new ChangeTrackingList<OpenApiFunctionDefinitionFunction>();
 
@@ -238,7 +237,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <returns> A new <see cref="OpenAI.OpenApiAnonymousAuthenticationDetails"/> instance for mocking. </returns>
         public static OpenApiAnonymousAuthenticationDetails OpenApiAnonymousAuthenticationDetails()
         {
-            return new OpenApiAnonymousAuthenticationDetails(OpenApiAuthenticationKind.Anonymous, additionalBinaryDataProperties: null);
+            return new OpenApiAnonymousAuthenticationDetails(default, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Security details for OpenApi project connection authentication. </summary>
@@ -246,7 +245,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <returns> A new <see cref="OpenAI.OpenApiProjectConnectionAuthenticationDetails"/> instance for mocking. </returns>
         public static OpenApiProjectConnectionAuthenticationDetails OpenApiProjectConnectionAuthenticationDetails(OpenApiProjectConnectionSecurityScheme securityScheme = default)
         {
-            return new OpenApiProjectConnectionAuthenticationDetails(OpenApiAuthenticationKind.ProjectConnection, additionalBinaryDataProperties: null, securityScheme);
+            return new OpenApiProjectConnectionAuthenticationDetails(default, additionalBinaryDataProperties: null, securityScheme);
         }
 
         /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
@@ -262,7 +261,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <returns> A new <see cref="OpenAI.OpenApiManagedAuthenticationDetails"/> instance for mocking. </returns>
         public static OpenApiManagedAuthenticationDetails OpenApiManagedAuthenticationDetails(OpenApiManagedSecurityScheme securityScheme = default)
         {
-            return new OpenApiManagedAuthenticationDetails(OpenApiAuthenticationKind.ManagedIdentity, additionalBinaryDataProperties: null, securityScheme);
+            return new OpenApiManagedAuthenticationDetails(default, additionalBinaryDataProperties: null, securityScheme);
         }
 
         /// <summary> Security scheme for OpenApi managed_identity authentication. </summary>
@@ -504,7 +503,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="updateDelayInSeconds"> Time to wait before updating memories after inactivity (seconds). Default 300. </param>
         /// <returns> A new <see cref="OpenAI.MemorySearchPreviewTool"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static MemorySearchPreviewTool MemorySearchPreviewTool(string memoryStoreName = default, string scope = default, MemorySearchOptions searchOptions = default, int? updateDelayInSeconds = default)
+        public static MemorySearchPreviewTool MemorySearchPreviewTool(string memoryStoreName = default, string scope = default, MemorySearchResultOptions searchOptions = default, int? updateDelayInSeconds = default)
         {
             return new MemorySearchPreviewTool(
                 "memory_search_preview",
@@ -517,11 +516,11 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Memory search options. </summary>
         /// <param name="maxMemories"> Maximum number of memory items to return. </param>
-        /// <returns> A new <see cref="OpenAI.MemorySearchOptions"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="OpenAI.MemorySearchResultOptions"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static MemorySearchOptions MemorySearchOptions(int? maxMemories = default)
+        public static MemorySearchResultOptions MemorySearchResultOptions(int? maxMemories = default)
         {
-            return new MemorySearchOptions(maxMemories, additionalBinaryDataProperties: null);
+            return new MemorySearchResultOptions(maxMemories, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A web search configuration for bing custom search. </summary>
@@ -945,7 +944,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// <param name="arguments"></param>
         /// <param name="status"></param>
         /// <returns> A new <see cref="OpenAI.AzureFunctionToolCall"/> instance for mocking. </returns>
-        [Experimental("AAIP001")]
+        [Experimental("AAIP002")]
         public static AzureFunctionToolCall AzureFunctionToolCall(ResponseItemKind @type = default, string id = default, AgentReference agentReference = default, string responseId = default, string callId = default, string name = default, string arguments = default, ToolCallStatus status = default)
         {
             return new AzureFunctionToolCall(
@@ -1063,17 +1062,17 @@ namespace Azure.AI.Extensions.OpenAI
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="OpenAI.UserProfileMemoryItem"/>, <see cref="OpenAI.ChatSummaryMemoryItem"/>, and <see cref="OpenAI.ProceduralMemoryItem"/>.
         /// </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="updatedOn"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
         /// <param name="kind"> The kind of the memory item. </param>
         /// <returns> A new <see cref="OpenAI.MemoryOutputItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static MemoryOutputItem MemoryOutputItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default, string kind = default)
+        public static MemoryOutputItem MemoryOutputItem(string memoryId = default, DateTimeOffset updatedOn = default, string scope = default, string content = default, string kind = default)
         {
             return new UnknownMemoryOutputItem(
                 memoryId,
-                updatedAt,
+                updatedOn,
                 scope,
                 content,
                 new MemoryItemKind(kind),
@@ -1082,16 +1081,16 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> A memory item specifically containing user profile information extracted from conversations, such as preferences, interests, and personal details. </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="updatedOn"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
         /// <returns> A new <see cref="OpenAI.UserProfileMemoryItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static UserProfileMemoryItem UserProfileMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
+        public static UserProfileMemoryItem UserProfileMemoryItem(string memoryId = default, DateTimeOffset updatedOn = default, string scope = default, string content = default)
         {
             return new UserProfileMemoryItem(
                 memoryId,
-                updatedAt,
+                updatedOn,
                 scope,
                 content,
                 MemoryItemKind.UserProfile,
@@ -1100,16 +1099,16 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> A memory item containing a summary extracted from conversations. </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="updatedOn"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
         /// <returns> A new <see cref="OpenAI.ChatSummaryMemoryItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ChatSummaryMemoryItem ChatSummaryMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
+        public static ChatSummaryMemoryItem ChatSummaryMemoryItem(string memoryId = default, DateTimeOffset updatedOn = default, string scope = default, string content = default)
         {
             return new ChatSummaryMemoryItem(
                 memoryId,
-                updatedAt,
+                updatedOn,
                 scope,
                 content,
                 MemoryItemKind.ChatSummary,
@@ -1118,16 +1117,16 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> A memory item containing a procedure extracted from conversations. </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="updatedOn"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
         /// <returns> A new <see cref="OpenAI.ProceduralMemoryItem"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ProceduralMemoryItem ProceduralMemoryItem(string memoryId = default, DateTimeOffset updatedAt = default, string scope = default, string content = default)
+        public static ProceduralMemoryItem ProceduralMemoryItem(string memoryId = default, DateTimeOffset updatedOn = default, string scope = default, string content = default)
         {
             return new ProceduralMemoryItem(
                 memoryId,
-                updatedAt,
+                updatedOn,
                 scope,
                 content,
                 MemoryItemKind.Procedural,

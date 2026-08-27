@@ -19,7 +19,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("identityType", new string[] { "identityType" }, defaultValue: "AMLToken");
+            IdentityType.Assign("AMLToken");
             DefineAdditionalProperties();
         }
 

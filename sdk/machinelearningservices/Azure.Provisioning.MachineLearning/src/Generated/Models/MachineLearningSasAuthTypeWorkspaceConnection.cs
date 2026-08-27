@@ -55,7 +55,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("authType", new string[] { "authType" }, defaultValue: "SAS");
+            AuthType.Assign("SAS");
             _credentials = DefineModelProperty<WorkspaceConnectionSharedAccessSignature>(nameof(Credentials), new string[] { "credentials" });
             DefineAdditionalProperties();
         }

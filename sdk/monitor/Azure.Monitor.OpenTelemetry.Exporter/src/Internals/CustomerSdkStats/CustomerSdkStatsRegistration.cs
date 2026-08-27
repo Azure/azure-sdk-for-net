@@ -59,15 +59,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats
         /// </summary>
         /// <param name="originalOptions">Original exporter options</param>
         /// <returns>Options configured for customer SDK stats</returns>
-        private static AzureMonitorExporterOptions CreateCustomerSdkStatsOptions(AzureMonitorExporterOptions originalOptions)
+        internal static AzureMonitorExporterOptions CreateCustomerSdkStatsOptions(AzureMonitorExporterOptions originalOptions)
         {
-            return new AzureMonitorExporterOptions
+            var options = new AzureMonitorExporterOptions
             {
                 ConnectionString = originalOptions.ConnectionString,
                 Credential = originalOptions.Credential,
                 EnableStatsbeat = false,
                 EnableLiveMetrics = false,
             };
+
+            // Disposing this meter provider exports once more on the process exit path.
+            options.Retry.NetworkTimeout = ShutdownPersistence.PersistOnShutdownConfig.InternalTelemetryNetworkTimeout;
+
+            return options;
         }
     }
 }

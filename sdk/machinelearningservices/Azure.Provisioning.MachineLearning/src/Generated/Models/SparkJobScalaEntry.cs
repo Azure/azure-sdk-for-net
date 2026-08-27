@@ -38,7 +38,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("sparkJobEntryType", new string[] { "sparkJobEntryType" }, defaultValue: "SparkJobScalaEntry");
+            SparkJobEntryType.Assign("SparkJobScalaEntry");
             _className = DefineProperty<string>(nameof(ClassName), new string[] { "className" }, isRequired: true);
             DefineAdditionalProperties();
         }

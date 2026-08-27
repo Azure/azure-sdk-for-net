@@ -86,10 +86,10 @@ namespace Azure.AI.Discovery
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Optional.IsDefined(CreatedAt))
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
-                writer.WriteStringValue(CreatedAt.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (Optional.IsDefined(CreatedBy))
             {
@@ -101,10 +101,10 @@ namespace Azure.AI.Discovery
                 writer.WritePropertyName("createdByType"u8);
                 writer.WriteStringValue(CreatedByType.Value.ToString());
             }
-            if (Optional.IsDefined(LastModifiedAt))
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedAt"u8);
-                writer.WriteStringValue(LastModifiedAt.Value, "O");
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             if (Optional.IsDefined(LastModifiedBy))
             {
@@ -174,10 +174,10 @@ namespace Azure.AI.Discovery
                 return null;
             }
             string name = default;
-            DateTimeOffset? createdAt = default;
+            DateTimeOffset? createdOn = default;
             string createdBy = default;
             DiscoveryActorType? createdByType = default;
-            DateTimeOffset? lastModifiedAt = default;
+            DateTimeOffset? lastModifiedOn = default;
             string lastModifiedBy = default;
             DiscoveryActorType? lastModifiedByType = default;
             string displayName = default;
@@ -197,7 +197,7 @@ namespace Azure.AI.Discovery
                     {
                         continue;
                     }
-                    createdAt = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("createdBy"u8))
@@ -220,7 +220,7 @@ namespace Azure.AI.Discovery
                     {
                         continue;
                     }
-                    lastModifiedAt = prop.Value.GetDateTimeOffset("O");
+                    lastModifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedBy"u8))
@@ -259,10 +259,10 @@ namespace Azure.AI.Discovery
             }
             return new DiscoveryConversation(
                 name,
-                createdAt,
+                createdOn,
                 createdBy,
                 createdByType,
-                lastModifiedAt,
+                lastModifiedOn,
                 lastModifiedBy,
                 lastModifiedByType,
                 displayName,

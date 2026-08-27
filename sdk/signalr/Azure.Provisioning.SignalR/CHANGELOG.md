@@ -1,14 +1,10 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.1 (2025-08-26)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Migrated the library to TypeSpec generation and updated the SignalR API version to `2025-01-01-preview`.
 
 ## 1.1.0 (2025-06-16)
 

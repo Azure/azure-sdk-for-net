@@ -199,10 +199,10 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(DetailedFromWhoisAt))
+            if (Optional.IsDefined(DetailedFromWhoisOn))
             {
                 writer.WritePropertyName("detailedFromWhoisAt"u8);
-                writer.WriteStringValue(DetailedFromWhoisAt.Value, "O");
+                writer.WriteStringValue(DetailedFromWhoisOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Sources))
             {
@@ -381,7 +381,7 @@ namespace Azure.Analytics.Defender.Easm
             string startIP = default;
             string endIP = default;
             IList<ReputationDetails> reputations = default;
-            DateTimeOffset? detailedFromWhoisAt = default;
+            DateTimeOffset? detailedFromWhoisOn = default;
             IList<SourceDetails> sources = default;
             DateTimeOffset? firstSeen = default;
             DateTimeOffset? lastSeen = default;
@@ -575,7 +575,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    detailedFromWhoisAt = prop.Value.GetDateTimeOffset("O");
+                    detailedFromWhoisOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("sources"u8))
@@ -798,7 +798,7 @@ namespace Azure.Analytics.Defender.Easm
                 startIP,
                 endIP,
                 reputations ?? new ChangeTrackingList<ReputationDetails>(),
-                detailedFromWhoisAt,
+                detailedFromWhoisOn,
                 sources ?? new ChangeTrackingList<SourceDetails>(),
                 firstSeen,
                 lastSeen,

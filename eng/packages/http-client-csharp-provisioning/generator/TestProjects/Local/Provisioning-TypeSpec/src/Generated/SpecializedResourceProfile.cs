@@ -15,13 +15,13 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         /// <param name="resourceVersion"> The resource API version. </param>
         public SpecializedResourceProfile(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, resourceVersion)
         {
+            Kind.Assign("Specialized");
         }
 
         /// <summary> Define all the provisionable properties for SpecializedResourceProfile. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("kind", new string[] { "kind" }, defaultValue: "Specialized");
             DefineAdditionalProperties();
         }
 
