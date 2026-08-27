@@ -18,6 +18,10 @@ namespace Azure.ResourceManager.Terraform.Models
     public static partial class ArmTerraformModelFactory
     {
 
+        /// <summary>
+        /// The base export parameter
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ExportQueryTerraform"/>, <see cref="Models.ExportResourceTerraform"/>, and <see cref="Models.ExportResourceGroupTerraform"/>.
+        /// </summary>
         /// <param name="type"> The parameter type. </param>
         /// <param name="targetProvider"> The target Azure Terraform provider. Defaults to `azurerm`. </param>
         /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration. If set to `false` empty-valued properties will be omitted from the configuration. Defaults to `true`. </param>
@@ -44,6 +48,7 @@ namespace Azure.ResourceManager.Terraform.Models
                 default);
         }
 
+        /// <summary> Uses ARG (Azure Resource Graph) query to choose resources to be exported. </summary>
         /// <param name="targetProvider"> The target Azure Terraform provider. Defaults to `azurerm`. </param>
         /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration. If set to `false` empty-valued properties will be omitted from the configuration. Defaults to `true`. </param>
         /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. Defaults to `true`. </param>
@@ -81,6 +86,7 @@ namespace Azure.ResourceManager.Terraform.Models
                 authorizationScopeFilter);
         }
 
+        /// <summary> Specified resources to be exported by their ids. </summary>
         /// <param name="targetProvider"> The target Azure Terraform provider. Defaults to `azurerm`. </param>
         /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration. If set to `false` empty-valued properties will be omitted from the configuration. Defaults to `true`. </param>
         /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. Defaults to `true`. </param>
@@ -119,6 +125,7 @@ namespace Azure.ResourceManager.Terraform.Models
                 includeResourceGroup);
         }
 
+        /// <summary> Export parameter for a resource group. </summary>
         /// <param name="targetProvider"> The target Azure Terraform provider. Defaults to `azurerm`. </param>
         /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration. If set to `false` empty-valued properties will be omitted from the configuration. Defaults to `true`. </param>
         /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. Defaults to `true`. </param>
@@ -148,29 +155,31 @@ namespace Azure.ResourceManager.Terraform.Models
                 namePattern);
         }
 
+        /// <summary> The status of the LRO (Long Running Operation) and the export result. </summary>
         /// <param name="properties"> RP-specific properties for the operationStatus resource, only appears when operation ended with Succeeded status. </param>
         /// <param name="status"> The operation status. </param>
         /// <param name="id"> The unique identifier for the operationStatus resource. </param>
         /// <param name="name"> The name of the  operationStatus resource. </param>
-        /// <param name="startOn"> Operation start time. </param>
-        /// <param name="endOn"> Operation complete time. </param>
+        /// <param name="startsOn"> Operation start time. </param>
+        /// <param name="endsOn"> Operation complete time. </param>
         /// <param name="percentComplete"> The progress made toward completing the operation. </param>
         /// <param name="error"> Errors that occurred if the operation ended with Canceled or Failed status. </param>
         /// <returns> A new <see cref="Models.TerraformOperationStatus"/> instance for mocking. </returns>
-        public static TerraformOperationStatus TerraformOperationStatus(TerraformExportResult properties = default, TerraformResourceProvisioningState status = default, string id = default, string name = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, double? percentComplete = default, ResponseError error = default)
+        public static TerraformOperationStatus TerraformOperationStatus(TerraformExportResult properties = default, TerraformResourceProvisioningState status = default, string id = default, string name = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, double? percentComplete = default, ResponseError error = default)
         {
             return new TerraformOperationStatus(
                 properties,
                 status,
                 id,
                 name,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 percentComplete,
                 error,
                 default);
         }
 
+        /// <summary> The Terraform export result. </summary>
         /// <param name="configuration"> The exported Terraform HCL configuration. </param>
         /// <param name="import"> The Terraform import blocks for the configuration, necessary for managing existing Azure resources in Terraform. </param>
         /// <param name="skippedResourceIds"> A list of Azure resources which could not be exported to Terraform. The most common cause is lack of Terraform provider support. Change the provider type to `azapi` for bigger set of supported resources. </param>

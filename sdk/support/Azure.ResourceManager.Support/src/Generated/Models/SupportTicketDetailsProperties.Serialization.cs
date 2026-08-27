@@ -141,10 +141,10 @@ namespace Azure.ResourceManager.Support.Models
             }
             writer.WritePropertyName("title"u8);
             writer.WriteStringValue(Title);
-            if (Optional.IsDefined(ProblemStartOn))
+            if (Optional.IsDefined(ProblemStartsOn))
             {
                 writer.WritePropertyName("problemStartTime"u8);
-                writer.WriteStringValue(ProblemStartOn.Value, "O");
+                writer.WriteStringValue(ProblemStartsOn.Value, "O");
             }
             writer.WritePropertyName("serviceId"u8);
             writer.WriteStringValue(ServiceId);
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Support.Models
             string supportPlanType = default;
             string supportPlanDisplayName = default;
             string title = default;
-            DateTimeOffset? problemStartOn = default;
+            DateTimeOffset? problemStartsOn = default;
             string serviceId = default;
             string serviceDisplayName = default;
             string status = default;
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Support.Models
                     {
                         continue;
                     }
-                    problemStartOn = prop.Value.GetDateTimeOffset("O");
+                    problemStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("serviceId"u8))
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Support.Models
                 supportPlanType,
                 supportPlanDisplayName,
                 title,
-                problemStartOn,
+                problemStartsOn,
                 serviceId,
                 serviceDisplayName,
                 status,
