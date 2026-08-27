@@ -35,16 +35,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="frequencyUnit"> The unit of time for how often the backup should be executed (e.g. for weekly backup, this should be set to Day and FrequencyInterval should be set to 7). </param>
         /// <param name="shouldKeepAtLeastOneBackup"> True if the retention policy should always keep at least one backup in the storage account, regardless how old it is; false otherwise. </param>
         /// <param name="retentionPeriodInDays"> After how many days backups should be deleted. </param>
-        /// <param name="startOn"> When the schedule should start working. </param>
+        /// <param name="startsOn"> When the schedule should start working. </param>
         /// <param name="lastExecutedOn"> Last time when this schedule was triggered. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppBackupSchedule(int frequencyInterval, BackupFrequencyUnit frequencyUnit, bool shouldKeepAtLeastOneBackup, int retentionPeriodInDays, DateTimeOffset? startOn, DateTimeOffset? lastExecutedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebAppBackupSchedule(int frequencyInterval, BackupFrequencyUnit frequencyUnit, bool shouldKeepAtLeastOneBackup, int retentionPeriodInDays, DateTimeOffset? startsOn, DateTimeOffset? lastExecutedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FrequencyInterval = frequencyInterval;
             FrequencyUnit = frequencyUnit;
             ShouldKeepAtLeastOneBackup = shouldKeepAtLeastOneBackup;
             RetentionPeriodInDays = retentionPeriodInDays;
-            StartOn = startOn;
+            StartsOn = startsOn;
             LastExecutedOn = lastExecutedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> When the schedule should start working. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> Last time when this schedule was triggered. </summary>
         [WirePath("lastExecutionTime")]

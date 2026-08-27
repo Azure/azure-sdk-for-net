@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("requestTracingEnabled"u8);
                 writer.WriteBooleanValue(IsRequestTracingEnabled.Value);
             }
-            if (Optional.IsDefined(RequestTracingExpirationOn))
+            if (Optional.IsDefined(RequestTracingExpiresOn))
             {
                 writer.WritePropertyName("requestTracingExpirationTime"u8);
-                writer.WriteStringValue(RequestTracingExpirationOn.Value, "O");
+                writer.WriteStringValue(RequestTracingExpiresOn.Value, "O");
             }
             if (Optional.IsDefined(IsRemoteDebuggingEnabled))
             {
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.AppService.Models
             string linuxFxVersion = default;
             string windowsFxVersion = default;
             bool? isRequestTracingEnabled = default;
-            DateTimeOffset? requestTracingExpirationOn = default;
+            DateTimeOffset? requestTracingExpiresOn = default;
             bool? isRemoteDebuggingEnabled = default;
             string remoteDebuggingVersion = default;
             bool? isHttpLoggingEnabled = default;
@@ -688,7 +688,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    requestTracingExpirationOn = prop.Value.GetDateTimeOffset("O");
+                    requestTracingExpiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("remoteDebuggingEnabled"u8))
@@ -1245,7 +1245,7 @@ namespace Azure.ResourceManager.AppService.Models
                 linuxFxVersion,
                 windowsFxVersion,
                 isRequestTracingEnabled,
-                requestTracingExpirationOn,
+                requestTracingExpiresOn,
                 isRemoteDebuggingEnabled,
                 remoteDebuggingVersion,
                 isHttpLoggingEnabled,
