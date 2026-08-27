@@ -106,15 +106,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Operations))
             {
@@ -187,8 +187,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string name = default;
             string status = default;
             double? percentComplete = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             IReadOnlyList<NetworkFabricOperationStatusResult> operations = default;
             ResponseError error = default;
             ResourceIdentifier resourceId = default;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("operations"u8))
@@ -293,8 +293,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 name,
                 status,
                 percentComplete,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 operations ?? new ChangeTrackingList<NetworkFabricOperationStatusResult>(),
                 error,
                 resourceId,
