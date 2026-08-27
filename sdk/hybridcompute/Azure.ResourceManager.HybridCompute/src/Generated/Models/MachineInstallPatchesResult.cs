@@ -33,14 +33,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="pendingPatchCount"> The number of patches that were identified as meeting the installation criteria, but were not able to be installed. Typically this happens when maintenanceWindowExceeded == true. </param>
         /// <param name="installedPatchCount"> The number of patches successfully installed. </param>
         /// <param name="failedPatchCount"> The number of patches that could not be installed due to some issue. See errors for details. </param>
-        /// <param name="startOn"> The UTC timestamp when the operation began. </param>
+        /// <param name="startsOn"> The UTC timestamp when the operation began. </param>
         /// <param name="lastModifiedOn"> The UTC timestamp when the operation finished. </param>
         /// <param name="startedBy"> Indicates if operation was triggered by user or by platform. </param>
         /// <param name="patchServiceUsed"> Specifies the patch service used for the operation. </param>
         /// <param name="osType"> The operating system type of the machine. </param>
         /// <param name="errorDetails"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineInstallPatchesResult(MachineOperationStatus? status, string installationActivityId, VmGuestPatchRebootStatus? rebootStatus, bool? maintenanceWindowExceeded, int? excludedPatchCount, int? notSelectedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, PatchOperationStartedBy? startedBy, PatchServiceUsed? patchServiceUsed, HybridComputeOSType? osType, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineInstallPatchesResult(MachineOperationStatus? status, string installationActivityId, VmGuestPatchRebootStatus? rebootStatus, bool? maintenanceWindowExceeded, int? excludedPatchCount, int? notSelectedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, DateTimeOffset? startsOn, DateTimeOffset? lastModifiedOn, PatchOperationStartedBy? startedBy, PatchServiceUsed? patchServiceUsed, HybridComputeOSType? osType, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             InstallationActivityId = installationActivityId;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             PendingPatchCount = pendingPatchCount;
             InstalledPatchCount = installedPatchCount;
             FailedPatchCount = failedPatchCount;
-            StartOn = startOn;
+            StartsOn = startsOn;
             LastModifiedOn = lastModifiedOn;
             StartedBy = startedBy;
             PatchServiceUsed = patchServiceUsed;
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> The UTC timestamp when the operation began. </summary>
         [WirePath("startDateTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The UTC timestamp when the operation finished. </summary>
         [WirePath("lastModifiedDateTime")]
