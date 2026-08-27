@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 location,
                 default,
                 default,
-                eventHubResourceId is null && consumerGroup is null && tableName is null && mappingRuleName is null && dataFormat is null && eventSystemProperties is null && compression is null && provisioningState is null && managedIdentityResourceId is null && managedIdentityObjectId is null && databaseRouting is null && retrievalStartOn is null ? default : new EventHubConnectionProperties(
+                eventHubResourceId is null && consumerGroup is null && tableName is null && mappingRuleName is null && dataFormat is null && eventSystemProperties is null && compression is null && provisioningState is null && managedIdentityResourceId is null && managedIdentityObjectId is null && databaseRouting is null ? default : new EventHubConnectionProperties(
                     eventHubResourceId,
                     consumerGroup,
                     tableName,
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     managedIdentityResourceId,
                     managedIdentityObjectId,
                     databaseRouting,
-                    retrievalStartOn,
+                    default,
                     default));
         }
 
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 location,
                 default,
                 default,
-                iotHubResourceId is null && consumerGroup is null && tableName is null && mappingRuleName is null && dataFormat is null && eventSystemProperties is null && sharedAccessPolicyName is null && databaseRouting is null && retrievalStartOn is null && provisioningState is null ? default : new IotHubConnectionProperties(
+                iotHubResourceId is null && consumerGroup is null && tableName is null && mappingRuleName is null && dataFormat is null && eventSystemProperties is null && sharedAccessPolicyName is null && databaseRouting is null && provisioningState is null ? default : new IotHubConnectionProperties(
                     iotHubResourceId,
                     consumerGroup,
                     tableName,
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     (eventSystemProperties ?? new ChangeTrackingList<string>()).ToList(),
                     sharedAccessPolicyName,
                     databaseRouting,
-                    retrievalStartOn,
+                    default,
                     provisioningState,
                     default));
         }
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 location,
                 default,
                 default,
-                tableName is null && mappingRuleName is null && managedIdentityResourceId is null && managedIdentityObjectId is null && cosmosDBAccountResourceId is null && cosmosDBDatabase is null && cosmosDBContainer is null && retrievalStartOn is null && provisioningState is null ? default : new CosmosDBDataConnectionProperties(
+                tableName is null && mappingRuleName is null && managedIdentityResourceId is null && managedIdentityObjectId is null && cosmosDBAccountResourceId is null && cosmosDBDatabase is null && cosmosDBContainer is null && provisioningState is null ? default : new CosmosDBDataConnectionProperties(
                     tableName,
                     mappingRuleName,
                     managedIdentityResourceId,
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     cosmosDBAccountResourceId,
                     cosmosDBDatabase,
                     cosmosDBContainer,
-                    retrievalStartOn,
+                    default,
                     provisioningState,
                     default));
         }
@@ -404,9 +404,9 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="managedIdentityResourceId"> The resource ID of a managed identity (system or user assigned) to be used to authenticate with event hub. </param>
         /// <param name="managedIdentityObjectId"> The object ID of the managedIdentityResourceId. </param>
         /// <param name="databaseRouting"> Indication for database routing information from the data connection, by default only database routing information is allowed. </param>
-        /// <param name="retrievalStartOn"> When defined, the data connection retrieves existing Event hub events created since the Retrieval start date. It can only retrieve events retained by the Event hub, based on its retention period. </param>
+        /// <param name="retrievalStartsOn"> When defined, the data connection retrieves existing Event hub events created since the Retrieval start date. It can only retrieve events retained by the Event hub, based on its retention period. </param>
         /// <returns> A new <see cref="Models.EventHubDataConnectionWithManagedIdentity"/> instance for mocking. </returns>
-        public static EventHubDataConnectionWithManagedIdentity EventHubDataConnectionWithManagedIdentity(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, ResourceIdentifier eventHubResourceIdForManagedIdentity = default, string consumerGroup = default, string tableName = default, string mappingRuleName = default, KustoEventHubDataFormat? dataFormat = default, IEnumerable<string> eventSystemProperties = default, EventHubMessagesCompressionType? compression = default, KustoProvisioningState? provisioningState = default, ResourceIdentifier managedIdentityResourceId = default, Guid? managedIdentityObjectId = default, KustoDatabaseRouting? databaseRouting = default, DateTimeOffset? retrievalStartOn = default)
+        public static EventHubDataConnectionWithManagedIdentity EventHubDataConnectionWithManagedIdentity(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, ResourceIdentifier eventHubResourceIdForManagedIdentity = default, string consumerGroup = default, string tableName = default, string mappingRuleName = default, KustoEventHubDataFormat? dataFormat = default, IEnumerable<string> eventSystemProperties = default, EventHubMessagesCompressionType? compression = default, KustoProvisioningState? provisioningState = default, ResourceIdentifier managedIdentityResourceId = default, Guid? managedIdentityObjectId = default, KustoDatabaseRouting? databaseRouting = default, DateTimeOffset? retrievalStartsOn = default)
         {
             return new EventHubDataConnectionWithManagedIdentity(
                 id,
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 location,
                 default,
                 default,
-                eventHubResourceIdForManagedIdentity is null && consumerGroup is null && tableName is null && mappingRuleName is null && dataFormat is null && eventSystemProperties is null && compression is null && provisioningState is null && managedIdentityResourceId is null && managedIdentityObjectId is null && databaseRouting is null && retrievalStartOn is null ? default : new EventHubConnectionWithManagedIdentityProperties(
+                eventHubResourceIdForManagedIdentity is null && consumerGroup is null && tableName is null && mappingRuleName is null && dataFormat is null && eventSystemProperties is null && compression is null && provisioningState is null && managedIdentityResourceId is null && managedIdentityObjectId is null && databaseRouting is null && retrievalStartsOn is null ? default : new EventHubConnectionWithManagedIdentityProperties(
                     eventHubResourceIdForManagedIdentity,
                     consumerGroup,
                     tableName,
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     managedIdentityResourceId,
                     managedIdentityObjectId,
                     databaseRouting,
-                    retrievalStartOn,
+                    retrievalStartsOn,
                     default));
         }
 
@@ -494,9 +494,9 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="isFollowed"> Indicates whether the database is followed. </param>
         /// <param name="keyVaultProperties"> KeyVault properties for the database encryption. </param>
         /// <param name="statisticsSize"> The database size - the total size of compressed data and index in bytes. </param>
-        /// <param name="suspensionStartOn"> The starting date and time of the suspension state. </param>
+        /// <param name="suspensionStartsOn"> The starting date and time of the suspension state. </param>
         /// <returns> A new <see cref="Models.KustoReadWriteDatabase"/> instance for mocking. </returns>
-        public static KustoReadWriteDatabase KustoReadWriteDatabase(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, KustoProvisioningState? provisioningState = default, TimeSpan? softDeletePeriod = default, TimeSpan? hotCachePeriod = default, bool? isFollowed = default, KustoKeyVaultProperties keyVaultProperties = default, float? statisticsSize = default, DateTimeOffset? suspensionStartOn = default)
+        public static KustoReadWriteDatabase KustoReadWriteDatabase(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, KustoProvisioningState? provisioningState = default, TimeSpan? softDeletePeriod = default, TimeSpan? hotCachePeriod = default, bool? isFollowed = default, KustoKeyVaultProperties keyVaultProperties = default, float? statisticsSize = default, DateTimeOffset? suspensionStartsOn = default)
         {
             return new KustoReadWriteDatabase(
                 id,
@@ -506,14 +506,14 @@ namespace Azure.ResourceManager.Kusto.Models
                 location,
                 default,
                 default,
-                provisioningState is null && softDeletePeriod is null && hotCachePeriod is null && statisticsSize is null && isFollowed is null && keyVaultProperties is null && suspensionStartOn is null ? default : new ReadWriteDatabaseProperties(
+                provisioningState is null && softDeletePeriod is null && hotCachePeriod is null && statisticsSize is null && isFollowed is null && keyVaultProperties is null && suspensionStartsOn is null ? default : new ReadWriteDatabaseProperties(
                     provisioningState,
                     softDeletePeriod,
                     hotCachePeriod,
                     new DatabaseStatistics(statisticsSize, default),
                     isFollowed,
                     keyVaultProperties,
-                    new SuspensionDetails(suspensionStartOn, default),
+                    new SuspensionDetails(suspensionStartsOn, default),
                     default));
         }
 
@@ -549,9 +549,9 @@ namespace Azure.ResourceManager.Kusto.Models
         /// <param name="originalDatabaseName"> The original database name, before databaseNameOverride or databaseNamePrefix where applied. </param>
         /// <param name="databaseShareOrigin"> The origin of the following setup. </param>
         /// <param name="statisticsSize"> The database size - the total size of compressed data and index in bytes. </param>
-        /// <param name="suspensionStartOn"> The starting date and time of the suspension state. </param>
+        /// <param name="suspensionStartsOn"> The starting date and time of the suspension state. </param>
         /// <returns> A new <see cref="Models.KustoReadOnlyFollowingDatabase"/> instance for mocking. </returns>
-        public static KustoReadOnlyFollowingDatabase KustoReadOnlyFollowingDatabase(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, KustoProvisioningState? provisioningState = default, TimeSpan? softDeletePeriod = default, TimeSpan? hotCachePeriod = default, string leaderClusterResourceId = default, string attachedDatabaseConfigurationName = default, KustoDatabasePrincipalsModificationKind? principalsModificationKind = default, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = default, string originalDatabaseName = default, KustoDatabaseShareOrigin? databaseShareOrigin = default, float? statisticsSize = default, DateTimeOffset? suspensionStartOn = default)
+        public static KustoReadOnlyFollowingDatabase KustoReadOnlyFollowingDatabase(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, KustoProvisioningState? provisioningState = default, TimeSpan? softDeletePeriod = default, TimeSpan? hotCachePeriod = default, string leaderClusterResourceId = default, string attachedDatabaseConfigurationName = default, KustoDatabasePrincipalsModificationKind? principalsModificationKind = default, KustoDatabaseTableLevelSharingProperties tableLevelSharingProperties = default, string originalDatabaseName = default, KustoDatabaseShareOrigin? databaseShareOrigin = default, float? statisticsSize = default, DateTimeOffset? suspensionStartsOn = default)
         {
             return new KustoReadOnlyFollowingDatabase(
                 id,
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 location,
                 default,
                 default,
-                provisioningState is null && softDeletePeriod is null && hotCachePeriod is null && statisticsSize is null && leaderClusterResourceId is null && attachedDatabaseConfigurationName is null && principalsModificationKind is null && tableLevelSharingProperties is null && originalDatabaseName is null && databaseShareOrigin is null && suspensionStartOn is null ? default : new ReadOnlyFollowingDatabaseProperties(
+                provisioningState is null && softDeletePeriod is null && hotCachePeriod is null && statisticsSize is null && leaderClusterResourceId is null && attachedDatabaseConfigurationName is null && principalsModificationKind is null && tableLevelSharingProperties is null && originalDatabaseName is null && databaseShareOrigin is null && suspensionStartsOn is null ? default : new ReadOnlyFollowingDatabaseProperties(
                     provisioningState,
                     softDeletePeriod,
                     hotCachePeriod,
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     tableLevelSharingProperties,
                     originalDatabaseName,
                     databaseShareOrigin,
-                    new SuspensionDetails(suspensionStartOn, default),
+                    new SuspensionDetails(suspensionStartsOn, default),
                     default));
         }
 
@@ -1574,14 +1574,14 @@ namespace Azure.ResourceManager.Kusto.Models
                 location,
                 default,
                 default,
-                provisioningState is null && softDeletePeriod is null && hotCachePeriod is null && statisticsSize is null && isFollowed is null && keyVaultProperties is null && suspensionStartOn is null ? default : new ReadWriteDatabaseProperties(
+                provisioningState is null && softDeletePeriod is null && hotCachePeriod is null && statisticsSize is null && isFollowed is null && keyVaultProperties is null ? default : new ReadWriteDatabaseProperties(
                     provisioningState,
                     softDeletePeriod,
                     hotCachePeriod,
                     new DatabaseStatistics(statisticsSize, default),
                     isFollowed,
                     keyVaultProperties,
-                    new SuspensionDetails(suspensionStartOn, default),
+                    default,
                     default));
         }
 
@@ -1614,7 +1614,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 location,
                 default,
                 default,
-                provisioningState is null && softDeletePeriod is null && hotCachePeriod is null && statisticsSize is null && leaderClusterResourceId is null && attachedDatabaseConfigurationName is null && principalsModificationKind is null && tableLevelSharingProperties is null && originalDatabaseName is null && databaseShareOrigin is null && suspensionStartOn is null ? default : new ReadOnlyFollowingDatabaseProperties(
+                provisioningState is null && softDeletePeriod is null && hotCachePeriod is null && statisticsSize is null && leaderClusterResourceId is null && attachedDatabaseConfigurationName is null && principalsModificationKind is null && tableLevelSharingProperties is null && originalDatabaseName is null && databaseShareOrigin is null ? default : new ReadOnlyFollowingDatabaseProperties(
                     provisioningState,
                     softDeletePeriod,
                     hotCachePeriod,
@@ -1625,7 +1625,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     tableLevelSharingProperties,
                     originalDatabaseName,
                     databaseShareOrigin,
-                    new SuspensionDetails(suspensionStartOn, default),
+                    default,
                     default));
         }
 

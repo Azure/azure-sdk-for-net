@@ -502,11 +502,11 @@ namespace Azure.ResourceManager.ManagedApplications.Models
 
         /// <param name="type"> The type of JIT schedule. </param>
         /// <param name="duration"> The required duration of the JIT request. </param>
-        /// <param name="startOn"> The start time of the request. </param>
+        /// <param name="startsOn"> The start time of the request. </param>
         /// <returns> A new <see cref="Models.JitSchedulingPolicy"/> instance for mocking. </returns>
-        public static JitSchedulingPolicy JitSchedulingPolicy(JitSchedulingType @type = default, TimeSpan duration = default, DateTimeOffset startOn = default)
+        public static JitSchedulingPolicy JitSchedulingPolicy(JitSchedulingType @type = default, TimeSpan duration = default, DateTimeOffset startsOn = default)
         {
-            return new JitSchedulingPolicy(@type, duration, startOn, default);
+            return new JitSchedulingPolicy(@type, duration, startsOn, default);
         }
 
         /// <param name="tags"> Jit request tags. </param>

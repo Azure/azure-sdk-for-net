@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 throw new FormatException($"The model {nameof(SuspensionDetails)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SuspensionStartOn))
+            if (Optional.IsDefined(SuspensionStartsOn))
             {
                 writer.WritePropertyName("suspensionStartDate"u8);
-                writer.WriteStringValue(SuspensionStartOn.Value, "O");
+                writer.WriteStringValue(SuspensionStartsOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Kusto.Models
             {
                 return null;
             }
-            DateTimeOffset? suspensionStartOn = default;
+            DateTimeOffset? suspensionStartsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     {
                         continue;
                     }
-                    suspensionStartOn = prop.Value.GetDateTimeOffset("O");
+                    suspensionStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Kusto.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SuspensionDetails(suspensionStartOn, additionalBinaryDataProperties);
+            return new SuspensionDetails(suspensionStartsOn, additionalBinaryDataProperties);
         }
     }
 }
