@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateStatus"/>. </summary>
-        /// <param name="startOn"> The time the operation or group was started. </param>
+        /// <param name="startsOn"> The time the operation or group was started. </param>
         /// <param name="completedOn"> The time the operation or group was completed. </param>
         /// <param name="state"> The State of the operation or group. </param>
         /// <param name="error"> The error details when a failure is encountered. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetUpdateStatus(DateTimeOffset? startOn, DateTimeOffset? completedOn, ContainerServiceFleetUpdateState? state, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetUpdateStatus(DateTimeOffset? startsOn, DateTimeOffset? completedOn, ContainerServiceFleetUpdateState? state, ResponseError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
+            StartsOn = startsOn;
             CompletedOn = completedOn;
             State = state;
             Error = error;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         }
 
         /// <summary> The time the operation or group was started. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The time the operation or group was completed. </summary>
         public DateTimeOffset? CompletedOn { get; }
