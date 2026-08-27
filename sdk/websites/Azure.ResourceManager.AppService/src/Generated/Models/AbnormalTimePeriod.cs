@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AbnormalTimePeriod"/>. </summary>
-        /// <param name="startOn"> Start time of the downtime. </param>
-        /// <param name="endOn"> End time of the downtime. </param>
+        /// <param name="startsOn"> Start time of the downtime. </param>
+        /// <param name="endsOn"> End time of the downtime. </param>
         /// <param name="events"> List of Possible Cause of downtime. </param>
         /// <param name="solutions"> List of proposed solutions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AbnormalTimePeriod(DateTimeOffset? startOn, DateTimeOffset? endOn, IList<DetectorAbnormalTimePeriod> events, IList<DiagnosticSolution> solutions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AbnormalTimePeriod(DateTimeOffset? startsOn, DateTimeOffset? endsOn, IList<DetectorAbnormalTimePeriod> events, IList<DiagnosticSolution> solutions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Events = events;
             Solutions = solutions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Start time of the downtime. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> End time of the downtime. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> List of Possible Cause of downtime. </summary>
         [WirePath("events")]

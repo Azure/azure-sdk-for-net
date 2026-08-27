@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="state"> The state of the auto import operation. </param>
         /// <param name="statusCode"> Server-defined status code for auto import job. </param>
         /// <param name="statusMessage"> Server-defined status message for auto import job. </param>
-        /// <param name="scanStartOn"> Date and time of when the currently running full scan began. </param>
-        /// <param name="scanEndOn"> Date and time of when the full scan ended. </param>
+        /// <param name="scanStartsOn"> Date and time of when the currently running full scan began. </param>
+        /// <param name="scanEndsOn"> Date and time of when the full scan ended. </param>
         /// <param name="totalBlobsWalked"> Total number of blobs walked during full scan. </param>
         /// <param name="rateOfBlobWalk"> Rate of blobs walked during full scan. </param>
         /// <param name="totalBlobsImported"> Total number of blobs imported during full scan. </param>
@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.StorageCache.Models
         /// <param name="lastStartedTimeUTC"> The time (in UTC) the latest auto import job started. </param>
         /// <param name="lastCompletionTimeUTC"> The time (in UTC) of the last completed auto import job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutoImportJobPropertiesStatus(AutoImportJobState? state, string statusCode, string statusMessage, DateTimeOffset? scanStartOn, DateTimeOffset? scanEndOn, long? totalBlobsWalked, long? rateOfBlobWalk, long? totalBlobsImported, long? rateOfBlobImport, long? importedFiles, long? importedDirectories, long? importedSymlinks, long? preexistingFiles, long? preexistingDirectories, long? preexistingSymlinks, long? totalErrors, long? totalConflicts, AutoImportJobPropertiesStatusBlobSyncEvents blobSyncEvents, DateTimeOffset? lastStartedTimeUTC, DateTimeOffset? lastCompletionTimeUTC, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutoImportJobPropertiesStatus(AutoImportJobState? state, string statusCode, string statusMessage, DateTimeOffset? scanStartsOn, DateTimeOffset? scanEndsOn, long? totalBlobsWalked, long? rateOfBlobWalk, long? totalBlobsImported, long? rateOfBlobImport, long? importedFiles, long? importedDirectories, long? importedSymlinks, long? preexistingFiles, long? preexistingDirectories, long? preexistingSymlinks, long? totalErrors, long? totalConflicts, AutoImportJobPropertiesStatusBlobSyncEvents blobSyncEvents, DateTimeOffset? lastStartedTimeUTC, DateTimeOffset? lastCompletionTimeUTC, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             State = state;
             StatusCode = statusCode;
             StatusMessage = statusMessage;
-            ScanStartOn = scanStartOn;
-            ScanEndOn = scanEndOn;
+            ScanStartsOn = scanStartsOn;
+            ScanEndsOn = scanEndsOn;
             TotalBlobsWalked = totalBlobsWalked;
             RateOfBlobWalk = rateOfBlobWalk;
             TotalBlobsImported = totalBlobsImported;
@@ -78,10 +78,10 @@ namespace Azure.ResourceManager.StorageCache.Models
         public string StatusMessage { get; }
 
         /// <summary> Date and time of when the currently running full scan began. </summary>
-        public DateTimeOffset? ScanStartOn { get; }
+        public DateTimeOffset? ScanStartsOn { get; }
 
         /// <summary> Date and time of when the full scan ended. </summary>
-        public DateTimeOffset? ScanEndOn { get; }
+        public DateTimeOffset? ScanEndsOn { get; }
 
         /// <summary> Total number of blobs walked during full scan. </summary>
         public long? TotalBlobsWalked { get; }

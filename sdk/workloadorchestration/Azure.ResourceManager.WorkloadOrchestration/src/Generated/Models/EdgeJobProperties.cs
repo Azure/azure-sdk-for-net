@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
         /// <summary> Initializes a new instance of <see cref="EdgeJobProperties"/>. </summary>
         /// <param name="jobType"> The type of job. </param>
-        /// <param name="startOn"> Start time of the job (ISO8601). </param>
-        /// <param name="endOn"> End time of the job (ISO8601). </param>
+        /// <param name="startsOn"> Start time of the job (ISO8601). </param>
+        /// <param name="endsOn"> End time of the job (ISO8601). </param>
         /// <param name="status"> Status of the job. </param>
         /// <param name="jobParameter"> Parameters for the job. </param>
         /// <param name="correlationId"> Correlation ID for tracking. </param>
@@ -40,11 +40,11 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="errorDetails"> Error Details if any failure is there. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeJobProperties(EdgeJobType jobType, DateTimeOffset? startOn, DateTimeOffset? endOn, EdgeJobStatus status, EdgeJobContent jobParameter, string correlationId, IReadOnlyList<EdgeJobStep> steps, string triggeredBy, WorkloadOrchestrationProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeJobProperties(EdgeJobType jobType, DateTimeOffset? startsOn, DateTimeOffset? endsOn, EdgeJobStatus status, EdgeJobContent jobParameter, string correlationId, IReadOnlyList<EdgeJobStep> steps, string triggeredBy, WorkloadOrchestrationProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             JobType = jobType;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Status = status;
             JobParameter = jobParameter;
             CorrelationId = correlationId;
@@ -59,10 +59,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public EdgeJobType JobType { get; }
 
         /// <summary> Start time of the job (ISO8601). </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> End time of the job (ISO8601). </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Status of the job. </summary>
         public EdgeJobStatus Status { get; }

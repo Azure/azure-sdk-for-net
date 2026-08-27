@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Start time of the period. </summary>
         [WirePath("properties.startTime")]
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -61,17 +61,17 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new DiagnosticAnalysisProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
         /// <summary> End time of the period. </summary>
         [WirePath("properties.endTime")]
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new DiagnosticAnalysisProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 

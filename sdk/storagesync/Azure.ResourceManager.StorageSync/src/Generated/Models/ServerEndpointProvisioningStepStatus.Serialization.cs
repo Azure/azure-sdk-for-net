@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(MinutesLeft))
             {
@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("progressPercentage"u8);
                 writer.WriteNumberValue(ProgressPercentage.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ErrorCode))
             {
@@ -169,10 +169,10 @@ namespace Azure.ResourceManager.StorageSync.Models
             }
             string name = default;
             string status = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             int? minutesLeft = default;
             int? progressPercentage = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? endsOn = default;
             int? errorCode = default;
             IReadOnlyDictionary<string, string> additionalInformation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("minutesLeft"u8))
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("errorCode"u8))
@@ -262,10 +262,10 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new ServerEndpointProvisioningStepStatus(
                 name,
                 status,
-                startOn,
+                startsOn,
                 minutesLeft,
                 progressPercentage,
-                endOn,
+                endsOn,
                 errorCode,
                 additionalInformation ?? new ChangeTrackingDictionary<string, string>(),
                 additionalBinaryDataProperties);
