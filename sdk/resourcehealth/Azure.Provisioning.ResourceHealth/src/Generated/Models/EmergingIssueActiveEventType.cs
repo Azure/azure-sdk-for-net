@@ -17,7 +17,7 @@ namespace Azure.Provisioning.ResourceHealth
         private BicepValue<string> _title;
         private BicepValue<string> _description;
         private BicepValue<string> _trackingId;
-        private BicepValue<DateTimeOffset> _startOn;
+        private BicepValue<DateTimeOffset> _startsOn;
         private BicepValue<string> _cloud;
         private BicepValue<ResourceHealthEventSeverityLevel> _severity;
         private BicepValue<ResourceHealthEventStageValue> _stage;
@@ -60,13 +60,13 @@ namespace Azure.Provisioning.ResourceHealth
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.Provisioning.ResourceHealth
             _title = DefineProperty<string>(nameof(Title), new string[] { "title" });
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _trackingId = DefineProperty<string>(nameof(TrackingId), new string[] { "trackingId" });
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, format: "O");
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startTime" }, format: "O");
             _cloud = DefineProperty<string>(nameof(Cloud), new string[] { "cloud" });
             _severity = DefineProperty<ResourceHealthEventSeverityLevel>(nameof(Severity), new string[] { "severity" });
             _stage = DefineProperty<ResourceHealthEventStageValue>(nameof(Stage), new string[] { "stage" });
