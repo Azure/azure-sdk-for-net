@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.SecurityCenter
         }
 
         /// <summary> The date on which the trial period will end, if applicable. Trial period exists for 30 days after upgrading to payed offerings. </summary>
-        public DateTimeOffset? HierarchyIdentifierTrialEndOn
+        public DateTimeOffset? HierarchyIdentifierTrialEndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.HierarchyIdentifierTrialEndOn;
+                return Properties is null ? default : Properties.HierarchyIdentifierTrialEndsOn;
             }
         }
 
