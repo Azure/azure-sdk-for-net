@@ -22,13 +22,15 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="targetProvider"> The target Azure Terraform provider. Defaults to `azurerm`. </param>
         /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration. If set to `false` empty-valued properties will be omitted from the configuration. Defaults to `true`. </param>
         /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. Defaults to `true`. </param>
-        /// <param name="includeRoleAssignment"> Whether to include RBAC role assignments assigned to the resources exported. Only resource-scoped role assignments are supported. Defaults to `false`. </param>
+        /// <param name="includeRoleAssignment"> Whether to include role assignments assigned to the resources exported. Defaults to `false`. This is deprecated in favor of `includeExtensions` (with `role-assignments` specified). </param>
+        /// <param name="includeExtensions"> Include extension resource types directly associated to the resources exported. </param>
         /// <param name="includeManagedResource"> Whether to include internal resources managed by Azure in the exported configuration. Defaults to `false`. </param>
         /// <param name="azureResourcesToExclude"> Excludes specified Azure Resource Ids. Case-insensitive Azure Resource ID regular expression. Example: `["/subscriptions/[0-9a-f-]+/resourceGroups/my-rg.*"]`. </param>
         /// <param name="terraformResourcesToExclude"> Excludes specified Terraform resource types. Example: `["azurerm_virtual_network"]`. </param>
         /// <returns> A new <see cref="Models.CommonExportProperties"/> instance for mocking. </returns>
-        public static CommonExportProperties CommonExportProperties(string @type = default, TargetTerraformProvider? targetProvider = default, bool? isOutputFullPropertiesEnabled = default, bool? isMaskSensitiveEnabled = default, bool? includeRoleAssignment = default, bool? includeManagedResource = default, IEnumerable<string> azureResourcesToExclude = default, IEnumerable<string> terraformResourcesToExclude = default)
+        public static CommonExportProperties CommonExportProperties(string @type = default, TargetTerraformProvider? targetProvider = default, bool? isOutputFullPropertiesEnabled = default, bool? isMaskSensitiveEnabled = default, bool? includeRoleAssignment = default, IEnumerable<AzureExtensionResourceType> includeExtensions = default, bool? includeManagedResource = default, IEnumerable<string> azureResourcesToExclude = default, IEnumerable<string> terraformResourcesToExclude = default)
         {
+            includeExtensions ??= new ChangeTrackingList<AzureExtensionResourceType>();
             azureResourcesToExclude ??= new ChangeTrackingList<string>();
             terraformResourcesToExclude ??= new ChangeTrackingList<string>();
 
@@ -38,6 +40,7 @@ namespace Azure.ResourceManager.Terraform.Models
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,
                 includeRoleAssignment,
+                (includeExtensions ?? new ChangeTrackingList<AzureExtensionResourceType>()).ToList(),
                 includeManagedResource,
                 (azureResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
                 (terraformResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
@@ -47,7 +50,8 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="targetProvider"> The target Azure Terraform provider. Defaults to `azurerm`. </param>
         /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration. If set to `false` empty-valued properties will be omitted from the configuration. Defaults to `true`. </param>
         /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. Defaults to `true`. </param>
-        /// <param name="includeRoleAssignment"> Whether to include RBAC role assignments assigned to the resources exported. Only resource-scoped role assignments are supported. Defaults to `false`. </param>
+        /// <param name="includeRoleAssignment"> Whether to include role assignments assigned to the resources exported. Defaults to `false`. This is deprecated in favor of `includeExtensions` (with `role-assignments` specified). </param>
+        /// <param name="includeExtensions"> Include extension resource types directly associated to the resources exported. </param>
         /// <param name="includeManagedResource"> Whether to include internal resources managed by Azure in the exported configuration. Defaults to `false`. </param>
         /// <param name="azureResourcesToExclude"> Excludes specified Azure Resource Ids. Case-insensitive Azure Resource ID regular expression. Example: `["/subscriptions/[0-9a-f-]+/resourceGroups/my-rg.*"]`. </param>
         /// <param name="terraformResourcesToExclude"> Excludes specified Terraform resource types. Example: `["azurerm_virtual_network"]`. </param>
@@ -58,8 +62,9 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="table"> The ARG table name. Defaults to 'Resources'. </param>
         /// <param name="authorizationScopeFilter"> The ARG Scope Filter parameter. </param>
         /// <returns> A new <see cref="Models.ExportQueryTerraform"/> instance for mocking. </returns>
-        public static ExportQueryTerraform ExportQueryTerraform(TargetTerraformProvider? targetProvider = default, bool? isOutputFullPropertiesEnabled = default, bool? isMaskSensitiveEnabled = default, bool? includeRoleAssignment = default, bool? includeManagedResource = default, IEnumerable<string> azureResourcesToExclude = default, IEnumerable<string> terraformResourcesToExclude = default, string query = default, string namePattern = default, bool? isRecursive = default, bool? includeResourceGroup = default, string table = default, TerraformAuthorizationScopeFilter? authorizationScopeFilter = default)
+        public static ExportQueryTerraform ExportQueryTerraform(TargetTerraformProvider? targetProvider = default, bool? isOutputFullPropertiesEnabled = default, bool? isMaskSensitiveEnabled = default, bool? includeRoleAssignment = default, IEnumerable<AzureExtensionResourceType> includeExtensions = default, bool? includeManagedResource = default, IEnumerable<string> azureResourcesToExclude = default, IEnumerable<string> terraformResourcesToExclude = default, string query = default, string namePattern = default, bool? isRecursive = default, bool? includeResourceGroup = default, string table = default, TerraformAuthorizationScopeFilter? authorizationScopeFilter = default)
         {
+            includeExtensions ??= new ChangeTrackingList<AzureExtensionResourceType>();
             azureResourcesToExclude ??= new ChangeTrackingList<string>();
             terraformResourcesToExclude ??= new ChangeTrackingList<string>();
 
@@ -69,6 +74,7 @@ namespace Azure.ResourceManager.Terraform.Models
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,
                 includeRoleAssignment,
+                (includeExtensions ?? new ChangeTrackingList<AzureExtensionResourceType>()).ToList(),
                 includeManagedResource,
                 (azureResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
                 (terraformResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
@@ -84,7 +90,8 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="targetProvider"> The target Azure Terraform provider. Defaults to `azurerm`. </param>
         /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration. If set to `false` empty-valued properties will be omitted from the configuration. Defaults to `true`. </param>
         /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. Defaults to `true`. </param>
-        /// <param name="includeRoleAssignment"> Whether to include RBAC role assignments assigned to the resources exported. Only resource-scoped role assignments are supported. Defaults to `false`. </param>
+        /// <param name="includeRoleAssignment"> Whether to include role assignments assigned to the resources exported. Defaults to `false`. This is deprecated in favor of `includeExtensions` (with `role-assignments` specified). </param>
+        /// <param name="includeExtensions"> Include extension resource types directly associated to the resources exported. </param>
         /// <param name="includeManagedResource"> Whether to include internal resources managed by Azure in the exported configuration. Defaults to `false`. </param>
         /// <param name="azureResourcesToExclude"> Excludes specified Azure Resource Ids. Case-insensitive Azure Resource ID regular expression. Example: `["/subscriptions/[0-9a-f-]+/resourceGroups/my-rg.*"]`. </param>
         /// <param name="terraformResourcesToExclude"> Excludes specified Terraform resource types. Example: `["azurerm_virtual_network"]`. </param>
@@ -95,8 +102,9 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="recursive"> Recursively includes child resources. Defaults to `false`. </param>
         /// <param name="includeResourceGroup"> Includes the resource group in the exported Terraform resources. Defaults to `false`. </param>
         /// <returns> A new <see cref="Models.ExportResourceTerraform"/> instance for mocking. </returns>
-        public static ExportResourceTerraform ExportResourceTerraform(TargetTerraformProvider? targetProvider = default, bool? isOutputFullPropertiesEnabled = default, bool? isMaskSensitiveEnabled = default, bool? includeRoleAssignment = default, bool? includeManagedResource = default, IEnumerable<string> azureResourcesToExclude = default, IEnumerable<string> terraformResourcesToExclude = default, IEnumerable<ResourceIdentifier> resourceIds = default, string resourceName = default, string resourceType = default, string namePattern = default, bool? recursive = default, bool? includeResourceGroup = default)
+        public static ExportResourceTerraform ExportResourceTerraform(TargetTerraformProvider? targetProvider = default, bool? isOutputFullPropertiesEnabled = default, bool? isMaskSensitiveEnabled = default, bool? includeRoleAssignment = default, IEnumerable<AzureExtensionResourceType> includeExtensions = default, bool? includeManagedResource = default, IEnumerable<string> azureResourcesToExclude = default, IEnumerable<string> terraformResourcesToExclude = default, IEnumerable<ResourceIdentifier> resourceIds = default, string resourceName = default, string resourceType = default, string namePattern = default, bool? recursive = default, bool? includeResourceGroup = default)
         {
+            includeExtensions ??= new ChangeTrackingList<AzureExtensionResourceType>();
             azureResourcesToExclude ??= new ChangeTrackingList<string>();
             terraformResourcesToExclude ??= new ChangeTrackingList<string>();
             resourceIds ??= new ChangeTrackingList<ResourceIdentifier>();
@@ -107,6 +115,7 @@ namespace Azure.ResourceManager.Terraform.Models
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,
                 includeRoleAssignment,
+                (includeExtensions ?? new ChangeTrackingList<AzureExtensionResourceType>()).ToList(),
                 includeManagedResource,
                 (azureResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
                 (terraformResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
@@ -122,15 +131,17 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="targetProvider"> The target Azure Terraform provider. Defaults to `azurerm`. </param>
         /// <param name="isOutputFullPropertiesEnabled"> Whether to output all non-computed properties in the generated Terraform configuration. If set to `false` empty-valued properties will be omitted from the configuration. Defaults to `true`. </param>
         /// <param name="isMaskSensitiveEnabled"> Mask sensitive attributes in the Terraform configuration. Defaults to `true`. </param>
-        /// <param name="includeRoleAssignment"> Whether to include RBAC role assignments assigned to the resources exported. Only resource-scoped role assignments are supported. Defaults to `false`. </param>
+        /// <param name="includeRoleAssignment"> Whether to include role assignments assigned to the resources exported. Defaults to `false`. This is deprecated in favor of `includeExtensions` (with `role-assignments` specified). </param>
+        /// <param name="includeExtensions"> Include extension resource types directly associated to the resources exported. </param>
         /// <param name="includeManagedResource"> Whether to include internal resources managed by Azure in the exported configuration. Defaults to `false`. </param>
         /// <param name="azureResourcesToExclude"> Excludes specified Azure Resource Ids. Case-insensitive Azure Resource ID regular expression. Example: `["/subscriptions/[0-9a-f-]+/resourceGroups/my-rg.*"]`. </param>
         /// <param name="terraformResourcesToExclude"> Excludes specified Terraform resource types. Example: `["azurerm_virtual_network"]`. </param>
         /// <param name="resourceGroupName"> The name of the resource group to be exported. </param>
         /// <param name="namePattern"> The id prefix for the exported Terraform resources. Defaults to `res-`. </param>
         /// <returns> A new <see cref="Models.ExportResourceGroupTerraform"/> instance for mocking. </returns>
-        public static ExportResourceGroupTerraform ExportResourceGroupTerraform(TargetTerraformProvider? targetProvider = default, bool? isOutputFullPropertiesEnabled = default, bool? isMaskSensitiveEnabled = default, bool? includeRoleAssignment = default, bool? includeManagedResource = default, IEnumerable<string> azureResourcesToExclude = default, IEnumerable<string> terraformResourcesToExclude = default, string resourceGroupName = default, string namePattern = default)
+        public static ExportResourceGroupTerraform ExportResourceGroupTerraform(TargetTerraformProvider? targetProvider = default, bool? isOutputFullPropertiesEnabled = default, bool? isMaskSensitiveEnabled = default, bool? includeRoleAssignment = default, IEnumerable<AzureExtensionResourceType> includeExtensions = default, bool? includeManagedResource = default, IEnumerable<string> azureResourcesToExclude = default, IEnumerable<string> terraformResourcesToExclude = default, string resourceGroupName = default, string namePattern = default)
         {
+            includeExtensions ??= new ChangeTrackingList<AzureExtensionResourceType>();
             azureResourcesToExclude ??= new ChangeTrackingList<string>();
             terraformResourcesToExclude ??= new ChangeTrackingList<string>();
 
@@ -140,6 +151,7 @@ namespace Azure.ResourceManager.Terraform.Models
                 isOutputFullPropertiesEnabled,
                 isMaskSensitiveEnabled,
                 includeRoleAssignment,
+                (includeExtensions ?? new ChangeTrackingList<AzureExtensionResourceType>()).ToList(),
                 includeManagedResource,
                 (azureResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
                 (terraformResourcesToExclude ?? new ChangeTrackingList<string>()).ToList(),
