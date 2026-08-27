@@ -514,6 +514,23 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
+        /// <summary> Gets or sets the BackupPolicy. </summary>
+        public CosmosDBAccountBackupPolicy BackupPolicy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackupPolicy;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CosmosDBAccountProperties();
+                }
+                Properties.BackupPolicy = value;
+            }
+        }
+
         /// <summary> Gets or sets the Cors. </summary>
         public BicepList<CosmosDBAccountCorsPolicy> Cors
         {
@@ -771,23 +788,6 @@ namespace Azure.Provisioning.CosmosDB
                     Properties = new CosmosDBAccountProperties();
                 }
                 Properties.AnalyticalStorageSchemaType = value;
-            }
-        }
-
-        /// <summary> Gets or sets the MigrationState. </summary>
-        public BackupPolicyMigrationState BackupMigrationState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.BackupMigrationState;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new CosmosDBAccountProperties();
-                }
-                Properties.BackupMigrationState = value;
             }
         }
 

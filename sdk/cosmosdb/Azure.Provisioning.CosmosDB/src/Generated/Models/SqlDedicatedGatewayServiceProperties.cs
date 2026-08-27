@@ -19,6 +19,7 @@ namespace Azure.Provisioning.CosmosDB
         /// <summary> Creates a new SqlDedicatedGatewayServiceProperties. </summary>
         public SqlDedicatedGatewayServiceProperties()
         {
+            ServiceType.Assign(CosmosDBServiceType.SqlDedicatedGateway);
         }
 
         /// <summary> Gets or sets the SqlDedicatedGatewayEndpoint. </summary>
@@ -65,7 +66,6 @@ namespace Azure.Provisioning.CosmosDB
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("serviceType", new string[] { "serviceType" }, defaultValue: "SqlDedicatedGateway");
             _sqlDedicatedGatewayEndpoint = DefineProperty<string>(nameof(SqlDedicatedGatewayEndpoint), new string[] { "sqlDedicatedGatewayEndpoint" });
             _dedicatedGatewayType = DefineProperty<DedicatedGatewayType>(nameof(DedicatedGatewayType), new string[] { "dedicatedGatewayType" });
             _locations = DefineListProperty<SqlDedicatedGatewayRegionalService>(nameof(Locations), new string[] { "locations" }, isOutput: true);

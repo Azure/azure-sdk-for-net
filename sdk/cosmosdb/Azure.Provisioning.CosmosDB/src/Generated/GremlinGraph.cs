@@ -189,7 +189,7 @@ namespace Azure.Provisioning.CosmosDB
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<GremlinGraphProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<GremlinDatabase>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<GremlinDatabase>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CosmosDB
@@ -15,11 +16,22 @@ namespace Azure.Provisioning.CosmosDB
     /// </summary>
     public partial class CosmosDBAccountBackupPolicy : ProvisionableConstruct
     {
+        private BicepValue<BackupPolicyType> _backupPolicyType;
         private BackupPolicyMigrationState _migrationState;
 
         /// <summary> Creates a new CosmosDBAccountBackupPolicy. </summary>
         public CosmosDBAccountBackupPolicy()
         {
+        }
+
+        /// <summary> Describes the mode of backups. </summary>
+        internal BicepValue<BackupPolicyType> BackupPolicyType
+        {
+            get
+            {
+                Initialize();
+                return _backupPolicyType;
+            }
         }
 
         /// <summary> Gets or sets the MigrationState. </summary>
@@ -41,6 +53,7 @@ namespace Azure.Provisioning.CosmosDB
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _backupPolicyType = DefineProperty<BackupPolicyType>(nameof(BackupPolicyType), new string[] { "type" }, isRequired: true);
             _migrationState = DefineModelProperty<BackupPolicyMigrationState>(nameof(MigrationState), new string[] { "migrationState" });
             DefineAdditionalProperties();
         }

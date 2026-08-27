@@ -69,7 +69,7 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                return PrimaryMasterKey.GeneratedOn;
+                return PrimaryMasterKey is null ? default : PrimaryMasterKey.GeneratedOn;
             }
         }
 
@@ -78,7 +78,7 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                return SecondaryMasterKey.GeneratedOn;
+                return SecondaryMasterKey is null ? default : SecondaryMasterKey.GeneratedOn;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                return PrimaryReadonlyMasterKey.GeneratedOn;
+                return PrimaryReadonlyMasterKey is null ? default : PrimaryReadonlyMasterKey.GeneratedOn;
             }
         }
 
@@ -96,7 +96,7 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                return SecondaryReadonlyMasterKey.GeneratedOn;
+                return SecondaryReadonlyMasterKey is null ? default : SecondaryReadonlyMasterKey.GeneratedOn;
             }
         }
 

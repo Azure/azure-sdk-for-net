@@ -17,6 +17,7 @@ namespace Azure.Provisioning.CosmosDB
         /// <summary> Creates a new MaterializedViewsBuilderServiceProperties. </summary>
         public MaterializedViewsBuilderServiceProperties()
         {
+            ServiceType.Assign(CosmosDBServiceType.MaterializedViewsBuilder);
         }
 
         /// <summary> Gets the Locations. </summary>
@@ -33,7 +34,6 @@ namespace Azure.Provisioning.CosmosDB
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("serviceType", new string[] { "serviceType" }, defaultValue: "MaterializedViewsBuilder");
             _locations = DefineListProperty<MaterializedViewsBuilderRegionalService>(nameof(Locations), new string[] { "locations" }, isOutput: true);
             DefineAdditionalProperties();
         }

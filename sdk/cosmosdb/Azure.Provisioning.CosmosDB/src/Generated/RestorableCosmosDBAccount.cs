@@ -105,7 +105,7 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                return Properties.AccountName;
+                return Properties is null ? default : Properties.AccountName;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                return Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                return Properties.OldestRestorableOn;
+                return Properties is null ? default : Properties.OldestRestorableOn;
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                return Properties.DeletedOn;
+                return Properties is null ? default : Properties.DeletedOn;
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                return Properties.ApiType;
+                return Properties is null ? default : Properties.ApiType;
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.Provisioning.CosmosDB
         {
             get
             {
-                return Properties.RestorableLocations;
+                return Properties is null ? default : Properties.RestorableLocations;
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.Provisioning.CosmosDB
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<RestorableDatabaseAccountProperties>(nameof(Properties), new string[] { "properties" });
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
-            _parent = DefineResource<CosmosDBLocation>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<CosmosDBLocation>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

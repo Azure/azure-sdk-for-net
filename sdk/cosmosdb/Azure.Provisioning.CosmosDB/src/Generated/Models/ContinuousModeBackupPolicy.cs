@@ -17,6 +17,7 @@ namespace Azure.Provisioning.CosmosDB
         /// <summary> Creates a new ContinuousModeBackupPolicy. </summary>
         public ContinuousModeBackupPolicy()
         {
+            BackupPolicyType.Assign(CosmosDB.BackupPolicyType.Continuous);
         }
 
         /// <summary> Gets or sets the ContinuousModeProperties. </summary>
@@ -55,7 +56,6 @@ namespace Azure.Provisioning.CosmosDB
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "Continuous");
             _continuousModeProperties = DefineModelProperty<ContinuousModeProperties>(nameof(ContinuousModeProperties), new string[] { "continuousModeProperties" });
             DefineAdditionalProperties();
         }

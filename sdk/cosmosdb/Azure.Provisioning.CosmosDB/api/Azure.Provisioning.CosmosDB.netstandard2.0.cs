@@ -36,7 +36,9 @@ namespace Azure.Provisioning.CosmosDB
     public partial class BackupPolicyMigrationState : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public BackupPolicyMigrationState() { }
+        [System.ObsoleteAttribute("Use StartsOn instead.")]
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.BackupPolicyMigrationStatus> Status { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.BackupPolicyType> TargetType { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -677,7 +679,7 @@ namespace Azure.Provisioning.CosmosDB
         public CosmosDBAccount(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.AnalyticalStorageSchemaType> AnalyticalStorageSchemaType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.CosmosDBServerVersion> ApiServerVersion { get { throw null; } set { } }
-        public Azure.Provisioning.CosmosDB.BackupPolicyMigrationState BackupMigrationState { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.CosmosDBAccountBackupPolicy BackupPolicy { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CosmosDB.CosmosDBAccountCapability> Capabilities { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> CapacityTotalThroughputLimit { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.CosmosDB.ConnectorOffer> ConnectorOffer { get { throw null; } set { } }

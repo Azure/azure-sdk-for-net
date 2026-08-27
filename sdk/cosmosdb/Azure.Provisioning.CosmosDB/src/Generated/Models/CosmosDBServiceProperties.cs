@@ -20,6 +20,7 @@ namespace Azure.Provisioning.CosmosDB
         private BicepValue<DateTimeOffset> _createdOn;
         private BicepValue<CosmosDBServiceSize> _instanceSize;
         private BicepValue<int> _instanceCount;
+        private BicepValue<CosmosDBServiceType> _serviceType;
         private BicepValue<CosmosDBServiceStatus> _status;
 
         /// <summary> Creates a new CosmosDBServiceProperties. </summary>
@@ -67,6 +68,16 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
+        /// <summary> ServiceType for the service. </summary>
+        internal BicepValue<CosmosDBServiceType> ServiceType
+        {
+            get
+            {
+                Initialize();
+                return _serviceType;
+            }
+        }
+
         /// <summary> Gets the Status. </summary>
         public BicepValue<CosmosDBServiceStatus> Status
         {
@@ -84,6 +95,7 @@ namespace Azure.Provisioning.CosmosDB
             _createdOn = DefineProperty<DateTimeOffset>(nameof(CreatedOn), new string[] { "creationTime" }, isOutput: true, format: "O");
             _instanceSize = DefineProperty<CosmosDBServiceSize>(nameof(InstanceSize), new string[] { "instanceSize" });
             _instanceCount = DefineProperty<int>(nameof(InstanceCount), new string[] { "instanceCount" });
+            _serviceType = DefineProperty<CosmosDBServiceType>(nameof(ServiceType), new string[] { "serviceType" }, isRequired: true);
             _status = DefineProperty<CosmosDBServiceStatus>(nameof(Status), new string[] { "status" }, isOutput: true);
             DefineAdditionalProperties();
         }

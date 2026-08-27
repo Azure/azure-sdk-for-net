@@ -407,7 +407,7 @@ namespace Azure.Provisioning.CosmosDB
         }
 
         /// <summary> Gets or sets the BackupPolicy. </summary>
-        internal CosmosDBAccountBackupPolicy BackupPolicy
+        public CosmosDBAccountBackupPolicy BackupPolicy
         {
             get
             {
@@ -667,23 +667,6 @@ namespace Azure.Provisioning.CosmosDB
                     AnalyticalStorageConfiguration = new AnalyticalStorageConfiguration();
                 }
                 AnalyticalStorageConfiguration.SchemaType = value;
-            }
-        }
-
-        /// <summary> Gets or sets the MigrationState. </summary>
-        public BackupPolicyMigrationState BackupMigrationState
-        {
-            get
-            {
-                return BackupPolicy is null ? default : BackupPolicy.MigrationState;
-            }
-            set
-            {
-                if (BackupPolicy is null)
-                {
-                    BackupPolicy = new CosmosDBAccountBackupPolicy();
-                }
-                BackupPolicy.MigrationState = value;
             }
         }
 

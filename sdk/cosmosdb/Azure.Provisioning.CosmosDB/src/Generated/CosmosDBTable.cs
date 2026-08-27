@@ -189,7 +189,7 @@ namespace Azure.Provisioning.CosmosDB
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<CosmosDBTableProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<CosmosDBAccount>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<CosmosDBAccount>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

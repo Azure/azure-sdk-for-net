@@ -166,7 +166,7 @@ namespace Azure.Provisioning.CosmosDB
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<ThroughputSettingsProperties>(nameof(Properties), new string[] { "properties" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<CassandraKeyspace>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<CassandraKeyspace>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

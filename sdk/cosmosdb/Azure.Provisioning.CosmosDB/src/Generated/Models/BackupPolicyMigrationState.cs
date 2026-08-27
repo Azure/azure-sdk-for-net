@@ -16,7 +16,7 @@ namespace Azure.Provisioning.CosmosDB
     {
         private BicepValue<BackupPolicyMigrationStatus> _status;
         private BicepValue<BackupPolicyType> _targetType;
-        private BicepValue<DateTimeOffset> _startOn;
+        private BicepValue<DateTimeOffset> _startsOn;
 
         /// <summary> Creates a new BackupPolicyMigrationState. </summary>
         public BackupPolicyMigrationState()
@@ -53,18 +53,18 @@ namespace Azure.Provisioning.CosmosDB
             }
         }
 
-        /// <summary> Gets or sets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets or sets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
             set
             {
                 Initialize();
-                _startOn.Assign(value);
+                _startsOn.Assign(value);
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.Provisioning.CosmosDB
             base.DefineProvisionableProperties();
             _status = DefineProperty<BackupPolicyMigrationStatus>(nameof(Status), new string[] { "status" });
             _targetType = DefineProperty<BackupPolicyType>(nameof(TargetType), new string[] { "targetType" });
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, format: "O");
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startTime" }, format: "O");
             DefineAdditionalProperties();
         }
 

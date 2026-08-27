@@ -17,6 +17,7 @@ namespace Azure.Provisioning.CosmosDB
         /// <summary> Creates a new DataTransferServiceProperties. </summary>
         public DataTransferServiceProperties()
         {
+            ServiceType.Assign(CosmosDBServiceType.DataTransfer);
         }
 
         /// <summary> Gets the Locations. </summary>
@@ -33,7 +34,6 @@ namespace Azure.Provisioning.CosmosDB
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("serviceType", new string[] { "serviceType" }, defaultValue: "DataTransfer");
             _locations = DefineListProperty<DataTransferRegionalService>(nameof(Locations), new string[] { "locations" }, isOutput: true);
             DefineAdditionalProperties();
         }

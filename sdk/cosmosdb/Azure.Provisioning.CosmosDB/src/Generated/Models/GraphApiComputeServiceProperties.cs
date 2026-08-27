@@ -18,6 +18,7 @@ namespace Azure.Provisioning.CosmosDB
         /// <summary> Creates a new GraphApiComputeServiceProperties. </summary>
         public GraphApiComputeServiceProperties()
         {
+            ServiceType.Assign(CosmosDBServiceType.GraphApiCompute);
         }
 
         /// <summary> Gets or sets the GraphApiComputeEndpoint. </summary>
@@ -49,7 +50,6 @@ namespace Azure.Provisioning.CosmosDB
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("serviceType", new string[] { "serviceType" }, defaultValue: "GraphAPICompute");
             _graphApiComputeEndpoint = DefineProperty<string>(nameof(GraphApiComputeEndpoint), new string[] { "graphApiComputeEndpoint" });
             _locations = DefineListProperty<GraphApiComputeRegionalService>(nameof(Locations), new string[] { "locations" }, isOutput: true);
             DefineAdditionalProperties();

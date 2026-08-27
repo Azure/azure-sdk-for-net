@@ -15,6 +15,7 @@ namespace Azure.Provisioning.CosmosDB
         /// <summary> Creates a new PeriodicModeBackupPolicy. </summary>
         public PeriodicModeBackupPolicy()
         {
+            BackupPolicyType.Assign(CosmosDB.BackupPolicyType.Periodic);
         }
 
         /// <summary> Gets or sets the PeriodicModeProperties. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.CosmosDB
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "Periodic");
             _periodicModeProperties = DefineModelProperty<PeriodicModeProperties>(nameof(PeriodicModeProperties), new string[] { "periodicModeProperties" });
             DefineAdditionalProperties();
         }
