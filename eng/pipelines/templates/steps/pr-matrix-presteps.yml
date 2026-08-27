@@ -76,7 +76,7 @@ steps:
           $reusedGraph = $false
           if (Test-Path -LiteralPath $graphPath) {
             try {
-              # Projection validates commit provenance, Debug+Release input coverage, NuGet
+              # Projection validates commit provenance, Debug input coverage, NuGet
               # completeness, and schema policy before accepting the reusable artifact.
               ./eng/scripts/Create-SparseCheckoutGraph.ps1 `
                 -PackageInfoDirectory "$(Build.ArtifactStagingDirectory)/PackageInfo" `
@@ -98,7 +98,6 @@ steps:
             dotnet msbuild /m /nr:false /nologo /tl:off `
               /t:GenerateRepositoryProjectGraphWithProjectGraph ./eng/service.proj `
               /p:RepositoryProjectGraphReaderPath="$graphPath" `
-              /p:RepositoryProjectGraphConfigurations=Debug+Release `
               /p:SkipServiceProjectImports=true `
               /p:IncludeRepositoryProjectGraphInputs=true `
               /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false `

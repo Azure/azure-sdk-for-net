@@ -97,8 +97,8 @@ if ($packageInfoFiles.Count -eq 0) {
 }
 
 $graph = Get-Content -LiteralPath $graphFullPath -Raw | ConvertFrom-Json -Depth 100
-if ($graph.schemaVersion -ne 4) {
-  throw "Unsupported repository project graph schema version '$($graph.schemaVersion)'. Expected 4."
+if ($graph.schemaVersion -ne 5) {
+  throw "Unsupported repository project graph schema version '$($graph.schemaVersion)'. Expected 5."
 }
 if (-not $graph.diagnostics.isComplete) {
   throw "Repository project graph is incomplete. See diagnostics in '$graphFullPath'."
@@ -112,20 +112,14 @@ if (-not $recordedSourceCommit.Equals($SourceCommit, [System.StringComparison]::
   throw "Repository project graph commit '$recordedSourceCommit' does not match requested sparse-checkout provenance '$SourceCommit'."
 }
 
-# A reusable graph must prove it evaluated every sparse-checkout input dimension. Older or
-# single-configuration artifacts remain valid for their original queries, but cannot narrow CI.
+# A reusable graph must prove it evaluated the Debug inputs used by PR test dependency selection.
 $generationProperty = $graph.diagnostics.PSObject.Properties['generation']
 if ($null -eq $generationProperty -or $null -eq $generationProperty.Value) {
   throw 'Repository project graph does not describe its generation policy.'
 }
 $generation = $generationProperty.Value
-$requestedConfigurations = New-StringSet
-foreach ($configuration in @($generation.configurations)) {
-  $null = $requestedConfigurations.Add([string] $configuration)
-}
-if (-not $generation.includesInputs -or -not $requestedConfigurations.Contains('Debug') -or
-    -not $requestedConfigurations.Contains('Release')) {
-  throw 'Sparse checkout requires a Debug+Release repository graph with evaluated inputs.'
+if (-not $generation.includesInputs -or $generation.configuration -ne 'Debug') {
+  throw 'Sparse checkout requires a Debug repository graph with evaluated inputs.'
 }
 
 $actualCommit = (& git -C $repositoryRoot rev-parse HEAD).Trim()

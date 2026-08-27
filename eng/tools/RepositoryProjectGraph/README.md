@@ -49,7 +49,7 @@ The implementation separates the calculation into three phases:
 
 1. **Evaluate the source graph once.** `RepositoryProjectGraphTask` constructs one in-process MSBuild `ProjectGraph` over the repository projects. It emits canonical inner configurations for each declared TFM and records evaluated `ProjectReference`, `PackageReference`, package version, package identity, and project metadata.
 2. **Complete package-only paths.** CI passes every compile-capable direct package root, including packages produced by this repository, through NuGet's restore engine with the complete evaluated P2P topology. The resulting lock-file targets are flattened to project/TFM-to-repository-package reachability records. This phase does not resolve physical compiler assemblies through RAR.
-3. **Build and query one artifact.** [`RepositoryProjectGraph.ps1`](../../scripts/RepositoryProjectGraph.ps1) writes a schema-versioned graph with diagnostics. Schema 4 contains only repository-relevant `(project, TFM)` reachability edges. Queries traverse each root configuration independently and union the resulting physical package roots only after reachability is complete.
+3. **Build and query one artifact.** [`RepositoryProjectGraph.ps1`](../../scripts/RepositoryProjectGraph.ps1) writes a schema-versioned graph with diagnostics. Schema 5 contains only repository-relevant `(project, TFM)` reachability edges and records the single Debug generation policy. Queries traverse each root configuration independently and union the resulting physical package roots only after reachability is complete.
 
 ```text
 repository projects + declared TFMs
@@ -63,11 +63,11 @@ repository projects + declared TFMs
 
 There is no MSBuild process spawned per inner project. `ProjectGraph` still performs real MSBuild evaluation, including imports, properties, conditions, central package versions, and TFM-specific items; it is not a lightweight XML parser.
 
-Schema 4 intentionally collapses requested build configurations into each project/TFM key only when their node, P2P, and direct-package records are equivalent. Evaluated inputs may differ and are unioned conservatively for sparse checkout. Dependency-only nodes created by additional global properties, or configuration-specific dependency topology, fail generation until a future schema preserves that identity. Use `Debug+Release` for a multi-configuration command-line invocation; MSBuild consumes commas and semicolons as property separators, while the task accepts `+` as an unambiguous delimiter. The artifact records its source commit, requested configurations, and whether inputs were evaluated so consumers can safely reuse only a compatible result.
+The graph always evaluates `Debug`, matching the established `ProjectDependsOn` dependency query, and preserves every declared target framework. This keeps one entry point per physical project while retaining TFM-specific dependencies and inputs. Dependency-only nodes created by additional global properties fail generation until a future schema preserves that identity. The artifact records its source commit, `Debug` generation policy, and whether inputs were evaluated so consumers can safely reuse only a compatible result.
 
 The artifact is a reachability model rather than a dump of restore inputs. It omits external-package edges after the NuGet phase has flattened any paths back to repository packages, merges direct and transitive repository-package reachability, and stores each evaluated input path once per project/TFM set. Restore-only metadata remains in the isolated intermediate records and package-resolution diagnostics instead of being repeated on every JSON edge.
 
-[`RepositoryProjectGraphRecord.cs`](RepositoryProjectGraphRecord.cs) owns the private line-record contract shared by the MSBuild graph and NuGet tasks. Its typed node, P2P, package, input, and derived-package records keep field ordering and validation out of task logic. The intermediate node and reference records contain only properties consumed by either NuGet resolution or the schema-4 artifact builder; NuGet path provenance is collapsed to one repository-package reachability record per project/TFM/package identity.
+[`RepositoryProjectGraphRecord.cs`](RepositoryProjectGraphRecord.cs) owns the private line-record contract shared by the MSBuild graph and NuGet tasks. Its typed node, P2P, package, input, and derived-package records keep field ordering and validation out of task logic. The intermediate node and reference records contain only properties consumed by either NuGet resolution or the schema-5 artifact builder; NuGet path provenance is collapsed to one repository-package reachability record per project/TFM/package identity.
 
 MSBuild outer-build references connect to each concrete destination inner build. The source graph preserves all of those destination configurations rather than applying a repository-owned nearest-framework reduction. This can conservatively over-select configurations, but it cannot discard an edge that MSBuild exposed. NuGet's synthetic P2P metadata remains path-based and deduplicates those records by referenced project, leaving compatibility selection to restore.
 
@@ -109,14 +109,14 @@ The NuGet mode is still marked `restoreEquivalent=false` until broader lock-file
 - Direct `PackageReference` compile asset filters are applied, and the NuGet lock-file traversal records `transitiveDependencyAssetFiltersApplied=true`.
 - The package-only phase does not reproduce all lock-file, RID-specific, conflict-resolution, source-mapping, or other restore behavior. These differences can produce false-positive or false-negative reachability if repository assumptions change.
 - The graph deliberately models the union of declared TFMs and does not add an OS-specific query dimension. Host-dependent MSBuild conditions remain an assumption of the repository analysis.
-- The task currently requires the repository's .NET 10 SDK. A single-configuration source graph has used roughly 2–3 GiB locally; a real Debug+Release input-enabled graph is materially larger. See [`SPARSE_CHECKOUT.md`](SPARSE_CHECKOUT.md) for the current CI-oriented measurement.
+- The task currently requires the repository's .NET 10 SDK. Repository-wide Debug evaluation has used roughly 2–3 GiB without sparse-checkout inputs; input-enabled measurements must be tracked separately. See [`SPARSE_CHECKOUT.md`](SPARSE_CHECKOUT.md) for the current CI validation scope.
 
 ## Performance
 
-Graph evaluation has a substantial fixed memory cost. The current Debug+Release,
-input-enabled sparse-checkout measurement and its validation scope are recorded in
-[`SPARSE_CHECKOUT.md`](SPARSE_CHECKOUT.md). Package-cache state remains a first-order
-runtime variable, so compare cold and warm measurements separately.
+Graph evaluation has a substantial fixed memory cost. Current Debug input-enabled
+sparse-checkout validation is recorded in [`SPARSE_CHECKOUT.md`](SPARSE_CHECKOUT.md).
+Package-cache state remains a first-order runtime variable, so compare cold and warm
+measurements separately.
 
 ## Design trade-off summary
 

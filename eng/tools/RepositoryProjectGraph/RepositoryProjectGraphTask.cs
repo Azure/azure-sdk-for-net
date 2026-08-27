@@ -15,6 +15,8 @@ namespace Azure.Sdk.Tools.RepositoryProjectGraph;
 
 public sealed class RepositoryProjectGraphTask : Task
 {
+    private const string GraphConfiguration = "Debug";
+
     private static readonly string[] s_inputItemTypes =
     {
         "Compile",
@@ -46,8 +48,6 @@ public sealed class RepositoryProjectGraphTask : Task
 
     public int DegreeOfParallelism { get; set; } = 1;
 
-    public string Configurations { get; set; } = string.Empty;
-
     public override bool Execute()
     {
         if (DegreeOfParallelism < 1)
@@ -76,39 +76,22 @@ public sealed class RepositoryProjectGraphTask : Task
             globalProperties["EnableDefaultItems"] = "false";
         }
 
-        string configurationsValue = string.IsNullOrWhiteSpace(Configurations)
-            ? globalProperties.GetValueOrDefault("Configuration", "Debug")
-            : Configurations;
-        string[] configurations = configurationsValue
-            // A plus sign survives MSBuild command-line property parsing. Semicolons remain
-            // supported for direct task invocations, where they are not escaped as "%3B".
-            .Split(new[] { ';', '+' }, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-            .Distinct(StringComparer.OrdinalIgnoreCase)
-            .ToArray();
-        if (configurations.Length == 0)
-        {
-            throw new InvalidOperationException("At least one build configuration is required.");
-        }
+        // Match the established ProjectDependsOn dependency query: evaluate Debug across every
+        // declared TFM. Sparse checkout consumes this same graph rather than adding another build
+        // configuration dimension to repository-wide evaluation.
+        globalProperties["Configuration"] = GraphConfiguration;
         string[] projectPaths = GetFullPaths(Projects);
         ProjectGraphEntryPoint[] entryPoints = projectPaths
-            .SelectMany(path => configurations.Select(configuration =>
-            {
-                var properties = new Dictionary<string, string>(globalProperties, StringComparer.OrdinalIgnoreCase)
-                {
-                    ["Configuration"] = configuration,
-                };
-                return new ProjectGraphEntryPoint(path, properties);
-            }))
+            .Select(path => new ProjectGraphEntryPoint(path, globalProperties))
             .ToArray();
 
-        EvaluateAndWriteRecords(entryPoints, projectPaths, GetFullPaths(RootProjects), configurations);
+        EvaluateAndWriteRecords(entryPoints, projectPaths, GetFullPaths(RootProjects));
     }
 
     private void EvaluateAndWriteRecords(
         ProjectGraphEntryPoint[] entryPoints,
         string[] projectPaths,
-        string[] rootProjectPaths,
-        string[] configurations)
+        string[] rootProjectPaths)
     {
         var options = new ProjectGraphOptions
         {
@@ -130,7 +113,7 @@ public sealed class RepositoryProjectGraphTask : Task
 
             IReadOnlyCollection<ProjectGraphNode> canonicalNodes = GetCanonicalNodes(graph, out GraphStatistics statistics);
             var recordsStopwatch = Stopwatch.StartNew();
-            long recordCount = WriteRecords(projectPaths, rootProjectPaths, canonicalNodes, configurations);
+            long recordCount = WriteRecords(projectPaths, rootProjectPaths, canonicalNodes);
             recordsStopwatch.Stop();
 
             Log.LogMessage(
@@ -261,11 +244,9 @@ public sealed class RepositoryProjectGraphTask : Task
                 ", ",
                 dependencyOnlyNodes.Take(5).Select(FormatConfiguration));
             throw new InvalidOperationException(
-                $"ProjectGraph contains {dependencyOnlyNodes.Length} dependency-only configurations that schema 4 cannot represent: {examples}. " +
+                $"ProjectGraph contains {dependencyOnlyNodes.Length} dependency-only configurations that schema 5 cannot represent: {examples}. " +
                 "Preserve the complete global-property identity before using this graph for dependency selection.");
         }
-
-        ValidateSchemaV4Configurations(canonicalNodes);
 
         statistics = new GraphStatistics(
             graph.ProjectNodes
@@ -280,46 +261,6 @@ public sealed class RepositoryProjectGraphTask : Task
         return canonicalNodes;
     }
 
-    private static void ValidateSchemaV4Configurations(IEnumerable<ProjectGraphNode> nodes)
-    {
-        // Debug and Release may have different evaluated inputs, which are safe to union for checkout.
-        // Dependency topology is not safely monotonic through NuGet version selection, so schema 4
-        // can collapse build configurations only when their dependency-bearing records are equivalent.
-        foreach (IGrouping<string, ProjectGraphNode> group in nodes.GroupBy(
-            node => GetSchemaConfigurationKey(node.ProjectInstance),
-            StringComparer.OrdinalIgnoreCase))
-        {
-            string[] signatures = group
-                .Select(GetDependencySignature)
-                .Distinct(StringComparer.Ordinal)
-                .Take(2)
-                .ToArray();
-            if (signatures.Length <= 1)
-            {
-                continue;
-            }
-
-            string configurations = string.Join(
-                ", ",
-                group.Select(node => node.ProjectInstance.GetPropertyValue("Configuration"))
-                    .Distinct(StringComparer.OrdinalIgnoreCase)
-                    .OrderBy(value => value, StringComparer.OrdinalIgnoreCase));
-            throw new InvalidOperationException(
-                $"Project configuration '{GetSchemaConfigurationKey(group.First().ProjectInstance)}' has conflicting " +
-                $"dependency-bearing records across build configurations [{configurations}]. Schema 4 cannot safely combine them.");
-        }
-    }
-
-    private static string GetDependencySignature(ProjectGraphNode node) => string.Join(
-        '\n',
-        GetDependencyRecords(node)
-            .Select(record => record.Serialize())
-            .Distinct(StringComparer.Ordinal)
-            .OrderBy(record => record, StringComparer.Ordinal));
-
-    private static string GetSchemaConfigurationKey(ProjectInstance project) =>
-        $"{GetProjectPath(project)}|{project.GetPropertyValue("TargetFramework")}";
-
     private static string FormatConfiguration(ProjectGraphNode node)
     {
         ProjectInstance project = node.ProjectInstance;
@@ -330,8 +271,7 @@ public sealed class RepositoryProjectGraphTask : Task
     private long WriteRecords(
         IEnumerable<string> declaredProjects,
         IEnumerable<string> rootProjects,
-        IEnumerable<ProjectGraphNode> nodes,
-        IEnumerable<string> configurations)
+        IEnumerable<ProjectGraphNode> nodes)
     {
         string fullRecordsPath = Path.GetFullPath(RecordsPath);
         string recordsDirectory = Path.GetDirectoryName(fullRecordsPath);
@@ -349,8 +289,8 @@ public sealed class RepositoryProjectGraphTask : Task
                 append: false,
                 new UTF8Encoding(encoderShouldEmitUTF8Identifier: false)))
             {
-                // Debug and Release usually evaluate to identical records. Keep the union here so
-                // the isolated PowerShell artifact builder does not parse duplicate input records.
+                // A path may appear through multiple evaluated items or imports. Emit it once so the
+                // isolated PowerShell artifact builder does not parse duplicate records.
                 var emittedRecords = new HashSet<string>(StringComparer.Ordinal);
                 WriteRecord(
                     writer,
@@ -358,7 +298,7 @@ public sealed class RepositoryProjectGraphTask : Task
                     emittedRecords,
                     RepositoryProjectGraphRecord.Format(
                         RepositoryProjectGraphRecord.GraphGenerationKind,
-                        string.Join(",", configurations.OrderBy(value => value, StringComparer.OrdinalIgnoreCase)),
+                        GraphConfiguration,
                         IncludeInputs.ToString()));
                 foreach (string project in declaredProjects)
                 {
@@ -381,8 +321,7 @@ public sealed class RepositoryProjectGraphTask : Task
 
                 foreach (ProjectGraphNode node in nodes
                     .OrderBy(node => GetProjectPath(node.ProjectInstance), StringComparer.OrdinalIgnoreCase)
-                    .ThenBy(node => node.ProjectInstance.GetPropertyValue("TargetFramework"), StringComparer.OrdinalIgnoreCase)
-                    .ThenBy(node => node.ProjectInstance.GetPropertyValue("Configuration"), StringComparer.OrdinalIgnoreCase))
+                    .ThenBy(node => node.ProjectInstance.GetPropertyValue("TargetFramework"), StringComparer.OrdinalIgnoreCase))
                 {
                     AddProjectRecords(writer, ref recordCount, emittedRecords, node);
                 }
