@@ -23,7 +23,7 @@ namespace Samples
         [global::Azure.Core.ForwardsClientCallsAttribute]
         public virtual string Get(string ifMatch, global::System.Threading.CancellationToken cancellationToken = default)
         {
-            return this.Get((ifMatch is null) ? ((global::Azure.MatchConditions)null) : new global::Azure.MatchConditions
+            return this.Get((ifMatch == null) ? ((global::Azure.MatchConditions)null) : new global::Azure.MatchConditions
             {
                 IfMatch = new global::Azure.ETag(ifMatch)
             }, cancellationToken);

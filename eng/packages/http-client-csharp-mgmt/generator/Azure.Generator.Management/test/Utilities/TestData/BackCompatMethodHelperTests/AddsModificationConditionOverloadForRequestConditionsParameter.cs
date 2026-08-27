@@ -24,7 +24,7 @@ namespace Samples
         [global::Azure.Core.ForwardsClientCallsAttribute]
         public virtual string Get(global::System.DateTimeOffset? ifModifiedSince, global::System.Threading.CancellationToken cancellationToken = default)
         {
-            return this.Get((ifModifiedSince is null) ? ((global::Azure.RequestConditions)null) : new global::Azure.RequestConditions
+            return this.Get((ifModifiedSince == null) ? ((global::Azure.RequestConditions)null) : new global::Azure.RequestConditions
             {
                 IfModifiedSince = ifModifiedSince
             }, cancellationToken);

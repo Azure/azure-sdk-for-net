@@ -110,8 +110,7 @@ namespace Azure.Generator.Management.Utilities
                     {
                         ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
                             code: GeneralWarningDiagnosticCode,
-                            message: $"Could not synthesize backward-compatible overload '{previousMethod.Signature.Name}' on '{enclosingType.Name}'. The previous public method may require a custom overload or ApiCompat suppression.",
-                            targetCrossLanguageDefinitionId: enclosingType.Name);
+                            message: $"Could not synthesize backward-compatible overload '{previousMethod.Signature.Name}' on '{enclosingType.Name}'. The previous public method may require a custom overload or ApiCompat suppression.");
                     }
                     continue;
                 }
@@ -121,8 +120,7 @@ namespace Azure.Generator.Management.Utilities
                 {
                     ManagementClientGenerator.Instance.Emitter.ReportDiagnostic(
                         code: GeneralWarningDiagnosticCode,
-                        message: $"Could not synthesize backward-compatible overload '{previousMethod.Signature.Name}' on '{enclosingType.Name}'. The previous public method may require a custom overload or ApiCompat suppression.",
-                        targetCrossLanguageDefinitionId: enclosingType.Name);
+                        message: $"Could not synthesize backward-compatible overload '{previousMethod.Signature.Name}' on '{enclosingType.Name}'. The previous public method may require a custom overload or ApiCompat suppression.");
                     continue;
                 }
 
@@ -413,22 +411,23 @@ namespace Azure.Generator.Management.Utilities
             var previousSignature = previousMethod.Signature;
             var currentSignature = currentMethod.Signature;
             ParameterProvider? currentConditionalParameter = null;
-            var currentConditionalParameters = new Dictionary<string, ParameterProvider>(StringComparer.OrdinalIgnoreCase);
+            var hasRequiredNonNullableConditionalParameter = false;
             foreach (var parameter in currentSignature.Parameters)
             {
                 var parameterKind = GetConditionalParameterKind(parameter);
                 if (parameterKind is ConditionalParameterKind.ETagHeader or ConditionalParameterKind.MatchConditions or ConditionalParameterKind.RequestConditions)
                 {
                     currentConditionalParameter ??= parameter;
-                }
-
-                if (ConditionalHeaderProperties.ContainsKey(parameter.Name))
-                {
-                    currentConditionalParameters.TryAdd(parameter.Name, parameter);
+                    hasRequiredNonNullableConditionalParameter |= parameter.DefaultValue is null && !parameter.Type.IsNullable;
                 }
             }
             if (currentConditionalParameter is null)
             {
+                return null;
+            }
+            if (hasRequiredNonNullableConditionalParameter)
+            {
+                // Previous optional conditions cannot represent "no condition" when the current condition parameter is required.
                 return null;
             }
 
@@ -464,13 +463,11 @@ namespace Azure.Generator.Management.Utilities
             for (var i = 0; i < previousSignature.Parameters.Count; i++)
             {
                 var previousParameter = previousSignature.Parameters[i];
-                currentConditionalParameters.TryGetValue(previousParameter.Name, out var currentParameter);
                 // When the new overload keeps the conditional parameter optional, drop defaults through the first
                 // converted parameter so calls that omit all conditions bind to the new overload instead of becoming ambiguous.
                 var parameter = CloneParameter(
                     previousParameter,
-                    removeDefault: removeLeadingDefaults && i <= firstConvertedParameter,
-                    wireInfo: currentParameter?.WireInfo);
+                    removeDefault: removeLeadingDefaults && i <= firstConvertedParameter);
                 if (parameterIndexes.ContainsKey(parameter.Name))
                 {
                     return null;
@@ -606,8 +603,8 @@ namespace Azure.Generator.Management.Utilities
                 else
                 {
                     allNull = allNull is null
-                        ? parameter.Is(Null)
-                        : allNull.And(parameter.Is(Null));
+                        ? parameter.Equal(Null)
+                        : allNull.And(parameter.Equal(Null));
                 }
             }
 
@@ -624,8 +621,7 @@ namespace Azure.Generator.Management.Utilities
             ParameterProvider parameter,
             bool removeDefault = false,
             string? name = null,
-            CSharpType? type = null,
-            WireInformation? wireInfo = null)
+            CSharpType? type = null)
         {
             return new(
                 name ?? parameter.Name,
@@ -641,7 +637,7 @@ namespace Azure.Generator.Management.Utilities
                 field: parameter.Field,
                 initializationValue: parameter.InitializationValue,
                 location: parameter.Location,
-                wireInfo: wireInfo ?? parameter.WireInfo,
+                wireInfo: parameter.WireInfo,
                 validation: parameter.Validation,
                 inputParameter: parameter.InputParameter)
             {

@@ -324,7 +324,7 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         }
 
         [Test]
-        public void AddsStringOverloadForRequiredETagParameter()
+        public void DoesNotAddStringOverloadForRequiredNonNullableETagParameter()
         {
             var enclosingType = new TestTypeView("TestClient");
             var current = CreateMethod(
@@ -343,28 +343,6 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
             var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current], [current]);
             var rendered = Render(WithMethods(enclosingType, result.ToArray()));
             Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
-        }
-
-        [Test]
-        public void GeneratedOverloadUsesCurrentConditionalHeaderWireInfo()
-        {
-            var enclosingType = new TestTypeView("TestClient");
-            var currentParameter = new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(ETag), isNullable: true), defaultValue: Default);
-            currentParameter.Update(wireInfo: new WireInformation(default, "If-Match"));
-            var current = CreateMethod(enclosingType, [currentParameter]);
-            var previousParameter = new ParameterProvider("ifMatch", $"The match condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default);
-            previousParameter.Update(wireInfo: new WireInformation(default, "ifMatch"));
-            var previous = CreateMethod(enclosingType, [previousParameter]);
-
-            var lastContractView = new TestTypeView(enclosingType.Name)
-            {
-                MethodsToBuild = [previous]
-            };
-            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
-
-            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current], [current]);
-
-            Assert.That(result[1].Signature.Parameters[0].WireInfo, Is.SameAs(currentParameter.WireInfo));
         }
 
         [Test]
