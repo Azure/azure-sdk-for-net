@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="provisioningState"> The current state of the resource. </param>
         /// <param name="errorDetails"> Error details for the resource. Only populated if resource is in failed state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OccurrenceResourceMetadata(string name, ResourceIdentifier id, string @type, ResourceIdentifier resourceId, IList<NotificationProperties> notificationSettings, DateTimeOffset scheduledOn, ResourceProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OccurrenceResourceMetadata(string name, ResourceIdentifier id, string @type, ResourceIdentifier resourceId, IList<NotificationProperties> notificationSettings, DateTimeOffset scheduledOn, OccurrenceResourceProvisioningState? provisioningState, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Id = id;
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public DateTimeOffset ScheduledOn { get; }
 
         /// <summary> The current state of the resource. </summary>
-        public ResourceProvisioningState? ProvisioningState { get; }
+        public OccurrenceResourceProvisioningState? ProvisioningState { get; }
 
         /// <summary> Error details for the resource. Only populated if resource is in failed state. </summary>
         public ResponseError ErrorDetails { get; }

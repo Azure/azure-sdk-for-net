@@ -25,12 +25,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="expireOn"> Expiry time of Recovery Point in UTC. </param>
         /// <param name="ruleName"> Rule name tagged on Recovery Point that governs life cycle. </param>
         /// <param name="isSoftDeleted"> Bool to indicate whether RP is in soft delete state or not. </param>
+        /// <param name="immutabilityProperties"> Immutability properties of the recovery point. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RecoveryPointProperties(DateTimeOffset? expireOn, string ruleName, bool? isSoftDeleted, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RecoveryPointProperties(DateTimeOffset? expireOn, string ruleName, bool? isSoftDeleted, RecoveryPointImmutabilityProperties immutabilityProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExpireOn = expireOn;
             RuleName = ruleName;
             IsSoftDeleted = isSoftDeleted;
+            ImmutabilityProperties = immutabilityProperties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,5 +44,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Bool to indicate whether RP is in soft delete state or not. </summary>
         public bool? IsSoftDeleted { get; set; }
+
+        /// <summary> Immutability properties of the recovery point. </summary>
+        public RecoveryPointImmutabilityProperties ImmutabilityProperties { get; set; }
     }
 }
