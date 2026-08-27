@@ -65,6 +65,10 @@ restore/build equivalence. The source graph continues to report
   source project. This conservative expansion supplies the recursive source closure
   required when a matrix job sets `UseProjectReferenceToAzureClients=true`, without
   constructing a second MSBuild graph.
+- **Artifact seeds:** every project below an artifact's `PackageInfo.DirectoryPath` is
+  a seed, along with projects that explicitly report that package root. Test projects
+  commonly infer nested roots such as `tests`; using only exact package-root matches
+  would omit test-only dependencies outside the artifact's SDK directory.
 - **Repository packages:** direct and NuGet-derived repository package identity edges
   are retained. `ReferenceOutputAssembly=false` P2P edges remain in the source/input
   graph but are excluded from synthetic NuGet restore metadata.
@@ -162,11 +166,21 @@ Focused validation also showed:
   dependency-only nodes, `ReferenceOutputAssembly=false`, all-inner destination
   edges, analyzer inputs, case-insensitive repository package expansion, transitive
   package edges, stale provenance, duplicate artifacts, and full-checkout fallback.
-  The graph suite passed 15/15 and the sparse projection suite passed 5/5.
+  The graph suite passed 14/14 and the sparse projection suite passed 5/5.
 - a local sparse clone using the Schema Registry closure restored and built the full
   `UseProjectReferenceToAzureClients=true` source closure. Test execution then aborted
   because this arm64 host has no x64 .NET test host, not because a checkout input was
   missing.
+
+The first broad hosted run of the pushed sparse integration passed the engineering
+script CI, matrix generation, and the Windows, Linux, and macOS test jobs except for
+one Linux net9 project-reference batch. That batch selected `System.ClientModel` but
+omitted `common/Perf/Azure.Test.Perf`, a direct dependency of a nested perf test
+project, and then failed to compile its `BenchmarkDotNet` usages. The artifact-seed
+rule above fixes that concrete gap; the real repository graph now reaches all three
+`Azure.Test.Perf` configurations from 23 `System.ClientModel` descendant seed
+configurations. The correction has focused local coverage but has not yet had a
+hosted rerun.
 
 ## Remaining limitations
 
@@ -182,6 +196,7 @@ Focused validation also showed:
 - The corrected real Debug+Release graph has a higher memory cost than the earlier
   escaped single-configuration measurements. Hosted validation should confirm agent
   headroom before enabling this optimization outside the PR test path.
-- Windows and Linux hosted jobs still need end-to-end full-versus-sparse comparisons
-  for net8, net9, net10, and applicable net462 legs across linked-input and
+- The hosted matrix has exercised Windows, Linux, and macOS net8/net9/net10 plus
+  Windows net462 legs, but the corrected artifact seeding still needs a rerun and
+  explicit full-versus-sparse output comparisons across linked-input and
   cross-service representatives.
