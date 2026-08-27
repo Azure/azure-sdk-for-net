@@ -148,11 +148,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The impact end time of the alert (the time of the last event contributing to the alert). </summary>
         [WirePath("properties.endTimeUtc")]
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
         }
 
@@ -178,11 +178,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The time the alert was made available for consumption. </summary>
         [WirePath("properties.processingEndTime")]
-        public DateTimeOffset? ProcessingEndOn
+        public DateTimeOffset? ProcessingEndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.ProcessingEndOn;
+                return Properties is null ? default : Properties.ProcessingEndsOn;
             }
         }
 
@@ -250,11 +250,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The impact start time of the alert (the time of the first event contributing to the alert). </summary>
         [WirePath("properties.startTimeUtc")]
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
