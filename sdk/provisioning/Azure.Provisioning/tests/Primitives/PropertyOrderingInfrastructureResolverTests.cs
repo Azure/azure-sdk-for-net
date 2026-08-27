@@ -18,10 +18,15 @@ public class PropertyOrderingInfrastructureResolverTests
         test.Define(
             new TestResource("example")
             {
+                Parent = "parent",
+                Scope = "scope",
+                Location = "location",
+                Name = "name",
                 Zulu = "last",
                 Child = new TestModel
                 {
                     Zulu = "last",
+                    Name = "middle",
                     Alpha = "first",
                 },
                 Alpha = "first",
@@ -35,6 +40,7 @@ public class PropertyOrderingInfrastructureResolverTests
                     new TestModel
                     {
                         Zulu = "last",
+                        Name = "middle",
                         Alpha = "first",
                     }
                 }
@@ -42,14 +48,20 @@ public class PropertyOrderingInfrastructureResolverTests
             .Compare(
                 """
                 resource example 'Microsoft.Test/examples@2025-01-01' = {
+                  name: 'name'
+                  location: 'location'
+                  scope: 'scope'
+                  parent: 'parent'
                   alpha: 'first'
                   child: {
                     alpha: 'first'
+                    name: 'middle'
                     zulu: 'last'
                   }
                   models: [
                     {
                       alpha: 'first'
+                      name: 'middle'
                       zulu: 'last'
                     }
                   ]
@@ -68,6 +80,34 @@ public class PropertyOrderingInfrastructureResolverTests
             new ResourceType("Microsoft.Test/examples"),
             "2025-01-01")
     {
+        public BicepValue<string> Parent
+        {
+            get { Initialize(); return _parent!; }
+            set { Initialize(); _parent!.Assign(value); }
+        }
+        private BicepValue<string>? _parent;
+
+        public BicepValue<string> Scope
+        {
+            get { Initialize(); return _scope!; }
+            set { Initialize(); _scope!.Assign(value); }
+        }
+        private BicepValue<string>? _scope;
+
+        public BicepValue<string> Location
+        {
+            get { Initialize(); return _location!; }
+            set { Initialize(); _location!.Assign(value); }
+        }
+        private BicepValue<string>? _location;
+
+        public BicepValue<string> Name
+        {
+            get { Initialize(); return _name!; }
+            set { Initialize(); _name!.Assign(value); }
+        }
+        private BicepValue<string>? _name;
+
         public BicepValue<string> Zulu
         {
             get { Initialize(); return _zulu!; }
@@ -106,6 +146,10 @@ public class PropertyOrderingInfrastructureResolverTests
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _parent = DefineProperty<string>("Parent", ["parent"]);
+            _scope = DefineProperty<string>("Scope", ["scope"]);
+            _location = DefineProperty<string>("Location", ["location"]);
+            _name = DefineProperty<string>("Name", ["name"]);
             _zulu = DefineProperty<string>("Zulu", ["zulu"]);
             _child = DefineModelProperty<TestModel>("Child", ["child"]);
             _alpha = DefineProperty<string>("Alpha", ["alpha"]);
@@ -116,6 +160,13 @@ public class PropertyOrderingInfrastructureResolverTests
 
     private sealed class TestModel : ProvisionableConstruct
     {
+        public BicepValue<string> Name
+        {
+            get { Initialize(); return _name!; }
+            set { Initialize(); _name!.Assign(value); }
+        }
+        private BicepValue<string>? _name;
+
         public BicepValue<string> Zulu
         {
             get { Initialize(); return _zulu!; }
@@ -133,6 +184,7 @@ public class PropertyOrderingInfrastructureResolverTests
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _name = DefineProperty<string>("Name", ["name"]);
             _zulu = DefineProperty<string>("Zulu", ["zulu"]);
             _alpha = DefineProperty<string>("Alpha", ["alpha"]);
         }

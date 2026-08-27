@@ -427,7 +427,9 @@ internal sealed class PropertyOrderingInfrastructureResolver : InfrastructureRes
             .. construct.ProvisionableProperties
                 .OrderBy(
                     pair => pair.Value.Self?.BicepPath,
-                    BicepPathComparer.Instance)
+                    construct is ProvisionableResource ?
+                        BicepPathComparer.ResourceInstance :
+                        BicepPathComparer.Instance)
                 .ThenBy(pair => pair.Key, StringComparer.Ordinal)
         ];
 
@@ -491,6 +493,14 @@ internal sealed class PropertyOrderingInfrastructureResolver : InfrastructureRes
     private sealed class BicepPathComparer : IComparer<IReadOnlyList<string>?>
     {
         public static BicepPathComparer Instance { get; } = new();
+        public static BicepPathComparer ResourceInstance { get; } = new(promoteResourceMetadata: true);
+
+        private readonly bool _promoteResourceMetadata;
+
+        private BicepPathComparer(bool promoteResourceMetadata = false)
+        {
+            _promoteResourceMetadata = promoteResourceMetadata;
+        }
 
         public int Compare(IReadOnlyList<string>? x, IReadOnlyList<string>? y)
         {
@@ -507,6 +517,16 @@ internal sealed class PropertyOrderingInfrastructureResolver : InfrastructureRes
                 return 1;
             }
 
+            if (_promoteResourceMetadata)
+            {
+                int priorityComparison = GetResourceMetadataPriority(x)
+                    .CompareTo(GetResourceMetadataPriority(y));
+                if (priorityComparison != 0)
+                {
+                    return priorityComparison;
+                }
+            }
+
             int count = Math.Min(x.Count, y.Count);
             for (int i = 0; i < count; i++)
             {
@@ -519,6 +539,18 @@ internal sealed class PropertyOrderingInfrastructureResolver : InfrastructureRes
 
             return x.Count.CompareTo(y.Count);
         }
+
+        private static int GetResourceMetadataPriority(IReadOnlyList<string> path) =>
+            path.Count == 1 ?
+                path[0] switch
+                {
+                    "name" => 0,
+                    "location" => 1,
+                    "scope" => 2,
+                    "parent" => 3,
+                    _ => 4
+                } :
+                4;
     }
 
     private sealed class ProvisionableConstructReferenceComparer : IEqualityComparer<ProvisionableConstruct>
