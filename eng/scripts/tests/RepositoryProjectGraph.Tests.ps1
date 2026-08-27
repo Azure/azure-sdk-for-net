@@ -44,7 +44,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
 
     It "builds a versioned artifact that unions evaluated target frameworks" {
         $graph = Get-Content -Raw $graphPath | ConvertFrom-Json -Depth 100
-        $graph.schemaVersion | Should -Be 4
+        $graph.schemaVersion | Should -Be 5
         $graph.sourceCommit | Should -Be $sourceCommit
         $graph.diagnostics.isComplete | Should -BeTrue
         $graph.diagnostics.configurationCount | Should -Be 5
@@ -180,11 +180,11 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
     It "rejects unsupported graph schemas" {
         $unsupportedPath = Join-Path $TestDrive "unsupported.json"
         $graph = Get-Content -Raw $graphPath | ConvertFrom-Json -Depth 100
-        $graph.schemaVersion = 5
+        $graph.schemaVersion = 6
         $graph | ConvertTo-Json -Depth 100 | Set-Content $unsupportedPath
         $outputPath = Join-Path $TestDrive "unsupported.txt"
         { & $scriptPath -Operation Reverse -GraphPath $unsupportedPath -Dependencies "Azure.A" -OutputPath $outputPath } |
-            Should -Throw "*schema version '5'*"
+            Should -Throw "*schema version '6'*"
     }
 
     It "diagnoses unevaluated declarations and cross-TFM identity conflicts" {
@@ -393,7 +393,6 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
                                 RootProjects="@(GraphRoot)"
                                 RecordsPath="$taskRecordsPath"
                                 IncludeInputs="true"
-                                Configurations="Debug+Release"
                                 DegreeOfParallelism="2" />
   </Target>
 </Project>
@@ -409,9 +408,9 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $taskGraph = Get-Content -Raw $taskGraphPath | ConvertFrom-Json -Depth 100
         $taskGraph.diagnostics.isComplete | Should -BeTrue
         $taskGraph.diagnostics.configurationGraph.isExact | Should -BeTrue
-        $taskGraph.diagnostics.generation.configurations | Should -Be @("Debug", "Release")
+        $taskGraph.diagnostics.generation.configuration | Should -Be "Debug"
         $taskGraph.diagnostics.generation.includesInputs | Should -BeTrue
-        Get-Content $taskRecordsPath | Should -Contain "GraphGeneration|Debug,Release|True"
+        Get-Content $taskRecordsPath | Should -Contain "GraphGeneration|Debug|True"
         $taskNodeRecord = Get-Content $taskRecordsPath | Where-Object { $_ -like "Node|$fixtureA|net8.0|*" }
         $taskNodeFields = $taskNodeRecord.Split('|')
         $taskNodeFields[13].Split(';') | Should -Contain "NU1605"
@@ -440,9 +439,9 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $analyzerInput.targetFrameworks | Should -Be @("net8.0", "net9.0")
     }
 
-    It "fails closed when build configurations have different dependency topology" {
-        $fixtureRoot = Join-Path $TestDrive "configuration-conflict-fixture"
-        $project = Join-Path $fixtureRoot "Conflict.csproj"
+    It "evaluates Debug even when the invoking build uses Release" {
+        $fixtureRoot = Join-Path $TestDrive "debug-configuration-fixture"
+        $project = Join-Path $fixtureRoot "Configuration.csproj"
         $driverPath = Join-Path $fixtureRoot "driver.proj"
         $recordsPath = Join-Path $fixtureRoot "task.records"
         New-Item -ItemType Directory -Path $fixtureRoot -Force | Out-Null
@@ -453,7 +452,8 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Conditional.Dependency" Version="1.0.0" Condition="'$(Configuration)' == 'Release'" />
+    <PackageReference Include="Debug.Dependency" Version="1.0.0" Condition="'$(Configuration)' == 'Debug'" />
+    <PackageReference Include="Release.Dependency" Version="1.0.0" Condition="'$(Configuration)' == 'Release'" />
   </ItemGroup>
 </Project>
 '@ | Set-Content $project
@@ -467,18 +467,20 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
              AssemblyFile="$taskAssembly" />
   <Target Name="BuildGraph">
     <RepositoryProjectGraphTask Projects="$project"
-                                RecordsPath="$recordsPath"
-                                Configurations="Debug+Release" />
+                                RecordsPath="$recordsPath" />
   </Target>
 </Project>
 "@ | Set-Content $driverPath
 
         & dotnet build $taskProject --no-restore -v:minimal
         $LASTEXITCODE | Should -Be 0
-        $output = & dotnet msbuild -nologo -v:minimal -t:BuildGraph $driverPath 2>&1
-        $LASTEXITCODE | Should -Not -Be 0
-        $output | Out-String | Should -Match "conflicting dependency-bearing records across build configurations"
-        Test-Path $recordsPath | Should -BeFalse
+        & dotnet msbuild -nologo -v:minimal -t:BuildGraph $driverPath /p:Configuration=Release
+        $LASTEXITCODE | Should -Be 0
+        $records = Get-Content $recordsPath
+        $records | Should -Contain "GraphGeneration|Debug|False"
+        $records | Should -Contain "PackageReference|$project|net8.0|Debug.Dependency||||1.0.0"
+        @($records | Where-Object { $_ -like "PackageReference|$project|net8.0|Release.Dependency|*" }) |
+            Should -BeNullOrEmpty
     }
 
     It "fails closed when references create dependency-only global-property configurations" {
@@ -519,8 +521,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
       <GraphProject Include="$projectA;$projectB" />
     </ItemGroup>
     <RepositoryProjectGraphTask Projects="@(GraphProject)"
-                                RecordsPath="$recordsPath"
-                                Configurations="Debug" />
+                                RecordsPath="$recordsPath" />
   </Target>
 </Project>
 "@ | Set-Content $driverPath
@@ -529,7 +530,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $LASTEXITCODE | Should -Be 0
         $output = & dotnet msbuild -nologo -v:minimal -t:BuildGraph $driverPath 2>&1
         $LASTEXITCODE | Should -Not -Be 0
-        $output | Out-String | Should -Match "dependency-only configurations that schema 4 cannot represent"
+        $output | Out-String | Should -Match "dependency-only configurations that schema 5 cannot represent"
         Test-Path $recordsPath | Should -BeFalse
     }
 }
