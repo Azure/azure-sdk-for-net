@@ -122,10 +122,10 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastComplianceStateChangeOn))
+            if (options.Format != "W" && Optional.IsDefined(LastComplianceStateChangedOn))
             {
                 writer.WritePropertyName("lastComplianceStateChangeAt"u8);
-                writer.WriteStringValue(LastComplianceStateChangeOn.Value, "O");
+                writer.WriteStringValue(LastComplianceStateChangedOn.Value, "O");
             }
             if (Optional.IsDefined(AssessOn))
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             string comments = default;
             IList<AttestationEvidence> evidence = default;
             string provisioningState = default;
-            DateTimeOffset? lastComplianceStateChangeOn = default;
+            DateTimeOffset? lastComplianceStateChangedOn = default;
             DateTimeOffset? assessOn = default;
             BinaryData metadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                     {
                         continue;
                     }
-                    lastComplianceStateChangeOn = prop.Value.GetDateTimeOffset("O");
+                    lastComplianceStateChangedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("assessmentDate"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 comments,
                 evidence ?? new ChangeTrackingList<AttestationEvidence>(),
                 provisioningState,
-                lastComplianceStateChangeOn,
+                lastComplianceStateChangedOn,
                 assessOn,
                 metadata,
                 additionalBinaryDataProperties);
