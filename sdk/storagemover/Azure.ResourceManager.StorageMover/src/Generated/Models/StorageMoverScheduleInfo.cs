@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="frequency"> Type of schedule — Monthly, Weekly, or Daily. </param>
         /// <param name="isActive"> Whether the schedule is currently active. </param>
         /// <param name="executionTime"> Time of day to execute (hours and minutes). </param>
-        /// <param name="startOn"> Specific one-time execution date and time. </param>
+        /// <param name="startsOn"> Specific one-time execution date and time. </param>
         /// <param name="daysOfWeek"> Days of the week for weekly schedules. </param>
         /// <param name="daysOfMonth"> Days of the month for monthly schedules. </param>
         /// <param name="cronExpression"> Optional CRON expression for advanced scheduling. </param>
-        /// <param name="endOn"> End time of the schedule (in UTC). </param>
+        /// <param name="endsOn"> End time of the schedule (in UTC). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageMoverScheduleInfo(StorageMoverScheduleFrequency? frequency, bool? isActive, StorageMoverSchedulerTime executionTime, DateTimeOffset? startOn, IList<string> daysOfWeek, IList<int> daysOfMonth, string cronExpression, DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageMoverScheduleInfo(StorageMoverScheduleFrequency? frequency, bool? isActive, StorageMoverSchedulerTime executionTime, DateTimeOffset? startsOn, IList<string> daysOfWeek, IList<int> daysOfMonth, string cronExpression, DateTimeOffset? endsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Frequency = frequency;
             IsActive = isActive;
             ExecutionTime = executionTime;
-            StartOn = startOn;
+            StartsOn = startsOn;
             DaysOfWeek = daysOfWeek;
             DaysOfMonth = daysOfMonth;
             CronExpression = cronExpression;
-            EndOn = endOn;
+            EndsOn = endsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         public StorageMoverSchedulerTime ExecutionTime { get; set; }
 
         /// <summary> Specific one-time execution date and time. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> Days of the week for weekly schedules. </summary>
         public IList<string> DaysOfWeek { get; }
@@ -69,6 +69,6 @@ namespace Azure.ResourceManager.StorageMover.Models
         public string CronExpression { get; set; }
 
         /// <summary> End time of the schedule (in UTC). </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
     }
 }

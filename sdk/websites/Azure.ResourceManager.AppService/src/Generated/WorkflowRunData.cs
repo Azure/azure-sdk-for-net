@@ -43,31 +43,31 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Gets the wait end time. </summary>
         [WirePath("properties.waitEndTime")]
-        public DateTimeOffset? WaitEndOn
+        public DateTimeOffset? WaitEndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.WaitEndOn;
+                return Properties is null ? default : Properties.WaitEndsOn;
             }
         }
 
         /// <summary> Gets the start time. </summary>
         [WirePath("properties.startTime")]
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
         /// <summary> Gets the end time. </summary>
         [WirePath("properties.endTime")]
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
         }
 

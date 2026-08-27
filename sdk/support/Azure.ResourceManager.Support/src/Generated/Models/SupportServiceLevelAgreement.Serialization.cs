@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Support.Models
             {
                 throw new FormatException($"The model {nameof(SupportServiceLevelAgreement)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(SlaInMinutes))
             {
@@ -131,8 +131,8 @@ namespace Azure.ResourceManager.Support.Models
             {
                 return null;
             }
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? expiresOn = default;
             int? slaInMinutes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Support.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expirationTime"u8))
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Support.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("slaMinutes"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Support.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SupportServiceLevelAgreement(startOn, expireOn, slaInMinutes, additionalBinaryDataProperties);
+            return new SupportServiceLevelAgreement(startsOn, expiresOn, slaInMinutes, additionalBinaryDataProperties);
         }
     }
 }
