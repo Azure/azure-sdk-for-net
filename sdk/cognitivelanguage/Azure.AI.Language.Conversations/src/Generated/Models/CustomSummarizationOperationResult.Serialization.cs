@@ -109,7 +109,7 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 return null;
             }
-            DateTimeOffset lastUpdateDateTime = default;
+            DateTimeOffset lastUpdateOn = default;
             ConversationActionState status = default;
             string name = default;
             AnalyzeConversationOperationResultsKind kind = default;
@@ -119,7 +119,7 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 if (prop.NameEquals("lastUpdateDateTime"u8))
                 {
-                    lastUpdateDateTime = prop.Value.GetDateTimeOffset("O");
+                    lastUpdateOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -148,7 +148,7 @@ namespace Azure.AI.Language.Conversations.Models
                 }
             }
             return new CustomSummarizationOperationResult(
-                lastUpdateDateTime,
+                lastUpdateOn,
                 status,
                 name,
                 kind,

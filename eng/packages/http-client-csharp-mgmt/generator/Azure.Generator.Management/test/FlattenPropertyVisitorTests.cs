@@ -946,6 +946,67 @@ namespace Azure.Generator.Mgmt.Tests
             decoratorsProperty!.SetValue(property, new[] { decorator });
         }
 
+        [Test]
+        public void TestPropertyFlattenSkipsDynamicPatchProperty()
+        {
+            var valueProperty = InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                properties: [valueProperty],
+                isDynamicModel: true);
+
+            var propertiesProperty = InputFactory.Property("properties", propertiesModel, isRequired: true, serializedName: "properties");
+            ApplyFlattenDecorator(propertiesProperty);
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                properties: [propertiesProperty],
+                isDynamicModel: true);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel]);
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+
+            RunVisitors(parentProvider);
+
+            Assert.That(parentProvider.Properties.Count(p => p.Name == "Patch"), Is.EqualTo(1));
+            Assert.That(parentProvider.Properties.Any(p => p.Name == "Value"), Is.True);
+        }
+
+        [Test]
+        public void TestSafeFlattenIgnoresDynamicPatchProperty()
+        {
+            var valueProperty = InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value");
+            var wrapperModel = InputFactory.Model(
+                "WrapperModel",
+                properties: [valueProperty],
+                isDynamicModel: true);
+            var wrapperProperty = InputFactory.Property("wrapper", wrapperModel, isRequired: true, serializedName: "wrapper");
+            var parentModel = InputFactory.Model(
+                "ParentModel",
+                properties: [wrapperProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, wrapperModel]);
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+
+            RunVisitors(parentProvider);
+
+            AssertSafeFlattenApplied(parentProvider, "dynamic Patch property");
+        }
+
+        private static void RunVisitors(ModelProvider model)
+        {
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitTypeCore, Is.Not.Null);
+
+            foreach (var visitor in ManagementClientGenerator.Instance.Visitors)
+            {
+                visitTypeCore!.Invoke(visitor, [model]);
+            }
+        }
+
         /// <summary>
         /// Verifies that when all flattened sub-properties are optional (non-required),
         /// the public constructor is kept as a parameterless constructor instead of being removed.
