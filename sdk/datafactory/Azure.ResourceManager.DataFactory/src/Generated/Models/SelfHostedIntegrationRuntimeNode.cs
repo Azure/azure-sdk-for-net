@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="registerOn"> The time at which the integration runtime node was registered in ISO8601 format. </param>
         /// <param name="lastConnectOn"> The most recent time at which the integration runtime was connected in ISO8601 format. </param>
         /// <param name="expireOn"> The time at which the integration runtime will expire in ISO8601 format. </param>
-        /// <param name="lastStartOn"> The time the node last started up. </param>
+        /// <param name="lastStartsOn"> The time the node last started up. </param>
         /// <param name="lastStopOn"> The integration runtime node last stop time. </param>
         /// <param name="lastUpdateResult"> The result of the last integration runtime node update. </param>
         /// <param name="lastStartUpdateOn"> The last time for the integration runtime node update start. </param>
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="concurrentJobsLimit"> Maximum concurrent jobs on the integration runtime node. </param>
         /// <param name="maxConcurrentJobs"> The maximum concurrent jobs in this integration runtime. </param>
         /// <param name="additionalProperties"></param>
-        internal SelfHostedIntegrationRuntimeNode(string nodeName, string machineName, Uri hostServiceUri, SelfHostedIntegrationRuntimeNodeStatus? status, IReadOnlyDictionary<string, string> capabilities, string versionStatus, string version, DateTimeOffset? registerOn, DateTimeOffset? lastConnectOn, DateTimeOffset? expireOn, DateTimeOffset? lastStartOn, DateTimeOffset? lastStopOn, IntegrationRuntimeUpdateResult? lastUpdateResult, DateTimeOffset? lastStartUpdateOn, DateTimeOffset? lastEndUpdateOn, bool? isActiveDispatcher, int? concurrentJobsLimit, int? maxConcurrentJobs, IReadOnlyDictionary<string, BinaryData> additionalProperties)
+        internal SelfHostedIntegrationRuntimeNode(string nodeName, string machineName, Uri hostServiceUri, SelfHostedIntegrationRuntimeNodeStatus? status, IReadOnlyDictionary<string, string> capabilities, string versionStatus, string version, DateTimeOffset? registerOn, DateTimeOffset? lastConnectOn, DateTimeOffset? expireOn, DateTimeOffset? lastStartsOn, DateTimeOffset? lastStopOn, IntegrationRuntimeUpdateResult? lastUpdateResult, DateTimeOffset? lastStartUpdateOn, DateTimeOffset? lastEndUpdateOn, bool? isActiveDispatcher, int? concurrentJobsLimit, int? maxConcurrentJobs, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             NodeName = nodeName;
             MachineName = machineName;
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             RegisterOn = registerOn;
             LastConnectOn = lastConnectOn;
             ExpireOn = expireOn;
-            LastStartOn = lastStartOn;
+            LastStartsOn = lastStartsOn;
             LastStopOn = lastStopOn;
             LastUpdateResult = lastUpdateResult;
             LastStartUpdateOn = lastStartUpdateOn;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         public DateTimeOffset? ExpireOn { get; }
 
         /// <summary> The time the node last started up. </summary>
-        public DateTimeOffset? LastStartOn { get; }
+        public DateTimeOffset? LastStartsOn { get; }
 
         /// <summary> The integration runtime node last stop time. </summary>
         public DateTimeOffset? LastStopOn { get; }

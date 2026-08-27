@@ -575,8 +575,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     folder,
                     default),
                 status,
-                startOn,
-                endOn,
+                default,
+                default,
                 percentComplete,
                 error,
                 default);
@@ -1176,7 +1176,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <returns> A new <see cref="Models.PeriodicTimerSourceInfo"/> instance for mocking. </returns>
         public static PeriodicTimerSourceInfo PeriodicTimerSourceInfo(DateTimeOffset startOn = default, string schedule = default, string topic = default)
         {
-            return new PeriodicTimerSourceInfo(startOn, schedule, topic, default);
+            return new PeriodicTimerSourceInfo(default, schedule, topic, default);
         }
 
         /// <param name="shareId"> The share ID. </param>
@@ -1642,8 +1642,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     folder,
                     default),
                 status,
-                startOn,
-                endOn,
+                default,
+                default,
                 percentComplete,
                 error,
                 default);

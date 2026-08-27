@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 status,
                 errorCode,
                 description,
-                startOn,
+                default,
                 resolutionOn,
                 default);
         }
@@ -1121,7 +1121,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <returns> A new <see cref="Models.ShipmentPickUpContent"/> instance for mocking. </returns>
         public static ShipmentPickUpContent ShipmentPickUpContent(DateTimeOffset startOn = default, DateTimeOffset endOn = default, string shipmentLocation = default)
         {
-            return new ShipmentPickUpContent(startOn, endOn, shipmentLocation, default);
+            return new ShipmentPickUpContent(default, default, shipmentLocation, default);
         }
 
         /// <param name="confirmationNumber"> Confirmation number for the pick up request. </param>
@@ -1702,7 +1702,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                isCancellable is null && isDeletable is null && isShippingAddressEditable is null && reverseShippingDetailsUpdate is null && reverseTransportPreferenceUpdate is null && isPrepareToShipEnabled is null && status is null && delayedStage is null && startOn is null && error is null && details is null && cancellationReason is null && deliveryType is null && deliveryInfoScheduledOn is null && isCancellableWithoutFee is null && areAllDevicesLost is null ? default : new JobProperties(
+                isCancellable is null && isDeletable is null && isShippingAddressEditable is null && reverseShippingDetailsUpdate is null && reverseTransportPreferenceUpdate is null && isPrepareToShipEnabled is null && status is null && delayedStage is null && error is null && details is null && cancellationReason is null && deliveryType is null && deliveryInfoScheduledOn is null && isCancellableWithoutFee is null && areAllDevicesLost is null ? default : new JobProperties(
                     transferType,
                     isCancellable,
                     isDeletable,
@@ -1712,7 +1712,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     isPrepareToShipEnabled,
                     status,
                     delayedStage,
-                    startOn,
+                    default,
                     error,
                     details,
                     cancellationReason,

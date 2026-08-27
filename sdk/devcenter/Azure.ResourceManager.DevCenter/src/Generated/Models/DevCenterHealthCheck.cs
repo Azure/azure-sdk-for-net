@@ -24,18 +24,18 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <summary> Initializes a new instance of <see cref="DevCenterHealthCheck"/>. </summary>
         /// <param name="status"> The status of the health check item. </param>
         /// <param name="displayName"> The display name of this health check item. </param>
-        /// <param name="startOn"> Start time of health check item. </param>
-        /// <param name="endOn"> End time of the health check item. </param>
+        /// <param name="startsOn"> Start time of health check item. </param>
+        /// <param name="endsOn"> End time of the health check item. </param>
         /// <param name="errorType"> The type of error that occurred during this health check. </param>
         /// <param name="recommendedAction"> The recommended action to fix the corresponding error. </param>
         /// <param name="additionalDetails"> Additional details about the health check or the recommended action. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevCenterHealthCheck(DevCenterHealthCheckStatus? status, string displayName, DateTimeOffset? startOn, DateTimeOffset? endOn, string errorType, string recommendedAction, string additionalDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevCenterHealthCheck(DevCenterHealthCheckStatus? status, string displayName, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string errorType, string recommendedAction, string additionalDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             DisplayName = displayName;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             ErrorType = errorType;
             RecommendedAction = recommendedAction;
             AdditionalDetails = additionalDetails;
@@ -49,10 +49,10 @@ namespace Azure.ResourceManager.DevCenter.Models
         public string DisplayName { get; }
 
         /// <summary> Start time of health check item. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> End time of the health check item. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> The type of error that occurred during this health check. </summary>
         public string ErrorType { get; }

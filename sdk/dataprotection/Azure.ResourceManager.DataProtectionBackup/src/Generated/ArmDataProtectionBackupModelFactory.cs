@@ -1258,7 +1258,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.BackupFindRestorableTimeRangeContent"/> instance for mocking. </returns>
         public static BackupFindRestorableTimeRangeContent BackupFindRestorableTimeRangeContent(RestoreSourceDataStoreType sourceDataStoreType = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default)
         {
-            return new BackupFindRestorableTimeRangeContent(sourceDataStoreType, startOn, endOn, default);
+            return new BackupFindRestorableTimeRangeContent(sourceDataStoreType, default, default, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1288,13 +1288,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new BackupFindRestorableTimeRangeResultProperties((restorableTimeRanges ?? new ChangeTrackingList<RestorableTimeRange>()).ToList(), objectType, default);
         }
 
-        /// <param name="startOn"> Start time for the available restore range. </param>
-        /// <param name="endOn"> End time for the available restore range. </param>
+        /// <param name="startsOn"> Start time for the available restore range. </param>
+        /// <param name="endsOn"> End time for the available restore range. </param>
         /// <param name="objectType"></param>
         /// <returns> A new <see cref="Models.RestorableTimeRange"/> instance for mocking. </returns>
-        public static RestorableTimeRange RestorableTimeRange(DateTimeOffset startOn = default, DateTimeOffset endOn = default, string objectType = default)
+        public static RestorableTimeRange RestorableTimeRange(DateTimeOffset startsOn = default, DateTimeOffset endsOn = default, string objectType = default)
         {
-            return new RestorableTimeRange(startOn, endOn, objectType, default);
+            return new RestorableTimeRange(startsOn, endsOn, objectType, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1442,7 +1442,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 dataSourceSetName,
                 dataSourceType,
                 duration,
-                endOn,
+                default,
                 (jobErrorDetails ?? new ChangeTrackingList<DataProtectionBackupUserFacingError>()).ToList(),
                 extendedInfo,
                 isUserTriggered,
@@ -1456,7 +1456,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 restoreType,
                 sourceResourceGroup,
                 sourceSubscriptionId,
-                startOn,
+                default,
                 status,
                 subscriptionId,
                 (supportedActions ?? new ChangeTrackingList<string>()).ToList(),
@@ -1593,7 +1593,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <returns> A new <see cref="Models.BackupInstanceDeletionInfo"/> instance for mocking. </returns>
         public static BackupInstanceDeletionInfo BackupInstanceDeletionInfo(DateTimeOffset? deleteOn = default, DateTimeOffset? billingEndOn = default, DateTimeOffset? scheduledPurgeOn = default, string deleteActivityId = default)
         {
-            return new BackupInstanceDeletionInfo(deleteOn, billingEndOn, scheduledPurgeOn, deleteActivityId, default);
+            return new BackupInstanceDeletionInfo(deleteOn, default, scheduledPurgeOn, deleteActivityId, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2020,7 +2020,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 dataSourceSetName,
                 dataSourceType,
                 duration,
-                endOn,
+                default,
                 default,
                 extendedInfo,
                 isUserTriggered,
@@ -2034,7 +2034,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 restoreType,
                 sourceResourceGroup,
                 sourceSubscriptionId,
-                startOn,
+                default,
                 status,
                 subscriptionId,
                 (supportedActions ?? new ChangeTrackingList<string>()).ToList(),
@@ -2161,7 +2161,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 dataSourceSetName,
                 dataSourceType,
                 duration,
-                endOn,
+                default,
                 default,
                 extendedInfo,
                 isUserTriggered,
@@ -2175,7 +2175,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 restoreType,
                 sourceResourceGroup,
                 sourceSubscriptionId,
-                startOn,
+                default,
                 status,
                 subscriptionId,
                 (supportedActions ?? new ChangeTrackingList<string>()).ToList(),

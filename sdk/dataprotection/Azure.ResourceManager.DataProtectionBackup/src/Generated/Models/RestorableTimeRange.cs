@@ -21,8 +21,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="endOn"> End time for the available restore range. </param>
         public RestorableTimeRange(DateTimeOffset startOn, DateTimeOffset endOn)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startOn;
+            EndsOn = endOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="RestorableTimeRange"/>. </summary>
@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal RestorableTimeRange(DateTimeOffset startOn, DateTimeOffset endOn, string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startOn;
+            EndsOn = endOn;
             ObjectType = objectType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Start time for the available restore range. </summary>
-        public DateTimeOffset StartOn { get; set; }
+        public DateTimeOffset StartsOn { get; set; }
 
         /// <summary> End time for the available restore range. </summary>
-        public DateTimeOffset EndOn { get; set; }
+        public DateTimeOffset EndsOn { get; set; }
 
         /// <summary> Gets or sets the ObjectType. </summary>
         public string ObjectType { get; set; }

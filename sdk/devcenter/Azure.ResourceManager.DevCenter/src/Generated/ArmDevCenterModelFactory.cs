@@ -927,13 +927,13 @@ namespace Azure.ResourceManager.DevCenter.Models
         }
 
         /// <param name="name"> Identifier of a build. </param>
-        /// <param name="startOn"> Start time of the task group. </param>
-        /// <param name="endOn"> End time of the task group. </param>
+        /// <param name="startsOn"> Start time of the task group. </param>
+        /// <param name="endsOn"> End time of the task group. </param>
         /// <param name="status"> The state of an Image Definition Build. </param>
         /// <returns> A new <see cref="Models.DevCenterLatestImageBuild"/> instance for mocking. </returns>
-        public static DevCenterLatestImageBuild DevCenterLatestImageBuild(string name = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DevCenterImageDefinitionBuildStatus? status = default)
+        public static DevCenterLatestImageBuild DevCenterLatestImageBuild(string name = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, DevCenterImageDefinitionBuildStatus? status = default)
         {
-            return new DevCenterLatestImageBuild(name, startOn, endOn, status, default);
+            return new DevCenterLatestImageBuild(name, startsOn, endsOn, status, default);
         }
 
         /// <param name="name"> Name of the task. </param>
@@ -979,22 +979,22 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="imageReference"> The specific image version used by the build. </param>
         /// <param name="status"> The status of the build. </param>
-        /// <param name="startOn"> Start time of the task group. </param>
-        /// <param name="endOn"> End time of the task group. </param>
+        /// <param name="startsOn"> Start time of the task group. </param>
+        /// <param name="endsOn"> End time of the task group. </param>
         /// <param name="errorDetails"> Details for image creation error. Populated when the image creation is not successful. </param>
         /// <returns> A new <see cref="DevCenter.ImageDefinitionBuildData"/> instance for mocking. </returns>
-        public static ImageDefinitionBuildData ImageDefinitionBuildData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DevCenterImageReference imageReference = default, DevCenterImageDefinitionBuildStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DevCenterImageCreationErrorDetails errorDetails = default)
+        public static ImageDefinitionBuildData ImageDefinitionBuildData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DevCenterImageReference imageReference = default, DevCenterImageDefinitionBuildStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, DevCenterImageCreationErrorDetails errorDetails = default)
         {
             return new ImageDefinitionBuildData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                imageReference is null && status is null && startOn is null && endOn is null && errorDetails is null ? default : new ImageDefinitionBuildProperties(
+                imageReference is null && status is null && startsOn is null && endsOn is null && errorDetails is null ? default : new ImageDefinitionBuildProperties(
                     imageReference,
                     status,
-                    startOn,
-                    endOn,
+                    startsOn,
+                    endsOn,
                     errorDetails,
                     default),
                 default);
@@ -1014,12 +1014,12 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="imageReference"> The specific image version used by the build. </param>
         /// <param name="status"> The status of the build. </param>
-        /// <param name="startOn"> Start time of the task group. </param>
-        /// <param name="endOn"> End time of the task group. </param>
+        /// <param name="startsOn"> Start time of the task group. </param>
+        /// <param name="endsOn"> End time of the task group. </param>
         /// <param name="errorDetails"> Details for image creation error. Populated when the image creation is not successful. </param>
         /// <param name="taskGroups"> The list of task groups executed during the image definition build. </param>
         /// <returns> A new <see cref="Models.DevCenterImageDefinitionBuildDetails"/> instance for mocking. </returns>
-        public static DevCenterImageDefinitionBuildDetails DevCenterImageDefinitionBuildDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DevCenterImageReference imageReference = default, DevCenterImageDefinitionBuildStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DevCenterImageCreationErrorDetails errorDetails = default, IEnumerable<DevCenterImageDefinitionBuildTaskGroup> taskGroups = default)
+        public static DevCenterImageDefinitionBuildDetails DevCenterImageDefinitionBuildDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DevCenterImageReference imageReference = default, DevCenterImageDefinitionBuildStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, DevCenterImageCreationErrorDetails errorDetails = default, IEnumerable<DevCenterImageDefinitionBuildTaskGroup> taskGroups = default)
         {
             taskGroups ??= new ChangeTrackingList<DevCenterImageDefinitionBuildTaskGroup>();
 
@@ -1030,8 +1030,8 @@ namespace Azure.ResourceManager.DevCenter.Models
                 systemData,
                 imageReference,
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 errorDetails,
                 (taskGroups ?? new ChangeTrackingList<DevCenterImageDefinitionBuildTaskGroup>()).ToList(),
                 default);
@@ -1039,19 +1039,19 @@ namespace Azure.ResourceManager.DevCenter.Models
 
         /// <param name="name"> The name of the task group. </param>
         /// <param name="status"> The status of the task group. </param>
-        /// <param name="startOn"> Start time of the task group. </param>
-        /// <param name="endOn"> End time of the task group. </param>
+        /// <param name="startsOn"> Start time of the task group. </param>
+        /// <param name="endsOn"> End time of the task group. </param>
         /// <param name="tasks"> The list of tasks executed during the task group. </param>
         /// <returns> A new <see cref="Models.DevCenterImageDefinitionBuildTaskGroup"/> instance for mocking. </returns>
-        public static DevCenterImageDefinitionBuildTaskGroup DevCenterImageDefinitionBuildTaskGroup(string name = default, DevCenterImageDefinitionBuildStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<DevCenterImageDefinitionBuildTask> tasks = default)
+        public static DevCenterImageDefinitionBuildTaskGroup DevCenterImageDefinitionBuildTaskGroup(string name = default, DevCenterImageDefinitionBuildStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<DevCenterImageDefinitionBuildTask> tasks = default)
         {
             tasks ??= new ChangeTrackingList<DevCenterImageDefinitionBuildTask>();
 
             return new DevCenterImageDefinitionBuildTaskGroup(
                 name,
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 (tasks ?? new ChangeTrackingList<DevCenterImageDefinitionBuildTask>()).ToList(),
                 default);
         }
@@ -1060,12 +1060,12 @@ namespace Azure.ResourceManager.DevCenter.Models
         /// <param name="parameters"> Parameters for the task. </param>
         /// <param name="displayName"> Display name to help differentiate multiple instances of the same task. </param>
         /// <param name="id"> ID of the task instance. </param>
-        /// <param name="startOn"> Start time of the task. </param>
-        /// <param name="endOn"> End time of the task. </param>
+        /// <param name="startsOn"> Start time of the task. </param>
+        /// <param name="endsOn"> End time of the task. </param>
         /// <param name="status"> The status of the task. </param>
         /// <param name="logUri"> The URI for retrieving logs for the task execution. </param>
         /// <returns> A new <see cref="Models.DevCenterImageDefinitionBuildTask"/> instance for mocking. </returns>
-        public static DevCenterImageDefinitionBuildTask DevCenterImageDefinitionBuildTask(string name = default, IEnumerable<DevCenterImageDefinitionBuildTaskParametersItem> parameters = default, string displayName = default, string id = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DevCenterImageDefinitionBuildStatus? status = default, Uri logUri = default)
+        public static DevCenterImageDefinitionBuildTask DevCenterImageDefinitionBuildTask(string name = default, IEnumerable<DevCenterImageDefinitionBuildTaskParametersItem> parameters = default, string displayName = default, string id = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, DevCenterImageDefinitionBuildStatus? status = default, Uri logUri = default)
         {
             parameters ??= new ChangeTrackingList<DevCenterImageDefinitionBuildTaskParametersItem>();
 
@@ -1074,8 +1074,8 @@ namespace Azure.ResourceManager.DevCenter.Models
                 (parameters ?? new ChangeTrackingList<DevCenterImageDefinitionBuildTaskParametersItem>()).ToList(),
                 displayName,
                 id,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 status,
                 logUri,
                 default);
@@ -1402,7 +1402,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 name,
                 resourceType,
                 systemData,
-                startOn is null && endOn is null && healthChecks is null ? default : new HealthCheckStatusDetailsProperties(startOn, endOn, (healthChecks ?? new ChangeTrackingList<DevCenterHealthCheck>()).ToList(), default),
+                healthChecks is null ? default : new HealthCheckStatusDetailsProperties(default, default, (healthChecks ?? new ChangeTrackingList<DevCenterHealthCheck>()).ToList(), default),
                 default);
         }
 
@@ -1419,8 +1419,8 @@ namespace Azure.ResourceManager.DevCenter.Models
             return new DevCenterHealthCheck(
                 status,
                 displayName,
-                startOn,
-                endOn,
+                default,
+                default,
                 errorType,
                 recommendedAction,
                 additionalDetails,

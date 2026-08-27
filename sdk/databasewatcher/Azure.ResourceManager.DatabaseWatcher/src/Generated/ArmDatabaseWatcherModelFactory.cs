@@ -146,19 +146,19 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                 default);
         }
 
-        /// <param name="startOn"> The start time of health validation, in UTC. </param>
-        /// <param name="endOn"> The end time of health validation, in UTC. </param>
+        /// <param name="startsOn"> The start time of health validation, in UTC. </param>
+        /// <param name="endsOn"> The end time of health validation, in UTC. </param>
         /// <param name="status"> The current health validation status. </param>
         /// <param name="issues"> The list of issues found by health validation. </param>
         /// <param name="provisioningState"> The provisioning state of the health validation resource. </param>
         /// <returns> A new <see cref="Models.DatabaseWatcherHealthValidationProperties"/> instance for mocking. </returns>
-        public static DatabaseWatcherHealthValidationProperties DatabaseWatcherHealthValidationProperties(DateTimeOffset startOn = default, DateTimeOffset endOn = default, DatabaseWatcherHealthValidationStatus status = default, IEnumerable<DatabaseWatcherHealthValidationIssue> issues = default, DatabaseWatcherResourceProvisioningState? provisioningState = default)
+        public static DatabaseWatcherHealthValidationProperties DatabaseWatcherHealthValidationProperties(DateTimeOffset startsOn = default, DateTimeOffset endsOn = default, DatabaseWatcherHealthValidationStatus status = default, IEnumerable<DatabaseWatcherHealthValidationIssue> issues = default, DatabaseWatcherResourceProvisioningState? provisioningState = default)
         {
             issues ??= new ChangeTrackingList<DatabaseWatcherHealthValidationIssue>();
 
             return new DatabaseWatcherHealthValidationProperties(
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 status,
                 (issues ?? new ChangeTrackingList<DatabaseWatcherHealthValidationIssue>()).ToList(),
                 provisioningState,
