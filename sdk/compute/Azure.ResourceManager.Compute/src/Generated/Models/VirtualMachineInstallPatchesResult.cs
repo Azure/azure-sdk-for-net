@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="installedPatchCount"> The number of patches successfully installed. </param>
         /// <param name="failedPatchCount"> The number of patches that could not be installed due to some issue. See errors for details. </param>
         /// <param name="patches"> The patches that were installed during the operation. </param>
-        /// <param name="startOn"> The UTC timestamp when the operation began. </param>
+        /// <param name="startsOn"> The UTC timestamp when the operation began. </param>
         /// <param name="error"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineInstallPatchesResult(PatchOperationStatus? status, string installationActivityId, VmGuestPatchRebootStatus? rebootStatus, bool? maintenanceWindowExceeded, int? excludedPatchCount, int? notSelectedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, IReadOnlyList<PatchInstallationDetail> patches, DateTimeOffset? startOn, ComputeApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineInstallPatchesResult(PatchOperationStatus? status, string installationActivityId, VmGuestPatchRebootStatus? rebootStatus, bool? maintenanceWindowExceeded, int? excludedPatchCount, int? notSelectedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, IReadOnlyList<PatchInstallationDetail> patches, DateTimeOffset? startsOn, ComputeApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             InstallationActivityId = installationActivityId;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
             InstalledPatchCount = installedPatchCount;
             FailedPatchCount = failedPatchCount;
             Patches = patches;
-            StartOn = startOn;
+            StartsOn = startsOn;
             Error = error;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Compute.Models
         public IReadOnlyList<PatchInstallationDetail> Patches { get; }
 
         /// <summary> The UTC timestamp when the operation began. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The errors that were encountered during execution of the operation. The details array contains the list of them. </summary>
         public ComputeApiError Error { get; }

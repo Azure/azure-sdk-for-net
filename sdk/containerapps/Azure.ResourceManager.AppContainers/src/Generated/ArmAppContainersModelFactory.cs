@@ -2287,7 +2287,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 certificateKeyVaultProperties,
                 certificateValue,
                 certificatePassword,
-                expireOn,
+                default,
                 thumbprint,
                 subjectName,
                 default);
@@ -2368,13 +2368,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="value"> PFX or PEM blob. </param>
         /// <param name="issuer"> Certificate issuer. </param>
         /// <param name="issueOn"> Certificate issue Date. </param>
-        /// <param name="expireOn"> Certificate expiration date. </param>
+        /// <param name="expiresOn"> Certificate expiration date. </param>
         /// <param name="thumbprint"> Certificate thumbprint. </param>
         /// <param name="isValid"> Is the certificate valid?. </param>
         /// <param name="publicKeyHash"> Public key hash. </param>
         /// <param name="certificateType"> The type of the certificate. Allowed values are `ServerSSLCertificate` and `ImagePullTrustedCA`. </param>
         /// <returns> A new <see cref="Models.ContainerAppCertificateProperties"/> instance for mocking. </returns>
-        public static ContainerAppCertificateProperties ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState = default, string deploymentErrors = default, ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties = default, string password = default, string subjectName = default, IEnumerable<string> subjectAlternativeNames = default, byte[] value = default, string issuer = default, DateTimeOffset? issueOn = default, DateTimeOffset? expireOn = default, string thumbprint = default, bool? isValid = default, string publicKeyHash = default, CertificateType? certificateType = default)
+        public static ContainerAppCertificateProperties ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState = default, string deploymentErrors = default, ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties = default, string password = default, string subjectName = default, IEnumerable<string> subjectAlternativeNames = default, byte[] value = default, string issuer = default, DateTimeOffset? issueOn = default, DateTimeOffset? expiresOn = default, string thumbprint = default, bool? isValid = default, string publicKeyHash = default, CertificateType? certificateType = default)
         {
             subjectAlternativeNames ??= new ChangeTrackingList<string>();
 
@@ -2388,7 +2388,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 value,
                 issuer,
                 issueOn,
-                expireOn,
+                expiresOn,
                 thumbprint,
                 isValid,
                 publicKeyHash,
@@ -3294,24 +3294,24 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="status"> Current running State of the job. </param>
-        /// <param name="startOn"> Job execution start time. </param>
-        /// <param name="endOn"> Job execution end time. </param>
+        /// <param name="startsOn"> Job execution start time. </param>
+        /// <param name="endsOn"> Job execution end time. </param>
         /// <param name="template"> Job's execution container. </param>
         /// <param name="reason"> Reason for the current condition of job execution. </param>
         /// <param name="message"> Human readable message indicating details about the current condition of the job execution. </param>
         /// <param name="detailedStatusReplicas"> Replicas in the execution. </param>
         /// <returns> A new <see cref="AppContainers.ContainerAppJobExecutionData"/> instance for mocking. </returns>
-        public static ContainerAppJobExecutionData ContainerAppJobExecutionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, JobExecutionRunningState? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, ContainerAppJobExecutionTemplate template = default, string reason = default, string message = default, IEnumerable<ReplicaExecutionStatus> detailedStatusReplicas = default)
+        public static ContainerAppJobExecutionData ContainerAppJobExecutionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, JobExecutionRunningState? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, ContainerAppJobExecutionTemplate template = default, string reason = default, string message = default, IEnumerable<ReplicaExecutionStatus> detailedStatusReplicas = default)
         {
             return new ContainerAppJobExecutionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                status is null && startOn is null && endOn is null && template is null && detailedStatusReplicas is null && reason is null && message is null ? default : new JobExecutionProperties(
+                status is null && startsOn is null && endsOn is null && template is null && detailedStatusReplicas is null && reason is null && message is null ? default : new JobExecutionProperties(
                     status,
-                    startOn,
-                    endOn,
+                    startsOn,
+                    endsOn,
                     template,
                     new ExecutionStatus((detailedStatusReplicas ?? new ChangeTrackingList<ReplicaExecutionStatus>()).ToList(), default),
                     reason,
@@ -3849,7 +3849,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 value,
                 issuer,
                 issueOn,
-                expireOn,
+                default,
                 thumbprint,
                 isValid,
                 publicKeyHash,
@@ -4244,10 +4244,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 name,
                 resourceType,
                 systemData,
-                status is null && startOn is null && endOn is null && template is null ? default : new JobExecutionProperties(
+                status is null && template is null ? default : new JobExecutionProperties(
                     status,
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     template,
                     default,
                     default,
@@ -4373,7 +4373,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 value,
                 issuer,
                 issueOn,
-                expireOn,
+                default,
                 thumbprint,
                 isValid,
                 publicKeyHash,
@@ -4564,7 +4564,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 default,
                 certificateValue,
                 certificatePassword,
-                expireOn,
+                default,
                 thumbprint,
                 subjectName,
                 default);
@@ -4596,7 +4596,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 value,
                 issuer,
                 issueOn,
-                expireOn,
+                default,
                 thumbprint,
                 isValid,
                 publicKeyHash,

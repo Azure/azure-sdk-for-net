@@ -687,8 +687,8 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 toastString,
                 detailString,
                 helpLink,
-                issueStartOn,
-                issueEndOn,
+                default,
+                default,
                 default);
         }
 

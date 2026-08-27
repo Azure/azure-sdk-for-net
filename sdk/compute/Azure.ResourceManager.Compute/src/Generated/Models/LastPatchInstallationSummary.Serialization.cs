@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("failedPatchCount"u8);
                 writer.WriteNumberValue(FailedPatchCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Compute.Models
             int? pendingPatchCount = default;
             int? installedPatchCount = default;
             int? failedPatchCount = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             DateTimeOffset? lastModifiedOn = default;
             ComputeApiError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedTime"u8))
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Compute.Models
                 pendingPatchCount,
                 installedPatchCount,
                 failedPatchCount,
-                startOn,
+                startsOn,
                 lastModifiedOn,
                 error,
                 additionalBinaryDataProperties);

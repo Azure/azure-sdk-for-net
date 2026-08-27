@@ -150,12 +150,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
-        /// <param name="startOn"> The start date for the budget. </param>
-        /// <param name="endOn"> The end date for the budget. If not provided, we default this to 10 years from the start date. </param>
+        /// <param name="startsOn"> The start date for the budget. </param>
+        /// <param name="endsOn"> The end date for the budget. If not provided, we default this to 10 years from the start date. </param>
         /// <returns> A new <see cref="Models.BudgetTimePeriod"/> instance for mocking. </returns>
-        public static BudgetTimePeriod BudgetTimePeriod(DateTimeOffset startOn = default, DateTimeOffset? endOn = default)
+        public static BudgetTimePeriod BudgetTimePeriod(DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default)
         {
-            return new BudgetTimePeriod(startOn, endOn, default);
+            return new BudgetTimePeriod(startsOn, endsOn, default);
         }
 
         /// <param name="and"> The logical "AND" expression. Must have at least 2 items. </param>
@@ -650,10 +650,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                billingPeriodId is null && usageStartOn is null && usageEndOn is null && resourceRate is null && offerName is null && resourceGroup is null && additionalInfo is null && orderNumber is null && instanceName is null && instanceId is null && currency is null && consumedQuantity is null && unitOfMeasure is null && pretaxCost is null && isEstimated is null && meterId is null && subscriptionGuid is null && subscriptionName is null && accountName is null && departmentName is null && consumedService is null && costCenter is null && additionalProperties is null && publisherName is null && planName is null && isRecurringCharge is null ? default : new MarketplaceProperties(
+                billingPeriodId is null && resourceRate is null && offerName is null && resourceGroup is null && additionalInfo is null && orderNumber is null && instanceName is null && instanceId is null && currency is null && consumedQuantity is null && unitOfMeasure is null && pretaxCost is null && isEstimated is null && meterId is null && subscriptionGuid is null && subscriptionName is null && accountName is null && departmentName is null && consumedService is null && costCenter is null && additionalProperties is null && publisherName is null && planName is null && isRecurringCharge is null ? default : new MarketplaceProperties(
                     billingPeriodId,
-                    usageStartOn,
-                    usageEndOn,
+                    default,
+                    default,
                     resourceRate,
                     offerName,
                     resourceGroup,
@@ -1577,10 +1577,10 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                billingPeriodId is null && usageStartOn is null && usageEndOn is null && azureCharges is null && marketplaceCharges is null && chargesBilledSeparately is null && currency is null && children is null && includedSubscriptions is null && excludedSubscriptions is null ? default : new ManagementGroupAggregatedCostProperties(
+                billingPeriodId is null && azureCharges is null && marketplaceCharges is null && chargesBilledSeparately is null && currency is null && children is null && includedSubscriptions is null && excludedSubscriptions is null ? default : new ManagementGroupAggregatedCostProperties(
                     billingPeriodId,
-                    usageStartOn,
-                    usageEndOn,
+                    default,
+                    default,
                     azureCharges,
                     marketplaceCharges,
                     chargesBilledSeparately,
@@ -1672,8 +1672,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="originalAmount"> The original amount of a lot, Note: This will not be returned for Contributor Organization Type in Multi-Entity consumption commitment. </param>
         /// <param name="closedBalance"> The balance as of the last invoice. </param>
         /// <param name="source"> The source of the lot. </param>
-        /// <param name="startOn"> The date when the lot became effective. </param>
-        /// <param name="expireOn"> The expiration date of a lot. </param>
+        /// <param name="startsOn"> The date when the lot became effective. </param>
+        /// <param name="expiresOn"> The expiration date of a lot. </param>
         /// <param name="poNumber"> The po number of the invoice on which the lot was added. This property is not available for ConsumptionCommitment lots. </param>
         /// <param name="purchasedOn"> The date when the lot was added. </param>
         /// <param name="status"> The status of the lot. </param>
@@ -1688,19 +1688,19 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="usedAmount"> Amount consumed from the commitment. </param>
         /// <param name="eTag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="Models.ConsumptionLotSummary"/> instance for mocking. </returns>
-        public static ConsumptionLotSummary ConsumptionLotSummary(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConsumptionAmount originalAmount = default, ConsumptionAmount closedBalance = default, ConsumptionLotSource? source = default, DateTimeOffset? startOn = default, DateTimeOffset? expireOn = default, string poNumber = default, DateTimeOffset? purchasedOn = default, ConsumptionLotStatus? status = default, string creditCurrency = default, string billingCurrency = default, ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency = default, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = default, ConsumptionReseller reseller = default, bool? isEstimatedBalance = default, string propertiesETag = default, OrganizationType? organizationType = default, ConsumptionAmount usedAmount = default, ETag? eTag = default)
+        public static ConsumptionLotSummary ConsumptionLotSummary(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ConsumptionAmount originalAmount = default, ConsumptionAmount closedBalance = default, ConsumptionLotSource? source = default, DateTimeOffset? startsOn = default, DateTimeOffset? expiresOn = default, string poNumber = default, DateTimeOffset? purchasedOn = default, ConsumptionLotStatus? status = default, string creditCurrency = default, string billingCurrency = default, ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency = default, ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = default, ConsumptionReseller reseller = default, bool? isEstimatedBalance = default, string propertiesETag = default, OrganizationType? organizationType = default, ConsumptionAmount usedAmount = default, ETag? eTag = default)
         {
             return new ConsumptionLotSummary(
                 id,
                 name,
                 resourceType,
                 systemData,
-                originalAmount is null && closedBalance is null && source is null && startOn is null && expireOn is null && poNumber is null && purchasedOn is null && status is null && creditCurrency is null && billingCurrency is null && originalAmountInBillingCurrency is null && closedBalanceInBillingCurrency is null && reseller is null && isEstimatedBalance is null && propertiesETag is null && organizationType is null && usedAmount is null ? default : new LotProperties(
+                originalAmount is null && closedBalance is null && source is null && startsOn is null && expiresOn is null && poNumber is null && purchasedOn is null && status is null && creditCurrency is null && billingCurrency is null && originalAmountInBillingCurrency is null && closedBalanceInBillingCurrency is null && reseller is null && isEstimatedBalance is null && propertiesETag is null && organizationType is null && usedAmount is null ? default : new LotProperties(
                     originalAmount,
                     closedBalance,
                     source,
-                    startOn,
-                    expireOn,
+                    startsOn,
+                    expiresOn,
                     poNumber,
                     purchasedOn,
                     status,
@@ -1897,12 +1897,12 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                originalAmount is null && closedBalance is null && source is null && startOn is null && expireOn is null && poNumber is null && purchasedOn is null && status is null && creditCurrency is null && billingCurrency is null && originalAmountInBillingCurrency is null && closedBalanceInBillingCurrency is null && reseller is null ? default : new LotProperties(
+                originalAmount is null && closedBalance is null && source is null && poNumber is null && purchasedOn is null && status is null && creditCurrency is null && billingCurrency is null && originalAmountInBillingCurrency is null && closedBalanceInBillingCurrency is null && reseller is null ? default : new LotProperties(
                     originalAmount,
                     closedBalance,
                     source,
-                    startOn,
-                    expireOn,
+                    default,
+                    default,
                     poNumber,
                     purchasedOn,
                     status,
