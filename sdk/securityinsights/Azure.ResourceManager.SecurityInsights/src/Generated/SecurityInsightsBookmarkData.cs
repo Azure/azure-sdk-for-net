@@ -226,11 +226,11 @@ namespace Azure.ResourceManager.SecurityInsights
 
         /// <summary> The start time for the query. </summary>
         [WirePath("properties.queryStartTime")]
-        public DateTimeOffset? QueryStartOn
+        public DateTimeOffset? QueryStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.QueryStartOn;
+                return Properties is null ? default : Properties.QueryStartsOn;
             }
             set
             {
@@ -238,17 +238,17 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     Properties = new BookmarkProperties();
                 }
-                Properties.QueryStartOn = value;
+                Properties.QueryStartsOn = value;
             }
         }
 
         /// <summary> The end time for the query. </summary>
         [WirePath("properties.queryEndTime")]
-        public DateTimeOffset? QueryEndOn
+        public DateTimeOffset? QueryEndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.QueryEndOn;
+                return Properties is null ? default : Properties.QueryEndsOn;
             }
             set
             {
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 {
                     Properties = new BookmarkProperties();
                 }
-                Properties.QueryEndOn = value;
+                Properties.QueryEndsOn = value;
             }
         }
 
