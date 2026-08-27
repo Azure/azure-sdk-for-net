@@ -208,7 +208,7 @@ if ($LASTEXITCODE -ne 0) {
 }
 
 # Attach each tracked evaluated input to the configurations that consume it. Repository package
-# identities also receive their shipping project's inputs directly for a complete path projection.
+# identities expand to their shipping configurations below, so paths have one canonical owner.
 foreach ($graphInput in $graph.inputs) {
   $projectPath = [string] $graphInput.projectPath
   if (-not $nodesByPath.ContainsKey($projectPath)) {
@@ -235,7 +235,6 @@ foreach ($graphInput in $graph.inputs) {
   if ($inputFrameworkCount -eq 0) {
     throw "Tracked input '$inputPath' has no target-framework configurations."
   }
-
 }
 
 $adjacency = @{}
