@@ -392,22 +392,5 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 Properties.ServiceManagedResourcesCosmosDBCollectionsThroughput = value;
             }
         }
-
-        /// <summary> Gets or sets the EncryptionKeyIdentifier. </summary>
-        public string EncryptionKeyIdentifier
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EncryptionKeyIdentifier;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new MachineLearningWorkspacePropertiesPatch();
-                }
-                Properties.EncryptionKeyIdentifier = value;
-            }
-        }
     }
 }

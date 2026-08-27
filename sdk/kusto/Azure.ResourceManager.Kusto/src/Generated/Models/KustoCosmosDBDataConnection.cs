@@ -159,11 +159,11 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> Optional. If defined, the data connection retrieves Cosmos DB documents created or updated after the specified retrieval start date. </summary>
         [WirePath("properties.retrievalStartDate")]
-        public DateTimeOffset? RetrievalStartOn
+        public DateTimeOffset? RetrievalStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.RetrievalStartOn;
+                return Properties is null ? default : Properties.RetrievalStartsOn;
             }
             set
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 {
                     Properties = new CosmosDBDataConnectionProperties();
                 }
-                Properties.RetrievalStartOn = value;
+                Properties.RetrievalStartsOn = value;
             }
         }
 
