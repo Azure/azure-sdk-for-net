@@ -123,7 +123,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // on disk for the next run rather than dropping it.
             tracerProvider.Dispose();
 
-            Assert.Equal(1, CountStoredPayloads());
+            AssertStoredPayloadCount(1);
         }
 
         [Fact]
@@ -213,7 +213,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             // Previously this inherited the pipeline's 100 second network timeout.
             Assert.True(stopwatch.Elapsed < TimeSpan.FromSeconds(15), $"Shutdown took {stopwatch.Elapsed}.");
-            Assert.Equal(1, CountStoredPayloads());
+            AssertStoredPayloadCount(1);
         }
 
         [Fact]
@@ -243,7 +243,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 // What a short-lived application configures: Dispose passes a finite timeout, and a
                 // zero budget stops that window being spent waiting on the drain.
                 Assert.True(stopwatch.Elapsed < TimeSpan.FromSeconds(1), $"Dispose took {stopwatch.Elapsed}.");
-                Assert.Equal(1, CountStoredPayloads());
+                AssertStoredPayloadCount(1);
             }
             finally
             {
@@ -267,7 +267,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             serviceProvider.GetRequiredService<LoggerProvider>().Shutdown();
 
             Assert.Empty(transport.Requests);
-            Assert.Equal(1, CountStoredPayloads());
+            AssertStoredPayloadCount(1);
         }
 
         [Fact]
@@ -288,7 +288,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 serviceProvider.GetRequiredService<LoggerProvider>().ForceFlush();
 
                 Assert.Empty(transport.Requests);
-                Assert.Equal(1, CountStoredPayloads());
+                AssertStoredPayloadCount(1);
             }
             finally
             {
@@ -314,7 +314,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             meterProvider.Shutdown();
 
             Assert.Empty(transport.Requests);
-            Assert.Equal(1, CountStoredPayloads());
+            AssertStoredPayloadCount(1);
         }
 
         [Fact]
@@ -452,7 +452,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 // The default budget would spend up to two seconds of Dispose's window waiting on a
                 // drain that cannot finish.
                 Assert.True(stopwatch.Elapsed < TimeSpan.FromSeconds(1), $"Dispose took {stopwatch.Elapsed}.");
-                Assert.Equal(1, CountStoredPayloads());
+                AssertStoredPayloadCount(1);
             }
             finally
             {
@@ -484,12 +484,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
-        /// Counts telemetry still on disk. A drain that failed or was cut short leaves the blob
-        /// leased rather than deleted, and a leased blob is renamed to ".lock".
+        /// Asserts on telemetry still on disk. A drain that failed or was cut short leaves the blob
+        /// leased rather than deleted, and a leased blob is renamed to ".lock". Names are reported
+        /// because the count alone does not say whether an extra file is a second write or a lease.
         /// </summary>
-        private int CountStoredPayloads()
-            => Directory.GetFiles(_storageRoot, "*.blob", SearchOption.AllDirectories).Length
-                + Directory.GetFiles(_storageRoot, "*.lock", SearchOption.AllDirectories).Length;
+        private void AssertStoredPayloadCount(int expected)
+        {
+            var stored = StoredPayloadNames();
+
+            Assert.True(
+                stored.Length == expected,
+                $"Expected {expected} stored payload(s), found {stored.Length}: {string.Join(", ", stored)}");
+        }
+
+        private string[] StoredPayloadNames()
+            => Directory.GetFiles(_storageRoot, "*.blob", SearchOption.AllDirectories)
+                .Concat(Directory.GetFiles(_storageRoot, "*.lock", SearchOption.AllDirectories))
+                .Select(path => Path.GetFileName(path) ?? path)
+                .OrderBy(name => name, StringComparer.Ordinal)
+                .ToArray();
 
         private void EmitActivity()
         {
