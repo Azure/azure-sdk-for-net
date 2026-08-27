@@ -96,6 +96,31 @@ public partial class StorageAccount : ProvisionableResource
         }
     }
 
+    /// <summary> Gets the status of the storage account at the time the operation was called. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is obsoleted and will be removed in a future version. Please use StorageAccountProvisioningState instead.")]
+    [CodeGenMember("ProvisioningState")]
+#pragma warning disable CS0618 // Compatibility property intentionally uses the obsolete shipped enum.
+    public BicepValue<StorageProvisioningState> ProvisioningState
+#pragma warning restore CS0618
+    {
+        get
+        {
+            Properties ??= new StorageAccountProperties();
+            return Properties.LegacyProvisioningState;
+        }
+    }
+
+    /// <summary> Gets the status of the storage account at the time the operation was called. </summary>
+    public BicepValue<StorageAccountProvisioningState> StorageAccountProvisioningState
+    {
+        get
+        {
+            Properties ??= new StorageAccountProperties();
+            return Properties.ProvisioningState;
+        }
+    }
+
     /// <summary> Gets or sets the custom domain assigned to this storage account. </summary>
     [CodeGenMember("CustomDomain")]
     public StorageCustomDomain CustomDomain

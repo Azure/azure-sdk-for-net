@@ -17,6 +17,9 @@ internal partial class StorageAccountProperties
     private StorageAccountEncryption _encryption;
     private BicepValue<StorageAccountAccessTier> _accessTier;
     private StorageAccountNetworkRuleSet _networkRuleSet;
+#pragma warning disable CS0618 // Compatibility property intentionally uses the obsolete shipped enum.
+    private BicepValue<StorageProvisioningState> _legacyProvisioningState;
+#pragma warning restore CS0618
 
     // TypeSpec generates a nested resource list named PrivateEndpointConnections, but the shipped new API names it PrivateEndpointConnectionResources.
     private BicepList<StoragePrivateEndpointConnection> _privateEndpointConnectionResources;
@@ -90,6 +93,13 @@ internal partial class StorageAccountProperties
         set { Initialize(); KeyPolicy.KeyExpirationPeriodInDays = value; }
     }
 
+#pragma warning disable CS0618 // Compatibility property intentionally uses the obsolete shipped enum.
+    internal BicepValue<StorageProvisioningState> LegacyProvisioningState
+#pragma warning restore CS0618
+    {
+        get { Initialize(); return _legacyProvisioningState; }
+    }
+
     partial void DefineAdditionalProperties()
     {
         // The create body makes these properties writable, but the resource model marks them as read-only. Remove this
@@ -104,5 +114,9 @@ internal partial class StorageAccountProperties
         // Both output aliases share the response path because they preserve the shipped new and old views of the same wire property.
         _privateEndpointConnectionResources = DefineListProperty<StoragePrivateEndpointConnection>(nameof(PrivateEndpointConnectionResources), new string[] { "privateEndpointConnections" }, isOutput: true, isRequired: false);
         _privateEndpointConnections = DefineListProperty<StoragePrivateEndpointConnectionData>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true, isRequired: false);
+
+#pragma warning disable CS0618 // Compatibility property registration intentionally uses the obsolete shipped enum.
+        _legacyProvisioningState = DefineProperty<StorageProvisioningState>(nameof(LegacyProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+#pragma warning restore CS0618
     }
 }

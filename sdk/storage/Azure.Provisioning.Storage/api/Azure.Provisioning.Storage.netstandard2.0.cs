@@ -564,7 +564,7 @@ namespace Azure.Provisioning.Storage
     {
         public FileShare(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.FileShareAccessTier> AccessTier { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> AccessTierChangeOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> AccessTierChangedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> AccessTierStatus { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> DeletedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.FileShareEnabledProtocol> EnabledProtocol { get { throw null; } set { } }
@@ -1186,7 +1186,8 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.BicepList<Azure.Provisioning.Storage.StoragePrivateEndpointConnection> PrivateEndpointConnectionResources { get { throw null; } }
         [System.ObsoleteAttribute("This property is obsoleted and will be removed in a future version. Please use PrivateEndpointConnectionResources instead.")]
         public Azure.Provisioning.BicepList<Azure.Provisioning.Storage.StoragePrivateEndpointConnectionData> PrivateEndpointConnections { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageAccountProvisioningState> ProvisioningState { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsoleted and will be removed in a future version. Please use StorageAccountProvisioningState instead.")]
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StoragePublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.Storage.StorageRoutingPreference RoutingPreference { get { throw null; } set { } }
         public Azure.Provisioning.Storage.StorageAccountSasPolicy SasPolicy { get { throw null; } set { } }
@@ -1195,6 +1196,7 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.Storage.StorageSku Sku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageAccountStatus> StatusOfPrimary { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageAccountStatus> StatusOfSecondary { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.StorageAccountProvisioningState> StorageAccountProvisioningState { get { throw null; } }
         public Azure.Provisioning.Storage.StorageAccountSkuConversionStatus StorageAccountSkuConversionStatus { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
@@ -1866,7 +1868,7 @@ namespace Azure.Provisioning.Storage
         public StorageServiceAccessPolicy() { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Permission { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class StorageSignedIdentifier : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1970,7 +1972,7 @@ namespace Azure.Provisioning.Storage
         public StorageTableAccessPolicy() { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Permission { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class StorageTableSignedIdentifier : Azure.Provisioning.Primitives.ProvisionableConstruct

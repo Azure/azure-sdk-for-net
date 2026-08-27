@@ -210,19 +210,6 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<StorageAccountProvisioningState> ProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new StorageAccountProperties();
-                }
-                return Properties.ProvisioningState;
-            }
-        }
-
         /// <summary> Gets the PrimaryEndpoints. </summary>
         public StorageAccountEndpoints PrimaryEndpoints
         {
