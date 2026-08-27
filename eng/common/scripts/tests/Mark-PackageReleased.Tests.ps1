@@ -8,6 +8,11 @@ Describe "Mark-PackageReleased.ps1" {
                 [object[]] $Arguments
             )
 
+            if ($Arguments.Count -eq 1 -and $Arguments[0] -eq "--version") {
+                $global:LASTEXITCODE = 0
+                return $global:AzSdkVersion
+            }
+
             $global:CapturedAzSdkArguments = @($Arguments)
             $global:CapturedAzSdkInvocations += ,@($Arguments)
             $global:LASTEXITCODE = $global:AzSdkExitCode
@@ -17,11 +22,13 @@ Describe "Mark-PackageReleased.ps1" {
 
     AfterAll {
         Remove-Item Function:\azsdk -ErrorAction SilentlyContinue
-        Remove-Variable AzSdkExitCode, AzSdkOutput, CapturedAzSdkArguments, CapturedAzSdkInvocations -Scope Global -ErrorAction SilentlyContinue
+        Remove-Variable AzSdkExitCode, AzSdkOutput, AzSdkVersion, CapturedAzSdkArguments, CapturedAzSdkInvocations, LanguageShort -Scope Global -ErrorAction SilentlyContinue
     }
 
     BeforeEach {
+        $global:LanguageShort = "python"
         $global:AzSdkExitCode = 0
+        $global:AzSdkVersion = "0.6.38"
         $global:AzSdkOutput = '{"operation_status":"Succeeded","api_review_hub":{"packageVersionId":"version123","isReleased":true},"api_view":{"revisionId":"revision456","isReleased":true}}'
         $global:CapturedAzSdkArguments = @()
         $global:CapturedAzSdkInvocations = @()
@@ -34,7 +41,7 @@ Describe "Mark-PackageReleased.ps1" {
     }
 
     It "passes package-info release inputs to azsdk" {
-        & $scriptPath -Language python -PackageInfoFiles $packageInfoPath -RepoOwner Azure
+        & $scriptPath -PackageInfoFiles $packageInfoPath -RepoOwner Azure
 
         ($global:CapturedAzSdkArguments -join "|") | Should Be (@(
             "package", "mark-released",
@@ -49,7 +56,7 @@ Describe "Mark-PackageReleased.ps1" {
     }
 
     It "omits the optional repository owner" {
-        & $scriptPath -Language java -PackageInfoFiles $packageInfoPath
+        & $scriptPath -PackageInfoFiles $packageInfoPath
 
         ($global:CapturedAzSdkArguments -join "|") | Should Not Match "--repo-owner"
     }
@@ -59,7 +66,7 @@ Describe "Mark-PackageReleased.ps1" {
         $packageInfo.PSObject.Properties.Remove("ApiHash")
         $packageInfo | ConvertTo-Json | Set-Content $packageInfoPath
 
-        & $scriptPath -Language python -PackageInfoFiles $packageInfoPath
+        & $scriptPath -PackageInfoFiles $packageInfoPath
 
         $global:CapturedAzSdkInvocations.Count | Should Be 1
         ($global:CapturedAzSdkArguments -join "|") | Should Not Match "--api-hash"
@@ -70,7 +77,7 @@ Describe "Mark-PackageReleased.ps1" {
         $caughtError = $null
 
         try {
-            & $scriptPath -Language python -PackageInfoFiles $packageInfoPath -AzSdkExePath $missingExecutable
+            & $scriptPath -PackageInfoFiles $packageInfoPath -AzSdkExePath $missingExecutable
         }
         catch {
             $caughtError = $_
@@ -80,8 +87,23 @@ Describe "Mark-PackageReleased.ps1" {
         $caughtError.Exception.Message | Should Match "azsdk CLI executable was not found"
     }
 
+    It "fails when the azsdk version is unsupported" {
+        $global:AzSdkVersion = "0.6.37"
+        $caughtError = $null
+
+        try {
+            & $scriptPath -PackageInfoFiles $packageInfoPath
+        }
+        catch {
+            $caughtError = $_
+        }
+
+        $caughtError.Exception.Message | Should Match "version 0.6.38 or later is required"
+        $global:CapturedAzSdkInvocations.Count | Should Be 0
+    }
+
     It "shows both backend results" {
-        $messages = @(& $scriptPath -Language python -PackageInfoFiles $packageInfoPath 6>&1) |
+        $messages = @(& $scriptPath -PackageInfoFiles $packageInfoPath 6>&1) |
             ForEach-Object { "$_" }
 
         [Array]::IndexOf($messages, "API Review Hub") | Should BeLessThan ([Array]::IndexOf($messages, "APIView"))
@@ -95,7 +117,7 @@ Describe "Mark-PackageReleased.ps1" {
         $caughtError = $null
 
         try {
-            & $scriptPath -Language python -PackageInfoFiles $packageInfoPath
+            & $scriptPath -PackageInfoFiles $packageInfoPath
         }
         catch {
             $caughtError = $_
@@ -111,7 +133,7 @@ Describe "Mark-PackageReleased.ps1" {
         $caughtError = $null
 
         try {
-            & $scriptPath -Language python -PackageInfoFiles $packageInfoPath
+            & $scriptPath -PackageInfoFiles $packageInfoPath
         }
         catch {
             $caughtError = $_
@@ -124,7 +146,7 @@ Describe "Mark-PackageReleased.ps1" {
     It "accepts a successful response with a missing backend result" {
         $global:AzSdkOutput = '{"operation_status":"Succeeded","api_review_hub":{"packageVersionId":"version123"},"api_view":null}'
 
-        { & $scriptPath -Language python -PackageInfoFiles $packageInfoPath } | Should Not Throw
+        { & $scriptPath -PackageInfoFiles $packageInfoPath } | Should Not Throw
     }
 
     It "marks every explicitly supplied package-info file" {
@@ -135,7 +157,7 @@ Describe "Mark-PackageReleased.ps1" {
             ApiHash = "def456"
         } | ConvertTo-Json | Set-Content $secondPackageInfoPath
 
-        & $scriptPath -Language python -PackageInfoFiles @($packageInfoPath, $secondPackageInfoPath)
+        & $scriptPath -PackageInfoFiles @($packageInfoPath, $secondPackageInfoPath)
 
         $global:CapturedAzSdkInvocations.Count | Should Be 2
         ($global:CapturedAzSdkInvocations[0] -join "|") | Should Match "--package-name\|azure-test\|--package-version\|1.0.0.*--api-hash\|abc123"
@@ -146,7 +168,7 @@ Describe "Mark-PackageReleased.ps1" {
         $invalidPackageInfoPath = Join-Path $TestDrive "invalid.json"
         Set-Content $invalidPackageInfoPath "not json"
 
-        { & $scriptPath -Language python -PackageInfoFiles @($invalidPackageInfoPath, $packageInfoPath) } |
+        { & $scriptPath -PackageInfoFiles @($invalidPackageInfoPath, $packageInfoPath) } |
             Should Throw
 
         $global:CapturedAzSdkInvocations.Count | Should Be 1

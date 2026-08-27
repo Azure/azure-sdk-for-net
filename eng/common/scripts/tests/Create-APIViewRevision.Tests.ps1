@@ -36,10 +36,11 @@ Describe "Create-APIViewRevision.ps1" {
         Remove-Item Function:\Find-Unknown-Artifacts-For-Apireview -ErrorAction SilentlyContinue
         Remove-Item Function:\az -ErrorAction SilentlyContinue
         Remove-Item Function:\Invoke-WebRequest -ErrorAction SilentlyContinue
-        Remove-Variable TestPackagePath, ApiViewRequests -Scope Global -ErrorAction SilentlyContinue
+        Remove-Variable TestPackagePath, ApiViewRequests, LanguageShort -Scope Global -ErrorAction SilentlyContinue
     }
 
     BeforeEach {
+        $global:LanguageShort = "Python"
         $testRoot = Join-Path $TestDrive "artifacts"
         $packageName = "test-package"
         $packageDirectory = Join-Path $testRoot $packageName
@@ -73,7 +74,7 @@ Describe "Create-APIViewRevision.ps1" {
     }
 
     It "creates a revision from a review token when one exists" {
-        Set-Content -Path (Join-Path $packageDirectory "${packageName}_Unknown.json") -Value "{}"
+        Set-Content -Path (Join-Path $packageDirectory "${packageName}_Python.json") -Value "{}"
 
         & $scriptPath -ArtifactPath $testRoot -PackageName $packageName -SourceBranch main -DefaultBranch main -BuildId 123 -RepoName Azure/test
 
@@ -82,13 +83,13 @@ Describe "Create-APIViewRevision.ps1" {
         $global:ApiViewRequests[0].Uri | Should Match "buildId=123"
         $global:ApiViewRequests[0].Uri | Should Match "repoName=Azure%2ftest"
         $global:ApiViewRequests[0].Uri | Should Match "packageName=test-package"
-        $global:ApiViewRequests[0].Uri | Should Match "reviewFilePath=test-package_Unknown.json"
+        $global:ApiViewRequests[0].Uri | Should Match "reviewFilePath=test-package_Python.json"
         $global:ApiViewRequests[0].Uri | Should Not Match "setReleaseTag"
         $global:ApiViewRequests[0].MaximumRetryCount | Should Be 3
     }
 
     It "requires pipeline metadata when creating from a review token" {
-        Set-Content -Path (Join-Path $packageDirectory "${packageName}_Unknown.json") -Value "{}"
+        Set-Content -Path (Join-Path $packageDirectory "${packageName}_Python.json") -Value "{}"
 
         $caughtError = $null
         try {

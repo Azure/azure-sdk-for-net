@@ -5,9 +5,6 @@ Checks whether a package is approved for release.
 .DESCRIPTION
 Invokes the centralized Azure SDK CLI API review release gate and fails unless its structured result approves the package.
 
-.PARAMETER Language
-The SDK language used to locate the package's API review.
-
 .PARAMETER PackageInfoFiles
 Package-info JSON files containing the package name, version, and optional API hash.
 
@@ -21,10 +18,6 @@ The path to the azsdk executable.
 param (
     [Parameter(Mandatory = $true)]
     [ValidateNotNullOrEmpty()]
-    [string] $Language,
-
-    [Parameter(Mandatory = $true)]
-    [ValidateNotNullOrEmpty()]
     [array] $PackageInfoFiles,
 
     [string] $RepoOwner = "",
@@ -35,6 +28,8 @@ param (
 
 Set-StrictMode -Version 4
 $ErrorActionPreference = "Stop"
+
+. (Join-Path $PSScriptRoot common.ps1)
 
 function Write-BackendStatus([string] $Name, [object] $Status) {
     if ($null -eq $Status) {
@@ -82,66 +77,11 @@ function Write-ApprovalSummary([object] $Response) {
     Write-Host "  Reason: $reason"
 }
 
-function Format-CommandArgument([string] $Argument) {
-    if ($Argument -match '[\s"'']') {
-        return '"' + $Argument.Replace('"', '\"') + '"'
-    }
-    return $Argument
-}
-
-function Invoke-AzSdkCommand([string] $Executable, [string[]] $Arguments) {
-    $command = Get-Command $Executable -ErrorAction SilentlyContinue
-    if (-not $command) {
-        throw "The azsdk CLI executable was not found at '$Executable'. Install azsdk before checking package approval."
-    }
-
-    if ($command.CommandType -ne [System.Management.Automation.CommandTypes]::Application) {
-        $output = @(& $command @Arguments 2>&1)
-        return [PSCustomObject]@{
-            ExitCode = $LASTEXITCODE
-            Output = ($output | ForEach-Object { "$_" }) -join [Environment]::NewLine
-            Stdout = ($output | ForEach-Object { "$_" }) -join [Environment]::NewLine
-            Stderr = ""
-        }
-    }
-
-    $startInfo = [System.Diagnostics.ProcessStartInfo]::new()
-    $startInfo.FileName = $command.Source
-    $startInfo.UseShellExecute = $false
-    $startInfo.RedirectStandardOutput = $true
-    $startInfo.RedirectStandardError = $true
-    $startInfo.CreateNoWindow = $true
-
-    if ($startInfo.PSObject.Properties["ArgumentList"]) {
-        foreach ($argument in $Arguments) {
-            $startInfo.ArgumentList.Add($argument)
-        }
-    }
-    else {
-        $formattedArguments = @($Arguments | ForEach-Object { Format-CommandArgument $_ })
-        $startInfo.Arguments = $formattedArguments -join " "
-    }
-
-    $process = [System.Diagnostics.Process]::Start($startInfo)
-    $stdoutTask = $process.StandardOutput.ReadToEndAsync()
-    $stderrTask = $process.StandardError.ReadToEndAsync()
-    $process.WaitForExit()
-    $stdout = $stdoutTask.GetAwaiter().GetResult()
-    $stderr = $stderrTask.GetAwaiter().GetResult()
-
-    return [PSCustomObject]@{
-        ExitCode = $process.ExitCode
-        Output = if (-not [string]::IsNullOrWhiteSpace($stdout)) { $stdout } else { $stderr }
-        Stdout = $stdout
-        Stderr = $stderr
-    }
-}
-
 function Test-PackageApproval([string] $PackageName, [string] $PackageVersion, [string] $ApiHash) {
     $arguments = @(
         "package",
         "get-approval-status",
-        "--language", $Language,
+        "--language", $LanguageShort,
         "--package-name", $PackageName,
         "--package-version", $PackageVersion,
         "--output", "json"
@@ -156,11 +96,11 @@ function Test-PackageApproval([string] $PackageName, [string] $PackageVersion, [
     }
 
     $hashDescription = if ([string]::IsNullOrWhiteSpace($ApiHash)) { "not provided" } else { $ApiHash }
-    Write-Host "Checking package approval: language=$Language, package=$PackageName, version=$PackageVersion, apiHash=$hashDescription"
+    Write-Host "Checking package approval: language=$LanguageShort, package=$PackageName, version=$PackageVersion, apiHash=$hashDescription"
     $formattedArguments = @($arguments | ForEach-Object { Format-CommandArgument $_ })
     Write-Host "Command: azsdk $($formattedArguments -join ' ')"
 
-    $commandResult = Invoke-AzSdkCommand $AzSdkExePath $arguments
+    $commandResult = Invoke-AzSdkCliCommand $AzSdkExePath $arguments
     $exitCode = $commandResult.ExitCode
 
     try {
@@ -205,6 +145,7 @@ if ($packageInfoPaths.Count -eq 0) {
     throw "At least one package-info file is required."
 }
 
+Confirm-AzSdkCliMinimumVersion $AzSdkExePath ([version] "0.6.38")
 $failures = @()
 foreach ($packageInfoFile in $packageInfoPaths) {
     try {

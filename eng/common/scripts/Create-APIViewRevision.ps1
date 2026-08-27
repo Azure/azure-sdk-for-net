@@ -30,6 +30,7 @@ param (
 Set-StrictMode -Version 4
 $ErrorActionPreference = "Stop"
 
+# Loads LanguageShort from eng/scripts/Language-Settings.ps1.
 . (Join-Path $PSScriptRoot common.ps1)
 
 function Get-ApiViewBearerToken {

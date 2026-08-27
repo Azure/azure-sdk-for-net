@@ -8,6 +8,11 @@ Describe "Get-PackageApprovalStatus.ps1" {
                 [object[]] $Arguments
             )
 
+            if ($Arguments.Count -eq 1 -and $Arguments[0] -eq "--version") {
+                $global:LASTEXITCODE = 0
+                return $global:AzSdkVersion
+            }
+
             $global:CapturedAzSdkArguments = @($Arguments)
             $global:CapturedAzSdkInvocations += ,@($Arguments)
             $global:LASTEXITCODE = $global:AzSdkExitCode
@@ -17,11 +22,13 @@ Describe "Get-PackageApprovalStatus.ps1" {
 
     AfterAll {
         Remove-Item Function:\azsdk -ErrorAction SilentlyContinue
-        Remove-Variable AzSdkExitCode, AzSdkOutput, CapturedAzSdkArguments, CapturedAzSdkInvocations -Scope Global -ErrorAction SilentlyContinue
+        Remove-Variable AzSdkExitCode, AzSdkOutput, AzSdkVersion, CapturedAzSdkArguments, CapturedAzSdkInvocations, LanguageShort -Scope Global -ErrorAction SilentlyContinue
     }
 
     BeforeEach {
+        $global:LanguageShort = "python"
         $global:AzSdkExitCode = 0
+        $global:AzSdkVersion = "0.6.38"
         $global:AzSdkOutput = '{"operation_status":"Succeeded","result":{"isApproved":true,"finalSource":"reviewHub","reason":"approved"}}'
         $global:CapturedAzSdkArguments = @()
         $global:CapturedAzSdkInvocations = @()
@@ -37,7 +44,7 @@ Describe "Get-PackageApprovalStatus.ps1" {
         $packageInfo | Add-Member -NotePropertyName ApiHash -NotePropertyValue abc123
         $packageInfo | ConvertTo-Json | Set-Content $packageInfoPath
 
-        & $scriptPath -Language python -PackageInfoFiles $packageInfoPath -RepoOwner Contoso
+        & $scriptPath -PackageInfoFiles $packageInfoPath -RepoOwner Contoso
 
         ($global:CapturedAzSdkArguments -join "|") | Should Be (@(
             "package", "get-approval-status",
@@ -51,7 +58,7 @@ Describe "Get-PackageApprovalStatus.ps1" {
     }
 
     It "omits the API hash when it is unavailable" {
-        & $scriptPath -Language java -PackageInfoFiles $packageInfoPath
+        & $scriptPath -PackageInfoFiles $packageInfoPath
 
         ($global:CapturedAzSdkArguments -join "|") | Should Not Match "--api-hash"
         ($global:CapturedAzSdkArguments -join "|") | Should Not Match "--repo-owner"
@@ -62,7 +69,7 @@ Describe "Get-PackageApprovalStatus.ps1" {
         $caughtError = $null
 
         try {
-            & $scriptPath -Language python -PackageInfoFiles $packageInfoPath -AzSdkExePath $missingExecutable
+            & $scriptPath -PackageInfoFiles $packageInfoPath -AzSdkExePath $missingExecutable
         }
         catch {
             $caughtError = $_
@@ -72,13 +79,28 @@ Describe "Get-PackageApprovalStatus.ps1" {
         $caughtError.Exception.Message | Should Match "azsdk CLI executable was not found"
     }
 
+    It "fails when the azsdk version is unsupported" {
+        $global:AzSdkVersion = "0.6.36"
+        $caughtError = $null
+
+        try {
+            & $scriptPath -PackageInfoFiles $packageInfoPath
+        }
+        catch {
+            $caughtError = $_
+        }
+
+        $caughtError.Exception.Message | Should Match "version 0.6.38 or later is required"
+        $global:CapturedAzSdkInvocations.Count | Should Be 0
+    }
+
     It "fails when azsdk returns a nonzero exit code" {
         $global:AzSdkExitCode = 1
         $global:AzSdkOutput = '{"operation_status":"Failed","response_error":"distinct raw command output"}'
         $caughtError = $null
 
         try {
-            & $scriptPath -Language python -PackageInfoFiles $packageInfoPath
+            & $scriptPath -PackageInfoFiles $packageInfoPath
         }
         catch {
             $caughtError = $_
@@ -92,7 +114,7 @@ Describe "Get-PackageApprovalStatus.ps1" {
         $packageInfo = Get-Content $packageInfoPath -Raw | ConvertFrom-Json
         $packageInfo.Name = "azure test"
         $packageInfo | ConvertTo-Json | Set-Content $packageInfoPath
-        $messages = @(& $scriptPath -Language python -PackageInfoFiles $packageInfoPath 6>&1)
+        $messages = @(& $scriptPath -PackageInfoFiles $packageInfoPath 6>&1)
 
         ($messages -join [Environment]::NewLine) | Should Match 'Command: azsdk package get-approval-status --language python --package-name "azure test" --package-version 1.0.0 --output json'
     }
@@ -100,7 +122,7 @@ Describe "Get-PackageApprovalStatus.ps1" {
     It "shows Review Hub and APIView results before the overall result" {
         $global:AzSdkOutput = '{"operation_status":"Succeeded","result":{"isApproved":true,"finalSource":"APIView","reason":"approved","reviewHub":{"isApproved":false,"reason":"repositoryNotSupported","statusCode":200},"apiView":{"isApproved":true,"reason":"approved","statusCode":200,"details":["API review is approved."]}}}'
 
-        $messages = @(& $scriptPath -Language python -PackageInfoFiles $packageInfoPath 6>&1) |
+        $messages = @(& $scriptPath -PackageInfoFiles $packageInfoPath 6>&1) |
             ForEach-Object { "$_" }
 
         [Array]::IndexOf($messages, "API Review Hub") | Should BeLessThan ([Array]::IndexOf($messages, "APIView"))
@@ -114,7 +136,7 @@ Describe "Get-PackageApprovalStatus.ps1" {
         $caughtError = $null
 
         try {
-            & $scriptPath -Language python -PackageInfoFiles $packageInfoPath
+            & $scriptPath -PackageInfoFiles $packageInfoPath
         }
         catch {
             $caughtError = $_
@@ -127,14 +149,14 @@ Describe "Get-PackageApprovalStatus.ps1" {
     It "fails when the response is malformed" {
         $global:AzSdkOutput = "not json"
 
-        { & $scriptPath -Language python -PackageInfoFiles $packageInfoPath } |
+        { & $scriptPath -PackageInfoFiles $packageInfoPath } |
             Should Throw
     }
 
     It "fails when a successful CLI invocation reports an unapproved result" {
         $global:AzSdkOutput = '{"operation_status":"Succeeded","result":{"isApproved":false,"finalSource":"none","reason":"pending"}}'
 
-        { & $scriptPath -Language python -PackageInfoFiles $packageInfoPath } |
+        { & $scriptPath -PackageInfoFiles $packageInfoPath } |
             Should Throw
     }
 
@@ -145,7 +167,7 @@ Describe "Get-PackageApprovalStatus.ps1" {
         $global:AzSdkExitCode = 1
         $global:AzSdkOutput = '{"operation_status":"Failed","response_error":"Package is not approved."}'
 
-        $messages = @(& $scriptPath -Language python -PackageInfoFiles $packageInfoPath 6>&1)
+        $messages = @(& $scriptPath -PackageInfoFiles $packageInfoPath 6>&1)
 
         ($messages -join [Environment]::NewLine) | Should Match "azure-test 1.0.0 is not marked for release. Ignoring approval check failure"
         $global:CapturedAzSdkInvocations.Count | Should Be 1
@@ -154,14 +176,14 @@ Describe "Get-PackageApprovalStatus.ps1" {
     It "fails when the response contract is missing the result" {
         $global:AzSdkOutput = '{"operation_status":"Succeeded"}'
 
-        { & $scriptPath -Language python -PackageInfoFiles $packageInfoPath } |
+        { & $scriptPath -PackageInfoFiles $packageInfoPath } |
             Should Throw
     }
 
     It "fails when the approval decision is not Boolean" {
         $global:AzSdkOutput = '{"operation_status":"Succeeded","result":{"isApproved":"false"}}'
 
-        { & $scriptPath -Language python -PackageInfoFiles $packageInfoPath } |
+        { & $scriptPath -PackageInfoFiles $packageInfoPath } |
             Should Throw
     }
 
@@ -173,7 +195,7 @@ Describe "Get-PackageApprovalStatus.ps1" {
             ApiHash = "def456"
         } | ConvertTo-Json | Set-Content $secondPackageInfoPath
 
-        & $scriptPath -Language python -PackageInfoFiles @($packageInfoPath, $secondPackageInfoPath)
+        & $scriptPath -PackageInfoFiles @($packageInfoPath, $secondPackageInfoPath)
 
         $global:CapturedAzSdkInvocations.Count | Should Be 2
         ($global:CapturedAzSdkInvocations[0] -join "|") | Should Match "--package-name\|azure-test\|--package-version\|1.0.0"
@@ -184,7 +206,7 @@ Describe "Get-PackageApprovalStatus.ps1" {
         $invalidPackageInfoPath = Join-Path $TestDrive "invalid.json"
         Set-Content $invalidPackageInfoPath "not json"
 
-        { & $scriptPath -Language python -PackageInfoFiles @($invalidPackageInfoPath, $packageInfoPath) } |
+        { & $scriptPath -PackageInfoFiles @($invalidPackageInfoPath, $packageInfoPath) } |
             Should Throw
 
         $global:CapturedAzSdkInvocations.Count | Should Be 1

@@ -1,6 +1,4 @@
 parameters:
-  - name: Language
-    type: string
   - name: PackageInfoFiles
     type: object
   - name: RepoOwner
@@ -42,7 +40,6 @@ steps:
       scriptPath: ${{ parameters.SourceRootPath }}/eng/common/scripts/Mark-PackageReleased.ps1
       # PackageInfoFiles example: @('a/file1.json','a/file2.json')
       arguments: >
-        -Language '${{ parameters.Language }}'
         -PackageInfoFiles @('${{ join(''',''', parameters.PackageInfoFiles) }}')
         -RepoOwner '${{ parameters.RepoOwner }}'
         -AzSdkExePath '$(AZSDK)'
