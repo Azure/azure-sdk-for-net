@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(State))
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Sql.Models
             string operationFriendlyName = default;
             int? percentComplete = default;
             string serverName = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             ManagementOperationState? state = default;
             int? errorCode = default;
             string errorDescription = default;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("state"u8))
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Sql.Models
                 operationFriendlyName,
                 percentComplete,
                 serverName,
-                startOn,
+                startsOn,
                 state,
                 errorCode,
                 errorDescription,
