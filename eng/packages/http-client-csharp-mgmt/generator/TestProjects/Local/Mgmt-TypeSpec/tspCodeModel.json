@@ -9446,6 +9446,10 @@
           "arguments": {}
         },
         {
+          "name": "TypeSpec.HttpClient.CSharp.@dynamicModel",
+          "arguments": {}
+        },
+        {
           "name": "Azure.ClientGenerator.Core.@clientOption",
           "arguments": {
             "name": "resource-rbac-roles",
@@ -22136,10 +22140,20 @@
             "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "MgmtTypeSpec.MultiFlattenProperties",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
-            "doc": "Properties model with a safe-flattened sub-model and a customized property.",
+            "doc": "Properties model with a safe-flattened sub-model and a customized property.\nAlso marked with",
             "decorators": [
               {
                 "name": "Azure.ResourceManager.@armProviderNamespace",
+                "arguments": {}
+              },
+              {
+                "name": "Azure.ClientGenerator.Core.@useSystemTextJsonConverter",
+                "arguments": {
+                  "scope": "csharp"
+                }
+              },
+              {
+                "name": "TypeSpec.HttpClient.CSharp.@dynamicModel",
                 "arguments": {}
               }
             ],
