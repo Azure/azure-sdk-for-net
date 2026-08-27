@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Describes the docker settings for the image. </summary>
         [WirePath("docker")]
-        public DockerSetting Docker { get; set; }
+        internal DockerSetting Docker { get; set; }
 
         /// <summary> Configuring the endpoints for the container. </summary>
         [WirePath("endpoints")]
@@ -77,5 +77,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
+
+        /// <summary> Indicate whether container shall run in privileged or non-privileged mode. </summary>
+        [WirePath("docker.privileged")]
+        public bool? Privileged
+        {
+            get
+            {
+                return Docker is null ? default : Docker.Privileged;
+            }
+            set
+            {
+                if (Docker is null)
+                {
+                    Docker = new DockerSetting();
+                }
+                Docker.Privileged = value;
+            }
+        }
     }
 }

@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Initializes a new instance of <see cref="RemoteSupportSession"/>. </summary>
         /// <param name="sessionId"> Unique session Id. </param>
-        /// <param name="sessionStartOn"> The start time of the remote support session, in UTC. </param>
-        /// <param name="sessionEndOn"> The end time of the remote support session, in UTC. </param>
+        /// <param name="sessionStartsOn"> The start time of the remote support session, in UTC. </param>
+        /// <param name="sessionEndsOn"> The end time of the remote support session, in UTC. </param>
         /// <param name="accessLevel"> The level of access granted during the remote support session. </param>
         /// <param name="transcriptLocation"> The location where the session transcript is stored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RemoteSupportSession(string sessionId, DateTimeOffset? sessionStartOn, DateTimeOffset? sessionEndOn, RemoteSupportAccessLevel? accessLevel, string transcriptLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RemoteSupportSession(string sessionId, DateTimeOffset? sessionStartsOn, DateTimeOffset? sessionEndsOn, RemoteSupportAccessLevel? accessLevel, string transcriptLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SessionId = sessionId;
-            SessionStartOn = sessionStartOn;
-            SessionEndOn = sessionEndOn;
+            SessionStartsOn = sessionStartsOn;
+            SessionEndsOn = sessionEndsOn;
             AccessLevel = accessLevel;
             TranscriptLocation = transcriptLocation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> The start time of the remote support session, in UTC. </summary>
         [WirePath("sessionStartTime")]
-        public DateTimeOffset? SessionStartOn { get; }
+        public DateTimeOffset? SessionStartsOn { get; }
 
         /// <summary> The end time of the remote support session, in UTC. </summary>
         [WirePath("sessionEndTime")]
-        public DateTimeOffset? SessionEndOn { get; }
+        public DateTimeOffset? SessionEndsOn { get; }
 
         /// <summary> The level of access granted during the remote support session. </summary>
         [WirePath("accessLevel")]

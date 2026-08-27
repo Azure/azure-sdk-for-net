@@ -41,9 +41,9 @@ namespace Azure.ResourceManager.Astro.Models
         /// <param name="termUnit"> Plan Display Name for the marketplace offer. </param>
         /// <param name="termId"> Plan Display Name for the marketplace offer. </param>
         /// <param name="renewalMode"> Subscription renewal mode. </param>
-        /// <param name="endOn"> Current subscription end date and time. </param>
+        /// <param name="endsOn"> Current subscription end date and time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AstroOfferDetails(string publisherId, string offerId, string planId, string planName, string termUnit, string termId, AstroRenewalMode? renewalMode, DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AstroOfferDetails(string publisherId, string offerId, string planId, string planName, string termUnit, string termId, AstroRenewalMode? renewalMode, DateTimeOffset? endsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublisherId = publisherId;
             OfferId = offerId;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Astro.Models
             TermUnit = termUnit;
             TermId = termId;
             RenewalMode = renewalMode;
-            EndOn = endOn;
+            EndsOn = endsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.Astro.Models
         public AstroRenewalMode? RenewalMode { get; set; }
 
         /// <summary> Current subscription end date and time. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
     }
 }

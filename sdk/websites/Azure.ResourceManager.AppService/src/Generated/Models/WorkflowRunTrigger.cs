@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="outputs"> Gets the outputs. </param>
         /// <param name="outputsLink"> Gets the link to outputs. </param>
         /// <param name="scheduledOn"> Gets the scheduled time. </param>
-        /// <param name="startOn"> Gets the start time. </param>
-        /// <param name="endOn"> Gets the end time. </param>
+        /// <param name="startsOn"> Gets the start time. </param>
+        /// <param name="endsOn"> Gets the end time. </param>
         /// <param name="trackingId"> Gets the tracking id. </param>
         /// <param name="correlation"> The run correlation. </param>
         /// <param name="code"> Gets the code. </param>
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="error"> Gets the error. </param>
         /// <param name="trackedProperties"> Gets the tracked properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowRunTrigger(string name, BinaryData inputs, WebAppContentLink inputsLink, BinaryData outputs, WebAppContentLink outputsLink, DateTimeOffset? scheduledOn, DateTimeOffset? startOn, DateTimeOffset? endOn, string trackingId, Correlation correlation, string code, WorkflowStatus? status, BinaryData error, BinaryData trackedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WorkflowRunTrigger(string name, BinaryData inputs, WebAppContentLink inputsLink, BinaryData outputs, WebAppContentLink outputsLink, DateTimeOffset? scheduledOn, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string trackingId, Correlation correlation, string code, WorkflowStatus? status, BinaryData error, BinaryData trackedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Inputs = inputs;
@@ -47,8 +47,8 @@ namespace Azure.ResourceManager.AppService.Models
             Outputs = outputs;
             OutputsLink = outputsLink;
             ScheduledOn = scheduledOn;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             TrackingId = trackingId;
             Correlation = correlation;
             Code = code;
@@ -134,11 +134,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the start time. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> Gets the end time. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Gets the tracking id. </summary>
         [WirePath("trackingId")]

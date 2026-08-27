@@ -32,20 +32,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="percentComplete"> Percent of the operation that is complete. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="startsOn"> The start time of the operation. </param>
+        /// <param name="endsOn"> The end time of the operation. </param>
         /// <param name="operations"> The operations list. </param>
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkBootstrapDeviceResyncPasswordsResult(ResourceIdentifier id, string name, string status, double? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<NetworkFabricOperationStatusResult> operations, ResponseError error, ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkBootstrapDeviceResyncPasswordsResult(ResourceIdentifier id, string name, string status, double? percentComplete, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IReadOnlyList<NetworkFabricOperationStatusResult> operations, ResponseError error, ResourceIdentifier resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Name = name;
             Status = status;
             PercentComplete = percentComplete;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Operations = operations;
             Error = error;
             ResourceId = resourceId;
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         public double? PercentComplete { get; }
 
         /// <summary> The start time of the operation. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The end time of the operation. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> The operations list. </summary>
         public IReadOnlyList<NetworkFabricOperationStatusResult> Operations { get; }

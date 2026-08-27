@@ -31,6 +31,6 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks.Models
         }
 
         /// <summary> Gets the AdditionalProperties. </summary>
-        public IDictionary<string, BinaryData> AdditionalProperties { get; } = new ChangeTrackingDictionary<string, BinaryData>();
+        public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;
     }
 }

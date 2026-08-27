@@ -170,11 +170,11 @@ namespace Azure.ResourceManager.PolicyInsights
         }
 
         /// <summary> The time the compliance state was last changed in this attestation. </summary>
-        public DateTimeOffset? LastComplianceStateChangeOn
+        public DateTimeOffset? LastComplianceStateChangedOn
         {
             get
             {
-                return Properties is null ? default : Properties.LastComplianceStateChangeOn;
+                return Properties is null ? default : Properties.LastComplianceStateChangedOn;
             }
         }
 

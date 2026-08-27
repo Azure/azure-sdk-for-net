@@ -144,10 +144,10 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastStartOn))
+            if (options.Format != "W" && Optional.IsDefined(LastStartsOn))
             {
                 writer.WritePropertyName("lastStartTime"u8);
-                writer.WriteStringValue(LastStartOn.Value, "O");
+                writer.WriteStringValue(LastStartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastStopOn))
             {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DateTimeOffset? registerOn = default;
             DateTimeOffset? lastConnectOn = default;
             DateTimeOffset? expireOn = default;
-            DateTimeOffset? lastStartOn = default;
+            DateTimeOffset? lastStartsOn = default;
             DateTimeOffset? lastStopOn = default;
             IntegrationRuntimeUpdateResult? lastUpdateResult = default;
             DateTimeOffset? lastStartUpdateOn = default;
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    lastStartOn = prop.Value.GetDateTimeOffset("O");
+                    lastStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastStopTime"u8))
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 registerOn,
                 lastConnectOn,
                 expireOn,
-                lastStartOn,
+                lastStartsOn,
                 lastStopOn,
                 lastUpdateResult,
                 lastStartUpdateOn,

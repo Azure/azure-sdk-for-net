@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.Support.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SupportServiceLevelAgreement"/>. </summary>
-        /// <param name="startOn"> Time in UTC (ISO 8601 format) when the service level agreement starts. </param>
-        /// <param name="expireOn"> Time in UTC (ISO 8601 format) when the service level agreement expires. </param>
+        /// <param name="startsOn"> Time in UTC (ISO 8601 format) when the service level agreement starts. </param>
+        /// <param name="expiresOn"> Time in UTC (ISO 8601 format) when the service level agreement expires. </param>
         /// <param name="slaInMinutes"> Service Level Agreement in minutes. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SupportServiceLevelAgreement(DateTimeOffset? startOn, DateTimeOffset? expireOn, int? slaInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SupportServiceLevelAgreement(DateTimeOffset? startsOn, DateTimeOffset? expiresOn, int? slaInMinutes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            ExpireOn = expireOn;
+            StartsOn = startsOn;
+            ExpiresOn = expiresOn;
             SlaInMinutes = slaInMinutes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Time in UTC (ISO 8601 format) when the service level agreement starts. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> Time in UTC (ISO 8601 format) when the service level agreement expires. </summary>
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpiresOn { get; }
 
         /// <summary> Service Level Agreement in minutes. </summary>
         public int? SlaInMinutes { get; }

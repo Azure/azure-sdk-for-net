@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="title"> The plain text title for the lab announcement. </param>
         /// <param name="markdown"> The markdown text (if any) that this lab displays in the UI. If left empty/null, nothing will be shown. </param>
         /// <param name="enabled"> Is the lab announcement active/enabled at this time?. </param>
-        /// <param name="expireOn"> The time at which the announcement expires (null for never). </param>
+        /// <param name="expiresOn"> The time at which the announcement expires (null for never). </param>
         /// <param name="isExpired"> Has this announcement expired?. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabAnnouncement(string title, string markdown, DevTestLabEnableStatus? enabled, DateTimeOffset? expireOn, bool? isExpired, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevTestLabAnnouncement(string title, string markdown, DevTestLabEnableStatus? enabled, DateTimeOffset? expiresOn, bool? isExpired, string provisioningState, Guid? uniqueIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Title = title;
             Markdown = markdown;
             Enabled = enabled;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             IsExpired = isExpired;
             ProvisioningState = provisioningState;
             UniqueIdentifier = uniqueIdentifier;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public DevTestLabEnableStatus? Enabled { get; set; }
 
         /// <summary> The time at which the announcement expires (null for never). </summary>
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpiresOn { get; set; }
 
         /// <summary> Has this announcement expired?. </summary>
         public bool? IsExpired { get; set; }

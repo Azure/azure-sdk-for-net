@@ -29,19 +29,19 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="exitCode"> Exit code returned from script execution. </param>
         /// <param name="output"> Script output stream. </param>
         /// <param name="error"> Script error stream. </param>
-        /// <param name="startOn"> Script start time. </param>
-        /// <param name="endOn"> Script end time. </param>
+        /// <param name="startsOn"> Script start time. </param>
+        /// <param name="endsOn"> Script end time. </param>
         /// <param name="statuses"> The resource status information. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineRunCommandInstanceView(ExecutionState? executionState, string executionMessage, int? exitCode, string output, string error, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachineRunCommandInstanceView(ExecutionState? executionState, string executionMessage, int? exitCode, string output, string error, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IReadOnlyList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ExecutionState = executionState;
             ExecutionMessage = executionMessage;
             ExitCode = exitCode;
             Output = output;
             Error = error;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Statuses = statuses;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.Compute.Models
         public string Error { get; }
 
         /// <summary> Script start time. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> Script end time. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> The resource status information. </summary>
         public IReadOnlyList<InstanceViewStatus> Statuses { get; }

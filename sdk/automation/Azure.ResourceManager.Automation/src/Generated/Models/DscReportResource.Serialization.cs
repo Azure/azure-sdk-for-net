@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WritePropertyName("durationInSeconds"u8);
                 writer.WriteNumberValue(DurationInSeconds.Value);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDate"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Automation.Models
             string error = default;
             string status = default;
             double? durationInSeconds = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Automation.Models
                 error,
                 status,
                 durationInSeconds,
-                startOn,
+                startsOn,
                 additionalBinaryDataProperties);
         }
     }

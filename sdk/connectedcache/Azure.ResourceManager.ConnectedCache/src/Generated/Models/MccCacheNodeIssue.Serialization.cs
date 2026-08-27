@@ -94,15 +94,15 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 writer.WritePropertyName("helpLink"u8);
                 writer.WriteStringValue(HelpLink);
             }
-            if (options.Format != "W" && Optional.IsDefined(IssueStartOn))
+            if (options.Format != "W" && Optional.IsDefined(IssueStartsOn))
             {
                 writer.WritePropertyName("issueStartDate"u8);
-                writer.WriteStringValue(IssueStartOn.Value, "O");
+                writer.WriteStringValue(IssueStartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(IssueEndOn))
+            if (options.Format != "W" && Optional.IsDefined(IssueEndsOn))
             {
                 writer.WritePropertyName("issueEndDate"u8);
-                writer.WriteStringValue(IssueEndOn.Value, "O");
+                writer.WriteStringValue(IssueEndsOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -150,8 +150,8 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             string toastString = default;
             string detailString = default;
             string helpLink = default;
-            DateTimeOffset? issueStartOn = default;
-            DateTimeOffset? issueEndOn = default;
+            DateTimeOffset? issueStartsOn = default;
+            DateTimeOffset? issueEndsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                     {
                         continue;
                     }
-                    issueStartOn = prop.Value.GetDateTimeOffset("O");
+                    issueStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("issueEndDate"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                     {
                         continue;
                     }
-                    issueEndOn = prop.Value.GetDateTimeOffset("O");
+                    issueEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -203,8 +203,8 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 toastString,
                 detailString,
                 helpLink,
-                issueStartOn,
-                issueEndOn,
+                issueStartsOn,
+                issueEndsOn,
                 additionalBinaryDataProperties);
         }
     }

@@ -43,6 +43,23 @@ namespace Azure.ResourceManager.Fabric.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        public FabricCapacityUpdateProperties Properties { get; set; }
+        internal FabricCapacityUpdateProperties Properties { get; set; }
+
+        /// <summary> The capacity overage properties of the Fabric capacity resource. </summary>
+        public CapacityOverageProperties FabricCapacityUpdateOverage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Overage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FabricCapacityUpdateProperties();
+                }
+                Properties.Overage = value;
+            }
+        }
     }
 }

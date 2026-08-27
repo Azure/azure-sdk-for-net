@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Avs.Models
         public VMwareFirewallLicenseProperties(int cores, DateTimeOffset endOn) : base(LicenseKind.VMwareFirewall)
         {
             Cores = cores;
-            EndOn = endOn;
+            EndsOn = endOn;
             Labels = new ChangeTrackingList<AvsLicenseLabel>();
         }
 
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Avs.Models
         {
             LicenseKey = licenseKey;
             Cores = cores;
-            EndOn = endOn;
+            EndsOn = endOn;
             BroadcomSiteId = broadcomSiteId;
             BroadcomContractNumber = broadcomContractNumber;
             Labels = labels;
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Avs.Models
         public int Cores { get; set; }
 
         /// <summary> UTC datetime when the license expires. </summary>
-        public DateTimeOffset EndOn { get; set; }
+        public DateTimeOffset EndsOn { get; set; }
 
         /// <summary> The Broadcom site ID associated with the license. </summary>
         public string BroadcomSiteId { get; set; }

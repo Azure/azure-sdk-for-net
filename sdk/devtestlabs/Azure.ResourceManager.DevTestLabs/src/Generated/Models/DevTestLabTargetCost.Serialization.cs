@@ -94,15 +94,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(CycleStartOn))
+            if (Optional.IsDefined(CycleStartsOn))
             {
                 writer.WritePropertyName("cycleStartDateTime"u8);
-                writer.WriteStringValue(CycleStartOn.Value, "O");
+                writer.WriteStringValue(CycleStartsOn.Value, "O");
             }
-            if (Optional.IsDefined(CycleEndOn))
+            if (Optional.IsDefined(CycleEndsOn))
             {
                 writer.WritePropertyName("cycleEndDateTime"u8);
-                writer.WriteStringValue(CycleEndOn.Value, "O");
+                writer.WriteStringValue(CycleEndsOn.Value, "O");
             }
             if (Optional.IsDefined(CycleType))
             {
@@ -154,8 +154,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             DevTestLabTargetCostStatus? status = default;
             int? target = default;
             IList<DevTestLabCostThreshold> costThresholds = default;
-            DateTimeOffset? cycleStartOn = default;
-            DateTimeOffset? cycleEndOn = default;
+            DateTimeOffset? cycleStartsOn = default;
+            DateTimeOffset? cycleEndsOn = default;
             DevTestLabReportingCycleType? cycleType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    cycleStartOn = prop.Value.GetDateTimeOffset("O");
+                    cycleStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("cycleEndDateTime"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    cycleEndOn = prop.Value.GetDateTimeOffset("O");
+                    cycleEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("cycleType"u8))
@@ -228,8 +228,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 status,
                 target,
                 costThresholds ?? new ChangeTrackingList<DevTestLabCostThreshold>(),
-                cycleStartOn,
-                cycleEndOn,
+                cycleStartsOn,
+                cycleEndsOn,
                 cycleType,
                 additionalBinaryDataProperties);
         }

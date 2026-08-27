@@ -45,11 +45,11 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Time in UTC (ISO 8601 format) when the chat began. </summary>
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
     }

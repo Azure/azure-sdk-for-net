@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             string timeGrain = default;
             CosmosDBMetricUnitType? unit = default;
             CosmosDBMetricName name = default;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("timeGrain"u8))
@@ -198,8 +198,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             return new PartitionMetric(
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 timeGrain,
                 unit,
                 name,
