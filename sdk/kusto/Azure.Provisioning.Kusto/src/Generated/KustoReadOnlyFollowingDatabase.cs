@@ -167,8 +167,8 @@ namespace Azure.Provisioning.Kusto
             }
         }
 
-        /// <summary> Gets the SuspensionStartOn. </summary>
-        public BicepValue<DateTimeOffset> SuspensionStartOn
+        /// <summary> Gets the SuspensionStartsOn. </summary>
+        public BicepValue<DateTimeOffset> SuspensionStartsOn
         {
             get
             {
@@ -176,7 +176,7 @@ namespace Azure.Provisioning.Kusto
                 {
                     Properties = new ReadOnlyFollowingDatabaseProperties();
                 }
-                return Properties.SuspensionStartOn;
+                return Properties.SuspensionStartsOn;
             }
         }
 
