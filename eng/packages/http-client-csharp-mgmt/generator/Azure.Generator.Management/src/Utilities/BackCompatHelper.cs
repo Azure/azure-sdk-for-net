@@ -220,13 +220,26 @@ namespace Azure.Generator.Management.Utilities
                 var leftParameter = left.Parameters[i];
                 var rightParameter = right.Parameters[i];
                 if (leftParameter.Name != rightParameter.Name
-                    || !leftParameter.Type.AreNamesEqual(rightParameter.Type))
+                    || !ParameterTypesMatch(leftParameter, rightParameter))
                 {
                     return false;
                 }
             }
 
             return true;
+        }
+
+        private static bool ParameterTypesMatch(ParameterProvider left, ParameterProvider right)
+        {
+            if (left.Type.Equals(right.Type))
+            {
+                return true;
+            }
+
+            var leftKind = GetConditionalParameterKind(left);
+            return leftKind is ConditionalParameterKind.ETagHeader or ConditionalParameterKind.MatchConditions or ConditionalParameterKind.RequestConditions
+                && leftKind == GetConditionalParameterKind(right)
+                && left.Type.AreNamesEqual(right.Type);
         }
 
         private static void DecorateBackwardCompatibilityMethod(MethodProvider method)

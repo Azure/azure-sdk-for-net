@@ -494,6 +494,34 @@ namespace Azure.Generator.Mgmt.Tests.Utilities
         }
 
         [Test]
+        public void DoesNotAddStringOverloadWhenNonConditionalParameterNullabilityDiffers()
+        {
+            var enclosingType = new TestTypeView("TestClient");
+            var current = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("count", $"The count.", new CSharpType(typeof(int))),
+                    new ParameterProvider("matchConditions", $"The match conditions.", new CSharpType(typeof(MatchConditions), isNullable: true), defaultValue: Default)
+                ]);
+            var previous = CreateMethod(
+                enclosingType,
+                [
+                    new ParameterProvider("count", $"The count.", new CSharpType(typeof(int), isNullable: true), defaultValue: Default),
+                    new ParameterProvider("ifMatch", $"The condition.", new CSharpType(typeof(string), isNullable: true), defaultValue: Default)
+                ]);
+
+            var lastContractView = new TestTypeView(enclosingType.Name)
+            {
+                MethodsToBuild = [previous]
+            };
+            ModelTestHelper.SetLastContractView(enclosingType, lastContractView);
+
+            var result = BackCompatHelper.DecorateBackwardCompatibilityMethods([current], [current]);
+            var rendered = Render(WithMethods(enclosingType, result.ToArray()));
+            Assert.That(rendered, Is.EqualTo(Helpers.GetExpectedFromFile()));
+        }
+
+        [Test]
         public void DoesNotAddStringOverloadWhenReturnTypeDiffers()
         {
             var enclosingType = new TestTypeView("TestClient");
