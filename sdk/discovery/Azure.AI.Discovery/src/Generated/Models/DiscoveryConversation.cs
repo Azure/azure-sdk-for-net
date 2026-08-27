@@ -23,23 +23,23 @@ namespace Azure.AI.Discovery
 
         /// <summary> Initializes a new instance of <see cref="DiscoveryConversation"/>. </summary>
         /// <param name="name"> The conversation name. </param>
-        /// <param name="createdAt"> The timestamp when the resource was created. </param>
+        /// <param name="createdOn"> The timestamp when the resource was created. </param>
         /// <param name="createdBy"> The ID of the user who created this resource. </param>
         /// <param name="createdByType"> The type of user who created this resource. </param>
-        /// <param name="lastModifiedAt"> The timestamp when the resource was last updated. </param>
+        /// <param name="lastModifiedOn"> The timestamp when the resource was last updated. </param>
         /// <param name="lastModifiedBy"> The ID of the user who updated this resource. </param>
         /// <param name="lastModifiedByType"> The type of user who updated this resource. </param>
         /// <param name="displayName"> The title. </param>
         /// <param name="investigationName"> The Name of the associated Investigation. </param>
         /// <param name="projectName"> The name of the associated Project. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveryConversation(string name, DateTimeOffset? createdAt, string createdBy, DiscoveryActorType? createdByType, DateTimeOffset? lastModifiedAt, string lastModifiedBy, DiscoveryActorType? lastModifiedByType, string displayName, string investigationName, string projectName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiscoveryConversation(string name, DateTimeOffset? createdOn, string createdBy, DiscoveryActorType? createdByType, DateTimeOffset? lastModifiedOn, string lastModifiedBy, DiscoveryActorType? lastModifiedByType, string displayName, string investigationName, string projectName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
             CreatedBy = createdBy;
             CreatedByType = createdByType;
-            LastModifiedAt = lastModifiedAt;
+            LastModifiedOn = lastModifiedOn;
             LastModifiedBy = lastModifiedBy;
             LastModifiedByType = lastModifiedByType;
             DisplayName = displayName;
@@ -52,7 +52,7 @@ namespace Azure.AI.Discovery
         public string Name { get; }
 
         /// <summary> The timestamp when the resource was created. </summary>
-        public DateTimeOffset? CreatedAt { get; set; }
+        public DateTimeOffset? CreatedOn { get; set; }
 
         /// <summary> The ID of the user who created this resource. </summary>
         public string CreatedBy { get; set; }
@@ -61,7 +61,7 @@ namespace Azure.AI.Discovery
         public DiscoveryActorType? CreatedByType { get; set; }
 
         /// <summary> The timestamp when the resource was last updated. </summary>
-        public DateTimeOffset? LastModifiedAt { get; set; }
+        public DateTimeOffset? LastModifiedOn { get; set; }
 
         /// <summary> The ID of the user who updated this resource. </summary>
         public string LastModifiedBy { get; set; }
