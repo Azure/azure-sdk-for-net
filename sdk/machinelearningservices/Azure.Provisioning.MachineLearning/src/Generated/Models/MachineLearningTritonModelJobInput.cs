@@ -55,7 +55,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            JobInputType.Assign("triton_model");
+            DefineProperty<string>("jobInputType", new string[] { "jobInputType" }, defaultValue: "triton_model");
             _mode = DefineProperty<MachineLearningInputDeliveryMode>(nameof(Mode), new string[] { "mode" });
             _uri = DefineProperty<Uri>(nameof(Uri), new string[] { "uri" }, isRequired: true);
             DefineAdditionalProperties();

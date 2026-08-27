@@ -36,7 +36,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            ActionType.Assign("CreateJob");
+            DefineProperty<string>("actionType", new string[] { "actionType" }, defaultValue: "CreateJob");
             _jobDefinition = DefineModelProperty<MachineLearningJobProperties>(nameof(JobDefinition), new string[] { "jobDefinition" }, isRequired: true);
             DefineAdditionalProperties();
         }

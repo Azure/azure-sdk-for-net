@@ -38,7 +38,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            PolicyType.Assign("TruncationSelection");
+            DefineProperty<string>("policyType", new string[] { "policyType" }, defaultValue: "TruncationSelection");
             _truncationPercentage = DefineProperty<int>(nameof(TruncationPercentage), new string[] { "truncationPercentage" });
             DefineAdditionalProperties();
         }

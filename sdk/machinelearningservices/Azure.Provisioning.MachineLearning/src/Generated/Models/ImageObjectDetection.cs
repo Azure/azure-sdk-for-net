@@ -137,7 +137,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            TaskType.Assign("ImageObjectDetection");
+            DefineProperty<string>("taskType", new string[] { "taskType" }, defaultValue: "ImageObjectDetection");
             _modelSettings = DefineModelProperty<ImageModelSettingsObjectDetection>(nameof(ModelSettings), new string[] { "modelSettings" });
             _searchSpace = DefineListProperty<ImageModelDistributionSettingsObjectDetection>(nameof(SearchSpace), new string[] { "searchSpace" });
             _limitSettings = DefineModelProperty<ImageLimitSettings>(nameof(LimitSettings), new string[] { "limitSettings" }, isRequired: true);

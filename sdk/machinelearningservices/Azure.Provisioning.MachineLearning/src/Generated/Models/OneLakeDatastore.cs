@@ -23,7 +23,7 @@ namespace Azure.Provisioning.MachineLearning
         }
 
         /// <summary> Gets or sets the Artifact. </summary>
-        public OneLakeArtifact Artifact
+        internal OneLakeArtifact Artifact
         {
             get
             {
@@ -82,11 +82,28 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
+        /// <summary> Gets or sets the ArtifactName. </summary>
+        public BicepValue<string> ArtifactName
+        {
+            get
+            {
+                return Artifact is null ? default : Artifact.ArtifactName;
+            }
+            set
+            {
+                if (Artifact is null)
+                {
+                    Artifact = new OneLakeArtifact();
+                }
+                Artifact.ArtifactName = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for OneLakeDatastore. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DatastoreType.Assign("OneLake");
+            DefineProperty<string>("datastoreType", new string[] { "datastoreType" }, defaultValue: "OneLake");
             _artifact = DefineModelProperty<OneLakeArtifact>(nameof(Artifact), new string[] { "artifact" }, isRequired: true);
             _endpoint = DefineProperty<string>(nameof(Endpoint), new string[] { "endpoint" });
             _oneLakeWorkspaceName = DefineProperty<string>(nameof(OneLakeWorkspaceName), new string[] { "oneLakeWorkspaceName" }, isRequired: true);

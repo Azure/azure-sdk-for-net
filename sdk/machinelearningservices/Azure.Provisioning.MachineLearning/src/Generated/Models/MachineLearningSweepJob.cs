@@ -184,7 +184,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            JobType.Assign("Sweep");
+            DefineProperty<string>("jobType", new string[] { "jobType" }, defaultValue: "Sweep");
             _earlyTermination = DefineModelProperty<MachineLearningEarlyTerminationPolicy>(nameof(EarlyTermination), new string[] { "earlyTermination" });
             _inputs = DefineDictionaryProperty<MachineLearningJobInput>(nameof(Inputs), new string[] { "inputs" });
             _limits = DefineModelProperty<MachineLearningSweepJobLimits>(nameof(Limits), new string[] { "limits" });

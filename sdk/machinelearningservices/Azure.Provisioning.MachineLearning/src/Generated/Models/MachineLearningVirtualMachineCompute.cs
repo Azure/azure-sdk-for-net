@@ -36,7 +36,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            ComputeType.Assign("VirtualMachine");
+            DefineProperty<string>("computeType", new string[] { "computeType" }, defaultValue: "VirtualMachine");
             _properties = DefineModelProperty<MachineLearningVirtualMachineProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

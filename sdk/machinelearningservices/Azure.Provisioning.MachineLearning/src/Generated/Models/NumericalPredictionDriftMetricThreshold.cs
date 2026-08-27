@@ -38,7 +38,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DataType.Assign("Numerical");
+            DefineProperty<string>("dataType", new string[] { "dataType" }, defaultValue: "Numerical");
             _metric = DefineProperty<NumericalPredictionDriftMetric>(nameof(Metric), new string[] { "metric" }, isRequired: true);
             DefineAdditionalProperties();
         }

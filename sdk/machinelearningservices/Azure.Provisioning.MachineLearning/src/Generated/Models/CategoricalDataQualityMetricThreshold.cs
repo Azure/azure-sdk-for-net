@@ -38,7 +38,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DataType.Assign("Categorical");
+            DefineProperty<string>("dataType", new string[] { "dataType" }, defaultValue: "Categorical");
             _metric = DefineProperty<CategoricalDataQualityMetric>(nameof(Metric), new string[] { "metric" }, isRequired: true);
             DefineAdditionalProperties();
         }

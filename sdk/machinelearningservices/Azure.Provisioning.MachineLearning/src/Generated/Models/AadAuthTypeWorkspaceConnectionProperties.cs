@@ -19,7 +19,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            AuthType.Assign("AAD");
+            DefineProperty<string>("authType", new string[] { "authType" }, defaultValue: "AAD");
             DefineAdditionalProperties();
         }
 

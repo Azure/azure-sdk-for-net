@@ -73,7 +73,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            AuthType.Assign("ApiKey");
+            DefineProperty<string>("authType", new string[] { "authType" }, defaultValue: "ApiKey");
             _credentials = DefineModelProperty<WorkspaceConnectionApiKey>(nameof(Credentials), new string[] { "credentials" });
             DefineAdditionalProperties();
         }

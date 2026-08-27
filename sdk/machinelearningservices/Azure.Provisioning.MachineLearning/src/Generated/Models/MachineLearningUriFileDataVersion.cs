@@ -19,7 +19,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DataType.Assign("uri_file");
+            DefineProperty<string>("dataType", new string[] { "dataType" }, defaultValue: "uri_file");
             DefineAdditionalProperties();
         }
 

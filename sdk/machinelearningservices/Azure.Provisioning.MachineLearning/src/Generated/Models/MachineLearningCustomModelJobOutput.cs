@@ -71,7 +71,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            JobOutputType.Assign("custom_model");
+            DefineProperty<string>("jobOutputType", new string[] { "jobOutputType" }, defaultValue: "custom_model");
             _assetName = DefineProperty<string>(nameof(AssetName), new string[] { "assetName" });
             _mode = DefineProperty<MachineLearningOutputDeliveryMode>(nameof(Mode), new string[] { "mode" });
             _uri = DefineProperty<Uri>(nameof(Uri), new string[] { "uri" });

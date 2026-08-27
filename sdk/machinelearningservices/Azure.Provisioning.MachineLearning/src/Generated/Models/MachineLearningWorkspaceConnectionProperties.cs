@@ -18,7 +18,6 @@ namespace Azure.Provisioning.MachineLearning
     /// </summary>
     public partial class MachineLearningWorkspaceConnectionProperties : ProvisionableConstruct
     {
-        private BicepValue<string> _authType;
         private BicepValue<MachineLearningConnectionCategory> _category;
         private BicepValue<ResourceIdentifier> _createdByWorkspaceArmId;
         private BicepValue<string> _error;
@@ -35,16 +34,6 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningWorkspaceConnectionProperties. </summary>
         public MachineLearningWorkspaceConnectionProperties()
         {
-        }
-
-        /// <summary> Authentication type of the connection target. </summary>
-        internal BicepValue<string> AuthType
-        {
-            get
-            {
-                Initialize();
-                return _authType;
-            }
         }
 
         /// <summary> Gets or sets the Category. </summary>
@@ -221,7 +210,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _authType = DefineProperty<string>(nameof(AuthType), new string[] { "authType" }, isRequired: true);
             _category = DefineProperty<MachineLearningConnectionCategory>(nameof(Category), new string[] { "category" });
             _createdByWorkspaceArmId = DefineProperty<ResourceIdentifier>(nameof(CreatedByWorkspaceArmId), new string[] { "createdByWorkspaceArmId" }, isOutput: true);
             _error = DefineProperty<string>(nameof(Error), new string[] { "error" });

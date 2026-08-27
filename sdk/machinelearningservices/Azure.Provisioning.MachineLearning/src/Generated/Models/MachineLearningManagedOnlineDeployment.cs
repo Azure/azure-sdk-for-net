@@ -19,7 +19,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            EndpointComputeType.Assign("Managed");
+            DefineProperty<string>("endpointComputeType", new string[] { "endpointComputeType" }, defaultValue: "Managed");
             DefineAdditionalProperties();
         }
 

@@ -70,7 +70,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            ComputeType.Assign("ServerlessSpark");
+            DefineProperty<string>("computeType", new string[] { "computeType" }, defaultValue: "ServerlessSpark");
             _computeIdentity = DefineModelProperty<MonitorComputeIdentityBase>(nameof(ComputeIdentity), new string[] { "computeIdentity" }, isRequired: true);
             _instanceType = DefineProperty<string>(nameof(InstanceType), new string[] { "instanceType" }, isRequired: true);
             _runtimeVersion = DefineProperty<string>(nameof(RuntimeVersion), new string[] { "runtimeVersion" }, isRequired: true);

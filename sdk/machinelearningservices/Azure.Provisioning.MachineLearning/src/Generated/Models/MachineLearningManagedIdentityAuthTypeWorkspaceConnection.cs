@@ -36,7 +36,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            AuthType.Assign("ManagedIdentity");
+            DefineProperty<string>("authType", new string[] { "authType" }, defaultValue: "ManagedIdentity");
             _credentials = DefineModelProperty<MachineLearningWorkspaceConnectionManagedIdentity>(nameof(Credentials), new string[] { "credentials" });
             DefineAdditionalProperties();
         }

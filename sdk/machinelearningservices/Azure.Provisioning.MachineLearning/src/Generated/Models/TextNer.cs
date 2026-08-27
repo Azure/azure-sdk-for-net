@@ -102,7 +102,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            TaskType.Assign("TextNER");
+            DefineProperty<string>("taskType", new string[] { "taskType" }, defaultValue: "TextNER");
             _featurizationSettings = DefineModelProperty<NlpVerticalFeaturizationSettings>(nameof(FeaturizationSettings), new string[] { "featurizationSettings" });
             _limitSettings = DefineModelProperty<NlpVerticalLimitSettings>(nameof(LimitSettings), new string[] { "limitSettings" });
             _validationData = DefineModelProperty<MachineLearningTableJobInput>(nameof(ValidationData), new string[] { "validationData" });

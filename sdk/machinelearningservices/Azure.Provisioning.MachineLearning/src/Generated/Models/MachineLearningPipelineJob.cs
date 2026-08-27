@@ -104,7 +104,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            JobType.Assign("Pipeline");
+            DefineProperty<string>("jobType", new string[] { "jobType" }, defaultValue: "Pipeline");
             _inputs = DefineDictionaryProperty<MachineLearningJobInput>(nameof(Inputs), new string[] { "inputs" });
             _jobs = DefineDictionaryProperty<BinaryData>(nameof(Jobs), new string[] { "jobs" });
             _outputs = DefineDictionaryProperty<MachineLearningJobOutput>(nameof(Outputs), new string[] { "outputs" });

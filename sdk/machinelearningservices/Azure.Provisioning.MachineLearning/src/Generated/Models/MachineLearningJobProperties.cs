@@ -22,7 +22,6 @@ namespace Azure.Provisioning.MachineLearning
         private BicepValue<string> _experimentName;
         private MachineLearningIdentityConfiguration _identity;
         private BicepValue<bool> _isArchived;
-        private BicepValue<string> _jobType;
         private NotificationSetting _notificationSetting;
         private BicepDictionary<MachineLearningJobService> _services;
         private BicepValue<MachineLearningJobStatus> _status;
@@ -122,16 +121,6 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
-        /// <summary> [Required] Specifies the type of job. </summary>
-        internal BicepValue<string> JobType
-        {
-            get
-            {
-                Initialize();
-                return _jobType;
-            }
-        }
-
         /// <summary> Gets or sets the NotificationSetting. </summary>
         public NotificationSetting NotificationSetting
         {
@@ -182,7 +171,6 @@ namespace Azure.Provisioning.MachineLearning
             _experimentName = DefineProperty<string>(nameof(ExperimentName), new string[] { "experimentName" });
             _identity = DefineModelProperty<MachineLearningIdentityConfiguration>(nameof(Identity), new string[] { "identity" });
             _isArchived = DefineProperty<bool>(nameof(IsArchived), new string[] { "isArchived" });
-            _jobType = DefineProperty<string>(nameof(JobType), new string[] { "jobType" }, isRequired: true);
             _notificationSetting = DefineModelProperty<NotificationSetting>(nameof(NotificationSetting), new string[] { "notificationSetting" });
             _services = DefineDictionaryProperty<MachineLearningJobService>(nameof(Services), new string[] { "services" });
             _status = DefineProperty<MachineLearningJobStatus>(nameof(Status), new string[] { "status" }, isOutput: true);

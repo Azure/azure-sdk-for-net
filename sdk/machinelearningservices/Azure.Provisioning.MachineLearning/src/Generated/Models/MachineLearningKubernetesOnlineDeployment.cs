@@ -36,7 +36,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            EndpointComputeType.Assign("Kubernetes");
+            DefineProperty<string>("endpointComputeType", new string[] { "endpointComputeType" }, defaultValue: "Kubernetes");
             _containerResourceRequirements = DefineModelProperty<MachineLearningContainerResourceRequirements>(nameof(ContainerResourceRequirements), new string[] { "containerResourceRequirements" });
             DefineAdditionalProperties();
         }

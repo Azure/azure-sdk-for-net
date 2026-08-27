@@ -19,7 +19,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            NodesValueType.Assign("All");
+            DefineProperty<string>("nodesValueType", new string[] { "nodesValueType" }, defaultValue: "All");
             DefineAdditionalProperties();
         }
 

@@ -36,7 +36,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            ComputeType.Assign("AmlCompute");
+            DefineProperty<string>("computeType", new string[] { "computeType" }, defaultValue: "AmlCompute");
             _properties = DefineModelProperty<AmlComputeProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

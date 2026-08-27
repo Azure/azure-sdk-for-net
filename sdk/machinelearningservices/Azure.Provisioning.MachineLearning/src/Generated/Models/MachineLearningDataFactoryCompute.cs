@@ -19,7 +19,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            ComputeType.Assign("DataFactory");
+            DefineProperty<string>("computeType", new string[] { "computeType" }, defaultValue: "DataFactory");
             DefineAdditionalProperties();
         }
 
