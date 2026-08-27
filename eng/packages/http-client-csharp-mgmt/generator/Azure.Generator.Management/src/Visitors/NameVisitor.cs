@@ -134,6 +134,16 @@ internal class NameVisitor : ScmLibraryVisitor
         "Start",
     };
 
+    private static readonly HashSet<string> _mtgDateTimeSuffixes = new(StringComparer.OrdinalIgnoreCase)
+    {
+        "Timestamp",
+        "DateTime",
+        "Time",
+        "Date",
+        "On",
+        "At",
+    };
+
     internal static bool IsMtgRenamedDateTimeProperty(PropertyProvider? property)
     {
         if (property is null ||
@@ -202,29 +212,16 @@ internal class NameVisitor : ScmLibraryVisitor
 
     private static int GetMtgDateTimeSuffixLength(string name)
     {
-        if (name.EndsWith("Timestamp", StringComparison.OrdinalIgnoreCase) ||
-            name.EndsWith("TimeStamp", StringComparison.OrdinalIgnoreCase))
+        var matchedLength = 0;
+        foreach (var candidate in _mtgDateTimeSuffixes)
         {
-            return "Timestamp".Length;
+            if (candidate.Length > matchedLength && name.EndsWith(candidate, StringComparison.OrdinalIgnoreCase))
+            {
+                matchedLength = candidate.Length;
+            }
         }
 
-        if (name.EndsWith("DateTime", StringComparison.OrdinalIgnoreCase))
-        {
-            return "DateTime".Length;
-        }
-
-        if (name.EndsWith("Time", StringComparison.OrdinalIgnoreCase) ||
-            name.EndsWith("Date", StringComparison.OrdinalIgnoreCase))
-        {
-            return "Time".Length;
-        }
-
-        if (name.EndsWith("On", StringComparison.OrdinalIgnoreCase))
-        {
-            return "On".Length;
-        }
-
-        return name.EndsWith("At", StringComparison.OrdinalIgnoreCase) ? "At".Length : 0;
+        return matchedLength;
     }
 
     private static bool HasExcludedMtgDateTimeComponent(string name, int suffixLength)
