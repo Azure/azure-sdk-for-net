@@ -1100,11 +1100,11 @@ namespace Azure.AI.Projects
         /// <param name="agentId"> The unique agent ID used to filter traces. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentName"> The agent name to fetch traces for. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
-        /// <param name="startOn"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
-        /// <param name="endOn"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
+        /// <param name="startsOn"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
+        /// <param name="endsOn"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
         /// <returns> A new <see cref="Projects.TracesEvaluatorGenerationJobSource"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = default)
+        public static TracesEvaluatorGenerationJobSource TracesEvaluatorGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default)
         {
             return new TracesEvaluatorGenerationJobSource(
                 EvaluatorGenerationJobSourceType.Traces,
@@ -1113,8 +1113,8 @@ namespace Azure.AI.Projects
                 agentId,
                 agentName,
                 agentVersion,
-                startOn,
-                endOn);
+                startsOn,
+                endsOn);
         }
 
         /// <summary> Dataset source for evaluator generation jobs — reference to a dataset. </summary>
@@ -2272,11 +2272,11 @@ namespace Azure.AI.Projects
         /// <param name="agentId"> The unique agent ID used to filter traces. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentName"> The agent name to fetch traces for. Provide either `agent_id` or `agent_name` — at least one is required. </param>
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
-        /// <param name="startOn"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
-        /// <param name="endOn"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
+        /// <param name="startsOn"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
+        /// <param name="endsOn"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
         /// <returns> A new <see cref="Projects.TracesDataGenerationJobSource"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = default)
+        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default)
         {
             return new TracesDataGenerationJobSource(
                 DataGenerationJobSourceType.Traces,
@@ -2285,8 +2285,8 @@ namespace Azure.AI.Projects
                 agentId,
                 agentName,
                 agentVersion,
-                startOn,
-                endOn);
+                startsOn,
+                endsOn);
         }
 
         /// <summary> File source for data generation jobs — Azure OpenAI file input. </summary>

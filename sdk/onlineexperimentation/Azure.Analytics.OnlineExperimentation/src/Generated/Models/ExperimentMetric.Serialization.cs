@@ -132,7 +132,7 @@ namespace Azure.Analytics.OnlineExperimentation
             if (options.Format != "W")
             {
                 writer.WritePropertyName("lastModifiedAt"u8);
-                writer.WriteStringValue(LastModifiedAt, "O");
+                writer.WriteStringValue(LastModifiedOn, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -184,7 +184,7 @@ namespace Azure.Analytics.OnlineExperimentation
             DesiredDirection desiredDirection = default;
             ExperimentMetricDefinition definition = default;
             ETag eTag = default;
-            DateTimeOffset lastModifiedAt = default;
+            DateTimeOffset lastModifiedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -242,7 +242,7 @@ namespace Azure.Analytics.OnlineExperimentation
                 }
                 if (prop.NameEquals("lastModifiedAt"u8))
                 {
-                    lastModifiedAt = prop.Value.GetDateTimeOffset("O");
+                    lastModifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -259,7 +259,7 @@ namespace Azure.Analytics.OnlineExperimentation
                 desiredDirection,
                 definition,
                 eTag,
-                lastModifiedAt,
+                lastModifiedOn,
                 additionalBinaryDataProperties);
         }
     }

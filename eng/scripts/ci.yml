@@ -32,3 +32,16 @@ extends:
   parameters:
     TargetDirectory: eng/scripts/
     TargetTags: 'UnitTest'
+    PreTestSteps:
+      # The unit tests do not consume repository history or tags. Declaring checkout here replaces
+      # the implicit checkout performed by Azure Pipelines rather than adding another fetch.
+      - checkout: self
+        fetchDepth: 1
+        fetchTags: false
+
+      - task: UseDotNet@2
+        displayName: 'Use .NET SDK'
+        retryCountOnTaskFailure: 3
+        inputs:
+          useGlobalJson: true
+          performMultiLevelLookup: true

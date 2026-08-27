@@ -1,24 +1,20 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.2 (2026-08-27)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+Upgraded api-verion to 2026-05-01-preview.
 
 ## 1.0.0-beta.1 (2026-06-15)
 
 ### Features Added
 
 - Initial release of the Azure HorizonDB management library for .NET.
-- Support for managing HorizonDb clusters.
-- Support for managing HorizonDb pools.
-- Support for managing HorizonDb pool replicas.
-- Support for managing HorizonDb pool firewall rules.
+- Support for managing HorizonDB clusters.
+- Support for managing HorizonDB pools.
+- Support for managing HorizonDB pool replicas.
+- Support for managing HorizonDB pool firewall rules.
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 

@@ -176,16 +176,21 @@ $latestAzure = Get-NpmLatestVersion "@azure-typespec/http-client-csharp"
 $latestMgmt  = Get-NpmLatestVersion "@azure-typespec/http-client-csharp-mgmt"
 $latestProv  = Get-NpmLatestVersion "@azure-typespec/http-client-csharp-provisioning"
 
-# --- Build version links ---
+# --- Version cells ---
+# These are rendered as plain text rather than links to npmjs.com. The npm website
+# blocks automated requests, so the repo's link checker (eng/common/scripts/Verify-Links.ps1)
+# cannot verify them. Because the "Latest on npm" column tracks a moving target, every
+# regeneration after a new publish would introduce a fresh, unverifiable URL and fail CI.
+# The ignore list is matched by exact string (Verify-Links.ps1), so it cannot cover them either.
 
-$linkBaseDep    = Get-NpmVersionLink "@typespec/http-client-csharp" $baseDep_azure
-$linkAzureDep   = Get-NpmVersionLink "@azure-typespec/http-client-csharp" $azureDep_mgmt
-$linkMgmtDep    = Get-NpmVersionLink "@azure-typespec/http-client-csharp-mgmt" $mgmtDep_prov
+$linkBaseDep    = $baseDep_azure
+$linkAzureDep   = $azureDep_mgmt
+$linkMgmtDep    = $mgmtDep_prov
 
-$linkLatestBase  = Get-NpmVersionLink "@typespec/http-client-csharp" $latestBase
-$linkLatestAzure = Get-NpmVersionLink "@azure-typespec/http-client-csharp" $latestAzure
-$linkLatestMgmt  = Get-NpmVersionLink "@azure-typespec/http-client-csharp-mgmt" $latestMgmt
-$linkLatestProv  = Get-NpmVersionLink "@azure-typespec/http-client-csharp-provisioning" $latestProv
+$linkLatestBase  = $latestBase
+$linkLatestAzure = $latestAzure
+$linkLatestMgmt  = $latestMgmt
+$linkLatestProv  = $latestProv
 
 # --- Resolve the git commit that corresponds to each dependency version ---
 # We query the npm registry for the exact publish timestamp of each dependency

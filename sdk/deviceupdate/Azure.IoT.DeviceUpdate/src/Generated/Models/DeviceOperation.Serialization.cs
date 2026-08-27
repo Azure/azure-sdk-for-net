@@ -101,9 +101,9 @@ namespace Azure.IoT.DeviceUpdate
                 writer.WriteStringValue(TraceId);
             }
             writer.WritePropertyName("lastActionDateTime"u8);
-            writer.WriteStringValue(LastActionDateTime, "O");
+            writer.WriteStringValue(LastActionOn, "O");
             writer.WritePropertyName("createdDateTime"u8);
-            writer.WriteStringValue(CreatedDateTime, "O");
+            writer.WriteStringValue(CreatedOn, "O");
             if (Optional.IsDefined(Etag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -155,8 +155,8 @@ namespace Azure.IoT.DeviceUpdate
             OperationStatus status = default;
             Error error = default;
             string traceId = default;
-            DateTimeOffset lastActionDateTime = default;
-            DateTimeOffset createdDateTime = default;
+            DateTimeOffset lastActionOn = default;
+            DateTimeOffset createdOn = default;
             string etag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -187,12 +187,12 @@ namespace Azure.IoT.DeviceUpdate
                 }
                 if (prop.NameEquals("lastActionDateTime"u8))
                 {
-                    lastActionDateTime = prop.Value.GetDateTimeOffset("O");
+                    lastActionOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("createdDateTime"u8))
                 {
-                    createdDateTime = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))
@@ -210,8 +210,8 @@ namespace Azure.IoT.DeviceUpdate
                 status,
                 error,
                 traceId,
-                lastActionDateTime,
-                createdDateTime,
+                lastActionOn,
+                createdOn,
                 etag,
                 additionalBinaryDataProperties);
         }

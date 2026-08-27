@@ -136,10 +136,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LastUpdatedDateTime))
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedDateTime"u8);
-                writer.WriteStringValue(LastUpdatedDateTime.Value, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(SourceDisplayName))
             {
@@ -195,7 +195,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             IDictionary<string, string> metadata = default;
             QnaDialog dialog = default;
             IList<SuggestedQuestionsCluster> activeLearningSuggestions = default;
-            DateTimeOffset? lastUpdatedDateTime = default;
+            DateTimeOffset? lastUpdatedOn = default;
             string sourceDisplayName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -286,7 +286,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    lastUpdatedDateTime = prop.Value.GetDateTimeOffset("O");
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("sourceDisplayName"u8))
@@ -307,7 +307,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 dialog,
                 activeLearningSuggestions ?? new ChangeTrackingList<SuggestedQuestionsCluster>(),
-                lastUpdatedDateTime,
+                lastUpdatedOn,
                 sourceDisplayName,
                 additionalBinaryDataProperties);
         }
