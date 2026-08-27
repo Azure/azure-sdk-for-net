@@ -5,8 +5,28 @@ Install-ModuleIfNotInstalled 'Pester' '5.3.3' | Import-Module
 
 Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
     BeforeAll {
-        $script:CreateGraphPath = Join-Path $PSScriptRoot '..' 'Create-SparseCheckoutGraph.ps1'
+        $script:RepositoryRoot = Resolve-Path (Join-Path $PSScriptRoot '..' '..' '..')
+        $script:TaskProject = Join-Path $script:RepositoryRoot 'eng/tools/RepositoryProjectGraph/RepositoryProjectGraph.csproj'
         $script:ResolvePathsPath = Join-Path $PSScriptRoot '..' 'Resolve-SparseCheckoutPaths.ps1'
+
+        function Invoke-SparseCheckoutProjection(
+            [string] $PackageInfoDirectory,
+            [string] $RepoRoot,
+            [string] $GraphPath,
+            [string] $OutputPath,
+            [string] $SourceCommit) {
+            $output = @(& dotnet msbuild /nologo /nr:false /v:minimal /t:CreateSparseCheckoutGraph `
+                $script:TaskProject `
+                "/p:SparseCheckoutPackageInfoDirectory=$PackageInfoDirectory" `
+                "/p:SparseCheckoutRepoRoot=$RepoRoot" `
+                "/p:SparseCheckoutSourceGraphPath=$GraphPath" `
+                "/p:SparseCheckoutOutputPath=$OutputPath" `
+                "/p:SparseCheckoutSourceCommit=$SourceCommit" 2>&1)
+            if ($LASTEXITCODE -ne 0) {
+                throw ($output -join "`n")
+            }
+            Write-Host ($output -join "`n")
+        }
     }
 
     BeforeEach {
@@ -39,7 +59,7 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
         } | ConvertTo-Json | Set-Content (Join-Path $packageInfo 'Azure.A.json')
 
         [ordered]@{
-            schemaVersion = 5
+            schemaVersion = 6
             repositoryRoot = $repo.Replace('\', '/')
             sourceCommit = $sourceCommit
             nodes = @(
@@ -61,21 +81,33 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
             )
             inputs = @(
                 @{ projectPath = 'sdk/alpha/A/tests/A.Tests.csproj'; targetFrameworks = @('net8.0'); path = 'sdk/shared/Shared/Shared.cs' }
+                # The typed projection must skip exact inputs and consume only checkoutRoots.
+                @{ projectPath = 'sdk/alpha/A/tests/A.Tests.csproj'; targetFrameworks = @('net8.0'); path = 'sdk/unused/Unused.cs' }
             )
+            checkoutRoots = [ordered]@{
+                'configuration:sdk/alpha/A/tests/A.Tests.csproj|net8.0' = @('/sdk/alpha/*', '/sdk/shared/*')
+                'configuration:sdk/alpha/A/tests/A.Tests.csproj|net9.0' = @('/sdk/alpha/*')
+                'configuration:sdk/beta/B/src/B.csproj|net8.0' = @('/sdk/beta/*')
+                'configuration:sdk/gamma/C/src/C.csproj|net9.0' = @('/sdk/gamma/*')
+                'configuration:sdk/delta/D/src/D.csproj|net8.0' = @('/sdk/delta/*')
+                'configuration:sdk/epsilon/E/src/E.csproj|net8.0' = @('/sdk/epsilon/*')
+                'configuration:common/Perf/Azure.Test.Perf/Azure.Test.Perf.csproj|net8.0' = @('/common/Perf/Azure.Test.Perf/*')
+            }
             diagnostics = @{
                 isComplete = $true
+                inputCount = 2
                 generation = @{
                     configuration = 'Debug'
                     includesInputs = $true
                 }
                 packageClosure = @{ resolutionMode = 'nuget-restore-graph' }
+                checkoutRoots = @{ isComplete = $true }
             }
         } | ConvertTo-Json -Depth 20 | Set-Content $graphPath
     }
 
     It 'extracts only the requested artifact closure from the shared graph' {
-        & $script:CreateGraphPath -PackageInfoDirectory $packageInfo -RepoRoot $repo -GraphPath $graphPath `
-            -OutputPath $checkoutGraphPath -SourceCommit $sourceCommit
+        Invoke-SparseCheckoutProjection $packageInfo $repo $graphPath $checkoutGraphPath $sourceCommit
 
         $checkoutGraph = Get-Content $checkoutGraphPath -Raw | ConvertFrom-Json
         $checkoutGraph.schemaVersion | Should -Be 1
@@ -94,6 +126,7 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
             '/sdk/epsilon/*',
             '/sdk/gamma/*',
             '/sdk/shared/*')
+        $paths | Should -Not -Contain '/sdk/unused/*'
         $paths | Should -Contain '/common/Perf/Azure.Test.Perf/*'
     }
 
@@ -102,41 +135,47 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
         $graph.diagnostics.isComplete = $false
         $graph | ConvertTo-Json -Depth 20 | Set-Content $graphPath
 
-        { & $script:CreateGraphPath -PackageInfoDirectory $packageInfo -RepoRoot $repo -GraphPath $graphPath `
-                -OutputPath $checkoutGraphPath -SourceCommit $sourceCommit } | Should -Throw '*graph is incomplete*'
+        { Invoke-SparseCheckoutProjection $packageInfo $repo $graphPath $checkoutGraphPath $sourceCommit } |
+            Should -Throw '*graph is incomplete*'
 
         $graph.diagnostics.isComplete = $true
         $graph.diagnostics.packageClosure.resolutionMode = 'unsupported-resolution-mode'
         $graph | ConvertTo-Json -Depth 20 | Set-Content $graphPath
-        { & $script:CreateGraphPath -PackageInfoDirectory $packageInfo -RepoRoot $repo -GraphPath $graphPath `
-                -OutputPath $checkoutGraphPath -SourceCommit $sourceCommit } | Should -Throw '*requires the NuGet restore graph*'
+        { Invoke-SparseCheckoutProjection $packageInfo $repo $graphPath $checkoutGraphPath $sourceCommit } |
+            Should -Throw '*requires the NuGet restore graph*'
 
         $graph.diagnostics.packageClosure.resolutionMode = 'nuget-restore-graph'
         $graph.diagnostics.generation.includesInputs = $false
         $graph | ConvertTo-Json -Depth 20 | Set-Content $graphPath
-        { & $script:CreateGraphPath -PackageInfoDirectory $packageInfo -RepoRoot $repo -GraphPath $graphPath `
-                -OutputPath $checkoutGraphPath -SourceCommit $sourceCommit } | Should -Throw '*requires a Debug repository graph*'
+        { Invoke-SparseCheckoutProjection $packageInfo $repo $graphPath $checkoutGraphPath $sourceCommit } |
+            Should -Throw '*requires a Debug repository graph*'
 
         $graph.diagnostics.generation.includesInputs = $true
         $graph.diagnostics.generation.configuration = 'Release'
         $graph | ConvertTo-Json -Depth 20 | Set-Content $graphPath
-        { & $script:CreateGraphPath -PackageInfoDirectory $packageInfo -RepoRoot $repo -GraphPath $graphPath `
-                -OutputPath $checkoutGraphPath -SourceCommit $sourceCommit } | Should -Throw '*requires a Debug repository graph*'
+        { Invoke-SparseCheckoutProjection $packageInfo $repo $graphPath $checkoutGraphPath $sourceCommit } |
+            Should -Throw '*requires a Debug repository graph*'
+
+        $graph.diagnostics.generation.configuration = 'Debug'
+        $graph.checkoutRoots = $null
+        $graph | ConvertTo-Json -Depth 20 | Set-Content $graphPath
+        { Invoke-SparseCheckoutProjection $packageInfo $repo $graphPath $checkoutGraphPath $sourceCommit } |
+            Should -Throw '*requires a complete checkout-root index*'
     }
 
     It 'rejects graph provenance when tracked source differs from the recorded commit' {
         $graph = Get-Content $graphPath -Raw | ConvertFrom-Json
         $graph.sourceCommit = 'stale'
         $graph | ConvertTo-Json -Depth 20 | Set-Content $graphPath
-        { & $script:CreateGraphPath -PackageInfoDirectory $packageInfo -RepoRoot $repo -GraphPath $graphPath `
-                -OutputPath $checkoutGraphPath -SourceCommit $sourceCommit } | Should -Throw '*does not match requested sparse-checkout provenance*'
+        { Invoke-SparseCheckoutProjection $packageInfo $repo $graphPath $checkoutGraphPath $sourceCommit } |
+            Should -Throw '*does not match requested sparse-checkout provenance*'
 
         $graph.sourceCommit = $sourceCommit
         $graph | ConvertTo-Json -Depth 20 | Set-Content $graphPath
         Set-Content -LiteralPath (Join-Path $repo 'sdk/alpha/A/tests/A.Tests.csproj') -Value 'modified'
 
-        { & $script:CreateGraphPath -PackageInfoDirectory $packageInfo -RepoRoot $repo -GraphPath $graphPath `
-                -OutputPath $checkoutGraphPath -SourceCommit $sourceCommit } | Should -Throw '*has tracked changes*'
+        { Invoke-SparseCheckoutProjection $packageInfo $repo $graphPath $checkoutGraphPath $sourceCommit } |
+            Should -Throw '*has tracked changes*'
     }
 
     It 'unions duplicate artifact seeds instead of silently retaining the first directory' {
@@ -145,8 +184,7 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
             DirectoryPath = 'sdk/beta/B'
         } | ConvertTo-Json | Set-Content (Join-Path $packageInfo 'Azure.A.duplicate.json')
 
-        & $script:CreateGraphPath -PackageInfoDirectory $packageInfo -RepoRoot $repo -GraphPath $graphPath `
-            -OutputPath $checkoutGraphPath -SourceCommit $sourceCommit
+        Invoke-SparseCheckoutProjection $packageInfo $repo $graphPath $checkoutGraphPath $sourceCommit
 
         $checkoutGraph = Get-Content $checkoutGraphPath -Raw | ConvertFrom-Json
         @($checkoutGraph.artifacts.'Azure.A').Count | Should -Be 3
