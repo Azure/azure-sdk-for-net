@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> Initializes a new instance of <see cref="IotOperationsResourceHealthStatus"/>. </summary>
         /// <param name="status"> The high-level health status of the resource. </param>
-        /// <param name="lastTransitionTime"> The timestamp (RFC3339) when the health status last changed. </param>
-        /// <param name="lastUpdateTime"> The timestamp (RFC3339) when the health status was last updated, even if the status did not change. </param>
+        /// <param name="lastTransitionOn"> The timestamp (RFC3339) when the health status last changed. </param>
+        /// <param name="lastUpdateOn"> The timestamp (RFC3339) when the health status was last updated, even if the status did not change. </param>
         /// <param name="message"> A human-readable message describing the last transition. </param>
         /// <param name="reasonCode"> Unique, CamelCase reason code describing the cause of the last health state transition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IotOperationsResourceHealthStatus(ResourceHealthState? status, string lastTransitionTime, string lastUpdateTime, string message, string reasonCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IotOperationsResourceHealthStatus(ResourceHealthState? status, DateTimeOffset? lastTransitionOn, DateTimeOffset? lastUpdateOn, string message, string reasonCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
-            LastTransitionTime = lastTransitionTime;
-            LastUpdateTime = lastUpdateTime;
+            LastTransitionOn = lastTransitionOn;
+            LastUpdateOn = lastUpdateOn;
             Message = message;
             ReasonCode = reasonCode;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.IotOperations.Models
         public ResourceHealthState? Status { get; }
 
         /// <summary> The timestamp (RFC3339) when the health status last changed. </summary>
-        public string LastTransitionTime { get; }
+        public DateTimeOffset? LastTransitionOn { get; }
 
         /// <summary> The timestamp (RFC3339) when the health status was last updated, even if the status did not change. </summary>
-        public string LastUpdateTime { get; }
+        public DateTimeOffset? LastUpdateOn { get; }
 
         /// <summary> A human-readable message describing the last transition. </summary>
         public string Message { get; }

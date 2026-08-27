@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.IotOperations.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastTransitionTime))
+            if (options.Format != "W" && Optional.IsDefined(LastTransitionOn))
             {
                 writer.WritePropertyName("lastTransitionTime"u8);
-                writer.WriteStringValue(LastTransitionTime);
+                writer.WriteStringValue(LastTransitionOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LastUpdateTime))
+            if (options.Format != "W" && Optional.IsDefined(LastUpdateOn))
             {
                 writer.WritePropertyName("lastUpdateTime"u8);
-                writer.WriteStringValue(LastUpdateTime);
+                writer.WriteStringValue(LastUpdateOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Message))
             {
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.IotOperations.Models
                 return null;
             }
             ResourceHealthState? status = default;
-            string lastTransitionTime = default;
-            string lastUpdateTime = default;
+            DateTimeOffset? lastTransitionOn = default;
+            DateTimeOffset? lastUpdateOn = default;
             string message = default;
             string reasonCode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -160,12 +160,20 @@ namespace Azure.ResourceManager.IotOperations.Models
                 }
                 if (prop.NameEquals("lastTransitionTime"u8))
                 {
-                    lastTransitionTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastTransitionOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastUpdateTime"u8))
                 {
-                    lastUpdateTime = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    lastUpdateOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("message"u8))
@@ -185,8 +193,8 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             return new IotOperationsResourceHealthStatus(
                 status,
-                lastTransitionTime,
-                lastUpdateTime,
+                lastTransitionOn,
+                lastUpdateOn,
                 message,
                 reasonCode,
                 additionalBinaryDataProperties);

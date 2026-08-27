@@ -479,17 +479,17 @@ namespace Azure.ResourceManager.IotOperations.Models
         }
 
         /// <param name="status"> The high-level health status of the resource. </param>
-        /// <param name="lastTransitionTime"> The timestamp (RFC3339) when the health status last changed. </param>
-        /// <param name="lastUpdateTime"> The timestamp (RFC3339) when the health status was last updated, even if the status did not change. </param>
+        /// <param name="lastTransitionOn"> The timestamp (RFC3339) when the health status last changed. </param>
+        /// <param name="lastUpdateOn"> The timestamp (RFC3339) when the health status was last updated, even if the status did not change. </param>
         /// <param name="message"> A human-readable message describing the last transition. </param>
         /// <param name="reasonCode"> Unique, CamelCase reason code describing the cause of the last health state transition. </param>
         /// <returns> A new <see cref="Models.IotOperationsResourceHealthStatus"/> instance for mocking. </returns>
-        public static IotOperationsResourceHealthStatus IotOperationsResourceHealthStatus(ResourceHealthState? status = default, string lastTransitionTime = default, string lastUpdateTime = default, string message = default, string reasonCode = default)
+        public static IotOperationsResourceHealthStatus IotOperationsResourceHealthStatus(ResourceHealthState? status = default, DateTimeOffset? lastTransitionOn = default, DateTimeOffset? lastUpdateOn = default, string message = default, string reasonCode = default)
         {
             return new IotOperationsResourceHealthStatus(
                 status,
-                lastTransitionTime,
-                lastUpdateTime,
+                lastTransitionOn,
+                lastUpdateOn,
                 message,
                 reasonCode,
                 default);
