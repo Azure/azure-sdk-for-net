@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("replicationMode"u8);
                 writer.WriteStringValue(ReplicationMode);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(PercentComplete))
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Sql.Models
             SqlServerDatabaseReplicationRole? role = default;
             SqlServerDatabaseReplicationRole? partnerRole = default;
             string replicationMode = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             int? percentComplete = default;
             ReplicationLinkState? replicationState = default;
             bool? isTerminationAllowed = default;
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("percentComplete"u8))
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Sql.Models
                 role,
                 partnerRole,
                 replicationMode,
-                startOn,
+                startsOn,
                 percentComplete,
                 replicationState,
                 isTerminationAllowed,
