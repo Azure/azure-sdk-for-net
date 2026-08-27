@@ -30,7 +30,7 @@ public class ConfigurationStoreTests
                         RetentionPeriod = new TimeSpan(1, 2, 3, 4),
                         LastModified = timestamp,
                         AuditTimestamps = { timestamp },
-                        ExpirationTimestamp = timestamp,
+                        ExpiresOn = timestamp,
                         ActivationOn = timestamp,
                         ActivationTime = new TimeSpan(0, 2, 3, 4, 5),
                         RetryAfter = TimeSpan.FromMilliseconds(1500),
