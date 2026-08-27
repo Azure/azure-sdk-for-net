@@ -30,11 +30,11 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="pendingPatchCount"> The number of all available patches expected to be installed over the course of the patch installation operation. </param>
         /// <param name="installedPatchCount"> The count of patches that successfully installed. </param>
         /// <param name="failedPatchCount"> The count of patches that failed installation. </param>
-        /// <param name="startOn"> The UTC timestamp when the operation began. </param>
+        /// <param name="startsOn"> The UTC timestamp when the operation began. </param>
         /// <param name="lastModifiedOn"> The UTC timestamp when the operation began. </param>
         /// <param name="error"> The errors that were encountered during execution of the operation. The details array contains the list of them. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LastPatchInstallationSummary(PatchOperationStatus? status, string installationActivityId, bool? maintenanceWindowExceeded, int? notSelectedPatchCount, int? excludedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, DateTimeOffset? startOn, DateTimeOffset? lastModifiedOn, ComputeApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LastPatchInstallationSummary(PatchOperationStatus? status, string installationActivityId, bool? maintenanceWindowExceeded, int? notSelectedPatchCount, int? excludedPatchCount, int? pendingPatchCount, int? installedPatchCount, int? failedPatchCount, DateTimeOffset? startsOn, DateTimeOffset? lastModifiedOn, ComputeApiError error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             InstallationActivityId = installationActivityId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Compute.Models
             PendingPatchCount = pendingPatchCount;
             InstalledPatchCount = installedPatchCount;
             FailedPatchCount = failedPatchCount;
-            StartOn = startOn;
+            StartsOn = startsOn;
             LastModifiedOn = lastModifiedOn;
             Error = error;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
         public int? FailedPatchCount { get; }
 
         /// <summary> The UTC timestamp when the operation began. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The UTC timestamp when the operation began. </summary>
         public DateTimeOffset? LastModifiedOn { get; }
