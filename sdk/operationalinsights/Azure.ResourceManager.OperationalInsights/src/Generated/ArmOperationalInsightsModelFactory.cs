@@ -1076,7 +1076,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 query,
                 binSize,
                 binDelay,
-                binStartOn,
+                default,
                 timeSelector,
                 destinationTable,
                 default);
@@ -1086,7 +1086,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         /// <returns> A new <see cref="Models.OperationalInsightsSummaryLogsRetryBin"/> instance for mocking. </returns>
         public static OperationalInsightsSummaryLogsRetryBin OperationalInsightsSummaryLogsRetryBin(DateTimeOffset? retryBinStartOn = default)
         {
-            return new OperationalInsightsSummaryLogsRetryBin(retryBinStartOn is null ? default : new SummaryLogsRetryBinProperties(retryBinStartOn.GetValueOrDefault(), default), default);
+            return new OperationalInsightsSummaryLogsRetryBin(default, default);
         }
 
         /// <param name="id"> The operation Id. </param>

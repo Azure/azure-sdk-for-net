@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("binDelay"u8);
                 writer.WriteNumberValue(BinDelay.Value);
             }
-            if (Optional.IsDefined(BinStartOn))
+            if (Optional.IsDefined(BinStartsOn))
             {
                 writer.WritePropertyName("binStartTime"u8);
-                writer.WriteStringValue(BinStartOn.Value, "O");
+                writer.WriteStringValue(BinStartsOn.Value, "O");
             }
             if (Optional.IsDefined(TimeSelector))
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             string query = default;
             int? binSize = default;
             int? binDelay = default;
-            DateTimeOffset? binStartOn = default;
+            DateTimeOffset? binStartsOn = default;
             OperationalInsightsSummaryTimeSelector? timeSelector = default;
             string destinationTable = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    binStartOn = prop.Value.GetDateTimeOffset("O");
+                    binStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("timeSelector"u8))
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 query,
                 binSize,
                 binDelay,
-                binStartOn,
+                binStartsOn,
                 timeSelector,
                 destinationTable,
                 additionalBinaryDataProperties);
