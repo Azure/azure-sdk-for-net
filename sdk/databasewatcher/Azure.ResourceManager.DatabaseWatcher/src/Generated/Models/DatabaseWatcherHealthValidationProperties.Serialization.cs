@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn, "O");
+                writer.WriteStringValue(StartsOn, "O");
             }
             if (options.Format != "W")
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn, "O");
+                writer.WriteStringValue(EndsOn, "O");
             }
             if (options.Format != "W")
             {
@@ -146,8 +146,8 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             {
                 return null;
             }
-            DateTimeOffset startOn = default;
-            DateTimeOffset endOn = default;
+            DateTimeOffset startsOn = default;
+            DateTimeOffset endsOn = default;
             DatabaseWatcherHealthValidationStatus status = default;
             IReadOnlyList<DatabaseWatcherHealthValidationIssue> issues = default;
             DatabaseWatcherResourceProvisioningState? provisioningState = default;
@@ -156,12 +156,12 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
             {
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -194,8 +194,8 @@ namespace Azure.ResourceManager.DatabaseWatcher.Models
                 }
             }
             return new DatabaseWatcherHealthValidationProperties(
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 status,
                 issues,
                 provisioningState,

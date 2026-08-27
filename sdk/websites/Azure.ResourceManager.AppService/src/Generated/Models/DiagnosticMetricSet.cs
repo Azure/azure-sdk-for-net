@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="DiagnosticMetricSet"/>. </summary>
         /// <param name="name"> Name of the metric. </param>
         /// <param name="unit"> Metric's unit. </param>
-        /// <param name="startOn"> Start time of the period. </param>
-        /// <param name="endOn"> End time of the period. </param>
+        /// <param name="startsOn"> Start time of the period. </param>
+        /// <param name="endsOn"> End time of the period. </param>
         /// <param name="timeGrain"> Presented time grain. Supported grains at the moment are PT1M, PT1H, P1D. </param>
         /// <param name="values"> Collection of metric values for the selected period based on the {Microsoft.Web.Hosting.Administration.DiagnosticMetricSet.TimeGrain}. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticMetricSet(string name, string unit, DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, IList<DiagnosticMetricSample> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiagnosticMetricSet(string name, string unit, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string timeGrain, IList<DiagnosticMetricSample> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Unit = unit;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             TimeGrain = timeGrain;
             Values = values;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -52,11 +52,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Start time of the period. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> End time of the period. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Presented time grain. Supported grains at the moment are PT1M, PT1H, P1D. </summary>
         [WirePath("timeGrain")]

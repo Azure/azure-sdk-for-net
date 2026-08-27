@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DiagnosticAnalysisProperties"/>. </summary>
-        /// <param name="startOn"> Start time of the period. </param>
-        /// <param name="endOn"> End time of the period. </param>
+        /// <param name="startsOn"> Start time of the period. </param>
+        /// <param name="endsOn"> End time of the period. </param>
         /// <param name="abnormalTimePeriods"> List of time periods. </param>
         /// <param name="payload"> Data by each detector. </param>
         /// <param name="nonCorrelatedDetectors"> Data by each detector for detectors that did not corelate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiagnosticAnalysisProperties(DateTimeOffset? startOn, DateTimeOffset? endOn, IList<AbnormalTimePeriod> abnormalTimePeriods, IList<AnalysisDetectorEvidences> payload, IList<DetectorDefinition> nonCorrelatedDetectors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiagnosticAnalysisProperties(DateTimeOffset? startsOn, DateTimeOffset? endsOn, IList<AbnormalTimePeriod> abnormalTimePeriods, IList<AnalysisDetectorEvidences> payload, IList<DetectorDefinition> nonCorrelatedDetectors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             AbnormalTimePeriods = abnormalTimePeriods;
             Payload = payload;
             NonCorrelatedDetectors = nonCorrelatedDetectors;
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Start time of the period. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> End time of the period. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> List of time periods. </summary>
         [WirePath("abnormalTimePeriods")]

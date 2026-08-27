@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.IotOperations.Models
     public static partial class ArmIotOperationsModelFactory
     {
 
+        /// <summary> A Instance resource is a logical container for a set of child resources. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -53,7 +54,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="features"> The features of the AIO Instance. </param>
         /// <param name="adrNamespaceRefResourceId"> The resource ID of the Azure Device Registry Namespace. </param>
         /// <param name="healthState"> The health state of the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="schemaRegistryRefResourceId"/> is null. </exception>
         /// <returns> A new <see cref="Models.IotOperationsInstanceProperties"/> instance for mocking. </returns>
         public static IotOperationsInstanceProperties IotOperationsInstanceProperties(string description = default, IotOperationsProvisioningState? provisioningState = default, string version = default, ResourceIdentifier schemaRegistryRefResourceId = default, ResourceIdentifier defaultSecretProviderClassRefResourceId = default, IDictionary<string, IotOperationsInstanceFeature> features = default, ResourceIdentifier adrNamespaceRefResourceId = default, ResourceHealthState? healthState = default)
         {
@@ -71,6 +71,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> The reference to the Schema Registry for this AIO Instance. </summary>
         /// <param name="resourceId"> The resource ID of the Schema Registry. </param>
         /// <returns> A new <see cref="Models.SchemaRegistryRef"/> instance for mocking. </returns>
         public static SchemaRegistryRef SchemaRegistryRef(ResourceIdentifier resourceId = default)
@@ -78,6 +79,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new SchemaRegistryRef(resourceId, default);
         }
 
+        /// <summary> The features of the AIO Instance. </summary>
         /// <param name="mode"> The state of the feature. </param>
         /// <param name="settings"> The settings of the feature. </param>
         /// <returns> A new <see cref="Models.IotOperationsInstanceFeature"/> instance for mocking. </returns>
@@ -88,6 +90,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new IotOperationsInstanceFeature(mode, settings ?? new ChangeTrackingDictionary<string, IotOperationsOperationalMode>(), default);
         }
 
+        /// <summary> Extended location is an extension of Azure locations. They provide a way to use their Azure ARC enabled Kubernetes clusters as target locations for deploying Azure services instances. </summary>
         /// <param name="name"> The name of the extended location. </param>
         /// <param name="type"> Type of ExtendedLocation. </param>
         /// <returns> A new <see cref="Models.IotOperationsExtendedLocation"/> instance for mocking. </returns>
@@ -96,6 +99,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new IotOperationsExtendedLocation(name, @type, default);
         }
 
+        /// <summary> The Instance update model. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.IotOperationsInstancePatch"/> instance for mocking. </returns>
@@ -106,6 +110,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new IotOperationsInstancePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
 
+        /// <summary> Instance broker resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -150,6 +155,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> Broker Advanced Settings. </summary>
         /// <param name="clients"> Configurations related to All Clients. </param>
         /// <param name="encryptInternalTraffic"> The setting to enable or disable encryption of internal Traffic. </param>
         /// <param name="internalCerts"> Certificate rotation and private key configuration. </param>
@@ -159,6 +165,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new BrokerAdvancedSettings(clients, encryptInternalTraffic, internalCerts, default);
         }
 
+        /// <summary> The settings of Client Config. </summary>
         /// <param name="maxSessionExpirySeconds"> Upper bound of Session Expiry Interval, in seconds. </param>
         /// <param name="maxMessageExpirySeconds"> Upper bound of Message Expiry Interval, in seconds. </param>
         /// <param name="maxPacketSizeBytes"> Max message size for a packet in Bytes. </param>
@@ -178,6 +185,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> The settings of Subscriber Queue Limit. </summary>
         /// <param name="length"> The maximum length of the queue before messages start getting dropped. </param>
         /// <param name="strategy"> The strategy to use for dropping messages from the queue. </param>
         /// <returns> A new <see cref="Models.SubscriberQueueLimit"/> instance for mocking. </returns>
@@ -186,6 +194,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new SubscriberQueueLimit(length, strategy, default);
         }
 
+        /// <summary> Cert Manager Cert properties. </summary>
         /// <param name="duration"> Lifetime of certificate. Must be specified using a Go time.Duration format (h|m|s). E.g. 240h for 240 hours and 45m for 45 minutes. </param>
         /// <param name="renewBefore"> When to begin renewing certificate. Must be specified using a Go time.Duration format (h|m|s). E.g. 240h for 240 hours and 45m for 45 minutes. </param>
         /// <param name="privateKey"> Configuration of certificate private key. </param>
@@ -195,6 +204,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new CertManagerCertConfig(duration, renewBefore, privateKey, default);
         }
 
+        /// <summary> Cert Manager private key properties. </summary>
         /// <param name="algorithm"> algorithm for private key. </param>
         /// <param name="rotationPolicy"> cert-manager private key rotationPolicy. </param>
         /// <returns> A new <see cref="Models.CertManagerPrivateKey"/> instance for mocking. </returns>
@@ -203,6 +213,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new CertManagerPrivateKey(algorithm, rotationPolicy, default);
         }
 
+        /// <summary> Cardinality properties. </summary>
         /// <param name="backendChain"> The backend broker desired properties. </param>
         /// <param name="frontend"> The frontend desired properties. </param>
         /// <returns> A new <see cref="Models.BrokerCardinality"/> instance for mocking. </returns>
@@ -211,6 +222,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new BrokerCardinality(backendChain, frontend, default);
         }
 
+        /// <summary> Desired properties of the backend instances of the broker. </summary>
         /// <param name="partitions"> The desired number of physical backend partitions. </param>
         /// <param name="redundancyFactor"> The desired numbers of backend replicas (pods) in a physical partition. </param>
         /// <param name="workers"> Number of logical backend workers per replica (pod). </param>
@@ -220,6 +232,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new BrokerBackendChain(partitions, redundancyFactor, workers, default);
         }
 
+        /// <summary> The desired properties of the frontend instances of the Broker. </summary>
         /// <param name="replicas"> The desired number of frontend instances (pods). </param>
         /// <param name="workers"> Number of logical frontend workers per instance (pod). </param>
         /// <returns> A new <see cref="Models.BrokerFrontend"/> instance for mocking. </returns>
@@ -238,6 +251,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new BrokerDiagnostics(logsLevel is null ? default : new DiagnosticsLogs(logsLevel, default), metricsPrometheusPort is null ? default : new IotOperationsMetrics(metricsPrometheusPort, default), selfCheck, traces, default);
         }
 
+        /// <summary> Broker Diagnostic Self check properties. </summary>
         /// <param name="mode"> The toggle to enable/disable self check. </param>
         /// <param name="intervalSeconds"> The self check interval. </param>
         /// <param name="timeoutSeconds"> The timeout for self check. </param>
@@ -247,6 +261,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new BrokerDiagnosticSelfCheck(mode, intervalSeconds, timeoutSeconds, default);
         }
 
+        /// <summary> Broker Diagnostic Trace properties. </summary>
         /// <param name="mode"> The toggle to enable/disable traces. </param>
         /// <param name="cacheSizeMegabytes"> The cache size in megabytes. </param>
         /// <param name="selfTracing"> The self tracing properties. </param>
@@ -257,6 +272,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new BrokerDiagnosticTraces(mode, cacheSizeMegabytes, selfTracing, spanChannelCapacity, default);
         }
 
+        /// <summary> Diagnostic Self tracing properties. </summary>
         /// <param name="mode"> The toggle to enable/disable self tracing. </param>
         /// <param name="intervalSeconds"> The self tracing interval. </param>
         /// <returns> A new <see cref="Models.DiagnosticSelfTracing"/> instance for mocking. </returns>
@@ -265,6 +281,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DiagnosticSelfTracing(mode, intervalSeconds, default);
         }
 
+        /// <summary> DiskBackedMessageBuffer properties. </summary>
         /// <param name="maxSize"> The max size of the message buffer on disk. If a PVC template is specified using one of ephemeralVolumeClaimSpec or persistentVolumeClaimSpec, then this size is used as the request and limit sizes of that template. If neither ephemeralVolumeClaimSpec nor persistentVolumeClaimSpec are specified, then an emptyDir volume is mounted with this size as its limit. See &lt;https://kubernetes.io/docs/concepts/storage/volumes/#emptydir&gt; for details. </param>
         /// <param name="ephemeralVolumeClaimSpec"> Use the specified persistent volume claim template to mount a "generic ephemeral volume" for the message buffer. See &lt;https://kubernetes.io/docs/concepts/storage/ephemeral-volumes/#generic-ephemeral-volumes&gt; for details. </param>
         /// <param name="persistentVolumeClaimSpec"> Use the specified persistent volume claim template to mount a persistent volume for the message buffer. </param>
@@ -274,6 +291,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DiskBackedMessageBuffer(maxSize, ephemeralVolumeClaimSpec, persistentVolumeClaimSpec, default);
         }
 
+        /// <summary> VolumeClaimSpec properties. </summary>
         /// <param name="volumeName"> VolumeName is the binding reference to the PersistentVolume backing this claim. </param>
         /// <param name="volumeMode"> volumeMode defines what type of volume is required by the claim. Value of Filesystem is implied when not included in claim spec. This is a beta feature. </param>
         /// <param name="storageClassName"> Name of the StorageClass required by the claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1. </param>
@@ -299,6 +317,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> Kubernetes reference. </summary>
         /// <param name="apiGroup"> APIGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required. </param>
         /// <param name="kind"> Kind is the type of resource being referenced. </param>
         /// <param name="name"> Name is the name of resource being referenced. </param>
@@ -308,6 +327,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new LocalKubernetesReference(apiGroup, kind, name, default);
         }
 
+        /// <summary> Kubernetes reference. </summary>
         /// <param name="apiGroup"> APIGroup is the group for the resource being referenced. If APIGroup is not specified, the specified Kind must be in the core API group. For any other third-party types, APIGroup is required. </param>
         /// <param name="kind"> Kind is the type of resource being referenced. </param>
         /// <param name="name"> Name is the name of resource being referenced. </param>
@@ -318,6 +338,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new KubernetesReference(apiGroup, kind, name, @namespace, default);
         }
 
+        /// <summary> VolumeClaimResourceRequirements properties. </summary>
         /// <param name="limits"> Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/. </param>
         /// <param name="requests"> Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/. </param>
         /// <param name="claims">
@@ -335,6 +356,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new VolumeClaimResourceRequirements(limits ?? new ChangeTrackingDictionary<string, string>(), requests ?? new ChangeTrackingDictionary<string, string>(), (claims ?? new ChangeTrackingList<VolumeClaimResourceRequirementsClaims>()).ToList(), default);
         }
 
+        /// <summary> VolumeClaimResourceRequirementsClaims properties. </summary>
         /// <param name="name"> Name of the resource. This must match the name of a resource in spec.resourceClaims. </param>
         /// <returns> A new <see cref="Models.VolumeClaimResourceRequirementsClaims"/> instance for mocking. </returns>
         public static VolumeClaimResourceRequirementsClaims VolumeClaimResourceRequirementsClaims(string name = default)
@@ -342,6 +364,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new VolumeClaimResourceRequirementsClaims(name, default);
         }
 
+        /// <summary> VolumeClaimSpecSelector properties. </summary>
         /// <param name="matchExpressions"> MatchExpressions is a list of label selector requirements. The requirements are ANDed. </param>
         /// <param name="matchLabels"> MatchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed. </param>
         /// <returns> A new <see cref="Models.VolumeClaimSpecSelector"/> instance for mocking. </returns>
@@ -353,6 +376,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new VolumeClaimSpecSelector((matchExpressions ?? new ChangeTrackingList<VolumeClaimSpecSelectorMatchExpressions>()).ToList(), matchLabels ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> VolumeClaimSpecSelectorMatchExpressions properties. </summary>
         /// <param name="key"> key is the label key that the selector applies to. </param>
         /// <param name="operator"> operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist. </param>
         /// <param name="values"> values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch. </param>
@@ -386,6 +410,10 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary>
+        /// Broker Retain policy properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BrokerRetainMessagesCustomPolicy"/>.
+        /// </summary>
         /// <param name="mode"> 'All' to persist all retain messages, 'None' to not persist any, 'Custom' to persist only the specified topics. </param>
         /// <returns> A new <see cref="Models.BrokerRetainMessagesPolicy"/> instance for mocking. </returns>
         public static BrokerRetainMessagesPolicy BrokerRetainMessagesPolicy(string mode = default)
@@ -393,6 +421,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new UnknownBrokerRetainMessagesPolicy(default, default);
         }
 
+        /// <summary> Custom Broker Retain Message Policy. </summary>
         /// <param name="retainSettings"> Settings for the policy. </param>
         /// <returns> A new <see cref="Models.BrokerRetainMessagesCustomPolicy"/> instance for mocking. </returns>
         public static BrokerRetainMessagesCustomPolicy BrokerRetainMessagesCustomPolicy(BrokerRetainMessagesSettings retainSettings = default)
@@ -410,6 +439,10 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new BrokerRetainMessagesSettings((topics ?? new ChangeTrackingList<string>()).ToList(), dynamicMode is null ? default : new BrokerRetainMessagesDynamic(dynamicMode.GetValueOrDefault(), default), default);
         }
 
+        /// <summary>
+        /// Broker State Store Policy.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BrokerStateStoreCustomPolicy"/>.
+        /// </summary>
         /// <param name="mode"> 'All' to persist all keys, 'None' to not persist any, 'Custom' to persist only the specified keys. </param>
         /// <returns> A new <see cref="Models.BrokerStateStorePolicy"/> instance for mocking. </returns>
         public static BrokerStateStorePolicy BrokerStateStorePolicy(string mode = default)
@@ -417,6 +450,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new UnknownBrokerStateStorePolicy(default, default);
         }
 
+        /// <summary> Broker State Store Custom Policy. </summary>
         /// <param name="stateStoreSettings"> Settings for the policy. </param>
         /// <returns> A new <see cref="Models.BrokerStateStoreCustomPolicy"/> instance for mocking. </returns>
         public static BrokerStateStoreCustomPolicy BrokerStateStoreCustomPolicy(BrokerStateStorePolicySettings stateStoreSettings = default)
@@ -434,6 +468,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new BrokerStateStorePolicySettings((stateStoreResources ?? new ChangeTrackingList<BrokerStateStorePolicyResources>()).ToList(), dynamicMode is null ? default : new BrokerStateStoreDynamic(dynamicMode.GetValueOrDefault(), default), default);
         }
 
+        /// <summary> Broker State Store Policy Resources properties. </summary>
         /// <param name="keyType"> The key to persist to disk. </param>
         /// <param name="keys"> List of keys to persist to disk, required. </param>
         /// <returns> A new <see cref="Models.BrokerStateStorePolicyResources"/> instance for mocking. </returns>
@@ -444,6 +479,10 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new BrokerStateStorePolicyResources(keyType, (keys ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary>
+        /// Broker Subscriber Queue Policy properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.BrokerSubscriberQueueCustomPolicy"/>.
+        /// </summary>
         /// <param name="mode"> 'All' to persist all subscriber queues, 'None' to not persist any, 'Custom' to persist only the specified queues. </param>
         /// <returns> A new <see cref="Models.BrokerSubscriberQueuePolicy"/> instance for mocking. </returns>
         public static BrokerSubscriberQueuePolicy BrokerSubscriberQueuePolicy(string mode = default)
@@ -451,6 +490,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new UnknownBrokerSubscriberQueuePolicy(default, default);
         }
 
+        /// <summary> Custom Subscriber Queue Policy Properties. </summary>
         /// <param name="subscriberQueueSettings"> Custom policy, required if mode is Custom. Subscriber queues from all groups are persisted to disk (logical OR). </param>
         /// <returns> A new <see cref="Models.BrokerSubscriberQueueCustomPolicy"/> instance for mocking. </returns>
         public static BrokerSubscriberQueueCustomPolicy BrokerSubscriberQueueCustomPolicy(BrokerSubscriberQueueCustomPolicySettings subscriberQueueSettings = default)
@@ -468,6 +508,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new BrokerSubscriberQueueCustomPolicySettings((subscriberClientIds ?? new ChangeTrackingList<string>()).ToList(), dynamicMode is null ? default : new BrokerSubscriberQueueDynamic(dynamicMode.GetValueOrDefault(), default), default);
         }
 
+        /// <summary> Instance broker resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -487,6 +528,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> Defines a Broker listener. A listener is a collection of ports on which the broker accepts connections from clients. </summary>
         /// <param name="serviceName"> Kubernetes Service name of this listener. </param>
         /// <param name="ports"> Ports on which this listener accepts client connections. </param>
         /// <param name="listenerServiceType"> Kubernetes Service type of this listener. </param>
@@ -506,6 +548,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> Defines a TCP port on which a `BrokerListener` listens. </summary>
         /// <param name="authenticationRef"> Reference to client authentication settings. Omit to disable authentication. </param>
         /// <param name="authorizationRef"> Reference to client authorization settings. Omit to disable authorization. </param>
         /// <param name="nodePort"> Kubernetes node port. Only relevant when this port is associated with a `NodePort` listener. </param>
@@ -534,6 +577,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new ListenerPortTlsCertMethod(mode, certManagerCertificateSpec, manualSecretRef is null ? default : new BrokerX509ManualCertificate(manualSecretRef, default), default);
         }
 
+        /// <summary> Automatic TLS server certificate management with cert-manager. </summary>
         /// <param name="duration"> Lifetime of certificate. Must be specified using a Go time.Duration format (h|m|s). E.g. 240h for 240 hours and 45m for 45 minutes. </param>
         /// <param name="secretName"> Secret for storing server certificate. Any existing data will be overwritten. This is a reference to the secret through an identifying name, not the secret itself. </param>
         /// <param name="renewBefore"> When to begin renewing certificate. Must be specified using a Go time.Duration format (h|m|s). E.g. 240h for 240 hours and 45m for 45 minutes. </param>
@@ -553,6 +597,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> Cert-Manager issuerRef properties. </summary>
         /// <param name="group"> group of issuer. </param>
         /// <param name="kind"> kind of issuer (Issuer or ClusterIssuer). </param>
         /// <param name="name"> name of issuer. </param>
@@ -562,6 +607,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new CertManagerIssuerRef(@group, kind, name, default);
         }
 
+        /// <summary> Subject Alternative Names (SANs) for certificate. </summary>
         /// <param name="dns"> DNS SANs. </param>
         /// <param name="ip"> IP address SANs. </param>
         /// <returns> A new <see cref="Models.SanForCert"/> instance for mocking. </returns>
@@ -573,6 +619,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new SanForCert((dns ?? new ChangeTrackingList<string>()).ToList(), (ip ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Instance broker authentication resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -592,6 +639,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> BrokerAuthentication Resource properties. </summary>
         /// <param name="authenticationMethods"> Defines a set of Broker authentication methods to be used on `BrokerListeners`. For each array element one authenticator type supported. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="healthState"> The health state of the resource. </param>
@@ -625,6 +673,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new BrokerAuthenticatorMethodCustom(authX509SecretRef is null ? default : new BrokerAuthenticatorCustomAuth(new BrokerX509ManualCertificate(authX509SecretRef, default), default), caCertConfigMap, endpoint, headers ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> X509 for BrokerAuthentication. </summary>
         /// <param name="authorizationAttributes"> X509 authorization attributes properties. </param>
         /// <param name="trustedClientCaCert"> Name of the trusted client ca cert resource. </param>
         /// <param name="additionalValidation"> X509 authentication attributes properties. </param>
@@ -636,6 +685,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new BrokerAuthenticatorMethodX509(authorizationAttributes ?? new ChangeTrackingDictionary<string, BrokerAuthenticatorMethodX509Attributes>(), trustedClientCaCert, additionalValidation, default);
         }
 
+        /// <summary> BrokerAuthenticatorMethodX509Attributes properties. </summary>
         /// <param name="attributes"> Attributes object. </param>
         /// <param name="subject"> Subject of the X509 attribute. </param>
         /// <returns> A new <see cref="Models.BrokerAuthenticatorMethodX509Attributes"/> instance for mocking. </returns>
@@ -646,6 +696,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new BrokerAuthenticatorMethodX509Attributes(attributes ?? new ChangeTrackingDictionary<string, string>(), subject, default);
         }
 
+        /// <summary> Instance broker authorizations resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -665,6 +716,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> BrokerAuthorization Resource properties. </summary>
         /// <param name="authorizationPolicies"> The list of authorization policies supported by the Authorization Resource. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="healthState"> The health state of the resource. </param>
@@ -674,6 +726,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new IotOperationsBrokerAuthorizationProperties(authorizationPolicies, provisioningState, healthState, default);
         }
 
+        /// <summary> Broker AuthorizationConfig properties. </summary>
         /// <param name="cache"> Enable caching of the authorization rules. </param>
         /// <param name="rules"> The authorization rules to follow. If no rule is set, but Authorization Resource is used that would mean DenyAll. </param>
         /// <returns> A new <see cref="Models.BrokerAuthorizationConfig"/> instance for mocking. </returns>
@@ -684,6 +737,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new BrokerAuthorizationConfig(cache, (rules ?? new ChangeTrackingList<BrokerAuthorizationRule>()).ToList(), default);
         }
 
+        /// <summary> AuthorizationConfig Rule Properties. </summary>
         /// <param name="brokerResources"> Give access to Broker methods and topics. </param>
         /// <param name="principals"> Give access to clients based on the following properties. </param>
         /// <param name="stateStoreResources"> Give access to state store resources. </param>
@@ -696,6 +750,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new BrokerAuthorizationRule((brokerResources ?? new ChangeTrackingList<BrokerResourceRule>()).ToList(), principals, (stateStoreResources ?? new ChangeTrackingList<StateStoreResourceRule>()).ToList(), default);
         }
 
+        /// <summary> Broker Resource Rule properties. This defines the objects that represent the actions or topics, such as - method.Connect, method.Publish, etc. </summary>
         /// <param name="method"> Give access for a Broker method (i.e., Connect, Subscribe, or Publish). </param>
         /// <param name="clientIds"> A list of client IDs that match the clients. The client IDs are case-sensitive and must match the client IDs provided by the clients during connection. This subfield may be set if the method is Connect. </param>
         /// <param name="topics"> A list of topics or topic patterns that match the topics that the clients can publish or subscribe to. This subfield is required if the method is Publish or Subscribe. </param>
@@ -708,6 +763,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new BrokerResourceRule(@method, (clientIds ?? new ChangeTrackingList<string>()).ToList(), (topics ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> PrincipalDefinition properties of Rule. </summary>
         /// <param name="attributes"> A list of key-value pairs that match the attributes of the clients. The attributes are case-sensitive and must match the attributes provided by the clients during authentication. </param>
         /// <param name="clientIds"> A list of client IDs that match the clients. The client IDs are case-sensitive and must match the client IDs provided by the clients during connection. </param>
         /// <param name="usernames"> A list of usernames that match the clients. The usernames are case-sensitive and must match the usernames provided by the clients during authentication. </param>
@@ -721,6 +777,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new PrincipalConfig((attributes ?? new ChangeTrackingList<IDictionary<string, string>>()).ToList(), (clientIds ?? new ChangeTrackingList<string>()).ToList(), (usernames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> State Store Resource Rule properties. </summary>
         /// <param name="keyType"> Allowed keyTypes pattern, string, binary. The key type used for matching, for example pattern tries to match the key to a glob-style pattern and string checks key is equal to value provided in keys. </param>
         /// <param name="keys"> Give access to state store keys for the corresponding principals defined. When key type is pattern set glob-style pattern (e.g., '<i>', 'clients/</i>'). </param>
         /// <param name="method"> Give access for `Read`, `Write` and `ReadWrite` access level. </param>
@@ -732,6 +789,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new StateStoreResourceRule(keyType, (keys ?? new ChangeTrackingList<string>()).ToList(), @method, default);
         }
 
+        /// <summary> Instance dataflowProfile resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -751,6 +809,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> DataflowProfile Resource properties. </summary>
         /// <param name="diagnostics"> Spec defines the desired identities of NBC diagnostics settings. </param>
         /// <param name="instanceCount"> To manually scale the dataflow profile, specify the maximum number of instances you want to run. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
@@ -769,6 +828,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowProfileDiagnostics(logsLevel is null ? default : new DiagnosticsLogs(logsLevel, default), metricsPrometheusPort is null ? default : new IotOperationsMetrics(metricsPrometheusPort, default), default);
         }
 
+        /// <summary> Instance dataflowProfile dataflow resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -788,6 +848,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> Dataflow Resource properties. </summary>
         /// <param name="mode"> Mode for Dataflow. Optional; defaults to Enabled. </param>
         /// <param name="requestDiskPersistence"> Disk persistence mode. </param>
         /// <param name="operations"> List of operations including source and destination references as well as transformation. </param>
@@ -807,6 +868,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> Dataflow Operation properties. NOTE - One only method is allowed to be used for one entry. </summary>
         /// <param name="operationType"> Type of operation. </param>
         /// <param name="name"> Optional user provided name of the transformation. </param>
         /// <param name="sourceSettings"> Source configuration. </param>
@@ -824,6 +886,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> Dataflow Source Operation properties. </summary>
         /// <param name="endpointRef"> Reference to the Dataflow Endpoint resource. Can only be of Broker and Kafka type. </param>
         /// <param name="assetRef"> Reference to the resource in Azure Device Registry where the data in the endpoint originates from. </param>
         /// <param name="serializationFormat"> Content is a JSON Schema. Allowed: JSON Schema/draft-7. </param>
@@ -843,6 +906,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> Dataflow BuiltIn Transformation properties. </summary>
         /// <param name="serializationFormat"> Serialization format. Optional; defaults to JSON. Allowed value JSON Schema/draft-7, Parquet. Default: Json. </param>
         /// <param name="schemaRef"> Reference to the schema that describes the output of the transformation. </param>
         /// <param name="datasets"> Enrich data from Broker State Store. Dataset references a key in Broker State Store. </param>
@@ -864,6 +928,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> Dataflow BuiltIn Transformation dataset properties. </summary>
         /// <param name="key"> The key of the dataset. </param>
         /// <param name="description"> A user provided optional description of the dataset. </param>
         /// <param name="schemaRef"> The reference to the schema that describes the dataset. Allowed: JSON Schema/draft-7. </param>
@@ -883,6 +948,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> Dataflow BuiltIn Transformation filter properties. </summary>
         /// <param name="type"> The type of dataflow operation. </param>
         /// <param name="description"> A user provided optional description of the filter. </param>
         /// <param name="inputs"> List of fields for filtering in JSON path expression. </param>
@@ -895,6 +961,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowBuiltInTransformationFilter(@type, description, (inputs ?? new ChangeTrackingList<string>()).ToList(), expression, default);
         }
 
+        /// <summary> Dataflow BuiltIn Transformation map properties. </summary>
         /// <param name="type"> Type of transformation. </param>
         /// <param name="description"> A user provided optional description of the mapping function. </param>
         /// <param name="inputs"> List of fields for mapping in JSON path expression. </param>
@@ -914,6 +981,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> Dataflow Destination Operation properties. </summary>
         /// <param name="endpointRef"> Reference to the Endpoint CR. Can be of Broker, Kafka, Fabric, ADLS, ADX type. </param>
         /// <param name="dataDestination"> Destination location, can be a topic or table name. Supports dynamic values with $topic, $systemProperties, $userProperties, $payload, $context, and $subscription. </param>
         /// <param name="headers"> Headers for the output data. </param>
@@ -925,6 +993,10 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowDestinationOperationSettings(endpointRef, dataDestination, (headers ?? new ChangeTrackingList<DataflowDestinationHeaderAction>()).ToList(), default);
         }
 
+        /// <summary>
+        /// Dataflow Destination Header Action properties
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataflowDestinationAddIfNotPresentHeaderAction"/>, <see cref="Models.DataflowDestinationRemoveHeaderAction"/>, and <see cref="Models.DataflowDestinationAddOrReplaceHeaderAction"/>.
+        /// </summary>
         /// <param name="actionType"> The type of header operation to perform. </param>
         /// <returns> A new <see cref="Models.DataflowDestinationHeaderAction"/> instance for mocking. </returns>
         public static DataflowDestinationHeaderAction DataflowDestinationHeaderAction(string actionType = default)
@@ -932,6 +1004,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new UnknownDataflowDestinationHeaderAction(default, default);
         }
 
+        /// <summary> Dataflow Destination Add if not present HeaderAction properties. </summary>
         /// <param name="key"> The name of the header to add. </param>
         /// <param name="value"> The value of the header to add. </param>
         /// <returns> A new <see cref="Models.DataflowDestinationAddIfNotPresentHeaderAction"/> instance for mocking. </returns>
@@ -940,6 +1013,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowDestinationAddIfNotPresentHeaderAction(default, default, key, value);
         }
 
+        /// <summary> Dataflow Destination Remove HeaderAction properties. </summary>
         /// <param name="key"> The name of the header to remove. </param>
         /// <returns> A new <see cref="Models.DataflowDestinationRemoveHeaderAction"/> instance for mocking. </returns>
         public static DataflowDestinationRemoveHeaderAction DataflowDestinationRemoveHeaderAction(string key = default)
@@ -947,6 +1021,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowDestinationRemoveHeaderAction(default, default, key);
         }
 
+        /// <summary> Dataflow Destination Add or Replace HeaderAction properties. </summary>
         /// <param name="key"> The name of the header to add or replace. </param>
         /// <param name="value"> The value of the header to add or replace. </param>
         /// <returns> A new <see cref="Models.DataflowDestinationAddOrReplaceHeaderAction"/> instance for mocking. </returns>
@@ -955,6 +1030,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowDestinationAddOrReplaceHeaderAction(default, default, key, value);
         }
 
+        /// <summary> Instance dataflowEndpoint resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1003,6 +1079,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> Azure Data Explorer endpoint properties. </summary>
         /// <param name="authentication"> Authentication configuration. NOTE - only authentication property is allowed per entry. </param>
         /// <param name="database"> Database name. </param>
         /// <param name="host"> Host of the Azure Data Explorer in the form of &lt;cluster&gt;.&lt;region&gt;.kusto.windows.net . </param>
@@ -1022,6 +1099,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowEndpointDataExplorerAuthentication(@method, systemAssignedManagedIdentityAudience is null ? default : new DataflowEndpointAuthenticationSystemAssignedManagedIdentity(systemAssignedManagedIdentityAudience, default), userAssignedManagedIdentitySettings, default);
         }
 
+        /// <summary> DataflowEndpoint Authentication UserAssignedManagedIdentity properties. </summary>
         /// <param name="clientId"> Client ID for the user-assigned managed identity. </param>
         /// <param name="scope"> Resource identifier (application ID URI) of the resource, affixed with the .default suffix. </param>
         /// <param name="tenantId"> Tenant ID. </param>
@@ -1031,6 +1109,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowEndpointAuthenticationUserAssignedManagedIdentity(clientId, scope, tenantId, default);
         }
 
+        /// <summary> Batching configuration. </summary>
         /// <param name="latencySeconds"> Batching latency in seconds. </param>
         /// <param name="maxMessages"> Maximum number of messages in a batch. </param>
         /// <returns> A new <see cref="Models.IotOperationsBatchingConfig"/> instance for mocking. </returns>
@@ -1039,6 +1118,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new IotOperationsBatchingConfig(latencySeconds, maxMessages, default);
         }
 
+        /// <summary> Azure Data Lake endpoint properties. </summary>
         /// <param name="authentication"> Authentication configuration. NOTE - only authentication property is allowed per entry. </param>
         /// <param name="host"> Host of the Azure Data Lake in the form of &lt;account&gt;.blob.core.windows.net . </param>
         /// <param name="batching"> Azure Data Lake endpoint batching configuration. </param>
@@ -1058,6 +1138,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowEndpointDataLakeStorageAuthentication(@method, accessTokenSecretRef is null ? default : new DataflowEndpointAuthenticationAccessToken(accessTokenSecretRef, default), systemAssignedManagedIdentityAudience is null ? default : new DataflowEndpointAuthenticationSystemAssignedManagedIdentity(systemAssignedManagedIdentityAudience, default), userAssignedManagedIdentitySettings, default);
         }
 
+        /// <summary> Microsoft Fabric endpoint properties. </summary>
         /// <param name="authentication"> Authentication configuration. NOTE - only one authentication property is allowed per entry. </param>
         /// <param name="names"> Names of the workspace and lakehouse. </param>
         /// <param name="oneLakePathType"> Type of location of the data in the workspace. Can be either tables or files. </param>
@@ -1084,6 +1165,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowEndpointFabricOneLakeAuthentication(@method, systemAssignedManagedIdentityAudience is null ? default : new DataflowEndpointAuthenticationSystemAssignedManagedIdentity(systemAssignedManagedIdentityAudience, default), userAssignedManagedIdentitySettings, default);
         }
 
+        /// <summary> Microsoft Fabric endpoint Names properties. </summary>
         /// <param name="lakehouseName"> Lakehouse name. </param>
         /// <param name="workspaceName"> Workspace name. </param>
         /// <returns> A new <see cref="Models.DataflowEndpointFabricOneLakeNames"/> instance for mocking. </returns>
@@ -1092,6 +1174,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowEndpointFabricOneLakeNames(lakehouseName, workspaceName, default);
         }
 
+        /// <summary> Kafka endpoint properties. </summary>
         /// <param name="authentication"> Authentication configuration. NOTE - only authentication property is allowed per entry. </param>
         /// <param name="consumerGroupId"> Consumer group ID. </param>
         /// <param name="host"> Kafka endpoint host. </param>
@@ -1136,6 +1219,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> DataflowEndpoint Authentication Sasl properties. </summary>
         /// <param name="saslType"> Type of SASL authentication. Can be PLAIN, SCRAM-SHA-256, or SCRAM-SHA-512. </param>
         /// <param name="secretRef"> Token secret name. </param>
         /// <returns> A new <see cref="Models.DataflowEndpointAuthenticationSasl"/> instance for mocking. </returns>
@@ -1144,6 +1228,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowEndpointAuthenticationSasl(saslType, secretRef, default);
         }
 
+        /// <summary> Kafka endpoint Batching properties. </summary>
         /// <param name="mode"> Mode for batching. </param>
         /// <param name="latencyMs"> Batching latency in milliseconds. </param>
         /// <param name="maxBytes"> Maximum number of bytes in a batch. </param>
@@ -1154,6 +1239,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowEndpointKafkaBatching(mode, latencyMs, maxBytes, maxMessages, default);
         }
 
+        /// <summary> Tls properties. </summary>
         /// <param name="mode"> Mode for TLS. </param>
         /// <param name="trustedCaCertificateConfigMapRef"> Trusted CA certificate config map. </param>
         /// <returns> A new <see cref="Models.IotOperationsTlsProperties"/> instance for mocking. </returns>
@@ -1162,6 +1248,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new IotOperationsTlsProperties(mode, trustedCaCertificateConfigMapRef, default);
         }
 
+        /// <summary> Broker endpoint properties. </summary>
         /// <param name="authentication"> authentication properties. DEFAULT: kubernetes.audience=aio-internal. NOTE - Enum field only property is allowed. </param>
         /// <param name="clientIdPrefix"> Client ID prefix. Client ID generated by the dataflow is &lt;prefix&gt;-TBD. Optional; no prefix if omitted. </param>
         /// <param name="host"> Host of the Broker in the form of &lt;hostname&gt;:&lt;port&gt;. Optional; connects to Broker if omitted. </param>
@@ -1208,6 +1295,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> OpenTelemetry endpoint properties. </summary>
         /// <param name="host"> Host of the OpenTelemetry in the form of &lt;host&gt;:&lt;port&gt;. </param>
         /// <param name="batching"> Batching configuration. </param>
         /// <param name="tls"> TLS configuration. </param>
@@ -1218,6 +1306,10 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowEndpointOpenTelemetry(host, batching, tls, authentication, default);
         }
 
+        /// <summary>
+        /// Dataflow OpenTelemetry authentication properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataflowOpenTelemetryServiceAccountAuthentication"/>, <see cref="Models.DataflowOpenTelemetryX509CertificateAuthentication"/>, and <see cref="Models.DataflowOpenTelemetryAnonymousAuthentication"/>.
+        /// </summary>
         /// <param name="method"> The authentication method. </param>
         /// <returns> A new <see cref="Models.DataflowOpenTelemetryAuthentication"/> instance for mocking. </returns>
         public static DataflowOpenTelemetryAuthentication DataflowOpenTelemetryAuthentication(string @method = default)
@@ -1241,6 +1333,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowOpenTelemetryX509CertificateAuthentication(default, default, x509CertificateSecretRef is null ? default : new DataflowEndpointAuthenticationX509(x509CertificateSecretRef, default));
         }
 
+        /// <summary> DataflowOpenTelemetryAnonymousAuthentication properties. </summary>
         /// <param name="anonymousSettings"> Settings for the anonymous connection. </param>
         /// <returns> A new <see cref="Models.DataflowOpenTelemetryAnonymousAuthentication"/> instance for mocking. </returns>
         public static DataflowOpenTelemetryAnonymousAuthentication DataflowOpenTelemetryAnonymousAuthentication(DataflowEndpointAuthenticationAnonymous anonymousSettings = default)
@@ -1248,12 +1341,14 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowOpenTelemetryAnonymousAuthentication(default, default, anonymousSettings);
         }
 
+        /// <summary> DataflowEndpoint Anonymous Authentication properties. </summary>
         /// <returns> A new <see cref="Models.DataflowEndpointAuthenticationAnonymous"/> instance for mocking. </returns>
         public static DataflowEndpointAuthenticationAnonymous DataflowEndpointAuthenticationAnonymous()
         {
             return new DataflowEndpointAuthenticationAnonymous(default);
         }
 
+        /// <summary> Instance dataflowEndpoint resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1273,6 +1368,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> DataflowGraph properties. </summary>
         /// <param name="mode"> The mode of the dataflow graph. </param>
         /// <param name="requestDiskPersistence"> Disk persistence mode. </param>
         /// <param name="nodes"> List of nodes in the dataflow graph. </param>
@@ -1295,6 +1391,10 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary>
+        /// DataflowGraph node properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataflowGraphSourceNode"/>, <see cref="Models.DataflowGraphGraphNode"/>, and <see cref="Models.DataflowGraphDestinationNode"/>.
+        /// </summary>
         /// <param name="name"> Name of the node. </param>
         /// <param name="nodeType"> Type of the node. </param>
         /// <returns> A new <see cref="Models.DataflowGraphNode"/> instance for mocking. </returns>
@@ -1303,6 +1403,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new UnknownDataflowGraphNode(name, default, default);
         }
 
+        /// <summary> DataflowGraph source node properties. </summary>
         /// <param name="name"> Name of the node. </param>
         /// <param name="sourceSettings"> Source configuration. </param>
         /// <returns> A new <see cref="Models.DataflowGraphSourceNode"/> instance for mocking. </returns>
@@ -1311,6 +1412,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowGraphSourceNode(name, default, default, sourceSettings);
         }
 
+        /// <summary> DataflowGraph source node settings. </summary>
         /// <param name="endpointRef"> The endpoint reference for the source. </param>
         /// <param name="dataSources"> List of data sources. </param>
         /// <param name="assetRef"> Reference to the resource in Azure Device Registry where the data in the endpoint originates from. </param>
@@ -1322,6 +1424,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowGraphSourceSettings(endpointRef, (dataSources ?? new ChangeTrackingList<string>()).ToList(), assetRef, default);
         }
 
+        /// <summary> DataflowGraph graph node properties. </summary>
         /// <param name="name"> Name of the node. </param>
         /// <param name="graphSettings"> Graph configuration. </param>
         /// <returns> A new <see cref="Models.DataflowGraphGraphNode"/> instance for mocking. </returns>
@@ -1330,6 +1433,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowGraphGraphNode(name, default, default, graphSettings);
         }
 
+        /// <summary> DataflowGraph graph node settings. </summary>
         /// <param name="registryEndpointRef"> Reference to the registry endpoint for pulling the artifact. </param>
         /// <param name="artifact"> The artifact name and version to pull. This should be in the format `&lt;artifact-name&gt;:&lt;version&gt;`. </param>
         /// <param name="configuration"> Configuration key-value pairs. </param>
@@ -1341,6 +1445,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowGraphNodeGraphSettings(registryEndpointRef, artifact, (configuration ?? new ChangeTrackingList<DataflowGraphGraphNodeConfiguration>()).ToList(), default);
         }
 
+        /// <summary> DataflowGraph graph node configuration. </summary>
         /// <param name="key"> Key of the configuration. </param>
         /// <param name="value"> Value of the configuration. </param>
         /// <returns> A new <see cref="Models.DataflowGraphGraphNodeConfiguration"/> instance for mocking. </returns>
@@ -1349,6 +1454,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowGraphGraphNodeConfiguration(key, value, default);
         }
 
+        /// <summary> DataflowGraph destination node properties. </summary>
         /// <param name="name"> Name of the node. </param>
         /// <param name="destinationSettings"> Destination configuration. </param>
         /// <returns> A new <see cref="Models.DataflowGraphDestinationNode"/> instance for mocking. </returns>
@@ -1357,6 +1463,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowGraphDestinationNode(name, default, default, destinationSettings);
         }
 
+        /// <summary> DataflowGraph destination node settings. </summary>
         /// <param name="endpointRef"> The name of the DataflowEndpoint resource . </param>
         /// <param name="dataDestination"> Data destination at the endpoint. </param>
         /// <param name="headers"> Headers for the output data. </param>
@@ -1368,6 +1475,10 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowGraphDestinationNodeSettings(endpointRef, dataDestination, (headers ?? new ChangeTrackingList<DataflowGraphDestinationHeaderAction>()).ToList(), default);
         }
 
+        /// <summary>
+        /// DataflowGraph Destination Header Action.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataflowGraphDestinationAddIfNotPresentHeaderAction"/>, <see cref="Models.DataflowGraphDestinationRemoveHeaderAction"/>, and <see cref="Models.DataflowGraphDestinationAddOrReplaceHeaderAction"/>.
+        /// </summary>
         /// <param name="actionType"> The type of header operation to perform. </param>
         /// <returns> A new <see cref="Models.DataflowGraphDestinationHeaderAction"/> instance for mocking. </returns>
         public static DataflowGraphDestinationHeaderAction DataflowGraphDestinationHeaderAction(string actionType = default)
@@ -1375,6 +1486,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new UnknownDataflowGraphDestinationHeaderAction(default, default);
         }
 
+        /// <summary> DataflowGraph Destination Add if not present HeaderAction properties. </summary>
         /// <param name="key"> The name of the header to add. </param>
         /// <param name="value"> The value of the header to add. </param>
         /// <returns> A new <see cref="Models.DataflowGraphDestinationAddIfNotPresentHeaderAction"/> instance for mocking. </returns>
@@ -1383,6 +1495,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowGraphDestinationAddIfNotPresentHeaderAction(default, default, key, value);
         }
 
+        /// <summary> DataflowGraph Destination Remove HeaderAction properties. </summary>
         /// <param name="key"> The name of the header to remove. </param>
         /// <returns> A new <see cref="Models.DataflowGraphDestinationRemoveHeaderAction"/> instance for mocking. </returns>
         public static DataflowGraphDestinationRemoveHeaderAction DataflowGraphDestinationRemoveHeaderAction(string key = default)
@@ -1390,6 +1503,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowGraphDestinationRemoveHeaderAction(default, default, key);
         }
 
+        /// <summary> DataflowGraph Destination Add or Replace HeaderAction properties. </summary>
         /// <param name="key"> The name of the header to add or replace. </param>
         /// <param name="value"> The value of the header to add or replace. </param>
         /// <returns> A new <see cref="Models.DataflowGraphDestinationAddOrReplaceHeaderAction"/> instance for mocking. </returns>
@@ -1407,6 +1521,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowGraphNodeConnection(@from, toName is null ? default : new DataflowGraphConnectionOutput(toName, default), default);
         }
 
+        /// <summary> DataflowGraph DataflowGraphNode Connection Input. </summary>
         /// <param name="name"> Name of the input node. </param>
         /// <param name="schema"> Schema settings for the input node. </param>
         /// <returns> A new <see cref="Models.DataflowGraphConnectionInput"/> instance for mocking. </returns>
@@ -1415,6 +1530,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowGraphConnectionInput(name, schema, default);
         }
 
+        /// <summary> DataflowGraph connection node output schema settings. </summary>
         /// <param name="serializationFormat"> Output serialization format. </param>
         /// <param name="schemaRef"> Reference to the schema that describes the output of the transformation. </param>
         /// <returns> A new <see cref="Models.DataflowGraphConnectionSchemaSettings"/> instance for mocking. </returns>
@@ -1423,6 +1539,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new DataflowGraphConnectionSchemaSettings(serializationFormat, schemaRef, default);
         }
 
+        /// <summary> RegistryEndpoint resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1442,6 +1559,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> RegistryEndpoint properties. </summary>
         /// <param name="host"> The Container Registry endpoint hostname. </param>
         /// <param name="authentication"> The authentication settings for the Azure Container Registry. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
@@ -1461,6 +1579,10 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary>
+        /// Model for RegistryEndpointAuthentication
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RegistryEndpointSystemAssignedIdentityAuthentication"/>, <see cref="Models.RegistryEndpointUserAssignedIdentityAuthentication"/>, <see cref="Models.RegistryEndpointAnonymousAuthentication"/>, and <see cref="Models.RegistryEndpointArtifactPullSecretAuthentication"/>.
+        /// </summary>
         /// <param name="method"> The authentication method. </param>
         /// <returns> A new <see cref="Models.RegistryEndpointAuthentication"/> instance for mocking. </returns>
         public static RegistryEndpointAuthentication RegistryEndpointAuthentication(string @method = default)
@@ -1475,6 +1597,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new RegistryEndpointSystemAssignedIdentityAuthentication(default, default, systemAssignedManagedIdentityAudience is null ? default : new RegistryEndpointSystemAssignedManagedIdentitySettings(systemAssignedManagedIdentityAudience, default));
         }
 
+        /// <summary> User assigned identity authentication. </summary>
         /// <param name="userAssignedManagedIdentitySettings"> User assigned managed identity properties. </param>
         /// <returns> A new <see cref="Models.RegistryEndpointUserAssignedIdentityAuthentication"/> instance for mocking. </returns>
         public static RegistryEndpointUserAssignedIdentityAuthentication RegistryEndpointUserAssignedIdentityAuthentication(RegistryEndpointUserAssignedManagedIdentitySettings userAssignedManagedIdentitySettings = default)
@@ -1482,6 +1605,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new RegistryEndpointUserAssignedIdentityAuthentication(default, default, userAssignedManagedIdentitySettings);
         }
 
+        /// <summary> User assigned managed identity properties. </summary>
         /// <param name="clientId"> Client ID for the user-assigned managed identity. </param>
         /// <param name="scope"> Resource identifier (application ID URI) of the resource, affixed with the .default suffix. </param>
         /// <param name="tenantId"> Tenant ID. </param>
@@ -1491,6 +1615,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new RegistryEndpointUserAssignedManagedIdentitySettings(clientId, scope, tenantId, default);
         }
 
+        /// <summary> Anonymous authentication. </summary>
         /// <param name="anonymousSettings"> Anonymous authentication properties. </param>
         /// <returns> A new <see cref="Models.RegistryEndpointAnonymousAuthentication"/> instance for mocking. </returns>
         public static RegistryEndpointAnonymousAuthentication RegistryEndpointAnonymousAuthentication(RegistryEndpointAnonymousSettings anonymousSettings = default)
@@ -1498,6 +1623,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new RegistryEndpointAnonymousAuthentication(default, default, anonymousSettings);
         }
 
+        /// <summary> RegistryEndpoint Anonymous authentication properties. </summary>
         /// <returns> A new <see cref="Models.RegistryEndpointAnonymousSettings"/> instance for mocking. </returns>
         public static RegistryEndpointAnonymousSettings RegistryEndpointAnonymousSettings()
         {
@@ -1512,6 +1638,10 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new RegistryEndpointArtifactPullSecretAuthentication(default, default, secretRef is null ? default : new RegistryEndpointArtifactPullSecretSettings(secretRef, default));
         }
 
+        /// <summary>
+        /// RegistryEndpoint Trust properties
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RegistryEndpointTrustedSigningKeySecret"/> and <see cref="Models.RegistryEndpointTrustedSigningKeyConfigMap"/>.
+        /// </summary>
         /// <param name="type"> The trust type for the registry endpoint. </param>
         /// <returns> A new <see cref="Models.RegistryEndpointTrustedSigningKey"/> instance for mocking. </returns>
         public static RegistryEndpointTrustedSigningKey RegistryEndpointTrustedSigningKey(string @type = default)
@@ -1519,6 +1649,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new UnknownRegistryEndpointTrustedSigningKey(default, default);
         }
 
+        /// <summary> Settings for RegistryEndpoint trust provided through a secret. </summary>
         /// <param name="secretRef"> The name of the secret. </param>
         /// <returns> A new <see cref="Models.RegistryEndpointTrustedSigningKeySecret"/> instance for mocking. </returns>
         public static RegistryEndpointTrustedSigningKeySecret RegistryEndpointTrustedSigningKeySecret(string secretRef = default)
@@ -1526,6 +1657,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new RegistryEndpointTrustedSigningKeySecret(default, default, secretRef);
         }
 
+        /// <summary> Settings for RegistryEndpoint trust provided through a configmap. </summary>
         /// <param name="configMapRef"> The name of the configmap. </param>
         /// <returns> A new <see cref="Models.RegistryEndpointTrustedSigningKeyConfigMap"/> instance for mocking. </returns>
         public static RegistryEndpointTrustedSigningKeyConfigMap RegistryEndpointTrustedSigningKeyConfigMap(string configMapRef = default)
@@ -1533,6 +1665,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new RegistryEndpointTrustedSigningKeyConfigMap(default, default, configMapRef);
         }
 
+        /// <summary> AkriConnectorTemplate resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1577,6 +1710,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> AkriConnectorTemplateAioMetadata properties. </summary>
         /// <param name="aioMinVersion"> The minimum version of AIO required for the connector. </param>
         /// <param name="aioMaxVersion"> The maximum version of AIO required for the connector. </param>
         /// <returns> A new <see cref="Models.AkriConnectorTemplateAioMetadata"/> instance for mocking. </returns>
@@ -1585,6 +1719,10 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new AkriConnectorTemplateAioMetadata(aioMinVersion, aioMaxVersion, default);
         }
 
+        /// <summary>
+        /// AkriConnectorTemplateRuntimeConfiguration properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AkriConnectorTemplateManagedConfiguration"/>.
+        /// </summary>
         /// <param name="runtimeConfigurationType"> Runtime configuration type for the Connector template. </param>
         /// <returns> A new <see cref="Models.AkriConnectorTemplateRuntimeConfiguration"/> instance for mocking. </returns>
         public static AkriConnectorTemplateRuntimeConfiguration AkriConnectorTemplateRuntimeConfiguration(string runtimeConfigurationType = default)
@@ -1592,6 +1730,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new UnknownAkriConnectorTemplateRuntimeConfiguration(default, default);
         }
 
+        /// <summary> AkriConnectorTemplateManagedConfiguration properties. </summary>
         /// <param name="managedConfigurationSettings"> The managed configuration settings. </param>
         /// <returns> A new <see cref="Models.AkriConnectorTemplateManagedConfiguration"/> instance for mocking. </returns>
         public static AkriConnectorTemplateManagedConfiguration AkriConnectorTemplateManagedConfiguration(AkriConnectorTemplateManagedConfigurationSettings managedConfigurationSettings = default)
@@ -1628,6 +1767,10 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary>
+        /// AkriConnectorTemplateAllocation properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AkriConnectorTemplateBucketizedAllocation"/>.
+        /// </summary>
         /// <param name="policy"> The allocation policy type. </param>
         /// <returns> A new <see cref="Models.AkriConnectorTemplateAllocation"/> instance for mocking. </returns>
         public static AkriConnectorTemplateAllocation AkriConnectorTemplateAllocation(string policy = default)
@@ -1635,6 +1778,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new UnknownAkriConnectorTemplateAllocation(default, default);
         }
 
+        /// <summary> AkriConnectorTemplateBucketizedAllocation properties. </summary>
         /// <param name="bucketSize"> The bucketized allocation of AEPs for connectors. </param>
         /// <returns> A new <see cref="Models.AkriConnectorTemplateBucketizedAllocation"/> instance for mocking. </returns>
         public static AkriConnectorTemplateBucketizedAllocation AkriConnectorTemplateBucketizedAllocation(int bucketSize = default)
@@ -1642,6 +1786,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new AkriConnectorTemplateBucketizedAllocation(default, default, bucketSize);
         }
 
+        /// <summary> AkriConnectorTemplatePersistentVolumeClaim properties. </summary>
         /// <param name="claimName"> The name of the persistent volume claim. </param>
         /// <param name="mountPath"> The mount path for the persistent volume claim. </param>
         /// <returns> A new <see cref="Models.AkriConnectorTemplatePersistentVolumeClaim"/> instance for mocking. </returns>
@@ -1650,6 +1795,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new AkriConnectorTemplatePersistentVolumeClaim(claimName, mountPath, default);
         }
 
+        /// <summary> AkriConnectorsSecret properties. </summary>
         /// <param name="secretKey"> The key in the secret to be mounted. </param>
         /// <param name="secretAlias"> The application-defined alias for the secret. </param>
         /// <param name="secretRef"> The name of the secret to be mounted. </param>
@@ -1689,6 +1835,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 imageConfigurationSettings);
         }
 
+        /// <summary> AkriConnectorTemplateRuntimeImageConfiguration properties. </summary>
         /// <param name="imageName"> The image name without any registry reference, tag or digest. </param>
         /// <param name="imagePullPolicy"> The pull policy of the image. </param>
         /// <param name="replicas"> The number of replicas to be set up. </param>
@@ -1706,6 +1853,10 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary>
+        /// AkriConnectorsRegistrySettings properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AkriConnectorsRegistryEndpointRef"/> and <see cref="Models.AkriConnectorsContainerRegistry"/>.
+        /// </summary>
         /// <param name="registrySettingsType"></param>
         /// <returns> A new <see cref="Models.AkriConnectorsRegistrySettings"/> instance for mocking. </returns>
         public static AkriConnectorsRegistrySettings AkriConnectorsRegistrySettings(string registrySettingsType = default)
@@ -1713,6 +1864,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new UnknownAkriConnectorsRegistrySettings(default, default);
         }
 
+        /// <summary> AkriConnectorsRegistryEndpointRef properties. </summary>
         /// <param name="registryEndpointRef"> The name of the registry endpoint. </param>
         /// <returns> A new <see cref="Models.AkriConnectorsRegistryEndpointRef"/> instance for mocking. </returns>
         public static AkriConnectorsRegistryEndpointRef AkriConnectorsRegistryEndpointRef(string registryEndpointRef = default)
@@ -1720,6 +1872,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new AkriConnectorsRegistryEndpointRef(default, default, registryEndpointRef);
         }
 
+        /// <summary> AkriConnectorsContainerRegistry properties. </summary>
         /// <param name="containerRegistrySettings"> The registry settings for the container registry. </param>
         /// <returns> A new <see cref="Models.AkriConnectorsContainerRegistry"/> instance for mocking. </returns>
         public static AkriConnectorsContainerRegistry AkriConnectorsContainerRegistry(AkriConnectorsContainerRegistrySettings containerRegistrySettings = default)
@@ -1727,6 +1880,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new AkriConnectorsContainerRegistry(default, default, containerRegistrySettings);
         }
 
+        /// <summary> AkriConnectorsContainerRegistry properties. </summary>
         /// <param name="registry"> The container registry to use for the artifact. </param>
         /// <param name="imagePullSecrets"> Optional list of references to secrets in the same namespace to use for pulling the connector image. </param>
         /// <returns> A new <see cref="Models.AkriConnectorsContainerRegistrySettings"/> instance for mocking. </returns>
@@ -1737,6 +1891,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new AkriConnectorsContainerRegistrySettings(registry, (imagePullSecrets ?? new ChangeTrackingList<AkriConnectorsImagePullSecret>()).ToList(), default);
         }
 
+        /// <summary> AkriConnectorsImagePullSecret properties. </summary>
         /// <param name="secretRef"> The name of the image pull secret. </param>
         /// <returns> A new <see cref="Models.AkriConnectorsImagePullSecret"/> instance for mocking. </returns>
         public static AkriConnectorsImagePullSecret AkriConnectorsImagePullSecret(string secretRef = default)
@@ -1744,6 +1899,10 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new AkriConnectorsImagePullSecret(secretRef, default);
         }
 
+        /// <summary>
+        /// AkriConnectorsTagDigestSettings properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AkriConnectorsTag"/> and <see cref="Models.AkriConnectorsDigest"/>.
+        /// </summary>
         /// <param name="tagDigestType"> The tag or digest type. </param>
         /// <returns> A new <see cref="Models.AkriConnectorsTagDigestSettings"/> instance for mocking. </returns>
         public static AkriConnectorsTagDigestSettings AkriConnectorsTagDigestSettings(string tagDigestType = default)
@@ -1751,6 +1910,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new UnknownAkriConnectorsTagDigestSettings(default, default);
         }
 
+        /// <summary> AkriConnectorsTag properties. </summary>
         /// <param name="tag"> The tag of the image. </param>
         /// <returns> A new <see cref="Models.AkriConnectorsTag"/> instance for mocking. </returns>
         public static AkriConnectorsTag AkriConnectorsTag(string tag = default)
@@ -1758,6 +1918,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new AkriConnectorsTag(default, default, tag);
         }
 
+        /// <summary> AkriConnectorsDigest properties. </summary>
         /// <param name="digest"> The digest of the image. </param>
         /// <returns> A new <see cref="Models.AkriConnectorsDigest"/> instance for mocking. </returns>
         public static AkriConnectorsDigest AkriConnectorsDigest(string digest = default)
@@ -1806,6 +1967,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new AkriConnectorTemplateDiagnostics(logsLevel is null ? default : new AkriConnectorsDiagnosticsLogs(logsLevel, default), default);
         }
 
+        /// <summary> AkriConnectorTemplateDeviceInboundEndpointType properties. </summary>
         /// <param name="displayName"> The display name of the device inbound endpoint. </param>
         /// <param name="endpointType"> The type of the device inbound endpoint. </param>
         /// <param name="version"> The version of the device inbound endpoint. </param>
@@ -1815,6 +1977,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new AkriConnectorTemplateDeviceInboundEndpointType(displayName, endpointType, version, default);
         }
 
+        /// <summary> AkriConnectorsMqttConnectionConfiguration properties. </summary>
         /// <param name="authentication"> Authentication properties. </param>
         /// <param name="host"> Host of the Broker in the form of &lt;hostname&gt;:&lt;port&gt;. </param>
         /// <param name="protocol"> The protocol to use for the connection. Currently only `mqtt` is supported. </param>
@@ -1836,6 +1999,10 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary>
+        /// AkriConnectorsMqttAuthentication properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AkriConnectorsServiceAccountAuthentication"/>.
+        /// </summary>
         /// <param name="method"> The authentication method for the MQTT connection. </param>
         /// <returns> A new <see cref="Models.AkriConnectorsMqttAuthentication"/> instance for mocking. </returns>
         public static AkriConnectorsMqttAuthentication AkriConnectorsMqttAuthentication(string @method = default)
@@ -1851,6 +2018,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new AkriConnectorsServiceAccountAuthentication(default, default, serviceAccountTokenAudience is null ? default : new AkriConnectorsServiceAccountTokenSettings(serviceAccountTokenAudience, default));
         }
 
+        /// <summary> AkriConnector resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1870,6 +2038,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 default);
         }
 
+        /// <summary> AkriConnector properties. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="allocatedDevices"> The allocated devices for the connector. </param>
         /// <param name="healthState"> The health state of the resource. </param>
@@ -1881,6 +2050,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             return new IotOperationsAkriConnectorProperties(provisioningState, (allocatedDevices ?? new ChangeTrackingList<AkriConnectorAllocatedDevice>()).ToList(), healthState, default);
         }
 
+        /// <summary> AkriConnector allocated device. </summary>
         /// <param name="deviceInboundEndpointName"> The name of the inbound endpoint for the device. </param>
         /// <param name="deviceName"> The name of the device. </param>
         /// <returns> A new <see cref="Models.AkriConnectorAllocatedDevice"/> instance for mocking. </returns>

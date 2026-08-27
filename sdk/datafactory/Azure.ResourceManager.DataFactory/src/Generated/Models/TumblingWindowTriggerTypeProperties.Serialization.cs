@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WritePropertyName("interval"u8);
             writer.WriteNumberValue(Interval);
             writer.WritePropertyName("startTime"u8);
-            writer.WriteStringValue(StartOn, "O");
-            if (Optional.IsDefined(EndOn))
+            writer.WriteStringValue(StartsOn, "O");
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(Delay))
             {
@@ -157,8 +157,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             TumblingWindowFrequency frequency = default;
             int interval = default;
-            DateTimeOffset startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset startsOn = default;
+            DateTimeOffset? endsOn = default;
             DataFactoryElement<string> delay = default;
             int maxConcurrency = default;
             RetryPolicy retryPolicy = default;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("delay"u8))
@@ -235,8 +235,8 @@ namespace Azure.ResourceManager.DataFactory.Models
             return new TumblingWindowTriggerTypeProperties(
                 frequency,
                 interval,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 delay,
                 maxConcurrency,
                 retryPolicy,

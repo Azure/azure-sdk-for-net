@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.Chaos.Models
 
         /// <summary> Initializes a new instance of <see cref="ChaosWorkspaceEvaluationProperties"/>. </summary>
         /// <param name="status"> The evaluation status. </param>
-        /// <param name="startOn"> The evaluation UTC start time. </param>
-        /// <param name="endOn"> The evaluation UTC end time. </param>
+        /// <param name="startsOn"> The evaluation UTC start time. </param>
+        /// <param name="endsOn"> The evaluation UTC end time. </param>
         /// <param name="errors"> System or infrastructure errors encountered during evaluation. </param>
         /// <param name="workspaceId"> The workspace ID this evaluation belongs to. </param>
         /// <param name="numScenariosToEvaluate"> The number of scenarios to evaluate. </param>
@@ -38,11 +38,11 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="evaluationResult"> The overall evaluation result. </param>
         /// <param name="results"> Per-scenario evaluation results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosWorkspaceEvaluationProperties(ChaosWorkspaceEvaluationStatus status, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<ChaosOperationError> errors, ResourceIdentifier workspaceId, int? numScenariosToEvaluate, int? numScenariosEvaluatedSucceeded, int? numScenariosEvaluatedFailed, int? numScenariosEvaluatedCancelled, ChaosRecommendationStatus? evaluationResult, IReadOnlyList<ChaosScenarioEvaluationResultItem> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChaosWorkspaceEvaluationProperties(ChaosWorkspaceEvaluationStatus status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IReadOnlyList<ChaosOperationError> errors, ResourceIdentifier workspaceId, int? numScenariosToEvaluate, int? numScenariosEvaluatedSucceeded, int? numScenariosEvaluatedFailed, int? numScenariosEvaluatedCancelled, ChaosRecommendationStatus? evaluationResult, IReadOnlyList<ChaosScenarioEvaluationResultItem> results, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Errors = errors;
             WorkspaceId = workspaceId;
             NumScenariosToEvaluate = numScenariosToEvaluate;
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.Chaos.Models
         public ChaosWorkspaceEvaluationStatus Status { get; }
 
         /// <summary> The evaluation UTC start time. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The evaluation UTC end time. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> System or infrastructure errors encountered during evaluation. </summary>
         public IReadOnlyList<ChaosOperationError> Errors { get; }

@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ResolutionOn))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DataBox.Models
             DelayNotificationStatus? status = default;
             PortalDelayErrorCode? errorCode = default;
             string description = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             DateTimeOffset? resolutionOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("resolutionTime"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 status,
                 errorCode,
                 description,
-                startOn,
+                startsOn,
                 resolutionOn,
                 additionalBinaryDataProperties);
         }

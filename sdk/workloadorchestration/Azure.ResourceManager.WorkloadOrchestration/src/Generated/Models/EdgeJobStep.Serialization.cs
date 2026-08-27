@@ -85,15 +85,15 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(Message))
             {
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             }
             string name = default;
             EdgeJobStatus status = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             string message = default;
             EdgeJobStepStatistics statistics = default;
             IReadOnlyList<EdgeJobStep> steps = default;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("message"u8))
@@ -246,8 +246,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             return new EdgeJobStep(
                 name,
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 message,
                 statistics,
                 steps ?? new ChangeTrackingList<EdgeJobStep>(),

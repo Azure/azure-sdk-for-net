@@ -28,22 +28,22 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="status"> Gets or sets the status of the test job. </param>
         /// <param name="statusDetails"> Gets or sets the status details of the test job. </param>
         /// <param name="runOn"> Gets or sets the runOn which specifies the group name where the job is to be executed. </param>
-        /// <param name="startOn"> Gets or sets the start time of the test job. </param>
-        /// <param name="endOn"> Gets or sets the end time of the test job. </param>
+        /// <param name="startsOn"> Gets or sets the start time of the test job. </param>
+        /// <param name="endsOn"> Gets or sets the end time of the test job. </param>
         /// <param name="exception"> Gets or sets the exception of the test job. </param>
         /// <param name="lastModifiedOn"> Gets or sets the last modified time of the test job. </param>
         /// <param name="lastStatusModifiedOn"> Gets or sets the last status modified time of the test job. </param>
         /// <param name="parameters"> Gets or sets the parameters of the test job. </param>
         /// <param name="logActivityTrace"> The activity-level tracing options of the runbook. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RunbookTestJob(DateTimeOffset? createdOn, string status, string statusDetails, string runOn, DateTimeOffset? startOn, DateTimeOffset? endOn, string exception, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastStatusModifiedOn, IReadOnlyDictionary<string, string> parameters, int? logActivityTrace, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RunbookTestJob(DateTimeOffset? createdOn, string status, string statusDetails, string runOn, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string exception, DateTimeOffset? lastModifiedOn, DateTimeOffset? lastStatusModifiedOn, IReadOnlyDictionary<string, string> parameters, int? logActivityTrace, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CreatedOn = createdOn;
             Status = status;
             StatusDetails = statusDetails;
             RunOn = runOn;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Exception = exception;
             LastModifiedOn = lastModifiedOn;
             LastStatusModifiedOn = lastStatusModifiedOn;
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.Automation.Models
         public string RunOn { get; }
 
         /// <summary> Gets or sets the start time of the test job. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> Gets or sets the end time of the test job. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Gets or sets the exception of the test job. </summary>
         public string Exception { get; }

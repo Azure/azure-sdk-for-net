@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (Optional.IsDefined(LastUpdated))
             {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             string id = default;
             IList<CoreSummary> coreSummaries = default;
             string status = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             DateTimeOffset? lastUpdated = default;
             string eTag = default;
             IList<SearchSort> sort = default;
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastUpdated"u8))
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 id,
                 coreSummaries ?? new ChangeTrackingList<CoreSummary>(),
                 status,
-                startOn,
+                startsOn,
                 lastUpdated,
                 eTag,
                 sort ?? new ChangeTrackingList<SearchSort>(),

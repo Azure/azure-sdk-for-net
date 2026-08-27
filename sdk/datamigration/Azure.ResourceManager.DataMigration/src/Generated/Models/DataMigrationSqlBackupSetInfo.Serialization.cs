@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(BackupStartOn))
+            if (options.Format != "W" && Optional.IsDefined(BackupStartsOn))
             {
                 writer.WritePropertyName("backupStartDate"u8);
-                writer.WriteStringValue(BackupStartOn.Value, "O");
+                writer.WriteStringValue(BackupStartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(BackupFinishOn))
             {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             string lastLSN = default;
             string backupType = default;
             IReadOnlyList<DataMigrationSqlBackupFileInfo> listOfBackupFiles = default;
-            DateTimeOffset? backupStartOn = default;
+            DateTimeOffset? backupStartsOn = default;
             DateTimeOffset? backupFinishOn = default;
             bool? isBackupRestored = default;
             bool? hasBackupChecksums = default;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    backupStartOn = prop.Value.GetDateTimeOffset("O");
+                    backupStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("backupFinishDate"u8))
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 lastLSN,
                 backupType,
                 listOfBackupFiles ?? new ChangeTrackingList<DataMigrationSqlBackupFileInfo>(),
-                backupStartOn,
+                backupStartsOn,
                 backupFinishOn,
                 isBackupRestored,
                 hasBackupChecksums,

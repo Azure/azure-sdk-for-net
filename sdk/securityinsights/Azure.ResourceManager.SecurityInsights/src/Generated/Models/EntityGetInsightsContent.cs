@@ -18,25 +18,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="EntityGetInsightsContent"/>. </summary>
-        /// <param name="startOn"> The start timeline date, so the results returned are after this date. </param>
-        /// <param name="endOn"> The end timeline date, so the results returned are before this date. </param>
-        public EntityGetInsightsContent(DateTimeOffset startOn, DateTimeOffset endOn)
+        /// <param name="startsOn"> The start timeline date, so the results returned are after this date. </param>
+        /// <param name="endsOn"> The end timeline date, so the results returned are before this date. </param>
+        public EntityGetInsightsContent(DateTimeOffset startsOn, DateTimeOffset endsOn)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             InsightQueryIds = new ChangeTrackingList<Guid>();
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityGetInsightsContent"/>. </summary>
-        /// <param name="startOn"> The start timeline date, so the results returned are after this date. </param>
-        /// <param name="endOn"> The end timeline date, so the results returned are before this date. </param>
+        /// <param name="startsOn"> The start timeline date, so the results returned are after this date. </param>
+        /// <param name="endsOn"> The end timeline date, so the results returned are before this date. </param>
         /// <param name="isDefaultExtendedTimeRangeAdded"> Indicates if query time range should be extended with default time range of the query. Default value is false. </param>
         /// <param name="insightQueryIds"> List of Insights Query Id. If empty, default value is all insights of this entity. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntityGetInsightsContent(DateTimeOffset startOn, DateTimeOffset endOn, bool? isDefaultExtendedTimeRangeAdded, IList<Guid> insightQueryIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntityGetInsightsContent(DateTimeOffset startsOn, DateTimeOffset endsOn, bool? isDefaultExtendedTimeRangeAdded, IList<Guid> insightQueryIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             IsDefaultExtendedTimeRangeAdded = isDefaultExtendedTimeRangeAdded;
             InsightQueryIds = insightQueryIds;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The start timeline date, so the results returned are after this date. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset StartOn { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary> The end timeline date, so the results returned are before this date. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset EndOn { get; }
+        public DateTimeOffset EndsOn { get; }
 
         /// <summary> Indicates if query time range should be extended with default time range of the query. Default value is false. </summary>
         [WirePath("addDefaultExtendedTimeRange")]

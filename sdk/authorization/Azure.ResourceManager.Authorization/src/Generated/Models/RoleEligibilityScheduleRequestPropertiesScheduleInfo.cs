@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="RoleEligibilityScheduleRequestPropertiesScheduleInfo"/>. </summary>
-        /// <param name="startOn"> Start DateTime of the role eligibility schedule. </param>
+        /// <param name="startsOn"> Start DateTime of the role eligibility schedule. </param>
         /// <param name="expiration"> Expiration of the role eligibility schedule. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoleEligibilityScheduleRequestPropertiesScheduleInfo(DateTimeOffset? startOn, RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration expiration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoleEligibilityScheduleRequestPropertiesScheduleInfo(DateTimeOffset? startsOn, RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration expiration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
+            StartsOn = startsOn;
             Expiration = expiration;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Start DateTime of the role eligibility schedule. </summary>
         [WirePath("startDateTime")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> Expiration of the role eligibility schedule. </summary>
         [WirePath("expiration")]
@@ -61,11 +61,11 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> End DateTime of the role eligibility schedule. </summary>
         [WirePath("expiration.endDateTime")]
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Expiration is null ? default : Expiration.EndOn;
+                return Expiration is null ? default : Expiration.EndsOn;
             }
             set
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     Expiration = new RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration();
                 }
-                Expiration.EndOn = value;
+                Expiration.EndsOn = value;
             }
         }
 

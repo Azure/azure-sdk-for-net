@@ -20,16 +20,16 @@ namespace Azure.ResourceManager.StorageActions.Models
         /// <summary> Initializes a new instance of <see cref="StorageTaskProperties"/>. </summary>
         /// <param name="isEnabled"> Storage Task is enabled when set to true and disabled when set to false. </param>
         /// <param name="description"> Text that describes the purpose of the storage task. </param>
-        /// <param name="action"> The storage task action that is executed. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="description"/> or <paramref name="action"/> is null. </exception>
-        public StorageTaskProperties(bool isEnabled, string description, StorageTaskAction action)
+        /// <param name="actionIf"> The if block of storage task operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="description"/> or <paramref name="actionIf"/> is null. </exception>
+        public StorageTaskProperties(bool isEnabled, string description, StorageTaskIfCondition actionIf)
         {
             Argument.AssertNotNull(description, nameof(description));
-            Argument.AssertNotNull(action, nameof(action));
+            Argument.AssertNotNull(actionIf, nameof(actionIf));
 
             IsEnabled = isEnabled;
             Description = description;
-            Action = action;
+            Action = new StorageTaskAction(actionIf);
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageTaskProperties"/>. </summary>
@@ -61,12 +61,25 @@ namespace Azure.ResourceManager.StorageActions.Models
         public string Description { get; set; }
 
         /// <summary> The storage task action that is executed. </summary>
-        public StorageTaskAction Action { get; set; }
+        internal StorageTaskAction Action { get; set; }
 
         /// <summary> Represents the provisioning state of the storage task. </summary>
         public StorageTaskProvisioningState? ProvisioningState { get; }
 
         /// <summary> The creation date and time of the storage task in UTC. </summary>
         public DateTimeOffset? CreationTimeInUtc { get; }
+
+        /// <summary> The if block of storage task operation. </summary>
+        public StorageTaskIfCondition ActionIf
+        {
+            get
+            {
+                return Action is null ? default : Action.If;
+            }
+            set
+            {
+                Action = new StorageTaskAction(value);
+            }
+        }
     }
 }

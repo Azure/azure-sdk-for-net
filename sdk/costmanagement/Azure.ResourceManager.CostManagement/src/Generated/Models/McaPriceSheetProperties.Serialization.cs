@@ -159,15 +159,15 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("tierMinimumUnits"u8);
                 writer.WriteStringValue(TierMinimumUnits);
             }
-            if (options.Format != "W" && Optional.IsDefined(EffectiveStartOn))
+            if (options.Format != "W" && Optional.IsDefined(EffectiveStartsOn))
             {
                 writer.WritePropertyName("effectiveStartDate"u8);
-                writer.WriteStringValue(EffectiveStartOn.Value, "O");
+                writer.WriteStringValue(EffectiveStartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EffectiveEndOn))
+            if (options.Format != "W" && Optional.IsDefined(EffectiveEndsOn))
             {
                 writer.WritePropertyName("effectiveEndDate"u8);
-                writer.WriteStringValue(EffectiveEndOn.Value, "O");
+                writer.WriteStringValue(EffectiveEndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(UnitPrice))
             {
@@ -263,8 +263,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             string meterSubCategory = default;
             string meterRegion = default;
             string tierMinimumUnits = default;
-            DateTimeOffset? effectiveStartOn = default;
-            DateTimeOffset? effectiveEndOn = default;
+            DateTimeOffset? effectiveStartsOn = default;
+            DateTimeOffset? effectiveEndsOn = default;
             string unitPrice = default;
             string basePrice = default;
             string marketPrice = default;
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    effectiveStartOn = prop.Value.GetDateTimeOffset("O");
+                    effectiveStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("effectiveEndDate"u8))
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    effectiveEndOn = prop.Value.GetDateTimeOffset("O");
+                    effectiveEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("unitPrice"u8))
@@ -440,8 +440,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                 meterSubCategory,
                 meterRegion,
                 tierMinimumUnits,
-                effectiveStartOn,
-                effectiveEndOn,
+                effectiveStartsOn,
+                effectiveEndsOn,
                 unitPrice,
                 basePrice,
                 marketPrice,

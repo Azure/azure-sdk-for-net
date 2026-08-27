@@ -22,25 +22,25 @@ namespace Azure.ResourceManager.CloudHealth.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EntityHistoryContent"/>. </summary>
-        /// <param name="startOn"> Start time for the history query. Defaults to 24 hours ago if not specified. </param>
-        /// <param name="endOn"> End time for the history query. Defaults to now if not specified. </param>
+        /// <param name="startsOn"> Start time for the history query. Defaults to 24 hours ago if not specified. </param>
+        /// <param name="endsOn"> End time for the history query. Defaults to now if not specified. </param>
         /// <param name="top"> Maximum number of health state transitions to return per page. Defaults to 1000. </param>
         /// <param name="nextMarker"> An opaque string value that identifies the portion of the result set to be returned with the next operation. Must not be combined with startAt or endAt. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EntityHistoryContent(DateTimeOffset? startOn, DateTimeOffset? endOn, int? top, string nextMarker, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EntityHistoryContent(DateTimeOffset? startsOn, DateTimeOffset? endsOn, int? top, string nextMarker, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Top = top;
             NextMarker = nextMarker;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Start time for the history query. Defaults to 24 hours ago if not specified. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> End time for the history query. Defaults to now if not specified. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Maximum number of health state transitions to return per page. Defaults to 1000. </summary>
         public int? Top { get; set; }

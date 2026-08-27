@@ -78,20 +78,20 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Billing Period Start Date as in the invoice. </summary>
-        public DateTimeOffset? BillingPeriodStartOn
+        public DateTimeOffset? BillingPeriodStartsOn
         {
             get
             {
-                return Properties.BillingPeriodStartOn;
+                return Properties.BillingPeriodStartsOn;
             }
         }
 
         /// <summary> Billing Period End Date as in the invoice. </summary>
-        public DateTimeOffset? BillingPeriodEndOn
+        public DateTimeOffset? BillingPeriodEndsOn
         {
             get
             {
-                return Properties.BillingPeriodEndOn;
+                return Properties.BillingPeriodEndsOn;
             }
         }
 
@@ -510,20 +510,20 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> Start date for the rating period when the service usage was rated for charges. The prices for Azure services are determined for the rating period. </summary>
-        public DateTimeOffset? ServicePeriodStartOn
+        public DateTimeOffset? ServicePeriodStartsOn
         {
             get
             {
-                return Properties.ServicePeriodStartOn;
+                return Properties.ServicePeriodStartsOn;
             }
         }
 
         /// <summary> End date for the period when the service usage was rated for charges. The prices for Azure services are determined based on the rating period. </summary>
-        public DateTimeOffset? ServicePeriodEndOn
+        public DateTimeOffset? ServicePeriodEndsOn
         {
             get
             {
-                return Properties.ServicePeriodEndOn;
+                return Properties.ServicePeriodEndsOn;
             }
         }
 

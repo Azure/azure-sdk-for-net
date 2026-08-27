@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
     public static partial class ArmConnectedCacheModelFactory
     {
 
+        /// <summary> Represents the high level Nodes needed to provision isp customer resources. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 default);
         }
 
+        /// <summary> Model representing customer for connectedCache resource. </summary>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="customer"> Mcc customer resource (customer entity). </param>
         /// <param name="additionalCustomerProperties"> Mcc customer resource additional properties. </param>
@@ -65,6 +67,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 default);
         }
 
+        /// <summary> Model representing Customer resource for ConnectedCache resource. </summary>
         /// <param name="fullyQualifiedResourceId"> Customer resource Azure fully qualified resource Id. </param>
         /// <param name="customerId"> Customer resource Guid Id. </param>
         /// <param name="customerName"> Customer resource name. </param>
@@ -108,6 +111,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 default);
         }
 
+        /// <summary> Model representing customer for connected cache resource. </summary>
         /// <param name="customerPropertiesOverviewCacheEfficiency"> Customer resource cache efficiency. </param>
         /// <param name="customerPropertiesOverviewAverageEgressMbps"> Customer resource average egress in Mbps. </param>
         /// <param name="customerPropertiesOverviewAverageMissMbps"> Customer resource average cache miss throughput in Mbps. </param>
@@ -175,6 +179,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 default);
         }
 
+        /// <summary> Mcc PATCH operation properties. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ConnectedCachePatchContent"/> instance for mocking. </returns>
         public static ConnectedCachePatchContent ConnectedCachePatchContent(IDictionary<string, string> tags = default)
@@ -184,6 +189,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             return new ConnectedCachePatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Represents the high level Nodes needed to provision cache node resources. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -207,6 +213,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 default);
         }
 
+        /// <summary> Model representing an Mcc cache node connectedCache resource. </summary>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="cacheNode"> Mcc cache node resource (cache node entity). </param>
         /// <param name="additionalCacheNodeProperties"> Mcc cache node resource additional properties. </param>
@@ -230,6 +237,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 default);
         }
 
+        /// <summary> Model representing Cache Node for ConnectedCache resource. </summary>
         /// <param name="fullyQualifiedResourceId"> Cache node resource Azure fully qualified resource Id. </param>
         /// <param name="customerId"> Cache node resource customer resource GUID Id. </param>
         /// <param name="customerName"> Cache node resource customer resource name. </param>
@@ -460,6 +468,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 default);
         }
 
+        /// <summary> Mcc cache node resource Tls certificate details. </summary>
         /// <param name="actionRequired"> Mcc cache node Tls certificate status. </param>
         /// <param name="certificateFileName"> Mcc cache node Tls certificate file name. </param>
         /// <param name="certType"> Mcc cache node Tls certificate Type. </param>
@@ -483,6 +492,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 default);
         }
 
+        /// <summary> Mcc cache node resource auto update properties. </summary>
         /// <param name="imageUriBeforeUpdate"> Auto update image uri before update. </param>
         /// <param name="imageUriTargeted"> Auto update image uri targetted to update. </param>
         /// <param name="imageUriTerminal"> Auto update image uri at Terminal. </param>
@@ -524,6 +534,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 default);
         }
 
+        /// <summary> Drive configuration for cache node. </summary>
         /// <param name="physicalPath"> physical path location of the folder used for caching content. </param>
         /// <param name="sizeInGb"> physical size of the drive used for caching content. </param>
         /// <param name="cacheNumber"> corresponding nginx cache number. Valid cache numbers are 1 - 20. </param>
@@ -557,6 +568,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 default);
         }
 
+        /// <summary> Mcc cache node resource all install details. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -605,6 +617,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 default);
         }
 
+        /// <summary> Mcc cache node resource auto update history. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -628,6 +641,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 default);
         }
 
+        /// <summary> Mcc cache node resource auto update history properties. </summary>
         /// <param name="customerId"> Mcc customer resource Id. </param>
         /// <param name="cacheNodeId"> Mcc cache node resource Id. </param>
         /// <param name="autoUpdateHistory"> Cache node resource auto update history information. </param>
@@ -639,6 +653,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
             return new MccCacheNodeAutoUpdateHistoryProperties(customerId, cacheNodeId, (autoUpdateHistory ?? new ChangeTrackingList<MccCacheNodeAutoUpdateInfo>()).ToList(), default);
         }
 
+        /// <summary> Mcc cache node resource issue history. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -662,6 +677,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 default);
         }
 
+        /// <summary> Mcc cache node resource issue history properties. </summary>
         /// <param name="customerId"> Mcc customer resource Id. </param>
         /// <param name="cacheNodeId"> Mcc cache node resource Id. </param>
         /// <param name="mccIssueHistory"> Cache node resource issue details history. </param>
@@ -687,11 +703,12 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 toastString,
                 detailString,
                 helpLink,
-                issueStartOn,
-                issueEndOn,
+                default,
+                default,
                 default);
         }
 
+        /// <summary> Represents the high level Nodes needed to provision customer resources. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -715,6 +732,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 default);
         }
 
+        /// <summary> Represents the high level Nodes needed to provision cache node resources. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -738,6 +756,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 default);
         }
 
+        /// <summary> Mcc cache node resource Tls certificate history details. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -761,6 +780,7 @@ namespace Azure.ResourceManager.ConnectedCache.Models
                 default);
         }
 
+        /// <summary> Mcc cache node resource auto update properties. </summary>
         /// <param name="customerId"> Mcc customer resource Id. </param>
         /// <param name="cacheNodeId"> Mcc cache node resource Id. </param>
         /// <param name="tlsCertificateHistory"> Cache node resource tls certificate history details. </param>

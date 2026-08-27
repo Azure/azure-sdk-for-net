@@ -24,17 +24,17 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CosmosDBBaseMetric"/>. </summary>
-        /// <param name="startOn"> The start time for the metric (ISO-8601 format). </param>
-        /// <param name="endOn"> The end time for the metric (ISO-8601 format). </param>
+        /// <param name="startsOn"> The start time for the metric (ISO-8601 format). </param>
+        /// <param name="endsOn"> The end time for the metric (ISO-8601 format). </param>
         /// <param name="timeGrain"> The time grain to be used to summarize the metric values. </param>
         /// <param name="unit"> The unit of the metric. </param>
         /// <param name="name"> The name information for the metric. </param>
         /// <param name="metricValues"> The metric values for the specified time window and timestep. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CosmosDBBaseMetric(DateTimeOffset? startOn, DateTimeOffset? endOn, string timeGrain, CosmosDBMetricUnitType? unit, CosmosDBMetricName name, IReadOnlyList<CosmosDBMetricValue> metricValues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CosmosDBBaseMetric(DateTimeOffset? startsOn, DateTimeOffset? endsOn, string timeGrain, CosmosDBMetricUnitType? unit, CosmosDBMetricName name, IReadOnlyList<CosmosDBMetricValue> metricValues, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             TimeGrain = timeGrain;
             Unit = unit;
             Name = name;
@@ -44,11 +44,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
         /// <summary> The start time for the metric (ISO-8601 format). </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The end time for the metric (ISO-8601 format). </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> The time grain to be used to summarize the metric values. </summary>
         [WirePath("timeGrain")]

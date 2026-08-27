@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.DataBox.Models
                 throw new FormatException($"The model {nameof(ShipmentPickUpContent)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("startTime"u8);
-            writer.WriteStringValue(StartOn, "O");
+            writer.WriteStringValue(StartsOn, "O");
             writer.WritePropertyName("endTime"u8);
-            writer.WriteStringValue(EndOn, "O");
+            writer.WriteStringValue(EndsOn, "O");
             writer.WritePropertyName("shipmentLocation"u8);
             writer.WriteStringValue(ShipmentLocation);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -138,8 +138,6 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            DateTimeOffset startOn = default;
-            DateTimeOffset endOn = default;
             string shipmentLocation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -164,7 +162,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ShipmentPickUpContent(startOn, endOn, shipmentLocation, additionalBinaryDataProperties);
+            return new ShipmentPickUpContent(default, default, shipmentLocation, additionalBinaryDataProperties);
         }
     }
 }

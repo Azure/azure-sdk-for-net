@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of <see cref="CriticalJobHistoryDetails"/>. </summary>
         /// <param name="jobName"> The job name. </param>
         /// <param name="jobId"> The ARM Id of the job being executed. </param>
-        /// <param name="startOn"> The start time of the job. </param>
+        /// <param name="startsOn"> The start time of the job. </param>
         /// <param name="jobStatus"> The job state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CriticalJobHistoryDetails(string jobName, ResourceIdentifier jobId, DateTimeOffset? startOn, string jobStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CriticalJobHistoryDetails(string jobName, ResourceIdentifier jobId, DateTimeOffset? startsOn, string jobStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             JobName = jobName;
             JobId = jobId;
-            StartOn = startOn;
+            StartsOn = startsOn;
             JobStatus = jobStatus;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public ResourceIdentifier JobId { get; }
 
         /// <summary> The start time of the job. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The job state. </summary>
         public string JobStatus { get; }

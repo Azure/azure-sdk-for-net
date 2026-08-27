@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 throw new FormatException($"The model {nameof(MaintenanceWindow)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (Optional.IsDefined(ExpireOn))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             {
                 return null;
             }
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             DateTimeOffset? expireOn = default;
             TimeSpan? duration = default;
             string timeZone = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expirationDateTime"u8))
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
             }
             return new MaintenanceWindow(
-                startOn,
+                startsOn,
                 expireOn,
                 duration,
                 timeZone,
