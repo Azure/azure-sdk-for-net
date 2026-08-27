@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("expiryDateTime"u8);
                 writer.WriteStringValue(ReservationExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(BenefitStartOn))
+            if (Optional.IsDefined(BenefitStartsOn))
             {
                 writer.WritePropertyName("benefitStartTime"u8);
-                writer.WriteStringValue(BenefitStartOn.Value, "O");
+                writer.WriteStringValue(BenefitStartsOn.Value, "O");
             }
             if (Optional.IsDefined(OriginalQuantity))
             {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Billing.Models
             DateTimeOffset? createdOn = default;
             DateTimeOffset? expireOn = default;
             DateTimeOffset? reservationExpireOn = default;
-            DateTimeOffset? benefitStartOn = default;
+            DateTimeOffset? benefitStartsOn = default;
             int? originalQuantity = default;
             string term = default;
             string provisioningState = default;
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    benefitStartOn = prop.Value.GetDateTimeOffset("O");
+                    benefitStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("originalQuantity"u8))
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Billing.Models
                 createdOn,
                 expireOn,
                 reservationExpireOn,
-                benefitStartOn,
+                benefitStartsOn,
                 originalQuantity,
                 term,
                 provisioningState,

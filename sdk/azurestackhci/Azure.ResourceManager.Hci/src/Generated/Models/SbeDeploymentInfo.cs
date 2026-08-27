@@ -27,15 +27,15 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="family"> SBE family name. </param>
         /// <param name="publisher"> SBE manifest publisher. </param>
         /// <param name="sbeManifestSource"> SBE Manifest Source. </param>
-        /// <param name="sbeManifestCreationOn"> SBE Manifest Creation Date. </param>
+        /// <param name="sbeManifestCreatedOn"> SBE Manifest Creation Date. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SbeDeploymentInfo(string version, string family, string publisher, string sbeManifestSource, DateTimeOffset? sbeManifestCreationOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SbeDeploymentInfo(string version, string family, string publisher, string sbeManifestSource, DateTimeOffset? sbeManifestCreatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             Family = family;
             Publisher = publisher;
             SbeManifestSource = sbeManifestSource;
-            SbeManifestCreationOn = sbeManifestCreationOn;
+            SbeManifestCreatedOn = sbeManifestCreatedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -57,6 +57,6 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> SBE Manifest Creation Date. </summary>
         [WirePath("sbeManifestCreationDate")]
-        public DateTimeOffset? SbeManifestCreationOn { get; set; }
+        public DateTimeOffset? SbeManifestCreatedOn { get; set; }
     }
 }

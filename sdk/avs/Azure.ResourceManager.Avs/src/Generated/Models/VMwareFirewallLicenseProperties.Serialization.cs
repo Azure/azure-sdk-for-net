@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Avs.Models
             writer.WritePropertyName("cores"u8);
             writer.WriteNumberValue(Cores);
             writer.WritePropertyName("endDate"u8);
-            writer.WriteStringValue(EndOn, "O");
+            writer.WriteStringValue(EndsOn, "O");
             if (Optional.IsDefined(BroadcomSiteId))
             {
                 writer.WritePropertyName("broadcomSiteId"u8);
@@ -141,7 +141,6 @@ namespace Azure.ResourceManager.Avs.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string licenseKey = default;
             int cores = default;
-            DateTimeOffset endOn = default;
             string broadcomSiteId = default;
             string broadcomContractNumber = default;
             IList<AvsLicenseLabel> labels = default;
@@ -211,7 +210,7 @@ namespace Azure.ResourceManager.Avs.Models
                 additionalBinaryDataProperties,
                 licenseKey,
                 cores,
-                endOn,
+                default,
                 broadcomSiteId,
                 broadcomContractNumber,
                 labels ?? new ChangeTrackingList<AvsLicenseLabel>());
