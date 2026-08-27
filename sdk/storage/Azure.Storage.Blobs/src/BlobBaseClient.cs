@@ -1692,17 +1692,16 @@ namespace Azure.Storage.Blobs.Specialized
                     // Wrap the response Content in a RetriableStream so we
                     // can return it before it's finished downloading, but still
                     // allow retrying if it fails.
-                    async ValueTask<Response<BlobDownloadStreamingResult>> Factory(long offset, bool async, CancellationToken cancellationToken)
-                    {
-                        return await StartDownloadAsync(
+                    ValueTask<Response<BlobDownloadStreamingResult>> Factory(long offset, bool async, CancellationToken cancellationToken)
+                        => StartDownloadAsync(
                             range,
                             conditionsWithEtag,
                             validationOptions,
                             offset,
                             layoutEndpoint: layoutEndpoint,
                             async: async,
-                            cancellationToken: cancellationToken).ConfigureAwait(false);
-                    }
+                            cancellationToken: cancellationToken);
+
                     async ValueTask<(Stream DecodingStream, StructuredMessageDecodingStream.RawDecodedData DecodedData)> StructuredMessageFactory(
                         long offset, bool async, CancellationToken cancellationToken)
                     {
