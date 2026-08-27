@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 throw new FormatException($"The model {nameof(LogCollectionSession)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(LogStartOn))
+            if (options.Format != "W" && Optional.IsDefined(LogStartsOn))
             {
                 writer.WritePropertyName("logStartTime"u8);
-                writer.WriteStringValue(LogStartOn.Value, "O");
+                writer.WriteStringValue(LogStartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(LogEndOn))
+            if (options.Format != "W" && Optional.IsDefined(LogEndsOn))
             {
                 writer.WritePropertyName("logEndTime"u8);
-                writer.WriteStringValue(LogEndOn.Value, "O");
+                writer.WriteStringValue(LogEndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(TimeCollected))
             {
@@ -161,8 +161,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            DateTimeOffset? logStartOn = default;
-            DateTimeOffset? logEndOn = default;
+            DateTimeOffset? logStartsOn = default;
+            DateTimeOffset? logEndsOn = default;
             DateTimeOffset? timeCollected = default;
             long? logSize = default;
             LogCollectionStatus? logCollectionStatus = default;
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    logStartOn = prop.Value.GetDateTimeOffset("O");
+                    logStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("logEndTime"u8))
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    logEndOn = prop.Value.GetDateTimeOffset("O");
+                    logEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("timeCollected"u8))
@@ -256,8 +256,8 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             return new LogCollectionSession(
-                logStartOn,
-                logEndOn,
+                logStartsOn,
+                logEndsOn,
                 timeCollected,
                 logSize,
                 logCollectionStatus,

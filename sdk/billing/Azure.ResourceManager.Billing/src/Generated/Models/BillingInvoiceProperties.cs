@@ -41,8 +41,8 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="failedPayments"> List of failed payments. </param>
         /// <param name="freeAzureCreditApplied"> The amount of free Azure credits applied to the charges. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </param>
         /// <param name="invoiceOn"> The date when the invoice was generated. </param>
-        /// <param name="invoicePeriodEndOn"> The end date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
-        /// <param name="invoicePeriodStartOn"> The start date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
+        /// <param name="invoicePeriodEndsOn"> The end date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
+        /// <param name="invoicePeriodStartsOn"> The start date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
         /// <param name="invoiceType"> Invoice type. </param>
         /// <param name="isMonthlyInvoice"> Specifies if the invoice is generated as part of monthly invoicing cycle or not. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </param>
         /// <param name="payments"> List of payments. </param>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="totalAmount"> The amount due when the invoice was generated. This field is applicable to billing accounts with agreement type Microsoft Customer Agreement. </param>
         /// <param name="refundDetails"> The details of a refund request. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingInvoiceProperties(BillingAmount amountDue, BillingAmount azurePrepaymentApplied, BillingAmount billedAmount, string billedDocumentId, string billingProfileDisplayName, ResourceIdentifier billingProfileId, BillingAmount creditAmount, string creditForDocumentId, IReadOnlyList<InvoiceDocument> documents, InvoiceDocumentType? documentType, DateTimeOffset? dueOn, IReadOnlyList<BillingInvoiceFailedPayment> failedPayments, BillingAmount freeAzureCreditApplied, DateTimeOffset? invoiceOn, DateTimeOffset? invoicePeriodEndOn, DateTimeOffset? invoicePeriodStartOn, BillingInvoiceType? invoiceType, bool? isMonthlyInvoice, IReadOnlyList<BillingInvoicePayment> payments, string purchaseOrderNumber, RebillDetails rebillDetails, BillingInvoiceStatus? status, string subscriptionDisplayName, string subscriptionId, SpecialTaxationType? specialTaxationType, BillingAmount subTotal, BillingAmount taxAmount, BillingAmount totalAmount, RefundDetailsSummary refundDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingInvoiceProperties(BillingAmount amountDue, BillingAmount azurePrepaymentApplied, BillingAmount billedAmount, string billedDocumentId, string billingProfileDisplayName, ResourceIdentifier billingProfileId, BillingAmount creditAmount, string creditForDocumentId, IReadOnlyList<InvoiceDocument> documents, InvoiceDocumentType? documentType, DateTimeOffset? dueOn, IReadOnlyList<BillingInvoiceFailedPayment> failedPayments, BillingAmount freeAzureCreditApplied, DateTimeOffset? invoiceOn, DateTimeOffset? invoicePeriodEndsOn, DateTimeOffset? invoicePeriodStartsOn, BillingInvoiceType? invoiceType, bool? isMonthlyInvoice, IReadOnlyList<BillingInvoicePayment> payments, string purchaseOrderNumber, RebillDetails rebillDetails, BillingInvoiceStatus? status, string subscriptionDisplayName, string subscriptionId, SpecialTaxationType? specialTaxationType, BillingAmount subTotal, BillingAmount taxAmount, BillingAmount totalAmount, RefundDetailsSummary refundDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AmountDue = amountDue;
             AzurePrepaymentApplied = azurePrepaymentApplied;
@@ -73,8 +73,8 @@ namespace Azure.ResourceManager.Billing.Models
             FailedPayments = failedPayments;
             FreeAzureCreditApplied = freeAzureCreditApplied;
             InvoiceOn = invoiceOn;
-            InvoicePeriodEndOn = invoicePeriodEndOn;
-            InvoicePeriodStartOn = invoicePeriodStartOn;
+            InvoicePeriodEndsOn = invoicePeriodEndsOn;
+            InvoicePeriodStartsOn = invoicePeriodStartsOn;
             InvoiceType = invoiceType;
             IsMonthlyInvoice = isMonthlyInvoice;
             Payments = payments;
@@ -149,11 +149,11 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The end date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </summary>
         [WirePath("invoicePeriodEndDate")]
-        public DateTimeOffset? InvoicePeriodEndOn { get; }
+        public DateTimeOffset? InvoicePeriodEndsOn { get; }
 
         /// <summary> The start date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </summary>
         [WirePath("invoicePeriodStartDate")]
-        public DateTimeOffset? InvoicePeriodStartOn { get; }
+        public DateTimeOffset? InvoicePeriodStartsOn { get; }
 
         /// <summary> Invoice type. </summary>
         [WirePath("invoiceType")]

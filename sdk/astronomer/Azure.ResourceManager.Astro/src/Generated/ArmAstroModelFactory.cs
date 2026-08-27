@@ -69,9 +69,9 @@ namespace Azure.ResourceManager.Astro.Models
         /// <param name="termUnit"> Plan Display Name for the marketplace offer. </param>
         /// <param name="termId"> Plan Display Name for the marketplace offer. </param>
         /// <param name="renewalMode"> Subscription renewal mode. </param>
-        /// <param name="endOn"> Current subscription end date and time. </param>
+        /// <param name="endsOn"> Current subscription end date and time. </param>
         /// <returns> A new <see cref="Models.AstroOfferDetails"/> instance for mocking. </returns>
-        public static AstroOfferDetails AstroOfferDetails(string publisherId = default, string offerId = default, string planId = default, string planName = default, string termUnit = default, string termId = default, AstroRenewalMode? renewalMode = default, DateTimeOffset? endOn = default)
+        public static AstroOfferDetails AstroOfferDetails(string publisherId = default, string offerId = default, string planId = default, string planName = default, string termUnit = default, string termId = default, AstroRenewalMode? renewalMode = default, DateTimeOffset? endsOn = default)
         {
             return new AstroOfferDetails(
                 publisherId,
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Astro.Models
                 termUnit,
                 termId,
                 renewalMode,
-                endOn,
+                endsOn,
                 default);
         }
 

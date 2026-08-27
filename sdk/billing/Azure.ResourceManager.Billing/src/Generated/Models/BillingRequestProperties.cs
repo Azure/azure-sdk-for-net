@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="billingProfileDisplayName"> The name of the billing profile. </param>
         /// <param name="createdBy"> The principal of the entity who created the request. </param>
         /// <param name="createdOn"> The date and time when the request was created. </param>
-        /// <param name="expireOn"> The date and time when the request expires. </param>
+        /// <param name="expiresOn"> The date and time when the request expires. </param>
         /// <param name="decisionReason"> The reason to approve or decline the request. </param>
         /// <param name="invoiceSectionId"> The fully qualified ID that uniquely identifies an invoice section. </param>
         /// <param name="invoiceSectionName"> The ID that uniquely identifies an invoice section. </param>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="lastUpdatedBy"> The principal of the entity who last updated the request. </param>
         /// <param name="lastUpdatedOn"> Date and time of last update. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingRequestProperties(BillingProvisioningState? provisioningState, IDictionary<string, string> additionalInformation, BillingPrincipal reviewedBy, DateTimeOffset? reviewalOn, ResourceIdentifier billingAccountId, string billingAccountName, string billingAccountDisplayName, Guid? billingAccountPrimaryBillingTenantId, ResourceIdentifier billingProfileId, string billingProfileName, string billingProfileDisplayName, BillingPrincipal createdBy, DateTimeOffset? createdOn, DateTimeOffset? expireOn, string decisionReason, ResourceIdentifier invoiceSectionId, string invoiceSectionName, string invoiceSectionDisplayName, ResourceIdentifier customerId, string customerName, string customerDisplayName, string subscriptionId, string subscriptionName, string subscriptionDisplayName, string justification, IList<BillingPrincipal> recipients, string requestScope, string billingScope, BillingRequestStatus? status, BillingRequestType? requestType, BillingPrincipal lastUpdatedBy, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingRequestProperties(BillingProvisioningState? provisioningState, IDictionary<string, string> additionalInformation, BillingPrincipal reviewedBy, DateTimeOffset? reviewalOn, ResourceIdentifier billingAccountId, string billingAccountName, string billingAccountDisplayName, Guid? billingAccountPrimaryBillingTenantId, ResourceIdentifier billingProfileId, string billingProfileName, string billingProfileDisplayName, BillingPrincipal createdBy, DateTimeOffset? createdOn, DateTimeOffset? expiresOn, string decisionReason, ResourceIdentifier invoiceSectionId, string invoiceSectionName, string invoiceSectionDisplayName, ResourceIdentifier customerId, string customerName, string customerDisplayName, string subscriptionId, string subscriptionName, string subscriptionDisplayName, string justification, IList<BillingPrincipal> recipients, string requestScope, string billingScope, BillingRequestStatus? status, BillingRequestType? requestType, BillingPrincipal lastUpdatedBy, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             AdditionalInformation = additionalInformation;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Billing.Models
             BillingProfileDisplayName = billingProfileDisplayName;
             CreatedBy = createdBy;
             CreatedOn = createdOn;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             DecisionReason = decisionReason;
             InvoiceSectionId = invoiceSectionId;
             InvoiceSectionName = invoiceSectionName;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The date and time when the request expires. </summary>
         [WirePath("expirationDate")]
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpiresOn { get; }
 
         /// <summary> The reason to approve or decline the request. </summary>
         [WirePath("decisionReason")]

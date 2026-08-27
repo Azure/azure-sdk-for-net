@@ -848,7 +848,7 @@ namespace Azure.ResourceManager.Batch.Models
                 targetLowPriorityNodes,
                 resizeTimeout,
                 nodeDeallocationOption,
-                startOn,
+                default,
                 (errors ?? new ChangeTrackingList<ResponseError>()).ToList(),
                 default);
         }

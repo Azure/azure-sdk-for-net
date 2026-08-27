@@ -143,11 +143,11 @@ namespace Azure.ResourceManager.Automation
         }
 
         /// <summary> Gets or sets the start time of the job. </summary>
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -155,16 +155,16 @@ namespace Azure.ResourceManager.Automation
                 {
                     Properties = new JobProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
         /// <summary> Gets or sets the end time of the job. </summary>
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     Properties = new JobProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 

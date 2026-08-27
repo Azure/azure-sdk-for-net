@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Initializes a new instance of <see cref="BillingPaymentTerm"/>. </summary>
         /// <param name="term"> Represents duration in netXX format. Always in days. </param>
-        /// <param name="startOn"> The date on when the defined 'Payment Term' will be effective from and is always in UTC. </param>
-        /// <param name="endOn"> The date on when the defined 'Payment Term' will end and is always in UTC. </param>
+        /// <param name="startsOn"> The date on when the defined 'Payment Term' will be effective from and is always in UTC. </param>
+        /// <param name="endsOn"> The date on when the defined 'Payment Term' will end and is always in UTC. </param>
         /// <param name="isDefault"> Indicates payment term is the standard payment term. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingPaymentTerm(string term, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isDefault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingPaymentTerm(string term, DateTimeOffset? startsOn, DateTimeOffset? endsOn, bool? isDefault, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Term = term;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             IsDefault = isDefault;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The date on when the defined 'Payment Term' will be effective from and is always in UTC. </summary>
         [WirePath("startDate")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> The date on when the defined 'Payment Term' will end and is always in UTC. </summary>
         [WirePath("endDate")]
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Indicates payment term is the standard payment term. </summary>
         [WirePath("isDefault")]

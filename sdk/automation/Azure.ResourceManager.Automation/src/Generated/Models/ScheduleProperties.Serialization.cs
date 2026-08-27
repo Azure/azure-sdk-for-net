@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 throw new FormatException($"The model {nameof(ScheduleProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(StartInMinutes))
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             double? startInMinutes = default;
             DateTimeOffset? expireOn = default;
             double? expireInMinutes = default;
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("startTimeOffsetMinutes"u8))
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             return new ScheduleProperties(
-                startOn,
+                startsOn,
                 startInMinutes,
                 expireOn,
                 expireInMinutes,

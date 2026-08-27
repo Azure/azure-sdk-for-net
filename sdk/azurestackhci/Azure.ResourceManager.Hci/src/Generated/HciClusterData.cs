@@ -310,31 +310,31 @@ namespace Azure.ResourceManager.Hci
 
         /// <summary> First cluster sync timestamp. </summary>
         [WirePath("properties.registrationTimestamp")]
-        public DateTimeOffset? RegistrationTimestamp
+        public DateTimeOffset? RegistrationOn
         {
             get
             {
-                return Properties is null ? default : Properties.RegistrationTimestamp;
+                return Properties is null ? default : Properties.RegistrationOn;
             }
         }
 
         /// <summary> Most recent cluster sync timestamp. </summary>
         [WirePath("properties.lastSyncTimestamp")]
-        public DateTimeOffset? LastSyncTimestamp
+        public DateTimeOffset? LastSyncOn
         {
             get
             {
-                return Properties is null ? default : Properties.LastSyncTimestamp;
+                return Properties is null ? default : Properties.LastSyncOn;
             }
         }
 
         /// <summary> Most recent billing meter timestamp. </summary>
         [WirePath("properties.lastBillingTimestamp")]
-        public DateTimeOffset? LastBillingTimestamp
+        public DateTimeOffset? LastBillingOn
         {
             get
             {
-                return Properties is null ? default : Properties.LastBillingTimestamp;
+                return Properties is null ? default : Properties.LastBillingOn;
             }
         }
 

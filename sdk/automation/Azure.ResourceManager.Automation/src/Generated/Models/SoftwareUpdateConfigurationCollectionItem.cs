@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.Automation.Models
         }
 
         /// <summary> the start time of the update. </summary>
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties.StartOn;
+                return Properties.StartsOn;
             }
         }
 
