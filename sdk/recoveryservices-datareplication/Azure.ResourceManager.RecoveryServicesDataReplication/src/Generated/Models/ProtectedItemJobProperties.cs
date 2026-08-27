@@ -27,18 +27,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="name"> Gets or sets job name. </param>
         /// <param name="displayName"> Gets or sets the job friendly display name. </param>
         /// <param name="state"> Gets or sets job state. </param>
-        /// <param name="startOn"> Gets or sets start time of the job. </param>
-        /// <param name="endOn"> Gets or sets end time of the job. </param>
+        /// <param name="startsOn"> Gets or sets start time of the job. </param>
+        /// <param name="endsOn"> Gets or sets end time of the job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProtectedItemJobProperties(string scenarioName, string id, string name, string displayName, string state, DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProtectedItemJobProperties(string scenarioName, string id, string name, string displayName, string state, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ScenarioName = scenarioName;
             Id = id;
             Name = name;
             DisplayName = displayName;
             State = state;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -58,9 +58,9 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public string State { get; }
 
         /// <summary> Gets or sets start time of the job. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> Gets or sets end time of the job. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
     }
 }

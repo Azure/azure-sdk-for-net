@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
             }
-            if (Optional.IsDefined(ScheduleWindowStartOn))
+            if (Optional.IsDefined(ScheduleWindowStartsOn))
             {
                 writer.WritePropertyName("scheduleWindowStartTime"u8);
-                writer.WriteStringValue(ScheduleWindowStartOn.Value, "O");
+                writer.WriteStringValue(ScheduleWindowStartsOn.Value, "O");
             }
             if (Optional.IsDefined(ScheduleWindowDuration))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 return null;
             }
             int? interval = default;
-            DateTimeOffset? scheduleWindowStartOn = default;
+            DateTimeOffset? scheduleWindowStartsOn = default;
             int? scheduleWindowDuration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    scheduleWindowStartOn = prop.Value.GetDateTimeOffset("O");
+                    scheduleWindowStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("scheduleWindowDuration"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BackupHourlySchedule(interval, scheduleWindowStartOn, scheduleWindowDuration, additionalBinaryDataProperties);
+            return new BackupHourlySchedule(interval, scheduleWindowStartsOn, scheduleWindowDuration, additionalBinaryDataProperties);
         }
     }
 }
