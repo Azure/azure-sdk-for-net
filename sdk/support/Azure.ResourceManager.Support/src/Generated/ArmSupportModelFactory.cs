@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="supportPlanType"> Support plan type associated with the support ticket. </param>
         /// <param name="supportPlanDisplayName"> Support plan type associated with the support ticket. </param>
         /// <param name="title"> Title of the support ticket. </param>
-        /// <param name="problemStartOn"> Time in UTC (ISO 8601 format) when the problem started. </param>
+        /// <param name="problemStartsOn"> Time in UTC (ISO 8601 format) when the problem started. </param>
         /// <param name="serviceId"> This is the resource Id of the Azure service resource associated with the support ticket. </param>
         /// <param name="serviceDisplayName"> Localized name of the Azure service. </param>
         /// <param name="status"> Status of the support ticket. </param>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <param name="technicalTicketDetailsResourceId"> This is the resource Id of the Azure service resource (For example: A virtual machine resource or an HDInsight resource) for which the support ticket is created. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="description"/>, <paramref name="problemClassificationId"/>, <paramref name="contactDetails"/>, <paramref name="title"/> or <paramref name="serviceId"/> is null. </exception>
         /// <returns> A new <see cref="Support.SupportTicketData"/> instance for mocking. </returns>
-        public static SupportTicketData SupportTicketData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string supportTicketId = default, string description = default, string problemClassificationId = default, string problemClassificationDisplayName = default, SupportSeverityLevel severity = default, string enrollmentId = default, bool? require24X7Response = default, AdvancedDiagnosticConsent advancedDiagnosticConsent = default, string problemScopingQuestions = default, string supportPlanId = default, SupportContactProfile contactDetails = default, SupportServiceLevelAgreement serviceLevelAgreement = default, string supportPlanType = default, string supportPlanDisplayName = default, string title = default, DateTimeOffset? problemStartOn = default, string serviceId = default, string serviceDisplayName = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, string fileWorkspaceName = default, IsTemporaryTicket? isTemporaryTicket = default, QuotaTicketDetails quotaTicketDetails = default, IEnumerable<SecondaryConsent> secondaryConsent = default, SupportDirectConnectEscalation directConnectEscalation = default, string communityForumPost = default, string supportEngineerEmailAddress = default, ResourceIdentifier technicalTicketDetailsResourceId = default)
+        public static SupportTicketData SupportTicketData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string supportTicketId = default, string description = default, string problemClassificationId = default, string problemClassificationDisplayName = default, SupportSeverityLevel severity = default, string enrollmentId = default, bool? require24X7Response = default, AdvancedDiagnosticConsent advancedDiagnosticConsent = default, string problemScopingQuestions = default, string supportPlanId = default, SupportContactProfile contactDetails = default, SupportServiceLevelAgreement serviceLevelAgreement = default, string supportPlanType = default, string supportPlanDisplayName = default, string title = default, DateTimeOffset? problemStartsOn = default, string serviceId = default, string serviceDisplayName = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? modifiedOn = default, string fileWorkspaceName = default, IsTemporaryTicket? isTemporaryTicket = default, QuotaTicketDetails quotaTicketDetails = default, IEnumerable<SecondaryConsent> secondaryConsent = default, SupportDirectConnectEscalation directConnectEscalation = default, string communityForumPost = default, string supportEngineerEmailAddress = default, ResourceIdentifier technicalTicketDetailsResourceId = default)
         {
             return new SupportTicketData(
                 id,
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Support.Models
         /// <returns> A new <see cref="Models.SupportServiceLevelAgreement"/> instance for mocking. </returns>
         public static SupportServiceLevelAgreement SupportServiceLevelAgreement(DateTimeOffset? startOn = default, DateTimeOffset? expireOn = default, int? slaInMinutes = default)
         {
-            return new SupportServiceLevelAgreement(startOn, expireOn, slaInMinutes, default);
+            return new SupportServiceLevelAgreement(default, default, slaInMinutes, default);
         }
 
         /// <param name="quotaChangeRequestSubType"> Required for certain quota types when there is a sub type, such as Batch, for which you are requesting a quota increase. </param>
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.Support.Models
                 name,
                 resourceType,
                 systemData,
-                messages is null && startOn is null ? default : new ChatTranscriptDetailsProperties((messages ?? new ChangeTrackingList<ChatTranscriptMessageProperties>()).ToList(), startOn, default),
+                messages is null ? default : new ChatTranscriptDetailsProperties((messages ?? new ChangeTrackingList<ChatTranscriptMessageProperties>()).ToList(), default, default),
                 default);
         }
 
@@ -449,7 +449,7 @@ namespace Azure.ResourceManager.Support.Models
                 name,
                 resourceType,
                 systemData,
-                createdOn is null && expireOn is null ? default : new FileWorkspaceDetailsProperties(createdOn, expireOn, default),
+                createdOn is null ? default : new FileWorkspaceDetailsProperties(createdOn, default, default),
                 default);
         }
 
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Support.Models
                 name,
                 resourceType,
                 systemData,
-                supportTicketId is null && description is null && problemClassificationId is null && problemClassificationDisplayName is null && enrollmentId is null && require24X7Response is null && problemScopingQuestions is null && supportPlanId is null && contactDetails is null && serviceLevelAgreement is null && supportEngineerEmailAddress is null && supportPlanType is null && supportPlanDisplayName is null && title is null && problemStartOn is null && serviceId is null && serviceDisplayName is null && status is null && createdOn is null && modifiedOn is null && fileWorkspaceName is null && isTemporaryTicket is null && technicalTicketDetailsResourceId is null && quotaTicketDetails is null && secondaryConsent is null ? default : new SupportTicketDetailsProperties(
+                supportTicketId is null && description is null && problemClassificationId is null && problemClassificationDisplayName is null && enrollmentId is null && require24X7Response is null && problemScopingQuestions is null && supportPlanId is null && contactDetails is null && serviceLevelAgreement is null && supportEngineerEmailAddress is null && supportPlanType is null && supportPlanDisplayName is null && title is null && serviceId is null && serviceDisplayName is null && status is null && createdOn is null && modifiedOn is null && fileWorkspaceName is null && isTemporaryTicket is null && technicalTicketDetailsResourceId is null && quotaTicketDetails is null && secondaryConsent is null ? default : new SupportTicketDetailsProperties(
                     supportTicketId,
                     description,
                     problemClassificationId,
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.Support.Models
                     supportPlanType,
                     supportPlanDisplayName,
                     title,
-                    problemStartOn,
+                    default,
                     serviceId,
                     serviceDisplayName,
                     status,

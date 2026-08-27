@@ -695,10 +695,10 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new ServerEndpointProvisioningStepStatus(
                 name,
                 status,
-                startOn,
+                default,
                 minutesLeft,
                 progressPercentage,
-                endOn,
+                default,
                 errorCode,
                 additionalInformation ?? new ChangeTrackingDictionary<string, string>(),
                 default);

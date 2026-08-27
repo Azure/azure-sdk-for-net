@@ -477,11 +477,11 @@ namespace Azure.ResourceManager.StorageMover.Models
                 frequency,
                 isActive,
                 executionTime,
-                startOn,
+                default,
                 (daysOfWeek ?? new ChangeTrackingList<string>()).ToList(),
                 (daysOfMonth ?? new ChangeTrackingList<int>()).ToList(),
                 cronExpression,
-                endOn,
+                default,
                 default);
         }
 
@@ -621,13 +621,13 @@ namespace Azure.ResourceManager.StorageMover.Models
                 name,
                 resourceType,
                 systemData,
-                status is null && scanStatus is null && agentName is null && agentResourceId is null && executionStartOn is null && executionEndOn is null && triggerType is null && scheduledExecutionOn is null && lastStatusUpdate is null && itemsScanned is null && itemsExcluded is null && itemsUnsupported is null && itemsNoTransferNeeded is null && itemsFailed is null && itemsTransferred is null && bytesScanned is null && bytesExcluded is null && bytesUnsupported is null && bytesNoTransferNeeded is null && bytesFailed is null && bytesTransferred is null && sourceName is null && sourceResourceId is null && sourceProperties is null && targetName is null && targetResourceId is null && targetProperties is null && jobDefinitionProperties is null && error is null && warnings is null && provisioningState is null ? default : new JobRunProperties(
+                status is null && scanStatus is null && agentName is null && agentResourceId is null && triggerType is null && scheduledExecutionOn is null && lastStatusUpdate is null && itemsScanned is null && itemsExcluded is null && itemsUnsupported is null && itemsNoTransferNeeded is null && itemsFailed is null && itemsTransferred is null && bytesScanned is null && bytesExcluded is null && bytesUnsupported is null && bytesNoTransferNeeded is null && bytesFailed is null && bytesTransferred is null && sourceName is null && sourceResourceId is null && sourceProperties is null && targetName is null && targetResourceId is null && targetProperties is null && jobDefinitionProperties is null && error is null && warnings is null && provisioningState is null ? default : new JobRunProperties(
                     status,
                     scanStatus,
                     agentName,
                     agentResourceId,
-                    executionStartOn,
-                    executionEndOn,
+                    default,
+                    default,
                     triggerType,
                     scheduledExecutionOn,
                     lastStatusUpdate,

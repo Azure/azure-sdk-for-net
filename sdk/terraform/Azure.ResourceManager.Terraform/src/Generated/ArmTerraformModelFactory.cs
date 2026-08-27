@@ -152,20 +152,20 @@ namespace Azure.ResourceManager.Terraform.Models
         /// <param name="status"> The operation status. </param>
         /// <param name="id"> The unique identifier for the operationStatus resource. </param>
         /// <param name="name"> The name of the  operationStatus resource. </param>
-        /// <param name="startOn"> Operation start time. </param>
-        /// <param name="endOn"> Operation complete time. </param>
+        /// <param name="startsOn"> Operation start time. </param>
+        /// <param name="endsOn"> Operation complete time. </param>
         /// <param name="percentComplete"> The progress made toward completing the operation. </param>
         /// <param name="error"> Errors that occurred if the operation ended with Canceled or Failed status. </param>
         /// <returns> A new <see cref="Models.TerraformOperationStatus"/> instance for mocking. </returns>
-        public static TerraformOperationStatus TerraformOperationStatus(TerraformExportResult properties = default, TerraformResourceProvisioningState status = default, string id = default, string name = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, double? percentComplete = default, ResponseError error = default)
+        public static TerraformOperationStatus TerraformOperationStatus(TerraformExportResult properties = default, TerraformResourceProvisioningState status = default, string id = default, string name = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, double? percentComplete = default, ResponseError error = default)
         {
             return new TerraformOperationStatus(
                 properties,
                 status,
                 id,
                 name,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 percentComplete,
                 error,
                 default);
