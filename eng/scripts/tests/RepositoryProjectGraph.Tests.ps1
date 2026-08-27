@@ -346,6 +346,14 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
     <PackageId>Azure.A.Tests</PackageId>
     <IsClientLibrary>true</IsClientLibrary>
     <IsTestProject>true</IsTestProject>
+    <WarningsAsErrors>
+      NU1605,
+      NU1608
+    </WarningsAsErrors>
+    <NoWarn>
+      NU1901;
+      NU1902
+    </NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="Azure.B" Version="1.2.3" />
@@ -404,6 +412,12 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $taskGraph.diagnostics.generation.configurations | Should -Be @("Debug", "Release")
         $taskGraph.diagnostics.generation.includesInputs | Should -BeTrue
         Get-Content $taskRecordsPath | Should -Contain "GraphGeneration|Debug,Release|True"
+        $taskNodeRecord = Get-Content $taskRecordsPath | Where-Object { $_ -like "Node|$fixtureA|net8.0|*" }
+        $taskNodeFields = $taskNodeRecord.Split('|')
+        $taskNodeFields[13].Split(';') | Should -Contain "NU1605"
+        $taskNodeFields[13].Split(';') | Should -Contain "NU1608"
+        $taskNodeFields[14].Split(';') | Should -Contain "NU1901"
+        $taskNodeFields[14].Split(';') | Should -Contain "NU1902"
         ($taskGraph.nodes | Where-Object packageId -eq "Azure.A.Tests").targetFrameworks | Should -Be @("net8.0", "net9.0")
         $taskPackageEdge = @($taskGraph.configurationEdges | Where-Object {
             $_.kind -eq "PackageReference" -and $_.to -eq "Azure.B"

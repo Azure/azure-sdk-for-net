@@ -444,13 +444,13 @@ public sealed class RepositoryProjectGraphTask : Task
             project.GetPropertyValue("IsGeneratorLibrary"),
             project.GetPropertyValue("IsShippingLibrary"),
             project.GetPropertyValue("CentralPackageTransitivePinningEnabled"),
-            project.GetPropertyValue("AssetTargetFallback"),
-            project.GetPropertyValue("PackageTargetFallback"),
+            NormalizeSemicolonSeparatedMetadata(project.GetPropertyValue("AssetTargetFallback")),
+            NormalizeSemicolonSeparatedMetadata(project.GetPropertyValue("PackageTargetFallback")),
             project.GetPropertyValue("RuntimeIdentifierGraphPath"),
             project.GetPropertyValue("TreatWarningsAsErrors"),
-            project.GetPropertyValue("WarningsAsErrors"),
-            project.GetPropertyValue("NoWarn"),
-            project.GetPropertyValue("WarningsNotAsErrors"));
+            NormalizeWarningMetadata(project.GetPropertyValue("WarningsAsErrors")),
+            NormalizeWarningMetadata(project.GetPropertyValue("NoWarn")),
+            NormalizeWarningMetadata(project.GetPropertyValue("WarningsNotAsErrors")));
 
         var projectReferenceRecords = new HashSet<RepositoryProjectGraphRecord.ProjectReference>();
         foreach (ProjectItemInstance reference in project.GetItems("ProjectReference"))
@@ -611,6 +611,20 @@ public sealed class RepositoryProjectGraphTask : Task
     }
 
     private static string NormalizeAssetMetadata(string value) => value.Replace(';', ',');
+
+    // MSBuild preserves formatting whitespace in multiline list properties. Canonicalize the
+    // separators consumed by NuGet while keeping paths and identities under strict validation.
+    private static string NormalizeSemicolonSeparatedMetadata(string value) => string.Join(
+        ';',
+        value.Split(
+            new[] { ';', '\r', '\n' },
+            StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
+
+    private static string NormalizeWarningMetadata(string value) => string.Join(
+        ';',
+        value.Split(
+            new[] { ';', ',', '\r', '\n' },
+            StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
 
     private static string GetPackageVersion(
         ProjectItemInstance reference,
