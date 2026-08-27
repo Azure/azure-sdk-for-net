@@ -14,7 +14,7 @@ public class ProvisioningOutputTests
     [Test]
     public async Task ArrayOutput()
     {
-        await using Trycep test = new();
+        await using Trycep test = new(orderProperties: true);
         test.Define(
             ctx =>
             {
@@ -51,7 +51,7 @@ public class ProvisioningOutputTests
     [Test]
     public async Task DictionaryOutput()
     {
-        await using Trycep test = new();
+        await using Trycep test = new(orderProperties: true);
         test.Define(
             ctx =>
             {
@@ -86,7 +86,7 @@ public class ProvisioningOutputTests
     [Test]
     public async Task EnumOutput()
     {
-        await using Trycep trycep = new();
+        await using Trycep trycep = new(orderProperties: true);
         trycep.Define(
             ctx =>
             {

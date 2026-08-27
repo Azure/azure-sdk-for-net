@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Tests.Primitives
         [Test]
         public async Task SetProvisioningProperty_WithDictionaryItem_ShouldNotThrow()
         {
-            await using var test = new Trycep();
+            await using var test = new Trycep(orderProperties: true);
 
             test.Define(
                 ctx =>
@@ -68,8 +68,8 @@ namespace Azure.Provisioning.Tests.Primitives
                     
                     resource storage 'Microsoft.Storage/storageAccounts@2024-01-01' = {
                       name: take('storage${uniqueString(resourceGroup().id)}', 24)
-                      kind: 'StorageV2'
                       location: location
+                      kind: 'StorageV2'
                       sku: {
                         name: 'Standard_LRS'
                       }
@@ -83,7 +83,7 @@ namespace Azure.Provisioning.Tests.Primitives
         [Test]
         public async Task SetProvisioningProperty_WithDictionaryItem_MultipleKeys_ShouldNotThrow()
         {
-            await using var test = new Trycep();
+            await using var test = new Trycep(orderProperties: true);
 
             test.Define(
                 ctx =>
@@ -141,8 +141,8 @@ namespace Azure.Provisioning.Tests.Primitives
                     
                     resource storage 'Microsoft.Storage/storageAccounts@2024-01-01' = {
                       name: take('storage${uniqueString(resourceGroup().id)}', 24)
-                      kind: 'StorageV2'
                       location: location
+                      kind: 'StorageV2'
                       sku: {
                         name: 'Standard_LRS'
                       }

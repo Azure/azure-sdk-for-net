@@ -11,7 +11,7 @@ public class BicepMetadataTests
     [Test]
     public void BicepMetadataDescriptionTest()
     {
-        new Trycep()
+        new Trycep(orderProperties: true)
             .Define(ctx =>
             {
                 Infrastructure infra = new();
@@ -34,8 +34,8 @@ public class BicepMetadataTests
                 @description('Production storage account')
                 resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
                   name: take('storage${uniqueString(resourceGroup().id)}', 24)
-                  kind: 'StorageV2'
                   location: location
+                  kind: 'StorageV2'
                   sku: {
                     name: 'Standard_LRS'
                   }
@@ -46,7 +46,7 @@ public class BicepMetadataTests
     [Test]
     public void BicepMetadataBatchSizeTest()
     {
-        new Trycep()
+        new Trycep(orderProperties: true)
             .Define(ctx =>
             {
                 Infrastructure infra = new();
@@ -69,8 +69,8 @@ public class BicepMetadataTests
                 @batchSize(1)
                 resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
                   name: take('storage${uniqueString(resourceGroup().id)}', 24)
-                  kind: 'StorageV2'
                   location: location
+                  kind: 'StorageV2'
                   sku: {
                     name: 'Standard_LRS'
                   }
@@ -81,7 +81,7 @@ public class BicepMetadataTests
     [Test]
     public void BicepMetadataOnlyIfNotExistsTest()
     {
-        new Trycep()
+        new Trycep(orderProperties: true)
             .Define(ctx =>
             {
                 Infrastructure infra = new();
@@ -104,8 +104,8 @@ public class BicepMetadataTests
                 @onlyIfNotExists()
                 resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
                   name: take('storage${uniqueString(resourceGroup().id)}', 24)
-                  kind: 'StorageV2'
                   location: location
+                  kind: 'StorageV2'
                   sku: {
                     name: 'Standard_LRS'
                   }
@@ -116,7 +116,7 @@ public class BicepMetadataTests
     [Test]
     public void BicepMetadataConditionTest()
     {
-        new Trycep()
+        new Trycep(orderProperties: true)
             .Define(ctx =>
             {
                 Infrastructure infra = new();
@@ -143,8 +143,8 @@ public class BicepMetadataTests
 
                 resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = if (deployStorage) {
                   name: take('storage${uniqueString(resourceGroup().id)}', 24)
-                  kind: 'StorageV2'
                   location: location
+                  kind: 'StorageV2'
                   sku: {
                     name: 'Standard_LRS'
                   }
@@ -155,7 +155,7 @@ public class BicepMetadataTests
     [Test]
     public void BicepMetadataAllCombinedTest()
     {
-        new Trycep()
+        new Trycep(orderProperties: true)
             .Define(ctx =>
             {
                 Infrastructure infra = new();
@@ -188,8 +188,8 @@ public class BicepMetadataTests
                 @batchSize(1)
                 resource storage 'Microsoft.Storage/storageAccounts@2023-01-01' = if (deployStorage) {
                   name: take('storage${uniqueString(resourceGroup().id)}', 24)
-                  kind: 'StorageV2'
                   location: location
+                  kind: 'StorageV2'
                   sku: {
                     name: 'Standard_LRS'
                   }
