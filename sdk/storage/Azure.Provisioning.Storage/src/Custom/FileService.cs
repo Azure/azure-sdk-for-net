@@ -6,6 +6,20 @@ namespace Azure.Provisioning.Storage;
 // Customize the generated FileService resource.
 public partial class FileService
 {
+    /// <summary> Gets or sets the SMB protocol settings. </summary>
+    public SmbSetting ProtocolSmbSetting
+    {
+        get
+        {
+            return ProtocolSettings is null ? default! : ProtocolSettings.SmbSetting;
+        }
+        set
+        {
+            ProtocolSettings ??= new FileServiceProtocolSettings();
+            ProtocolSettings.SmbSetting = value;
+        }
+    }
+
     public static partial class ResourceVersions
     {
         /// <summary>2024-01-01.</summary>

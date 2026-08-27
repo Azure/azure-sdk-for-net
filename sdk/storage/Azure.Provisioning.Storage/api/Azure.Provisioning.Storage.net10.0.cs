@@ -471,6 +471,7 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } }
         public Azure.Provisioning.Storage.StorageAccount Parent { get { throw null; } set { } }
         public Azure.Provisioning.Storage.FileServiceProtocolSettings ProtocolSettings { get { throw null; } set { } }
+        public Azure.Provisioning.Storage.SmbSetting ProtocolSmbSetting { get { throw null; } set { } }
         public Azure.Provisioning.Storage.DeleteRetentionPolicy ShareDeleteRetentionPolicy { get { throw null; } set { } }
         public Azure.Provisioning.Storage.StorageSku Sku { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
