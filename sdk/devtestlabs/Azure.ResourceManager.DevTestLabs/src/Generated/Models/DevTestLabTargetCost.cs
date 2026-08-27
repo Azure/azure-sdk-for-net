@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="status"> Target cost status. </param>
         /// <param name="target"> Lab target cost. </param>
         /// <param name="costThresholds"> Cost thresholds. </param>
-        /// <param name="cycleStartOn"> Reporting cycle start date. </param>
-        /// <param name="cycleEndOn"> Reporting cycle end date. </param>
+        /// <param name="cycleStartsOn"> Reporting cycle start date. </param>
+        /// <param name="cycleEndsOn"> Reporting cycle end date. </param>
         /// <param name="cycleType"> Reporting cycle type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevTestLabTargetCost(DevTestLabTargetCostStatus? status, int? target, IList<DevTestLabCostThreshold> costThresholds, DateTimeOffset? cycleStartOn, DateTimeOffset? cycleEndOn, DevTestLabReportingCycleType? cycleType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevTestLabTargetCost(DevTestLabTargetCostStatus? status, int? target, IList<DevTestLabCostThreshold> costThresholds, DateTimeOffset? cycleStartsOn, DateTimeOffset? cycleEndsOn, DevTestLabReportingCycleType? cycleType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             Target = target;
             CostThresholds = costThresholds;
-            CycleStartOn = cycleStartOn;
-            CycleEndOn = cycleEndOn;
+            CycleStartsOn = cycleStartsOn;
+            CycleEndsOn = cycleEndsOn;
             CycleType = cycleType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         public IList<DevTestLabCostThreshold> CostThresholds { get; }
 
         /// <summary> Reporting cycle start date. </summary>
-        public DateTimeOffset? CycleStartOn { get; set; }
+        public DateTimeOffset? CycleStartsOn { get; set; }
 
         /// <summary> Reporting cycle end date. </summary>
-        public DateTimeOffset? CycleEndOn { get; set; }
+        public DateTimeOffset? CycleEndsOn { get; set; }
 
         /// <summary> Reporting cycle type. </summary>
         public DevTestLabReportingCycleType? CycleType { get; set; }

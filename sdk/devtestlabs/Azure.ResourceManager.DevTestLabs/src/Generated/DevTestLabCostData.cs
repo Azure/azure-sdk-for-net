@@ -105,11 +105,11 @@ namespace Azure.ResourceManager.DevTestLabs
         }
 
         /// <summary> The start time of the cost data. </summary>
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -117,16 +117,16 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     Properties = new LabCostProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
         /// <summary> The end time of the cost data. </summary>
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 {
                     Properties = new LabCostProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 
