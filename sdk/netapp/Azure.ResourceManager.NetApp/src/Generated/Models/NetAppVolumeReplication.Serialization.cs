@@ -105,15 +105,15 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("mirrorState"u8);
                 writer.WriteStringValue(MirrorState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ReplicationCreationOn))
+            if (options.Format != "W" && Optional.IsDefined(ReplicationCreatedOn))
             {
                 writer.WritePropertyName("replicationCreationTime"u8);
-                writer.WriteStringValue(ReplicationCreationOn.Value, "O");
+                writer.WriteStringValue(ReplicationCreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ReplicationDeletionOn))
+            if (options.Format != "W" && Optional.IsDefined(ReplicationDeletedOn))
             {
                 writer.WritePropertyName("replicationDeletionTime"u8);
-                writer.WriteStringValue(ReplicationDeletionOn.Value, "O");
+                writer.WriteStringValue(ReplicationDeletedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -163,8 +163,8 @@ namespace Azure.ResourceManager.NetApp.Models
             ResourceIdentifier remoteVolumeResourceId = default;
             string remoteVolumeRegion = default;
             ReplicationMirrorState? mirrorState = default;
-            DateTimeOffset? replicationCreationOn = default;
-            DateTimeOffset? replicationDeletionOn = default;
+            DateTimeOffset? replicationCreatedOn = default;
+            DateTimeOffset? replicationDeletedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    replicationCreationOn = prop.Value.GetDateTimeOffset("O");
+                    replicationCreatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("replicationDeletionTime"u8))
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     {
                         continue;
                     }
-                    replicationDeletionOn = prop.Value.GetDateTimeOffset("O");
+                    replicationDeletedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -244,8 +244,8 @@ namespace Azure.ResourceManager.NetApp.Models
                 remoteVolumeResourceId,
                 remoteVolumeRegion,
                 mirrorState,
-                replicationCreationOn,
-                replicationDeletionOn,
+                replicationCreatedOn,
+                replicationDeletedOn,
                 additionalBinaryDataProperties);
         }
     }
