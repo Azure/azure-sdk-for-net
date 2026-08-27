@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <returns> A new <see cref="Models.EdgeOrderStageDetails"/> instance for mocking. </returns>
         public static EdgeOrderStageDetails EdgeOrderStageDetails(EdgeOrderStageStatus? stageStatus = default, EdgeOrderStageName? stageName = default, string displayName = default, DateTimeOffset? startOn = default)
         {
-            return new EdgeOrderStageDetails(stageStatus, stageName, displayName, startOn, default);
+            return new EdgeOrderStageDetails(stageStatus, stageName, displayName, default, default);
         }
 
         /// <param name="notificationPreferences"> Notification preferences. </param>
@@ -1201,10 +1201,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                orderItemDetails is null && addressDetails is null && startOn is null && orderId is null ? default : new OrderItemProperties(
+                orderItemDetails is null && addressDetails is null && orderId is null ? default : new OrderItemProperties(
                     orderItemDetails,
                     addressDetails,
-                    startOn,
+                    default,
                     orderId,
                     default,
                     default),

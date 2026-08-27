@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DisconnectedOperations.Models
         /// <returns> A new <see cref="Models.DisconnectedOperationsBillingPeriod"/> instance for mocking. </returns>
         public static DisconnectedOperationsBillingPeriod DisconnectedOperationsBillingPeriod(int cores = default, DisconnectedOperationsPricingModel pricingModel = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default)
         {
-            return new DisconnectedOperationsBillingPeriod(cores, pricingModel, startOn, endOn, default);
+            return new DisconnectedOperationsBillingPeriod(cores, pricingModel, default, default, default);
         }
 
         /// <param name="azureHybridWindowsServerBenefit"> Azure Hybrid Windows Server Benefit plan. </param>
