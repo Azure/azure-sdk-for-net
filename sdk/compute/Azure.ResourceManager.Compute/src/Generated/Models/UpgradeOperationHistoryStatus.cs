@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="UpgradeOperationHistoryStatus"/>. </summary>
         /// <param name="code"> Code indicating the current status of the upgrade. </param>
-        /// <param name="startOn"> Start time of the upgrade. </param>
-        /// <param name="endOn"> End time of the upgrade. </param>
+        /// <param name="startsOn"> Start time of the upgrade. </param>
+        /// <param name="endsOn"> End time of the upgrade. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UpgradeOperationHistoryStatus(UpgradeState? code, DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UpgradeOperationHistoryStatus(UpgradeState? code, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.Compute.Models
         public UpgradeState? Code { get; }
 
         /// <summary> Start time of the upgrade. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> End time of the upgrade. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
     }
 }
