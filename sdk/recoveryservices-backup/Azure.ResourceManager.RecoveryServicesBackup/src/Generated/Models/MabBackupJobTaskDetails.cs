@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="MabBackupJobTaskDetails"/>. </summary>
         /// <param name="taskId"> The task display name. </param>
-        /// <param name="startOn"> The start time. </param>
-        /// <param name="endOn"> The end time. </param>
+        /// <param name="startsOn"> The start time. </param>
+        /// <param name="endsOn"> The end time. </param>
         /// <param name="duration"> Time elapsed for task. </param>
         /// <param name="status"> The status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MabBackupJobTaskDetails(string taskId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? duration, string status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MabBackupJobTaskDetails(string taskId, DateTimeOffset? startsOn, DateTimeOffset? endsOn, TimeSpan? duration, string status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TaskId = taskId;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Duration = duration;
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -42,10 +42,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string TaskId { get; set; }
 
         /// <summary> The start time. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> The end time. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Time elapsed for task. </summary>
         public TimeSpan? Duration { get; set; }

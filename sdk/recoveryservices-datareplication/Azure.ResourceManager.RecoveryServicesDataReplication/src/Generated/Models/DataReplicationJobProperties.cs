@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Initializes a new instance of <see cref="DataReplicationJobProperties"/>. </summary>
         /// <param name="displayName"> Gets or sets the friendly display name. </param>
         /// <param name="state"> Gets or sets the job state. </param>
-        /// <param name="startOn"> Gets or sets the start time. </param>
-        /// <param name="endOn"> Gets or sets the end time. </param>
+        /// <param name="startsOn"> Gets or sets the start time. </param>
+        /// <param name="endsOn"> Gets or sets the end time. </param>
         /// <param name="objectId"> Gets or sets the affected object Id. </param>
         /// <param name="objectName"> Gets or sets the affected object name. </param>
         /// <param name="objectInternalId"> Gets or sets the affected object internal Id. </param>
@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="customProperties"> Job model custom properties. </param>
         /// <param name="provisioningState"> Gets or sets the provisioning state of the job. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataReplicationJobProperties(string displayName, DataReplicationJobState? state, DateTimeOffset? startOn, DateTimeOffset? endOn, string objectId, string objectName, string objectInternalId, string objectInternalName, DataReplicationJobObjectType? objectType, string replicationProviderId, string sourceFabricProviderId, string targetFabricProviderId, IReadOnlyList<string> allowedActions, string activityId, IReadOnlyList<DataReplicationTask> tasks, IReadOnlyList<DataReplicationErrorInfo> errors, DataReplicationJobCustomProperties customProperties, DataReplicationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataReplicationJobProperties(string displayName, DataReplicationJobState? state, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string objectId, string objectName, string objectInternalId, string objectInternalName, DataReplicationJobObjectType? objectType, string replicationProviderId, string sourceFabricProviderId, string targetFabricProviderId, IReadOnlyList<string> allowedActions, string activityId, IReadOnlyList<DataReplicationTask> tasks, IReadOnlyList<DataReplicationErrorInfo> errors, DataReplicationJobCustomProperties customProperties, DataReplicationProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             State = state;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             ObjectId = objectId;
             ObjectName = objectName;
             ObjectInternalId = objectInternalId;
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public DataReplicationJobState? State { get; }
 
         /// <summary> Gets or sets the start time. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> Gets or sets the end time. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Gets or sets the affected object Id. </summary>
         public string ObjectId { get; }
