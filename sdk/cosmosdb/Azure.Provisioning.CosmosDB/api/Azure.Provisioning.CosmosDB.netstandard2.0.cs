@@ -3321,6 +3321,28 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepValue<string> RegionalDatabaseAccountInstanceId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ObsoleteAttribute("This type is retained only for backward compatibility and is not used by provisioning resources.")]
+    public partial class RestorableSqlContainerPropertiesResourceContainer : Azure.Provisioning.CosmosDB.CosmosDBSqlContainerResourceInfo
+    {
+        public RestorableSqlContainerPropertiesResourceContainer() { }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Rid { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Self { get { throw null; } }
+        public Azure.Provisioning.BicepValue<float> Timestamp { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is retained only for backward compatibility and is not used by provisioning resources.")]
+    public partial class RestorableSqlDatabasePropertiesResourceDatabase : Azure.Provisioning.CosmosDB.CosmosDBSqlDatabaseResourceInfo
+    {
+        public RestorableSqlDatabasePropertiesResourceDatabase() { }
+        public Azure.Provisioning.BicepValue<string> Colls { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Rid { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Self { get { throw null; } }
+        public Azure.Provisioning.BicepValue<float> Timestamp { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Users { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class RestoreParametersBase : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public RestoreParametersBase() { }
