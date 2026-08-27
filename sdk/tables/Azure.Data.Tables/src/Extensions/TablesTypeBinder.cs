@@ -161,20 +161,20 @@ namespace Azure.Data.Tables
             }
             else if (typeof(T).IsEnum)
             {
-                if (!Enum.IsDefined(memberInfo.Type, propertyValue as string))
+                if (!TryParseEnum(memberInfo.Type, propertyValue as string, out var parsedEnum))
                     return false;
 
-                value = (T)Enum.Parse(memberInfo.Type, propertyValue as string);
+                value = (T)parsedEnum;
             }
             else if (typeof(T).IsGenericType &&
                      typeof(T).GetGenericTypeDefinition() == typeof(Nullable<>) &&
                      typeof(T).GetGenericArguments() is { Length: 1 } arguments &&
                      arguments[0].IsEnum)
             {
-                if (!Enum.IsDefined(arguments[0], propertyValue as string))
+                if (!TryParseEnum(arguments[0], propertyValue as string, out var parsedEnum))
                     return false;
 
-                value = (T)Enum.Parse(arguments[0], propertyValue as string);
+                value = (T)parsedEnum;
             }
             else if (typeof(T) == typeof(ETag))
             {
@@ -182,6 +182,31 @@ namespace Azure.Data.Tables
             }
 
             return true;
+        }
+
+        private static bool TryParseEnum(Type enumType, string enumValue, out object parsedEnum)
+        {
+            parsedEnum = default;
+
+            if (!Enum.TryParse(enumType, enumValue, out parsedEnum))
+            {
+                return false;
+            }
+
+            if (enumValue?.Contains(',') == true)
+            {
+                foreach (var part in enumValue.Split(','))
+                {
+                    if (!Enum.IsDefined(enumType, part.Trim()))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            return Enum.IsDefined(enumType, enumValue);
         }
     }
 }

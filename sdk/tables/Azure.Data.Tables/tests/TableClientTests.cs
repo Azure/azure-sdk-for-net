@@ -398,6 +398,50 @@ namespace Azure.Data.Tables.Tests
         }
 
         [Test]
+        public void FlagsEnumPropertiesAreDeSerializedProperly()
+        {
+            var entity = new FlagsEnumEntity
+            {
+                PartitionKey = "partitionKey",
+                RowKey = "01",
+                Timestamp = DateTime.Now,
+                MyFlagsFoo = FlagsFoo.Read | FlagsFoo.Write,
+                MyNullableFlagsFoo = NullableFlagsFoo.Read | NullableFlagsFoo.Write,
+                ETag = ETag.All
+            };
+
+            var dictEntity = entity.ToOdataAnnotatedDictionary();
+            var deserializedEntity = dictEntity.ToTableEntity<FlagsEnumEntity>();
+
+            Assert.That(dictEntity["MyFlagsFoo"], Is.EqualTo("Read, Write"), "The entities should be equivalent");
+            Assert.That(dictEntity["MyNullableFlagsFoo"], Is.EqualTo("Read, Write"), "The entities should be equivalent");
+            Assert.That(deserializedEntity.MyFlagsFoo, Is.EqualTo(entity.MyFlagsFoo), "The entities should be equivalent");
+            Assert.That(deserializedEntity.MyNullableFlagsFoo, Is.EqualTo(entity.MyNullableFlagsFoo), "The entities should be equivalent");
+        }
+
+        [Test]
+        public void FlagsEnumPropertiesWithUnknownValuesAreNotDeserialized()
+        {
+            FlagsFoo foo = (FlagsFoo)8;
+            NullableFlagsFoo? nullableFoo = (NullableFlagsFoo)8;
+            var entity = new FlagsEnumEntity
+            {
+                PartitionKey = "partitionKey",
+                RowKey = "01",
+                Timestamp = DateTime.Now,
+                MyFlagsFoo = foo,
+                MyNullableFlagsFoo = nullableFoo,
+                ETag = ETag.All
+            };
+
+            var dictEntity = entity.ToOdataAnnotatedDictionary();
+            var deserializedEntity = dictEntity.ToTableEntity<FlagsEnumEntity>();
+
+            Assert.That(deserializedEntity.MyFlagsFoo, Is.EqualTo(default(FlagsFoo)), "The non-existing enum value should not be deserialized.");
+            Assert.That(deserializedEntity.MyNullableFlagsFoo, Is.Null, "The non-existing nullable enum value should not be deserialized.");
+        }
+
+        [Test]
         public void RoundTripContinuationTokenWithPartitionKeyAndRowKey()
         {
             var response = new MockResponse(200);
@@ -908,6 +952,34 @@ namespace Azure.Data.Tables.Tests
         {
             One,
             Two
+        }
+
+        public class FlagsEnumEntity : ITableEntity
+        {
+            public string PartitionKey { get; set; }
+            public string RowKey { get; set; }
+            public DateTimeOffset? Timestamp { get; set; }
+            public ETag ETag { get; set; }
+            public FlagsFoo MyFlagsFoo { get; set; }
+            public NullableFlagsFoo? MyNullableFlagsFoo { get; set; }
+        }
+
+        [Flags]
+        public enum FlagsFoo
+        {
+            None = 0,
+            Read = 1,
+            Write = 2,
+            Delete = 4
+        }
+
+        [Flags]
+        public enum NullableFlagsFoo
+        {
+            None = 0,
+            Read = 1,
+            Write = 2,
+            Delete = 4
         }
     }
 }
