@@ -133,8 +133,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             ResourceIdentifier billingAccountResourceId = default;
             ConditionalCreditsProvisioningState? provisioningState = default;
             ConditionalCreditStatus? status = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             string productCode = default;
             ResourceIdentifier benefitResourceId = default;
             ResourceIdentifier resourceId = default;
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endAt"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("productCode"u8))
@@ -271,8 +271,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 billingAccountResourceId,
                 provisioningState,
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 productCode,
                 benefitResourceId,
                 resourceId,
