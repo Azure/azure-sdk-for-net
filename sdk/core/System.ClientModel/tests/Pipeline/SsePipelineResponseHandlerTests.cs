@@ -551,7 +551,7 @@ public class SsePipelineResponseHandlerTests
             Encoding.UTF8.GetString(buffer, 0, read),
             "Events delivered before the drop are still returned.");
         Assert.ThrowsAsync<IOException>(
-            async () => await stream.ReadExactlyAsync(buffer),
+            async () => await ExpectNoFurtherReadAsync(stream, buffer),
             "A service that sends no id cannot resume, so the drop " +
             "must surface instead of being silently replayed.");
         Assert.AreEqual(
@@ -580,7 +580,7 @@ public class SsePipelineResponseHandlerTests
             "retry: 0\ndata: one\n\n",
             Encoding.UTF8.GetString(buffer, 0, read));
         Assert.Throws<IOException>(
-            () => stream.ReadExactly(buffer));
+            () => ExpectNoFurtherRead(stream, buffer));
         Assert.AreEqual(1, handler.RequestCount);
     }
 
@@ -643,7 +643,7 @@ public class SsePipelineResponseHandlerTests
             "retry: 0\nid: first\ndata: one\n\n",
             Encoding.UTF8.GetString(buffer, 0, read));
         Assert.ThrowsAsync<IOException>(
-            async () => await stream.ReadExactlyAsync(buffer),
+            async () => await ExpectNoFurtherReadAsync(stream, buffer),
             "A body too large to snapshot must keep the original " +
             "one-shot behaviour.");
         Assert.AreEqual(1, requestCount);
@@ -677,7 +677,7 @@ public class SsePipelineResponseHandlerTests
             "retry: 0\nid: first\ndata: one\n\n",
             Encoding.UTF8.GetString(buffer, 0, read));
         Assert.ThrowsAsync<IOException>(
-            async () => await stream.ReadExactlyAsync(buffer),
+            async () => await ExpectNoFurtherReadAsync(stream, buffer),
             "A body whose length cannot be measured must not be " +
             "snapshotted.");
         Assert.AreEqual(1, requestCount);
@@ -1399,6 +1399,27 @@ public class SsePipelineResponseHandlerTests
                 Location = new Uri(location)
             }
         };
+
+    // net462 has no Stream.ReadExactly, and CA2022 forbids discarding the
+    // count from a plain Read, so reads that are expected to fault assert
+    // on the count they would otherwise have ignored.
+    private static async Task ExpectNoFurtherReadAsync(
+        Stream stream,
+        byte[] buffer)
+    {
+        int read = await stream.ReadAsync(buffer, 0, buffer.Length);
+        Assert.Fail(
+            $"Expected the drop to surface, but read {read} bytes.");
+    }
+
+    private static void ExpectNoFurtherRead(
+        Stream stream,
+        byte[] buffer)
+    {
+        int read = stream.Read(buffer, 0, buffer.Length);
+        Assert.Fail(
+            $"Expected the drop to surface, but read {read} bytes.");
+    }
 
     private static async Task<string> ReadToEndAsync(
         Stream stream)
