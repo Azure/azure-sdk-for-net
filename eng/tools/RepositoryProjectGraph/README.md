@@ -67,6 +67,8 @@ Schema 4 intentionally collapses requested build configurations into each projec
 
 The artifact is a reachability model rather than a dump of restore inputs. It omits external-package edges after the NuGet phase has flattened any paths back to repository packages, merges direct and transitive repository-package reachability, and stores each evaluated input path once per project/TFM set. Restore-only metadata remains in the isolated intermediate records and package-resolution diagnostics instead of being repeated on every JSON edge.
 
+[`RepositoryProjectGraphRecord.cs`](RepositoryProjectGraphRecord.cs) owns the private line-record contract shared by the MSBuild graph and NuGet tasks. Its typed node, P2P, package, input, and derived-package records keep field ordering and validation out of task logic. The intermediate node and reference records contain only properties consumed by either NuGet resolution or the schema-4 artifact builder; NuGet path provenance is collapsed to one repository-package reachability record per project/TFM/package identity.
+
 MSBuild outer-build references connect to each concrete destination inner build. The source graph preserves all of those destination configurations rather than applying a repository-owned nearest-framework reduction. This can conservatively over-select configurations, but it cannot discard an edge that MSBuild exposed. NuGet's synthetic P2P metadata remains path-based and deduplicates those records by referenced project, leaving compatibility selection to restore.
 
 ### External package resolution

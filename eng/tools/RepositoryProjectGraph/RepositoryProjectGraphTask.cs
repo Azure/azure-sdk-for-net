@@ -313,6 +313,7 @@ public sealed class RepositoryProjectGraphTask : Task
     private static string GetDependencySignature(ProjectGraphNode node) => string.Join(
         '\n',
         GetDependencyRecords(node)
+            .Select(record => record.Serialize())
             .Distinct(StringComparer.Ordinal)
             .OrderBy(record => record, StringComparer.Ordinal));
 
@@ -355,18 +356,27 @@ public sealed class RepositoryProjectGraphTask : Task
                     writer,
                     ref recordCount,
                     emittedRecords,
-                    string.Join(
-                        "|",
-                        "GraphGeneration",
+                    RepositoryProjectGraphRecord.Format(
+                        RepositoryProjectGraphRecord.GraphGenerationKind,
                         string.Join(",", configurations.OrderBy(value => value, StringComparer.OrdinalIgnoreCase)),
-                        IncludeInputs));
+                        IncludeInputs.ToString()));
                 foreach (string project in declaredProjects)
                 {
-                    WriteRecord(writer, ref recordCount, emittedRecords, $"DeclaredProject|{project}");
+                    WriteRecord(
+                        writer,
+                        ref recordCount,
+                        emittedRecords,
+                        RepositoryProjectGraphRecord.Format(
+                            RepositoryProjectGraphRecord.DeclaredProjectKind,
+                            project));
                 }
                 foreach (string project in rootProjects)
                 {
-                    WriteRecord(writer, ref recordCount, emittedRecords, $"Root|{project}");
+                    WriteRecord(
+                        writer,
+                        ref recordCount,
+                        emittedRecords,
+                        RepositoryProjectGraphRecord.Format(RepositoryProjectGraphRecord.RootKind, project));
                 }
 
                 foreach (ProjectGraphNode node in nodes
@@ -396,9 +406,9 @@ public sealed class RepositoryProjectGraphTask : Task
         ProjectInstance project = node.ProjectInstance;
         string projectPath = GetProjectPath(project);
         string targetFramework = project.GetPropertyValue("TargetFramework");
-        foreach (string record in GetDependencyRecords(node))
+        foreach (RepositoryProjectGraphRecord record in GetDependencyRecords(node))
         {
-            WriteRecord(writer, ref recordCount, emittedRecords, record);
+            WriteRecord(writer, ref recordCount, emittedRecords, record.Serialize());
         }
 
         if (IncludeInputs)
@@ -407,7 +417,7 @@ public sealed class RepositoryProjectGraphTask : Task
         }
     }
 
-    private static IEnumerable<string> GetDependencyRecords(ProjectGraphNode node)
+    private static IEnumerable<RepositoryProjectGraphRecord> GetDependencyRecords(ProjectGraphNode node)
     {
         ProjectInstance project = node.ProjectInstance;
         string projectPath = GetProjectPath(project);
@@ -425,28 +435,24 @@ public sealed class RepositoryProjectGraphTask : Task
                 .TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
         }
 
-        yield return string.Join(
-            "|",
-            "Node",
+        yield return new RepositoryProjectGraphRecord.Node(
             projectPath,
             targetFramework,
             packageId,
-            project.GetPropertyValue("AssemblyName"),
             packageRoot,
             project.GetPropertyValue("IsClientLibrary"),
             project.GetPropertyValue("IsGeneratorLibrary"),
-            project.GetPropertyValue("IsTestProject"),
             project.GetPropertyValue("IsShippingLibrary"),
             project.GetPropertyValue("CentralPackageTransitivePinningEnabled"),
-            NormalizeRecordMetadata(project.GetPropertyValue("AssetTargetFallback")),
-            NormalizeRecordMetadata(project.GetPropertyValue("PackageTargetFallback")),
-            NormalizeRecordMetadata(project.GetPropertyValue("RuntimeIdentifierGraphPath")),
+            project.GetPropertyValue("AssetTargetFallback"),
+            project.GetPropertyValue("PackageTargetFallback"),
+            project.GetPropertyValue("RuntimeIdentifierGraphPath"),
             project.GetPropertyValue("TreatWarningsAsErrors"),
-            NormalizeRecordMetadata(project.GetPropertyValue("WarningsAsErrors")),
-            NormalizeRecordMetadata(project.GetPropertyValue("NoWarn")),
-            NormalizeRecordMetadata(project.GetPropertyValue("WarningsNotAsErrors")));
+            project.GetPropertyValue("WarningsAsErrors"),
+            project.GetPropertyValue("NoWarn"),
+            project.GetPropertyValue("WarningsNotAsErrors"));
 
-        var projectReferenceRecords = new HashSet<string>(StringComparer.Ordinal);
+        var projectReferenceRecords = new HashSet<RepositoryProjectGraphRecord.ProjectReference>();
         foreach (ProjectItemInstance reference in project.GetItems("ProjectReference"))
         {
             string referencePath = GetItemFullPath(project, reference);
@@ -458,14 +464,11 @@ public sealed class RepositoryProjectGraphTask : Task
 
             foreach (string referencedTargetFramework in referencedTargetFrameworks)
             {
-                string record = string.Join(
-                    "|",
-                    "ProjectReference",
+                var record = new RepositoryProjectGraphRecord.ProjectReference(
                     projectPath,
                     targetFramework,
                     referencePath,
                     reference.GetMetadataValue("ReferenceOutputAssembly"),
-                    reference.GetMetadataValue("OutputItemType"),
                     NormalizeAssetMetadata(reference.GetMetadataValue("PrivateAssets")),
                     NormalizeAssetMetadata(reference.GetMetadataValue("IncludeAssets")),
                     NormalizeAssetMetadata(reference.GetMetadataValue("ExcludeAssets")),
@@ -485,9 +488,7 @@ public sealed class RepositoryProjectGraphTask : Task
                 StringComparer.OrdinalIgnoreCase);
         foreach (ProjectItemInstance reference in project.GetItems("PackageReference"))
         {
-            yield return string.Join(
-                "|",
-                "PackageReference",
+            yield return new RepositoryProjectGraphRecord.PackageReference(
                 projectPath,
                 targetFramework,
                 reference.EvaluatedInclude,
@@ -548,7 +549,10 @@ public sealed class RepositoryProjectGraphTask : Task
                 writer,
                 ref recordCount,
                 emittedRecords,
-                $"Input|{projectPath}|{targetFramework}|Import|{Path.GetFullPath(import)}");
+                new RepositoryProjectGraphRecord.Input(
+                    projectPath,
+                    targetFramework,
+                    Path.GetFullPath(import)).Serialize());
         }
 
         foreach (string itemType in s_inputItemTypes)
@@ -559,7 +563,10 @@ public sealed class RepositoryProjectGraphTask : Task
                     writer,
                     ref recordCount,
                     emittedRecords,
-                    $"Input|{projectPath}|{targetFramework}|{itemType}|{GetItemFullPath(project, item)}");
+                    new RepositoryProjectGraphRecord.Input(
+                        projectPath,
+                        targetFramework,
+                        GetItemFullPath(project, item)).Serialize());
             }
         }
 
@@ -572,7 +579,10 @@ public sealed class RepositoryProjectGraphTask : Task
                     writer,
                     ref recordCount,
                     emittedRecords,
-                    $"Input|{projectPath}|{targetFramework}|ReferenceHintPath|{Path.GetFullPath(Path.Combine(project.Directory, hintPath))}");
+                    new RepositoryProjectGraphRecord.Input(
+                        projectPath,
+                        targetFramework,
+                        Path.GetFullPath(Path.Combine(project.Directory, hintPath))).Serialize());
             }
         }
     }
@@ -601,11 +611,6 @@ public sealed class RepositoryProjectGraphTask : Task
     }
 
     private static string NormalizeAssetMetadata(string value) => value.Replace(';', ',');
-
-    private static string NormalizeRecordMetadata(string value) => value
-        .Replace('|', '/')
-        .Replace('\r', ';')
-        .Replace('\n', ';');
 
     private static string GetPackageVersion(
         ProjectItemInstance reference,
