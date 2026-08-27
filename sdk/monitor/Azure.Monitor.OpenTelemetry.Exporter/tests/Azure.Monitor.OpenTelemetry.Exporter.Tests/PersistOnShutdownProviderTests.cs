@@ -484,9 +484,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
-        /// Asserts on telemetry still on disk. A drain that failed or was cut short leaves the blob
-        /// leased rather than deleted, and a leased blob is renamed to ".lock". Names are reported
-        /// because the count alone does not say whether an extra file is a second write or a lease.
+        /// Asserts on telemetry still on disk, counted per payload rather than per file. A drain
+        /// that failed or was cut short leaves the blob leased rather than deleted. Names are
+        /// reported so a failure says which payloads were found.
         /// </summary>
         private void AssertStoredPayloadCount(int expected)
         {
@@ -498,11 +498,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         private string[] StoredPayloadNames()
-            => Directory.GetFiles(_storageRoot, "*.blob", SearchOption.AllDirectories)
-                .Concat(Directory.GetFiles(_storageRoot, "*.lock", SearchOption.AllDirectories))
+            => Directory.GetFiles(_storageRoot, "*", SearchOption.AllDirectories)
                 .Select(path => Path.GetFileName(path) ?? path)
+                .Select(TrimLeaseSuffix)
+                .Where(name => name.EndsWith(".blob", StringComparison.Ordinal))
+                .Distinct(StringComparer.Ordinal)
                 .OrderBy(name => name, StringComparer.Ordinal)
                 .ToArray();
+
+        /// <summary>
+        /// Leasing renames "x.blob" to "x.blob@{expiry}.lock". Counting by the name underneath keeps
+        /// a drain that leases mid-enumeration from making one payload look like two.
+        /// </summary>
+        private static string TrimLeaseSuffix(string name)
+        {
+            var lease = name.IndexOf(".blob@", StringComparison.Ordinal);
+
+            return lease < 0 ? name : name.Substring(0, lease + ".blob".Length);
+        }
 
         private void EmitActivity()
         {
