@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             return new NetworkCloudAccessBridgePatch(accessBridgePatchSecurityRules is null ? default : new AccessBridgePatchProperties((accessBridgePatchSecurityRules ?? new ChangeTrackingList<NetworkCloudAccessBridgeSecurityRule>()).ToList(), default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="endsOn"> The end time of the operation. </param>
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="resultRef"> For actions that run commands or scripts, a reference to the location of the result. </param>
         /// <param name="resultUri"> For actions that run commands or scripts, the URL where the full output of the script output can be retrieved. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="startsOn"> The start time of the operation. </param>
         /// <param name="status"> Operation status. </param>
         /// <returns> A new <see cref="Models.NetworkCloudOperationStatusResult"/> instance for mocking. </returns>
-        public static NetworkCloudOperationStatusResult NetworkCloudOperationStatusResult(DateTimeOffset? endOn = default, ResponseError error = default, ResourceIdentifier id = default, string name = default, IEnumerable<NetworkCloudOperationStatusResult> operations = default, float? percentComplete = default, string exitCode = default, string outputHead = default, Uri resultRef = default, Uri resultUri = default, ResourceIdentifier resourceId = default, DateTimeOffset? startOn = default, string status = default)
+        public static NetworkCloudOperationStatusResult NetworkCloudOperationStatusResult(DateTimeOffset? endsOn = default, ResponseError error = default, ResourceIdentifier id = default, string name = default, IEnumerable<NetworkCloudOperationStatusResult> operations = default, float? percentComplete = default, string exitCode = default, string outputHead = default, Uri resultRef = default, Uri resultUri = default, ResourceIdentifier resourceId = default, DateTimeOffset? startsOn = default, string status = default)
         {
             operations ??= new ChangeTrackingList<NetworkCloudOperationStatusResult>();
 
             return new NetworkCloudOperationStatusResult(
-                endOn,
+                endsOn,
                 error,
                 id,
                 name,
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 percentComplete,
                 exitCode is null && outputHead is null && resultRef is null && resultUri is null ? default : new OperationStatusResultProperties(exitCode, outputHead, resultRef, resultUri, default),
                 resourceId,
-                startOn,
+                startsOn,
                 status,
                 default);
         }
@@ -3435,7 +3435,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static NetworkCloudOperationStatusResult NetworkCloudOperationStatusResult(DateTimeOffset? endOn = default, ResponseError error = default, ResourceIdentifier id = default, string name = default, IEnumerable<NetworkCloudOperationStatusResult> operations = default, float? percentComplete = default, ResourceIdentifier resourceId = default, DateTimeOffset? startOn = default, string status = default, string exitCode = default, string outputHead = default, Uri resultRef = default, Uri resultUri = default)
         {
             return new NetworkCloudOperationStatusResult(
-                endOn,
+                default,
                 error,
                 id,
                 name,
@@ -3443,7 +3443,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 percentComplete,
                 exitCode is null && outputHead is null && resultRef is null && resultUri is null ? default : new OperationStatusResultProperties(exitCode, outputHead, resultRef, resultUri, default),
                 resourceId,
-                startOn,
+                default,
                 status,
                 default);
         }

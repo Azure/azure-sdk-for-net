@@ -399,8 +399,8 @@ namespace Azure.ResourceManager.NetApp.Models
                 remoteVolumeResourceId,
                 remoteVolumeRegion,
                 mirrorState,
-                replicationCreationOn,
-                replicationDeletionOn,
+                default,
+                default,
                 default);
         }
 
@@ -1743,33 +1743,6 @@ namespace Azure.ResourceManager.NetApp.Models
                 resourceType,
                 systemData,
                 properties,
-                default);
-        }
-
-        /// <param name="provisioningState"> Azure lifecycle management. </param>
-        /// <param name="size"> Size of backup in bytes. </param>
-        /// <param name="label"> Label for backup. </param>
-        /// <param name="backupType"> Type of backup Manual or Scheduled. </param>
-        /// <param name="failureReason"> Failure reason. </param>
-        /// <param name="elasticVolumeResourceId"> ResourceId used to identify the Elastic Volume. </param>
-        /// <param name="snapshotUsage"> Manual backup using an already existing snapshot. This will always be CreateNewSnapshot for scheduled backups and UseExistingSnapshot/CreateNewSnapshot for manual backups. </param>
-        /// <param name="elasticSnapshotResourceId"> ResourceId used to identify the elastic snapshot resource. This is required when an existing snapshot needs to be used for creating a manual backup. </param>
-        /// <param name="elasticBackupPolicyResourceId"> ResourceId used to identify the elastic backup policy. </param>
-        /// <param name="volumeSize"> Specifies if the backup is for a large volume. </param>
-        /// <returns> A new <see cref="Models.ElasticBackupProperties"/> instance for mocking. </returns>
-        public static ElasticBackupProperties ElasticBackupProperties(NetAppProvisioningState? provisioningState = default, long? size = default, string label = default, ElasticBackupType? backupType = default, string failureReason = default, ResourceIdentifier elasticVolumeResourceId = default, ElasticBackupSnapshotUsage? snapshotUsage = default, ResourceIdentifier elasticSnapshotResourceId = default, ResourceIdentifier elasticBackupPolicyResourceId = default, ElasticBackupVolumeSize? volumeSize = default)
-        {
-            return new ElasticBackupProperties(
-                provisioningState,
-                size,
-                label,
-                backupType,
-                failureReason,
-                elasticVolumeResourceId,
-                snapshotUsage,
-                elasticSnapshotResourceId,
-                elasticBackupPolicyResourceId,
-                volumeSize,
                 default);
         }
 

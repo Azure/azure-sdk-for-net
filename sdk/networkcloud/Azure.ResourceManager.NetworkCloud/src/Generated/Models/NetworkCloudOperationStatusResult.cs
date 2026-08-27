@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkCloudOperationStatusResult"/>. </summary>
-        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="endsOn"> The end time of the operation. </param>
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="percentComplete"> Percent of the operation that is complete. </param>
         /// <param name="properties"> The additional properties of the operation status result. </param>
         /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="startsOn"> The start time of the operation. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkCloudOperationStatusResult(DateTimeOffset? endOn, ResponseError error, ResourceIdentifier id, string name, IReadOnlyList<NetworkCloudOperationStatusResult> operations, float? percentComplete, OperationStatusResultProperties properties, ResourceIdentifier resourceId, DateTimeOffset? startOn, string status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NetworkCloudOperationStatusResult(DateTimeOffset? endsOn, ResponseError error, ResourceIdentifier id, string name, IReadOnlyList<NetworkCloudOperationStatusResult> operations, float? percentComplete, OperationStatusResultProperties properties, ResourceIdentifier resourceId, DateTimeOffset? startsOn, string status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            EndOn = endOn;
+            EndsOn = endsOn;
             Error = error;
             Id = id;
             Name = name;
@@ -49,13 +49,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             PercentComplete = percentComplete;
             Properties = properties;
             ResourceId = resourceId;
-            StartOn = startOn;
+            StartsOn = startsOn;
             Status = status;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The end time of the operation. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> If present, details of the operation error. </summary>
         public ResponseError Error { get; }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public ResourceIdentifier ResourceId { get; }
 
         /// <summary> The start time of the operation. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> Operation status. </summary>
         public string Status { get; }

@@ -54,11 +54,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         }
 
         /// <summary> The start time for a maintenance. </summary>
-        public DateTimeOffset? MaintenanceStartOn
+        public DateTimeOffset? MaintenanceStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.MaintenanceStartOn;
+                return Properties is null ? default : Properties.MaintenanceStartsOn;
             }
             set
             {
@@ -66,34 +66,34 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
                 {
                     Properties = new MaintenanceProperties();
                 }
-                Properties.MaintenanceStartOn = value;
+                Properties.MaintenanceStartsOn = value;
             }
         }
 
         /// <summary> The end time for a maintenance. </summary>
-        public DateTimeOffset? MaintenanceEndOn
+        public DateTimeOffset? MaintenanceEndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.MaintenanceEndOn;
+                return Properties is null ? default : Properties.MaintenanceEndsOn;
             }
         }
 
         /// <summary> The start time for a maintenance execution. </summary>
-        public DateTimeOffset? MaintenanceExecutionStartOn
+        public DateTimeOffset? MaintenanceExecutionStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.MaintenanceExecutionStartOn;
+                return Properties is null ? default : Properties.MaintenanceExecutionStartsOn;
             }
         }
 
         /// <summary> The end time for a maintenance execution. </summary>
-        public DateTimeOffset? MaintenanceExecutionEndOn
+        public DateTimeOffset? MaintenanceExecutionEndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.MaintenanceExecutionEndOn;
+                return Properties is null ? default : Properties.MaintenanceExecutionEndsOn;
             }
         }
 

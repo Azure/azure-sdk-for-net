@@ -372,8 +372,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 datasourceSizeInBytes is null && dataTransferredInBytes is null && backupMetadata is null ? default : new BackupAndExportResponseProperties(datasourceSizeInBytes, dataTransferredInBytes, backupMetadata, default),
                 error,
                 status,
-                startOn,
-                endOn,
+                default,
+                default,
                 percentComplete,
                 default);
         }
@@ -710,13 +710,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 name,
                 resourceType,
                 systemData,
-                maintenanceType is null && maintenanceState is null && maintenanceStartOn is null && maintenanceEndOn is null && maintenanceExecutionStartOn is null && maintenanceExecutionEndOn is null && maintenanceAvailableScheduleMinOn is null && maintenanceAvailableScheduleMaxOn is null && maintenanceTitle is null && maintenanceDescription is null ? default : new MaintenanceProperties(
+                maintenanceType is null && maintenanceState is null && maintenanceAvailableScheduleMinOn is null && maintenanceAvailableScheduleMaxOn is null && maintenanceTitle is null && maintenanceDescription is null ? default : new MaintenanceProperties(
                     maintenanceType,
                     maintenanceState,
-                    maintenanceStartOn,
-                    maintenanceEndOn,
-                    maintenanceExecutionStartOn,
-                    maintenanceExecutionEndOn,
+                    default,
+                    default,
+                    default,
+                    default,
                     maintenanceAvailableScheduleMinOn,
                     maintenanceAvailableScheduleMaxOn,
                     maintenanceTitle,
@@ -730,7 +730,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.MySqlFlexibleServerMaintenancePatch"/> instance for mocking. </returns>
         public static MySqlFlexibleServerMaintenancePatch MySqlFlexibleServerMaintenancePatch(DateTimeOffset? maintenanceStartOn = default)
         {
-            return new MySqlFlexibleServerMaintenancePatch(maintenanceStartOn is null ? default : new MaintenancePropertiesForUpdate(maintenanceStartOn, default), default);
+            return new MySqlFlexibleServerMaintenancePatch(default, default);
         }
 
         /// <param name="zone"> zone name. </param>
