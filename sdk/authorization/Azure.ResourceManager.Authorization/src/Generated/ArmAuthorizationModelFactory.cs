@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Authorization.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmAuthorizationModelFactory
     {
+        /// <summary> An attribute namespace resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleManagementAttributeNamespaceData(id, name, resourceType, systemData, default);
         }
 
+        /// <summary> Request body for creating an attribute namespace. </summary>
         /// <param name="namespaceOwnerPrincipalId"> The principal ID of the namespace owner. </param>
         /// <returns> A new <see cref="Models.RoleManagementAttributeNamespaceCreateContent"/> instance for mocking. </returns>
         public static RoleManagementAttributeNamespaceCreateContent RoleManagementAttributeNamespaceCreateContent(string namespaceOwnerPrincipalId = default)
@@ -40,8 +42,8 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="displayName"> The display name for the history definition. </param>
-        /// <param name="reviewHistoryPeriodStartOn"> Date time used when selecting review data, all reviews included in data start on or after this date. For use only with one-time/non-recurring reports. </param>
-        /// <param name="reviewHistoryPeriodEndOn"> Date time used when selecting review data, all reviews included in data end on or before this date. For use only with one-time/non-recurring reports. </param>
+        /// <param name="reviewHistoryPeriodStartsOn"> Date time used when selecting review data, all reviews included in data start on or after this date. For use only with one-time/non-recurring reports. </param>
+        /// <param name="reviewHistoryPeriodEndsOn"> Date time used when selecting review data, all reviews included in data end on or before this date. For use only with one-time/non-recurring reports. </param>
         /// <param name="decisions"> Collection of review decisions which the history data should be filtered on. For example if Approve and Deny are supplied the data will only contain review results in which the decision maker approved or denied a review request. </param>
         /// <param name="status"> This read-only field specifies the of the requested review history data. This is either requested, in-progress, done or error. </param>
         /// <param name="createdOn"> Date time when history definition was created. </param>
@@ -54,17 +56,17 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="pattern"> Access Review History Definition recurrence settings. </param>
         /// <param name="range"> Access Review History Definition recurrence settings. </param>
         /// <returns> A new <see cref="Authorization.AccessReviewHistoryDefinitionData"/> instance for mocking. </returns>
-        public static AccessReviewHistoryDefinitionData AccessReviewHistoryDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, DateTimeOffset? reviewHistoryPeriodStartOn = default, DateTimeOffset? reviewHistoryPeriodEndOn = default, IEnumerable<AccessReviewResult> decisions = default, AccessReviewHistoryDefinitionStatus? status = default, DateTimeOffset? createdOn = default, IEnumerable<AccessReviewScope> scopes = default, IEnumerable<AccessReviewHistoryInstance> instances = default, string principalId = default, AccessReviewActorIdentityType? principalType = default, string principalName = default, string userPrincipalName = default, AccessReviewRecurrencePattern pattern = default, AccessReviewRecurrenceRange range = default)
+        public static AccessReviewHistoryDefinitionData AccessReviewHistoryDefinitionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, DateTimeOffset? reviewHistoryPeriodStartsOn = default, DateTimeOffset? reviewHistoryPeriodEndsOn = default, IEnumerable<AccessReviewResult> decisions = default, AccessReviewHistoryDefinitionStatus? status = default, DateTimeOffset? createdOn = default, IEnumerable<AccessReviewScope> scopes = default, IEnumerable<AccessReviewHistoryInstance> instances = default, string principalId = default, AccessReviewActorIdentityType? principalType = default, string principalName = default, string userPrincipalName = default, AccessReviewRecurrencePattern pattern = default, AccessReviewRecurrenceRange range = default)
         {
             return new AccessReviewHistoryDefinitionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                displayName is null && reviewHistoryPeriodStartOn is null && reviewHistoryPeriodEndOn is null && decisions is null && status is null && createdOn is null && principalId is null && principalType is null && principalName is null && userPrincipalName is null && scopes is null && pattern is null && range is null && instances is null ? default : new AccessReviewHistoryDefinitionProperties(
+                displayName is null && reviewHistoryPeriodStartsOn is null && reviewHistoryPeriodEndsOn is null && decisions is null && status is null && createdOn is null && principalId is null && principalType is null && principalName is null && userPrincipalName is null && scopes is null && pattern is null && range is null && instances is null ? default : new AccessReviewHistoryDefinitionProperties(
                     displayName,
-                    reviewHistoryPeriodStartOn,
-                    reviewHistoryPeriodEndOn,
+                    reviewHistoryPeriodStartsOn,
+                    reviewHistoryPeriodEndsOn,
                     (decisions ?? new ChangeTrackingList<AccessReviewResult>()).ToList(),
                     status,
                     createdOn,
@@ -77,8 +79,8 @@ namespace Azure.ResourceManager.Authorization.Models
         }
 
         /// <param name="displayName"> The display name for the history definition. </param>
-        /// <param name="reviewHistoryPeriodStartOn"> Date time used when selecting review data, all reviews included in data start on or after this date. For use only with one-time/non-recurring reports. </param>
-        /// <param name="reviewHistoryPeriodEndOn"> Date time used when selecting review data, all reviews included in data end on or before this date. For use only with one-time/non-recurring reports. </param>
+        /// <param name="reviewHistoryPeriodStartsOn"> Date time used when selecting review data, all reviews included in data start on or after this date. For use only with one-time/non-recurring reports. </param>
+        /// <param name="reviewHistoryPeriodEndsOn"> Date time used when selecting review data, all reviews included in data end on or before this date. For use only with one-time/non-recurring reports. </param>
         /// <param name="decisions"> Collection of review decisions which the history data should be filtered on. For example if Approve and Deny are supplied the data will only contain review results in which the decision maker approved or denied a review request. </param>
         /// <param name="status"> This read-only field specifies the of the requested review history data. This is either requested, in-progress, done or error. </param>
         /// <param name="createdOn"> Date time when history definition was created. </param>
@@ -91,7 +93,7 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="range"> Access Review History Definition recurrence settings. </param>
         /// <param name="instances"> Set of access review history instances for this history definition. </param>
         /// <returns> A new <see cref="Models.AccessReviewHistoryDefinitionProperties"/> instance for mocking. </returns>
-        public static AccessReviewHistoryDefinitionProperties AccessReviewHistoryDefinitionProperties(string displayName = default, DateTimeOffset? reviewHistoryPeriodStartOn = default, DateTimeOffset? reviewHistoryPeriodEndOn = default, IEnumerable<AccessReviewResult> decisions = default, AccessReviewHistoryDefinitionStatus? status = default, DateTimeOffset? createdOn = default, string principalId = default, AccessReviewActorIdentityType? principalType = default, string principalName = default, string userPrincipalName = default, IEnumerable<AccessReviewScope> scopes = default, AccessReviewRecurrencePattern pattern = default, AccessReviewRecurrenceRange range = default, IEnumerable<AccessReviewHistoryInstance> instances = default)
+        public static AccessReviewHistoryDefinitionProperties AccessReviewHistoryDefinitionProperties(string displayName = default, DateTimeOffset? reviewHistoryPeriodStartsOn = default, DateTimeOffset? reviewHistoryPeriodEndsOn = default, IEnumerable<AccessReviewResult> decisions = default, AccessReviewHistoryDefinitionStatus? status = default, DateTimeOffset? createdOn = default, string principalId = default, AccessReviewActorIdentityType? principalType = default, string principalName = default, string userPrincipalName = default, IEnumerable<AccessReviewScope> scopes = default, AccessReviewRecurrencePattern pattern = default, AccessReviewRecurrenceRange range = default, IEnumerable<AccessReviewHistoryInstance> instances = default)
         {
             decisions ??= new ChangeTrackingList<AccessReviewResult>();
             scopes ??= new ChangeTrackingList<AccessReviewScope>();
@@ -99,8 +101,8 @@ namespace Azure.ResourceManager.Authorization.Models
 
             return new AccessReviewHistoryDefinitionProperties(
                 displayName,
-                reviewHistoryPeriodStartOn,
-                reviewHistoryPeriodEndOn,
+                reviewHistoryPeriodStartsOn,
+                reviewHistoryPeriodEndsOn,
                 (decisions ?? new ChangeTrackingList<AccessReviewResult>()).ToList(),
                 status,
                 createdOn,
@@ -111,6 +113,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
+        /// <summary> Details of the actor identity. </summary>
         /// <param name="principalId"> The identity id. </param>
         /// <param name="principalType"> The identity type : user/servicePrincipal. </param>
         /// <param name="principalName"> The identity display name. </param>
@@ -121,6 +124,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new AccessReviewActorIdentity(principalId, principalType, principalName, userPrincipalName, default);
         }
 
+        /// <summary> Descriptor for what needs to be reviewed. </summary>
         /// <param name="resourceId"> ResourceId in which this review is getting created. </param>
         /// <param name="roleDefinitionId"> This is used to indicate the role being reviewed. </param>
         /// <param name="principalType"> The identity type user/servicePrincipal to review. </param>
@@ -148,6 +152,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
+        /// <summary> Recurrence Pattern of an Access Review Schedule Definition. </summary>
         /// <param name="type"> The recurrence type : weekly, monthly, etc. </param>
         /// <param name="interval"> The interval for recurrence. For a quarterly review, the interval is 3 for type : absoluteMonthly. </param>
         /// <returns> A new <see cref="Models.AccessReviewRecurrencePattern"/> instance for mocking. </returns>
@@ -156,21 +161,22 @@ namespace Azure.ResourceManager.Authorization.Models
             return new AccessReviewRecurrencePattern(@type, interval, default);
         }
 
+        /// <summary> Recurrence Range of an Access Review Schedule Definition. </summary>
         /// <param name="type"> The recurrence range type. The possible values are: endDate, noEnd, numbered. </param>
         /// <param name="numberOfOccurrences"> The number of times to repeat the access review. Required and must be positive if type is numbered. </param>
-        /// <param name="startOn"> The DateTime when the review is scheduled to be start. This could be a date in the future. Required on create. </param>
-        /// <param name="endOn"> The DateTime when the review is scheduled to end. Required if type is endDate. </param>
+        /// <param name="startsOn"> The DateTime when the review is scheduled to be start. This could be a date in the future. Required on create. </param>
+        /// <param name="endsOn"> The DateTime when the review is scheduled to end. Required if type is endDate. </param>
         /// <returns> A new <see cref="Models.AccessReviewRecurrenceRange"/> instance for mocking. </returns>
-        public static AccessReviewRecurrenceRange AccessReviewRecurrenceRange(AccessReviewRecurrenceRangeType? @type = default, int? numberOfOccurrences = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default)
+        public static AccessReviewRecurrenceRange AccessReviewRecurrenceRange(AccessReviewRecurrenceRangeType? @type = default, int? numberOfOccurrences = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default)
         {
-            return new AccessReviewRecurrenceRange(@type, numberOfOccurrences, startOn, endOn, default);
+            return new AccessReviewRecurrenceRange(@type, numberOfOccurrences, startsOn, endsOn, default);
         }
 
         /// <param name="id"> The access review history definition instance id. </param>
         /// <param name="name"> The access review history definition instance unique id. </param>
         /// <param name="type"> The resource type. </param>
-        /// <param name="reviewHistoryPeriodStartOn"> Date time used when selecting review data, all reviews included in data start on or after this date. For use only with one-time/non-recurring reports. </param>
-        /// <param name="reviewHistoryPeriodEndOn"> Date time used when selecting review data, all reviews included in data end on or before this date. For use only with one-time/non-recurring reports. </param>
+        /// <param name="reviewHistoryPeriodStartsOn"> Date time used when selecting review data, all reviews included in data start on or after this date. For use only with one-time/non-recurring reports. </param>
+        /// <param name="reviewHistoryPeriodEndsOn"> Date time used when selecting review data, all reviews included in data end on or before this date. For use only with one-time/non-recurring reports. </param>
         /// <param name="displayName"> The display name for the parent history definition. </param>
         /// <param name="status"> Status of the requested review history instance data. This is either requested, in-progress, done or error. The state transitions are as follows - Requested -&gt; InProgress -&gt; Done -&gt; Expired. </param>
         /// <param name="runOn"> Date time when the history data report is scheduled to be generated. </param>
@@ -178,11 +184,11 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="downloadUri"> Uri which can be used to retrieve review history data. To generate this Uri, generateDownloadUri() must be called for a specific accessReviewHistoryDefinitionInstance. The link expires after a 24 hour period. Callers can see the expiration date time by looking at the 'se' parameter in the generated uri. </param>
         /// <param name="expiration"> Date time when history data report expires and the associated data is deleted. </param>
         /// <returns> A new <see cref="Models.AccessReviewHistoryInstance"/> instance for mocking. </returns>
-        public static AccessReviewHistoryInstance AccessReviewHistoryInstance(string id = default, string name = default, string @type = default, DateTimeOffset? reviewHistoryPeriodStartOn = default, DateTimeOffset? reviewHistoryPeriodEndOn = default, string displayName = default, AccessReviewHistoryDefinitionStatus? status = default, DateTimeOffset? runOn = default, DateTimeOffset? fulfilledOn = default, string downloadUri = default, DateTimeOffset? expiration = default)
+        public static AccessReviewHistoryInstance AccessReviewHistoryInstance(string id = default, string name = default, string @type = default, DateTimeOffset? reviewHistoryPeriodStartsOn = default, DateTimeOffset? reviewHistoryPeriodEndsOn = default, string displayName = default, AccessReviewHistoryDefinitionStatus? status = default, DateTimeOffset? runOn = default, DateTimeOffset? fulfilledOn = default, string downloadUri = default, DateTimeOffset? expiration = default)
         {
-            return new AccessReviewHistoryInstance(id, name, @type, reviewHistoryPeriodStartOn is null && reviewHistoryPeriodEndOn is null && displayName is null && status is null && runOn is null && fulfilledOn is null && downloadUri is null && expiration is null ? default : new AccessReviewHistoryInstanceProperties(
-                reviewHistoryPeriodStartOn,
-                reviewHistoryPeriodEndOn,
+            return new AccessReviewHistoryInstance(id, name, @type, reviewHistoryPeriodStartsOn is null && reviewHistoryPeriodEndsOn is null && displayName is null && status is null && runOn is null && fulfilledOn is null && downloadUri is null && expiration is null ? default : new AccessReviewHistoryInstanceProperties(
+                reviewHistoryPeriodStartsOn,
+                reviewHistoryPeriodEndsOn,
                 displayName,
                 status,
                 runOn,
@@ -340,6 +346,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
+        /// <summary> Descriptor for what needs to be reviewed. </summary>
         /// <param name="principalId"> The id of the reviewer(user/servicePrincipal). </param>
         /// <param name="principalType"> The identity type : user/servicePrincipal. </param>
         /// <returns> A new <see cref="Models.AccessReviewReviewer"/> instance for mocking. </returns>
@@ -353,23 +360,23 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="status"> This read-only field specifies the status of an access review instance. </param>
-        /// <param name="startOn"> The DateTime when the review instance is scheduled to be start. </param>
-        /// <param name="endOn"> The DateTime when the review instance is scheduled to end. </param>
+        /// <param name="startsOn"> The DateTime when the review instance is scheduled to be start. </param>
+        /// <param name="endsOn"> The DateTime when the review instance is scheduled to end. </param>
         /// <param name="reviewers"> This is the collection of reviewers. </param>
         /// <param name="backupReviewers"> This is the collection of backup reviewers. </param>
         /// <param name="reviewersType"> This field specifies the type of reviewers for a review. Usually for a review, reviewers are explicitly assigned. However, in some cases, the reviewers may not be assigned and instead be chosen dynamically. For example managers review or self review. </param>
         /// <returns> A new <see cref="Authorization.AccessReviewInstanceData"/> instance for mocking. </returns>
-        public static AccessReviewInstanceData AccessReviewInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AccessReviewInstanceStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<AccessReviewReviewer> reviewers = default, IEnumerable<AccessReviewReviewer> backupReviewers = default, AccessReviewInstanceReviewersType? reviewersType = default)
+        public static AccessReviewInstanceData AccessReviewInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AccessReviewInstanceStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<AccessReviewReviewer> reviewers = default, IEnumerable<AccessReviewReviewer> backupReviewers = default, AccessReviewInstanceReviewersType? reviewersType = default)
         {
             return new AccessReviewInstanceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                status is null && startOn is null && endOn is null && reviewers is null && backupReviewers is null && reviewersType is null ? default : new AccessReviewInstanceProperties(
+                status is null && startsOn is null && endsOn is null && reviewers is null && backupReviewers is null && reviewersType is null ? default : new AccessReviewInstanceProperties(
                     status,
-                    startOn,
-                    endOn,
+                    startsOn,
+                    endsOn,
                     (reviewers ?? new ChangeTrackingList<AccessReviewReviewer>()).ToList(),
                     (backupReviewers ?? new ChangeTrackingList<AccessReviewReviewer>()).ToList(),
                     reviewersType,
@@ -377,22 +384,23 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
+        /// <summary> Access Review Instance properties. </summary>
         /// <param name="status"> This read-only field specifies the status of an access review instance. </param>
-        /// <param name="startOn"> The DateTime when the review instance is scheduled to be start. </param>
-        /// <param name="endOn"> The DateTime when the review instance is scheduled to end. </param>
+        /// <param name="startsOn"> The DateTime when the review instance is scheduled to be start. </param>
+        /// <param name="endsOn"> The DateTime when the review instance is scheduled to end. </param>
         /// <param name="reviewers"> This is the collection of reviewers. </param>
         /// <param name="backupReviewers"> This is the collection of backup reviewers. </param>
         /// <param name="reviewersType"> This field specifies the type of reviewers for a review. Usually for a review, reviewers are explicitly assigned. However, in some cases, the reviewers may not be assigned and instead be chosen dynamically. For example managers review or self review. </param>
         /// <returns> A new <see cref="Models.AccessReviewInstanceProperties"/> instance for mocking. </returns>
-        public static AccessReviewInstanceProperties AccessReviewInstanceProperties(AccessReviewInstanceStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<AccessReviewReviewer> reviewers = default, IEnumerable<AccessReviewReviewer> backupReviewers = default, AccessReviewInstanceReviewersType? reviewersType = default)
+        public static AccessReviewInstanceProperties AccessReviewInstanceProperties(AccessReviewInstanceStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<AccessReviewReviewer> reviewers = default, IEnumerable<AccessReviewReviewer> backupReviewers = default, AccessReviewInstanceReviewersType? reviewersType = default)
         {
             reviewers ??= new ChangeTrackingList<AccessReviewReviewer>();
             backupReviewers ??= new ChangeTrackingList<AccessReviewReviewer>();
 
             return new AccessReviewInstanceProperties(
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 (reviewers ?? new ChangeTrackingList<AccessReviewReviewer>()).ToList(),
                 (backupReviewers ?? new ChangeTrackingList<AccessReviewReviewer>()).ToList(),
                 reviewersType,
@@ -465,7 +473,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 name,
                 resourceType,
                 systemData,
-                scope is null && roleDefinitionId is null && principalId is null && principalType is null && roleAssignmentScheduleRequestId is null && linkedRoleEligibilityScheduleId is null && assignmentType is null && memberType is null && status is null && startOn is null && endOn is null && condition is null && conditionVersion is null && createdOn is null && updatedOn is null && expandedProperties is null ? default : new RoleAssignmentScheduleProperties(
+                scope is null && roleDefinitionId is null && principalId is null && principalType is null && roleAssignmentScheduleRequestId is null && linkedRoleEligibilityScheduleId is null && assignmentType is null && memberType is null && status is null && condition is null && conditionVersion is null && createdOn is null && updatedOn is null && expandedProperties is null ? default : new RoleAssignmentScheduleProperties(
                     scope,
                     roleDefinitionId,
                     principalId,
@@ -475,8 +483,8 @@ namespace Azure.ResourceManager.Authorization.Models
                     assignmentType,
                     memberType,
                     status,
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     condition,
                     conditionVersion,
                     createdOn,
@@ -531,7 +539,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 name,
                 resourceType,
                 systemData,
-                scope is null && roleDefinitionId is null && principalId is null && principalType is null && roleAssignmentScheduleId is null && originRoleAssignmentId is null && status is null && startOn is null && endOn is null && linkedRoleEligibilityScheduleId is null && linkedRoleEligibilityScheduleInstanceId is null && assignmentType is null && memberType is null && condition is null && conditionVersion is null && createdOn is null && expandedProperties is null ? default : new RoleAssignmentScheduleInstanceProperties(
+                scope is null && roleDefinitionId is null && principalId is null && principalType is null && roleAssignmentScheduleId is null && originRoleAssignmentId is null && status is null && linkedRoleEligibilityScheduleId is null && linkedRoleEligibilityScheduleInstanceId is null && assignmentType is null && memberType is null && condition is null && conditionVersion is null && createdOn is null && expandedProperties is null ? default : new RoleAssignmentScheduleInstanceProperties(
                     scope,
                     roleDefinitionId,
                     principalId,
@@ -539,8 +547,8 @@ namespace Azure.ResourceManager.Authorization.Models
                     roleAssignmentScheduleId,
                     originRoleAssignmentId,
                     status,
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     linkedRoleEligibilityScheduleId,
                     linkedRoleEligibilityScheduleInstanceId,
                     assignmentType,
@@ -586,7 +594,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 name,
                 resourceType,
                 systemData,
-                scope is null && roleDefinitionId is null && principalId is null && principalType is null && requestType is null && status is null && approvalId is null && targetRoleAssignmentScheduleId is null && targetRoleAssignmentScheduleInstanceId is null && startOn is null && expirationType is null && endOn is null && duration is null && linkedRoleEligibilityScheduleId is null && justification is null && ticketInfo is null && condition is null && conditionVersion is null && createdOn is null && requestorId is null && expandedProperties is null ? default : new RoleAssignmentScheduleRequestProperties(
+                scope is null && roleDefinitionId is null && principalId is null && principalType is null && requestType is null && status is null && approvalId is null && targetRoleAssignmentScheduleId is null && targetRoleAssignmentScheduleInstanceId is null && expirationType is null && duration is null && linkedRoleEligibilityScheduleId is null && justification is null && ticketInfo is null && condition is null && conditionVersion is null && createdOn is null && requestorId is null && expandedProperties is null ? default : new RoleAssignmentScheduleRequestProperties(
                     scope,
                     roleDefinitionId,
                     principalId.GetValueOrDefault(),
@@ -596,7 +604,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     approvalId,
                     targetRoleAssignmentScheduleId,
                     targetRoleAssignmentScheduleInstanceId,
-                    new RoleAssignmentScheduleRequestPropertiesScheduleInfo(startOn, new RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endOn, duration, default), default),
+                    new RoleAssignmentScheduleRequestPropertiesScheduleInfo(default, new RoleAssignmentScheduleRequestPropertiesScheduleInfoExpiration(expirationType, default, duration, default), default),
                     linkedRoleEligibilityScheduleId,
                     justification,
                     ticketInfo,
@@ -609,6 +617,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
+        /// <summary> Ticket Info of the role assignment. </summary>
         /// <param name="ticketNumber"> Ticket number for the role assignment. </param>
         /// <param name="ticketSystem"> Ticket system name for the role assignment. </param>
         /// <returns> A new <see cref="Models.RoleAssignmentScheduleTicketInfo"/> instance for mocking. </returns>
@@ -643,7 +652,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 name,
                 resourceType,
                 systemData,
-                scope is null && roleDefinitionId is null && principalId is null && principalType is null && roleEligibilityScheduleRequestId is null && memberType is null && status is null && startOn is null && endOn is null && condition is null && conditionVersion is null && createdOn is null && updatedOn is null && expandedProperties is null ? default : new RoleEligibilityScheduleProperties(
+                scope is null && roleDefinitionId is null && principalId is null && principalType is null && roleEligibilityScheduleRequestId is null && memberType is null && status is null && condition is null && conditionVersion is null && createdOn is null && updatedOn is null && expandedProperties is null ? default : new RoleEligibilityScheduleProperties(
                     scope,
                     roleDefinitionId,
                     principalId,
@@ -651,8 +660,8 @@ namespace Azure.ResourceManager.Authorization.Models
                     roleEligibilityScheduleRequestId,
                     memberType,
                     status,
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     condition,
                     conditionVersion,
                     createdOn,
@@ -687,15 +696,15 @@ namespace Azure.ResourceManager.Authorization.Models
                 name,
                 resourceType,
                 systemData,
-                scope is null && roleDefinitionId is null && principalId is null && principalType is null && roleEligibilityScheduleId is null && status is null && startOn is null && endOn is null && memberType is null && condition is null && conditionVersion is null && createdOn is null && expandedProperties is null ? default : new RoleEligibilityScheduleInstanceProperties(
+                scope is null && roleDefinitionId is null && principalId is null && principalType is null && roleEligibilityScheduleId is null && status is null && memberType is null && condition is null && conditionVersion is null && createdOn is null && expandedProperties is null ? default : new RoleEligibilityScheduleInstanceProperties(
                     scope,
                     roleDefinitionId,
                     principalId,
                     principalType,
                     roleEligibilityScheduleId,
                     status,
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     memberType,
                     condition,
                     conditionVersion,
@@ -737,7 +746,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 name,
                 resourceType,
                 systemData,
-                scope is null && roleDefinitionId is null && principalId is null && principalType is null && requestType is null && status is null && approvalId is null && startOn is null && expirationType is null && endOn is null && duration is null && targetRoleEligibilityScheduleId is null && targetRoleEligibilityScheduleInstanceId is null && justification is null && ticketInfo is null && condition is null && conditionVersion is null && createdOn is null && requestorId is null && expandedProperties is null ? default : new RoleEligibilityScheduleRequestProperties(
+                scope is null && roleDefinitionId is null && principalId is null && principalType is null && requestType is null && status is null && approvalId is null && expirationType is null && duration is null && targetRoleEligibilityScheduleId is null && targetRoleEligibilityScheduleInstanceId is null && justification is null && ticketInfo is null && condition is null && conditionVersion is null && createdOn is null && requestorId is null && expandedProperties is null ? default : new RoleEligibilityScheduleRequestProperties(
                     scope,
                     roleDefinitionId,
                     principalId.GetValueOrDefault(),
@@ -745,7 +754,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     requestType.GetValueOrDefault(),
                     status,
                     approvalId,
-                    new RoleEligibilityScheduleRequestPropertiesScheduleInfo(startOn, new RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endOn, duration, default), default),
+                    new RoleEligibilityScheduleRequestPropertiesScheduleInfo(default, new RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration(expirationType, default, duration, default), default),
                     targetRoleEligibilityScheduleId,
                     targetRoleEligibilityScheduleInstanceId,
                     justification,
@@ -759,6 +768,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
+        /// <summary> Ticket Info of the role eligibility. </summary>
         /// <param name="ticketNumber"> Ticket number for the role eligibility. </param>
         /// <param name="ticketSystem"> Ticket system name for the role eligibility. </param>
         /// <returns> A new <see cref="Models.RoleEligibilityScheduleRequestPropertiesTicketInfo"/> instance for mocking. </returns>
@@ -802,6 +812,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
+        /// <summary> The name of the entity last modified it. </summary>
         /// <param name="id"> The id of the principal made changes. </param>
         /// <param name="displayName"> The name of the principal made changes. </param>
         /// <param name="principalType"> Type of principal such as user , group etc. </param>
@@ -812,6 +823,10 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleManagementPrincipal(id, displayName, principalType, email, default);
         }
 
+        /// <summary>
+        /// The role management policy rule.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RoleManagementPolicyApprovalRule"/>, <see cref="Models.RoleManagementPolicyAuthenticationContextRule"/>, <see cref="Models.RoleManagementPolicyEnablementRule"/>, <see cref="Models.RoleManagementPolicyExpirationRule"/>, <see cref="Models.RoleManagementPolicyNotificationRule"/>, and <see cref="Models.RoleManagementPolicyPimOnlyModeRule"/>.
+        /// </summary>
         /// <param name="id"> The id of the rule. </param>
         /// <param name="ruleType"> The type of rule. </param>
         /// <param name="target"> The target of the current rule. </param>
@@ -821,6 +836,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new UnknownRoleManagementPolicyRule(id, default, target, default);
         }
 
+        /// <summary> The role management policy rule target. </summary>
         /// <param name="caller"> The caller of the setting. </param>
         /// <param name="operations"> The type of operation. </param>
         /// <param name="level"> The assignment level to which rule is applied. </param>
@@ -845,6 +861,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
+        /// <summary> The role management policy approval rule. </summary>
         /// <param name="id"> The id of the rule. </param>
         /// <param name="target"> The target of the current rule. </param>
         /// <param name="settings"> The approval setting. </param>
@@ -854,6 +871,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleManagementPolicyApprovalRule(id, default, target, default, settings);
         }
 
+        /// <summary> The approval settings. </summary>
         /// <param name="isApprovalRequired"> Determines whether approval is required or not. </param>
         /// <param name="isApprovalRequiredForExtension"> Determines whether approval is required for assignment extension. </param>
         /// <param name="isRequestorJustificationRequired"> Determine whether requestor justification is required. </param>
@@ -873,6 +891,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
+        /// <summary> The approval stage. </summary>
         /// <param name="approvalStageTimeOutInDays"> The time in days when approval request would be timed out. </param>
         /// <param name="isApproverJustificationRequired"> Determines whether approver need to provide justification for his decision. </param>
         /// <param name="escalationTimeInMinutes"> The time in minutes when the approval request would be escalated if the primary approver does not approve. </param>
@@ -895,6 +914,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
+        /// <summary> The detail of a user. </summary>
         /// <param name="userType"> The type of user. </param>
         /// <param name="isBackup"> The value indicating whether the user is a backup fallback approver. </param>
         /// <param name="id"> The object id of the user. </param>
@@ -905,6 +925,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleManagementUserInfo(userType, isBackup, id, description, default);
         }
 
+        /// <summary> The role management policy authentication context rule. </summary>
         /// <param name="id"> The id of the rule. </param>
         /// <param name="target"> The target of the current rule. </param>
         /// <param name="isEnabled"> The value indicating if rule is enabled. </param>
@@ -921,6 +942,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 claimValue);
         }
 
+        /// <summary> The role management policy enablement rule. </summary>
         /// <param name="id"> The id of the rule. </param>
         /// <param name="target"> The target of the current rule. </param>
         /// <param name="enablementRules"> The list of enabled rules. </param>
@@ -932,6 +954,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleManagementPolicyEnablementRule(id, default, target, default, (enablementRules ?? new ChangeTrackingList<RoleAssignmentEnablementRuleType>()).ToList());
         }
 
+        /// <summary> The role management policy expiration rule. </summary>
         /// <param name="id"> The id of the rule. </param>
         /// <param name="target"> The target of the current rule. </param>
         /// <param name="isExpirationRequired"> The value indicating whether expiration is required. </param>
@@ -952,6 +975,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 (exceptionMembers ?? new ChangeTrackingList<RoleManagementUserInfo>()).ToList());
         }
 
+        /// <summary> The role management policy notification rule. </summary>
         /// <param name="id"> The id of the rule. </param>
         /// <param name="target"> The target of the current rule. </param>
         /// <param name="notificationDeliveryType"> The type of notification. </param>
@@ -976,6 +1000,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 isDefaultRecipientsEnabled);
         }
 
+        /// <summary> The role management policy PIM only mode rule. </summary>
         /// <param name="id"> The id of the rule. </param>
         /// <param name="target"> The target of the current rule. </param>
         /// <param name="pimOnlyModeSettings"> The PIM Only Mode settings. </param>
@@ -985,6 +1010,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleManagementPolicyPimOnlyModeRule(id, default, target, default, pimOnlyModeSettings);
         }
 
+        /// <summary> The PIM Only Mode settings. </summary>
         /// <param name="mode"> Determines whether the setting is enabled, disabled or report only. </param>
         /// <param name="excludes"> The list of excluded entities that the rule does not apply to. </param>
         /// <param name="excludedAssignmentTypes"> The list of excluded assignment types allowed. </param>
@@ -997,6 +1023,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new PimOnlyModeSettings(mode, (excludes ?? new ChangeTrackingList<UsersOrServicePrincipalSet>()).ToList(), (excludedAssignmentTypes ?? new ChangeTrackingList<ExcludedPrincipalType>()).ToList(), default);
         }
 
+        /// <summary> The detail of a subject. </summary>
         /// <param name="type"> The type of user. </param>
         /// <param name="id"> The object id of the entity. </param>
         /// <param name="displayName"> The display Name of the entity. </param>
@@ -1116,6 +1143,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
+        /// <summary> Deny assignment permissions. </summary>
         /// <param name="actions"> Actions to which the deny assignment does not grant access. </param>
         /// <param name="notActions"> Actions to exclude from that the deny assignment does not grant access. </param>
         /// <param name="dataActions"> Data actions to which the deny assignment does not grant access. </param>
@@ -1193,7 +1221,6 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="createdBy"> Id of the user who created the assignment. </param>
         /// <param name="updatedBy"> Id of the user who updated the assignment. </param>
         /// <param name="delegatedManagedIdentityResourceId"> Id of the delegated managed identity resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         /// <returns> A new <see cref="Models.RoleAssignmentCreateOrUpdateContent"/> instance for mocking. </returns>
         public static RoleAssignmentCreateOrUpdateContent RoleAssignmentCreateOrUpdateContent(string scope = default, ResourceIdentifier roleDefinitionId = default, Guid principalId = default, RoleManagementPrincipalType? principalType = default, string description = default, string condition = default, string conditionVersion = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string createdBy = default, string updatedBy = default, ResourceIdentifier delegatedManagedIdentityResourceId = default)
         {
@@ -1248,6 +1275,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
+        /// <summary> Role definition permissions. </summary>
         /// <param name="actions"> Allowed actions. </param>
         /// <param name="notActions"> Denied actions. </param>
         /// <param name="dataActions"> Allowed Data actions. </param>
@@ -1340,6 +1368,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
+        /// <summary> Alert incident. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1357,6 +1386,10 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
+        /// <summary>
+        /// Alert incident properties
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureRolesAssignedOutsidePimAlertIncidentProperties"/>, <see cref="Models.DuplicateRoleCreatedAlertIncidentProperties"/>, <see cref="Models.TooManyOwnersAssignedToResourceAlertIncidentProperties"/>, and <see cref="Models.TooManyPermanentOwnersAssignedToResourceAlertIncidentProperties"/>.
+        /// </summary>
         /// <param name="alertIncidentType"> The alert incident type. </param>
         /// <returns> A new <see cref="Models.RoleManagementAlertIncidentProperties"/> instance for mocking. </returns>
         public static RoleManagementAlertIncidentProperties RoleManagementAlertIncidentProperties(string alertIncidentType = default)
@@ -1364,6 +1397,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new UnknownRoleManagementAlertIncidentProperties(alertIncidentType, default);
         }
 
+        /// <summary> Azure roles assigned outside PIM alert incident properties. </summary>
         /// <param name="assigneeDisplayName"> The assignee display name. </param>
         /// <param name="assigneeUserPrincipalName"> The assignee user principal name. </param>
         /// <param name="assigneeId"> The assignee ID. </param>
@@ -1392,6 +1426,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 requestorUserPrincipalName);
         }
 
+        /// <summary> Duplicate role created alert incident properties. </summary>
         /// <param name="roleName"> The role name. </param>
         /// <param name="duplicateRoles"> The duplicate roles. </param>
         /// <param name="reason"> The reason for the incident. </param>
@@ -1401,6 +1436,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new DuplicateRoleCreatedAlertIncidentProperties(default, default, roleName, duplicateRoles, reason);
         }
 
+        /// <summary> Too many owners assigned to resource alert incident properties. </summary>
         /// <param name="assigneeName"> The assignee name. </param>
         /// <param name="assigneeType"> The assignee type. </param>
         /// <returns> A new <see cref="Models.TooManyOwnersAssignedToResourceAlertIncidentProperties"/> instance for mocking. </returns>
@@ -1409,6 +1445,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new TooManyOwnersAssignedToResourceAlertIncidentProperties(default, default, assigneeName, assigneeType);
         }
 
+        /// <summary> Too many permanent owners assigned to resource alert incident properties. </summary>
         /// <param name="assigneeName"> The assignee name. </param>
         /// <param name="assigneeType"> The assignee type. </param>
         /// <returns> A new <see cref="Models.TooManyPermanentOwnersAssignedToResourceAlertIncidentProperties"/> instance for mocking. </returns>
@@ -1417,6 +1454,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new TooManyPermanentOwnersAssignedToResourceAlertIncidentProperties(default, default, assigneeName, assigneeType);
         }
 
+        /// <summary> Alert configuration. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1434,6 +1472,10 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
+        /// <summary>
+        /// Alert configuration properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureRolesAssignedOutsidePimAlertConfigurationProperties"/>, <see cref="Models.DuplicateRoleCreatedAlertConfigurationProperties"/>, <see cref="Models.TooManyOwnersAssignedToResourceAlertConfigurationProperties"/>, and <see cref="Models.TooManyPermanentOwnersAssignedToResourceAlertConfigurationProperties"/>.
+        /// </summary>
         /// <param name="alertDefinitionId"> The alert definition ID. </param>
         /// <param name="scope"> The alert scope. </param>
         /// <param name="isEnabled"> True if the alert is enabled, false will disable the scanning for the specific alert. </param>
@@ -1451,6 +1493,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
+        /// <summary> The Azure roles assigned outside PIM alert configuration properties. </summary>
         /// <param name="alertDefinitionId"> The alert definition ID. </param>
         /// <param name="scope"> The alert scope. </param>
         /// <param name="isEnabled"> True if the alert is enabled, false will disable the scanning for the specific alert. </param>
@@ -1467,6 +1510,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
+        /// <summary> The duplicate role created alert configuration. </summary>
         /// <param name="alertDefinitionId"> The alert definition ID. </param>
         /// <param name="scope"> The alert scope. </param>
         /// <param name="isEnabled"> True if the alert is enabled, false will disable the scanning for the specific alert. </param>
@@ -1483,6 +1527,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
+        /// <summary> Too many owners assigned to resource alert configuration properties. </summary>
         /// <param name="alertDefinitionId"> The alert definition ID. </param>
         /// <param name="scope"> The alert scope. </param>
         /// <param name="isEnabled"> True if the alert is enabled, false will disable the scanning for the specific alert. </param>
@@ -1503,6 +1548,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 thresholdPercentageOfOwnersOutOfAllRoleMembers);
         }
 
+        /// <summary> Too many permanent owners assigned to resource alert configuration properties. </summary>
         /// <param name="alertDefinitionId"> The alert definition ID. </param>
         /// <param name="scope"> The alert scope. </param>
         /// <param name="isEnabled"> True if the alert is enabled, false will disable the scanning for the specific alert. </param>
@@ -1523,6 +1569,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 thresholdPercentageOfPermanentOwnersOutOfAllOwners);
         }
 
+        /// <summary> Alert operation result. </summary>
         /// <param name="id"> The id of the alert operation. </param>
         /// <param name="status"> The status of the alert operation. </param>
         /// <param name="statusDetail"> The status detail of the alert operation. </param>
@@ -1616,6 +1663,10 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
+        /// <summary>
+        /// Target of the decision.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AccessReviewDecisionUserIdentity"/> and <see cref="Models.AccessReviewDecisionServicePrincipalIdentity"/>.
+        /// </summary>
         /// <param name="type"> The type of decision target : User/ServicePrincipal. </param>
         /// <param name="id"> The id of principal whose access was reviewed. </param>
         /// <param name="displayName"> The display name of the user whose access was reviewed. </param>
@@ -1625,6 +1676,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new UnknownAccessReviewDecisionIdentity(default, id, displayName, default);
         }
 
+        /// <summary> User Decision Target. </summary>
         /// <param name="id"> The id of principal whose access was reviewed. </param>
         /// <param name="displayName"> The display name of the user whose access was reviewed. </param>
         /// <param name="userPrincipalName"> The user principal name of the user whose access was reviewed. </param>
@@ -1634,6 +1686,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new AccessReviewDecisionUserIdentity(default, id, displayName, default, userPrincipalName);
         }
 
+        /// <summary> Service Principal Decision Target. </summary>
         /// <param name="id"> The id of principal whose access was reviewed. </param>
         /// <param name="displayName"> The display name of the user whose access was reviewed. </param>
         /// <param name="appId"> The appId for the service principal entity being reviewed. </param>
@@ -1643,6 +1696,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new AccessReviewDecisionServicePrincipalIdentity(default, id, displayName, default, appId);
         }
 
+        /// <summary> Target of the decision. </summary>
         /// <param name="type"> The type of resource. </param>
         /// <param name="id"> The id of resource associated with a decision record. </param>
         /// <param name="displayName"> The display name of resource associated with a decision record. </param>
@@ -1652,6 +1706,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new AccessReviewDecisionResourceTarget(@type, id, displayName, default);
         }
 
+        /// <summary> Access Review Decision Insight. </summary>
         /// <param name="id"> The access review insight id. </param>
         /// <param name="name"> The access review insight name. </param>
         /// <param name="type"> The resource type. </param>
@@ -1662,6 +1717,10 @@ namespace Azure.ResourceManager.Authorization.Models
             return new AccessReviewDecisionInsight(id, name, @type, properties, default);
         }
 
+        /// <summary>
+        /// Details of the Insight.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AccessReviewDecisionUserSignInInsightProperties"/>.
+        /// </summary>
         /// <param name="type"> The type of insight. </param>
         /// <param name="insightCreatedOn"> Date Time when the insight was created. </param>
         /// <returns> A new <see cref="Models.AccessReviewDecisionInsightProperties"/> instance for mocking. </returns>
@@ -1670,6 +1729,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new UnknownAccessReviewDecisionInsightProperties(default, insightCreatedOn, default);
         }
 
+        /// <summary> User Decision Target. </summary>
         /// <param name="insightCreatedOn"> Date Time when the insight was created. </param>
         /// <param name="lastSignInOn"> Date Time when the user signed into the tenant. </param>
         /// <returns> A new <see cref="Models.AccessReviewDecisionUserSignInInsightProperties"/> instance for mocking. </returns>
@@ -1690,6 +1750,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new AccessReviewContactedReviewer(id, name, @type, userDisplayName is null && userPrincipalName is null && createdOn is null ? default : new AccessReviewContactedReviewerProperties(userDisplayName, userPrincipalName, createdOn, default), default);
         }
 
+        /// <summary> Record All Decisions payload. </summary>
         /// <param name="principalId"> The id of principal which needs to be approved/denied. </param>
         /// <param name="resourceId"> The id of resource which needs to be approved/denied. </param>
         /// <param name="decision"> The decision to make. Approvers can take action of Approve/Deny. </param>
@@ -1700,6 +1761,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RecordAllDecisionsProperties(principalId, resourceId, decision, justification, default);
         }
 
+        /// <summary> Eligible child resource. </summary>
         /// <param name="id"> The resource scope Id. </param>
         /// <param name="name"> The resource name. </param>
         /// <param name="resourceType"> The resource type. </param>
@@ -1727,6 +1789,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
+        /// <summary> Provider Operations metadata. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1751,6 +1814,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
+        /// <summary> Resource Type. </summary>
         /// <param name="name"> The resource type name. </param>
         /// <param name="displayName"> The resource type display name. </param>
         /// <param name="operations"> The resource type operations. </param>
@@ -1762,6 +1826,7 @@ namespace Azure.ResourceManager.Authorization.Models
             return new AuthorizationProviderResourceType(name, displayName, (operations ?? new ChangeTrackingList<AuthorizationProviderOperationInfo>()).ToList(), default);
         }
 
+        /// <summary> Operation. </summary>
         /// <param name="name"> The operation name. </param>
         /// <param name="displayName"> The operation display name. </param>
         /// <param name="description"> The operation description. </param>
@@ -1781,18 +1846,18 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Authorization.DenyAssignmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Deny Assignment. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="denyAssignmentName"> The display name of the deny assignment. </param>
         /// <param name="description"> The description of the deny assignment. </param>
-        /// <param name="permissions"> An array of permissions that are denied by the deny assignment. </param>
+        /// <param name="permissions"></param>
         /// <param name="scope"> The deny assignment scope. </param>
         /// <param name="isAppliedToChildScopes"> Determines if the deny assignment applies to child scopes. Default value is false. </param>
-        /// <param name="principals"> Array of principals to which the deny assignment applies. </param>
-        /// <param name="excludePrincipals"> Array of principals to which the deny assignment does not apply. </param>
+        /// <param name="principals"></param>
+        /// <param name="excludePrincipals"></param>
         /// <param name="isSystemProtected"> Specifies whether this deny assignment was created by Azure and cannot be edited or deleted. </param>
         /// <returns> A new <see cref="Authorization.DenyAssignmentData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -1823,11 +1888,11 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Authorization.AuthorizationRoleDefinitionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Role definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="roleName"> The role name. </param>
         /// <param name="description"> The role definition description. </param>
         /// <param name="roleType"> The role type. </param>
@@ -1856,17 +1921,17 @@ namespace Azure.ResourceManager.Authorization.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RoleManagementExpandedProperties"/>. </summary>
+        /// <summary> The RoleManagementExpandedProperties. </summary>
         /// <param name="principalId"> Id of the principal. </param>
         /// <param name="principalDisplayName"> Display name of the principal. </param>
         /// <param name="email"> Email id of the principal. </param>
         /// <param name="principalType"> Type of the principal. </param>
         /// <param name="roleDefinitionId"> Id of the role definition. </param>
         /// <param name="roleDefinitionDisplayName"> Display name of the role definition. </param>
-        /// <param name="roleType"> The role type. </param>
+        /// <param name="roleType"> Type of the role definition. </param>
         /// <param name="scopeId"> Scope id of the resource. </param>
         /// <param name="scopeDisplayName"> Display name of the resource. </param>
-        /// <param name="scopeType"> Type of the scope. </param>
+        /// <param name="scopeType"> Type of the resource. </param>
         /// <returns> A new <see cref="Models.RoleManagementExpandedProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RoleManagementExpandedProperties RoleManagementExpandedProperties(Guid? principalId = default, string principalDisplayName = default, string email = default, RoleManagementPrincipalType? principalType = default, ResourceIdentifier roleDefinitionId = default, string roleDefinitionDisplayName = default, AuthorizationRoleType? roleType = default, ResourceIdentifier scopeId = default, string scopeDisplayName = default, RoleManagementScopeType? scopeType = default)
@@ -1874,20 +1939,20 @@ namespace Azure.ResourceManager.Authorization.Models
             return new RoleManagementExpandedProperties(scopeId is null && scopeDisplayName is null && scopeType is null ? default : new ExpandedPropertiesScope(scopeId, scopeDisplayName, scopeType, default), roleDefinitionId is null && roleDefinitionDisplayName is null && roleType is null ? default : new ExpandedPropertiesRoleDefinition(roleDefinitionId, roleDefinitionDisplayName, roleType, default), principalId is null && principalDisplayName is null && email is null && principalType is null ? default : new ExpandedPropertiesPrincipal(principalId, principalDisplayName, email, principalType, default), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PolicyAssignmentProperties"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Expanded info of resource scope, role definition and policy. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="policyId"> Id of the policy. </param>
         /// <param name="lastModifiedBy"> The name of the entity last modified it. </param>
         /// <param name="lastModifiedOn"> The last modified date time. </param>
         /// <param name="roleDefinitionId"> Id of the role definition. </param>
         /// <param name="roleDefinitionDisplayName"> Display name of the role definition. </param>
-        /// <param name="roleType"> The role type. </param>
+        /// <param name="roleType"> Type of the role definition. </param>
         /// <param name="scopeId"> Scope id of the resource. </param>
         /// <param name="scopeDisplayName"> Display name of the resource. </param>
-        /// <param name="scopeType"> Type of the scope. </param>
+        /// <param name="scopeType"> Type of the resource. </param>
         /// <returns> A new <see cref="Models.PolicyAssignmentProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PolicyAssignmentProperties PolicyAssignmentProperties(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier policyId = default, RoleManagementPrincipal lastModifiedBy = default, DateTimeOffset? lastModifiedOn = default, ResourceIdentifier roleDefinitionId = default, string roleDefinitionDisplayName = default, AuthorizationRoleType? roleType = default, ResourceIdentifier scopeId = default, string scopeDisplayName = default, RoleManagementScopeType? scopeType = default)

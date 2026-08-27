@@ -20,11 +20,11 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Initializes a new instance of <see cref="BillingProfilePropertiesCurrentPaymentTerm"/>. </summary>
         /// <param name="term"> Represents duration in netXX format. Always in days. </param>
-        /// <param name="startOn"> The date on when the defined 'Payment Term' will be effective from and is always in UTC. </param>
-        /// <param name="endOn"> The date on when the defined 'Payment Term' will end and is always in UTC. </param>
+        /// <param name="startsOn"> The date on when the defined 'Payment Term' will be effective from and is always in UTC. </param>
+        /// <param name="endsOn"> The date on when the defined 'Payment Term' will end and is always in UTC. </param>
         /// <param name="isDefault"> Indicates payment term is the standard payment term. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingProfilePropertiesCurrentPaymentTerm(string term, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isDefault, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(term, startOn, endOn, isDefault, additionalBinaryDataProperties)
+        internal BillingProfilePropertiesCurrentPaymentTerm(string term, DateTimeOffset? startsOn, DateTimeOffset? endsOn, bool? isDefault, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(term, startsOn, endsOn, isDefault, additionalBinaryDataProperties)
         {
         }
     }

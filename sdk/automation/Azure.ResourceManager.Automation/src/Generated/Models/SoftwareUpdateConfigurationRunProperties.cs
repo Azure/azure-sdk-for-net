@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="status"> Status of the software update configuration run. </param>
         /// <param name="configuredDuration"> Configured duration for the software update configuration run. </param>
         /// <param name="osType"> Operating system target of the software update configuration triggered this run. </param>
-        /// <param name="startOn"> Start time of the software update configuration run. </param>
-        /// <param name="endOn"> End time of the software update configuration run. </param>
+        /// <param name="startsOn"> Start time of the software update configuration run. </param>
+        /// <param name="endsOn"> End time of the software update configuration run. </param>
         /// <param name="computerCount"> Number of computers in the software update configuration run. </param>
         /// <param name="failedCount"> Number of computers with failed status. </param>
         /// <param name="createdOn"> Creation time of the resource, which only appears in the response. </param>
@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="lastModifiedBy"> LastModifiedBy property, which only appears in the response. </param>
         /// <param name="tasks"> Software update configuration tasks triggered in this run. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SoftwareUpdateConfigurationRunProperties(UpdateConfigurationNavigation softwareUpdateConfiguration, string status, TimeSpan? configuredDuration, string osType, DateTimeOffset? startOn, DateTimeOffset? endOn, int? computerCount, int? failedCount, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationRunTasks tasks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SoftwareUpdateConfigurationRunProperties(UpdateConfigurationNavigation softwareUpdateConfiguration, string status, TimeSpan? configuredDuration, string osType, DateTimeOffset? startsOn, DateTimeOffset? endsOn, int? computerCount, int? failedCount, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, SoftwareUpdateConfigurationRunTasks tasks, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SoftwareUpdateConfiguration = softwareUpdateConfiguration;
             Status = status;
             ConfiguredDuration = configuredDuration;
             OSType = osType;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             ComputerCount = computerCount;
             FailedCount = failedCount;
             CreatedOn = createdOn;
@@ -67,10 +67,10 @@ namespace Azure.ResourceManager.Automation.Models
         public string OSType { get; }
 
         /// <summary> Start time of the software update configuration run. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> End time of the software update configuration run. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Number of computers in the software update configuration run. </summary>
         public int? ComputerCount { get; }
