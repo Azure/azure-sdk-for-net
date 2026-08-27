@@ -109,25 +109,25 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreateOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(CurrentAttempts))
             {
                 writer.WritePropertyName("currentAttempts"u8);
                 writer.WriteNumberValue(CurrentAttempts.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(CurrentAttemptStartOn))
+            if (options.Format != "W" && Optional.IsDefined(CurrentAttemptStartsOn))
             {
                 writer.WritePropertyName("currentAttemptStartTime"u8);
-                writer.WriteStringValue(CurrentAttemptStartOn.Value, "O");
+                writer.WriteStringValue(CurrentAttemptStartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastMessage))
             {
@@ -188,10 +188,10 @@ namespace Azure.ResourceManager.Sql.Models
             JobExecutionLifecycle? lifecycle = default;
             JobExecutionProvisioningState? provisioningState = default;
             DateTimeOffset? createOn = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             int? currentAttempts = default;
-            DateTimeOffset? currentAttemptStartOn = default;
+            DateTimeOffset? currentAttemptStartsOn = default;
             string lastMessage = default;
             JobExecutionTarget target = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("currentAttempts"u8))
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    currentAttemptStartOn = prop.Value.GetDateTimeOffset("O");
+                    currentAttemptStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastMessage"u8))
@@ -319,10 +319,10 @@ namespace Azure.ResourceManager.Sql.Models
                 lifecycle,
                 provisioningState,
                 createOn,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 currentAttempts,
-                currentAttemptStartOn,
+                currentAttemptStartsOn,
                 lastMessage,
                 target,
                 additionalBinaryDataProperties);
