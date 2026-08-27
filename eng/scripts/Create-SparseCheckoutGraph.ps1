@@ -196,9 +196,6 @@ foreach ($node in $graph.nodes) {
       Add-TableValue $configurationsByRepositoryPackage $package `
         (Get-ConfigurationKey $projectPath ([string] $targetFramework))
     }
-    if ($checkoutPath) {
-      Add-TableValue $paths $package $checkoutPath
-    }
   }
 }
 
@@ -239,10 +236,6 @@ foreach ($graphInput in $graph.inputs) {
     throw "Tracked input '$inputPath' has no target-framework configurations."
   }
 
-  $node = $nodesByPath[$projectPath]
-  if ($node.isShippingLibrary -and $node.packageId) {
-    Add-TableValue $paths (Get-PackageKey ([string] $node.packageId)) $checkoutPath
-  }
 }
 
 $adjacency = @{}
