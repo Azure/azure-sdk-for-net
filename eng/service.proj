@@ -13,7 +13,6 @@
     <IncludeIntegrationTests Condition="'$(IncludeIntegrationTests)' == ''">true</IncludeIntegrationTests>
     <IncludeSamplesApplications Condition="'$(IncludeSamplesApplications)' == ''">true</IncludeSamplesApplications>
     <IncludeSamplesApplications Condition="'$(ServiceDirectory)' != '*' or '$(IncludeSamples)' == 'false'">false</IncludeSamplesApplications>
-    <RepositoryProjectGraphForwardOutputKind Condition="'$(RepositoryProjectGraphForwardOutputKind)' == ''">Projects</RepositoryProjectGraphForwardOutputKind>
     <RepositoryProjectGraphReaderPath Condition="'$(RepositoryProjectGraphReaderPath)' == ''">$(RepoRoot)artifacts/obj/RepositoryProjectGraph/repository-project-graph.reader.json</RepositoryProjectGraphReaderPath>
     <RepositoryProjectGraphReaderRecordsPath Condition="'$(RepositoryProjectGraphReaderRecordsPath)' == ''">$(RepositoryProjectGraphReaderPath).records</RepositoryProjectGraphReaderRecordsPath>
     <RepositoryProjectGraphPackageRecordsPath Condition="'$(RepositoryProjectGraphPackageRecordsPath)' == ''">$(RepositoryProjectGraphReaderPath).packages.records</RepositoryProjectGraphPackageRecordsPath>
@@ -215,7 +214,7 @@
                                 RootProjects="@(_RepositoryProjectGraphRoot)"
                                 RecordsPath="$(RepositoryProjectGraphReaderRecordsPath)"
                                 RepositoryRoot="$(RepoRoot)"
-                                IncludeInputs="$(IncludeRepositoryProjectGraphInputs)"
+                                IncludeInputCheckoutRoots="$(IncludeRepositoryProjectGraphInputCheckoutRoots)"
                                 DegreeOfParallelism="$(RepositoryProjectGraphReaderDegreeOfParallelism)" />
     <ResolveExternalPackageClosureWithNuGetTask RecordsPath="$(RepositoryProjectGraphReaderRecordsPath)"
                                                 OutputPath="$(RepositoryProjectGraphPackageRecordsPath)"
@@ -237,7 +236,7 @@
   </Target>
 
   <Target Name="QueryRepositoryProjectGraphForwardWithProjectGraph" DependsOnTargets="GenerateRepositoryProjectGraphWithProjectGraph">
-    <Exec Command="pwsh -NoProfile -NonInteractive -File &quot;$(RepoRoot)eng/scripts/RepositoryProjectGraph.ps1&quot; -Operation Forward -GraphPath &quot;$(RepositoryProjectGraphReaderPath)&quot; -RootProjects &quot;$(RepositoryProjectGraphRootProjects)&quot; -RootProjectsPath &quot;$(RepositoryProjectGraphRootProjectsPath)&quot; -ForwardOutputKind &quot;$(RepositoryProjectGraphForwardOutputKind)&quot; -OutputPath &quot;$(OutputProjectFilePath)&quot;" />
+    <Exec Command="pwsh -NoProfile -NonInteractive -File &quot;$(RepoRoot)eng/scripts/RepositoryProjectGraph.ps1&quot; -Operation Forward -GraphPath &quot;$(RepositoryProjectGraphReaderPath)&quot; -RootProjects &quot;$(RepositoryProjectGraphRootProjects)&quot; -RootProjectsPath &quot;$(RepositoryProjectGraphRootProjectsPath)&quot; -OutputPath &quot;$(OutputProjectFilePath)&quot;" />
   </Target>
 
   <Target Name="ProjectDependsOn">

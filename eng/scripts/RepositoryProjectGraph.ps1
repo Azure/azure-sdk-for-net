@@ -14,9 +14,7 @@ param(
   [string] $Dependencies,
   [string] $RootProjects,
   [string] $RootProjectsPath,
-  [string] $PackageRootsOnly = 'false',
-  [ValidateSet('Projects', 'Inputs', 'All')]
-  [string] $ForwardOutputKind = 'Projects'
+  [string] $PackageRootsOnly = 'false'
 )
 
 Set-StrictMode -Version 3
@@ -78,8 +76,8 @@ function Read-Graph([string] $Path) {
     throw "Repository project graph does not exist: $Path"
   }
   $graph = Get-Content -Raw $Path | ConvertFrom-Json -Depth 100
-  if ($graph.schemaVersion -ne 6) {
-    throw "Unsupported repository project graph schema version '$($graph.schemaVersion)'. Expected 6."
+  if ($graph.schemaVersion -ne 7) {
+    throw "Unsupported repository project graph schema version '$($graph.schemaVersion)'. Expected 7."
   }
   return $graph
 }
@@ -190,7 +188,6 @@ function Build-Graph {
   $nodes = @{}
   $configurationEdges = @{}
   $directPackageReferences = @{}
-  $inputs = @{}
   $checkoutRoots = @{}
   $declaredProjects = New-CaseInsensitiveSet
   $roots = [System.Collections.Generic.List[string]]::new()
@@ -229,7 +226,7 @@ function Build-Graph {
         $graphGenerationRecordCount++
         $graphGeneration = [ordered]@{
           configuration = $parts[1]
-          includesInputs = [bool]::Parse($parts[2])
+          includesInputCheckoutRoots = [bool]::Parse($parts[2])
         }
       }
       'Node' {
@@ -345,21 +342,6 @@ function Build-Graph {
         if ($parts.Length -ge 11) { $packageClosureSummary['restoreRequestCount'] = [int]$parts[10] }
         if ($parts.Length -ge 12) { $packageClosureSummary['selectedPackageCount'] = [int]$parts[11] }
       }
-      'Input' {
-        if ($parts.Length -lt 4) { throw "Invalid input record: $line" }
-        if (!$parts[3]) { continue }
-        $from = Get-RelativePath $root $parts[1]
-        $path = Get-RelativePath $root $parts[3]
-        $key = "$from|$path"
-        if (!$inputs.ContainsKey($key)) {
-          $inputs[$key] = [pscustomobject][ordered]@{
-            projectPath = $from
-            path = $path
-            targetFrameworks = (New-CaseInsensitiveSet)
-          }
-        }
-        if ($parts[2]) { $null = $inputs[$key].targetFrameworks.Add($parts[2]) }
-      }
       'CheckoutRoot' {
         if ($parts.Length -lt 4) { throw "Invalid checkout-root record: $line" }
         if (!$parts[3]) { continue }
@@ -412,17 +394,37 @@ function Build-Graph {
   }
 
   $configurationKeys = New-CaseInsensitiveSet
+  $sdkConfigurationKeys = New-CaseInsensitiveSet
   foreach ($node in $nodes.Values) {
     foreach ($targetFramework in $node.targetFrameworks) {
-      $null = $configurationKeys.Add((Get-ConfigurationKey $node.projectPath $targetFramework))
+      $configurationKey = Get-ConfigurationKey $node.projectPath $targetFramework
+      $null = $configurationKeys.Add($configurationKey)
+      if ($node.projectPath.StartsWith('sdk/', [System.StringComparison]::OrdinalIgnoreCase)) {
+        $null = $sdkConfigurationKeys.Add($configurationKey)
+      }
     }
   }
   $unknownCheckoutRootConfigurations = @($checkoutRoots.Keys | Where-Object {
     !$configurationKeys.Contains($_)
   } | Sort-Object)
-  $missingCheckoutRootConfigurations = @($configurationKeys | Where-Object {
+  $missingCheckoutRootConfigurations = @($sdkConfigurationKeys | Where-Object {
     !$checkoutRoots.ContainsKey($_)
   } | Sort-Object)
+  $unsupportedCheckoutRoots = @(
+    foreach ($entry in $checkoutRoots.GetEnumerator()) {
+      foreach ($path in $entry.Value) {
+        if ($path -notmatch '^/sdk/[^/]+/\*$') {
+          [ordered]@{ configuration = $entry.Key; path = $path }
+        }
+      }
+    }
+  )
+  $checkoutRootCount = 0
+  foreach ($configurationCheckoutRoots in $checkoutRoots.Values) {
+    $checkoutRootCount += $configurationCheckoutRoots.Count
+  }
+  $checkoutRootsComplete = $unknownCheckoutRootConfigurations.Count -eq 0 -and
+    $missingCheckoutRootConfigurations.Count -eq 0 -and $unsupportedCheckoutRoots.Count -eq 0
   $missingConfigurationReferences = @($configurationEdges.Values | Where-Object {
     !$configurationKeys.Contains((Get-ConfigurationKey $_.fromProject $_.fromTargetFramework)) -or
       ($_.kind -eq 'ProjectReference' -and !$configurationKeys.Contains((Get-ConfigurationKey $_.to $_.toTargetFramework)))
@@ -485,7 +487,7 @@ function Build-Graph {
   })
 
   $graph = [ordered]@{
-    schemaVersion = 6
+    schemaVersion = 7
     repositoryRoot = $root.Replace('\', '/')
     sourceCommit = Get-SourceCommit $root
     nodes = @($nodes.Values | Sort-Object projectPath | ForEach-Object {
@@ -493,12 +495,6 @@ function Build-Graph {
       [pscustomobject]$_
     })
     configurationEdges = @($repositoryConfigurationEdges | Sort-Object kind, fromProject, fromTargetFramework, to, toTargetFramework)
-    inputs = @($inputs.Values | Sort-Object projectPath, path | ForEach-Object {
-      $_.targetFrameworks = @($_.targetFrameworks | Sort-Object)
-      [pscustomobject]$_
-    })
-    # Exact inputs remain queryable above. This compact derivative lets sparse-checkout
-    # consumers avoid allocating and regrouping the much larger input collection.
     checkoutRoots = ConvertTo-SortedSetTable $checkoutRoots
     roots = @($roots)
     diagnostics = [ordered]@{
@@ -511,12 +507,13 @@ function Build-Graph {
       projectCount = $nodes.Count
       configurationCount = $configurationKeys.Count
       configurationEdgeCount = $repositoryConfigurationEdges.Count
-      inputCount = $inputs.Count
       checkoutRoots = [ordered]@{
-        isComplete = $unknownCheckoutRootConfigurations.Count -eq 0 -and $missingCheckoutRootConfigurations.Count -eq 0
+        isComplete = $checkoutRootsComplete
         configurationCount = $checkoutRoots.Count
+        rootCount = $checkoutRootCount
         unknownConfigurations = $unknownCheckoutRootConfigurations
         missingConfigurations = $missingCheckoutRootConfigurations
+        unsupportedRoots = $unsupportedCheckoutRoots
       }
       duplicatePackageIds = $duplicatePackageIds
       missingProjectReferences = $missingProjectReferences
@@ -641,29 +638,9 @@ function Invoke-ForwardQuery {
   $seeds = @($requestedRoots | ForEach-Object { $indexes.ConfigurationsByProject[$_] })
   $reachable = Get-Reachable $indexes.Forward $seeds
   $lines = [System.Collections.Generic.List[string]]::new()
-  if ($ForwardOutputKind -in @('Projects', 'All')) {
-    foreach ($node in $graph.nodes) {
-      if (Test-ProjectOutputReached $indexes $reachable $node) {
-        $lines.Add("Project|$($node.projectPath)")
-      }
-    }
-  }
-  if ($ForwardOutputKind -in @('Inputs', 'All')) {
-    foreach ($input in $graph.inputs) {
-      $node = $indexes.Nodes[$input.projectPath]
-      $inputReached = $node.isShippingLibrary -and $node.packageId -and
-        $reachable.Contains((Get-PackageKey $node.packageId))
-      if (!$inputReached) {
-        foreach ($targetFramework in $input.targetFrameworks) {
-          if ($reachable.Contains((Get-ConfigurationKey $input.projectPath $targetFramework))) {
-            $inputReached = $true
-            break
-          }
-        }
-      }
-      if ($inputReached) {
-        $lines.Add("Input|$($input.path)")
-      }
+  foreach ($node in $graph.nodes) {
+    if (Test-ProjectOutputReached $indexes $reachable $node) {
+      $lines.Add("Project|$($node.projectPath)")
     }
   }
   Write-Lines $OutputPath @($lines | Sort-Object -Unique)

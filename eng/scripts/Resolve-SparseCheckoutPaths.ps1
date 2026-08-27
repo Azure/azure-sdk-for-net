@@ -76,6 +76,12 @@ foreach ($configuration in $visited) {
     continue
   }
   foreach ($path in @($graph.paths[$configuration])) {
+    # Dynamic roots are deliberately limited to SDK services. Common and build
+    # infrastructure must come from alwaysIncludedPaths instead of graph inputs.
+    if ($path -notmatch '^/sdk/[^/]+/\*$') {
+      Write-Warning "Sparse checkout graph contains unsupported dynamic path '$path'; using a full checkout."
+      return $null
+    }
     if ($seen.Add([string] $path)) {
       $null = $dynamicPaths.Add([string] $path)
     }

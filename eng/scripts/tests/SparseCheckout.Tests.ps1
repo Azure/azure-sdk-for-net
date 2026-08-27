@@ -59,7 +59,7 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
         } | ConvertTo-Json | Set-Content (Join-Path $packageInfo 'Azure.A.json')
 
         [ordered]@{
-            schemaVersion = 6
+            schemaVersion = 7
             repositoryRoot = $repo.Replace('\', '/')
             sourceCommit = $sourceCommit
             nodes = @(
@@ -79,11 +79,6 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
                 # NuGet identities are case-insensitive; serialized projection keys are not.
                 @{ kind = 'PackageReference'; fromProject = 'sdk/delta/D/src/D.csproj'; fromTargetFramework = 'net8.0'; to = 'azure.e' }
             )
-            inputs = @(
-                @{ projectPath = 'sdk/alpha/A/tests/A.Tests.csproj'; targetFrameworks = @('net8.0'); path = 'sdk/shared/Shared/Shared.cs' }
-                # The typed projection must skip exact inputs and consume only checkoutRoots.
-                @{ projectPath = 'sdk/alpha/A/tests/A.Tests.csproj'; targetFrameworks = @('net8.0'); path = 'sdk/unused/Unused.cs' }
-            )
             checkoutRoots = [ordered]@{
                 'configuration:sdk/alpha/A/tests/A.Tests.csproj|net8.0' = @('/sdk/alpha/*', '/sdk/shared/*')
                 'configuration:sdk/alpha/A/tests/A.Tests.csproj|net9.0' = @('/sdk/alpha/*')
@@ -91,14 +86,12 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
                 'configuration:sdk/gamma/C/src/C.csproj|net9.0' = @('/sdk/gamma/*')
                 'configuration:sdk/delta/D/src/D.csproj|net8.0' = @('/sdk/delta/*')
                 'configuration:sdk/epsilon/E/src/E.csproj|net8.0' = @('/sdk/epsilon/*')
-                'configuration:common/Perf/Azure.Test.Perf/Azure.Test.Perf.csproj|net8.0' = @('/common/Perf/Azure.Test.Perf/*')
             }
             diagnostics = @{
                 isComplete = $true
-                inputCount = 2
                 generation = @{
                     configuration = 'Debug'
-                    includesInputs = $true
+                    includesInputCheckoutRoots = $true
                 }
                 packageClosure = @{ resolutionMode = 'nuget-restore-graph' }
                 checkoutRoots = @{ isComplete = $true }
@@ -113,8 +106,11 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
         $checkoutGraph.schemaVersion | Should -Be 1
         $checkoutGraph.sourceCommit | Should -Be $sourceCommit
         @($checkoutGraph.artifacts.'Azure.A').Count | Should -Be 2
-        @($checkoutGraph.alwaysIncludedPaths) | Should -Be @('/*', '!/*/', '/eng', '/.config')
+        @($checkoutGraph.alwaysIncludedPaths) | Should -Be @('/*', '!/*/', '/eng', '/.config', '/common')
         @($checkoutGraph.paths.PSObject.Properties.Name | Where-Object { $_ -like 'package:*' }) |
+            Should -BeNullOrEmpty
+        @($checkoutGraph.paths.PSObject.Properties | ForEach-Object { @($_.Value) } |
+            Where-Object { $_ -notlike '/sdk/*' }) |
             Should -BeNullOrEmpty
 
         $paths = @(& $script:ResolvePathsPath -GraphPath $checkoutGraphPath -ArtifactNames 'Azure.A' `
@@ -127,7 +123,7 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
             '/sdk/gamma/*',
             '/sdk/shared/*')
         $paths | Should -Not -Contain '/sdk/unused/*'
-        $paths | Should -Contain '/common/Perf/Azure.Test.Perf/*'
+        $paths | Should -Contain '/common'
     }
 
     It 'rejects incomplete and non-NuGet source graphs instead of narrowing' {
@@ -145,18 +141,24 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
             Should -Throw '*requires the NuGet restore graph*'
 
         $graph.diagnostics.packageClosure.resolutionMode = 'nuget-restore-graph'
-        $graph.diagnostics.generation.includesInputs = $false
+        $graph.diagnostics.generation.includesInputCheckoutRoots = $false
         $graph | ConvertTo-Json -Depth 20 | Set-Content $graphPath
         { Invoke-SparseCheckoutProjection $packageInfo $repo $graphPath $checkoutGraphPath $sourceCommit } |
             Should -Throw '*requires a Debug repository graph*'
 
-        $graph.diagnostics.generation.includesInputs = $true
+        $graph.diagnostics.generation.includesInputCheckoutRoots = $true
         $graph.diagnostics.generation.configuration = 'Release'
         $graph | ConvertTo-Json -Depth 20 | Set-Content $graphPath
         { Invoke-SparseCheckoutProjection $packageInfo $repo $graphPath $checkoutGraphPath $sourceCommit } |
             Should -Throw '*requires a Debug repository graph*'
 
         $graph.diagnostics.generation.configuration = 'Debug'
+        $graph.checkoutRoots.'configuration:sdk/alpha/A/tests/A.Tests.csproj|net8.0' += '/artifacts/obj/*'
+        $graph | ConvertTo-Json -Depth 20 | Set-Content $graphPath
+        { Invoke-SparseCheckoutProjection $packageInfo $repo $graphPath $checkoutGraphPath $sourceCommit } |
+            Should -Throw '*non-SDK checkout root*artifacts*'
+
+        $graph.checkoutRoots.'configuration:sdk/alpha/A/tests/A.Tests.csproj|net8.0' = @('/sdk/alpha/*', '/sdk/shared/*')
         $graph.checkoutRoots = $null
         $graph | ConvertTo-Json -Depth 20 | Set-Content $graphPath
         { Invoke-SparseCheckoutProjection $packageInfo $repo $graphPath $checkoutGraphPath $sourceCommit } |
@@ -196,7 +198,7 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
             sourceCommit = $sourceCommit
             isComplete = $true
             failureReason = ''
-            alwaysIncludedPaths = @('/*', '!/*/', '/eng')
+            alwaysIncludedPaths = @('/*', '!/*/', '/eng', '/common')
             artifacts = @{
                 'Azure.A' = @('configuration:A|net8.0')
                 'Azure.B' = @('configuration:B|net8.0')
@@ -214,10 +216,16 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
 
         @(& $script:ResolvePathsPath -GraphPath $checkoutGraphPath -ArtifactNames 'Azure.A,Azure.B' `
             -ExpectedSourceCommit $sourceCommit) | Should -Be @(
-                '/*', '!/*/', '/eng', '/sdk/alpha/*', '/sdk/beta/*', '/sdk/shared/*')
+                '/*', '!/*/', '/eng', '/common', '/sdk/alpha/*', '/sdk/beta/*', '/sdk/shared/*')
         @(& $script:ResolvePathsPath -GraphPath $checkoutGraphPath -ArtifactNames 'Azure.A,Missing' `
             -ExpectedSourceCommit $sourceCommit) | Should -BeNullOrEmpty
         @(& $script:ResolvePathsPath -GraphPath $checkoutGraphPath -ArtifactNames 'Azure.A' `
             -ExpectedSourceCommit 'stale') | Should -BeNullOrEmpty
+
+        $checkoutGraph = Get-Content $checkoutGraphPath -Raw | ConvertFrom-Json
+        $checkoutGraph.paths.'configuration:Shared|net8.0' = @('/artifacts/obj/*')
+        $checkoutGraph | ConvertTo-Json -Depth 10 | Set-Content $checkoutGraphPath
+        @(& $script:ResolvePathsPath -GraphPath $checkoutGraphPath -ArtifactNames 'Azure.A' `
+            -ExpectedSourceCommit $sourceCommit) | Should -BeNullOrEmpty
     }
 }

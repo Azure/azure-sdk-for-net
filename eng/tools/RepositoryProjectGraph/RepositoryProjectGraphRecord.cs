@@ -14,7 +14,6 @@ internal abstract record RepositoryProjectGraphRecord
     internal const string DeclaredProjectKind = "DeclaredProject";
     internal const string CheckoutRootKind = "CheckoutRoot";
     internal const string GraphGenerationKind = "GraphGeneration";
-    internal const string InputKind = "Input";
     internal const string NodeKind = "Node";
     internal const string PackageClosureSummaryKind = "PackageClosureSummary";
     internal const string PackageReferenceKind = "PackageReference";
@@ -209,21 +208,6 @@ internal abstract record RepositoryProjectGraphRecord
                 fields[5],
                 fields[6],
                 fields[7]);
-        }
-    }
-
-    internal sealed record Input(
-        string ProjectPath,
-        string TargetFramework,
-        string Path) : RepositoryProjectGraphRecord
-    {
-        internal override string Kind => InputKind;
-
-        protected override IEnumerable<string> GetFields()
-        {
-            yield return ProjectPath;
-            yield return TargetFramework;
-            yield return Path;
         }
     }
 
