@@ -192,21 +192,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The cluster query start time. </summary>
         [WirePath("properties.clusterQueryStartTime")]
-        public DateTimeOffset? ClusterQueryStartOn
+        public DateTimeOffset? ClusterQueryStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.ClusterQueryStartOn;
+                return Properties is null ? default : Properties.ClusterQueryStartsOn;
             }
         }
 
         /// <summary> The cluster query end time. </summary>
         [WirePath("properties.clusterQueryEndTime")]
-        public DateTimeOffset? ClusterQueryEndOn
+        public DateTimeOffset? ClusterQueryEndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.ClusterQueryEndOn;
+                return Properties is null ? default : Properties.ClusterQueryEndsOn;
             }
         }
 
