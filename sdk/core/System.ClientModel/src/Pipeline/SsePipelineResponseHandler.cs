@@ -718,9 +718,9 @@ internal sealed class SsePipelineResponseHandler : IDisposable
             return false;
         }
 
-        foreach (string value in accept.Split(','))
+        foreach (string value in SplitOutsideQuotes(accept, ','))
         {
-            string[] mediaRange = value.Split(';');
+            List<string> mediaRange = SplitOutsideQuotes(value, ';');
             if (!string.Equals(
                 mediaRange[0].Trim(),
                 "text/event-stream",
@@ -742,9 +742,49 @@ internal sealed class SsePipelineResponseHandler : IDisposable
         return false;
     }
 
-    private static bool HasZeroWeight(string[] mediaRange)
+    // RFC 9110 sections 5.6.4 and 5.6.6: a parameter value may be a quoted
+    // string, and text inside double quotes is a single value rather than
+    // syntax. A comma or semicolon there separates nothing, so splitting on
+    // every occurrence would both end a media range early - letting
+    // 'profile="a,b";q=0' escape its own weight - and invent parameters,
+    // letting 'profile="a;q=0;b"' reject a stream the caller accepted.
+    private static List<string> SplitOutsideQuotes(string value, char delimiter)
     {
-        for (int i = 1; i < mediaRange.Length; i++)
+        List<string> parts = new();
+        bool quoted = false;
+        int start = 0;
+
+        for (int i = 0; i < value.Length; i++)
+        {
+            char current = value[i];
+
+            if (quoted && current == '\\' && i + 1 < value.Length)
+            {
+                // A quoted-pair escapes the character that follows it,
+                // which may be the quote that would otherwise close the
+                // string.
+                i++;
+                continue;
+            }
+
+            if (current == '"')
+            {
+                quoted = !quoted;
+            }
+            else if (current == delimiter && !quoted)
+            {
+                parts.Add(value.Substring(start, i - start));
+                start = i + 1;
+            }
+        }
+
+        parts.Add(value.Substring(start));
+        return parts;
+    }
+
+    private static bool HasZeroWeight(List<string> mediaRange)
+    {
+        for (int i = 1; i < mediaRange.Count; i++)
         {
             int separator = mediaRange[i].IndexOf('=');
             if (separator < 0)
@@ -752,6 +792,8 @@ internal sealed class SsePipelineResponseHandler : IDisposable
                 continue;
             }
 
+            // Parameter names are tokens, never quoted strings, so the first
+            // '=' always separates this parameter's name from its value.
             if (!mediaRange[i].Substring(0, separator).Trim().Equals(
                 "q",
                 StringComparison.OrdinalIgnoreCase))

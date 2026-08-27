@@ -284,8 +284,17 @@ public class SsePipelineResponseHandlerTests
             "The private classifier must not outlive the send.");
     }
 
-    [Test]
-    public async Task ZeroQualityAcceptIsNotWrapped()
+    // RFC 9110 sections 5.6.4 and 5.6.6: delimiters inside a quoted
+    // parameter value are data, not syntax. Without that distinction a
+    // quoted comma ends the media range before its weight is read, so the
+    // zero weight is never seen and the stream is wrapped anyway.
+    [TestCase("text/event-stream; q=0")]
+    [TestCase("application/json, text/event-stream;q=0.000")]
+    [TestCase("text/event-stream;profile=\"a,b\";q=0")]
+    [TestCase("text/event-stream;profile=\"x;y\";q=0")]
+    [TestCase("application/json, text/event-stream;profile=\"a,b;c\";q=0")]
+    [TestCase("text/event-stream;profile=\"a\\\"b,c\";q=0")]
+    public async Task ZeroQualityAcceptIsNotWrapped(string accept)
     {
         int requestCount = 0;
         var handler = new MockHttpClientHandler(_ =>
@@ -303,7 +312,7 @@ public class SsePipelineResponseHandlerTests
         using PipelineResponse response = await SendResponseAsync(
             pipeline,
             new Uri("https://example.test/events"),
-            accept: "text/event-stream; q=0");
+            accept: accept);
         Stream stream = response.ContentStream!;
         var buffer = new byte[1024];
 
@@ -319,39 +328,6 @@ public class SsePipelineResponseHandlerTests
         Assert.AreEqual(1, requestCount);
     }
 
-    [Test]
-    public async Task ZeroQualityAmongOtherMediaTypesIsNotWrapped()
-    {
-        int requestCount = 0;
-        var handler = new MockHttpClientHandler(_ =>
-        {
-            requestCount++;
-            return Task.FromResult(
-                requestCount == 1
-                    ? CreateDroppedResponse(
-                        "retry: 0\ndata: one\n\n")
-                    : CreateResponse(
-                        HttpStatusCode.OK,
-                        "retry: 0\ndata: two\n\n"));
-        });
-        ClientPipeline pipeline = CreatePipeline(handler);
-        using PipelineResponse response = await SendResponseAsync(
-            pipeline,
-            new Uri("https://example.test/events"),
-            accept: "application/json, text/event-stream;q=0.000");
-        Stream stream = response.ContentStream!;
-        var buffer = new byte[1024];
-
-        int read = await stream.ReadAsync(buffer, 0, buffer.Length);
-
-        Assert.AreEqual(
-            "retry: 0\ndata: one\n\n",
-            Encoding.UTF8.GetString(buffer, 0, read));
-        Assert.ThrowsAsync<IOException>(
-            async () => await ExpectNoFurtherReadAsync(stream, buffer));
-        Assert.AreEqual(1, requestCount);
-    }
-
     [TestCase("text/event-stream")]
     [TestCase("text/event-stream;q=1")]
     [TestCase("text/event-stream; q=0.5")]
@@ -359,6 +335,14 @@ public class SsePipelineResponseHandlerTests
     [TestCase("text/event-stream;charset=utf-8;q=1.0")]
     [TestCase("application/json;q=0, text/event-stream")]
     [TestCase("text/event-stream;q=0.5;profile=x")]
+    // The converse of the cases above: an apparent weight that lives inside
+    // a quoted value is part of that value and must not reject the stream.
+    [TestCase("text/event-stream;profile=\"a;q=0;b\"")]
+    [TestCase("text/event-stream;profile=\"a,b\"")]
+    [TestCase("text/event-stream;profile=\"q=0\"")]
+    // The escaped quote keeps the string open, so the ';q=0' that follows is
+    // still quoted data.
+    [TestCase("text/event-stream;profile=\"a\\\";q=0;b\"")]
     public async Task PositiveQualityAcceptIsWrapped(string accept)
     {
         int requestCount = 0;

@@ -207,8 +207,17 @@ namespace Azure.Core.Tests
             Assert.AreEqual(1, transport.Requests.Count);
         }
 
-        [Test]
-        public async Task ZeroQualityAcceptIsNotWrapped()
+        // RFC 9110 sections 5.6.4 and 5.6.6: delimiters inside a quoted
+        // parameter value are data, not syntax. Without that distinction a
+        // quoted comma ends the media range before its weight is read, so
+        // the zero weight is never seen and the stream is wrapped anyway.
+        [TestCase("text/event-stream; q=0")]
+        [TestCase("application/json, text/event-stream;q=0.000")]
+        [TestCase("text/event-stream;profile=\"a,b\";q=0")]
+        [TestCase("text/event-stream;profile=\"x;y\";q=0")]
+        [TestCase("application/json, text/event-stream;profile=\"a,b;c\";q=0")]
+        [TestCase("text/event-stream;profile=\"a\\\"b,c\";q=0")]
+        public async Task ZeroQualityAcceptIsNotWrapped(string accept)
         {
             int requestCount = 0;
             var transport = new MockTransport(_ =>
@@ -222,7 +231,7 @@ namespace Azure.Core.Tests
             using HttpMessage message = CreateMessage(
                 pipeline,
                 new Uri("https://example.test/events"),
-                accept: "text/event-stream; q=0");
+                accept: accept);
 
             await pipeline.SendAsync(message, CancellationToken.None);
             Stream stream = message.Response.ContentStream!;
@@ -239,36 +248,6 @@ namespace Azure.Core.Tests
             Assert.AreEqual(1, requestCount);
         }
 
-        [Test]
-        public async Task ZeroQualityAmongOtherMediaTypesIsNotWrapped()
-        {
-            int requestCount = 0;
-            var transport = new MockTransport(_ =>
-            {
-                requestCount++;
-                return requestCount == 1
-                    ? CreateDroppedResponse("retry: 0\ndata: one\n\n")
-                    : CreateSseResponse("retry: 0\ndata: two\n\n");
-            });
-            HttpPipeline pipeline = new(transport);
-            using HttpMessage message = CreateMessage(
-                pipeline,
-                new Uri("https://example.test/events"),
-                accept: "application/json, text/event-stream;q=0.000");
-
-            await pipeline.SendAsync(message, CancellationToken.None);
-            Stream stream = message.Response.ContentStream!;
-            var buffer = new byte[1024];
-            int read = await stream.ReadAsync(buffer, 0, buffer.Length);
-
-            Assert.AreEqual(
-                "retry: 0\ndata: one\n\n",
-                Encoding.UTF8.GetString(buffer, 0, read));
-            Assert.ThrowsAsync<IOException>(
-                async () => await ExpectNoFurtherReadAsync(stream, buffer));
-            Assert.AreEqual(1, requestCount);
-        }
-
         [TestCase("text/event-stream")]
         [TestCase("text/event-stream;q=1")]
         [TestCase("text/event-stream; q=0.5")]
@@ -276,6 +255,15 @@ namespace Azure.Core.Tests
         [TestCase("text/event-stream;charset=utf-8;q=1.0")]
         [TestCase("application/json;q=0, text/event-stream")]
         [TestCase("text/event-stream;q=0.5;profile=x")]
+        // The converse of the cases above: an apparent weight that lives
+        // inside a quoted value is part of that value and must not reject
+        // the stream.
+        [TestCase("text/event-stream;profile=\"a;q=0;b\"")]
+        [TestCase("text/event-stream;profile=\"a,b\"")]
+        [TestCase("text/event-stream;profile=\"q=0\"")]
+        // The escaped quote keeps the string open, so the ';q=0' that
+        // follows is still quoted data.
+        [TestCase("text/event-stream;profile=\"a\\\";q=0;b\"")]
         public async Task PositiveQualityAcceptIsWrapped(string accept)
         {
             int requestCount = 0;
