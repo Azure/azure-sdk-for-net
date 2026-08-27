@@ -58,6 +58,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 default);
         }
 
+        /// <summary> Event contains information about customer driven, platform driven, or unplanned events that occurred on the Appliance. </summary>
         /// <param name="type"> The type of event is used to classify how the event was initiated. </param>
         /// <param name="code"> Code is used to break down the event further to identify why it occurred. </param>
         /// <param name="status"> Status is used to represent the outcome of the event. </param>
@@ -86,6 +87,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             return new ApplianceNetworkProfile(proxyVersion is null ? default : new ProxyConfiguration(proxyVersion, default), dnsVersion is null ? default : new DnsConfiguration(dnsVersion, default), gatewayVersion is null ? default : new GatewayConfiguration(gatewayVersion, default), default);
         }
 
+        /// <summary> The Appliances patchable resource definition. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ResourceConnectorAppliancePatch"/> instance for mocking. </returns>
         public static ResourceConnectorAppliancePatch ResourceConnectorAppliancePatch(IDictionary<string, string> tags = default)
@@ -95,6 +97,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             return new ResourceConnectorAppliancePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> The List Cluster User Credential appliance. </summary>
         /// <param name="hybridConnectionConfig"> Contains the REP (rendezvous endpoint) and “Listener” access token from notification service (NS). </param>
         /// <param name="kubeconfigs"> The list of appliance kubeconfigs. </param>
         /// <returns> A new <see cref="Models.ApplianceListCredentialResult"/> instance for mocking. </returns>
@@ -105,6 +108,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             return new ApplianceListCredentialResult(hybridConnectionConfig, (kubeconfigs ?? new ChangeTrackingList<ApplianceCredentialKubeconfig>()).ToList(), default);
         }
 
+        /// <summary> Contains the REP (rendezvous endpoint) and “Listener” access token from notification service (NS). </summary>
         /// <param name="expirationTime"> Timestamp when this token will be expired. </param>
         /// <param name="hybridConnectionName"> Name of the connection. </param>
         /// <param name="relay"> Name of the notification service. </param>
@@ -115,6 +119,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             return new HybridConnectionConfig(expirationTime, hybridConnectionName, relay, token, default);
         }
 
+        /// <summary> Cluster User Credential appliance. </summary>
         /// <param name="name"> Name which contains the role of the kubeconfig. </param>
         /// <param name="value"> Contains the kubeconfig value. </param>
         /// <returns> A new <see cref="Models.ApplianceCredentialKubeconfig"/> instance for mocking. </returns>
@@ -123,6 +128,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             return new ApplianceCredentialKubeconfig(name, value, default);
         }
 
+        /// <summary> The List Cluster Keys Results appliance. </summary>
         /// <param name="artifactProfiles"> Map of artifacts that contains a list of ArtifactProfile used to upload artifacts such as logs. </param>
         /// <param name="kubeconfigs"> The list of appliance kubeconfigs. </param>
         /// <param name="sshKeys"> Map of Customer User Public, Private SSH Keys and Certificate when available. </param>
@@ -136,6 +142,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             return new ApplianceListKeysResult(artifactProfiles ?? new ChangeTrackingDictionary<string, ApplianceArtifactProfile>(), (kubeconfigs ?? new ChangeTrackingList<ApplianceCredentialKubeconfig>()).ToList(), sshKeys ?? new ChangeTrackingDictionary<string, ApplianceSshKey>(), default);
         }
 
+        /// <summary> Appliance ArtifactProfile definition. </summary>
         /// <param name="endpoint"> Endpoint is the URL to upload artifacts to. </param>
         /// <returns> A new <see cref="Models.ApplianceArtifactProfile"/> instance for mocking. </returns>
         public static ApplianceArtifactProfile ApplianceArtifactProfile(string endpoint = default)
@@ -143,6 +150,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             return new ApplianceArtifactProfile(endpoint, default);
         }
 
+        /// <summary> Appliance SSHKey definition. </summary>
         /// <param name="certificate"> Certificate associated with the public key if the key is signed. </param>
         /// <param name="creationTimeStamp"> Certificate creation timestamp (Unix). </param>
         /// <param name="expirationTimeStamp"> Certificate expiration timestamp (Unix). </param>
@@ -160,6 +168,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 default);
         }
 
+        /// <summary> The Upgrade Graph for appliance. </summary>
         /// <param name="id"> The appliance resource path. </param>
         /// <param name="name"> The release train name. </param>
         /// <param name="properties"> The properties of supported version. </param>
@@ -169,6 +178,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             return new ApplianceUpgradeGraph(id, name, properties, default);
         }
 
+        /// <summary> The Upgrade Graph Properties for appliance. </summary>
         /// <param name="applianceVersion"> The current appliance version. </param>
         /// <param name="supportedVersions"> This contains the current version and supported upgrade versions. </param>
         /// <returns> A new <see cref="Models.ApplianceUpgradeGraphProperties"/> instance for mocking. </returns>
@@ -187,6 +197,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             return new ApplianceSupportedVersion(metadataCatalogVersion is null ? default : new ApplianceSupportedVersionMetadata(metadataCatalogVersion, default), version, default);
         }
 
+        /// <summary> The SupportedVersionCatalogVersion object for appliance. </summary>
         /// <param name="data"> The newer supported version catalog version data. </param>
         /// <param name="name"> The catalog version name for the version available for upgrade. </param>
         /// <param name="namespace"> The catalog version namespace for the version available for upgrade. </param>
@@ -196,6 +207,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             return new ApplianceSupportedVersionCatalogVersion(data, name, @namespace, default);
         }
 
+        /// <summary> The SupportedVersionCatalogVersionData object for appliance. </summary>
         /// <param name="audience"> The image audience name for the version available for upgrade. </param>
         /// <param name="catalog"> The image catalog name for the version available for upgrade. </param>
         /// <param name="offer"> The image offer name for the version available for upgrade. </param>
@@ -206,6 +218,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             return new ApplianceSupportedVersionCatalogVersionProperties(audience, catalog, offer, version, default);
         }
 
+        /// <summary> The Get Telemetry Config Result appliance. </summary>
         /// <param name="telemetryInstrumentationKey"> Telemetry instrumentation key. </param>
         /// <returns> A new <see cref="Models.ApplianceTelemetryConfigResult"/> instance for mocking. </returns>
         public static ApplianceTelemetryConfigResult ApplianceTelemetryConfigResult(string telemetryInstrumentationKey = default)

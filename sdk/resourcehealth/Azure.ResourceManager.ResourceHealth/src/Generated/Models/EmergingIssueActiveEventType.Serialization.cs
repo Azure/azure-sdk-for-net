@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WritePropertyName("trackingId"u8);
                 writer.WriteStringValue(TrackingId);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (Optional.IsDefined(Cloud))
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             string title = default;
             string description = default;
             string trackingId = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             string cloud = default;
             ResourceHealthEventSeverityLevel? severity = default;
             ResourceHealthEventStageValue? stage = default;
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("cloud"u8))
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 title,
                 description,
                 trackingId,
-                startOn,
+                startsOn,
                 cloud,
                 severity,
                 stage,
