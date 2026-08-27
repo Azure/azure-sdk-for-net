@@ -78,8 +78,10 @@ restore/build equivalence. The source graph continues to report
   `EmbeddedResource`, `AdditionalFiles`, local `Reference` hint paths, analyzers,
   analyzer config files, Protobuf, TypeScript, application/page/resource items,
   splash screens, and native references. Repository-relative inputs are conservatively
-  coarsened while their exact records are emitted. Roots that contain only generated or
-  otherwise untracked files simply match no files during Git sparse checkout.
+  coarsened while their exact records are emitted. Graph evaluation disables SDK default
+  items because every configuration already contributes its project checkout root; only
+  explicit items and imports need to add roots outside that directory. Roots that contain
+  only generated or otherwise untracked files simply match no files during Git sparse checkout.
 - **Checkout roots:** selected or reached SDK projects become
   `/sdk/<service>/*`. Non-SDK linked inputs retain a narrower containing-directory
   root. Only repository root files, `/eng`, and `/.config` are unconditional; SDK
@@ -181,6 +183,10 @@ hosted rerun.
   items or imports. Whole reached SDK services and the build/bootstrap cone cover
   current repository patterns, but a new cross-service custom input must be exposed
   as an evaluated item/import or sparse checkout must be disabled for it.
+- Build logic that adds a reference or external input only when an SDK-default item exists
+  is not represented while graph evaluation uses `EnableDefaultItems=false`. No such
+  repository logic is currently known; introducing it requires an explicit graph item or
+  removal of the optimization.
 - The graph is the host-neutral union of declared compile TFMs. It does not model an
   OS or RID query dimension and must not be used to claim runtime-asset equivalence.
 - The manually assembled NuGet spec is deliberately not authoritative static-restore
