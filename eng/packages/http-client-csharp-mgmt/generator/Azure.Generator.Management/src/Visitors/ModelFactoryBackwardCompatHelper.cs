@@ -573,13 +573,9 @@ namespace Azure.Generator.Management.Visitors
             var arguments = new List<ValueExpression>(constructorParameters.Count);
             var usedArguments = new HashSet<ValueExpression>();
             var changed = constructorParameters.Count != newInstanceExpression.Parameters.Count;
-            for (int i = 0; i < constructorParameters.Count; i++)
+            foreach (var constructorParameter in constructorParameters)
             {
-                var constructorParameter = constructorParameters[i];
-                var positionalFallback = constructorParameters.Count == newInstanceExpression.Parameters.Count
-                    ? newInstanceExpression.Parameters[i]
-                    : null;
-                if (TryGetArgumentByName(argumentsByName, constructorParameter, positionalFallback, out var argument))
+                if (TryGetArgumentByName(argumentsByName, constructorParameter, out var argument))
                 {
                     arguments.Add(argument);
                     usedArguments.Add(argument);
@@ -604,7 +600,6 @@ namespace Azure.Generator.Management.Visitors
         private static bool TryGetArgumentByName(
             IReadOnlyDictionary<string, ValueExpression> argumentsByName,
             ParameterProvider constructorParameter,
-            ValueExpression? positionalFallback,
             [NotNullWhen(true)] out ValueExpression? argument)
         {
             if (argumentsByName.TryGetValue(constructorParameter.Name, out argument))
@@ -634,13 +629,28 @@ namespace Azure.Generator.Management.Visitors
                 return true;
             }
 
-            if (positionalFallback is not null && NameVisitor.IsMtgRenamedDateTimeProperty(constructorParameter.Property))
+            if (constructorParameter.Property is not { } property || !NameVisitor.IsMtgRenamedDateTimeProperty(property))
             {
-                argument = positionalFallback;
-                return true;
+                return false;
             }
 
-            return false;
+            foreach (var candidate in argumentsByName.Values)
+            {
+                if (!NameVisitor.HasSameSourceProperty(property, candidate))
+                {
+                    continue;
+                }
+
+                if (argument is not null)
+                {
+                    argument = null;
+                    return false;
+                }
+
+                argument = candidate;
+            }
+
+            return argument is not null;
         }
 
         private static bool TryGetArgumentName(ValueExpression argument, [NotNullWhen(true)] out string? name)
@@ -845,7 +855,7 @@ namespace Azure.Generator.Management.Visitors
             else if (matches.Length == 0 && expectedProperty is not null && NameVisitor.IsMtgRenamedDateTimeProperty(expectedProperty))
             {
                 matches = method.Signature.Parameters.Where(p =>
-                    ReferenceEquals(p.Property, expectedProperty)
+                    NameVisitor.HasSameSourceProperty(expectedProperty, p.Property)
                     && AreCompatibleParameterTypes(p.Type, expectedType)).ToArray();
             }
 

@@ -72,15 +72,12 @@ namespace Azure.Generator.Mgmt.Tests
                 "TypeSpec.utcDateTime",
                 InputPrimitiveType.String);
             var inputProperty = InputFactory.Property("StartTime", dateTime, isRequired: true);
+            typeof(InputProperty).GetProperty(nameof(InputProperty.IsExactName))!
+                .SetValue(inputProperty, true);
             var inputModel = InputFactory.Model("TestModel", properties: [inputProperty]);
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
-            var property = plugin.Object.TypeFactory.CreateModel(inputModel)!.Properties.Single();
-            property.Update(name: "StartTime");
 
-            typeof(Management.Visitors.NameVisitor).GetMethod(
-                    "PreVisitProperty",
-                    System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!
-                .Invoke(new Management.Visitors.NameVisitor(), [inputProperty, property]);
+            var property = plugin.Object.TypeFactory.CreateModel(inputModel)!.Properties.Single();
 
             Assert.That(property.Name, Is.EqualTo("StartTime"));
         }
@@ -95,16 +92,16 @@ namespace Azure.Generator.Mgmt.Tests
         [TestCase("FirstSeenTime", "FirstSeenOn")]
         [TestCase("TestDate", "TestOn")]
         [TestCase("TestDateTime", "TestOn")]
-        // Names that must be preserved: the From/To prefixes and the PointInTime suffix are
-        // excluded by the visitor, and bare "Time"/"Date" are too short to carry a prefix.
+        // Names that must be preserved: MTG excludes the From/To prefixes and the PointInTime suffix,
+        // and bare "Time"/"Date" are too short to carry a prefix.
         [TestCase("FromTime", "FromTime")]
         [TestCase("ToTime", "ToTime")]
         [TestCase("RestorePointInTime", "RestorePointInTime")]
         [TestCase("Time", "Time")]
         [TestCase("Date", "Date")]
-        public void TestTransformTimePropertyName(string testPropertyName, string expectedPropertyName)
+        public void DateTimePropertyUsesMtgName(string testPropertyName, string expectedPropertyName)
         {
-            Assert.That(TransformDateTimePropertyName(testPropertyName, InputPrimitiveType.PlainDate), Is.EqualTo(expectedPropertyName));
+            Assert.That(GetGeneratedDateTimePropertyName(testPropertyName, InputPrimitiveType.PlainDate), Is.EqualTo(expectedPropertyName));
         }
 
         // The rename keys off the input type rather than the mapped C# type, so utcDateTime must
@@ -114,19 +111,19 @@ namespace Azure.Generator.Mgmt.Tests
         [TestCase("CreationTime", "CreatedOn")]
         [TestCase("ExpirationTime", "ExpiresOn")]
         [TestCase("RestorePointInTime", "RestorePointInTime")]
-        public void TestTransformTimePropertyNameForUtcDateTime(string testPropertyName, string expectedPropertyName)
+        public void UtcDateTimePropertyUsesMtgName(string testPropertyName, string expectedPropertyName)
         {
             var utcDateTime = new InputDateTimeType(DateTimeKnownEncoding.Rfc3339, "utcDateTime", "TypeSpec.utcDateTime", InputPrimitiveType.String);
-            Assert.That(TransformDateTimePropertyName(testPropertyName, utcDateTime), Is.EqualTo(expectedPropertyName));
+            Assert.That(GetGeneratedDateTimePropertyName(testPropertyName, utcDateTime), Is.EqualTo(expectedPropertyName));
         }
 
         [Test]
         public void TestNonDateTimePropertyNameIsNotTransformed()
         {
-            Assert.That(TransformDateTimePropertyName("StartTime", InputPrimitiveType.String), Is.EqualTo("StartTime"));
+            Assert.That(GetGeneratedDateTimePropertyName("StartTime", InputPrimitiveType.String), Is.EqualTo("StartTime"));
         }
 
-        private static string? TransformDateTimePropertyName(string testPropertyName, InputType propertyType)
+        private static string? GetGeneratedDateTimePropertyName(string testPropertyName, InputType propertyType)
         {
             const string testModelName = "TestModel";
             var modelProperty = InputFactory.Property(testPropertyName, propertyType, serializedName: "testName", isRequired: true);

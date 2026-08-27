@@ -127,7 +127,7 @@ namespace Azure.Generator.Mgmt.Tests
             var model = output.TypeProviders.OfType<ModelProvider>().Single(p => p.Name == "TestModel");
             _ = plugin.Object.GetWriter(model).Write();
             var serialization = model.SerializationProviders.Single();
-            var generated = plugin.Object.GetWriter(serialization).Write().Content;
+            var generated = plugin.Object.GetWriter(serialization).Write().Content.Replace("\r\n", "\n");
 
             Assert.That(generated, Does.Contain("global::System.DateTimeOffset startOn = default;"));
             Assert.That(generated, Does.Contain("global::System.DateTimeOffset endOn = default;"));
@@ -486,7 +486,7 @@ namespace Azure.Generator.Mgmt.Tests
             var inputModel = InputFactory.Model(
                 "TestModel",
                 usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
-                properties: [InputFactory.Property(inputName, dateTimeType)]);
+                properties: [InputFactory.Property(inputName, dateTimeType, serializedName: "unrelated_wire_name")]);
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
             var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
@@ -566,6 +566,62 @@ namespace Azure.Generator.Mgmt.Tests
             modelFactory.Update(methods: [method]);
 
             Assert.DoesNotThrow(() => Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods));
+        }
+
+        [Test]
+        public void RebuildsRenamedDateTimeDeserializeArgumentsAfterConstructorReorder()
+        {
+            var dateTimeType = new InputDateTimeType(
+                DateTimeKnownEncoding.Rfc3339,
+                "utcDateTime",
+                "TypeSpec.utcDateTime",
+                InputPrimitiveType.String);
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Input | InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("startTime", dateTimeType, isRequired: true),
+                    InputFactory.Property("endTime", dateTimeType, isRequired: true)
+                ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var startProperty = model.Properties.Single(p => p.Name == "StartsOn");
+            var endProperty = model.Properties.Single(p => p.Name == "EndsOn");
+            var startVariable = startProperty.AsVariableExpression;
+            var endVariable = endProperty.AsVariableExpression;
+            startProperty.AsParameter.Update(name: "startOn");
+            endProperty.AsParameter.Update(name: "endOn");
+
+            var rebuiltModel = new Microsoft.TypeSpec.Generator.ClientModel.Providers.ScmModelProvider(inputModel);
+            var rebuiltParameters = rebuiltModel.FullConstructor.Signature.Parameters;
+            var rebuiltStartProperty = rebuiltModel.Properties.Single(p => p.Name == "StartsOn");
+            var rebuiltEndProperty = rebuiltModel.Properties.Single(p => p.Name == "EndsOn");
+            var rebuiltStart = new ParameterProvider(
+                "startsOn", rebuiltStartProperty.Description!, rebuiltStartProperty.Type, property: rebuiltStartProperty);
+            var rebuiltEnd = new ParameterProvider(
+                "endsOn", rebuiltEndProperty.Description!, rebuiltEndProperty.Type, property: rebuiltEndProperty);
+            var additionalData = rebuiltParameters.Single(p => p.Name == "additionalBinaryDataProperties");
+            rebuiltModel.FullConstructor.Signature.Update(parameters: [rebuiltEnd, rebuiltStart, additionalData]);
+            typeof(ModelProvider).GetField("_fullConstructor", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(model, rebuiltModel.FullConstructor);
+
+            var additionalDataVariable = new VariableExpression(additionalData.Type, additionalData.Name);
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "DeserializeTestModel",
+                    null,
+                    MethodSignatureModifiers.Internal | MethodSignatureModifiers.Static,
+                    model.Type,
+                    null,
+                    []),
+                Return(new NewInstanceExpression(model.Type, [startVariable, endVariable, additionalDataVariable])),
+                model);
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixConstructorCalls([method]);
+
+            var rendered = method.BodyStatements!.ToDisplayString();
+            Assert.That(rendered, Does.Contain("new global::Samples.Models.TestModel(endOn, startOn, additionalBinaryDataProperties)"));
         }
 
         [Test]

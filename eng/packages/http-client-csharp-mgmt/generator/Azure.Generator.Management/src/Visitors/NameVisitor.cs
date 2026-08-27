@@ -5,12 +5,14 @@ using Azure.Core;
 using Azure.Generator.Management.Primitives;
 using Microsoft.TypeSpec.Generator.ClientModel;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
+using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 namespace Azure.Generator.Management.Visitors;
 
@@ -106,11 +108,19 @@ internal class NameVisitor : ScmLibraryVisitor
 
     protected override PropertyProvider? PreVisitProperty(InputProperty property, PropertyProvider? propertyProvider)
     {
+        if (propertyProvider is not null)
+        {
+            RegisterSourceProperty(propertyProvider, property);
+        }
+
         DoPreVisitPropertyForResourceTypeName(property, propertyProvider);
         DoPreVisitPropertyForUrlPropertyName(property, propertyProvider);
         DoPreVisitPropertyNameRenaming(property, propertyProvider);
         return base.PreVisitProperty(property, propertyProvider);
     }
+
+    private static readonly ConditionalWeakTable<PropertyProvider, InputProperty> _sourceProperties = new();
+    private static readonly ConditionalWeakTable<VariableExpression, InputProperty> _sourcePropertiesByVariable = new();
 
     private static readonly HashSet<string> _mtgDateTimeVerbPrefixes = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -126,19 +136,14 @@ internal class NameVisitor : ScmLibraryVisitor
 
     internal static bool IsMtgRenamedDateTimeProperty(PropertyProvider? property)
     {
-        if (property?.WireInfo is not { } wireInfo ||
-            wireInfo.SerializationFormat is not (
-                SerializationFormat.DateTime_RFC1123 or
-                SerializationFormat.DateTime_RFC3339 or
-                SerializationFormat.DateTime_RFC7231 or
-                SerializationFormat.DateTime_ISO8601 or
-                SerializationFormat.DateTime_Unix or
-                SerializationFormat.Date_ISO8601))
+        if (property is null ||
+            !_sourceProperties.TryGetValue(property, out var inputProperty) ||
+            !IsDateTimeInputType(inputProperty.Type))
         {
             return false;
         }
 
-        var name = wireInfo.SerializedName;
+        var name = inputProperty.Name;
         var suffixLength = GetMtgDateTimeSuffixLength(name);
         if (suffixLength == 0 || suffixLength == name.Length || HasExcludedMtgDateTimeComponent(name, suffixLength))
         {
@@ -165,6 +170,35 @@ internal class NameVisitor : ScmLibraryVisitor
 
         return false;
     }
+
+    internal static bool HasSameSourceProperty(PropertyProvider expectedProperty, PropertyProvider? candidateProperty)
+        => candidateProperty is not null &&
+            _sourceProperties.TryGetValue(expectedProperty, out var expectedInput) &&
+            _sourceProperties.TryGetValue(candidateProperty, out var candidateInput) &&
+            ReferenceEquals(expectedInput, candidateInput);
+
+    internal static bool HasSameSourceProperty(PropertyProvider expectedProperty, ValueExpression candidate)
+        => candidate is VariableExpression variable &&
+            _sourceProperties.TryGetValue(expectedProperty, out var expectedInput) &&
+            _sourcePropertiesByVariable.TryGetValue(variable, out var candidateInput) &&
+            ReferenceEquals(expectedInput, candidateInput);
+
+    private static void RegisterSourceProperty(PropertyProvider propertyProvider, InputProperty inputProperty)
+    {
+        _sourceProperties.Remove(propertyProvider);
+        _sourceProperties.Add(propertyProvider, inputProperty);
+        var variable = propertyProvider.AsVariableExpression;
+        _sourcePropertiesByVariable.Remove(variable);
+        _sourcePropertiesByVariable.Add(variable, inputProperty);
+    }
+
+    private static bool IsDateTimeInputType(InputType inputType) => inputType switch
+    {
+        InputDateTimeType => true,
+        InputPrimitiveType { Kind: InputPrimitiveTypeKind.PlainDate } => true,
+        InputNullableType nullableType => IsDateTimeInputType(nullableType.Type),
+        _ => false
+    };
 
     private static int GetMtgDateTimeSuffixLength(string name)
     {
