@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.RecoveryServices.Models
 
         /// <summary> Initializes a new instance of <see cref="DeletedVaultProperties"/>. </summary>
         /// <param name="vaultId"> ARM Id of the Vault which was deleted. </param>
-        /// <param name="vaultDeletionOn"> Time in UTC at which the Vault was deleted. </param>
+        /// <param name="vaultDeletedOn"> Time in UTC at which the Vault was deleted. </param>
         /// <param name="purgeOn"> Time in UTC at which the DeletedVault will be purged. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeletedVaultProperties(string vaultId, DateTimeOffset? vaultDeletionOn, DateTimeOffset? purgeOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeletedVaultProperties(string vaultId, DateTimeOffset? vaultDeletedOn, DateTimeOffset? purgeOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VaultId = vaultId;
-            VaultDeletionOn = vaultDeletionOn;
+            VaultDeletedOn = vaultDeletedOn;
             PurgeOn = purgeOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         public string VaultId { get; }
 
         /// <summary> Time in UTC at which the Vault was deleted. </summary>
-        public DateTimeOffset? VaultDeletionOn { get; }
+        public DateTimeOffset? VaultDeletedOn { get; }
 
         /// <summary> Time in UTC at which the DeletedVault will be purged. </summary>
         public DateTimeOffset? PurgeOn { get; }

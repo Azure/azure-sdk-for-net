@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="quantity"> Quantity of the skus that are part of the reservation. Must be greater than zero. </param>
         /// <param name="provisioningState"> Current state of the reservation. </param>
         /// <param name="effectOn"> DateTime of the reservation starting when this version is effective from. </param>
-        /// <param name="benefitStartOn"> This is the DateTime when the reservation benefit started. </param>
+        /// <param name="benefitStartsOn"> This is the DateTime when the reservation benefit started. </param>
         /// <param name="lastUpdatedOn"> DateTime of the last time the reservation was updated. </param>
         /// <param name="reservationExpireOn"> This is the date when the reservation will expire. </param>
         /// <param name="expireOn"> This is the date-time when the reservation will expire. </param>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="userFriendlyRenewState"> The renew state of the reservation for display, e.g. On. </param>
         /// <param name="utilization"> Reservation utilization. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationProperties(ReservedResourceType? reservedResourceType, InstanceFlexibility? instanceFlexibility, string displayName, IReadOnlyList<string> appliedScopes, AppliedScopeType? appliedScopeType, bool? isArchived, string capabilities, int? quantity, ReservationProvisioningState? provisioningState, DateTimeOffset? effectOn, DateTimeOffset? benefitStartOn, DateTimeOffset? lastUpdatedOn, DateTimeOffset? reservationExpireOn, DateTimeOffset? expireOn, DateTimeOffset? reviewOn, string skuDescription, ExtendedStatusInfo extendedStatusInfo, ReservationBillingPlan? billingPlan, string displayProvisioningState, string provisioningSubState, DateTimeOffset? reservationPurchaseOn, DateTimeOffset? purchaseOn, ReservationSplitProperties splitProperties, ReservationMergeProperties mergeProperties, ReservationSwapProperties swapProperties, AppliedScopeProperties appliedScopeProperties, ResourceIdentifier billingScopeId, bool? isRenewEnabled, string renewSource, string renewDestination, RenewProperties renewProperties, ReservationTerm? term, string userFriendlyAppliedScopeType, string userFriendlyRenewState, ReservationPropertiesUtilization utilization, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReservationProperties(ReservedResourceType? reservedResourceType, InstanceFlexibility? instanceFlexibility, string displayName, IReadOnlyList<string> appliedScopes, AppliedScopeType? appliedScopeType, bool? isArchived, string capabilities, int? quantity, ReservationProvisioningState? provisioningState, DateTimeOffset? effectOn, DateTimeOffset? benefitStartsOn, DateTimeOffset? lastUpdatedOn, DateTimeOffset? reservationExpireOn, DateTimeOffset? expireOn, DateTimeOffset? reviewOn, string skuDescription, ExtendedStatusInfo extendedStatusInfo, ReservationBillingPlan? billingPlan, string displayProvisioningState, string provisioningSubState, DateTimeOffset? reservationPurchaseOn, DateTimeOffset? purchaseOn, ReservationSplitProperties splitProperties, ReservationMergeProperties mergeProperties, ReservationSwapProperties swapProperties, AppliedScopeProperties appliedScopeProperties, ResourceIdentifier billingScopeId, bool? isRenewEnabled, string renewSource, string renewDestination, RenewProperties renewProperties, ReservationTerm? term, string userFriendlyAppliedScopeType, string userFriendlyRenewState, ReservationPropertiesUtilization utilization, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ReservedResourceType = reservedResourceType;
             InstanceFlexibility = instanceFlexibility;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Reservations.Models
             Quantity = quantity;
             ProvisioningState = provisioningState;
             EffectOn = effectOn;
-            BenefitStartOn = benefitStartOn;
+            BenefitStartsOn = benefitStartsOn;
             LastUpdatedOn = lastUpdatedOn;
             ReservationExpireOn = reservationExpireOn;
             ExpireOn = expireOn;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public DateTimeOffset? EffectOn { get; }
 
         /// <summary> This is the DateTime when the reservation benefit started. </summary>
-        public DateTimeOffset? BenefitStartOn { get; }
+        public DateTimeOffset? BenefitStartsOn { get; }
 
         /// <summary> DateTime of the last time the reservation was updated. </summary>
         public DateTimeOffset? LastUpdatedOn { get; }
