@@ -10,7 +10,6 @@ using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using NUnit.Framework;
-using System;
 using System.Reflection;
 using System.Text;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
@@ -613,14 +612,6 @@ namespace Azure.Generator.Mgmt.Tests
             }
 
             return builder.ToString().Replace("\r\n", "\n");
-        }
-
-        private static void SetLastContractView(TypeProvider typeProvider, TypeProvider lastContractView)
-        {
-            typeof(TypeProvider).GetField(
-                    "_lastContractView",
-                    BindingFlags.NonPublic | BindingFlags.Instance)!
-                .SetValue(typeProvider, new Lazy<TypeProvider?>(() => lastContractView));
         }
 
         private class TestModelFactoryView : TypeProvider
