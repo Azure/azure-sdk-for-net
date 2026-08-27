@@ -13,52 +13,52 @@ using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Ingress profile for the container service cluster. </summary>
-    public partial class ManagedClusterIngressProfile : IJsonModel<ManagedClusterIngressProfile>
+    /// <summary> DRANET settings of an agent pool. </summary>
+    internal partial class DRANETProfile : IJsonModel<DRANETProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedClusterIngressProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DRANETProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIngressProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DRANETProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedClusterIngressProfile(document.RootElement, options);
+                        return DeserializeDRANETProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterIngressProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DRANETProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIngressProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DRANETProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterIngressProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DRANETProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedClusterIngressProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DRANETProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedClusterIngressProfile IPersistableModel<ManagedClusterIngressProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DRANETProfile IPersistableModel<DRANETProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedClusterIngressProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DRANETProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedClusterIngressProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DRANETProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,15 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIngressProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DRANETProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterIngressProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DRANETProfile)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(WebAppRouting))
+            if (Optional.IsDefined(Mode))
             {
-                writer.WritePropertyName("webAppRouting"u8);
-                writer.WriteObjectValue(WebAppRouting, options);
-            }
-            if (Optional.IsDefined(GatewayApi))
-            {
-                writer.WritePropertyName("gatewayAPI"u8);
-                writer.WriteObjectValue(GatewayApi, options);
+                writer.WritePropertyName("mode"u8);
+                writer.WriteStringValue(Mode.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,50 +98,40 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedClusterIngressProfile IJsonModel<ManagedClusterIngressProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DRANETProfile IJsonModel<DRANETProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedClusterIngressProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DRANETProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedClusterIngressProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DRANETProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterIngressProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DRANETProfile)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedClusterIngressProfile(document.RootElement, options);
+            return DeserializeDRANETProfile(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedClusterIngressProfile DeserializeManagedClusterIngressProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static DRANETProfile DeserializeDRANETProfile(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ManagedClusterIngressProfileWebAppRouting webAppRouting = default;
-            ManagedClusterIngressProfileGatewayConfiguration gatewayApi = default;
+            DranetMode? mode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("webAppRouting"u8))
+                if (prop.NameEquals("mode"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    webAppRouting = ManagedClusterIngressProfileWebAppRouting.DeserializeManagedClusterIngressProfileWebAppRouting(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("gatewayAPI"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    gatewayApi = ManagedClusterIngressProfileGatewayConfiguration.DeserializeManagedClusterIngressProfileGatewayConfiguration(prop.Value, options);
+                    mode = new DranetMode(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterIngressProfile(webAppRouting, gatewayApi, additionalBinaryDataProperties);
+            return new DRANETProfile(mode, additionalBinaryDataProperties);
         }
     }
 }
