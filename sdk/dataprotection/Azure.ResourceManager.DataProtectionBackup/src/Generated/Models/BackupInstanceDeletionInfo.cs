@@ -18,14 +18,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="BackupInstanceDeletionInfo"/>. </summary>
         /// <param name="deleteOn"> Specifies time of deletion. </param>
-        /// <param name="billingEndOn"> Specifies billing end date. </param>
+        /// <param name="billingEndsOn"> Specifies billing end date. </param>
         /// <param name="scheduledPurgeOn"> Specifies purge time. </param>
         /// <param name="deleteActivityId"> Delete activity ID for troubleshooting purpose. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupInstanceDeletionInfo(DateTimeOffset? deleteOn, DateTimeOffset? billingEndOn, DateTimeOffset? scheduledPurgeOn, string deleteActivityId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupInstanceDeletionInfo(DateTimeOffset? deleteOn, DateTimeOffset? billingEndsOn, DateTimeOffset? scheduledPurgeOn, string deleteActivityId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DeleteOn = deleteOn;
-            BillingEndOn = billingEndOn;
+            BillingEndsOn = billingEndsOn;
             ScheduledPurgeOn = scheduledPurgeOn;
             DeleteActivityId = deleteActivityId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public DateTimeOffset? DeleteOn { get; }
 
         /// <summary> Specifies billing end date. </summary>
-        public DateTimeOffset? BillingEndOn { get; }
+        public DateTimeOffset? BillingEndsOn { get; }
 
         /// <summary> Specifies purge time. </summary>
         public DateTimeOffset? ScheduledPurgeOn { get; }

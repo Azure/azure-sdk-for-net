@@ -41,20 +41,20 @@ namespace Azure.ResourceManager.DevCenter
         internal HealthCheckStatusDetailsProperties Properties { get; set; }
 
         /// <summary> Start time of last execution of the health checks. </summary>
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
         /// <summary> End time of last execution of the health checks. </summary>
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
         }
 
