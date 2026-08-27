@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             BackupManagementType? backupManagementType = default;
             string operation = default;
             string status = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             string activityId = default;
             string jobType = "VaultJob";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("activityId"u8))
@@ -255,8 +255,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 backupManagementType,
                 operation,
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 activityId,
                 jobType,
                 additionalBinaryDataProperties,
