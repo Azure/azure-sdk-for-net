@@ -1136,8 +1136,8 @@ namespace Azure.Provisioning.Storage
         public Azure.Provisioning.BicepValue<string> AuthenticationMethods { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ChannelEncryption { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> EncryptionInTransitIsRequired { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<bool> IsMultiChannelEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> KerberosTicketEncryption { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> MultichannelIsMultiChannelEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Versions { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }

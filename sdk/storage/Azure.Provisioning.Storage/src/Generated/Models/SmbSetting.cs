@@ -115,23 +115,6 @@ namespace Azure.Provisioning.Storage
             }
         }
 
-        /// <summary> Gets or sets the IsMultiChannelEnabled. </summary>
-        public BicepValue<bool> MultichannelIsMultiChannelEnabled
-        {
-            get
-            {
-                return Multichannel is null ? default : Multichannel.IsMultiChannelEnabled;
-            }
-            set
-            {
-                if (Multichannel is null)
-                {
-                    Multichannel = new Multichannel();
-                }
-                Multichannel.IsMultiChannelEnabled = value;
-            }
-        }
-
         /// <summary> Gets or sets the IsRequired. </summary>
         public BicepValue<bool> EncryptionInTransitIsRequired
         {
