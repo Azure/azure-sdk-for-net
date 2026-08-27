@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         /// <param name="toastString"> Mcc cache node issues toastString. </param>
         /// <param name="detailString"> Mcc cache node issue detail string. </param>
         /// <param name="helpLink"> Mcc cache node issue related help link. </param>
-        /// <param name="issueStartOn"> Mcc cache node issue start date. </param>
-        /// <param name="issueEndOn"> Mcc cache node issue end date. </param>
+        /// <param name="issueStartsOn"> Mcc cache node issue start date. </param>
+        /// <param name="issueEndsOn"> Mcc cache node issue end date. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MccCacheNodeIssue(string mccIssueType, string toastString, string detailString, string helpLink, DateTimeOffset? issueStartOn, DateTimeOffset? issueEndOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MccCacheNodeIssue(string mccIssueType, string toastString, string detailString, string helpLink, DateTimeOffset? issueStartsOn, DateTimeOffset? issueEndsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MccIssueType = mccIssueType;
             ToastString = toastString;
             DetailString = detailString;
             HelpLink = helpLink;
-            IssueStartOn = issueStartOn;
-            IssueEndOn = issueEndOn;
+            IssueStartsOn = issueStartsOn;
+            IssueEndsOn = issueEndsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.ConnectedCache.Models
         public string HelpLink { get; }
 
         /// <summary> Mcc cache node issue start date. </summary>
-        public DateTimeOffset? IssueStartOn { get; }
+        public DateTimeOffset? IssueStartsOn { get; }
 
         /// <summary> Mcc cache node issue end date. </summary>
-        public DateTimeOffset? IssueEndOn { get; }
+        public DateTimeOffset? IssueEndsOn { get; }
     }
 }

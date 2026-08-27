@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("otherPatchCount"u8);
                 writer.WriteNumberValue(OtherPatchCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AvailablePatches))
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Compute.Models
             bool? rebootPending = default;
             int? criticalAndSecurityPatchCount = default;
             int? otherPatchCount = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             IReadOnlyList<VirtualMachineSoftwarePatchProperties> availablePatches = default;
             ComputeApiError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("availablePatches"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Compute.Models
                 rebootPending,
                 criticalAndSecurityPatchCount,
                 otherPatchCount,
-                startOn,
+                startsOn,
                 availablePatches ?? new ChangeTrackingList<VirtualMachineSoftwarePatchProperties>(),
                 error,
                 additionalBinaryDataProperties);
