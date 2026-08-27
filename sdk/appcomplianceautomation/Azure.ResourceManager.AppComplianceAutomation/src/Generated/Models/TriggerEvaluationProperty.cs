@@ -26,14 +26,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
 
         /// <summary> Initializes a new instance of <see cref="TriggerEvaluationProperty"/>. </summary>
         /// <param name="triggerOn"> The time when the evaluation is triggered. </param>
-        /// <param name="evaluationEndOn"> The time when the evaluation is end. </param>
+        /// <param name="evaluationEndsOn"> The time when the evaluation is end. </param>
         /// <param name="resourceIds"> List of resource ids to be evaluated. </param>
         /// <param name="quickAssessments"> List of quick assessments. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TriggerEvaluationProperty(DateTimeOffset? triggerOn, DateTimeOffset? evaluationEndOn, IReadOnlyList<string> resourceIds, IReadOnlyList<QuickAssessment> quickAssessments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TriggerEvaluationProperty(DateTimeOffset? triggerOn, DateTimeOffset? evaluationEndsOn, IReadOnlyList<string> resourceIds, IReadOnlyList<QuickAssessment> quickAssessments, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TriggerOn = triggerOn;
-            EvaluationEndOn = evaluationEndOn;
+            EvaluationEndsOn = evaluationEndsOn;
             ResourceIds = resourceIds;
             QuickAssessments = quickAssessments;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         public DateTimeOffset? TriggerOn { get; }
 
         /// <summary> The time when the evaluation is end. </summary>
-        public DateTimeOffset? EvaluationEndOn { get; }
+        public DateTimeOffset? EvaluationEndsOn { get; }
 
         /// <summary> List of resource ids to be evaluated. </summary>
         public IReadOnlyList<string> ResourceIds { get; }

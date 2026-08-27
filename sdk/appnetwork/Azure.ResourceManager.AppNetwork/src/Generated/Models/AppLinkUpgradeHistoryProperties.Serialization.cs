@@ -80,11 +80,11 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 throw new FormatException($"The model {nameof(AppLinkUpgradeHistoryProperties)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("startTimestamp"u8);
-            writer.WriteStringValue(StartOn, "O");
-            if (Optional.IsDefined(EndOn))
+            writer.WriteStringValue(StartsOn, "O");
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTimestamp"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             writer.WritePropertyName("initiatedBy"u8);
             writer.WriteStringValue(InitiatedBy);
@@ -139,8 +139,8 @@ namespace Azure.ResourceManager.AppNetwork.Models
             {
                 return null;
             }
-            DateTimeOffset startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset startsOn = default;
+            DateTimeOffset? endsOn = default;
             string initiatedBy = default;
             string fromVersion = default;
             string toVersion = default;
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
             {
                 if (prop.NameEquals("startTimestamp"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTimestamp"u8))
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("initiatedBy"u8))
@@ -192,8 +192,8 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 }
             }
             return new AppLinkUpgradeHistoryProperties(
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 initiatedBy,
                 fromVersion,
                 toVersion,
