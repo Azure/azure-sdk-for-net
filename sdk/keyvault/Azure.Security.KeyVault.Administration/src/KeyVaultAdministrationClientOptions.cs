@@ -54,6 +54,10 @@ namespace Azure.Security.KeyVault.Administration
             {
                 Version = serviceVersion;
             }
+            if (bool.TryParse(section["EnableProofOfPossession"], out bool enableProofOfPossession))
+            {
+                EnableProofOfPossession = enableProofOfPossession;
+            }
             ConfigureLogging();
         }
 

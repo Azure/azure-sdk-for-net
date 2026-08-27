@@ -1370,6 +1370,41 @@ namespace Azure.Core.Tests
             Assert.AreEqual(1, callCount, "PoP token cache must still hit when the request URI and method are unchanged.");
         }
 
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_ReAcquiresProofOfPossessionTokenPerNonce()
+        {
+            // A PoP token is also bound to the challenge nonce, so a new nonce for the same URI and method must
+            // re-invoke the credential rather than reuse proof generated with the stale nonce.
+            using var bindingCertificate = MakeSelfSignedCertificate();
+            var contexts = new List<TokenRequestContext>();
+            var credential = new TokenCredentialStub((requestContext, _) =>
+                {
+                    lock (contexts)
+                    {
+                        contexts.Add(requestContext);
+                        return new AccessToken(
+                            $"pop-token-{contexts.Count}",
+                            DateTimeOffset.UtcNow.AddHours(1),
+                            refreshOn: null,
+                            tokenType: "PoP",
+                            bindingCertificate: bindingCertificate);
+                    }
+                },
+                IsAsync);
+
+            var nonces = new Queue<string>(new[] { "nonce-1", "nonce-2" });
+            var policy = new ProofOfPossessionNonceTestPolicy(credential, "scope", () => nonces.Dequeue());
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
+
+            var uri = new Uri("https://example.com/same-resource");
+            await SendGetRequest(transport, policy, uri: uri);
+            await SendGetRequest(transport, policy, uri: uri);
+
+            Assert.AreEqual(2, contexts.Count, "Expected a fresh credential call when only the PoP nonce changes.");
+            Assert.AreEqual("nonce-1", contexts[0].ProofOfPossessionNonce);
+            Assert.AreEqual("nonce-2", contexts[1].ProofOfPossessionNonce);
+        }
+
         private static X509Certificate2 MakeSelfSignedCertificate()
         {
             using RSA key = RSA.Create(2048);
@@ -1398,6 +1433,30 @@ namespace Azure.Core.Tests
                     parentRequestId: message.Request.ClientRequestId,
                     isCaeEnabled: true,
                     isProofOfPossessionEnabled: true,
+                    requestUri: message.Request.Uri.ToUri(),
+                    requestMethod: message.Request.Method.ToString());
+        }
+
+        private class ProofOfPossessionNonceTestPolicy : BearerTokenAuthenticationPolicy
+        {
+            private readonly Func<string> _nonceProvider;
+
+            public ProofOfPossessionNonceTestPolicy(TokenCredential credential, string scope, Func<string> nonceProvider)
+                : base(credential, scope) => _nonceProvider = nonceProvider;
+
+            protected override void AuthorizeRequest(HttpMessage message) =>
+                AuthenticateAndAuthorizeRequest(message, BuildContext(message));
+
+            protected override async ValueTask AuthorizeRequestAsync(HttpMessage message) =>
+                await AuthenticateAndAuthorizeRequestAsync(message, BuildContext(message)).ConfigureAwait(false);
+
+            private TokenRequestContext BuildContext(HttpMessage message) =>
+                new TokenRequestContext(
+                    new[] { "scope" },
+                    parentRequestId: message.Request.ClientRequestId,
+                    isCaeEnabled: true,
+                    isProofOfPossessionEnabled: true,
+                    proofOfPossessionNonce: _nonceProvider(),
                     requestUri: message.Request.Uri.ToUri(),
                     requestMethod: message.Request.Method.ToString());
         }

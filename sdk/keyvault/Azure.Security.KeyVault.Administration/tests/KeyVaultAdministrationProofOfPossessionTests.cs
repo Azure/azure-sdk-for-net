@@ -2,11 +2,13 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Security.KeyVault.Administration.Models;
 using Azure.Security.KeyVault.Tests;
+using Microsoft.Extensions.Configuration;
 using NUnit.Framework;
 
 namespace Azure.Security.KeyVault.Administration.Tests
@@ -20,6 +22,26 @@ namespace Azure.Security.KeyVault.Administration.Tests
         public void Setup()
         {
             ChallengeBasedAuthenticationPolicy.ClearCache();
+        }
+
+        [Test]
+        public void BindsEnableProofOfPossessionFromConfiguration()
+        {
+            // The configuration schema advertises Options:EnableProofOfPossession, so the options constructor
+            // that binds a configuration section must read it - otherwise the value is silently discarded.
+            IConfigurationSection section = new ConfigurationBuilder()
+                .AddInMemoryCollection(new Dictionary<string, string>
+                {
+                    ["kv:EnableProofOfPossession"] = "true",
+                })
+                .Build()
+                .GetSection("kv");
+
+#pragma warning disable SCME0002 // Experimental configuration-binding constructor.
+            KeyVaultAdministrationClientOptions options = new(section);
+#pragma warning restore SCME0002
+
+            Assert.IsTrue(options.EnableProofOfPossession);
         }
 
         [Test]

@@ -550,12 +550,14 @@ namespace Azure.Core.Pipeline
                     !string.Equals(context.Claims, CurrentContext.Claims) ||
                     (context.TenantId != null && !string.Equals(context.TenantId, CurrentContext.TenantId)) ||
                     context.IsProofOfPossessionEnabled != CurrentContext.IsProofOfPossessionEnabled ||
-                    // PoP tokens are bound to a specific request URI + method, so invalidate the single-slot
-                    // cache when either changes. Gated on the requested PoP flag (not on the cached token being
-                    // observably bound) so a still-in-flight acquisition is not reused across a different URI.
+                    // PoP tokens are bound to a specific request URI, method, and nonce, so invalidate the
+                    // single-slot cache when any of them changes. Gated on the requested PoP flag (not on the
+                    // cached token being observably bound) so a still-in-flight acquisition is not reused across
+                    // a different target.
                     (context.IsProofOfPossessionEnabled && CurrentContext.IsProofOfPossessionEnabled &&
                         (context.ResourceRequestUri != CurrentContext.ResourceRequestUri ||
-                         !string.Equals(context.ResourceRequestMethod, CurrentContext.ResourceRequestMethod, StringComparison.OrdinalIgnoreCase)));
+                         !string.Equals(context.ResourceRequestMethod, CurrentContext.ResourceRequestMethod, StringComparison.OrdinalIgnoreCase) ||
+                         !string.Equals(context.ProofOfPossessionNonce, CurrentContext.ProofOfPossessionNonce, StringComparison.Ordinal)));
 
                 public bool IsBackgroundTokenAvailable(DateTimeOffset now) =>
                     BackgroundTokenUpdateTcs != null &&

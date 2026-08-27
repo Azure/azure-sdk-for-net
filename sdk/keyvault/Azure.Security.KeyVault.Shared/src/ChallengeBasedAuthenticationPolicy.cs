@@ -17,6 +17,7 @@ namespace Azure.Security.KeyVault
         private const string KeyVaultStashedContentKey = "KeyVaultContent";
         private const string TokenBoundAuthHeaderName = "x-ms-tokenboundauth";
         private const string PoPTokenTypePrefix = "pop ";
+        private const string MtlsPoPTokenTypePrefix = "mtls_pop ";
         private static readonly Type[] s_updateParameterTypes = [typeof(HttpPipelineTransportOptions)];
         private readonly bool _verifyChallengeResource;
         private readonly bool _enableProofOfPossession;
@@ -256,13 +257,14 @@ namespace Azure.Security.KeyVault
         }
 
         // Sends x-ms-tokenboundauth only when the acquired token is actually PoP-bound - decided from the
-        // negotiated Authorization scheme (not the requested flag), and skipped when the certificate could
-        // not be applied to the transport.
+        // negotiated Authorization scheme (mtls_pop for managed-identity mTLS PoP, or pop), not the requested
+        // flag, and skipped when the certificate could not be applied to the transport.
         private void AddTokenBoundAuthHeaderIfBound(HttpMessage message)
         {
             if (!_transportUpdateFailed &&
                 message.Request.Headers.TryGetValue(HttpHeader.Names.Authorization, out string authorizationHeaderValue) &&
-                authorizationHeaderValue.StartsWith(PoPTokenTypePrefix, StringComparison.OrdinalIgnoreCase))
+                (authorizationHeaderValue.StartsWith(MtlsPoPTokenTypePrefix, StringComparison.OrdinalIgnoreCase) ||
+                 authorizationHeaderValue.StartsWith(PoPTokenTypePrefix, StringComparison.OrdinalIgnoreCase)))
             {
                 message.Request.Headers.SetValue(TokenBoundAuthHeaderName, "true");
             }

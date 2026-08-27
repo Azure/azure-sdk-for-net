@@ -52,8 +52,9 @@ namespace Azure.Security.KeyVault.Secrets.Tests
             Assert.AreEqual("secret-value", secret.Value);
         }
 
-        [Test]
-        public async Task RequestsProofOfPossessionTokenAndAddsTokenBoundAuthHeader()
+        [TestCase("mtls_pop")]
+        [TestCase("PoP")]
+        public async Task RequestsProofOfPossessionTokenAndAddsTokenBoundAuthHeader(string tokenType)
         {
             bool sawAuthorizedVaultRequest = false;
             MockTransportBuilder builder = new MockTransportBuilder();
@@ -70,10 +71,10 @@ namespace Azure.Security.KeyVault.Secrets.Tests
 
             MockTransport transport = builder.Build();
 
-            // The credential simulates a Proof-of-Possession-bound token by returning "PoP" as the token type,
-            // matching what MSAL/Azure.Identity returns for a credential that actually honored
-            // TokenRequestContext.IsProofOfPossessionEnabled (e.g. Managed Identity with mTLS support).
-            MockCredential credential = new MockCredential(transport, tokenType: "PoP");
+            // The credential simulates a Proof-of-Possession-bound token by returning the mtls_pop (managed-identity
+            // mTLS PoP) or pop token type - what MSAL/Azure.Identity actually returns when a credential honors
+            // TokenRequestContext.IsProofOfPossessionEnabled.
+            MockCredential credential = new MockCredential(transport, tokenType: tokenType);
             SecretClient client = new SecretClient(
                 VaultUri,
                 credential,
@@ -574,7 +575,7 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                     // Accept both a plain Bearer token and a PoP-bound token carrying the same access token value,
                     // so tests can simulate a credential that honored TokenRequestContext.IsProofOfPossessionEnabled.
                     case VaultHost when request.Headers.TryGetValue(AuthorizationHeader, out string headerValue) &&
-                        (headerValue == $"Bearer {AccessToken}" || headerValue == $"PoP {AccessToken}"):
+                        (headerValue == $"Bearer {AccessToken}" || headerValue == $"PoP {AccessToken}" || headerValue == $"mtls_pop {AccessToken}"):
                         return new MockResponse(200, "OK")
                         {
                             ContentStream = new KeyVaultSecret("test-secret", "secret-value").ToStream(),
