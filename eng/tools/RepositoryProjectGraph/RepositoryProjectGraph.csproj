@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="CreateSparseCheckoutGraphTask.cs" />
     <Compile Include="RepositoryProjectGraphRecord.cs" />
     <Compile Include="RepositoryProjectGraphTask.cs" />
     <Compile Include="ResolveExternalPackageClosureWithNuGetTask.cs" />
@@ -56,4 +57,16 @@
                HintPath="$(MSBuildToolsPath)/NuGet.Versioning.dll"
                Private="false" />
   </ItemGroup>
+
+  <UsingTask TaskName="Azure.Sdk.Tools.RepositoryProjectGraph.CreateSparseCheckoutGraphTask"
+             AssemblyFile="$(TargetPath)" />
+
+  <Target Name="CreateSparseCheckoutGraph" DependsOnTargets="Build">
+    <CreateSparseCheckoutGraphTask PackageInfoDirectory="$(SparseCheckoutPackageInfoDirectory)"
+                                   RepoRoot="$(SparseCheckoutRepoRoot)"
+                                   GraphPath="$(SparseCheckoutSourceGraphPath)"
+                                   OutputPath="$(SparseCheckoutOutputPath)"
+                                   SourceCommit="$(SparseCheckoutSourceCommit)"
+                                   AllowDirtySource="$(SparseCheckoutAllowDirtySource)" />
+  </Target>
 </Project>

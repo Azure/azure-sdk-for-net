@@ -14,9 +14,11 @@ classification, batching, and each job's `ProjectNames` remain unchanged.
 2. The matrix seed reuses that artifact when its commit, generation policy, schema,
    and completeness diagnostics match. Passes that skip dependency analysis construct
    the same canonical graph once as a fallback.
-3. `Create-SparseCheckoutGraph.ps1` scans the canonical artifact once and publishes a compact
-   checkout graph. It contains artifact seeds, configuration/package adjacency,
-   and checkout roots instead of a precomputed closure for every artifact.
+3. `RepositoryProjectGraphTask` emits deduplicated checkout-root records alongside exact
+   input records, and schema 6 groups them into a compact configuration index.
+   `CreateSparseCheckoutGraphTask` then uses a typed `System.Text.Json` stream to skip the
+   large exact `inputs` value and publishes artifact seeds, configuration/package adjacency,
+   and checkout roots.
 4. Each fanned-out test job runs `Resolve-SparseCheckoutPaths.ps1`. The resolver
    traverses only its comma-separated `ProjectNames` batch and extracts the path
    union before the existing sparse checkout step.
@@ -29,7 +31,7 @@ package selection
 
 matrix seed (same full checkout)
     -> reuse canonical graph (or generate if absent)
-    -> one indexed checkout projection
+    -> typed projection from compact graph indexes
     -> publish TestCheckoutGraph
 
 test batch
@@ -39,10 +41,11 @@ test batch
     -> sparse checkout
 ```
 
-The previous implementation performed a BFS and then rescanned every graph node
-and input for every artifact. Its cost was effectively
-`artifacts × (nodes + inputs)`. The indexed design performs the large scans once;
-each test job pays only for its reachable subgraph.
+The previous implementations either rescanned every graph node and input for every
+artifact, at a cost of `artifacts × (nodes + inputs)`, or allocated the complete
+186,000-record input collection in PowerShell before regrouping it. The current design
+coarsens each input as the canonical artifact is built, skips exact inputs during typed
+projection, and makes each test job pay only for its reachable subgraph.
 
 ## Correctness boundary
 
@@ -50,7 +53,7 @@ This is conservative repository identity reachability, not proof of normal
 restore/build equivalence. The source graph continues to report
 `restoreEquivalent=false`.
 
-- **Target frameworks:** schema 5 preserves source-TFM to destination-TFM edges.
+- **Target frameworks:** schema 6 preserves source-TFM to destination-TFM edges.
   When MSBuild exposes an outer-build project reference, every concrete destination
   inner build is retained. Checkout may over-select incompatible destination TFMs,
   but it does not invent a nearest-framework policy that could omit source.
@@ -74,7 +77,9 @@ restore/build equivalence. The source graph continues to report
 - **Inputs:** captured inputs include imports, `Compile`, `None`, `Content`,
   `EmbeddedResource`, `AdditionalFiles`, local `Reference` hint paths, analyzers,
   analyzer config files, Protobuf, TypeScript, application/page/resource items,
-  splash screens, and native references. Only tracked repository files affect paths.
+  splash screens, and native references. Repository-relative inputs are conservatively
+  coarsened while their exact records are emitted. Roots that contain only generated or
+  otherwise untracked files simply match no files during Git sparse checkout.
 - **Checkout roots:** selected or reached SDK projects become
   `/sdk/<service>/*`. Non-SDK linked inputs retain a narrower containing-directory
   root. Only repository root files, `/eng`, and `/.config` are unconditional; SDK
@@ -83,7 +88,7 @@ restore/build equivalence. The source graph continues to report
   Projection requires the same `Build.SourceVersion`, `Debug`, and evaluated
   inputs, verifies `HEAD`, and rejects tracked worktree changes. Every test job verifies
   the same commit before using the projected graph.
-- **Identity:** schema 5 rejects dependency-only global-property nodes and
+- **Identity:** schema 6 rejects dependency-only global-property nodes and
   fails rather than silently dropping an alternate MSBuild node that its path/TFM
   identity cannot represent.
 
@@ -101,7 +106,8 @@ seed job catches graph/projection failures and publishes an explicit incomplete
 - `SPARSE_CHECKOUT_GRAPH_RESULT=available|fallback` in the seed job;
 - `REPOSITORY_PROJECT_GRAPH_RESULT=reused|generated` in the seed job;
 - `SPARSE_CHECKOUT_RESULT=narrowed pathCount=<n>|full` in each test job; and
-- graph/project/configuration/edge/input/artifact counts, projection bytes and time,
+- graph/project/configuration/edge/input/artifact counts, projection bytes, phase times,
+  peak working set,
   plus each query's artifact, reachable-node, and path counts.
 
 The fallback is intentionally broad. A known-partial graph is never used to narrow
