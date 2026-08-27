@@ -50,7 +50,6 @@ namespace Azure.Security.KeyVault.Administration
             _diagnostics = new ClientDiagnostics(options, true);
             _restClient = new KeyVaultRestClient(vaultUri, credential, options);
         }
-
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyVaultBackupClient"/> class for mocking.
         /// </summary>

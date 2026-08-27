@@ -25,6 +25,10 @@
                     "DisableChallengeResourceVerification": {
                       "type": "boolean",
                       "description": "Disable verification that the authentication challenge resource matches the Key Vault domain."
+                    },
+                    "EnableProofOfPossession": {
+                      "type": "boolean",
+                      "description": "Request Proof-of-Possession (PoP) token binding for authenticated requests. Opt-in; defaults to false."
                     }
                   }
                 }
