@@ -25,15 +25,15 @@ namespace Azure.ResourceManager.Hci.Models
         /// <summary> Initializes a new instance of <see cref="ArcPasswordCredential"/>. </summary>
         /// <param name="secretText"></param>
         /// <param name="keyId"></param>
-        /// <param name="startOn"></param>
-        /// <param name="endOn"></param>
+        /// <param name="startsOn"></param>
+        /// <param name="endsOn"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ArcPasswordCredential(string secretText, string keyId, DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ArcPasswordCredential(string secretText, string keyId, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecretText = secretText;
             KeyId = keyId;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -45,12 +45,12 @@ namespace Azure.ResourceManager.Hci.Models
         [WirePath("keyId")]
         public string KeyId { get; }
 
-        /// <summary> Gets the StartOn. </summary>
+        /// <summary> Gets the StartsOn. </summary>
         [WirePath("startDateTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
-        /// <summary> Gets the EndOn. </summary>
+        /// <summary> Gets the EndsOn. </summary>
         [WirePath("endDateTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
     }
 }

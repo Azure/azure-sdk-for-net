@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(TermEndOn))
+            if (options.Format != "W" && Optional.IsDefined(TermEndsOn))
             {
                 writer.WritePropertyName("termEndDate"u8);
-                writer.WriteStringValue(TermEndOn.Value, "O");
+                writer.WriteStringValue(TermEndsOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Billing.Models
             string skuId = default;
             TimeSpan? termDuration = default;
             long? quantity = default;
-            DateTimeOffset? termEndOn = default;
+            DateTimeOffset? termEndsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    termEndOn = prop.Value.GetDateTimeOffset("O");
+                    termEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Billing.Models
                 skuId,
                 termDuration,
                 quantity,
-                termEndOn,
+                termEndsOn,
                 additionalBinaryDataProperties);
         }
     }

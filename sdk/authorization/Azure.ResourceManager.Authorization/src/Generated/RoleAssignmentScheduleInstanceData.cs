@@ -113,21 +113,21 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary> The startDateTime of the role assignment schedule instance. </summary>
         [WirePath("properties.startDateTime")]
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
         /// <summary> The endDateTime of the role assignment schedule instance. </summary>
         [WirePath("properties.endDateTime")]
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
         }
 

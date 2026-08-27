@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateGetByBillingAccountRequest(string billingAccountName, DateTimeOffset? periodStartDate, DateTimeOffset? periodEndDate, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        internal HttpMessage CreateGetByBillingAccountRequest(string billingAccountName, DateTimeOffset? periodStartsOn, DateTimeOffset? periodEndsOn, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -76,13 +76,13 @@ namespace Azure.ResourceManager.Billing
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (periodStartDate != null)
+            if (periodStartsOn != null)
             {
-                uri.AppendQuery("periodStartDate", TypeFormatters.ConvertToString(periodStartDate, SerializationFormat.Date_ISO8601), true);
+                uri.AppendQuery("periodStartDate", TypeFormatters.ConvertToString(periodStartsOn, SerializationFormat.Date_ISO8601), true);
             }
-            if (periodEndDate != null)
+            if (periodEndsOn != null)
             {
-                uri.AppendQuery("periodEndDate", TypeFormatters.ConvertToString(periodEndDate, SerializationFormat.Date_ISO8601), true);
+                uri.AppendQuery("periodEndDate", TypeFormatters.ConvertToString(periodEndsOn, SerializationFormat.Date_ISO8601), true);
             }
             if (filter != null)
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateNextGetByBillingAccountRequest(Uri nextPage, string billingAccountName, DateTimeOffset? periodStartDate, DateTimeOffset? periodEndDate, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        internal HttpMessage CreateNextGetByBillingAccountRequest(Uri nextPage, string billingAccountName, DateTimeOffset? periodStartsOn, DateTimeOffset? periodEndsOn, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateGetByBillingProfileRequest(string billingAccountName, string billingProfileName, DateTimeOffset? periodStartDate, DateTimeOffset? periodEndDate, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        internal HttpMessage CreateGetByBillingProfileRequest(string billingAccountName, string billingProfileName, DateTimeOffset? periodStartsOn, DateTimeOffset? periodEndsOn, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -245,13 +245,13 @@ namespace Azure.ResourceManager.Billing
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (periodStartDate != null)
+            if (periodStartsOn != null)
             {
-                uri.AppendQuery("periodStartDate", TypeFormatters.ConvertToString(periodStartDate, SerializationFormat.Date_ISO8601), true);
+                uri.AppendQuery("periodStartDate", TypeFormatters.ConvertToString(periodStartsOn, SerializationFormat.Date_ISO8601), true);
             }
-            if (periodEndDate != null)
+            if (periodEndsOn != null)
             {
-                uri.AppendQuery("periodEndDate", TypeFormatters.ConvertToString(periodEndDate, SerializationFormat.Date_ISO8601), true);
+                uri.AppendQuery("periodEndDate", TypeFormatters.ConvertToString(periodEndsOn, SerializationFormat.Date_ISO8601), true);
             }
             if (filter != null)
             {
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateNextGetByBillingProfileRequest(Uri nextPage, string billingAccountName, string billingProfileName, DateTimeOffset? periodStartDate, DateTimeOffset? periodEndDate, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        internal HttpMessage CreateNextGetByBillingProfileRequest(Uri nextPage, string billingAccountName, string billingProfileName, DateTimeOffset? periodStartsOn, DateTimeOffset? periodEndsOn, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateGetByBillingSubscriptionRequest(string subscriptionId, DateTimeOffset? periodStartDate, DateTimeOffset? periodEndDate, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        internal HttpMessage CreateGetByBillingSubscriptionRequest(string subscriptionId, DateTimeOffset? periodStartsOn, DateTimeOffset? periodEndsOn, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -342,13 +342,13 @@ namespace Azure.ResourceManager.Billing
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (periodStartDate != null)
+            if (periodStartsOn != null)
             {
-                uri.AppendQuery("periodStartDate", TypeFormatters.ConvertToString(periodStartDate, SerializationFormat.Date_ISO8601), true);
+                uri.AppendQuery("periodStartDate", TypeFormatters.ConvertToString(periodStartsOn, SerializationFormat.Date_ISO8601), true);
             }
-            if (periodEndDate != null)
+            if (periodEndsOn != null)
             {
-                uri.AppendQuery("periodEndDate", TypeFormatters.ConvertToString(periodEndDate, SerializationFormat.Date_ISO8601), true);
+                uri.AppendQuery("periodEndDate", TypeFormatters.ConvertToString(periodEndsOn, SerializationFormat.Date_ISO8601), true);
             }
             if (filter != null)
             {
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.Billing
             return message;
         }
 
-        internal HttpMessage CreateNextGetByBillingSubscriptionRequest(Uri nextPage, string subscriptionId, DateTimeOffset? periodStartDate, DateTimeOffset? periodEndDate, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
+        internal HttpMessage CreateNextGetByBillingSubscriptionRequest(Uri nextPage, string subscriptionId, DateTimeOffset? periodStartsOn, DateTimeOffset? periodEndsOn, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

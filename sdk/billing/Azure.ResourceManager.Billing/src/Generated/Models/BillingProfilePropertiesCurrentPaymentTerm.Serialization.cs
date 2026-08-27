@@ -103,8 +103,8 @@ namespace Azure.ResourceManager.Billing.Models
                 return null;
             }
             string term = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             bool? isDefault = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endDate"u8))
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("isDefault"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Billing.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BillingProfilePropertiesCurrentPaymentTerm(term, startOn, endOn, isDefault, additionalBinaryDataProperties);
+            return new BillingProfilePropertiesCurrentPaymentTerm(term, startsOn, endsOn, isDefault, additionalBinaryDataProperties);
         }
     }
 }

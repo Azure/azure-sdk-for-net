@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 throw new FormatException($"The model {nameof(PerNodeRemoteSupportSession)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(SessionStartOn))
+            if (options.Format != "W" && Optional.IsDefined(SessionStartsOn))
             {
                 writer.WritePropertyName("sessionStartTime"u8);
-                writer.WriteStringValue(SessionStartOn.Value, "O");
+                writer.WriteStringValue(SessionStartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(SessionEndOn))
+            if (options.Format != "W" && Optional.IsDefined(SessionEndsOn))
             {
                 writer.WritePropertyName("sessionEndTime"u8);
-                writer.WriteStringValue(SessionEndOn.Value, "O");
+                writer.WriteStringValue(SessionEndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(NodeName))
             {
@@ -146,8 +146,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            DateTimeOffset? sessionStartOn = default;
-            DateTimeOffset? sessionEndOn = default;
+            DateTimeOffset? sessionStartsOn = default;
+            DateTimeOffset? sessionEndsOn = default;
             string nodeName = default;
             long? duration = default;
             HciClusterAccessLevel? accessLevel = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    sessionStartOn = prop.Value.GetDateTimeOffset("O");
+                    sessionStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("sessionEndTime"u8))
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    sessionEndOn = prop.Value.GetDateTimeOffset("O");
+                    sessionEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("nodeName"u8))
@@ -207,8 +207,8 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             return new PerNodeRemoteSupportSession(
-                sessionStartOn,
-                sessionEndOn,
+                sessionStartsOn,
+                sessionEndsOn,
                 nodeName,
                 duration,
                 accessLevel,
