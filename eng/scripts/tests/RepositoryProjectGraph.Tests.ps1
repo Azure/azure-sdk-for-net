@@ -12,7 +12,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $testProject = Join-Path $repoRoot "sdk/example/A/tests/A.Tests.csproj"
         $projectA = Join-Path $repoRoot "sdk/example/A/src/A.csproj"
         $projectB = Join-Path $repoRoot "sdk/example/B/src/B.csproj"
-        $inputA = Join-Path $repoRoot "sdk/example/A/src/A.cs"
+        $inputA = Join-Path $repoRoot "sdk/shared/A.cs"
         $packageA = Split-Path (Split-Path $projectA -Parent) -Parent
         $packageB = Split-Path (Split-Path $projectB -Parent) -Parent
         $testPackage = Split-Path (Split-Path $testProject -Parent) -Parent
@@ -24,11 +24,17 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         @(
             "Node|$projectA|net8.0|Azure.A|$packageA|true||true"
             "Node|$projectA|net9.0|Azure.A|$packageA|true||true"
+            "CheckoutRoot|$projectA|net8.0|/sdk/example/*"
+            "CheckoutRoot|$projectA|net9.0|/sdk/example/*"
             "PackageReference|$projectA|net9.0|Azure.B|||"
             "Input|$projectA|net8.0|$inputA"
+            "CheckoutRoot|$projectA|net8.0|/sdk/shared/*"
             "Node|$projectB|net8.0|Azure.B|$packageB|true||true"
+            "CheckoutRoot|$projectB|net8.0|/sdk/example/*"
             "Node|$testProject|net8.0|Azure.A.Tests|$testPackage|true||"
             "Node|$testProject|net9.0|Azure.A.Tests|$testPackage|true||"
+            "CheckoutRoot|$testProject|net8.0|/sdk/example/*"
+            "CheckoutRoot|$testProject|net9.0|/sdk/example/*"
             "ProjectReference|$testProject|net8.0|$projectA|||||net8.0"
             "ProjectReference|$testProject|net9.0|$projectA|||||net9.0"
             "PackageReference|$testProject|net9.0|Azure.External|||"
@@ -44,7 +50,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
 
     It "builds a versioned artifact that unions evaluated target frameworks" {
         $graph = Get-Content -Raw $graphPath | ConvertFrom-Json -Depth 100
-        $graph.schemaVersion | Should -Be 5
+        $graph.schemaVersion | Should -Be 6
         $graph.sourceCommit | Should -Be $sourceCommit
         $graph.diagnostics.isComplete | Should -BeTrue
         $graph.diagnostics.configurationCount | Should -Be 5
@@ -66,6 +72,10 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $configurationEdge.toTargetFramework | Should -Be "net9.0"
         $graph.diagnostics.unmappedRepositoryPackageReferences | Should -Contain "Azure.External"
         $graph.diagnostics.hasUnresolvedExternalPackageClosure | Should -BeTrue
+        $graph.inputs[0].path | Should -Be "sdk/shared/A.cs"
+        @($graph.checkoutRoots.'configuration:sdk/example/A/src/A.csproj|net8.0') |
+            Should -Be @('/sdk/example/*', '/sdk/shared/*')
+        $graph.diagnostics.checkoutRoots.isComplete | Should -BeTrue
     }
 
     It "adds resolved external package closure edges and diagnostics" {
@@ -150,7 +160,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $result = Get-Content $outputPath
         $result | Should -Contain "Project|sdk/example/A/src/A.csproj"
         $result | Should -Contain "Project|sdk/example/B/src/B.csproj"
-        $result | Should -Contain "Input|sdk/example/A/src/A.cs"
+        $result | Should -Contain "Input|sdk/shared/A.cs"
     }
 
     It "marks missing repository project references in diagnostics" {
@@ -180,11 +190,11 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
     It "rejects unsupported graph schemas" {
         $unsupportedPath = Join-Path $TestDrive "unsupported.json"
         $graph = Get-Content -Raw $graphPath | ConvertFrom-Json -Depth 100
-        $graph.schemaVersion = 6
+        $graph.schemaVersion = 5
         $graph | ConvertTo-Json -Depth 100 | Set-Content $unsupportedPath
         $outputPath = Join-Path $TestDrive "unsupported.txt"
         { & $scriptPath -Operation Reverse -GraphPath $unsupportedPath -Dependencies "Azure.A" -OutputPath $outputPath } |
-            Should -Throw "*schema version '6'*"
+            Should -Throw "*schema version '5'*"
     }
 
     It "diagnoses unevaluated declarations and cross-TFM identity conflicts" {
@@ -392,6 +402,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
     <RepositoryProjectGraphTask Projects="@(GraphProject)"
                                 RootProjects="@(GraphRoot)"
                                 RecordsPath="$taskRecordsPath"
+                                RepositoryRoot="$fixtureRoot"
                                 IncludeInputs="true"
                                 DegreeOfParallelism="2" />
   </Target>
@@ -437,6 +448,9 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         }
         $analyzerInput.path | Should -Be "sdk/shared/analyzers/Shared.Analyzer.dll"
         $analyzerInput.targetFrameworks | Should -Be @("net8.0", "net9.0")
+        @($taskGraph.checkoutRoots.'configuration:sdk/example/A/tests/A.Tests.csproj|net8.0') |
+            Should -Contain '/sdk/shared/*'
+        Get-Content $taskRecordsPath | Should -Contain "CheckoutRoot|$fixtureA|net8.0|/sdk/shared/*"
     }
 
     It "evaluates Debug even when the invoking build uses Release" {
@@ -467,7 +481,8 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
              AssemblyFile="$taskAssembly" />
   <Target Name="BuildGraph">
     <RepositoryProjectGraphTask Projects="$project"
-                                RecordsPath="$recordsPath" />
+                                RecordsPath="$recordsPath"
+                                RepositoryRoot="$fixtureRoot" />
   </Target>
 </Project>
 "@ | Set-Content $driverPath
@@ -521,7 +536,8 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
       <GraphProject Include="$projectA;$projectB" />
     </ItemGroup>
     <RepositoryProjectGraphTask Projects="@(GraphProject)"
-                                RecordsPath="$recordsPath" />
+                                RecordsPath="$recordsPath"
+                                RepositoryRoot="$fixtureRoot" />
   </Target>
 </Project>
 "@ | Set-Content $driverPath
@@ -530,7 +546,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $LASTEXITCODE | Should -Be 0
         $output = & dotnet msbuild -nologo -v:minimal -t:BuildGraph $driverPath 2>&1
         $LASTEXITCODE | Should -Not -Be 0
-        $output | Out-String | Should -Match "dependency-only configurations that schema 5 cannot represent"
+        $output | Out-String | Should -Match "dependency-only configurations that schema 6 cannot represent"
         Test-Path $recordsPath | Should -BeFalse
     }
 }

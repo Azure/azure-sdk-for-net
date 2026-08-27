@@ -214,6 +214,7 @@
     <RepositoryProjectGraphTask Projects="@(_DistinctRepositoryProjectGraphReaderProject)"
                                 RootProjects="@(_RepositoryProjectGraphRoot)"
                                 RecordsPath="$(RepositoryProjectGraphReaderRecordsPath)"
+                                RepositoryRoot="$(RepoRoot)"
                                 IncludeInputs="$(IncludeRepositoryProjectGraphInputs)"
                                 DegreeOfParallelism="$(RepositoryProjectGraphReaderDegreeOfParallelism)" />
     <ResolveExternalPackageClosureWithNuGetTask RecordsPath="$(RepositoryProjectGraphReaderRecordsPath)"

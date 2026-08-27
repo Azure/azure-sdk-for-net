@@ -16,6 +16,7 @@ namespace Azure.Sdk.Tools.RepositoryProjectGraph;
 public sealed class RepositoryProjectGraphTask : Task
 {
     private const string GraphConfiguration = "Debug";
+    private string _repositoryRoot = string.Empty;
 
     private static readonly string[] s_inputItemTypes =
     {
@@ -44,6 +45,9 @@ public sealed class RepositoryProjectGraphTask : Task
     [Required]
     public string RecordsPath { get; set; } = string.Empty;
 
+    [Required]
+    public string RepositoryRoot { get; set; } = string.Empty;
+
     public bool IncludeInputs { get; set; }
 
     public int DegreeOfParallelism { get; set; } = 1;
@@ -70,6 +74,13 @@ public sealed class RepositoryProjectGraphTask : Task
 
     private void ExecuteCore()
     {
+        if (string.IsNullOrWhiteSpace(RepositoryRoot))
+        {
+            throw new InvalidOperationException("RepositoryRoot is required.");
+        }
+        _repositoryRoot = Path.GetFullPath(RepositoryRoot)
+            .TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
+
         var globalProperties = GetGlobalProperties();
         if (!IncludeInputs)
         {
@@ -244,7 +255,7 @@ public sealed class RepositoryProjectGraphTask : Task
                 ", ",
                 dependencyOnlyNodes.Take(5).Select(FormatConfiguration));
             throw new InvalidOperationException(
-                $"ProjectGraph contains {dependencyOnlyNodes.Length} dependency-only configurations that schema 5 cannot represent: {examples}. " +
+                $"ProjectGraph contains {dependencyOnlyNodes.Length} dependency-only configurations that schema 6 cannot represent: {examples}. " +
                 "Preserve the complete global-property identity before using this graph for dependency selection.");
         }
 
@@ -348,6 +359,19 @@ public sealed class RepositoryProjectGraphTask : Task
         foreach (RepositoryProjectGraphRecord record in GetDependencyRecords(node))
         {
             WriteRecord(writer, ref recordCount, emittedRecords, record.Serialize());
+        }
+
+        string projectCheckoutRoot = GetCheckoutRoot(projectPath);
+        if (!string.IsNullOrEmpty(projectCheckoutRoot))
+        {
+            WriteRecord(
+                writer,
+                ref recordCount,
+                emittedRecords,
+                new RepositoryProjectGraphRecord.CheckoutRoot(
+                    projectPath,
+                    targetFramework,
+                    projectCheckoutRoot).Serialize());
         }
 
         if (IncludeInputs)
@@ -473,7 +497,7 @@ public sealed class RepositoryProjectGraphTask : Task
         return result.OrderBy(value => value, StringComparer.OrdinalIgnoreCase).ToArray();
     }
 
-    private static void AddInputRecords(
+    private void AddInputRecords(
         TextWriter writer,
         ref long recordCount,
         HashSet<string> emittedRecords,
@@ -484,28 +508,16 @@ public sealed class RepositoryProjectGraphTask : Task
         foreach (string import in project.GetPropertyValue("MSBuildAllProjects")
             .Split(';', StringSplitOptions.RemoveEmptyEntries))
         {
-            WriteRecord(
-                writer,
-                ref recordCount,
-                emittedRecords,
-                new RepositoryProjectGraphRecord.Input(
-                    projectPath,
-                    targetFramework,
-                    Path.GetFullPath(import)).Serialize());
+            WriteInputRecord(
+                writer, ref recordCount, emittedRecords, projectPath, targetFramework, Path.GetFullPath(import));
         }
 
         foreach (string itemType in s_inputItemTypes)
         {
             foreach (ProjectItemInstance item in project.GetItems(itemType))
             {
-                WriteRecord(
-                    writer,
-                    ref recordCount,
-                    emittedRecords,
-                    new RepositoryProjectGraphRecord.Input(
-                        projectPath,
-                        targetFramework,
-                        GetItemFullPath(project, item)).Serialize());
+                WriteInputRecord(
+                    writer, ref recordCount, emittedRecords, projectPath, targetFramework, GetItemFullPath(project, item));
             }
         }
 
@@ -514,19 +526,82 @@ public sealed class RepositoryProjectGraphTask : Task
             string hintPath = reference.GetMetadataValue("HintPath");
             if (!string.IsNullOrEmpty(hintPath))
             {
-                WriteRecord(
+                WriteInputRecord(
                     writer,
                     ref recordCount,
                     emittedRecords,
-                    new RepositoryProjectGraphRecord.Input(
-                        projectPath,
-                        targetFramework,
-                        Path.GetFullPath(Path.Combine(project.Directory, hintPath))).Serialize());
+                    projectPath,
+                    targetFramework,
+                    Path.GetFullPath(Path.Combine(project.Directory, hintPath)));
             }
         }
     }
 
-    private static void WriteRecord(
+    private void WriteInputRecord(
+        TextWriter writer,
+        ref long recordCount,
+        HashSet<string> emittedRecords,
+        string projectPath,
+        string targetFramework,
+        string inputPath)
+    {
+        if (!WriteRecord(
+            writer,
+            ref recordCount,
+            emittedRecords,
+            new RepositoryProjectGraphRecord.Input(projectPath, targetFramework, inputPath).Serialize()))
+        {
+            return;
+        }
+
+        string checkoutRoot = GetCheckoutRoot(inputPath);
+        if (!string.IsNullOrEmpty(checkoutRoot))
+        {
+            WriteRecord(
+                writer,
+                ref recordCount,
+                emittedRecords,
+                new RepositoryProjectGraphRecord.CheckoutRoot(
+                    projectPath,
+                    targetFramework,
+                    checkoutRoot).Serialize());
+        }
+    }
+
+    /// <summary>
+    /// Coarsens an absolute project or input path to a repository sparse-checkout root.
+    /// Root files, always-included directories, and paths outside the repository return empty.
+    /// </summary>
+    private string GetCheckoutRoot(string inputPath)
+    {
+        string path = Path.GetRelativePath(_repositoryRoot, inputPath).Replace('\\', '/').Trim('/');
+        if (Path.IsPathRooted(path))
+        {
+            return string.Empty;
+        }
+
+        string[] segments = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
+        if (segments.Length < 2 || segments[0] == "..")
+        {
+            return string.Empty;
+        }
+        if (segments[0].Equals("sdk", StringComparison.OrdinalIgnoreCase))
+        {
+            return segments.Length < 3 ? string.Empty : $"/sdk/{segments[1]}/*";
+        }
+        if (segments[0].Equals("eng", StringComparison.OrdinalIgnoreCase) ||
+            segments[0].Equals(".config", StringComparison.OrdinalIgnoreCase))
+        {
+            return string.Empty;
+        }
+
+        string directory = Path.GetDirectoryName(path)?.Replace('\\', '/');
+        return string.IsNullOrWhiteSpace(directory) || directory == "."
+            ? string.Empty
+            : $"/{directory.Trim('/')}/*";
+    }
+
+    private static bool WriteRecord(
         TextWriter writer,
         ref long recordCount,
         HashSet<string> emittedRecords,
@@ -534,10 +609,11 @@ public sealed class RepositoryProjectGraphTask : Task
     {
         if (!emittedRecords.Add(record))
         {
-            return;
+            return false;
         }
         writer.WriteLine(record);
         recordCount++;
+        return true;
     }
 
     private static string GetItemFullPath(ProjectInstance project, ProjectItemInstance item)

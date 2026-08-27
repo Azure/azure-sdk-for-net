@@ -55,6 +55,21 @@ function Add-AdjacencyEdge($Table, [string] $From, [string] $To) {
   }
 }
 
+function Add-SetTableValue($Table, [string] $Key, [string] $Value) {
+  if (!$Table.ContainsKey($Key)) {
+    $Table[$Key] = New-CaseInsensitiveSet
+  }
+  $null = $Table[$Key].Add($Value)
+}
+
+function ConvertTo-SortedSetTable($Table) {
+  $result = [ordered]@{}
+  foreach ($key in @($Table.Keys | Sort-Object)) {
+    $result[$key] = @($Table[$key] | Sort-Object)
+  }
+  return $result
+}
+
 function Get-PackageKey([string] $Id) { return "package:$Id" }
 function Get-ConfigurationKey([string] $Path, [string] $TargetFramework) { return "configuration:$Path|$TargetFramework" }
 
@@ -63,8 +78,8 @@ function Read-Graph([string] $Path) {
     throw "Repository project graph does not exist: $Path"
   }
   $graph = Get-Content -Raw $Path | ConvertFrom-Json -Depth 100
-  if ($graph.schemaVersion -ne 5) {
-    throw "Unsupported repository project graph schema version '$($graph.schemaVersion)'. Expected 5."
+  if ($graph.schemaVersion -ne 6) {
+    throw "Unsupported repository project graph schema version '$($graph.schemaVersion)'. Expected 6."
   }
   return $graph
 }
@@ -171,6 +186,7 @@ function Build-Graph {
   $configurationEdges = @{}
   $directPackageReferences = @{}
   $inputs = @{}
+  $checkoutRoots = @{}
   $declaredProjects = New-CaseInsensitiveSet
   $roots = [System.Collections.Generic.List[string]]::new()
   $rootSet = New-CaseInsensitiveSet
@@ -333,6 +349,12 @@ function Build-Graph {
         }
         if ($parts[2]) { $null = $inputs[$key].targetFrameworks.Add($parts[2]) }
       }
+      'CheckoutRoot' {
+        if ($parts.Length -lt 4) { throw "Invalid checkout-root record: $line" }
+        if (!$parts[3]) { continue }
+        $from = Get-RelativePath $root $parts[1]
+        Add-SetTableValue $checkoutRoots (Get-ConfigurationKey $from $parts[2]) $parts[3]
+      }
       'Root' {
         if ($parts.Length -lt 2) { throw "Invalid root record: $line" }
         if (!$parts[1]) { continue }
@@ -382,6 +404,12 @@ function Build-Graph {
       $null = $configurationKeys.Add((Get-ConfigurationKey $node.projectPath $targetFramework))
     }
   }
+  $unknownCheckoutRootConfigurations = @($checkoutRoots.Keys | Where-Object {
+    !$configurationKeys.Contains($_)
+  } | Sort-Object)
+  $missingCheckoutRootConfigurations = @($configurationKeys | Where-Object {
+    !$checkoutRoots.ContainsKey($_)
+  } | Sort-Object)
   $missingConfigurationReferences = @($configurationEdges.Values | Where-Object {
     !$configurationKeys.Contains((Get-ConfigurationKey $_.fromProject $_.fromTargetFramework)) -or
       ($_.kind -eq 'ProjectReference' -and !$configurationKeys.Contains((Get-ConfigurationKey $_.to $_.toTargetFramework)))
@@ -444,7 +472,7 @@ function Build-Graph {
   })
 
   $graph = [ordered]@{
-    schemaVersion = 5
+    schemaVersion = 6
     repositoryRoot = $root.Replace('\', '/')
     sourceCommit = Get-SourceCommit $root
     nodes = @($nodes.Values | Sort-Object projectPath | ForEach-Object {
@@ -456,6 +484,9 @@ function Build-Graph {
       $_.targetFrameworks = @($_.targetFrameworks | Sort-Object)
       [pscustomobject]$_
     })
+    # Exact inputs remain queryable above. This compact derivative lets sparse-checkout
+    # consumers avoid allocating and regrouping the much larger input collection.
+    checkoutRoots = ConvertTo-SortedSetTable $checkoutRoots
     roots = @($roots)
     diagnostics = [ordered]@{
       isComplete = $duplicatePackageIds.Count -eq 0 -and $missingProjectReferences.Count -eq 0 -and
@@ -468,6 +499,12 @@ function Build-Graph {
       configurationCount = $configurationKeys.Count
       configurationEdgeCount = $repositoryConfigurationEdges.Count
       inputCount = $inputs.Count
+      checkoutRoots = [ordered]@{
+        isComplete = $unknownCheckoutRootConfigurations.Count -eq 0 -and $missingCheckoutRootConfigurations.Count -eq 0
+        configurationCount = $checkoutRoots.Count
+        unknownConfigurations = $unknownCheckoutRootConfigurations
+        missingConfigurations = $missingCheckoutRootConfigurations
+      }
       duplicatePackageIds = $duplicatePackageIds
       missingProjectReferences = $missingProjectReferences
       missingDeclaredProjects = $missingDeclaredProjects

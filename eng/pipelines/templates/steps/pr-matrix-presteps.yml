@@ -72,18 +72,27 @@ steps:
         $checkoutGraphPath = "$checkoutGraphDirectory/checkout-graph.json"
         New-Item -ItemType Directory -Path $checkoutGraphDirectory -Force | Out-Null
 
+        function New-SparseCheckoutProjection {
+          dotnet msbuild /nologo /nr:false /v:minimal `
+            /t:CreateSparseCheckoutGraph `
+            "$(Build.SourcesDirectory)/eng/tools/RepositoryProjectGraph/RepositoryProjectGraph.csproj" `
+            /p:SparseCheckoutPackageInfoDirectory="$(Build.ArtifactStagingDirectory)/PackageInfo" `
+            /p:SparseCheckoutRepoRoot="$(Build.SourcesDirectory)" `
+            /p:SparseCheckoutSourceGraphPath="$graphPath" `
+            /p:SparseCheckoutOutputPath="$checkoutGraphPath" `
+            /p:SparseCheckoutSourceCommit="$(Build.SourceVersion)"
+          if ($LASTEXITCODE -ne 0) {
+            throw "Sparse checkout projection failed with exit code $LASTEXITCODE."
+          }
+        }
+
         try {
           $reusedGraph = $false
           if (Test-Path -LiteralPath $graphPath) {
             try {
               # Projection validates commit provenance, Debug input coverage, NuGet
               # completeness, and schema policy before accepting the reusable artifact.
-              ./eng/scripts/Create-SparseCheckoutGraph.ps1 `
-                -PackageInfoDirectory "$(Build.ArtifactStagingDirectory)/PackageInfo" `
-                -RepoRoot "$(Build.SourcesDirectory)" `
-                -GraphPath $graphPath `
-                -OutputPath $checkoutGraphPath `
-                -SourceCommit "$(Build.SourceVersion)"
+              New-SparseCheckoutProjection
               $reusedGraph = $true
               Write-Host 'REPOSITORY_PROJECT_GRAPH_RESULT=reused'
             }
@@ -106,12 +115,7 @@ steps:
               throw "RepositoryProjectGraph generation failed with exit code $LASTEXITCODE."
             }
 
-            ./eng/scripts/Create-SparseCheckoutGraph.ps1 `
-              -PackageInfoDirectory "$(Build.ArtifactStagingDirectory)/PackageInfo" `
-              -RepoRoot "$(Build.SourcesDirectory)" `
-              -GraphPath $graphPath `
-              -OutputPath $checkoutGraphPath `
-              -SourceCommit "$(Build.SourceVersion)"
+            New-SparseCheckoutProjection
             Write-Host 'REPOSITORY_PROJECT_GRAPH_RESULT=generated'
           }
           Write-Host 'SPARSE_CHECKOUT_GRAPH_RESULT=available'
