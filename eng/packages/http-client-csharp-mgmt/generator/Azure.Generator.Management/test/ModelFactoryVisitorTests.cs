@@ -263,12 +263,26 @@ namespace Azure.Generator.Mgmt.Tests
         [Test]
         public void RestoredFactoryMethodDocumentationIsIndependentOfLastContractIndentation()
         {
-            var firstDocs = DescribeDocs(BuildRestoredMethodWithUnmatchedParameter(
+            // The indentation is varied on a parameter that still maps to the model as well as one that does not,
+            // so this cannot pass merely because unmatched text is discarded.
+            var firstDocs = DescribeDocs(BuildRestoredMethodWithIndentedLegacyDocs(
+                $"Previous parameter summary.\n            Previous parameter details.",
                 $"Legacy parameter summary.\n             - First item.\n            Legacy parameter details."));
-            var secondDocs = DescribeDocs(BuildRestoredMethodWithUnmatchedParameter(
+            var secondDocs = DescribeDocs(BuildRestoredMethodWithIndentedLegacyDocs(
+                $"Previous parameter summary.\n                        Previous parameter details.",
                 $"Legacy parameter summary.\n                         - First item.\n                        Legacy parameter details."));
 
             Assert.That(secondDocs, Is.EqualTo(firstDocs));
+
+            // The matched parameter is documented from the current model regardless of how the last contract was
+            // indented, and no rendered line carries the writer's indentation. That growth is the #62444 regression.
+            Assert.That(firstDocs, Does.Contain("Current parameter summary."));
+            Assert.That(firstDocs, Does.Contain("Current parameter details."));
+            Assert.That(firstDocs, Does.Not.Contain("Previous parameter details."));
+            Assert.That(
+                firstDocs.Split('\n').Any(line => line.StartsWith("      ")),
+                Is.False,
+                "regenerated documentation must not carry the last contract's continuation indentation");
         }
 
         [Test]
@@ -522,6 +536,44 @@ namespace Azure.Generator.Mgmt.Tests
                 model.Type,
                 "legacyValue",
                 parameterDescription);
+
+            Assert.That(
+                Management.Visitors.ModelFactoryBackwardCompatHelper.TryCreateBackwardCompatMethod(
+                    previousMethod,
+                    modelFactory,
+                    out var restoredMethod),
+                Is.True);
+
+            return restoredMethod!;
+        }
+
+        private static MethodProvider BuildRestoredMethodWithIndentedLegacyDocs(
+            FormattableString matchedLegacyDescription,
+            FormattableString unmatchedLegacyDescription)
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            model.FullConstructor.Signature.Parameters.Single(parameter => parameter.Name == "value")
+                .Update(description: $"Current parameter summary.\nCurrent parameter details.");
+
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var previousSignature = new MethodSignature(
+                "TestModel",
+                $"Previous model summary.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"Previous return summary.",
+                [
+                    new ParameterProvider("value", matchedLegacyDescription, typeof(string)),
+                    new ParameterProvider("legacyValue", unmatchedLegacyDescription, typeof(string))
+                ]);
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            var previousMethod = new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView);
 
             Assert.That(
                 Management.Visitors.ModelFactoryBackwardCompatHelper.TryCreateBackwardCompatMethod(
