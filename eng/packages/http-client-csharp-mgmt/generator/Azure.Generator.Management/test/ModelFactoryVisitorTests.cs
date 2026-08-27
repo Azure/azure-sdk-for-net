@@ -618,7 +618,7 @@ namespace Azure.Generator.Mgmt.Tests
                 Return(new NewInstanceExpression(model.Type, [startVariable, endVariable, additionalDataVariable])),
                 model);
 
-            Management.Visitors.ModelFactoryBackwardCompatHelper.FixConstructorCalls([method]);
+            Management.Visitors.SerializationConstructorCallHelper.FixConstructorCalls([method]);
 
             var rendered = method.BodyStatements!.ToDisplayString();
             Assert.That(rendered, Does.Contain("new global::Samples.Models.TestModel(endOn, startOn, additionalBinaryDataProperties)"));
@@ -661,7 +661,7 @@ namespace Azure.Generator.Mgmt.Tests
                 });
             modelFactory.Update(methods: [method]);
 
-            Management.Visitors.ModelFactoryBackwardCompatHelper.FixConstructorCalls(modelFactory.Methods);
+            Management.Visitors.SerializationConstructorCallHelper.FixConstructorCalls(modelFactory.Methods);
 
             var rendered = new TypeProviderWriter(modelFactory).Write().Content;
             Assert.That(rendered, Does.Not.Contain("name0"));
@@ -696,7 +696,7 @@ namespace Azure.Generator.Mgmt.Tests
                 modelFactory);
             modelFactory.Update(methods: [method]);
 
-            Management.Visitors.ModelFactoryBackwardCompatHelper.FixConstructorCalls(modelFactory.Methods);
+            Management.Visitors.SerializationConstructorCallHelper.FixConstructorCalls(modelFactory.Methods);
 
             var rendered = new TypeProviderWriter(modelFactory).Write().Content;
             Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(vmwareId, ((global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>)default));"));
@@ -730,7 +730,7 @@ namespace Azure.Generator.Mgmt.Tests
                 modelFactory);
             modelFactory.Update(methods: [method]);
 
-            Management.Visitors.ModelFactoryBackwardCompatHelper.FixConstructorCalls(modelFactory.Methods);
+            Management.Visitors.SerializationConstructorCallHelper.FixConstructorCalls(modelFactory.Methods);
 
             var rendered = new TypeProviderWriter(modelFactory).Write().Content;
             Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(vmwareId, ((global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>)default));"));

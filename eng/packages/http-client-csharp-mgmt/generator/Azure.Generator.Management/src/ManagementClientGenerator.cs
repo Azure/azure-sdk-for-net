@@ -67,12 +67,12 @@ namespace Azure.Generator.Management
             }
             else
             {
-                ModelFactoryBackwardCompatHelper.FixConstructorCalls(provider.Methods);
+                SerializationConstructorCallHelper.FixConstructorCalls(provider.Methods);
             }
 
             foreach (var serialization in provider.SerializationProviders)
             {
-                ModelFactoryBackwardCompatHelper.FixConstructorCalls(serialization.Methods);
+                SerializationConstructorCallHelper.FixConstructorCalls(serialization.Methods);
             }
 
             return base.GetWriter(provider);
