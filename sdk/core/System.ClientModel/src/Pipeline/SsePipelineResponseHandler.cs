@@ -12,6 +12,21 @@ namespace System.ClientModel.Primitives;
 internal sealed class SsePipelineResponseHandler : IDisposable
 {
     private const int MaxRedirects = 50;
+
+    // Replaying a request on reconnect requires a private snapshot of the
+    // body taken at send time: holding the caller's content instead would
+    // transmit whatever those bytes happen to be at reconnect time, which for
+    // pooled or reused buffers can be unrelated - possibly another tenant's -
+    // data. Snapshotting a large body is an unbounded memory cost per
+    // in-flight stream, so requests with a large or unmeasurable body opt out
+    // of reconnection and keep their original one-shot behaviour. Callers who
+    // need those replayed can do so far more cheaply than this type can: they
+    // still own the content, so they can re-send it without a snapshot at all.
+    // The limit is set to cover ordinary streaming requests, including long
+    // conversations and a single inline image, since a large request tends to
+    // produce a long-running stream that is the most exposed to a drop.
+    private const long MaxReplayableContentLength = 4 * 1024 * 1024;
+
     private readonly ClientPipeline _pipeline;
     private readonly PipelineMessage _templateMessage;
     private readonly PipelineMessageClassifier _classifier;
@@ -92,8 +107,23 @@ internal sealed class SsePipelineResponseHandler : IDisposable
         {
             return null;
         }
+        if (!CanSnapshotContent(message.Request.Content))
+        {
+            return null;
+        }
 
         return new SsePipelineResponseHandler(pipeline, message);
+    }
+
+    private static bool CanSnapshotContent(BinaryContent? content)
+    {
+        if (content is null)
+        {
+            return true;
+        }
+
+        return content.TryComputeLength(out long length) &&
+            length <= MaxReplayableContentLength;
     }
 
     internal void WrapResponse(PipelineMessage message)
@@ -164,8 +194,23 @@ internal sealed class SsePipelineResponseHandler : IDisposable
             ReconnectAsync,
             _operationCancellationToken,
             reconnectOwner: this,
-            initialLastEventId: _initialLastEventId);
+            initialLastEventId: _initialLastEventId,
+            requireLastEventId: !IsIdempotent(_method));
     }
+
+    // RFC 9110 section 9.2.2: a client should not automatically retry a
+    // request with a non-idempotent method unless it knows the request was
+    // never applied. A dropped SSE stream gives no such assurance - the
+    // service may have already acted on the request - so replaying one of
+    // these is only safe once the service has published a resumption token
+    // that tells it to continue rather than repeat the work.
+    private static bool IsIdempotent(string method)
+        => method.Equals("GET", StringComparison.OrdinalIgnoreCase) ||
+            method.Equals("HEAD", StringComparison.OrdinalIgnoreCase) ||
+            method.Equals("OPTIONS", StringComparison.OrdinalIgnoreCase) ||
+            method.Equals("TRACE", StringComparison.OrdinalIgnoreCase) ||
+            method.Equals("PUT", StringComparison.OrdinalIgnoreCase) ||
+            method.Equals("DELETE", StringComparison.OrdinalIgnoreCase);
 
     // Reconnects always use the same pipeline send mode as the initial
     // request. Process and ProcessAsync are independent transport
@@ -286,12 +331,18 @@ internal sealed class SsePipelineResponseHandler : IDisposable
             }
 
             // A successful response that is not an event stream cannot be
-            // spliced onto the events already delivered, so end the stream
-            // rather than surface unrelated bytes as events.
+            // spliced onto the events already delivered. Ending the stream
+            // quietly would be indistinguishable from the 204 stop signal and
+            // would present a truncated stream as a complete one, so surface
+            // the protocol violation instead.
             if (!IsEventStreamResponse(response))
             {
+                string? contentType = GetContentType(response);
                 response.Dispose();
-                return null;
+                throw new InvalidOperationException(
+                    "An SSE reconnect response must have content type " +
+                    "'text/event-stream', but received " +
+                    $"'{contentType ?? "none"}'.");
             }
 
             Stream stream = response.ContentStream ??
@@ -519,6 +570,13 @@ internal sealed class SsePipelineResponseHandler : IDisposable
                 out isRetriable)) &&
             isRetriable;
     }
+
+    private static string? GetContentType(PipelineResponse response)
+        => response.Headers.TryGetValue(
+            "Content-Type",
+            out string? contentType)
+                ? contentType
+                : null;
 
     private static bool IsEventStreamResponse(PipelineResponse response)
         => response.Headers.TryGetValue(

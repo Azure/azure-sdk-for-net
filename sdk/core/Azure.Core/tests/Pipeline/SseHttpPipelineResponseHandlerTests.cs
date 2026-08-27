@@ -49,16 +49,12 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task EmptyIdRemovesLastEventIdHeader()
+        public void EmptyIdStopsReconnecting()
         {
             int requestCount = 0;
-            string? lastEventId = null;
-            var transport = new MockTransport(request =>
+            var transport = new MockTransport(_ =>
             {
                 requestCount++;
-                request.Headers.TryGetValue(
-                    "Last-Event-ID",
-                    out lastEventId);
                 return requestCount == 1
                     ? CreateDroppedResponse(
                         "retry: 0\nid: first\ndata: one\n\n" +
@@ -70,11 +66,21 @@ namespace Azure.Core.Tests
                 pipeline,
                 new Uri("https://example.test/events"));
 
-            await pipeline.SendAsync(message, CancellationToken.None);
-            await ReadToEndAsync(message.Response.ContentStream!);
-
-            Assert.AreEqual(2, requestCount);
-            Assert.IsNull(lastEventId);
+            // The event stream specification would reconnect here and omit
+            // the Last-Event-ID header. An empty last event id leaves no
+            // resumption point, so replaying carries the same divergence
+            // hazard as a stream that never sent an id at all and the drop
+            // is surfaced instead.
+            Assert.ThrowsAsync<IOException>(
+                async () =>
+                {
+                    await pipeline.SendAsync(
+                        message,
+                        CancellationToken.None);
+                    await ReadToEndAsync(
+                        message.Response.ContentStream!);
+                });
+            Assert.AreEqual(1, requestCount);
         }
 
         [Test]
@@ -214,7 +220,7 @@ namespace Azure.Core.Tests
                         "Location",
                         "https://example.test/temporary"),
                     2 => CreateDroppedResponse(
-                        "retry: 0\ndata: one\n\n"),
+                        "retry: 0\nid: one\ndata: one\n\n"),
                     _ => new MockResponse(204)
                 };
             });
@@ -299,6 +305,294 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task DroppedStreamWithoutEventIdDoesNotReconnect()
+        {
+            int requestCount = 0;
+            var transport = new MockTransport(_ =>
+            {
+                requestCount++;
+                return requestCount == 1
+                    ? CreateDroppedResponse(
+                        "retry: 0\ndata: one\n\n")
+                    : new MockResponse(204);
+            });
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"));
+
+            await pipeline.SendAsync(message, CancellationToken.None);
+            Stream stream = message.Response.ContentStream!;
+            var buffer = new byte[1024];
+            int read = await stream.ReadAsync(buffer, 0, buffer.Length);
+
+            Assert.AreEqual(
+                "retry: 0\ndata: one\n\n",
+                Encoding.UTF8.GetString(buffer, 0, read),
+                "Events delivered before the drop are still returned.");
+            Assert.ThrowsAsync<IOException>(
+                async () => await stream.ReadExactlyAsync(buffer),
+                "A service that sends no id cannot resume, so the drop " +
+                "must surface instead of being silently replayed.");
+            Assert.AreEqual(
+                1,
+                requestCount,
+                "Replaying without a last event id would restart " +
+                "generation and splice a divergent completion onto the " +
+                "events already delivered.");
+        }
+
+        [Test]
+        public void NonIdempotentRequestWithoutEventIdDoesNotReconnect()
+        {
+            int requestCount = 0;
+            var transport = new MockTransport(_ =>
+            {
+                requestCount++;
+                return requestCount == 1
+                    ? CreateDroppedResponse("retry: 0\ndata: partial")
+                    : CreateSseResponse("retry: 0\ndata: whole\n\n");
+            });
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"),
+                RequestMethod.Post,
+                BinaryData.FromString("{}"));
+
+            Assert.ThrowsAsync<IOException>(
+                async () =>
+                {
+                    await pipeline.SendAsync(
+                        message,
+                        CancellationToken.None);
+                    await ReadToEndAsync(
+                        message.Response.ContentStream!);
+                },
+                "RFC 9110 forbids automatically replaying a POST that " +
+                "may already have been applied.");
+            Assert.AreEqual(1, requestCount);
+        }
+
+        [Test]
+        public async Task NonIdempotentRequestWithEventIdReconnects()
+        {
+            int requestCount = 0;
+            string? lastEventId = null;
+            var transport = new MockTransport(request =>
+            {
+                requestCount++;
+                lastEventId = request.Headers.TryGetValue(
+                    "Last-Event-ID",
+                    out string? value)
+                        ? value
+                        : null;
+                return requestCount == 1
+                    ? CreateDroppedResponse(
+                        "retry: 0\nid: first\ndata: one\n\n")
+                    : new MockResponse(204);
+            });
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"),
+                RequestMethod.Post,
+                BinaryData.FromString("{}"));
+
+            await pipeline.SendAsync(message, CancellationToken.None);
+            string content = await ReadToEndAsync(
+                message.Response.ContentStream!);
+
+            Assert.AreEqual("retry: 0\nid: first\ndata: one\n\n", content);
+            Assert.AreEqual(
+                2,
+                requestCount,
+                "A service that publishes a resumption token has opted " +
+                "into being asked to continue rather than repeat the work.");
+            Assert.AreEqual("first", lastEventId);
+        }
+
+        [Test]
+        public async Task IdempotentRequestWithoutEventIdReconnects()
+        {
+            int requestCount = 0;
+            var transport = new MockTransport(_ =>
+            {
+                requestCount++;
+                return requestCount == 1
+                    ? CreateDroppedResponse("retry: 0\ndata: partial")
+                    : CreateSseResponse("retry: 0\ndata: whole\n\n");
+            });
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"),
+                RequestMethod.Put,
+                BinaryData.FromString("{}"));
+
+            await pipeline.SendAsync(message, CancellationToken.None);
+            string content = await ReadToEndAsync(
+                message.Response.ContentStream!);
+
+            Assert.AreEqual("retry: 0\ndata: whole\n\n", content);
+            Assert.AreEqual(
+                2,
+                requestCount,
+                "An idempotent method is safe to replay by definition.");
+        }
+
+        [Test]
+        public void SyncDroppedStreamWithoutEventIdDoesNotReconnect()
+        {
+            var transport = new SyncOnlyTransport(_ =>
+                CreateDroppedResponse("retry: 0\ndata: one\n\n"));
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"));
+
+            pipeline.Send(message, CancellationToken.None);
+            Stream stream = message.Response.ContentStream!;
+            var buffer = new byte[1024];
+            int read = stream.Read(buffer, 0, buffer.Length);
+
+            Assert.AreEqual(
+                "retry: 0\ndata: one\n\n",
+                Encoding.UTF8.GetString(buffer, 0, read));
+            Assert.Throws<IOException>(
+                () => stream.ReadExactly(buffer));
+            Assert.AreEqual(1, transport.RequestCount);
+        }
+
+        [Test]
+        public async Task DroppedStreamBeforeAnyEventStillReconnects()
+        {
+            int requestCount = 0;
+            var transport = new MockTransport(_ =>
+            {
+                requestCount++;
+                return requestCount == 1
+                    ? CreateDroppedResponse("retry: 0\ndata: partial")
+                    : CreateSseResponse("retry: 0\ndata: whole\n\n");
+            });
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"));
+
+            await pipeline.SendAsync(message, CancellationToken.None);
+            string content = await ReadToEndAsync(
+                message.Response.ContentStream!);
+
+            StringAssert.Contains("data: whole", content);
+            Assert.AreEqual(
+                2,
+                requestCount,
+                "Restarting from the beginning is exactly correct when " +
+                "no event has been dispatched yet.");
+        }
+
+        [Test]
+        public async Task OversizedRequestContentIsNotWrapped()
+        {
+            int requestCount = 0;
+            var transport = new MockTransport(_ =>
+            {
+                requestCount++;
+                return requestCount == 1
+                    ? CreateDroppedResponse(
+                        "retry: 0\nid: first\ndata: one\n\n")
+                    : new MockResponse(204);
+            });
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"),
+                RequestMethod.Post,
+                BinaryData.FromBytes(
+                    new byte[(4 * 1024 * 1024) + 1]));
+
+            await pipeline.SendAsync(message, CancellationToken.None);
+            Stream stream = message.Response.ContentStream!;
+            var buffer = new byte[1024];
+            int read = await stream.ReadAsync(buffer, 0, buffer.Length);
+
+            Assert.AreEqual(
+                "retry: 0\nid: first\ndata: one\n\n",
+                Encoding.UTF8.GetString(buffer, 0, read));
+            Assert.ThrowsAsync<IOException>(
+                async () => await stream.ReadExactlyAsync(buffer),
+                "A body too large to snapshot must keep the original " +
+                "one-shot behaviour.");
+            Assert.AreEqual(1, requestCount);
+        }
+
+        [Test]
+        public async Task UnmeasurableRequestContentIsNotWrapped()
+        {
+            int requestCount = 0;
+            var transport = new MockTransport(_ =>
+            {
+                requestCount++;
+                return requestCount == 1
+                    ? CreateDroppedResponse(
+                        "retry: 0\nid: first\ndata: one\n\n")
+                    : new MockResponse(204);
+            });
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"));
+            message.Request.Method = RequestMethod.Post;
+            message.Request.Content =
+                new UnmeasurableContent(Encoding.UTF8.GetBytes("body"));
+
+            await pipeline.SendAsync(message, CancellationToken.None);
+            Stream stream = message.Response.ContentStream!;
+            var buffer = new byte[1024];
+            int read = await stream.ReadAsync(buffer, 0, buffer.Length);
+
+            Assert.AreEqual(
+                "retry: 0\nid: first\ndata: one\n\n",
+                Encoding.UTF8.GetString(buffer, 0, read));
+            Assert.ThrowsAsync<IOException>(
+                async () => await stream.ReadExactlyAsync(buffer),
+                "A body whose length cannot be measured must not be " +
+                "snapshotted.");
+            Assert.AreEqual(1, requestCount);
+        }
+
+        [Test]
+        public async Task RequestContentAtSizeLimitIsStillWrapped()
+        {
+            int requestCount = 0;
+            var transport = new MockTransport(_ =>
+            {
+                requestCount++;
+                return requestCount == 1
+                    ? CreateDroppedResponse(
+                        "retry: 0\nid: first\ndata: one\n\n")
+                    : new MockResponse(204);
+            });
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"),
+                RequestMethod.Post,
+                BinaryData.FromBytes(new byte[4 * 1024 * 1024]));
+
+            await pipeline.SendAsync(message, CancellationToken.None);
+            string content = await ReadToEndAsync(
+                message.Response.ContentStream!);
+
+            StringAssert.Contains("data: one", content);
+            Assert.AreEqual(
+                2,
+                requestCount,
+                "A body exactly at the limit is still replayable.");
+        }
+
+        [Test]
         public async Task NonSseResponseIsNotWrapped()
         {
             int requestCount = 0;
@@ -373,7 +667,7 @@ namespace Azure.Core.Tests
                 authorizationHeaders.Add(authorization!);
                 return requestCount == 1
                     ? CreateDroppedResponse(
-                        "retry: 0\ndata: one\n\n")
+                        "retry: 0\nid: one\ndata: one\n\n")
                     : new MockResponse(204);
             });
             var policy = new RotatingAuthenticationPolicy();
@@ -445,10 +739,10 @@ namespace Azure.Core.Tests
             var transport = new SyncOnlyTransport(requestCount =>
                 requestCount == 1
                     ? CreateDroppedResponse(
-                        "retry: 0\ndata: one\n\n")
+                        "retry: 0\nid: one\ndata: one\n\n")
                     : requestCount == 2
                         ? CreateDroppedResponse(
-                            "data: two\n\n")
+                            "id: two\ndata: two\n\n")
                         : new MockResponse(204));
             HttpPipeline pipeline = new(transport);
             using HttpMessage message = CreateMessage(
@@ -520,7 +814,7 @@ namespace Azure.Core.Tests
                 if (requestCount == 1)
                 {
                     return CreateDroppedResponse(
-                        "retry: 0\ndata: one\n\n");
+                        "retry: 0\nid: one\ndata: one\n\n");
                 }
 
                 reconnectResponse = CreateDroppedResponse(
@@ -605,7 +899,7 @@ namespace Azure.Core.Tests
                 return requestCount switch
                 {
                     1 => CreateDroppedResponse(
-                        "retry: 0\ndata: one\n\n"),
+                        "retry: 0\nid: one\ndata: one\n\n"),
                     2 => new MockResponse(503),
                     _ => new MockResponse(204)
                 };
@@ -707,7 +1001,7 @@ namespace Azure.Core.Tests
                 var dropped = new MockResponse(200)
                 {
                     ContentStream = new ThrowAtEndStream(
-                        "retry: 0\ndata: one\n\n")
+                        "retry: 0\nid: one\ndata: one\n\n")
                 };
                 dropped.AddHeader(
                     "Content-Type",
@@ -731,7 +1025,7 @@ namespace Azure.Core.Tests
         }
 
         [Test]
-        public async Task ReconnectWithNonEventStreamContentTypeEndsStream()
+        public void ReconnectWithNonEventStreamContentTypeFailsStream()
         {
             int requestCount = 0;
             var transport = new MockTransport(_ =>
@@ -739,7 +1033,7 @@ namespace Azure.Core.Tests
                 requestCount++;
                 return requestCount == 1
                     ? CreateDroppedResponse(
-                        "retry: 0\ndata: one\n\n")
+                        "retry: 0\nid: first\ndata: one\n\n")
                     : new MockResponse(200)
                         .AddHeader("Content-Type", "application/json")
                         .SetContent("data: gateway\n\n");
@@ -749,19 +1043,25 @@ namespace Azure.Core.Tests
                 pipeline,
                 new Uri("https://example.test/events"));
 
-            await pipeline.SendAsync(message, CancellationToken.None);
-            string content = await ReadToEndAsync(
-                message.Response.ContentStream!);
+            InvalidOperationException? exception =
+                Assert.ThrowsAsync<InvalidOperationException>(
+                    async () =>
+                    {
+                        await pipeline.SendAsync(
+                            message,
+                            CancellationToken.None);
+                        await ReadToEndAsync(
+                            message.Response.ContentStream!);
+                    });
 
-            StringAssert.Contains("data: one", content);
-            StringAssert.DoesNotContain(
-                "gateway",
-                content,
-                "A reconnect that is not an event stream must not be spliced onto the delivered events.");
+            StringAssert.Contains(
+                "text/event-stream",
+                exception!.Message,
+                "The failure must identify the unexpected content type.");
             Assert.AreEqual(
                 2,
                 requestCount,
-                "A reconnect that is not an event stream must end the stream.");
+                "A reconnect that fails its content type contract must be observable rather than look like a clean stop.");
         }
 
         [Test]
@@ -774,7 +1074,7 @@ namespace Azure.Core.Tests
                 if (requestCount == 1)
                 {
                     return CreateDroppedResponse(
-                        "retry: 0\ndata: one\n\n");
+                        "retry: 0\nid: one\ndata: one\n\n");
                 }
 
                 // Both attempts of the first reconnect fail, so the retry
@@ -878,6 +1178,37 @@ namespace Azure.Core.Tests
             };
             response.AddHeader("Content-Type", "text/event-stream");
             return response;
+        }
+
+        private sealed class UnmeasurableContent : RequestContent
+        {
+            private readonly byte[] _bytes;
+
+            public UnmeasurableContent(byte[] bytes) => _bytes = bytes;
+
+            public override bool TryComputeLength(out long length)
+            {
+                length = 0;
+                return false;
+            }
+
+            public override void WriteTo(
+                Stream stream,
+                CancellationToken cancellation)
+                => stream.Write(_bytes, 0, _bytes.Length);
+
+            public override Task WriteToAsync(
+                Stream stream,
+                CancellationToken cancellation)
+                => stream.WriteAsync(
+                    _bytes,
+                    0,
+                    _bytes.Length,
+                    cancellation);
+
+            public override void Dispose()
+            {
+            }
         }
 
         private sealed class ThrowAtEndStream : MemoryStream
@@ -1045,7 +1376,7 @@ namespace Azure.Core.Tests
                 if (_requestCount == 1)
                 {
                     message.Response = CreateDroppedResponse(
-                        "retry: 0\ndata: one\n\n");
+                        "retry: 0\nid: one\ndata: one\n\n");
                     return;
                 }
 

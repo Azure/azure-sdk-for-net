@@ -3,6 +3,7 @@
 
 using System.Globalization;
 using System.IO;
+using System.Runtime.ExceptionServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -45,6 +46,7 @@ internal sealed class SseReconnectingStream : Stream
     private readonly Func<string?, CancellationToken, SseReconnectResult?> _reconnect;
     private readonly CancellationToken _operationCancellationToken;
     private readonly IDisposable? _reconnectOwner;
+    private readonly bool _requireLastEventId;
     private readonly CancellationTokenSource _disposeCancellation = new();
     private readonly object _currentSync = new();
     private readonly byte[] _readBuffer = new byte[ReadBufferSize];
@@ -61,6 +63,8 @@ internal sealed class SseReconnectingStream : Stream
     private bool _reconnectImmediately;
     private bool _endOfStream;
     private bool _currentFaulted;
+    private bool _dispatchedEvent;
+    private ExceptionDispatchInfo? _currentFault;
     private volatile bool _disposed;
     private bool _isFirstLine = true;
 
@@ -71,7 +75,8 @@ internal sealed class SseReconnectingStream : Stream
         CancellationToken operationCancellationToken,
         bool reconnectImmediately = false,
         IDisposable? reconnectOwner = null,
-        string? initialLastEventId = null)
+        string? initialLastEventId = null,
+        bool requireLastEventId = false)
     {
         _current = new SseReconnectResult(initialStream);
         _reconnect = reconnect;
@@ -81,6 +86,7 @@ internal sealed class SseReconnectingStream : Stream
         _reconnectOwner = reconnectOwner;
         _lastEventId = initialLastEventId;
         _eventIdBuffer = initialLastEventId;
+        _requireLastEventId = requireLastEventId;
     }
 
     public override bool CanRead => !_disposed;
@@ -128,11 +134,11 @@ internal sealed class SseReconnectingStream : Stream
                         0,
                         _readBuffer.Length);
                 }
-                catch (IOException) when (
+                catch (IOException ex) when (
                     !linkedCancellation.IsCancellationRequested)
                 {
                     read = 0;
-                    _currentFaulted = true;
+                    MarkCurrentFaulted(ex);
                 }
             }
 
@@ -207,11 +213,11 @@ internal sealed class SseReconnectingStream : Stream
                         _readBuffer.Length,
                         linkedCancellation.Token).ConfigureAwait(false);
                 }
-                catch (IOException) when (
+                catch (IOException ex) when (
                     !linkedCancellation.IsCancellationRequested)
                 {
                     read = 0;
-                    _currentFaulted = true;
+                    MarkCurrentFaulted(ex);
                 }
             }
 
@@ -282,11 +288,11 @@ internal sealed class SseReconnectingStream : Stream
                         _readBuffer,
                         linkedCancellation.Token).ConfigureAwait(false);
                 }
-                catch (IOException) when (
+                catch (IOException ex) when (
                     !linkedCancellation.IsCancellationRequested)
                 {
                     read = 0;
-                    _currentFaulted = true;
+                    MarkCurrentFaulted(ex);
                 }
             }
 
@@ -323,9 +329,50 @@ internal sealed class SseReconnectingStream : Stream
     }
 #endif
 
+    private void MarkCurrentFaulted(IOException exception)
+    {
+        _currentFaulted = true;
+        _currentFault = ExceptionDispatchInfo.Capture(exception);
+    }
+
+    // A reconnect can only land the caller back at the right place in the
+    // stream when the service participates in the SSE resumption contract by
+    // emitting "id:" fields. Without a last event id there is nothing to send
+    // in Last-Event-ID, so the service restarts the stream from the beginning
+    // and every event already handed to the caller would be delivered a second
+    // time. Silently duplicating events is worse than surfacing the drop, so
+    // resumption is only attempted when it can be done faithfully.
+    //
+    // A server-issued last event id makes a replay safe on its own: the
+    // service published a resumption token and is expected to continue from
+    // it rather than repeat work. Without one, replaying is only acceptable
+    // when nothing has been dispatched yet and the request method is
+    // idempotent, since RFC 9110 section 9.2.2 forbids automatically retrying
+    // a non-idempotent request that may already have been applied.
+    private bool CanResumeFaithfully
+        => !string.IsNullOrEmpty(_lastEventId) ||
+            (!_dispatchedEvent && !_requireLastEventId);
+
+    private bool TryFailUnresumableStream()
+    {
+        if (CanResumeFaithfully)
+        {
+            return false;
+        }
+
+        _endOfStream = true;
+        _currentFault?.Throw();
+        return true;
+    }
+
     private bool Reconnect(CancellationToken cancellationToken)
     {
         if (_endOfStream)
+        {
+            return false;
+        }
+
+        if (TryFailUnresumableStream())
         {
             return false;
         }
@@ -397,6 +444,11 @@ internal sealed class SseReconnectingStream : Stream
         CancellationToken cancellationToken)
     {
         if (_endOfStream)
+        {
+            return false;
+        }
+
+        if (TryFailUnresumableStream())
         {
             return false;
         }
@@ -542,14 +594,16 @@ internal sealed class SseReconnectingStream : Stream
 
     private void CommitEvent()
     {
-        if (_pendingEvent.TryGetBuffer(
-            out ArraySegment<byte> eventBytes))
+        if (_pendingEvent.Length > 0 &&
+            _pendingEvent.TryGetBuffer(
+                out ArraySegment<byte> eventBytes))
         {
             _readyEvents.Position = _readyEvents.Length;
             _readyEvents.Write(
                 eventBytes.Array!,
                 eventBytes.Offset,
                 checked((int)_pendingEvent.Length));
+            _dispatchedEvent = true;
         }
 
         _pendingEvent.SetLength(0);
@@ -663,6 +717,7 @@ internal sealed class SseReconnectingStream : Stream
 
             _current = next;
             _currentFaulted = false;
+            _currentFault = null;
             return true;
         }
     }
