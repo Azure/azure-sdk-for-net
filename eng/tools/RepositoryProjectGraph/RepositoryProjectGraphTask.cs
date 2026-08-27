@@ -82,10 +82,10 @@ public sealed class RepositoryProjectGraphTask : Task
             .TrimEnd(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar);
 
         var globalProperties = GetGlobalProperties();
-        if (!IncludeInputs)
-        {
-            globalProperties["EnableDefaultItems"] = "false";
-        }
+        // Sparse checkout includes the directory containing every reached project, so SDK default
+        // items beneath that directory add no coverage. Keep imports and explicit linked items,
+        // while avoiding repository-wide evaluation of the default Compile/None/Content globs.
+        globalProperties["EnableDefaultItems"] = "false";
 
         // Match the established ProjectDependsOn dependency query: evaluate Debug across every
         // declared TFM. Sparse checkout consumes this same graph rather than adding another build

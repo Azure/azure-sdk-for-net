@@ -339,6 +339,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $fixtureRoot = Join-Path $TestDrive "task-fixture"
         $fixtureA = Join-Path $fixtureRoot "sdk/example/A/tests/A.Tests.csproj"
         $fixtureB = Join-Path $fixtureRoot "sdk/example/B/src/B.csproj"
+        $implicitCompile = Join-Path (Split-Path $fixtureA -Parent) "Implicit.cs"
         $hintAssembly = Join-Path $fixtureRoot "sdk/shared/lib/Shared.dll"
         $analyzerAssembly = Join-Path $fixtureRoot "sdk/shared/analyzers/Shared.Analyzer.dll"
         $driverPath = Join-Path $fixtureRoot "driver.proj"
@@ -346,6 +347,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $taskGraphPath = Join-Path $fixtureRoot "task.json"
         New-Item -ItemType Directory -Path (Split-Path $fixtureA -Parent), (Split-Path $fixtureB -Parent), `
             (Split-Path $hintAssembly -Parent), (Split-Path $analyzerAssembly -Parent) -Force | Out-Null
+        Set-Content $implicitCompile "internal class Implicit {}"
         Set-Content $hintAssembly "fixture"
         Set-Content $analyzerAssembly "fixture"
 
@@ -448,6 +450,9 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         }
         $analyzerInput.path | Should -Be "sdk/shared/analyzers/Shared.Analyzer.dll"
         $analyzerInput.targetFrameworks | Should -Be @("net8.0", "net9.0")
+        @($taskGraph.inputs | Where-Object path -eq "sdk/example/A/tests/Implicit.cs") | Should -BeNullOrEmpty
+        @($taskGraph.checkoutRoots.'configuration:sdk/example/A/tests/A.Tests.csproj|net8.0') |
+            Should -Contain '/sdk/example/*'
         @($taskGraph.checkoutRoots.'configuration:sdk/example/A/tests/A.Tests.csproj|net8.0') |
             Should -Contain '/sdk/shared/*'
         Get-Content $taskRecordsPath | Should -Contain "CheckoutRoot|$fixtureA|net8.0|/sdk/shared/*"
