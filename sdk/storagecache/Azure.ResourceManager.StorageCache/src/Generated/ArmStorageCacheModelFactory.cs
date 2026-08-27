@@ -761,7 +761,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && adminStatus is null && autoImportPrefixes is null && conflictResolutionMode is null && enableDeletions is null && maximumErrors is null && state is null && statusCode is null && statusMessage is null && scanStartOn is null && scanEndOn is null && totalBlobsWalked is null && rateOfBlobWalk is null && totalBlobsImported is null && rateOfBlobImport is null && importedFiles is null && importedDirectories is null && importedSymlinks is null && preexistingFiles is null && preexistingDirectories is null && preexistingSymlinks is null && totalErrors is null && totalConflicts is null && blobSyncEvents is null && lastStartedTimeUTC is null && lastCompletionTimeUTC is null ? default : new AutoImportJobProperties(
+                provisioningState is null && adminStatus is null && autoImportPrefixes is null && conflictResolutionMode is null && enableDeletions is null && maximumErrors is null && state is null && statusCode is null && statusMessage is null && totalBlobsWalked is null && rateOfBlobWalk is null && totalBlobsImported is null && rateOfBlobImport is null && importedFiles is null && importedDirectories is null && importedSymlinks is null && preexistingFiles is null && preexistingDirectories is null && preexistingSymlinks is null && totalErrors is null && totalConflicts is null && blobSyncEvents is null && lastStartedTimeUTC is null && lastCompletionTimeUTC is null ? default : new AutoImportJobProperties(
                     provisioningState,
                     adminStatus,
                     (autoImportPrefixes ?? new ChangeTrackingList<string>()).ToList(),
@@ -772,8 +772,8 @@ namespace Azure.ResourceManager.StorageCache.Models
                         state,
                         statusCode,
                         statusMessage,
-                        scanStartOn,
-                        scanEndOn,
+                        default,
+                        default,
                         totalBlobsWalked,
                         rateOfBlobWalk,
                         totalBlobsImported,

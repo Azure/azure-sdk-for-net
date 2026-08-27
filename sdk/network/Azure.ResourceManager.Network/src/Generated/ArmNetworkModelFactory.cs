@@ -6583,7 +6583,7 @@ namespace Azure.ResourceManager.Network.Models
         {
             results ??= new ChangeTrackingList<TroubleshootingDetails>();
 
-            return new TroubleshootingResult(startOn, endOn, code, (results ?? new ChangeTrackingList<TroubleshootingDetails>()).ToList(), default);
+            return new TroubleshootingResult(default, default, code, (results ?? new ChangeTrackingList<TroubleshootingDetails>()).ToList(), default);
         }
 
         /// <param name="id"> The id of the get troubleshoot operation. </param>
@@ -6832,8 +6832,8 @@ namespace Azure.ResourceManager.Network.Models
                 providerLocation,
                 (providers ?? new ChangeTrackingList<string>()).ToList(),
                 (azureLocations ?? new ChangeTrackingList<AzureLocation>()).ToList(),
-                startOn,
-                endOn,
+                default,
+                default,
                 default);
         }
 
@@ -11230,7 +11230,7 @@ namespace Azure.ResourceManager.Network.Models
             return new PacketCaptureQueryStatusResult(
                 name,
                 id,
-                captureStartOn,
+                default,
                 packetCaptureStatus,
                 stopReason,
                 (packetCaptureError ?? new ChangeTrackingList<PcError>()).ToList(),
@@ -11256,7 +11256,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <returns> A new <see cref="Network.ConnectionMonitorData"/> instance for mocking. </returns>
         public static ConnectionMonitorData ConnectionMonitorData(ConnectionMonitorSource source = default, ConnectionMonitorDestination destination = default, bool? autoStart = default, int? monitoringIntervalInSeconds = default, IEnumerable<ConnectionMonitorEndpoint> endpoints = default, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations = default, IEnumerable<ConnectionMonitorTestGroup> testGroups = default, IEnumerable<ConnectionMonitorOutput> outputs = default, string notes = default, AzureLocation? location = default, IDictionary<string, string> tags = default, NetworkProvisioningState? provisioningState = default, DateTimeOffset? startOn = default, string monitoringStatus = default, ConnectionMonitorEndpointType? connectionMonitorType = default, string name = default)
         {
-            return new ConnectionMonitorData(source is null && destination is null && autoStart is null && monitoringIntervalInSeconds is null && endpoints is null && testConfigurations is null && testGroups is null && outputs is null && notes is null && provisioningState is null && startOn is null && monitoringStatus is null && connectionMonitorType is null ? default : new ConnectionMonitorResultProperties(
+            return new ConnectionMonitorData(source is null && destination is null && autoStart is null && monitoringIntervalInSeconds is null && endpoints is null && testConfigurations is null && testGroups is null && outputs is null && notes is null && provisioningState is null && monitoringStatus is null && connectionMonitorType is null ? default : new ConnectionMonitorResultProperties(
                 source,
                 destination,
                 autoStart,
@@ -11268,7 +11268,7 @@ namespace Azure.ResourceManager.Network.Models
                 notes,
                 default,
                 provisioningState,
-                startOn,
+                default,
                 monitoringStatus,
                 connectionMonitorType), name, default);
         }
@@ -11306,7 +11306,7 @@ namespace Azure.ResourceManager.Network.Models
                 notes,
                 default,
                 provisioningState,
-                startOn,
+                default,
                 monitoringStatus,
                 connectionMonitorType);
         }
@@ -17835,7 +17835,7 @@ namespace Azure.ResourceManager.Network.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ConnectionMonitorData ConnectionMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, AzureLocation? location = default, IReadOnlyDictionary<string, string> tags = default, ConnectionMonitorSource source = default, ConnectionMonitorDestination destination = default, bool? autoStart = default, int? monitoringIntervalInSeconds = default, IEnumerable<ConnectionMonitorEndpoint> endpoints = default, IEnumerable<ConnectionMonitorTestConfiguration> testConfigurations = default, IEnumerable<ConnectionMonitorTestGroup> testGroups = default, IEnumerable<ConnectionMonitorOutput> outputs = default, string notes = default, NetworkProvisioningState? provisioningState = default, DateTimeOffset? startOn = default, string monitoringStatus = default, ConnectionMonitorType? connectionMonitorType = default)
         {
-            return new ConnectionMonitorData(source is null && destination is null && autoStart is null && monitoringIntervalInSeconds is null && endpoints is null && testConfigurations is null && testGroups is null && outputs is null && notes is null && provisioningState is null && startOn is null && monitoringStatus is null ? default : new ConnectionMonitorResultProperties(
+            return new ConnectionMonitorData(source is null && destination is null && autoStart is null && monitoringIntervalInSeconds is null && endpoints is null && testConfigurations is null && testGroups is null && outputs is null && notes is null && provisioningState is null && monitoringStatus is null ? default : new ConnectionMonitorResultProperties(
                 source,
                 destination,
                 autoStart,
@@ -17847,7 +17847,7 @@ namespace Azure.ResourceManager.Network.Models
                 notes,
                 default,
                 provisioningState,
-                startOn,
+                default,
                 monitoringStatus,
                 default), name, default);
         }

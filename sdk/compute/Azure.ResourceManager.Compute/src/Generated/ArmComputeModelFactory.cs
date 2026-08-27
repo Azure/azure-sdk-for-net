@@ -1406,7 +1406,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.UpgradeOperationHistoryStatus"/> instance for mocking. </returns>
         public static UpgradeOperationHistoryStatus UpgradeOperationHistoryStatus(UpgradeState? code = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default)
         {
-            return new UpgradeOperationHistoryStatus(code, startOn, endOn, default);
+            return new UpgradeOperationHistoryStatus(code, default, default, default);
         }
 
         /// <param name="successfulInstanceCount"> The number of instances that have been successfully upgraded. </param>
@@ -1542,7 +1542,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <returns> A new <see cref="Models.RollingUpgradeRunningStatus"/> instance for mocking. </returns>
         public static RollingUpgradeRunningStatus RollingUpgradeRunningStatus(RollingUpgradeStatusCode? code = default, DateTimeOffset? startOn = default, RollingUpgradeActionType? lastAction = default, DateTimeOffset? lastActionOn = default)
         {
-            return new RollingUpgradeRunningStatus(code, startOn, lastAction, lastActionOn, default);
+            return new RollingUpgradeRunningStatus(code, default, lastAction, lastActionOn, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1834,10 +1834,10 @@ namespace Azure.ResourceManager.Compute.Models
         {
             return new MaintenanceRedeployStatus(
                 isCustomerInitiatedMaintenanceAllowed,
-                preMaintenanceWindowStartOn,
-                preMaintenanceWindowEndOn,
-                maintenanceWindowStartOn,
-                maintenanceWindowEndOn,
+                default,
+                default,
+                default,
+                default,
                 lastOperationResultCode,
                 lastOperationMessage,
                 default);
@@ -2528,7 +2528,7 @@ namespace Azure.ResourceManager.Compute.Models
                 rebootPending,
                 criticalAndSecurityPatchCount,
                 otherPatchCount,
-                startOn,
+                default,
                 lastModifiedOn,
                 error,
                 default);
@@ -2557,7 +2557,7 @@ namespace Azure.ResourceManager.Compute.Models
                 pendingPatchCount,
                 installedPatchCount,
                 failedPatchCount,
-                startOn,
+                default,
                 lastModifiedOn,
                 error,
                 default);
@@ -2660,7 +2660,7 @@ namespace Azure.ResourceManager.Compute.Models
                 rebootPending,
                 criticalAndSecurityPatchCount,
                 otherPatchCount,
-                startOn,
+                default,
                 (availablePatches ?? new ChangeTrackingList<VirtualMachineSoftwarePatchProperties>()).ToList(),
                 error,
                 default);
@@ -2802,7 +2802,7 @@ namespace Azure.ResourceManager.Compute.Models
                 installedPatchCount,
                 failedPatchCount,
                 (patches ?? new ChangeTrackingList<PatchInstallationDetail>()).ToList(),
-                startOn,
+                default,
                 error,
                 default);
         }
@@ -3890,8 +3890,8 @@ namespace Azure.ResourceManager.Compute.Models
                 exitCode,
                 output,
                 error,
-                startOn,
-                endOn,
+                default,
+                default,
                 (statuses ?? new ChangeTrackingList<InstanceViewStatus>()).ToList(),
                 default);
         }
@@ -4597,13 +4597,13 @@ namespace Azure.ResourceManager.Compute.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                encryptionType is null && activeKey is null && previousKeys is null && provisioningState is null && rotationToLatestKeyVersionEnabled is null && lastKeyRotationTimestamp is null && autoKeyRotationError is null && federatedClientId is null ? default : new EncryptionSetProperties(
+                encryptionType is null && activeKey is null && previousKeys is null && provisioningState is null && rotationToLatestKeyVersionEnabled is null && autoKeyRotationError is null && federatedClientId is null ? default : new EncryptionSetProperties(
                     encryptionType,
                     activeKey,
                     (previousKeys ?? new ChangeTrackingList<KeyForDiskEncryptionSet>()).ToList(),
                     provisioningState,
                     rotationToLatestKeyVersionEnabled,
-                    lastKeyRotationTimestamp,
+                    default,
                     autoKeyRotationError,
                     federatedClientId,
                     default),
@@ -4786,8 +4786,8 @@ namespace Azure.ResourceManager.Compute.Models
             return new ImmutabilityPolicy(
                 immutabilityDurationDays,
                 @type,
-                policyStartOn,
-                policyExpirationOn,
+                default,
+                default,
                 isPolicyExpired,
                 default);
         }
@@ -8741,13 +8741,13 @@ namespace Azure.ResourceManager.Compute.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                encryptionType is null && activeKey is null && previousKeys is null && provisioningState is null && rotationToLatestKeyVersionEnabled is null && lastKeyRotationTimestamp is null && autoKeyRotationError is null && federatedClientId is null ? default : new EncryptionSetProperties(
+                encryptionType is null && activeKey is null && previousKeys is null && provisioningState is null && rotationToLatestKeyVersionEnabled is null && autoKeyRotationError is null && federatedClientId is null ? default : new EncryptionSetProperties(
                     encryptionType,
                     activeKey,
                     (previousKeys ?? new ChangeTrackingList<KeyForDiskEncryptionSet>()).ToList(),
                     provisioningState,
                     rotationToLatestKeyVersionEnabled,
-                    lastKeyRotationTimestamp,
+                    default,
                     autoKeyRotationError,
                     federatedClientId,
                     default),

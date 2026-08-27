@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 quantity,
                 provisioningState,
                 effectOn,
-                benefitStartOn,
+                default,
                 lastUpdatedOn,
                 reservationExpireOn,
                 expireOn,
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="createdOn"> This is the DateTime when the reservation was created. </param>
         /// <param name="reservationExpireOn"> This is the date when the reservation will expire. </param>
         /// <param name="expireOn"> This is the date-time when the reservation will expire. </param>
-        /// <param name="benefitStartOn"> This is the DateTime when the reservation benefit started. </param>
+        /// <param name="benefitStartsOn"> This is the DateTime when the reservation benefit started. </param>
         /// <param name="originalQuantity"> Total Quantity of the skus purchased in the reservation. </param>
         /// <param name="term"> Represent the term of reservation. </param>
         /// <param name="provisioningState"> Current state of the reservation. </param>
@@ -527,20 +527,20 @@ namespace Azure.ResourceManager.Reservations.Models
         /// <param name="reviewOn"> This is the date-time when the Azure Hybrid Benefit needs to be reviewed. </param>
         /// <param name="version"></param>
         /// <returns> A new <see cref="Reservations.ReservationOrderData"/> instance for mocking. </returns>
-        public static ReservationOrderData ReservationOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, DateTimeOffset? requestOn = default, DateTimeOffset? createdOn = default, DateTimeOffset? reservationExpireOn = default, DateTimeOffset? expireOn = default, DateTimeOffset? benefitStartOn = default, int? originalQuantity = default, ReservationTerm? term = default, ReservationProvisioningState? provisioningState = default, ReservationBillingPlan? billingPlan = default, ReservationOrderBillingPlanInformation planInformation = default, IEnumerable<ReservationDetailData> reservations = default, DateTimeOffset? reviewOn = default, int? version = default)
+        public static ReservationOrderData ReservationOrderData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string displayName = default, DateTimeOffset? requestOn = default, DateTimeOffset? createdOn = default, DateTimeOffset? reservationExpireOn = default, DateTimeOffset? expireOn = default, DateTimeOffset? benefitStartsOn = default, int? originalQuantity = default, ReservationTerm? term = default, ReservationProvisioningState? provisioningState = default, ReservationBillingPlan? billingPlan = default, ReservationOrderBillingPlanInformation planInformation = default, IEnumerable<ReservationDetailData> reservations = default, DateTimeOffset? reviewOn = default, int? version = default)
         {
             return new ReservationOrderData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                displayName is null && requestOn is null && createdOn is null && reservationExpireOn is null && expireOn is null && benefitStartOn is null && originalQuantity is null && term is null && provisioningState is null && billingPlan is null && planInformation is null && reservations is null && reviewOn is null ? default : new ReservationOrderProperties(
+                displayName is null && requestOn is null && createdOn is null && reservationExpireOn is null && expireOn is null && benefitStartsOn is null && originalQuantity is null && term is null && provisioningState is null && billingPlan is null && planInformation is null && reservations is null && reviewOn is null ? default : new ReservationOrderProperties(
                     displayName,
                     requestOn,
                     createdOn,
                     reservationExpireOn,
                     expireOn,
-                    benefitStartOn,
+                    benefitStartsOn,
                     originalQuantity,
                     term,
                     provisioningState,
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.Reservations.Models
         {
             transactions ??= new ChangeTrackingList<PaymentDetail>();
 
-            return new ReservationOrderBillingPlanInformation(pricingCurrencyTotal, startOn, nextPaymentDueOn, (transactions ?? new ChangeTrackingList<PaymentDetail>()).ToList(), default);
+            return new ReservationOrderBillingPlanInformation(pricingCurrencyTotal, default, nextPaymentDueOn, (transactions ?? new ChangeTrackingList<PaymentDetail>()).ToList(), default);
         }
 
         /// <param name="dueOn"> Date when the payment needs to be done. </param>
@@ -1057,13 +1057,13 @@ namespace Azure.ResourceManager.Reservations.Models
                 name,
                 resourceType,
                 systemData,
-                displayName is null && requestOn is null && createdOn is null && reservationExpireOn is null && expireOn is null && benefitStartOn is null && originalQuantity is null && term is null && provisioningState is null && billingPlan is null && planInformation is null && reservations is null && reviewOn is null ? default : new ReservationOrderProperties(
+                displayName is null && requestOn is null && createdOn is null && reservationExpireOn is null && expireOn is null && originalQuantity is null && term is null && provisioningState is null && billingPlan is null && planInformation is null && reservations is null && reviewOn is null ? default : new ReservationOrderProperties(
                     displayName,
                     requestOn,
                     createdOn,
                     reservationExpireOn,
                     expireOn,
-                    benefitStartOn,
+                    default,
                     originalQuantity,
                     term,
                     provisioningState,

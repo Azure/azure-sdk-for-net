@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <returns> A new <see cref="Models.ContainerServiceFleetUpdateStatus"/> instance for mocking. </returns>
         public static ContainerServiceFleetUpdateStatus ContainerServiceFleetUpdateStatus(DateTimeOffset? startOn = default, DateTimeOffset? completedOn = default, ContainerServiceFleetUpdateState? state = default, ResponseError error = default)
         {
-            return new ContainerServiceFleetUpdateStatus(startOn, completedOn, state, error, default);
+            return new ContainerServiceFleetUpdateStatus(default, completedOn, state, error, default);
         }
 
         /// <param name="status"> The status of the UpdateStage. </param>

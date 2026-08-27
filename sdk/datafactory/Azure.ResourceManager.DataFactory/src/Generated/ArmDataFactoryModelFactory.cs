@@ -455,21 +455,21 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <param name="frequency"> The frequency. </param>
         /// <param name="interval"> The interval. </param>
-        /// <param name="startOn"> The start time. </param>
-        /// <param name="endOn"> The end time. </param>
+        /// <param name="startsOn"> The start time. </param>
+        /// <param name="endsOn"> The end time. </param>
         /// <param name="timeZone"> The time zone. </param>
         /// <param name="schedule"> The recurrence schedule. </param>
         /// <param name="additionalProperties"></param>
         /// <returns> A new <see cref="Models.ScheduleTriggerRecurrence"/> instance for mocking. </returns>
-        public static ScheduleTriggerRecurrence ScheduleTriggerRecurrence(DataFactoryRecurrenceFrequency? frequency = default, int? interval = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string timeZone = default, DataFactoryRecurrenceSchedule schedule = default, IDictionary<string, BinaryData> additionalProperties = default)
+        public static ScheduleTriggerRecurrence ScheduleTriggerRecurrence(DataFactoryRecurrenceFrequency? frequency = default, int? interval = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, string timeZone = default, DataFactoryRecurrenceSchedule schedule = default, IDictionary<string, BinaryData> additionalProperties = default)
         {
             additionalProperties ??= new ChangeTrackingDictionary<string, BinaryData>();
 
             return new ScheduleTriggerRecurrence(
                 frequency,
                 interval,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 timeZone,
                 schedule,
                 additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
@@ -6337,7 +6337,7 @@ namespace Azure.ResourceManager.DataFactory.Models
 
             return new ManagedIntegrationRuntimeOperationResult(
                 managedIntegrationRuntimeOperationResultType,
-                startOn,
+                default,
                 result,
                 errorCode,
                 (parameters ?? new ChangeTrackingList<string>()).ToList(),
@@ -6427,7 +6427,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 registerOn,
                 lastConnectOn,
                 expireOn,
-                lastStartOn,
+                default,
                 lastStopOn,
                 lastUpdateResult,
                 lastStartUpdateOn,

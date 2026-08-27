@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <returns> A new <see cref="Models.CarbonEmissionAvailableDateRange"/> instance for mocking. </returns>
         public static CarbonEmissionAvailableDateRange CarbonEmissionAvailableDateRange(DateTimeOffset startOn = default, DateTimeOffset endOn = default)
         {
-            return new CarbonEmissionAvailableDateRange(startOn, endOn, default);
+            return new CarbonEmissionAvailableDateRange(default, default, default);
         }
     }
 }

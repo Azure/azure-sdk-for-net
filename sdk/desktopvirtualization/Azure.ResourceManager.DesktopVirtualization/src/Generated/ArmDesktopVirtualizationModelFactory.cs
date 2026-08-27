@@ -488,13 +488,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <param name="expireOn"> Expiration time of registration token. </param>
+        /// <param name="expiresOn"> Expiration time of registration token. </param>
         /// <param name="token"> The registration token base64 encoded string. </param>
         /// <param name="registrationTokenOperation"> The type of resetting the token. </param>
         /// <returns> A new <see cref="Models.HostPoolRegistrationInfo"/> instance for mocking. </returns>
-        public static HostPoolRegistrationInfo HostPoolRegistrationInfo(DateTimeOffset? expireOn = default, string token = default, HostPoolRegistrationTokenOperation? registrationTokenOperation = default)
+        public static HostPoolRegistrationInfo HostPoolRegistrationInfo(DateTimeOffset? expiresOn = default, string token = default, HostPoolRegistrationTokenOperation? registrationTokenOperation = default)
         {
-            return new HostPoolRegistrationInfo(expireOn, token, registrationTokenOperation, default);
+            return new HostPoolRegistrationInfo(expiresOn, token, registrationTokenOperation, default);
         }
 
         /// <param name="updateType"> The type of maintenance for session host components. </param>
@@ -617,12 +617,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <param name="expireOn"> Expiration time of registration token. </param>
+        /// <param name="expiresOn"> Expiration time of registration token. </param>
         /// <param name="registrationTokenOperation"> The type of resetting the token. </param>
         /// <returns> A new <see cref="Models.HostPoolRegistrationInfoPatch"/> instance for mocking. </returns>
-        public static HostPoolRegistrationInfoPatch HostPoolRegistrationInfoPatch(DateTimeOffset? expireOn = default, HostPoolRegistrationTokenOperation? registrationTokenOperation = default)
+        public static HostPoolRegistrationInfoPatch HostPoolRegistrationInfoPatch(DateTimeOffset? expiresOn = default, HostPoolRegistrationTokenOperation? registrationTokenOperation = default)
         {
-            return new HostPoolRegistrationInfoPatch(expireOn, registrationTokenOperation, default);
+            return new HostPoolRegistrationInfoPatch(expiresOn, registrationTokenOperation, default);
         }
 
         /// <param name="updateType"> The type of maintenance for session host components. </param>
@@ -645,12 +645,12 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new MaintenanceWindowPatchProperties(hour, dayOfWeek, default);
         }
 
-        /// <param name="expireOn"> Expiration time of registration token. </param>
+        /// <param name="expiresOn"> Expiration time of registration token. </param>
         /// <param name="token"> The registration token base64 encoded string. </param>
         /// <returns> A new <see cref="Models.DesktopVirtualizationRegistrationTokenMinimal"/> instance for mocking. </returns>
-        public static DesktopVirtualizationRegistrationTokenMinimal DesktopVirtualizationRegistrationTokenMinimal(DateTimeOffset? expireOn = default, string token = default)
+        public static DesktopVirtualizationRegistrationTokenMinimal DesktopVirtualizationRegistrationTokenMinimal(DateTimeOffset? expiresOn = default, string token = default)
         {
-            return new DesktopVirtualizationRegistrationTokenMinimal(expireOn, token, default);
+            return new DesktopVirtualizationRegistrationTokenMinimal(expiresOn, token, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -936,11 +936,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 default);
         }
 
-        /// <param name="expirationOn"> Expiration time of the registration token in UTC. </param>
+        /// <param name="expiresOn"> Expiration time of the registration token in UTC. </param>
         /// <returns> A new <see cref="Models.ScopedRegistrationTokenContent"/> instance for mocking. </returns>
-        public static ScopedRegistrationTokenContent ScopedRegistrationTokenContent(DateTimeOffset expirationOn = default)
+        public static ScopedRegistrationTokenContent ScopedRegistrationTokenContent(DateTimeOffset expiresOn = default)
         {
-            return new ScopedRegistrationTokenContent(expirationOn, default);
+            return new ScopedRegistrationTokenContent(expiresOn, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1668,20 +1668,20 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="percentComplete"> Percent of the operation that is complete. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="startsOn"> The start time of the operation. </param>
+        /// <param name="endsOn"> The end time of the operation. </param>
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="status"> Operation status. Current defined values are &lt; Error | Scheduled | UpdatingSessionHosts | ValidatingSessionHostUpdate | Paused | Pausing | Cancelling &gt; | Succeeded | Failed | Canceled. </param>
         /// <param name="properties"> Properties bag for sessionHostManagement Update Statuses. </param>
         /// <returns> A new <see cref="Models.SessionHostManagementUpdateStatus"/> instance for mocking. </returns>
-        public static SessionHostManagementUpdateStatus SessionHostManagementUpdateStatus(ResourceIdentifier id = default, string name = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, ResponseError error = default, SessionHostManagementUpdateOperationStatus status = default, SessionHostManagementUpdateStatusProperties properties = default)
+        public static SessionHostManagementUpdateStatus SessionHostManagementUpdateStatus(ResourceIdentifier id = default, string name = default, double? percentComplete = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, ResponseError error = default, SessionHostManagementUpdateOperationStatus status = default, SessionHostManagementUpdateStatusProperties properties = default)
         {
             return new SessionHostManagementUpdateStatus(
                 id,
                 name,
                 percentComplete,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 error,
                 status,
                 properties,
@@ -1698,16 +1698,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new SessionHostManagementUpdateStatusProperties(correlationId, progress, scheduledOn, sessionHostManagement, default);
         }
 
-        /// <param name="executionStartOn"> Time that the sessionHostManagement operation was created. </param>
+        /// <param name="executionStartsOn"> Time that the sessionHostManagement operation was created. </param>
         /// <param name="totalSessionHosts"> The number of sessionHosts to be started in the sessionHostManagement operation. </param>
         /// <param name="sessionHostsInProgress"> The number of sessionHosts in progress in the sessionHostManagement operation. </param>
         /// <param name="sessionHostsCompleted"> The number of sessionHosts completed in the sessionHostManagement operation. </param>
         /// <param name="sessionHostsRollbackFailed"> The number of sessionHosts rollback failed in the sessionHostManagement operation. </param>
         /// <returns> A new <see cref="Models.SessionHostManagementOperationProgress"/> instance for mocking. </returns>
-        public static SessionHostManagementOperationProgress SessionHostManagementOperationProgress(DateTimeOffset? executionStartOn = default, int? totalSessionHosts = default, int? sessionHostsInProgress = default, int? sessionHostsCompleted = default, int? sessionHostsRollbackFailed = default)
+        public static SessionHostManagementOperationProgress SessionHostManagementOperationProgress(DateTimeOffset? executionStartsOn = default, int? totalSessionHosts = default, int? sessionHostsInProgress = default, int? sessionHostsCompleted = default, int? sessionHostsRollbackFailed = default)
         {
             return new SessionHostManagementOperationProgress(
-                executionStartOn,
+                executionStartsOn,
                 totalSessionHosts,
                 sessionHostsInProgress,
                 sessionHostsCompleted,
@@ -1718,20 +1718,20 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="percentComplete"> Percent of the operation that is complete. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="startsOn"> The start time of the operation. </param>
+        /// <param name="endsOn"> The end time of the operation. </param>
         /// <param name="error"> If present, details of the operation error. </param>
         /// <param name="status"> Operation status. </param>
         /// <param name="properties"> The custom properties of the SessionHost Provisioning Status. </param>
         /// <returns> A new <see cref="Models.SessionHostManagementProvisioningStatus"/> instance for mocking. </returns>
-        public static SessionHostManagementProvisioningStatus SessionHostManagementProvisioningStatus(ResourceIdentifier id = default, string name = default, double? percentComplete = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, ResponseError error = default, SessionHostManagementProvisioningOperationStatus status = default, SessionHostManagementProvisioningStatusProperties properties = default)
+        public static SessionHostManagementProvisioningStatus SessionHostManagementProvisioningStatus(ResourceIdentifier id = default, string name = default, double? percentComplete = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, ResponseError error = default, SessionHostManagementProvisioningOperationStatus status = default, SessionHostManagementProvisioningStatusProperties properties = default)
         {
             return new SessionHostManagementProvisioningStatus(
                 id,
                 name,
                 percentComplete,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 error,
                 status,
                 properties,
@@ -1748,16 +1748,16 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             return new SessionHostManagementProvisioningStatusProperties(correlationId, progress, scheduledOn, sessionHostManagement, default);
         }
 
-        /// <param name="executionStartOn"> Time that the sessionHostManagement operation was created. </param>
+        /// <param name="executionStartsOn"> Time that the sessionHostManagement operation was created. </param>
         /// <param name="sessionHostsInProgress"> The number of sessionHosts in progress in the sessionHostManagement provisioning operation. </param>
         /// <param name="sessionHostsCompleted"> The number of sessionHosts completed in the sessionHostManagement provisioning operation. </param>
         /// <param name="finalSessionHostsCount"> The final instance count of the host pool for this provisioning operation. </param>
         /// <param name="initialSessionHostsCount"> The initial instance count of the host pool for this provisioning operation. </param>
         /// <returns> A new <see cref="Models.SessionHostManagementProvisioningOperationProgress"/> instance for mocking. </returns>
-        public static SessionHostManagementProvisioningOperationProgress SessionHostManagementProvisioningOperationProgress(DateTimeOffset? executionStartOn = default, int? sessionHostsInProgress = default, int? sessionHostsCompleted = default, int? finalSessionHostsCount = default, int? initialSessionHostsCount = default)
+        public static SessionHostManagementProvisioningOperationProgress SessionHostManagementProvisioningOperationProgress(DateTimeOffset? executionStartsOn = default, int? sessionHostsInProgress = default, int? sessionHostsCompleted = default, int? finalSessionHostsCount = default, int? initialSessionHostsCount = default)
         {
             return new SessionHostManagementProvisioningOperationProgress(
-                executionStartOn,
+                executionStartsOn,
                 sessionHostsInProgress,
                 sessionHostsCompleted,
                 finalSessionHostsCount,

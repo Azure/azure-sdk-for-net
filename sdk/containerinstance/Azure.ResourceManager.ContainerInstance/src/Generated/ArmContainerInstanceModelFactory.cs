@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         {
             return new ContainerState(
                 state,
-                startOn,
+                default,
                 exitCode,
                 finishOn,
                 detailStatus,

@@ -73,20 +73,20 @@ namespace Azure.ResourceManager.Consumption.Models
         }
 
         /// <summary> The date when the lot became effective. </summary>
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
         /// <summary> The expiration date of a lot. </summary>
-        public DateTimeOffset? ExpireOn
+        public DateTimeOffset? ExpiresOn
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
         }
 

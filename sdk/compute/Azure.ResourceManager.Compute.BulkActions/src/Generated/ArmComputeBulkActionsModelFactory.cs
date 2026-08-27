@@ -1630,22 +1630,22 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="resourceType"> The type of resource the scheduled action is targeting. </param>
         /// <param name="actionType"> The action the scheduled action should perform in the resources. </param>
-        /// <param name="startOn"> The time which the scheduled action is supposed to start running. </param>
-        /// <param name="endOn"> The time when the scheduled action is supposed to stop scheduling. </param>
+        /// <param name="startsOn"> The time which the scheduled action is supposed to start running. </param>
+        /// <param name="endsOn"> The time when the scheduled action is supposed to stop scheduling. </param>
         /// <param name="schedule"> The schedule the scheduled action is supposed to follow. </param>
         /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
         /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
         /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
         /// <returns> A new <see cref="Models.ScheduledActionProperties"/> instance for mocking. </returns>
-        public static ScheduledActionProperties ScheduledActionProperties(ScheduledActionsResourceType resourceType = default, ScheduledActionType actionType = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = default, ScheduledActionsSchedule schedule = default, IEnumerable<NotificationProperties> notificationSettings = default, bool? disabled = default, ScheduledActionsProvisioningState? provisioningState = default)
+        public static ScheduledActionProperties ScheduledActionProperties(ScheduledActionsResourceType resourceType = default, ScheduledActionType actionType = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, ScheduledActionsSchedule schedule = default, IEnumerable<NotificationProperties> notificationSettings = default, bool? disabled = default, ScheduledActionsProvisioningState? provisioningState = default)
         {
             notificationSettings ??= new ChangeTrackingList<NotificationProperties>();
 
             return new ScheduledActionProperties(
                 resourceType,
                 actionType,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 schedule,
                 (notificationSettings ?? new ChangeTrackingList<NotificationProperties>()).ToList(),
                 disabled,
@@ -1717,21 +1717,21 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="resourceType"> The type of resource the scheduled action is targeting. </param>
         /// <param name="actionType"> The action the scheduled action should perform in the resources. </param>
-        /// <param name="startOn"> The time which the scheduled action is supposed to start running. </param>
-        /// <param name="endOn"> The time when the scheduled action is supposed to stop scheduling. </param>
+        /// <param name="startsOn"> The time which the scheduled action is supposed to start running. </param>
+        /// <param name="endsOn"> The time when the scheduled action is supposed to stop scheduling. </param>
         /// <param name="schedule"> The schedule the scheduled action is supposed to follow. </param>
         /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
         /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
         /// <returns> A new <see cref="Models.ScheduledActionUpdateProperties"/> instance for mocking. </returns>
-        public static ScheduledActionUpdateProperties ScheduledActionUpdateProperties(ScheduledActionsResourceType? resourceType = default, ScheduledActionType? actionType = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, ScheduledActionsSchedulePatch schedule = default, IEnumerable<NotificationProperties> notificationSettings = default, bool? disabled = default)
+        public static ScheduledActionUpdateProperties ScheduledActionUpdateProperties(ScheduledActionsResourceType? resourceType = default, ScheduledActionType? actionType = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, ScheduledActionsSchedulePatch schedule = default, IEnumerable<NotificationProperties> notificationSettings = default, bool? disabled = default)
         {
             notificationSettings ??= new ChangeTrackingList<NotificationProperties>();
 
             return new ScheduledActionUpdateProperties(
                 resourceType,
                 actionType,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 schedule,
                 (notificationSettings ?? new ChangeTrackingList<NotificationProperties>()).ToList(),
                 disabled,
@@ -1917,15 +1917,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <param name="resourceType"> The type of resource the scheduled action is targeting. </param>
         /// <param name="actionType"> The action the scheduled action should perform in the resources. </param>
-        /// <param name="startOn"> The time which the scheduled action is supposed to start running. </param>
-        /// <param name="endOn"> The time when the scheduled action is supposed to stop scheduling. </param>
+        /// <param name="startsOn"> The time which the scheduled action is supposed to start running. </param>
+        /// <param name="endsOn"> The time when the scheduled action is supposed to stop scheduling. </param>
         /// <param name="schedule"> The schedule the scheduled action is supposed to follow. </param>
         /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
         /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
         /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
         /// <param name="resourceNotificationSettings"> The notification settings for the scheduled action at a resource level. Resource level notification settings are scope to specific resources only and submitted through attach requests. </param>
         /// <returns> A new <see cref="Models.ScheduledActionsExtensionProperties"/> instance for mocking. </returns>
-        public static ScheduledActionsExtensionProperties ScheduledActionsExtensionProperties(ScheduledActionsResourceType resourceType = default, ScheduledActionType actionType = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = default, ScheduledActionsSchedule schedule = default, IEnumerable<NotificationProperties> notificationSettings = default, bool? disabled = default, ScheduledActionsProvisioningState? provisioningState = default, IEnumerable<NotificationProperties> resourceNotificationSettings = default)
+        public static ScheduledActionsExtensionProperties ScheduledActionsExtensionProperties(ScheduledActionsResourceType resourceType = default, ScheduledActionType actionType = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, ScheduledActionsSchedule schedule = default, IEnumerable<NotificationProperties> notificationSettings = default, bool? disabled = default, ScheduledActionsProvisioningState? provisioningState = default, IEnumerable<NotificationProperties> resourceNotificationSettings = default)
         {
             notificationSettings ??= new ChangeTrackingList<NotificationProperties>();
             resourceNotificationSettings ??= new ChangeTrackingList<NotificationProperties>();
@@ -1933,8 +1933,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             return new ScheduledActionsExtensionProperties(
                 resourceType,
                 actionType,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 schedule,
                 (notificationSettings ?? new ChangeTrackingList<NotificationProperties>()).ToList(),
                 disabled,

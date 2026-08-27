@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="runType"> The type of run. </param>
         /// <param name="agentPoolName"> The dedicated agent pool for the run. </param>
         /// <param name="createdOn"> The time the run was scheduled. </param>
-        /// <param name="startOn"> The time the run started. </param>
+        /// <param name="startsOn"> The time the run started. </param>
         /// <param name="finishOn"> The time the run finished. </param>
         /// <param name="outputImages"> The list of all images that were generated from the run. This is applicable if the run generates base image dependencies. </param>
         /// <param name="task"> The task against which run was scheduled. </param>
@@ -94,21 +94,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
         /// <param name="isArchiveEnabled"> The value that indicates whether archiving is enabled or not. </param>
         /// <param name="agentCpu"> The CPU configuration in terms of number of cores required for the run. </param>
         /// <returns> A new <see cref="Tasks.ContainerRegistryRunData"/> instance for mocking. </returns>
-        public static ContainerRegistryRunData ContainerRegistryRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string runId = default, ContainerRegistryTaskRunStatus? status = default, DateTimeOffset? lastUpdatedOn = default, ContainerRegistryTaskRunType? runType = default, string agentPoolName = default, DateTimeOffset? createdOn = default, DateTimeOffset? startOn = default, DateTimeOffset? finishOn = default, IEnumerable<ContainerRegistryTaskImageDescriptor> outputImages = default, string task = default, ContainerRegistryTaskImageUpdateTrigger imageUpdateTrigger = default, ContainerRegistryTaskSourceTriggerDescriptor sourceTrigger = default, ContainerRegistryTaskTimerTriggerDescriptor timerTrigger = default, ContainerRegistryTaskPlatformProperties platform = default, string sourceRegistryAuth = default, IEnumerable<string> customRegistries = default, string runErrorMessage = default, string updateTriggerToken = default, ContainerRegistryTaskImageDescriptor logArtifact = default, ContainerRegistryTaskProvisioningState? provisioningState = default, bool? isArchiveEnabled = default, int? agentCpu = default)
+        public static ContainerRegistryRunData ContainerRegistryRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string runId = default, ContainerRegistryTaskRunStatus? status = default, DateTimeOffset? lastUpdatedOn = default, ContainerRegistryTaskRunType? runType = default, string agentPoolName = default, DateTimeOffset? createdOn = default, DateTimeOffset? startsOn = default, DateTimeOffset? finishOn = default, IEnumerable<ContainerRegistryTaskImageDescriptor> outputImages = default, string task = default, ContainerRegistryTaskImageUpdateTrigger imageUpdateTrigger = default, ContainerRegistryTaskSourceTriggerDescriptor sourceTrigger = default, ContainerRegistryTaskTimerTriggerDescriptor timerTrigger = default, ContainerRegistryTaskPlatformProperties platform = default, string sourceRegistryAuth = default, IEnumerable<string> customRegistries = default, string runErrorMessage = default, string updateTriggerToken = default, ContainerRegistryTaskImageDescriptor logArtifact = default, ContainerRegistryTaskProvisioningState? provisioningState = default, bool? isArchiveEnabled = default, int? agentCpu = default)
         {
             return new ContainerRegistryRunData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                runId is null && status is null && lastUpdatedOn is null && runType is null && agentPoolName is null && createdOn is null && startOn is null && finishOn is null && outputImages is null && task is null && imageUpdateTrigger is null && sourceTrigger is null && timerTrigger is null && platform is null && agentCpu is null && sourceRegistryAuth is null && customRegistries is null && runErrorMessage is null && updateTriggerToken is null && logArtifact is null && provisioningState is null && isArchiveEnabled is null ? default : new RunProperties(
+                runId is null && status is null && lastUpdatedOn is null && runType is null && agentPoolName is null && createdOn is null && startsOn is null && finishOn is null && outputImages is null && task is null && imageUpdateTrigger is null && sourceTrigger is null && timerTrigger is null && platform is null && agentCpu is null && sourceRegistryAuth is null && customRegistries is null && runErrorMessage is null && updateTriggerToken is null && logArtifact is null && provisioningState is null && isArchiveEnabled is null ? default : new RunProperties(
                     runId,
                     status,
                     lastUpdatedOn,
                     runType,
                     agentPoolName,
                     createdOn,
-                    startOn,
+                    startsOn,
                     finishOn,
                     (outputImages ?? new ChangeTrackingList<ContainerRegistryTaskImageDescriptor>()).ToList(),
                     task,

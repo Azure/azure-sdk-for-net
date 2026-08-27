@@ -98,20 +98,20 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDate"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endDate"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(NotifiesOn))
             {
@@ -185,9 +185,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             string displayName = default;
             SubscriptionState state = default;
             DateTimeOffset? createdOn = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             DateTimeOffset? expireOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? endsOn = default;
             DateTimeOffset? notifiesOn = default;
             string primaryKey = default;
             string secondaryKey = default;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expirationDate"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("notificationDate"u8))
@@ -296,9 +296,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 displayName,
                 state,
                 createdOn,
-                startOn,
+                startsOn,
                 expireOn,
-                endOn,
+                endsOn,
                 notifiesOn,
                 primaryKey,
                 secondaryKey,

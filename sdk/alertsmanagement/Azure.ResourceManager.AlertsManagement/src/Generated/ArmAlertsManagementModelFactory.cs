@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 sourceCreatedId,
                 smartGroupId,
                 smartGroupingReason,
-                startOn,
+                default,
                 lastModifiedOn,
                 monitorConditionResolvedOn,
                 lastModifiedBy,
@@ -308,11 +308,11 @@ namespace Azure.ResourceManager.AlertsManagement.Models
         /// <param name="datasources"> An array of the azure monitor workspace resource ids. </param>
         /// <param name="grafanaExplorePath"> Partial link to the Grafana explore API. </param>
         /// <param name="query"> The Prometheus expression query. </param>
-        /// <param name="startOn"> The start evaluation date and time in ISO8601 format. </param>
-        /// <param name="endOn"> The end evaluation date and time in ISO8601 format. </param>
+        /// <param name="startsOn"> The start evaluation date and time in ISO8601 format. </param>
+        /// <param name="endsOn"> The end evaluation date and time in ISO8601 format. </param>
         /// <param name="step"> Query resolution step width in ISO8601 format. </param>
         /// <returns> A new <see cref="Models.PrometheusRangeQuery"/> instance for mocking. </returns>
-        public static PrometheusRangeQuery PrometheusRangeQuery(string title = default, string description = default, AlertsManagementStatus status = default, string errorMessage = default, string linkToApi = default, IEnumerable<string> datasources = default, string grafanaExplorePath = default, string query = default, DateTimeOffset startOn = default, DateTimeOffset endOn = default, string step = default)
+        public static PrometheusRangeQuery PrometheusRangeQuery(string title = default, string description = default, AlertsManagementStatus status = default, string errorMessage = default, string linkToApi = default, IEnumerable<string> datasources = default, string grafanaExplorePath = default, string query = default, DateTimeOffset startsOn = default, DateTimeOffset endsOn = default, string step = default)
         {
             datasources ??= new ChangeTrackingList<string>();
 
@@ -327,8 +327,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 (datasources ?? new ChangeTrackingList<string>()).ToList(),
                 grafanaExplorePath,
                 query,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 step);
         }
 

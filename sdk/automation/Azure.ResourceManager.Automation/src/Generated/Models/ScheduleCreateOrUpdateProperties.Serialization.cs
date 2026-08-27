@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("startTime"u8);
-            writer.WriteStringValue(StartOn, "O");
+            writer.WriteStringValue(StartsOn, "O");
             if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             string description = default;
-            DateTimeOffset startOn = default;
+            DateTimeOffset startsOn = default;
             DateTimeOffset? expireOn = default;
             BinaryData interval = default;
             AutomationScheduleFrequency frequency = default;
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expiryTime"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Automation.Models
             }
             return new ScheduleCreateOrUpdateProperties(
                 description,
-                startOn,
+                startsOn,
                 expireOn,
                 interval,
                 frequency,

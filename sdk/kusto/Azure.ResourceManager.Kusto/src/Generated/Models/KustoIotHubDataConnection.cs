@@ -181,11 +181,11 @@ namespace Azure.ResourceManager.Kusto.Models
 
         /// <summary> When defined, the data connection retrieves existing Event hub events created since the Retrieval start date. It can only retrieve events retained by the Event hub, based on its retention period. </summary>
         [WirePath("properties.retrievalStartDate")]
-        public DateTimeOffset? RetrievalStartOn
+        public DateTimeOffset? RetrievalStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.RetrievalStartOn;
+                return Properties is null ? default : Properties.RetrievalStartsOn;
             }
             set
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 {
                     Properties = new IotHubConnectionProperties();
                 }
-                Properties.RetrievalStartOn = value;
+                Properties.RetrievalStartsOn = value;
             }
         }
 

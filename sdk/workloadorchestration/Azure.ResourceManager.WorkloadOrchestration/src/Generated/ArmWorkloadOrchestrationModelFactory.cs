@@ -262,8 +262,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
 
             return new EdgeJobProperties(
                 jobType,
-                startOn,
-                endOn,
+                default,
+                default,
                 status,
                 jobParameter,
                 correlationId,
@@ -311,8 +311,8 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
             return new EdgeJobStep(
                 name,
                 status,
-                startOn,
-                endOn,
+                default,
+                default,
                 message,
                 statistics,
                 (steps ?? new ChangeTrackingList<EdgeJobStep>()).ToList(),

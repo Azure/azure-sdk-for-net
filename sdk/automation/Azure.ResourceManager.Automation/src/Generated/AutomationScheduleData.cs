@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Automation
         internal ScheduleProperties Properties { get; set; }
 
         /// <summary> Gets or sets the start time of the schedule. </summary>
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Automation
                 {
                     Properties = new ScheduleProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 

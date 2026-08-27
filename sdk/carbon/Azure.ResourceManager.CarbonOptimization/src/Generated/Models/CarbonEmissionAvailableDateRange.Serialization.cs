@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 throw new FormatException($"The model {nameof(CarbonEmissionAvailableDateRange)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("startDate"u8);
-            writer.WriteStringValue(StartOn, "O");
+            writer.WriteStringValue(StartsOn, "O");
             writer.WritePropertyName("endDate"u8);
-            writer.WriteStringValue(EndOn, "O");
+            writer.WriteStringValue(EndsOn, "O");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -133,19 +133,19 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             {
                 return null;
             }
-            DateTimeOffset startOn = default;
-            DateTimeOffset endOn = default;
+            DateTimeOffset startsOn = default;
+            DateTimeOffset endsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("startDate"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endDate"u8))
                 {
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CarbonEmissionAvailableDateRange(startOn, endOn, additionalBinaryDataProperties);
+            return new CarbonEmissionAvailableDateRange(startsOn, endsOn, additionalBinaryDataProperties);
         }
     }
 }

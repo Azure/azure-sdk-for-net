@@ -1324,7 +1324,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 systemData,
                 default,
                 default,
-                additionalData is null && friendlyName is null && alertDisplayName is null && alertType is null && compromisedEntity is null && confidenceLevel is null && confidenceReasons is null && confidenceScore is null && confidenceScoreStatus is null && description is null && endOn is null && intent is null && providerAlertId is null && processingEndOn is null && productComponentName is null && productName is null && productVersion is null && remediationSteps is null && severity is null && startOn is null && status is null && systemAlertId is null && tactics is null && alertGeneratedOn is null && vendorName is null && alertLink is null && resourceIdentifiers is null ? default : new SecurityAlertProperties(
+                additionalData is null && friendlyName is null && alertDisplayName is null && alertType is null && compromisedEntity is null && confidenceLevel is null && confidenceReasons is null && confidenceScore is null && confidenceScoreStatus is null && description is null && intent is null && providerAlertId is null && productComponentName is null && productName is null && productVersion is null && remediationSteps is null && severity is null && status is null && systemAlertId is null && tactics is null && alertGeneratedOn is null && vendorName is null && alertLink is null && resourceIdentifiers is null ? default : new SecurityAlertProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
                     friendlyName,
                     default,
@@ -1336,16 +1336,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     confidenceScore,
                     confidenceScoreStatus,
                     description,
-                    endOn,
+                    default,
                     intent,
                     providerAlertId,
-                    processingEndOn,
+                    default,
                     productComponentName,
                     productName,
                     productVersion,
                     (remediationSteps ?? new ChangeTrackingList<string>()).ToList(),
                     severity,
-                    startOn,
+                    default,
                     status,
                     systemAlertId,
                     (tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>()).ToList(),
@@ -1866,7 +1866,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 systemData,
                 default,
                 default,
-                additionalData is null && friendlyName is null && networkMessageIds is null && countByDeliveryStatus is null && countByThreatType is null && countByProtectionStatus is null && threats is null && query is null && queryOn is null && mailCount is null && isVolumeAnomaly is null && source is null && clusterSourceIdentifier is null && clusterSourceType is null && clusterQueryStartOn is null && clusterQueryEndOn is null && clusterGroup is null ? default : new MailClusterEntityProperties(
+                additionalData is null && friendlyName is null && networkMessageIds is null && countByDeliveryStatus is null && countByThreatType is null && countByProtectionStatus is null && threats is null && query is null && queryOn is null && mailCount is null && isVolumeAnomaly is null && source is null && clusterSourceIdentifier is null && clusterSourceType is null && clusterGroup is null ? default : new MailClusterEntityProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
                     friendlyName,
                     default,
@@ -1882,8 +1882,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     source,
                     clusterSourceIdentifier,
                     clusterSourceType,
-                    clusterQueryStartOn,
-                    clusterQueryEndOn,
+                    default,
+                    default,
                     clusterGroup));
         }
 
@@ -2231,22 +2231,22 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="updatedOn"> The last time the bookmark was updated. </param>
         /// <param name="updatedBy"> Describes a user that updated the bookmark. </param>
         /// <param name="eventOn"> The bookmark event time. </param>
-        /// <param name="queryStartOn"> The start time for the query. </param>
-        /// <param name="queryEndOn"> The end time for the query. </param>
+        /// <param name="queryStartsOn"> The start time for the query. </param>
+        /// <param name="queryEndsOn"> The end time for the query. </param>
         /// <param name="incidentInfo"> Describes an incident that relates to bookmark. </param>
         /// <param name="entityMappings"> Describes the entity mappings of the bookmark. </param>
         /// <param name="tactics"> A list of relevant mitre attacks. </param>
         /// <param name="techniques"> A list of relevant mitre techniques. </param>
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsBookmarkData"/> instance for mocking. </returns>
-        public static SecurityInsightsBookmarkData SecurityInsightsBookmarkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? createdOn = default, SecurityInsightsUserInfo createdBy = default, string displayName = default, IEnumerable<string> labels = default, string notes = default, string query = default, string queryResult = default, DateTimeOffset? updatedOn = default, SecurityInsightsUserInfo updatedBy = default, DateTimeOffset? eventOn = default, DateTimeOffset? queryStartOn = default, DateTimeOffset? queryEndOn = default, SecurityInsightsBookmarkIncidentInfo incidentInfo = default, IEnumerable<BookmarkEntityMappings> entityMappings = default, IEnumerable<SecurityInsightsAttackTactic> tactics = default, IEnumerable<string> techniques = default, ETag? eTag = default)
+        public static SecurityInsightsBookmarkData SecurityInsightsBookmarkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? createdOn = default, SecurityInsightsUserInfo createdBy = default, string displayName = default, IEnumerable<string> labels = default, string notes = default, string query = default, string queryResult = default, DateTimeOffset? updatedOn = default, SecurityInsightsUserInfo updatedBy = default, DateTimeOffset? eventOn = default, DateTimeOffset? queryStartsOn = default, DateTimeOffset? queryEndsOn = default, SecurityInsightsBookmarkIncidentInfo incidentInfo = default, IEnumerable<BookmarkEntityMappings> entityMappings = default, IEnumerable<SecurityInsightsAttackTactic> tactics = default, IEnumerable<string> techniques = default, ETag? eTag = default)
         {
             return new SecurityInsightsBookmarkData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                createdOn is null && createdBy is null && displayName is null && labels is null && notes is null && query is null && queryResult is null && updatedOn is null && updatedBy is null && eventOn is null && queryStartOn is null && queryEndOn is null && incidentInfo is null && entityMappings is null && tactics is null && techniques is null ? default : new BookmarkProperties(
+                createdOn is null && createdBy is null && displayName is null && labels is null && notes is null && query is null && queryResult is null && updatedOn is null && updatedBy is null && eventOn is null && queryStartsOn is null && queryEndsOn is null && incidentInfo is null && entityMappings is null && tactics is null && techniques is null ? default : new BookmarkProperties(
                     createdOn,
                     createdBy,
                     displayName,
@@ -2257,8 +2257,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     updatedOn,
                     updatedBy,
                     eventOn,
-                    queryStartOn,
-                    queryEndOn,
+                    queryStartsOn,
+                    queryEndsOn,
                     incidentInfo,
                     (entityMappings ?? new ChangeTrackingList<BookmarkEntityMappings>()).ToList(),
                     (tactics ?? new ChangeTrackingList<SecurityInsightsAttackTactic>()).ToList(),
@@ -4322,13 +4322,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new EntityManualTriggerRequestContent(incidentArmId, tenantId, logicAppsResourceId, default);
         }
 
-        /// <param name="endOn"> The end date filter, so the only expansion results returned are before this date. </param>
+        /// <param name="endsOn"> The end date filter, so the only expansion results returned are before this date. </param>
         /// <param name="expansionId"> The Id of the expansion to perform. </param>
-        /// <param name="startOn"> The start date filter, so the only expansion results returned are after this date. </param>
+        /// <param name="startsOn"> The start date filter, so the only expansion results returned are after this date. </param>
         /// <returns> A new <see cref="Models.EntityExpandContent"/> instance for mocking. </returns>
-        public static EntityExpandContent EntityExpandContent(DateTimeOffset? endOn = default, Guid? expansionId = default, DateTimeOffset? startOn = default)
+        public static EntityExpandContent EntityExpandContent(DateTimeOffset? endsOn = default, Guid? expansionId = default, DateTimeOffset? startsOn = default)
         {
-            return new EntityExpandContent(endOn, expansionId, startOn, default);
+            return new EntityExpandContent(endsOn, expansionId, startsOn, default);
         }
 
         /// <param name="metaDataAggregations"> Information of the aggregated nodes in the expansion result. </param>
@@ -4506,16 +4506,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new EntityQueryItemPropertiesDataTypesItem(dataType, default);
         }
 
-        /// <param name="startOn"> The start timeline date, so the results returned are after this date. </param>
-        /// <param name="endOn"> The end timeline date, so the results returned are before this date. </param>
+        /// <param name="startsOn"> The start timeline date, so the results returned are after this date. </param>
+        /// <param name="endsOn"> The end timeline date, so the results returned are before this date. </param>
         /// <param name="isDefaultExtendedTimeRangeAdded"> Indicates if query time range should be extended with default time range of the query. Default value is false. </param>
         /// <param name="insightQueryIds"> List of Insights Query Id. If empty, default value is all insights of this entity. </param>
         /// <returns> A new <see cref="Models.EntityGetInsightsContent"/> instance for mocking. </returns>
-        public static EntityGetInsightsContent EntityGetInsightsContent(DateTimeOffset startOn = default, DateTimeOffset endOn = default, bool? isDefaultExtendedTimeRangeAdded = default, IEnumerable<Guid> insightQueryIds = default)
+        public static EntityGetInsightsContent EntityGetInsightsContent(DateTimeOffset startsOn = default, DateTimeOffset endsOn = default, bool? isDefaultExtendedTimeRangeAdded = default, IEnumerable<Guid> insightQueryIds = default)
         {
             insightQueryIds ??= new ChangeTrackingList<Guid>();
 
-            return new EntityGetInsightsContent(startOn, endOn, isDefaultExtendedTimeRangeAdded, (insightQueryIds ?? new ChangeTrackingList<Guid>()).ToList(), default);
+            return new EntityGetInsightsContent(startsOn, endsOn, isDefaultExtendedTimeRangeAdded, (insightQueryIds ?? new ChangeTrackingList<Guid>()).ToList(), default);
         }
 
         /// <param name="queryId"> The query id of the insight. </param>
@@ -4530,12 +4530,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new EntityInsightItem(queryId, queryTimeInterval, tableQueryResults, (chartQueryResults ?? new ChangeTrackingList<InsightsTableResult>()).ToList(), default);
         }
 
-        /// <param name="startOn"> Insight query start time. </param>
-        /// <param name="endOn"> Insight query end time. </param>
+        /// <param name="startsOn"> Insight query start time. </param>
+        /// <param name="endsOn"> Insight query end time. </param>
         /// <returns> A new <see cref="Models.EntityInsightItemQueryTimeInterval"/> instance for mocking. </returns>
-        public static EntityInsightItemQueryTimeInterval EntityInsightItemQueryTimeInterval(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default)
+        public static EntityInsightItemQueryTimeInterval EntityInsightItemQueryTimeInterval(DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default)
         {
-            return new EntityInsightItemQueryTimeInterval(startOn, endOn, default);
+            return new EntityInsightItemQueryTimeInterval(startsOn, endsOn, default);
         }
 
         /// <param name="columns"> Columns Metadata of the table. </param>
@@ -4809,17 +4809,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="state"> The state of the file import. </param>
         /// <param name="totalRecordCount"> The number of records in the file. </param>
         /// <param name="validRecordCount"> The number of records that have passed validation. </param>
-        /// <param name="filesExpirationOn"> The time the files associated with this import are deleted from the storage account. </param>
-        /// <param name="importExpirationOn"> The time the file import record is soft deleted from the database and history. </param>
+        /// <param name="filesExpiresOn"> The time the files associated with this import are deleted from the storage account. </param>
+        /// <param name="importExpiresOn"> The time the file import record is soft deleted from the database and history. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsFileImportData"/> instance for mocking. </returns>
-        public static SecurityInsightsFileImportData SecurityInsightsFileImportData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IngestionMode? ingestionMode = default, SecurityInsightsFileImportContentType? contentType = default, DateTimeOffset? createdOn = default, SecurityInsightsFileMetadata errorFile = default, IEnumerable<SecurityInsightsFileValidationError> errorsPreview = default, SecurityInsightsFileMetadata importFile = default, int? ingestedRecordCount = default, string source = default, SecurityInsightsFileImportState? state = default, int? totalRecordCount = default, int? validRecordCount = default, DateTimeOffset? filesExpirationOn = default, DateTimeOffset? importExpirationOn = default)
+        public static SecurityInsightsFileImportData SecurityInsightsFileImportData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IngestionMode? ingestionMode = default, SecurityInsightsFileImportContentType? contentType = default, DateTimeOffset? createdOn = default, SecurityInsightsFileMetadata errorFile = default, IEnumerable<SecurityInsightsFileValidationError> errorsPreview = default, SecurityInsightsFileMetadata importFile = default, int? ingestedRecordCount = default, string source = default, SecurityInsightsFileImportState? state = default, int? totalRecordCount = default, int? validRecordCount = default, DateTimeOffset? filesExpiresOn = default, DateTimeOffset? importExpiresOn = default)
         {
             return new SecurityInsightsFileImportData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                ingestionMode is null && contentType is null && createdOn is null && errorFile is null && errorsPreview is null && importFile is null && ingestedRecordCount is null && source is null && state is null && totalRecordCount is null && validRecordCount is null && filesExpirationOn is null && importExpirationOn is null ? default : new FileImportProperties(
+                ingestionMode is null && contentType is null && createdOn is null && errorFile is null && errorsPreview is null && importFile is null && ingestedRecordCount is null && source is null && state is null && totalRecordCount is null && validRecordCount is null && filesExpiresOn is null && importExpiresOn is null ? default : new FileImportProperties(
                     ingestionMode.GetValueOrDefault(),
                     contentType.GetValueOrDefault(),
                     createdOn,
@@ -4831,8 +4831,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     state,
                     totalRecordCount,
                     validRecordCount,
-                    filesExpirationOn,
-                    importExpirationOn,
+                    filesExpiresOn,
+                    importExpiresOn,
                     default),
                 default);
         }
@@ -5114,19 +5114,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="targetResourceName"> The resource name of the workspace manager group targeted by the workspace manager assignment. </param>
-        /// <param name="lastJobEndOn"> The time the last job associated to this assignment ended at. </param>
+        /// <param name="lastJobEndsOn"> The time the last job associated to this assignment ended at. </param>
         /// <param name="lastJobProvisioningState"> State of the last job associated to this assignment. </param>
         /// <param name="items"> List of resources included in this workspace manager assignment. </param>
         /// <param name="eTag"> Resource Etag. </param>
         /// <returns> A new <see cref="SecurityInsights.WorkspaceManagerAssignmentData"/> instance for mocking. </returns>
-        public static WorkspaceManagerAssignmentData WorkspaceManagerAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string targetResourceName = default, DateTimeOffset? lastJobEndOn = default, JobProvisioningState? lastJobProvisioningState = default, IEnumerable<WorkspaceManagerAssignmentItem> items = default, ETag? eTag = default)
+        public static WorkspaceManagerAssignmentData WorkspaceManagerAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string targetResourceName = default, DateTimeOffset? lastJobEndsOn = default, JobProvisioningState? lastJobProvisioningState = default, IEnumerable<WorkspaceManagerAssignmentItem> items = default, ETag? eTag = default)
         {
             return new WorkspaceManagerAssignmentData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                targetResourceName is null && lastJobEndOn is null && lastJobProvisioningState is null && items is null ? default : new WorkspaceManagerAssignmentProperties(targetResourceName, lastJobEndOn, lastJobProvisioningState, (items ?? new ChangeTrackingList<WorkspaceManagerAssignmentItem>()).ToList(), default),
+                targetResourceName is null && lastJobEndsOn is null && lastJobProvisioningState is null && items is null ? default : new WorkspaceManagerAssignmentProperties(targetResourceName, lastJobEndsOn, lastJobProvisioningState, (items ?? new ChangeTrackingList<WorkspaceManagerAssignmentItem>()).ToList(), default),
                 eTag,
                 default);
         }
@@ -5225,13 +5225,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default);
         }
 
-        /// <param name="endOn"> The end date filter, so the only expansion results returned are before this date. </param>
+        /// <param name="endsOn"> The end date filter, so the only expansion results returned are before this date. </param>
         /// <param name="expansionId"> The Id of the expansion to perform. </param>
-        /// <param name="startOn"> The start date filter, so the only expansion results returned are after this date. </param>
+        /// <param name="startsOn"> The start date filter, so the only expansion results returned are after this date. </param>
         /// <returns> A new <see cref="Models.BookmarkExpandContent"/> instance for mocking. </returns>
-        public static BookmarkExpandContent BookmarkExpandContent(DateTimeOffset? endOn = default, Guid? expansionId = default, DateTimeOffset? startOn = default)
+        public static BookmarkExpandContent BookmarkExpandContent(DateTimeOffset? endsOn = default, Guid? expansionId = default, DateTimeOffset? startsOn = default)
         {
-            return new BookmarkExpandContent(endOn, expansionId, startOn, default);
+            return new BookmarkExpandContent(endsOn, expansionId, startsOn, default);
         }
 
         /// <param name="metaDataAggregations"> Information of the aggregated nodes in the expansion result. </param>
@@ -6507,15 +6507,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <param name="kinds"> Array of timeline Item kinds. </param>
-        /// <param name="startOn"> The start timeline date, so the results returned are after this date. </param>
-        /// <param name="endOn"> The end timeline date, so the results returned are before this date. </param>
+        /// <param name="startsOn"> The start timeline date, so the results returned are after this date. </param>
+        /// <param name="endsOn"> The end timeline date, so the results returned are before this date. </param>
         /// <param name="numberOfBucket"> The number of bucket for timeline queries aggregation. </param>
         /// <returns> A new <see cref="Models.EntityTimelineContent"/> instance for mocking. </returns>
-        public static EntityTimelineContent EntityTimelineContent(IEnumerable<EntityTimelineKind> kinds = default, DateTimeOffset startOn = default, DateTimeOffset endOn = default, int? numberOfBucket = default)
+        public static EntityTimelineContent EntityTimelineContent(IEnumerable<EntityTimelineKind> kinds = default, DateTimeOffset startsOn = default, DateTimeOffset endsOn = default, int? numberOfBucket = default)
         {
             kinds ??= new ChangeTrackingList<EntityTimelineKind>();
 
-            return new EntityTimelineContent((kinds ?? new ChangeTrackingList<EntityTimelineKind>()).ToList(), startOn, endOn, numberOfBucket, default);
+            return new EntityTimelineContent((kinds ?? new ChangeTrackingList<EntityTimelineKind>()).ToList(), startsOn, endsOn, numberOfBucket, default);
         }
 
         /// <param name="kind"> The entity query kind type. </param>
@@ -6526,21 +6526,21 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         }
 
         /// <param name="queryId"> The activity query id. </param>
-        /// <param name="bucketStartOn"> The grouping bucket start time. </param>
-        /// <param name="bucketEndOn"> The grouping bucket end time. </param>
+        /// <param name="bucketStartsOn"> The grouping bucket start time. </param>
+        /// <param name="bucketEndsOn"> The grouping bucket end time. </param>
         /// <param name="firstActivityOn"> The time of the first activity in the grouping bucket. </param>
         /// <param name="lastActivityOn"> The time of the last activity in the grouping bucket. </param>
         /// <param name="content"> The activity timeline content. </param>
         /// <param name="title"> The activity timeline title. </param>
         /// <returns> A new <see cref="Models.ActivityTimelineItem"/> instance for mocking. </returns>
-        public static ActivityTimelineItem ActivityTimelineItem(string queryId = default, DateTimeOffset bucketStartOn = default, DateTimeOffset bucketEndOn = default, DateTimeOffset firstActivityOn = default, DateTimeOffset lastActivityOn = default, string content = default, string title = default)
+        public static ActivityTimelineItem ActivityTimelineItem(string queryId = default, DateTimeOffset bucketStartsOn = default, DateTimeOffset bucketEndsOn = default, DateTimeOffset firstActivityOn = default, DateTimeOffset lastActivityOn = default, string content = default, string title = default)
         {
             return new ActivityTimelineItem(
                 default,
                 default,
                 queryId,
-                bucketStartOn,
-                bucketEndOn,
+                bucketStartsOn,
+                bucketEndsOn,
                 firstActivityOn,
                 lastActivityOn,
                 content,
@@ -6550,13 +6550,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="azureResourceId"> The bookmark azure resource id. </param>
         /// <param name="displayName"> The bookmark display name. </param>
         /// <param name="notes"> The notes of the bookmark. </param>
-        /// <param name="endOn"> The bookmark end time. </param>
-        /// <param name="startOn"> The bookmark start time. </param>
+        /// <param name="endsOn"> The bookmark end time. </param>
+        /// <param name="startsOn"> The bookmark start time. </param>
         /// <param name="eventOn"> The bookmark event time. </param>
         /// <param name="createdBy"> Describes a user that created the bookmark. </param>
         /// <param name="labels"> List of labels relevant to this bookmark. </param>
         /// <returns> A new <see cref="Models.BookmarkTimelineItem"/> instance for mocking. </returns>
-        public static BookmarkTimelineItem BookmarkTimelineItem(ResourceIdentifier azureResourceId = default, string displayName = default, string notes = default, DateTimeOffset? endOn = default, DateTimeOffset? startOn = default, DateTimeOffset? eventOn = default, SecurityInsightsUserInfo createdBy = default, IEnumerable<string> labels = default)
+        public static BookmarkTimelineItem BookmarkTimelineItem(ResourceIdentifier azureResourceId = default, string displayName = default, string notes = default, DateTimeOffset? endsOn = default, DateTimeOffset? startsOn = default, DateTimeOffset? eventOn = default, SecurityInsightsUserInfo createdBy = default, IEnumerable<string> labels = default)
         {
             labels ??= new ChangeTrackingList<string>();
 
@@ -6566,8 +6566,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 azureResourceId,
                 displayName,
                 notes,
-                endOn,
-                startOn,
+                endsOn,
+                startsOn,
                 eventOn,
                 createdBy,
                 (labels ?? new ChangeTrackingList<string>()).ToList());
@@ -6577,15 +6577,15 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="productName"> The anomaly product name. </param>
         /// <param name="description"> The anomaly description. </param>
         /// <param name="displayName"> The anomaly name. </param>
-        /// <param name="endOn"> The anomaly end time. </param>
-        /// <param name="startOn"> The anomaly start time. </param>
+        /// <param name="endsOn"> The anomaly end time. </param>
+        /// <param name="startsOn"> The anomaly start time. </param>
         /// <param name="generatedOn"> The anomaly generated time. </param>
         /// <param name="vendor"> The name of the anomaly vendor. </param>
         /// <param name="intent"> The intent of the anomaly. </param>
         /// <param name="techniques"> The techniques of the anomaly. </param>
         /// <param name="reasons"> The reasons that cause the anomaly. </param>
         /// <returns> A new <see cref="Models.AnomalyTimelineItem"/> instance for mocking. </returns>
-        public static AnomalyTimelineItem AnomalyTimelineItem(ResourceIdentifier azureResourceId = default, string productName = default, string description = default, string displayName = default, DateTimeOffset endOn = default, DateTimeOffset startOn = default, DateTimeOffset generatedOn = default, string vendor = default, string intent = default, IEnumerable<string> techniques = default, IEnumerable<string> reasons = default)
+        public static AnomalyTimelineItem AnomalyTimelineItem(ResourceIdentifier azureResourceId = default, string productName = default, string description = default, string displayName = default, DateTimeOffset endsOn = default, DateTimeOffset startsOn = default, DateTimeOffset generatedOn = default, string vendor = default, string intent = default, IEnumerable<string> techniques = default, IEnumerable<string> reasons = default)
         {
             techniques ??= new ChangeTrackingList<string>();
             reasons ??= new ChangeTrackingList<string>();
@@ -6597,8 +6597,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 productName,
                 description,
                 displayName,
-                endOn,
-                startOn,
+                endsOn,
+                startsOn,
                 generatedOn,
                 vendor,
                 intent,
@@ -6611,14 +6611,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="description"> The alert description. </param>
         /// <param name="displayName"> The alert name. </param>
         /// <param name="severity"> The alert severity. </param>
-        /// <param name="endOn"> The alert end time. </param>
-        /// <param name="startOn"> The alert start time. </param>
+        /// <param name="endsOn"> The alert end time. </param>
+        /// <param name="startsOn"> The alert start time. </param>
         /// <param name="generatedOn"> The alert generated time. </param>
         /// <param name="alertType"> The name of the alert type. </param>
         /// <param name="intent"> The intent of the alert. </param>
         /// <param name="techniques"> The techniques of the alert. </param>
         /// <returns> A new <see cref="Models.SecurityAlertTimelineItem"/> instance for mocking. </returns>
-        public static SecurityAlertTimelineItem SecurityAlertTimelineItem(ResourceIdentifier azureResourceId = default, string productName = default, string description = default, string displayName = default, SecurityInsightsAlertSeverity severity = default, DateTimeOffset endOn = default, DateTimeOffset startOn = default, DateTimeOffset generatedOn = default, string alertType = default, SecurityInsightsKillChainIntent? intent = default, IEnumerable<string> techniques = default)
+        public static SecurityAlertTimelineItem SecurityAlertTimelineItem(ResourceIdentifier azureResourceId = default, string productName = default, string description = default, string displayName = default, SecurityInsightsAlertSeverity severity = default, DateTimeOffset endsOn = default, DateTimeOffset startsOn = default, DateTimeOffset generatedOn = default, string alertType = default, SecurityInsightsKillChainIntent? intent = default, IEnumerable<string> techniques = default)
         {
             techniques ??= new ChangeTrackingList<string>();
 
@@ -6630,8 +6630,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 description,
                 displayName,
                 severity,
-                endOn,
-                startOn,
+                endsOn,
+                startsOn,
                 generatedOn,
                 alertType,
                 intent,
@@ -6714,25 +6714,25 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="endOn"> The time the job completed. </param>
+        /// <param name="endsOn"> The time the job completed. </param>
         /// <param name="items"> List of items published by the job. </param>
         /// <param name="provisioningState"> State of the job. </param>
-        /// <param name="startOn"> The time the job started. </param>
+        /// <param name="startsOn"> The time the job started. </param>
         /// <param name="errorMessage"> Message to describe error, if an error exists. </param>
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.WorkspaceManagerAssignmentJobData"/> instance for mocking. </returns>
-        public static WorkspaceManagerAssignmentJobData WorkspaceManagerAssignmentJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? endOn = default, IEnumerable<SecurityInsightsContentJobItem> items = default, JobProvisioningState? provisioningState = default, DateTimeOffset? startOn = default, string errorMessage = default, ETag? eTag = default)
+        public static WorkspaceManagerAssignmentJobData WorkspaceManagerAssignmentJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? endsOn = default, IEnumerable<SecurityInsightsContentJobItem> items = default, JobProvisioningState? provisioningState = default, DateTimeOffset? startsOn = default, string errorMessage = default, ETag? eTag = default)
         {
             return new WorkspaceManagerAssignmentJobData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                endOn is null && items is null && provisioningState is null && startOn is null && errorMessage is null ? default : new JobProperties(
-                    endOn,
+                endsOn is null && items is null && provisioningState is null && startsOn is null && errorMessage is null ? default : new JobProperties(
+                    endsOn,
                     (items ?? new ChangeTrackingList<SecurityInsightsContentJobItem>()).ToList(),
                     provisioningState,
-                    startOn,
+                    startsOn,
                     errorMessage,
                     default),
                 eTag,
@@ -6831,7 +6831,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                createdOn is null && createdBy is null && displayName is null && labels is null && notes is null && query is null && queryResult is null && updatedOn is null && updatedBy is null && eventOn is null && queryStartOn is null && queryEndOn is null && incidentInfo is null ? default : new BookmarkProperties(
+                createdOn is null && createdBy is null && displayName is null && labels is null && notes is null && query is null && queryResult is null && updatedOn is null && updatedBy is null && eventOn is null && incidentInfo is null ? default : new BookmarkProperties(
                     createdOn,
                     createdBy,
                     displayName,
@@ -6842,8 +6842,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     updatedOn,
                     updatedBy,
                     eventOn,
-                    queryStartOn,
-                    queryEndOn,
+                    default,
+                    default,
                     incidentInfo,
                     default,
                     default,

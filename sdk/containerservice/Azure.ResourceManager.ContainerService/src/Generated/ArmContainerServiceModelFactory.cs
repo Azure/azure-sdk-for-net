@@ -2250,7 +2250,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Recurrence schedule for the maintenance window. One and only one of the schedule
         /// types should be specified: 'daily', 'weekly', 'absoluteMonthly', or 'relativeMonthly'.
         /// </param>
-        /// <param name="startOn">
+        /// <param name="startsOn">
         /// The date the maintenance window activates. If the current date is before this
         /// date, the maintenance window is inactive and will not be used. If not specified,
         /// the maintenance window will be active right away.
@@ -2276,14 +2276,14 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// '2026-12-22 22:00' to '2027-01-03 22:00' in UTC time.
         /// </param>
         /// <returns> A new <see cref="Models.MaintenanceWindowResourceProperties"/> instance for mocking. </returns>
-        public static MaintenanceWindowResourceProperties MaintenanceWindowResourceProperties(ContainerServiceProvisioningState? provisioningState = default, ContainerServiceMaintenanceSchedule schedule = default, DateTimeOffset? startOn = default, string startTime = default, int durationHours = default, string utcOffset = default, IEnumerable<ContainerServiceDateSpan> notAllowedDates = default)
+        public static MaintenanceWindowResourceProperties MaintenanceWindowResourceProperties(ContainerServiceProvisioningState? provisioningState = default, ContainerServiceMaintenanceSchedule schedule = default, DateTimeOffset? startsOn = default, string startTime = default, int durationHours = default, string utcOffset = default, IEnumerable<ContainerServiceDateSpan> notAllowedDates = default)
         {
             notAllowedDates ??= new ChangeTrackingList<ContainerServiceDateSpan>();
 
             return new MaintenanceWindowResourceProperties(
                 provisioningState,
                 schedule,
-                startOn,
+                startsOn,
                 startTime,
                 durationHours,
                 utcOffset,

@@ -722,18 +722,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <param name="syncTrigger"> The action that triggered the most recent registry sync. </param>
         /// <param name="syncState"> The status of the connected registry's most recent sync. </param>
-        /// <param name="lastSyncStartOn"> The time that the connected registry's most recent sync started. </param>
-        /// <param name="lastSyncEndOn"> The time that the connected registry's most recent sync ended. </param>
-        /// <param name="lastSuccessfulSyncEndOn"> The time that the connected registry's most recent successful sync ended. </param>
+        /// <param name="lastSyncStartsOn"> The time that the connected registry's most recent sync started. </param>
+        /// <param name="lastSyncEndsOn"> The time that the connected registry's most recent sync ended. </param>
+        /// <param name="lastSuccessfulSyncEndsOn"> The time that the connected registry's most recent successful sync ended. </param>
         /// <returns> A new <see cref="Models.ContainerRegistrySyncResult"/> instance for mocking. </returns>
-        public static ContainerRegistrySyncResult ContainerRegistrySyncResult(ContainerRegistrySyncTrigger syncTrigger = default, ContainerRegistrySyncState syncState = default, DateTimeOffset? lastSyncStartOn = default, DateTimeOffset? lastSyncEndOn = default, DateTimeOffset? lastSuccessfulSyncEndOn = default)
+        public static ContainerRegistrySyncResult ContainerRegistrySyncResult(ContainerRegistrySyncTrigger syncTrigger = default, ContainerRegistrySyncState syncState = default, DateTimeOffset? lastSyncStartsOn = default, DateTimeOffset? lastSyncEndsOn = default, DateTimeOffset? lastSuccessfulSyncEndsOn = default)
         {
             return new ContainerRegistrySyncResult(
                 syncTrigger,
                 syncState,
-                lastSyncStartOn,
-                lastSyncEndOn,
-                lastSuccessfulSyncEndOn,
+                lastSyncStartsOn,
+                lastSyncEndsOn,
+                lastSuccessfulSyncEndsOn,
                 default);
         }
 
@@ -1037,7 +1037,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="status"> The current status of the pipeline run. </param>
         /// <param name="importedArtifacts"> The artifacts imported in the pipeline run. </param>
         /// <param name="progressPercentage"> The percentage complete of the copy operation. </param>
-        /// <param name="startOn"> The time the pipeline run started. </param>
+        /// <param name="startsOn"> The time the pipeline run started. </param>
         /// <param name="finishOn"> The time the pipeline run finished. </param>
         /// <param name="source"> The source of the pipeline run. </param>
         /// <param name="target"> The target of the pipeline run. </param>
@@ -1045,7 +1045,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="sourceTriggerOn"> The timestamp when the source update happened. </param>
         /// <param name="pipelineRunErrorMessage"> The detailed error message for the pipeline run in the case of failure. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryPipelineRunResult"/> instance for mocking. </returns>
-        public static ContainerRegistryPipelineRunResult ContainerRegistryPipelineRunResult(string status = default, IEnumerable<string> importedArtifacts = default, string progressPercentage = default, DateTimeOffset? startOn = default, DateTimeOffset? finishOn = default, ContainerRegistryImportPipelineSourceProperties source = default, ContainerRegistryExportPipelineTargetProperties target = default, string catalogDigest = default, DateTimeOffset? sourceTriggerOn = default, string pipelineRunErrorMessage = default)
+        public static ContainerRegistryPipelineRunResult ContainerRegistryPipelineRunResult(string status = default, IEnumerable<string> importedArtifacts = default, string progressPercentage = default, DateTimeOffset? startsOn = default, DateTimeOffset? finishOn = default, ContainerRegistryImportPipelineSourceProperties source = default, ContainerRegistryExportPipelineTargetProperties target = default, string catalogDigest = default, DateTimeOffset? sourceTriggerOn = default, string pipelineRunErrorMessage = default)
         {
             importedArtifacts ??= new ChangeTrackingList<string>();
 
@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 status,
                 (importedArtifacts ?? new ChangeTrackingList<string>()).ToList(),
                 progressPercentage is null ? default : new ProgressProperties(progressPercentage, default),
-                startOn,
+                startsOn,
                 finishOn,
                 source,
                 target,

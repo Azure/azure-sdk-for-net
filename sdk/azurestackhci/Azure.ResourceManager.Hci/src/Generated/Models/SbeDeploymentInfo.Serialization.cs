@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("sbeManifestSource"u8);
                 writer.WriteStringValue(SbeManifestSource);
             }
-            if (Optional.IsDefined(SbeManifestCreationOn))
+            if (Optional.IsDefined(SbeManifestCreatedOn))
             {
                 writer.WritePropertyName("sbeManifestCreationDate"u8);
-                writer.WriteStringValue(SbeManifestCreationOn.Value, "O");
+                writer.WriteStringValue(SbeManifestCreatedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Hci.Models
             string family = default;
             string publisher = default;
             string sbeManifestSource = default;
-            DateTimeOffset? sbeManifestCreationOn = default;
+            DateTimeOffset? sbeManifestCreatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    sbeManifestCreationOn = prop.Value.GetDateTimeOffset("O");
+                    sbeManifestCreatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Hci.Models
                 family,
                 publisher,
                 sbeManifestSource,
-                sbeManifestCreationOn,
+                sbeManifestCreatedOn,
                 additionalBinaryDataProperties);
         }
     }

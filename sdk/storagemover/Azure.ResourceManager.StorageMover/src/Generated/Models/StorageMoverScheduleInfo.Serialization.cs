@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WritePropertyName("executionTime"u8);
                 writer.WriteObjectValue(ExecutionTime, options);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDate"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(DaysOfWeek))
             {
@@ -124,10 +124,10 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WritePropertyName("cronExpression"u8);
                 writer.WriteStringValue(CronExpression);
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endDate"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -174,11 +174,11 @@ namespace Azure.ResourceManager.StorageMover.Models
             StorageMoverScheduleFrequency? frequency = default;
             bool? isActive = default;
             StorageMoverSchedulerTime executionTime = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             IList<string> daysOfWeek = default;
             IList<int> daysOfMonth = default;
             string cronExpression = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? endsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("daysOfWeek"u8))
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -276,11 +276,11 @@ namespace Azure.ResourceManager.StorageMover.Models
                 frequency,
                 isActive,
                 executionTime,
-                startOn,
+                startsOn,
                 daysOfWeek ?? new ChangeTrackingList<string>(),
                 daysOfMonth ?? new ChangeTrackingList<int>(),
                 cronExpression,
-                endOn,
+                endsOn,
                 additionalBinaryDataProperties);
         }
     }

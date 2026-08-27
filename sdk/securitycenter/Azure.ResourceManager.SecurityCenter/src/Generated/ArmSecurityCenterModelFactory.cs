@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="description"> Description of the suspicious activity that was detected. </param>
         /// <param name="severity"> The risk level of the threat that was detected. Learn more: https://docs.microsoft.com/en-us/azure/security-center/security-center-alerts-overview#how-are-alerts-classified. </param>
         /// <param name="intent"> The kill chain related intent behind the alert. For list of supported values, and explanations of Azure Security Center's supported kill chain intents. </param>
-        /// <param name="startOn"> The UTC time of the first event or activity included in the alert in ISO8601 format. </param>
-        /// <param name="endOn"> The UTC time of the last event or activity included in the alert in ISO8601 format. </param>
+        /// <param name="startsOn"> The UTC time of the first event or activity included in the alert in ISO8601 format. </param>
+        /// <param name="endsOn"> The UTC time of the last event or activity included in the alert in ISO8601 format. </param>
         /// <param name="resourceIdentifiers"> The resource identifiers that can be used to direct the alert to the right product exposure group (tenant, workspace, subscription etc.). There can be multiple identifiers of different type per alert. </param>
         /// <param name="remediationSteps"> Manual action items to take to remediate the alert. </param>
         /// <param name="vendorName"> The name of the vendor that raises the alert. </param>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="alertUri"> A direct link to the alert page in Azure Portal. </param>
         /// <param name="generatedOn"> The UTC time the alert was generated in ISO8601 format. </param>
         /// <param name="productName"> The name of the product which published this alert (Microsoft Sentinel, Microsoft Defender for Identity, Microsoft Defender for Endpoint, Microsoft Defender for Office, Microsoft Defender for Cloud Apps, and so on). </param>
-        /// <param name="processingEndOn"> The UTC processing end time of the alert in ISO8601 format. </param>
+        /// <param name="processingEndsOn"> The UTC processing end time of the alert in ISO8601 format. </param>
         /// <param name="entities"> A list of entities related to the alert. </param>
         /// <param name="isIncident"> This field determines whether the alert is an incident (a compound grouping of several alerts) or a single alert. </param>
         /// <param name="correlationKey"> Key for corelating related alerts. Alerts with the same correlation key considered to be related. </param>
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="subTechniques"> Kill chain related sub-techniques behind the alert. </param>
         /// <param name="supportingEvidence"> Changing set of properties depending on the supportingEvidence type. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityAlertData"/> instance for mocking. </returns>
-        public static SecurityAlertData SecurityAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string version = default, string alertType = default, string systemAlertId = default, string productComponentName = default, string alertDisplayName = default, string description = default, SecurityAlertSeverity? severity = default, KillChainIntent? intent = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<SecurityAlertResourceIdentifier> resourceIdentifiers = default, IEnumerable<string> remediationSteps = default, string vendorName = default, SecurityAlertStatus? status = default, IEnumerable<IDictionary<string, string>> extendedLinks = default, Uri alertUri = default, DateTimeOffset? generatedOn = default, string productName = default, DateTimeOffset? processingEndOn = default, IEnumerable<SecurityAlertEntity> entities = default, bool? isIncident = default, string correlationKey = default, IDictionary<string, string> extendedProperties = default, string compromisedEntity = default, IEnumerable<string> techniques = default, IEnumerable<string> subTechniques = default, SecurityAlertSupportingEvidence supportingEvidence = default)
+        public static SecurityAlertData SecurityAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string version = default, string alertType = default, string systemAlertId = default, string productComponentName = default, string alertDisplayName = default, string description = default, SecurityAlertSeverity? severity = default, KillChainIntent? intent = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<SecurityAlertResourceIdentifier> resourceIdentifiers = default, IEnumerable<string> remediationSteps = default, string vendorName = default, SecurityAlertStatus? status = default, IEnumerable<IDictionary<string, string>> extendedLinks = default, Uri alertUri = default, DateTimeOffset? generatedOn = default, string productName = default, DateTimeOffset? processingEndsOn = default, IEnumerable<SecurityAlertEntity> entities = default, bool? isIncident = default, string correlationKey = default, IDictionary<string, string> extendedProperties = default, string compromisedEntity = default, IEnumerable<string> techniques = default, IEnumerable<string> subTechniques = default, SecurityAlertSupportingEvidence supportingEvidence = default)
         {
             return new SecurityAlertData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                version is null && alertType is null && systemAlertId is null && productComponentName is null && alertDisplayName is null && description is null && severity is null && intent is null && startOn is null && endOn is null && resourceIdentifiers is null && remediationSteps is null && vendorName is null && status is null && extendedLinks is null && alertUri is null && generatedOn is null && productName is null && processingEndOn is null && entities is null && isIncident is null && correlationKey is null && extendedProperties is null && compromisedEntity is null && techniques is null && subTechniques is null && supportingEvidence is null ? default : new AlertProperties(
+                version is null && alertType is null && systemAlertId is null && productComponentName is null && alertDisplayName is null && description is null && severity is null && intent is null && startsOn is null && endsOn is null && resourceIdentifiers is null && remediationSteps is null && vendorName is null && status is null && extendedLinks is null && alertUri is null && generatedOn is null && productName is null && processingEndsOn is null && entities is null && isIncident is null && correlationKey is null && extendedProperties is null && compromisedEntity is null && techniques is null && subTechniques is null && supportingEvidence is null ? default : new AlertProperties(
                     version,
                     alertType,
                     systemAlertId,
@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     description,
                     severity,
                     intent,
-                    startOn,
-                    endOn,
+                    startsOn,
+                    endsOn,
                     (resourceIdentifiers ?? new ChangeTrackingList<SecurityAlertResourceIdentifier>()).ToList(),
                     (remediationSteps ?? new ChangeTrackingList<string>()).ToList(),
                     vendorName,
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     alertUri,
                     generatedOn,
                     productName,
-                    processingEndOn,
+                    processingEndsOn,
                     (entities ?? new ChangeTrackingList<SecurityAlertEntity>()).ToList(),
                     isIncident,
                     correlationKey,
@@ -778,16 +778,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="code"> The status of the health report. </param>
         /// <param name="reason"> The reason of the given status. </param>
         /// <param name="lastScannedOn"> The date of when the resource was scanned in the last time. </param>
-        /// <param name="statusChangeOn"> The date of when the status of the health report was changed in the last time. </param>
+        /// <param name="statusChangedOn"> The date of when the status of the health report was changed in the last time. </param>
         /// <param name="firstEvaluationOn"> The date of when the resource of the health report was scanned in the first time. </param>
         /// <returns> A new <see cref="Models.HealthReportStatus"/> instance for mocking. </returns>
-        public static HealthReportStatus HealthReportStatus(SecurityCenterHealthStatus? code = default, string reason = default, DateTimeOffset? lastScannedOn = default, DateTimeOffset? statusChangeOn = default, DateTimeOffset? firstEvaluationOn = default)
+        public static HealthReportStatus HealthReportStatus(SecurityCenterHealthStatus? code = default, string reason = default, DateTimeOffset? lastScannedOn = default, DateTimeOffset? statusChangedOn = default, DateTimeOffset? firstEvaluationOn = default)
         {
             return new HealthReportStatus(
                 code,
                 reason,
                 lastScannedOn,
-                statusChangeOn,
+                statusChangedOn,
                 firstEvaluationOn,
                 default);
         }
@@ -1700,14 +1700,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="hierarchyIdentifier"> The multi cloud resource identifier (account id in case of AWS connector, project number in case of GCP connector). </param>
-        /// <param name="hierarchyIdentifierTrialEndOn"> The date on which the trial period will end, if applicable. Trial period exists for 30 days after upgrading to payed offerings. </param>
+        /// <param name="hierarchyIdentifierTrialEndsOn"> The date on which the trial period will end, if applicable. Trial period exists for 30 days after upgrading to payed offerings. </param>
         /// <param name="environmentName"> The multi cloud resource's cloud name. </param>
         /// <param name="offerings"> A collection of offerings for the security connector. </param>
         /// <param name="environmentData"> The security connector environment data. </param>
         /// <param name="kind"> Kind of the resource. </param>
         /// <param name="eTag"> Entity tag is used for comparing two or more entities from the same requested resource. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityConnectorData"/> instance for mocking. </returns>
-        public static SecurityConnectorData SecurityConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string hierarchyIdentifier = default, DateTimeOffset? hierarchyIdentifierTrialEndOn = default, SecurityCenterCloudName? environmentName = default, IEnumerable<SecurityCenterCloudOffering> offerings = default, SecurityConnectorEnvironment environmentData = default, string kind = default, ETag? eTag = default)
+        public static SecurityConnectorData SecurityConnectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string hierarchyIdentifier = default, DateTimeOffset? hierarchyIdentifierTrialEndsOn = default, SecurityCenterCloudName? environmentName = default, IEnumerable<SecurityCenterCloudOffering> offerings = default, SecurityConnectorEnvironment environmentData = default, string kind = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1718,9 +1718,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                hierarchyIdentifier is null && hierarchyIdentifierTrialEndOn is null && environmentName is null && offerings is null && environmentData is null ? default : new SecurityConnectorProperties(
+                hierarchyIdentifier is null && hierarchyIdentifierTrialEndsOn is null && environmentName is null && offerings is null && environmentData is null ? default : new SecurityConnectorProperties(
                     hierarchyIdentifier,
-                    hierarchyIdentifierTrialEndOn,
+                    hierarchyIdentifierTrialEndsOn,
                     environmentName,
                     (offerings ?? new ChangeTrackingList<SecurityCenterCloudOffering>()).ToList(),
                     environmentData,
@@ -3589,6 +3589,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             return new SqlVulnerabilityAssessmentRemediation(description, (scripts ?? new ChangeTrackingList<string>()).ToList(), isAutomated, portalLink, default);
         }
 
+        /// <param name="expectedResults"> Expected results. </param>
+        /// <param name="updatedOn"> Baseline update time (UTC). </param>
+        /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentBaseline"/> instance for mocking. </returns>
+        public static SqlVulnerabilityAssessmentBaseline SqlVulnerabilityAssessmentBaseline(IEnumerable<IList<string>> expectedResults = default, DateTimeOffset? updatedOn = default)
+        {
+            expectedResults ??= new ChangeTrackingList<IList<string>>();
+
+            return new SqlVulnerabilityAssessmentBaseline((expectedResults ?? new ChangeTrackingList<IList<string>>()).ToList(), updatedOn, default);
+        }
+
         /// <param name="ruleId"> The rule Id. </param>
         /// <param name="severity"> The rule severity. </param>
         /// <param name="category"> The rule category. </param>
@@ -4937,6 +4947,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="server"> The server name. </param>
         /// <param name="database"> The database name. </param>
         /// <param name="sqlVersion"> The SQL version. </param>
+        /// <param name="startsOn"> The scan start time (UTC). </param>
+        /// <param name="endsOn"> Scan results are valid until end time (UTC). </param>
         /// <param name="highSeverityFailedRulesCount"> The number of failed rules with high severity. </param>
         /// <param name="mediumSeverityFailedRulesCount"> The number of failed rules with medium severity. </param>
         /// <param name="lowSeverityFailedRulesCount"> The number of failed rules with low severity. </param>
@@ -4946,7 +4958,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="isBaselineApplied"> Baseline created for this database, and has one or more rules. </param>
         /// <param name="lastScanOn"> Last scan time. </param>
         /// <returns> A new <see cref="Models.SqlVulnerabilityAssessmentScanProperties"/> instance for mocking. </returns>
-        public static SqlVulnerabilityAssessmentScanProperties SqlVulnerabilityAssessmentScanProperties(SqlVulnerabilityAssessmentScanTriggerType? triggerType = default, SqlVulnerabilityAssessmentScanState? state = default, string server = default, string database = default, string sqlVersion = default, int? highSeverityFailedRulesCount = default, int? mediumSeverityFailedRulesCount = default, int? lowSeverityFailedRulesCount = default, int? totalPassedRulesCount = default, int? totalFailedRulesCount = default, int? totalRulesCount = default, bool? isBaselineApplied = default, DateTimeOffset? lastScanOn = default)
+        public static SqlVulnerabilityAssessmentScanProperties SqlVulnerabilityAssessmentScanProperties(SqlVulnerabilityAssessmentScanTriggerType? triggerType = default, SqlVulnerabilityAssessmentScanState? state = default, string server = default, string database = default, string sqlVersion = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, int? highSeverityFailedRulesCount = default, int? mediumSeverityFailedRulesCount = default, int? lowSeverityFailedRulesCount = default, int? totalPassedRulesCount = default, int? totalFailedRulesCount = default, int? totalRulesCount = default, bool? isBaselineApplied = default, DateTimeOffset? lastScanOn = default)
         {
             return new SqlVulnerabilityAssessmentScanProperties(
                 triggerType,
@@ -4954,6 +4966,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 server,
                 database,
                 sqlVersion,
+                startsOn,
+                endsOn,
                 highSeverityFailedRulesCount,
                 mediumSeverityFailedRulesCount,
                 lowSeverityFailedRulesCount,

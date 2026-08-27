@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.ApiCenter.Models
         }
 
         /// <param name="scheduledPurgeOn"> UTC date and time when the service will be automatically purged. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
-        /// <param name="softDeletionOn"> UTC date and time when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
+        /// <param name="softDeletedOn"> UTC date and time when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
         /// <returns> A new <see cref="Models.ApiCenterDeletedServiceProperties"/> instance for mocking. </returns>
-        public static ApiCenterDeletedServiceProperties ApiCenterDeletedServiceProperties(DateTimeOffset? scheduledPurgeOn = default, DateTimeOffset? softDeletionOn = default)
+        public static ApiCenterDeletedServiceProperties ApiCenterDeletedServiceProperties(DateTimeOffset? scheduledPurgeOn = default, DateTimeOffset? softDeletedOn = default)
         {
-            return new ApiCenterDeletedServiceProperties(scheduledPurgeOn, softDeletionOn, default);
+            return new ApiCenterDeletedServiceProperties(scheduledPurgeOn, softDeletedOn, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

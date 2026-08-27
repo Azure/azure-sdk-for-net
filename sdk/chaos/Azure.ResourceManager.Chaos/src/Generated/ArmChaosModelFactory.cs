@@ -377,8 +377,8 @@ namespace Azure.ResourceManager.Chaos.Models
                 actionName,
                 actionId,
                 status,
-                startOn,
-                endOn,
+                default,
+                default,
                 (targets ?? new ChangeTrackingList<ExperimentExecutionActionTargetDetailsProperties>()).ToList(),
                 default);
         }
@@ -705,8 +705,8 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <param name="status"> The evaluation status. </param>
-        /// <param name="startOn"> The evaluation UTC start time. </param>
-        /// <param name="endOn"> The evaluation UTC end time. </param>
+        /// <param name="startsOn"> The evaluation UTC start time. </param>
+        /// <param name="endsOn"> The evaluation UTC end time. </param>
         /// <param name="errors"> System or infrastructure errors encountered during evaluation. </param>
         /// <param name="workspaceId"> The workspace ID this evaluation belongs to. </param>
         /// <param name="numScenariosToEvaluate"> The number of scenarios to evaluate. </param>
@@ -716,15 +716,15 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="evaluationResult"> The overall evaluation result. </param>
         /// <param name="results"> Per-scenario evaluation results. </param>
         /// <returns> A new <see cref="Models.ChaosWorkspaceEvaluationProperties"/> instance for mocking. </returns>
-        public static ChaosWorkspaceEvaluationProperties ChaosWorkspaceEvaluationProperties(ChaosWorkspaceEvaluationStatus status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<ChaosOperationError> errors = default, ResourceIdentifier workspaceId = default, int? numScenariosToEvaluate = default, int? numScenariosEvaluatedSucceeded = default, int? numScenariosEvaluatedFailed = default, int? numScenariosEvaluatedCancelled = default, ChaosRecommendationStatus? evaluationResult = default, IEnumerable<ChaosScenarioEvaluationResultItem> results = default)
+        public static ChaosWorkspaceEvaluationProperties ChaosWorkspaceEvaluationProperties(ChaosWorkspaceEvaluationStatus status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<ChaosOperationError> errors = default, ResourceIdentifier workspaceId = default, int? numScenariosToEvaluate = default, int? numScenariosEvaluatedSucceeded = default, int? numScenariosEvaluatedFailed = default, int? numScenariosEvaluatedCancelled = default, ChaosRecommendationStatus? evaluationResult = default, IEnumerable<ChaosScenarioEvaluationResultItem> results = default)
         {
             errors ??= new ChangeTrackingList<ChaosOperationError>();
             results ??= new ChangeTrackingList<ChaosScenarioEvaluationResultItem>();
 
             return new ChaosWorkspaceEvaluationProperties(
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 (errors ?? new ChangeTrackingList<ChaosOperationError>()).ToList(),
                 workspaceId,
                 numScenariosToEvaluate,
@@ -1007,15 +1007,15 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="executionErrors"> Business errors from fault injection — permission and resource state issues. </param>
         /// <param name="scenarioRunJson"> The scenario run json. </param>
         /// <param name="scenarioRunSummary"> The scenario run summary. </param>
-        /// <param name="startOn"> When the scenario run was started. </param>
-        /// <param name="endOn"> When the scenario run was completed. </param>
+        /// <param name="startsOn"> When the scenario run was started. </param>
+        /// <param name="endsOn"> When the scenario run was completed. </param>
         /// <param name="zoneResolution">
         /// Zone resolution information. Present when the scenario configuration
         /// used physical zone targeting (`physicalZones`). Contains the mode,
         /// requested physical zones, and per-subscription logical zone mappings.
         /// </param>
         /// <returns> A new <see cref="Models.ChaosScenarioRunProperties"/> instance for mocking. </returns>
-        public static ChaosScenarioRunProperties ChaosScenarioRunProperties(string workspaceName = default, string scenarioName = default, string scenarioConfigurationName = default, Guid managedIdentityPrincipalId = default, ChaosScenarioRunState status = default, IEnumerable<ChaosScenarioRunResourceInfo> resources = default, IEnumerable<ChaosOperationError> errors = default, ChaosScenarioErrors executionErrors = default, string scenarioRunJson = default, IEnumerable<ChaosScenarioRunSummaryAction> scenarioRunSummary = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = default, ChaosZoneResolutionInfo zoneResolution = default)
+        public static ChaosScenarioRunProperties ChaosScenarioRunProperties(string workspaceName = default, string scenarioName = default, string scenarioConfigurationName = default, Guid managedIdentityPrincipalId = default, ChaosScenarioRunState status = default, IEnumerable<ChaosScenarioRunResourceInfo> resources = default, IEnumerable<ChaosOperationError> errors = default, ChaosScenarioErrors executionErrors = default, string scenarioRunJson = default, IEnumerable<ChaosScenarioRunSummaryAction> scenarioRunSummary = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, ChaosZoneResolutionInfo zoneResolution = default)
         {
             resources ??= new ChangeTrackingList<ChaosScenarioRunResourceInfo>();
             errors ??= new ChangeTrackingList<ChaosOperationError>();
@@ -1032,8 +1032,8 @@ namespace Azure.ResourceManager.Chaos.Models
                 executionErrors,
                 scenarioRunJson,
                 (scenarioRunSummary ?? new ChangeTrackingList<ChaosScenarioRunSummaryAction>()).ToList(),
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 zoneResolution,
                 default);
         }
@@ -1180,21 +1180,21 @@ namespace Azure.ResourceManager.Chaos.Models
         }
 
         /// <param name="status"> The scenario validation status. </param>
-        /// <param name="startOn"> The scenario validation UTC start time. </param>
+        /// <param name="startsOn"> The scenario validation UTC start time. </param>
         /// <param name="executionPlanJson"> Execution plan created from validation. This plan will be executed as-is on next scenario execution. </param>
-        /// <param name="endOn"> The scenario validation UTC end time. </param>
+        /// <param name="endsOn"> The scenario validation UTC end time. </param>
         /// <param name="errors"> System or infrastructure errors encountered during validation. </param>
         /// <param name="validationErrors"> Business errors from validation — permission and resource state issues. </param>
         /// <returns> A new <see cref="Models.ChaosScenarioValidationProperties"/> instance for mocking. </returns>
-        public static ChaosScenarioValidationProperties ChaosScenarioValidationProperties(ChaosScenarioValidationState status = default, DateTimeOffset startOn = default, string executionPlanJson = default, DateTimeOffset? endOn = default, IEnumerable<ChaosOperationError> errors = default, ChaosScenarioErrors validationErrors = default)
+        public static ChaosScenarioValidationProperties ChaosScenarioValidationProperties(ChaosScenarioValidationState status = default, DateTimeOffset startsOn = default, string executionPlanJson = default, DateTimeOffset? endsOn = default, IEnumerable<ChaosOperationError> errors = default, ChaosScenarioErrors validationErrors = default)
         {
             errors ??= new ChangeTrackingList<ChaosOperationError>();
 
             return new ChaosScenarioValidationProperties(
                 status,
-                startOn,
+                startsOn,
                 executionPlanJson,
-                endOn,
+                endsOn,
                 (errors ?? new ChangeTrackingList<ChaosOperationError>()).ToList(),
                 validationErrors,
                 default);

@@ -41,14 +41,14 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="appliedScopeProperties"> Properties specific to applied scope type. Not required if not applicable. </param>
         /// <param name="commitment"> Commitment towards the benefit. </param>
         /// <param name="effectiveOn"> DateTime of the savings plan starting when this version is effective from. </param>
-        /// <param name="benefitStartOn"> This is the DateTime when the savings plan benefit starts. </param>
+        /// <param name="benefitStartsOn"> This is the DateTime when the savings plan benefit starts. </param>
         /// <param name="expiryOn"> This is the date-time when the savings plan will expire. </param>
         /// <param name="purchaseOn"> Date time when the savings plan was purchased. </param>
         /// <param name="utilization"> Savings plan utilization. </param>
         /// <param name="extendedStatusInfo"> Extended status information. </param>
         /// <param name="productCode"> Represents UPN. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SavingsPlanModelProperties(string displayName, BillingProvisioningState? provisioningState, string displayProvisioningState, string userFriendlyAppliedScopeType, string billingScopeId, ResourceIdentifier billingProfileId, ResourceIdentifier customerId, ResourceIdentifier billingAccountId, BillingSavingsPlanTerm? term, bool? isRenewed, string renewSource, string renewDestination, BillingRenewProperties renewProperties, BillingPlan? billingPlan, BillingAppliedScopeType? appliedScopeType, BillingAppliedScopeProperties appliedScopeProperties, BillingBenefitCommitment commitment, DateTimeOffset? effectiveOn, DateTimeOffset? benefitStartOn, DateTimeOffset? expiryOn, DateTimeOffset? purchaseOn, SavingsPlanUtilization utilization, ExtendedStatusInfo extendedStatusInfo, string productCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SavingsPlanModelProperties(string displayName, BillingProvisioningState? provisioningState, string displayProvisioningState, string userFriendlyAppliedScopeType, string billingScopeId, ResourceIdentifier billingProfileId, ResourceIdentifier customerId, ResourceIdentifier billingAccountId, BillingSavingsPlanTerm? term, bool? isRenewed, string renewSource, string renewDestination, BillingRenewProperties renewProperties, BillingPlan? billingPlan, BillingAppliedScopeType? appliedScopeType, BillingAppliedScopeProperties appliedScopeProperties, BillingBenefitCommitment commitment, DateTimeOffset? effectiveOn, DateTimeOffset? benefitStartsOn, DateTimeOffset? expiryOn, DateTimeOffset? purchaseOn, SavingsPlanUtilization utilization, ExtendedStatusInfo extendedStatusInfo, string productCode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             ProvisioningState = provisioningState;
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Billing.Models
             AppliedScopeProperties = appliedScopeProperties;
             Commitment = commitment;
             EffectiveOn = effectiveOn;
-            BenefitStartOn = benefitStartOn;
+            BenefitStartsOn = benefitStartsOn;
             ExpiryOn = expiryOn;
             PurchaseOn = purchaseOn;
             Utilization = utilization;
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> This is the DateTime when the savings plan benefit starts. </summary>
         [WirePath("benefitStartTime")]
-        public DateTimeOffset? BenefitStartOn { get; }
+        public DateTimeOffset? BenefitStartsOn { get; }
 
         /// <summary> This is the date-time when the savings plan will expire. </summary>
         [WirePath("expiryDateTime")]

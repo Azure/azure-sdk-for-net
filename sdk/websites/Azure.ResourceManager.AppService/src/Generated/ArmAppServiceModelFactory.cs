@@ -1587,7 +1587,7 @@ namespace Azure.ResourceManager.AppService.Models
                 (errors ?? new ChangeTrackingList<ResponseError>()).ToList(),
                 createdOn,
                 modifiedOn,
-                expireOn,
+                default,
                 geoMasterOperationId,
                 default);
         }
@@ -1959,7 +1959,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                createdOn is null && recommendationId is null && resourceId is null && resourceScope is null && ruleName is null && displayName is null && message is null && level is null && channels is null && categoryTags is null && actionName is null && enabled is null && states is null && startOn is null && endOn is null && nextNotificationOn is null && notificationExpirationOn is null && notifiedOn is null && score is null && isDynamic is null && extensionName is null && bladeName is null && forwardLink is null ? default : new RecommendationProperties(
+                createdOn is null && recommendationId is null && resourceId is null && resourceScope is null && ruleName is null && displayName is null && message is null && level is null && channels is null && categoryTags is null && actionName is null && enabled is null && states is null && nextNotificationOn is null && notifiedOn is null && score is null && isDynamic is null && extensionName is null && bladeName is null && forwardLink is null ? default : new RecommendationProperties(
                     createdOn,
                     recommendationId,
                     resourceId,
@@ -1973,10 +1973,10 @@ namespace Azure.ResourceManager.AppService.Models
                     actionName,
                     enabled,
                     (states ?? new ChangeTrackingList<string>()).ToList(),
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     nextNotificationOn,
-                    notificationExpirationOn,
+                    default,
                     notifiedOn,
                     score,
                     isDynamic,
@@ -2278,7 +2278,7 @@ namespace Azure.ResourceManager.AppService.Models
                 frequencyUnit,
                 shouldKeepAtLeastOneBackup,
                 retentionPeriodInDays,
-                startOn,
+                default,
                 lastExecutedOn,
                 default);
         }
@@ -2854,8 +2854,8 @@ namespace Azure.ResourceManager.AppService.Models
 
             return new PerfMonSet(
                 name,
-                startOn,
-                endOn,
+                default,
+                default,
                 timeGrain,
                 (values ?? new ChangeTrackingList<PerfMonSample>()).ToList(),
                 default);
@@ -3099,7 +3099,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="linuxFxVersion"> Linux App Framework and version. </param>
         /// <param name="windowsFxVersion"> Xenon App Framework and version. </param>
         /// <param name="isRequestTracingEnabled"> &lt;code&gt;true&lt;/code&gt; if request tracing is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="requestTracingExpirationOn"> Request tracing expiration time. </param>
+        /// <param name="requestTracingExpiresOn"> Request tracing expiration time. </param>
         /// <param name="isRemoteDebuggingEnabled"> &lt;code&gt;true&lt;/code&gt; if remote debugging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="remoteDebuggingVersion"> Remote debugging version. </param>
         /// <param name="isHttpLoggingEnabled"> &lt;code&gt;true&lt;/code&gt; if HTTP logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -3182,14 +3182,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="virtualApplications"> Virtual applications. </param>
         /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <returns> A new <see cref="AppService.SiteConfigData"/> instance for mocking. </returns>
-        public static SiteConfigData SiteConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? numberOfWorkers = default, string netFrameworkVersion = default, string phpVersion = default, string pythonVersion = default, string nodeVersion = default, string powerShellVersion = default, string linuxFxVersion = default, string windowsFxVersion = default, bool? isRequestTracingEnabled = default, DateTimeOffset? requestTracingExpirationOn = default, bool? isRemoteDebuggingEnabled = default, string remoteDebuggingVersion = default, bool? isHttpLoggingEnabled = default, bool? useManagedIdentityCreds = default, string acrUserManagedIdentityId = default, int? logsDirectorySizeLimit = default, bool? isDetailedErrorLoggingEnabled = default, string publishingUsername = default, SiteMachineKey machineKey = default, string documentRoot = default, ScmType? scmType = default, bool? use32BitWorkerProcess = default, bool? isWebSocketsEnabled = default, bool? isAlwaysOn = default, string javaVersion = default, string javaContainer = default, string javaContainerVersion = default, string appCommandLine = default, ManagedPipelineMode? managedPipelineMode = default, SiteLoadBalancing? loadBalancing = default, SiteLimits limits = default, bool? isAutoHealEnabled = default, AutoHealRules autoHealRules = default, string tracingOptions = default, string vnetName = default, bool? isVnetRouteAllEnabled = default, int? vnetPrivatePortsCount = default, AppServiceCorsSettings cors = default, WebAppPushSettings push = default, string autoSwapSlotName = default, bool? isLocalMySqlEnabled = default, int? managedServiceIdentityId = default, int? xManagedServiceIdentityId = default, string keyVaultReferenceIdentity = default, SiteDefaultAction? ipSecurityRestrictionsDefaultAction = default, SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction = default, bool? allowIPSecurityRestrictionsForScmToUseMain = default, bool? isHttp20Enabled = default, int? http20ProxyFlag = default, AppServiceSupportedTlsVersion? minTlsVersion = default, AppServiceTlsCipherSuite? minTlsCipherSuite = default, AppServiceSupportedTlsVersion? scmMinTlsVersion = default, AppServiceFtpsState? ftpsState = default, int? preWarmedInstanceCount = default, int? functionAppScaleLimit = default, int? elasticWebAppScaleLimit = default, string healthCheckPath = default, bool? isFunctionsRuntimeScaleMonitoringEnabled = default, string websiteTimeZone = default, int? minimumElasticInstanceCount = default, string publicNetworkAccess = default, IEnumerable<RampUpRule> experimentsRampUpRules = default, string apiDefinitionUriStringValue = default, string apiManagementConfigId = default, Uri apiDefinitionUri = default, IEnumerable<AppServiceNameValuePair> appSettings = default, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts = default, IEnumerable<ConnStringInfo> connectionStrings = default, IEnumerable<string> defaultDocuments = default, IEnumerable<HttpRequestHandlerMapping> handlerMappings = default, IEnumerable<AppServiceIPSecurityRestriction> ipSecurityRestrictions = default, IEnumerable<AppServiceNameValuePair> metadata = default, IEnumerable<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = default, IEnumerable<VirtualApplication> virtualApplications = default, string kind = default)
+        public static SiteConfigData SiteConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? numberOfWorkers = default, string netFrameworkVersion = default, string phpVersion = default, string pythonVersion = default, string nodeVersion = default, string powerShellVersion = default, string linuxFxVersion = default, string windowsFxVersion = default, bool? isRequestTracingEnabled = default, DateTimeOffset? requestTracingExpiresOn = default, bool? isRemoteDebuggingEnabled = default, string remoteDebuggingVersion = default, bool? isHttpLoggingEnabled = default, bool? useManagedIdentityCreds = default, string acrUserManagedIdentityId = default, int? logsDirectorySizeLimit = default, bool? isDetailedErrorLoggingEnabled = default, string publishingUsername = default, SiteMachineKey machineKey = default, string documentRoot = default, ScmType? scmType = default, bool? use32BitWorkerProcess = default, bool? isWebSocketsEnabled = default, bool? isAlwaysOn = default, string javaVersion = default, string javaContainer = default, string javaContainerVersion = default, string appCommandLine = default, ManagedPipelineMode? managedPipelineMode = default, SiteLoadBalancing? loadBalancing = default, SiteLimits limits = default, bool? isAutoHealEnabled = default, AutoHealRules autoHealRules = default, string tracingOptions = default, string vnetName = default, bool? isVnetRouteAllEnabled = default, int? vnetPrivatePortsCount = default, AppServiceCorsSettings cors = default, WebAppPushSettings push = default, string autoSwapSlotName = default, bool? isLocalMySqlEnabled = default, int? managedServiceIdentityId = default, int? xManagedServiceIdentityId = default, string keyVaultReferenceIdentity = default, SiteDefaultAction? ipSecurityRestrictionsDefaultAction = default, SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction = default, bool? allowIPSecurityRestrictionsForScmToUseMain = default, bool? isHttp20Enabled = default, int? http20ProxyFlag = default, AppServiceSupportedTlsVersion? minTlsVersion = default, AppServiceTlsCipherSuite? minTlsCipherSuite = default, AppServiceSupportedTlsVersion? scmMinTlsVersion = default, AppServiceFtpsState? ftpsState = default, int? preWarmedInstanceCount = default, int? functionAppScaleLimit = default, int? elasticWebAppScaleLimit = default, string healthCheckPath = default, bool? isFunctionsRuntimeScaleMonitoringEnabled = default, string websiteTimeZone = default, int? minimumElasticInstanceCount = default, string publicNetworkAccess = default, IEnumerable<RampUpRule> experimentsRampUpRules = default, string apiDefinitionUriStringValue = default, string apiManagementConfigId = default, Uri apiDefinitionUri = default, IEnumerable<AppServiceNameValuePair> appSettings = default, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts = default, IEnumerable<ConnStringInfo> connectionStrings = default, IEnumerable<string> defaultDocuments = default, IEnumerable<HttpRequestHandlerMapping> handlerMappings = default, IEnumerable<AppServiceIPSecurityRestriction> ipSecurityRestrictions = default, IEnumerable<AppServiceNameValuePair> metadata = default, IEnumerable<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = default, IEnumerable<VirtualApplication> virtualApplications = default, string kind = default)
         {
             return new SiteConfigData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                numberOfWorkers is null && defaultDocuments is null && netFrameworkVersion is null && phpVersion is null && pythonVersion is null && nodeVersion is null && powerShellVersion is null && linuxFxVersion is null && windowsFxVersion is null && isRequestTracingEnabled is null && requestTracingExpirationOn is null && isRemoteDebuggingEnabled is null && remoteDebuggingVersion is null && isHttpLoggingEnabled is null && useManagedIdentityCreds is null && acrUserManagedIdentityId is null && logsDirectorySizeLimit is null && isDetailedErrorLoggingEnabled is null && publishingUsername is null && appSettings is null && metadata is null && connectionStrings is null && machineKey is null && handlerMappings is null && documentRoot is null && scmType is null && use32BitWorkerProcess is null && isWebSocketsEnabled is null && isAlwaysOn is null && javaVersion is null && javaContainer is null && javaContainerVersion is null && appCommandLine is null && managedPipelineMode is null && virtualApplications is null && loadBalancing is null && experimentsRampUpRules is null && limits is null && isAutoHealEnabled is null && autoHealRules is null && tracingOptions is null && vnetName is null && isVnetRouteAllEnabled is null && vnetPrivatePortsCount is null && cors is null && push is null && apiDefinitionUriStringValue is null && apiManagementConfigId is null && autoSwapSlotName is null && isLocalMySqlEnabled is null && managedServiceIdentityId is null && xManagedServiceIdentityId is null && keyVaultReferenceIdentity is null && ipSecurityRestrictions is null && ipSecurityRestrictionsDefaultAction is null && scmIPSecurityRestrictions is null && scmIPSecurityRestrictionsDefaultAction is null && allowIPSecurityRestrictionsForScmToUseMain is null && isHttp20Enabled is null && http20ProxyFlag is null && minTlsVersion is null && minTlsCipherSuite is null && scmMinTlsVersion is null && ftpsState is null && preWarmedInstanceCount is null && functionAppScaleLimit is null && elasticWebAppScaleLimit is null && healthCheckPath is null && isFunctionsRuntimeScaleMonitoringEnabled is null && websiteTimeZone is null && minimumElasticInstanceCount is null && azureStorageAccounts is null && publicNetworkAccess is null ? default : new SiteConfigProperties(
+                numberOfWorkers is null && defaultDocuments is null && netFrameworkVersion is null && phpVersion is null && pythonVersion is null && nodeVersion is null && powerShellVersion is null && linuxFxVersion is null && windowsFxVersion is null && isRequestTracingEnabled is null && requestTracingExpiresOn is null && isRemoteDebuggingEnabled is null && remoteDebuggingVersion is null && isHttpLoggingEnabled is null && useManagedIdentityCreds is null && acrUserManagedIdentityId is null && logsDirectorySizeLimit is null && isDetailedErrorLoggingEnabled is null && publishingUsername is null && appSettings is null && metadata is null && connectionStrings is null && machineKey is null && handlerMappings is null && documentRoot is null && scmType is null && use32BitWorkerProcess is null && isWebSocketsEnabled is null && isAlwaysOn is null && javaVersion is null && javaContainer is null && javaContainerVersion is null && appCommandLine is null && managedPipelineMode is null && virtualApplications is null && loadBalancing is null && experimentsRampUpRules is null && limits is null && isAutoHealEnabled is null && autoHealRules is null && tracingOptions is null && vnetName is null && isVnetRouteAllEnabled is null && vnetPrivatePortsCount is null && cors is null && push is null && apiDefinitionUriStringValue is null && apiManagementConfigId is null && autoSwapSlotName is null && isLocalMySqlEnabled is null && managedServiceIdentityId is null && xManagedServiceIdentityId is null && keyVaultReferenceIdentity is null && ipSecurityRestrictions is null && ipSecurityRestrictionsDefaultAction is null && scmIPSecurityRestrictions is null && scmIPSecurityRestrictionsDefaultAction is null && allowIPSecurityRestrictionsForScmToUseMain is null && isHttp20Enabled is null && http20ProxyFlag is null && minTlsVersion is null && minTlsCipherSuite is null && scmMinTlsVersion is null && ftpsState is null && preWarmedInstanceCount is null && functionAppScaleLimit is null && elasticWebAppScaleLimit is null && healthCheckPath is null && isFunctionsRuntimeScaleMonitoringEnabled is null && websiteTimeZone is null && minimumElasticInstanceCount is null && azureStorageAccounts is null && publicNetworkAccess is null ? default : new SiteConfigProperties(
                     numberOfWorkers,
                     (defaultDocuments ?? new ChangeTrackingList<string>()).ToList(),
                     netFrameworkVersion,
@@ -3200,7 +3200,7 @@ namespace Azure.ResourceManager.AppService.Models
                     linuxFxVersion,
                     windowsFxVersion,
                     isRequestTracingEnabled,
-                    requestTracingExpirationOn,
+                    requestTracingExpiresOn,
                     isRemoteDebuggingEnabled,
                     remoteDebuggingVersion,
                     isHttpLoggingEnabled,
@@ -3315,8 +3315,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="maximumElasticWorkerCount"> Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan. </param>
         /// <param name="numberOfSites"> Number of apps assigned to this App Service plan. </param>
         /// <param name="isSpot"> If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances. </param>
-        /// <param name="spotExpirationOn"> The time when the server farm expires. Valid only if it is a spot server farm. </param>
-        /// <param name="freeOfferExpirationOn"> The time when the server farm free offer expires. </param>
+        /// <param name="spotExpiresOn"> The time when the server farm expires. Valid only if it is a spot server farm. </param>
+        /// <param name="freeOfferExpiresOn"> The time when the server farm free offer expires. </param>
         /// <param name="resourceGroup"> Resource group of the App Service plan. </param>
         /// <param name="isReserved"> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
         /// <param name="isXenon"> Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
@@ -3332,14 +3332,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="identity"> Managed service identity. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServicePlanPatch"/> instance for mocking. </returns>
-        public static AppServicePlanPatch AppServicePlanPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string workerTierName = default, AppServicePlanStatus? status = default, string subscription = default, HostingEnvironmentProfile hostingEnvironmentProfile = default, int? maximumNumberOfWorkers = default, int? numberOfWorkers = default, string geoRegion = default, bool? isPerSiteScaling = default, bool? isElasticScaleEnabled = default, int? maximumElasticWorkerCount = default, int? numberOfSites = default, bool? isSpot = default, DateTimeOffset? spotExpirationOn = default, DateTimeOffset? freeOfferExpirationOn = default, string resourceGroup = default, bool? isReserved = default, bool? isXenon = default, bool? isHyperV = default, int? targetWorkerCount = default, int? targetWorkerSizeId = default, ProvisioningState? provisioningState = default, KubeEnvironmentProfile kubeEnvironmentProfile = default, bool? isZoneRedundant = default, ManagedServiceIdentity identity = default, string kind = default)
+        public static AppServicePlanPatch AppServicePlanPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string workerTierName = default, AppServicePlanStatus? status = default, string subscription = default, HostingEnvironmentProfile hostingEnvironmentProfile = default, int? maximumNumberOfWorkers = default, int? numberOfWorkers = default, string geoRegion = default, bool? isPerSiteScaling = default, bool? isElasticScaleEnabled = default, int? maximumElasticWorkerCount = default, int? numberOfSites = default, bool? isSpot = default, DateTimeOffset? spotExpiresOn = default, DateTimeOffset? freeOfferExpiresOn = default, string resourceGroup = default, bool? isReserved = default, bool? isXenon = default, bool? isHyperV = default, int? targetWorkerCount = default, int? targetWorkerSizeId = default, ProvisioningState? provisioningState = default, KubeEnvironmentProfile kubeEnvironmentProfile = default, bool? isZoneRedundant = default, ManagedServiceIdentity identity = default, string kind = default)
         {
             return new AppServicePlanPatch(
                 id,
                 name,
                 resourceType,
                 systemData,
-                workerTierName is null && status is null && subscription is null && hostingEnvironmentProfile is null && maximumNumberOfWorkers is null && numberOfWorkers is null && geoRegion is null && isPerSiteScaling is null && isElasticScaleEnabled is null && maximumElasticWorkerCount is null && numberOfSites is null && isSpot is null && spotExpirationOn is null && freeOfferExpirationOn is null && resourceGroup is null && isReserved is null && isXenon is null && isHyperV is null && targetWorkerCount is null && targetWorkerSizeId is null && provisioningState is null && kubeEnvironmentProfile is null && isZoneRedundant is null ? default : new AppServicePlanPatchResourceProperties(
+                workerTierName is null && status is null && subscription is null && hostingEnvironmentProfile is null && maximumNumberOfWorkers is null && numberOfWorkers is null && geoRegion is null && isPerSiteScaling is null && isElasticScaleEnabled is null && maximumElasticWorkerCount is null && numberOfSites is null && isSpot is null && spotExpiresOn is null && freeOfferExpiresOn is null && resourceGroup is null && isReserved is null && isXenon is null && isHyperV is null && targetWorkerCount is null && targetWorkerSizeId is null && provisioningState is null && kubeEnvironmentProfile is null && isZoneRedundant is null ? default : new AppServicePlanPatchResourceProperties(
                     workerTierName,
                     status,
                     subscription,
@@ -3352,8 +3352,8 @@ namespace Azure.ResourceManager.AppService.Models
                     maximumElasticWorkerCount,
                     numberOfSites,
                     isSpot,
-                    spotExpirationOn,
-                    freeOfferExpirationOn,
+                    spotExpiresOn,
+                    freeOfferExpiresOn,
                     resourceGroup,
                     isReserved,
                     isXenon,
@@ -3675,9 +3675,9 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                startOn is null && endOn is null && abnormalTimePeriods is null && payload is null && nonCorrelatedDetectors is null ? default : new DiagnosticAnalysisProperties(
-                    startOn,
-                    endOn,
+                abnormalTimePeriods is null && payload is null && nonCorrelatedDetectors is null ? default : new DiagnosticAnalysisProperties(
+                    default,
+                    default,
                     (abnormalTimePeriods ?? new ChangeTrackingList<AbnormalTimePeriod>()).ToList(),
                     (payload ?? new ChangeTrackingList<AnalysisDetectorEvidences>()).ToList(),
                     (nonCorrelatedDetectors ?? new ChangeTrackingList<DetectorDefinition>()).ToList(),
@@ -3686,21 +3686,21 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <param name="startOn"> Start time of the downtime. </param>
-        /// <param name="endOn"> End time of the downtime. </param>
+        /// <param name="startsOn"> Start time of the downtime. </param>
+        /// <param name="endsOn"> End time of the downtime. </param>
         /// <param name="events"> List of Possible Cause of downtime. </param>
         /// <param name="solutions"> List of proposed solutions. </param>
         /// <returns> A new <see cref="Models.AbnormalTimePeriod"/> instance for mocking. </returns>
-        public static AbnormalTimePeriod AbnormalTimePeriod(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<DetectorAbnormalTimePeriod> events = default, IEnumerable<DiagnosticSolution> solutions = default)
+        public static AbnormalTimePeriod AbnormalTimePeriod(DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<DetectorAbnormalTimePeriod> events = default, IEnumerable<DiagnosticSolution> solutions = default)
         {
             events ??= new ChangeTrackingList<DetectorAbnormalTimePeriod>();
             solutions ??= new ChangeTrackingList<DiagnosticSolution>();
 
-            return new AbnormalTimePeriod(startOn, endOn, (events ?? new ChangeTrackingList<DetectorAbnormalTimePeriod>()).ToList(), (solutions ?? new ChangeTrackingList<DiagnosticSolution>()).ToList(), default);
+            return new AbnormalTimePeriod(startsOn, endsOn, (events ?? new ChangeTrackingList<DetectorAbnormalTimePeriod>()).ToList(), (solutions ?? new ChangeTrackingList<DiagnosticSolution>()).ToList(), default);
         }
 
-        /// <param name="startOn"> Start time of the correlated event. </param>
-        /// <param name="endOn"> End time of the correlated event. </param>
+        /// <param name="startsOn"> Start time of the correlated event. </param>
+        /// <param name="endsOn"> End time of the correlated event. </param>
         /// <param name="message"> Message describing the event. </param>
         /// <param name="source"> Represents the name of the Detector. </param>
         /// <param name="priority"> Represents the rank of the Detector. </param>
@@ -3708,14 +3708,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="issueType"> Represents the type of the Detector. </param>
         /// <param name="solutions"> List of proposed solutions. </param>
         /// <returns> A new <see cref="Models.DetectorAbnormalTimePeriod"/> instance for mocking. </returns>
-        public static DetectorAbnormalTimePeriod DetectorAbnormalTimePeriod(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string message = default, string source = default, double? priority = default, IEnumerable<IList<AppServiceNameValuePair>> metaData = default, DetectorIssueType? issueType = default, IEnumerable<DiagnosticSolution> solutions = default)
+        public static DetectorAbnormalTimePeriod DetectorAbnormalTimePeriod(DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, string message = default, string source = default, double? priority = default, IEnumerable<IList<AppServiceNameValuePair>> metaData = default, DetectorIssueType? issueType = default, IEnumerable<DiagnosticSolution> solutions = default)
         {
             metaData ??= new ChangeTrackingList<IList<AppServiceNameValuePair>>();
             solutions ??= new ChangeTrackingList<DiagnosticSolution>();
 
             return new DetectorAbnormalTimePeriod(
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 message,
                 source,
                 priority,
@@ -3781,20 +3781,20 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <param name="name"> Name of the metric. </param>
         /// <param name="unit"> Metric's unit. </param>
-        /// <param name="startOn"> Start time of the period. </param>
-        /// <param name="endOn"> End time of the period. </param>
+        /// <param name="startsOn"> Start time of the period. </param>
+        /// <param name="endsOn"> End time of the period. </param>
         /// <param name="timeGrain"> Presented time grain. Supported grains at the moment are PT1M, PT1H, P1D. </param>
         /// <param name="values"> Collection of metric values for the selected period based on the {Microsoft.Web.Hosting.Administration.DiagnosticMetricSet.TimeGrain}. </param>
         /// <returns> A new <see cref="Models.DiagnosticMetricSet"/> instance for mocking. </returns>
-        public static DiagnosticMetricSet DiagnosticMetricSet(string name = default, string unit = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string timeGrain = default, IEnumerable<DiagnosticMetricSample> values = default)
+        public static DiagnosticMetricSet DiagnosticMetricSet(string name = default, string unit = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, string timeGrain = default, IEnumerable<DiagnosticMetricSample> values = default)
         {
             values ??= new ChangeTrackingList<DiagnosticMetricSample>();
 
             return new DiagnosticMetricSet(
                 name,
                 unit,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 timeGrain,
                 (values ?? new ChangeTrackingList<DiagnosticMetricSample>()).ToList(),
                 default);
@@ -3878,9 +3878,9 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                startOn is null && endOn is null && issueDetected is null && detectorDefinition is null && metrics is null && abnormalTimePeriods is null && data is null && dataSource is null ? default : new DiagnosticDetectorResponseProperties(
-                    startOn,
-                    endOn,
+                issueDetected is null && detectorDefinition is null && metrics is null && abnormalTimePeriods is null && data is null && dataSource is null ? default : new DiagnosticDetectorResponseProperties(
+                    default,
+                    default,
                     issueDetected,
                     detectorDefinition,
                     (metrics ?? new ChangeTrackingList<DiagnosticMetricSet>()).ToList(),
@@ -5856,14 +5856,14 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                status is null && message is null && author is null && deployer is null && authorEmail is null && startOn is null && endOn is null && isActive is null && details is null ? default : new DeploymentProperties(
+                status is null && message is null && author is null && deployer is null && authorEmail is null && isActive is null && details is null ? default : new DeploymentProperties(
                     status,
                     message,
                     author,
                     deployer,
                     authorEmail,
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     isActive,
                     details,
                     default),
@@ -5889,11 +5889,11 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                deployer is null && provisioningState is null && startOn is null && endOn is null && isComplete is null ? default : new MSDeployStatusProperties(
+                deployer is null && provisioningState is null && isComplete is null ? default : new MSDeployStatusProperties(
                     deployer,
                     provisioningState,
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     isComplete,
                     default),
                 kind,
@@ -6253,7 +6253,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                identifier is null && deploymentName is null && href is null && minidump is null && isProfileRunning is null && isIisProfileRunning is null && iisProfileTimeoutInSeconds is null && parent is null && children is null && processThreads is null && openFileHandles is null && modules is null && fileName is null && commandLine is null && userName is null && handleCount is null && moduleCount is null && threadCount is null && startOn is null && totalCpuTime is null && userCpuTime is null && privilegedCpuTime is null && workingSet is null && peakWorkingSet is null && privateMemory is null && virtualMemory is null && peakVirtualMemory is null && pagedSystemMemory is null && nonPagedSystemMemory is null && pagedMemory is null && peakPagedMemory is null && timeStamp is null && environmentVariables is null && isScmSite is null && isWebjob is null && description is null ? default : new ProcessInfoProperties(
+                identifier is null && deploymentName is null && href is null && minidump is null && isProfileRunning is null && isIisProfileRunning is null && iisProfileTimeoutInSeconds is null && parent is null && children is null && processThreads is null && openFileHandles is null && modules is null && fileName is null && commandLine is null && userName is null && handleCount is null && moduleCount is null && threadCount is null && totalCpuTime is null && userCpuTime is null && privilegedCpuTime is null && workingSet is null && peakWorkingSet is null && privateMemory is null && virtualMemory is null && peakVirtualMemory is null && pagedSystemMemory is null && nonPagedSystemMemory is null && pagedMemory is null && peakPagedMemory is null && timeStamp is null && environmentVariables is null && isScmSite is null && isWebjob is null && description is null ? default : new ProcessInfoProperties(
                     identifier,
                     deploymentName,
                     href,
@@ -6272,7 +6272,7 @@ namespace Azure.ResourceManager.AppService.Models
                     handleCount,
                     moduleCount,
                     threadCount,
-                    startOn,
+                    default,
                     totalCpuTime,
                     userCpuTime,
                     privilegedCpuTime,
@@ -6701,8 +6701,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="webJobId"> Job ID. </param>
         /// <param name="webJobName"> Job name. </param>
         /// <param name="status"> Job status. </param>
-        /// <param name="startOn"> Start time. </param>
-        /// <param name="endOn"> End time. </param>
+        /// <param name="startsOn"> Start time. </param>
+        /// <param name="endsOn"> End time. </param>
         /// <param name="duration"> Job duration. </param>
         /// <param name="outputUri"> Output URL. </param>
         /// <param name="errorUri"> Error URL. </param>
@@ -6710,14 +6710,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="jobName"> Job name. </param>
         /// <param name="trigger"> Job trigger. </param>
         /// <returns> A new <see cref="Models.TriggeredJobRun"/> instance for mocking. </returns>
-        public static TriggeredJobRun TriggeredJobRun(string webJobId = default, string webJobName = default, TriggeredWebJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, Uri outputUri = default, Uri errorUri = default, Uri uri = default, string jobName = default, string trigger = default)
+        public static TriggeredJobRun TriggeredJobRun(string webJobId = default, string webJobName = default, TriggeredWebJobStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default, Uri outputUri = default, Uri errorUri = default, Uri uri = default, string jobName = default, string trigger = default)
         {
             return new TriggeredJobRun(
                 webJobId,
                 webJobName,
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 duration,
                 outputUri,
                 errorUri,
@@ -6783,9 +6783,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="waitEndOn"> Gets the wait end time. </param>
-        /// <param name="startOn"> Gets the start time. </param>
-        /// <param name="endOn"> Gets the end time. </param>
+        /// <param name="waitEndsOn"> Gets the wait end time. </param>
+        /// <param name="startsOn"> Gets the start time. </param>
+        /// <param name="endsOn"> Gets the end time. </param>
         /// <param name="status"> Gets the status. </param>
         /// <param name="code"> Gets the code. </param>
         /// <param name="error"> Gets the error. </param>
@@ -6796,17 +6796,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="response"> Gets the response of the flow run. </param>
         /// <param name="correlationClientTrackingId"> The client tracking id. </param>
         /// <returns> A new <see cref="AppService.WorkflowRunData"/> instance for mocking. </returns>
-        public static WorkflowRunData WorkflowRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? waitEndOn = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, WorkflowStatus? status = default, string code = default, BinaryData error = default, string correlationId = default, WorkflowResourceReference workflow = default, WorkflowRunTrigger trigger = default, IReadOnlyDictionary<string, WorkflowOutputContent> outputs = default, WorkflowRunTrigger response = default, string correlationClientTrackingId = default)
+        public static WorkflowRunData WorkflowRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? waitEndsOn = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, WorkflowStatus? status = default, string code = default, BinaryData error = default, string correlationId = default, WorkflowResourceReference workflow = default, WorkflowRunTrigger trigger = default, IReadOnlyDictionary<string, WorkflowOutputContent> outputs = default, WorkflowRunTrigger response = default, string correlationClientTrackingId = default)
         {
             return new WorkflowRunData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                waitEndOn is null && startOn is null && endOn is null && status is null && code is null && error is null && correlationId is null && correlationClientTrackingId is null && workflow is null && trigger is null && outputs is null && response is null ? default : new WorkflowRunProperties(
-                    waitEndOn,
-                    startOn,
-                    endOn,
+                waitEndsOn is null && startsOn is null && endsOn is null && status is null && code is null && error is null && correlationId is null && correlationClientTrackingId is null && workflow is null && trigger is null && outputs is null && response is null ? default : new WorkflowRunProperties(
+                    waitEndsOn,
+                    startsOn,
+                    endsOn,
                     status,
                     code,
                     error,
@@ -6844,8 +6844,8 @@ namespace Azure.ResourceManager.AppService.Models
                 outputs,
                 outputsLink,
                 scheduledOn,
-                startOn,
-                endOn,
+                default,
+                default,
                 trackingId,
                 correlationClientTrackingId is null ? default : new Correlation(correlationClientTrackingId, default),
                 code,
@@ -6920,9 +6920,9 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                startOn is null && endOn is null && status is null && code is null && error is null && trackingId is null && correlation is null && inputsLink is null && outputsLink is null && trackedProperties is null && retryHistory is null ? default : new WorkflowRunActionProperties(
-                    startOn,
-                    endOn,
+                status is null && code is null && error is null && trackingId is null && correlation is null && inputsLink is null && outputsLink is null && trackedProperties is null && retryHistory is null ? default : new WorkflowRunActionProperties(
+                    default,
+                    default,
                     status,
                     code,
                     error,
@@ -6957,18 +6957,18 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppRunCorrelation(clientTrackingId, (clientKeywords ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <param name="startOn"> Gets the start time. </param>
-        /// <param name="endOn"> Gets the end time. </param>
+        /// <param name="startsOn"> Gets the start time. </param>
+        /// <param name="endsOn"> Gets the end time. </param>
         /// <param name="code"> Gets the status code. </param>
         /// <param name="clientRequestId"> Gets the client request Id. </param>
         /// <param name="serviceRequestId"> Gets the service request Id. </param>
         /// <param name="errorInfo"> The error properties. </param>
         /// <returns> A new <see cref="Models.WebAppRetryHistory"/> instance for mocking. </returns>
-        public static WebAppRetryHistory WebAppRetryHistory(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string code = default, string clientRequestId = default, string serviceRequestId = default, WebAppErrorProperties errorInfo = default)
+        public static WebAppRetryHistory WebAppRetryHistory(DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, string code = default, string clientRequestId = default, string serviceRequestId = default, WebAppErrorProperties errorInfo = default)
         {
             return new WebAppRetryHistory(
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 code,
                 clientRequestId,
                 serviceRequestId,
@@ -7109,14 +7109,14 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <param name="startOn"> The time the request started. </param>
-        /// <param name="endOn"> The time the request ended. </param>
+        /// <param name="startsOn"> The time the request started. </param>
+        /// <param name="endsOn"> The time the request ended. </param>
         /// <param name="request"> The request. </param>
         /// <param name="response"> The response. </param>
         /// <returns> A new <see cref="Models.WebAppRequestHistoryProperties"/> instance for mocking. </returns>
-        public static WebAppRequestHistoryProperties WebAppRequestHistoryProperties(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, WebAppRequest request = default, WebAppResponse response = default)
+        public static WebAppRequestHistoryProperties WebAppRequestHistoryProperties(DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, WebAppRequest request = default, WebAppResponse response = default)
         {
-            return new WebAppRequestHistoryProperties(startOn, endOn, request, response, default);
+            return new WebAppRequestHistoryProperties(startsOn, endsOn, request, response, default);
         }
 
         /// <param name="headers"> A list of all the headers attached to the request. </param>
@@ -7272,8 +7272,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="startOn"> Gets the start time. </param>
-        /// <param name="endOn"> Gets the end time. </param>
+        /// <param name="startsOn"> Gets the start time. </param>
+        /// <param name="endsOn"> Gets the end time. </param>
         /// <param name="scheduledOn"> The scheduled time. </param>
         /// <param name="status"> Gets the status. </param>
         /// <param name="code"> Gets the code. </param>
@@ -7285,16 +7285,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="run"> Gets the reference to workflow run. </param>
         /// <param name="correlationClientTrackingId"> The client tracking id. </param>
         /// <returns> A new <see cref="AppService.WorkflowTriggerHistoryData"/> instance for mocking. </returns>
-        public static WorkflowTriggerHistoryData WorkflowTriggerHistoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? scheduledOn = default, WorkflowStatus? status = default, string code = default, BinaryData error = default, string trackingId = default, WebAppContentLink inputsLink = default, WebAppContentLink outputsLink = default, bool? isFired = default, WorkflowResourceReference run = default, string correlationClientTrackingId = default)
+        public static WorkflowTriggerHistoryData WorkflowTriggerHistoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, DateTimeOffset? scheduledOn = default, WorkflowStatus? status = default, string code = default, BinaryData error = default, string trackingId = default, WebAppContentLink inputsLink = default, WebAppContentLink outputsLink = default, bool? isFired = default, WorkflowResourceReference run = default, string correlationClientTrackingId = default)
         {
             return new WorkflowTriggerHistoryData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                startOn is null && endOn is null && scheduledOn is null && status is null && code is null && error is null && trackingId is null && correlationClientTrackingId is null && inputsLink is null && outputsLink is null && isFired is null && run is null ? default : new WorkflowTriggerHistoryProperties(
-                    startOn,
-                    endOn,
+                startsOn is null && endsOn is null && scheduledOn is null && status is null && code is null && error is null && trackingId is null && correlationClientTrackingId is null && inputsLink is null && outputsLink is null && isFired is null && run is null ? default : new WorkflowTriggerHistoryProperties(
+                    startsOn,
+                    endsOn,
                     scheduledOn,
                     status,
                     code,
@@ -8173,7 +8173,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                numberOfWorkers is null && defaultDocuments is null && netFrameworkVersion is null && phpVersion is null && pythonVersion is null && nodeVersion is null && powerShellVersion is null && linuxFxVersion is null && windowsFxVersion is null && isRequestTracingEnabled is null && requestTracingExpirationOn is null && isRemoteDebuggingEnabled is null && remoteDebuggingVersion is null && isHttpLoggingEnabled is null && useManagedIdentityCreds is null && acrUserManagedIdentityId is null && logsDirectorySizeLimit is null && isDetailedErrorLoggingEnabled is null && publishingUsername is null && appSettings is null && metadata is null && connectionStrings is null && machineKey is null && handlerMappings is null && documentRoot is null && scmType is null && use32BitWorkerProcess is null && isWebSocketsEnabled is null && isAlwaysOn is null && javaVersion is null && javaContainer is null && javaContainerVersion is null && appCommandLine is null && managedPipelineMode is null && virtualApplications is null && loadBalancing is null && experimentsRampUpRules is null && limits is null && isAutoHealEnabled is null && autoHealRules is null && tracingOptions is null && vnetName is null && isVnetRouteAllEnabled is null && vnetPrivatePortsCount is null && cors is null && push is null && apiManagementConfigId is null && autoSwapSlotName is null && isLocalMySqlEnabled is null && managedServiceIdentityId is null && xManagedServiceIdentityId is null && keyVaultReferenceIdentity is null && ipSecurityRestrictions is null && ipSecurityRestrictionsDefaultAction is null && scmIPSecurityRestrictions is null && scmIPSecurityRestrictionsDefaultAction is null && allowIPSecurityRestrictionsForScmToUseMain is null && isHttp20Enabled is null && http20ProxyFlag is null && minTlsVersion is null && minTlsCipherSuite is null && scmMinTlsVersion is null && ftpsState is null && preWarmedInstanceCount is null && functionAppScaleLimit is null && elasticWebAppScaleLimit is null && healthCheckPath is null && isFunctionsRuntimeScaleMonitoringEnabled is null && websiteTimeZone is null && minimumElasticInstanceCount is null && azureStorageAccounts is null && publicNetworkAccess is null ? default : new SiteConfigProperties(
+                numberOfWorkers is null && defaultDocuments is null && netFrameworkVersion is null && phpVersion is null && pythonVersion is null && nodeVersion is null && powerShellVersion is null && linuxFxVersion is null && windowsFxVersion is null && isRequestTracingEnabled is null && isRemoteDebuggingEnabled is null && remoteDebuggingVersion is null && isHttpLoggingEnabled is null && useManagedIdentityCreds is null && acrUserManagedIdentityId is null && logsDirectorySizeLimit is null && isDetailedErrorLoggingEnabled is null && publishingUsername is null && appSettings is null && metadata is null && connectionStrings is null && machineKey is null && handlerMappings is null && documentRoot is null && scmType is null && use32BitWorkerProcess is null && isWebSocketsEnabled is null && isAlwaysOn is null && javaVersion is null && javaContainer is null && javaContainerVersion is null && appCommandLine is null && managedPipelineMode is null && virtualApplications is null && loadBalancing is null && experimentsRampUpRules is null && limits is null && isAutoHealEnabled is null && autoHealRules is null && tracingOptions is null && vnetName is null && isVnetRouteAllEnabled is null && vnetPrivatePortsCount is null && cors is null && push is null && apiManagementConfigId is null && autoSwapSlotName is null && isLocalMySqlEnabled is null && managedServiceIdentityId is null && xManagedServiceIdentityId is null && keyVaultReferenceIdentity is null && ipSecurityRestrictions is null && ipSecurityRestrictionsDefaultAction is null && scmIPSecurityRestrictions is null && scmIPSecurityRestrictionsDefaultAction is null && allowIPSecurityRestrictionsForScmToUseMain is null && isHttp20Enabled is null && http20ProxyFlag is null && minTlsVersion is null && minTlsCipherSuite is null && scmMinTlsVersion is null && ftpsState is null && preWarmedInstanceCount is null && functionAppScaleLimit is null && elasticWebAppScaleLimit is null && healthCheckPath is null && isFunctionsRuntimeScaleMonitoringEnabled is null && websiteTimeZone is null && minimumElasticInstanceCount is null && azureStorageAccounts is null && publicNetworkAccess is null ? default : new SiteConfigProperties(
                     numberOfWorkers,
                     (defaultDocuments ?? new ChangeTrackingList<string>()).ToList(),
                     netFrameworkVersion,
@@ -8184,7 +8184,7 @@ namespace Azure.ResourceManager.AppService.Models
                     linuxFxVersion,
                     windowsFxVersion,
                     isRequestTracingEnabled,
-                    requestTracingExpirationOn,
+                    default,
                     isRemoteDebuggingEnabled,
                     remoteDebuggingVersion,
                     isHttpLoggingEnabled,
@@ -8355,7 +8355,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                numberOfWorkers is null && defaultDocuments is null && netFrameworkVersion is null && phpVersion is null && pythonVersion is null && nodeVersion is null && powerShellVersion is null && linuxFxVersion is null && windowsFxVersion is null && isRequestTracingEnabled is null && requestTracingExpirationOn is null && isRemoteDebuggingEnabled is null && remoteDebuggingVersion is null && isHttpLoggingEnabled is null && useManagedIdentityCreds is null && acrUserManagedIdentityId is null && logsDirectorySizeLimit is null && isDetailedErrorLoggingEnabled is null && publishingUsername is null && appSettings is null && metadata is null && connectionStrings is null && machineKey is null && handlerMappings is null && documentRoot is null && scmType is null && use32BitWorkerProcess is null && isWebSocketsEnabled is null && isAlwaysOn is null && javaVersion is null && javaContainer is null && javaContainerVersion is null && appCommandLine is null && managedPipelineMode is null && virtualApplications is null && loadBalancing is null && experimentsRampUpRules is null && limits is null && isAutoHealEnabled is null && autoHealRules is null && tracingOptions is null && vnetName is null && isVnetRouteAllEnabled is null && vnetPrivatePortsCount is null && cors is null && push is null && apiManagementConfigId is null && autoSwapSlotName is null && isLocalMySqlEnabled is null && managedServiceIdentityId is null && xManagedServiceIdentityId is null && keyVaultReferenceIdentity is null && ipSecurityRestrictions is null && ipSecurityRestrictionsDefaultAction is null && scmIPSecurityRestrictions is null && scmIPSecurityRestrictionsDefaultAction is null && allowIPSecurityRestrictionsForScmToUseMain is null && isHttp20Enabled is null && minTlsVersion is null && minTlsCipherSuite is null && scmMinTlsVersion is null && ftpsState is null && preWarmedInstanceCount is null && functionAppScaleLimit is null && elasticWebAppScaleLimit is null && healthCheckPath is null && isFunctionsRuntimeScaleMonitoringEnabled is null && websiteTimeZone is null && minimumElasticInstanceCount is null && azureStorageAccounts is null && publicNetworkAccess is null ? default : new SiteConfigProperties(
+                numberOfWorkers is null && defaultDocuments is null && netFrameworkVersion is null && phpVersion is null && pythonVersion is null && nodeVersion is null && powerShellVersion is null && linuxFxVersion is null && windowsFxVersion is null && isRequestTracingEnabled is null && isRemoteDebuggingEnabled is null && remoteDebuggingVersion is null && isHttpLoggingEnabled is null && useManagedIdentityCreds is null && acrUserManagedIdentityId is null && logsDirectorySizeLimit is null && isDetailedErrorLoggingEnabled is null && publishingUsername is null && appSettings is null && metadata is null && connectionStrings is null && machineKey is null && handlerMappings is null && documentRoot is null && scmType is null && use32BitWorkerProcess is null && isWebSocketsEnabled is null && isAlwaysOn is null && javaVersion is null && javaContainer is null && javaContainerVersion is null && appCommandLine is null && managedPipelineMode is null && virtualApplications is null && loadBalancing is null && experimentsRampUpRules is null && limits is null && isAutoHealEnabled is null && autoHealRules is null && tracingOptions is null && vnetName is null && isVnetRouteAllEnabled is null && vnetPrivatePortsCount is null && cors is null && push is null && apiManagementConfigId is null && autoSwapSlotName is null && isLocalMySqlEnabled is null && managedServiceIdentityId is null && xManagedServiceIdentityId is null && keyVaultReferenceIdentity is null && ipSecurityRestrictions is null && ipSecurityRestrictionsDefaultAction is null && scmIPSecurityRestrictions is null && scmIPSecurityRestrictionsDefaultAction is null && allowIPSecurityRestrictionsForScmToUseMain is null && isHttp20Enabled is null && minTlsVersion is null && minTlsCipherSuite is null && scmMinTlsVersion is null && ftpsState is null && preWarmedInstanceCount is null && functionAppScaleLimit is null && elasticWebAppScaleLimit is null && healthCheckPath is null && isFunctionsRuntimeScaleMonitoringEnabled is null && websiteTimeZone is null && minimumElasticInstanceCount is null && azureStorageAccounts is null && publicNetworkAccess is null ? default : new SiteConfigProperties(
                     numberOfWorkers,
                     (defaultDocuments ?? new ChangeTrackingList<string>()).ToList(),
                     netFrameworkVersion,
@@ -8366,7 +8366,7 @@ namespace Azure.ResourceManager.AppService.Models
                     linuxFxVersion,
                     windowsFxVersion,
                     isRequestTracingEnabled,
-                    requestTracingExpirationOn,
+                    default,
                     isRemoteDebuggingEnabled,
                     remoteDebuggingVersion,
                     isHttpLoggingEnabled,
@@ -8539,7 +8539,7 @@ namespace Azure.ResourceManager.AppService.Models
                 linuxFxVersion,
                 windowsFxVersion,
                 isRequestTracingEnabled,
-                requestTracingExpirationOn,
+                default,
                 isRemoteDebuggingEnabled,
                 remoteDebuggingVersion,
                 isHttpLoggingEnabled,
@@ -8709,7 +8709,7 @@ namespace Azure.ResourceManager.AppService.Models
                 linuxFxVersion,
                 windowsFxVersion,
                 isRequestTracingEnabled,
-                requestTracingExpirationOn,
+                default,
                 isRemoteDebuggingEnabled,
                 remoteDebuggingVersion,
                 isHttpLoggingEnabled,
@@ -9430,7 +9430,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                token is null && tokenSecret is null && refreshToken is null && expireOn is null ? default : new SourceControlProperties(token, tokenSecret, refreshToken, expireOn, default),
+                token is null && tokenSecret is null && refreshToken is null ? default : new SourceControlProperties(token, tokenSecret, refreshToken, default, default),
                 kind,
                 default);
         }
@@ -10803,7 +10803,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                password is null && friendlyName is null && subjectName is null && hostNames is null && siteName is null && selfLink is null && issuer is null && issueOn is null && expireOn is null && thumbprintString is null && isValid is null && publicKeyHash is null && hostingEnvironmentProfile is null && keyVaultId is null && keyVaultSecretName is null && keyVaultSecretStatus is null && serverFarmId is null && canonicalName is null && domainValidationMethod is null ? default : new CertificatePatchResourceProperties(
+                password is null && friendlyName is null && subjectName is null && hostNames is null && siteName is null && selfLink is null && issuer is null && issueOn is null && thumbprintString is null && isValid is null && publicKeyHash is null && hostingEnvironmentProfile is null && keyVaultId is null && keyVaultSecretName is null && keyVaultSecretStatus is null && serverFarmId is null && canonicalName is null && domainValidationMethod is null ? default : new CertificatePatchResourceProperties(
                     password,
                     friendlyName,
                     subjectName,
@@ -10813,7 +10813,7 @@ namespace Azure.ResourceManager.AppService.Models
                     selfLink,
                     issuer,
                     issueOn,
-                    expireOn,
+                    default,
                     thumbprintString,
                     isValid,
                     default,
@@ -11218,7 +11218,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                workerTierName is null && status is null && subscription is null && hostingEnvironmentProfile is null && maximumNumberOfWorkers is null && numberOfWorkers is null && geoRegion is null && isPerSiteScaling is null && isElasticScaleEnabled is null && maximumElasticWorkerCount is null && numberOfSites is null && isSpot is null && spotExpirationOn is null && freeOfferExpirationOn is null && resourceGroup is null && isReserved is null && isXenon is null && isHyperV is null && targetWorkerCount is null && targetWorkerSizeId is null && provisioningState is null && kubeEnvironmentProfile is null && isZoneRedundant is null ? default : new AppServicePlanPatchResourceProperties(
+                workerTierName is null && status is null && subscription is null && hostingEnvironmentProfile is null && maximumNumberOfWorkers is null && numberOfWorkers is null && geoRegion is null && isPerSiteScaling is null && isElasticScaleEnabled is null && maximumElasticWorkerCount is null && numberOfSites is null && isSpot is null && resourceGroup is null && isReserved is null && isXenon is null && isHyperV is null && targetWorkerCount is null && targetWorkerSizeId is null && provisioningState is null && kubeEnvironmentProfile is null && isZoneRedundant is null ? default : new AppServicePlanPatchResourceProperties(
                     workerTierName,
                     status,
                     subscription,
@@ -11231,8 +11231,8 @@ namespace Azure.ResourceManager.AppService.Models
                     maximumElasticWorkerCount,
                     numberOfSites,
                     isSpot,
-                    spotExpirationOn,
-                    freeOfferExpirationOn,
+                    default,
+                    default,
                     resourceGroup,
                     isReserved,
                     isXenon,
@@ -12179,14 +12179,14 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                status is null && message is null && author is null && deployer is null && authorEmail is null && startOn is null && endOn is null && isActive is null && details is null ? default : new DeploymentProperties(
+                status is null && message is null && author is null && deployer is null && authorEmail is null && isActive is null && details is null ? default : new DeploymentProperties(
                     status,
                     message,
                     author,
                     deployer,
                     authorEmail,
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     isActive,
                     details,
                     default),
@@ -12271,11 +12271,11 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                deployer is null && provisioningState is null && startOn is null && endOn is null && isComplete is null ? default : new MSDeployStatusProperties(
+                deployer is null && provisioningState is null && isComplete is null ? default : new MSDeployStatusProperties(
                     deployer,
                     provisioningState,
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     isComplete,
                     default),
                 kind,
@@ -12570,10 +12570,10 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                waitEndOn is null && startOn is null && endOn is null && status is null && code is null && error is null && correlationId is null && correlationClientTrackingId is null && workflow is null && trigger is null && outputs is null && response is null ? default : new WorkflowRunProperties(
-                    waitEndOn,
-                    startOn,
-                    endOn,
+                status is null && code is null && error is null && correlationId is null && correlationClientTrackingId is null && workflow is null && trigger is null && outputs is null && response is null ? default : new WorkflowRunProperties(
+                    default,
+                    default,
+                    default,
                     status,
                     code,
                     error,
@@ -12649,9 +12649,9 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                startOn is null && endOn is null && scheduledOn is null && status is null && code is null && error is null && trackingId is null && correlationClientTrackingId is null && inputsLink is null && outputsLink is null && isFired is null && run is null ? default : new WorkflowTriggerHistoryProperties(
-                    startOn,
-                    endOn,
+                scheduledOn is null && status is null && code is null && error is null && trackingId is null && correlationClientTrackingId is null && inputsLink is null && outputsLink is null && isFired is null && run is null ? default : new WorkflowTriggerHistoryProperties(
+                    default,
+                    default,
                     scheduledOn,
                     status,
                     code,
@@ -13018,7 +13018,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                identifier is null && deploymentName is null && href is null && minidump is null && isProfileRunning is null && isIisProfileRunning is null && iisProfileTimeoutInSeconds is null && parent is null && children is null && processThreads is null && openFileHandles is null && modules is null && fileName is null && commandLine is null && userName is null && handleCount is null && moduleCount is null && threadCount is null && startOn is null && totalCpuTime is null && userCpuTime is null && privilegedCpuTime is null && workingSet is null && peakWorkingSet is null && privateMemory is null && virtualMemory is null && peakVirtualMemory is null && pagedSystemMemory is null && nonPagedSystemMemory is null && pagedMemory is null && peakPagedMemory is null && timeStamp is null && environmentVariables is null && isScmSite is null && isWebjob is null && description is null ? default : new ProcessInfoProperties(
+                identifier is null && deploymentName is null && href is null && minidump is null && isProfileRunning is null && isIisProfileRunning is null && iisProfileTimeoutInSeconds is null && parent is null && children is null && processThreads is null && openFileHandles is null && modules is null && fileName is null && commandLine is null && userName is null && handleCount is null && moduleCount is null && threadCount is null && totalCpuTime is null && userCpuTime is null && privilegedCpuTime is null && workingSet is null && peakWorkingSet is null && privateMemory is null && virtualMemory is null && peakVirtualMemory is null && pagedSystemMemory is null && nonPagedSystemMemory is null && pagedMemory is null && peakPagedMemory is null && timeStamp is null && environmentVariables is null && isScmSite is null && isWebjob is null && description is null ? default : new ProcessInfoProperties(
                     identifier,
                     deploymentName,
                     href,
@@ -13037,7 +13037,7 @@ namespace Azure.ResourceManager.AppService.Models
                     handleCount,
                     moduleCount,
                     threadCount,
-                    startOn,
+                    default,
                     totalCpuTime,
                     userCpuTime,
                     privilegedCpuTime,
@@ -14144,7 +14144,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                workerTierName is null && status is null && subscription is null && hostingEnvironmentProfile is null && maximumNumberOfWorkers is null && numberOfWorkers is null && geoRegion is null && isPerSiteScaling is null && isElasticScaleEnabled is null && maximumElasticWorkerCount is null && numberOfSites is null && isSpot is null && spotExpirationOn is null && freeOfferExpirationOn is null && resourceGroup is null && isReserved is null && isXenon is null && isHyperV is null && targetWorkerCount is null && targetWorkerSizeId is null && provisioningState is null && kubeEnvironmentProfile is null && isZoneRedundant is null ? default : new AppServicePlanPatchResourceProperties(
+                workerTierName is null && status is null && subscription is null && hostingEnvironmentProfile is null && maximumNumberOfWorkers is null && numberOfWorkers is null && geoRegion is null && isPerSiteScaling is null && isElasticScaleEnabled is null && maximumElasticWorkerCount is null && numberOfSites is null && isSpot is null && resourceGroup is null && isReserved is null && isXenon is null && isHyperV is null && targetWorkerCount is null && targetWorkerSizeId is null && provisioningState is null && kubeEnvironmentProfile is null && isZoneRedundant is null ? default : new AppServicePlanPatchResourceProperties(
                     workerTierName,
                     status,
                     subscription,
@@ -14157,8 +14157,8 @@ namespace Azure.ResourceManager.AppService.Models
                     maximumElasticWorkerCount,
                     numberOfSites,
                     isSpot,
-                    spotExpirationOn,
-                    freeOfferExpirationOn,
+                    default,
+                    default,
                     resourceGroup,
                     isReserved,
                     isXenon,

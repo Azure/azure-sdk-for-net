@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.DependencyMap.Models
             return new DependencyMapVisualizationFilter(dateTime, processNameFilter, default);
         }
 
-        /// <param name="startOn"> Start date time for dependency map visualization query. </param>
-        /// <param name="endOn"> End date time for dependency map visualization query. </param>
+        /// <param name="startsOn"> Start date time for dependency map visualization query. </param>
+        /// <param name="endsOn"> End date time for dependency map visualization query. </param>
         /// <returns> A new <see cref="Models.DependencyMapDateTimeFilter"/> instance for mocking. </returns>
-        public static DependencyMapDateTimeFilter DependencyMapDateTimeFilter(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default)
+        public static DependencyMapDateTimeFilter DependencyMapDateTimeFilter(DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default)
         {
-            return new DependencyMapDateTimeFilter(startOn, endOn, default);
+            return new DependencyMapDateTimeFilter(startsOn, endsOn, default);
         }
 
         /// <param name="operator"> Operator for process name filter. </param>
@@ -118,19 +118,19 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="name"> The resource name of the operation status. It must match the last segment of 'id' field. </param>
         /// <param name="status"> The overall arm status of the operation. It has one of the terminal states - Succeeded/Failed/Canceled. </param>
         /// <param name="error"> Contains error details if status is Failed/Canceled. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="startsOn"> The start time of the operation. </param>
+        /// <param name="endsOn"> The end time of the operation. </param>
         /// <param name="properties"> Properties for export dependencies. These should only be set if the status is Succeeded. </param>
         /// <returns> A new <see cref="Models.ExportDependenciesOperationResult"/> instance for mocking. </returns>
-        public static ExportDependenciesOperationResult ExportDependenciesOperationResult(string id = default, string name = default, string status = default, ResponseError error = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, ExportDependenciesResultProperties properties = default)
+        public static ExportDependenciesOperationResult ExportDependenciesOperationResult(string id = default, string name = default, string status = default, ResponseError error = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, ExportDependenciesResultProperties properties = default)
         {
             return new ExportDependenciesOperationResult(
                 id,
                 name,
                 status,
                 error,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 properties,
                 default);
         }
@@ -155,19 +155,19 @@ namespace Azure.ResourceManager.DependencyMap.Models
         /// <param name="name"> The resource name of the operation status. It must match the last segment of 'id' field. </param>
         /// <param name="status"> The overall arm status of the operation. It has one of the terminal states - Succeeded/Failed/Canceled. </param>
         /// <param name="error"> Contains error details if status is Failed/Canceled. </param>
-        /// <param name="startOn"> The start time of the operation. </param>
-        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="startsOn"> The start time of the operation. </param>
+        /// <param name="endsOn"> The end time of the operation. </param>
         /// <param name="getDependencyViewForAllMachinesResultLayoutFileSasUri"> The SAS URI of the blob containing the layout file for the multi-server view. </param>
         /// <returns> A new <see cref="Models.GetDependencyViewForAllMachinesOperationResult"/> instance for mocking. </returns>
-        public static GetDependencyViewForAllMachinesOperationResult GetDependencyViewForAllMachinesOperationResult(string id = default, string name = default, string status = default, ResponseError error = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string getDependencyViewForAllMachinesResultLayoutFileSasUri = default)
+        public static GetDependencyViewForAllMachinesOperationResult GetDependencyViewForAllMachinesOperationResult(string id = default, string name = default, string status = default, ResponseError error = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, string getDependencyViewForAllMachinesResultLayoutFileSasUri = default)
         {
             return new GetDependencyViewForAllMachinesOperationResult(
                 id,
                 name,
                 status,
                 error,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 getDependencyViewForAllMachinesResultLayoutFileSasUri is null ? default : new GetDependencyViewForAllMachinesResultProperties(getDependencyViewForAllMachinesResultLayoutFileSasUri, default),
                 default);
         }

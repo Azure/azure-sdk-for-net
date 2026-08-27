@@ -1949,11 +1949,11 @@ namespace Azure.ResourceManager.Cdn.Models
 
         /// <param name="secretSourceId"> Resource ID. </param>
         /// <param name="secretVersion"> Version of the secret to be used. </param>
-        /// <param name="expireOn"> Soonest expiration date among certificates in customer's certificate chain in ISO 8601 compliant format yyyy-MM-ddTHH:mm:ss.fffffffK in UTC. </param>
+        /// <param name="expiresOn"> Soonest expiration date among certificates in customer's certificate chain in ISO 8601 compliant format yyyy-MM-ddTHH:mm:ss.fffffffK in UTC. </param>
         /// <returns> A new <see cref="Models.FrontDoorSecretMtlsCertificateChain"/> instance for mocking. </returns>
-        public static FrontDoorSecretMtlsCertificateChain FrontDoorSecretMtlsCertificateChain(ResourceIdentifier secretSourceId = default, string secretVersion = default, DateTimeOffset? expireOn = default)
+        public static FrontDoorSecretMtlsCertificateChain FrontDoorSecretMtlsCertificateChain(ResourceIdentifier secretSourceId = default, string secretVersion = default, DateTimeOffset? expiresOn = default)
         {
-            return new FrontDoorSecretMtlsCertificateChain(default, default, secretSourceId is null ? default : new CdnResourceReference(secretSourceId, default), secretVersion, expireOn);
+            return new FrontDoorSecretMtlsCertificateChain(default, default, secretSourceId is null ? default : new CdnResourceReference(secretSourceId, default), secretVersion, expiresOn);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

@@ -604,8 +604,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
+        /// <param name="startsOn"> The start time of the job execution. </param>
+        /// <param name="endsOn"> The end time of the job execution. </param>
         /// <param name="duration"> The time elapsed during the execution of this job. </param>
         /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
         /// <param name="resourceId"> The resource for which this job was created. This is typically the resource that the job is intended to manage or operate on. </param>
@@ -617,15 +617,15 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="triggeredBy"> Indicates whether the job was triggered by the system or a user. </param>
         /// <param name="provisioningState"> The provisioning state of the recovery job. </param>
         /// <returns> A new <see cref="Models.RecoveryJobProperties"/> instance for mocking. </returns>
-        public static RecoveryJobProperties RecoveryJobProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, UserConsent? executionConfigurationsUserConsent = default, JobTriggeredBy? triggeredBy = default, ResilienceManagementProvisioningState? provisioningState = default)
+        public static RecoveryJobProperties RecoveryJobProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, UserConsent? executionConfigurationsUserConsent = default, JobTriggeredBy? triggeredBy = default, ResilienceManagementProvisioningState? provisioningState = default)
         {
             retryDetails ??= new ChangeTrackingList<JobRetryDetails>();
             userComments ??= new ChangeTrackingList<JobUserComment>();
 
             return new RecoveryJobProperties(
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 duration,
                 errorDetails,
                 resourceId,
@@ -641,8 +641,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
+        /// <param name="startsOn"> The start time of the job execution. </param>
+        /// <param name="endsOn"> The end time of the job execution. </param>
         /// <param name="duration"> The time elapsed during the execution of this job. </param>
         /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
         /// <param name="resourceId"> The resource for which this job was created. This is typically the resource that the job is intended to manage or operate on. </param>
@@ -654,15 +654,15 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="executionConfigurationsUserConsent"> User consent for performing recovery action. </param>
         /// <param name="triggeredBy"> Indicates whether the job was triggered by the system or a user. </param>
         /// <returns> A new <see cref="Models.JobProperties"/> instance for mocking. </returns>
-        public static JobProperties JobProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, string jobType = default, UserConsent? executionConfigurationsUserConsent = default, JobTriggeredBy? triggeredBy = default)
+        public static JobProperties JobProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, string jobType = default, UserConsent? executionConfigurationsUserConsent = default, JobTriggeredBy? triggeredBy = default)
         {
             retryDetails ??= new ChangeTrackingList<JobRetryDetails>();
             userComments ??= new ChangeTrackingList<JobUserComment>();
 
             return new UnknownJobProperties(
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 duration,
                 errorDetails,
                 resourceId,
@@ -688,21 +688,21 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
+        /// <param name="startsOn"> The start time of the job execution. </param>
+        /// <param name="endsOn"> The end time of the job execution. </param>
         /// <param name="duration"> The time elapsed during the execution of this job. </param>
         /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
         /// <param name="retryAttempt"> The retry attempt number of the job. </param>
         /// <param name="userComments"> User Comments. </param>
         /// <returns> A new <see cref="Models.JobRetryDetails"/> instance for mocking. </returns>
-        public static JobRetryDetails JobRetryDetails(ResilienceManagementJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, int retryAttempt = default, IEnumerable<JobUserComment> userComments = default)
+        public static JobRetryDetails JobRetryDetails(ResilienceManagementJobStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, int retryAttempt = default, IEnumerable<JobUserComment> userComments = default)
         {
             userComments ??= new ChangeTrackingList<JobUserComment>();
 
             return new JobRetryDetails(
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 duration,
                 errorDetails,
                 retryAttempt,
@@ -730,8 +730,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
+        /// <param name="startsOn"> The start time of the job execution. </param>
+        /// <param name="endsOn"> The end time of the job execution. </param>
         /// <param name="duration"> The time elapsed during the execution of this job. </param>
         /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
         /// <param name="taskId"> Identifier of the task. </param>
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="subTasksList"> List of sub-tasks associated with this job. </param>
         /// <param name="retryDetails"> Retry details of the task. </param>
         /// <returns> A new <see cref="Models.JobTaskDetail"/> instance for mocking. </returns>
-        public static JobTaskDetail JobTaskDetail(ResilienceManagementJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, string taskId = default, string taskName = default, IEnumerable<ResourceIdentifier> linkedJobIds = default, IEnumerable<JobUserComment> userComments = default, IEnumerable<JobTaskDetail> subTasksList = default, IEnumerable<JobRetryDetails> retryDetails = default)
+        public static JobTaskDetail JobTaskDetail(ResilienceManagementJobStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, string taskId = default, string taskName = default, IEnumerable<ResourceIdentifier> linkedJobIds = default, IEnumerable<JobUserComment> userComments = default, IEnumerable<JobTaskDetail> subTasksList = default, IEnumerable<JobRetryDetails> retryDetails = default)
         {
             linkedJobIds ??= new ChangeTrackingList<ResourceIdentifier>();
             userComments ??= new ChangeTrackingList<JobUserComment>();
@@ -750,8 +750,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
             return new JobTaskDetail(
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 duration,
                 errorDetails,
                 taskId,
@@ -764,8 +764,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
+        /// <param name="startsOn"> The start time of the job execution. </param>
+        /// <param name="endsOn"> The end time of the job execution. </param>
         /// <param name="duration"> The time elapsed during the execution of this job. </param>
         /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
         /// <param name="resourceId"> The resource for which this job was created. This is typically the resource that the job is intended to manage or operate on. </param>
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="supportedVerbsForStage"> Matrix of Actions supported on Operations. </param>
         /// <param name="currentActiveOperationId"> The currently active operationID on this Drill Run. There can be only one active. </param>
         /// <returns> A new <see cref="Models.DrillRunProperties"/> instance for mocking. </returns>
-        public static DrillRunProperties DrillRunProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, UserConsent? executionConfigurationsUserConsent = default, JobTriggeredBy? triggeredBy = default, ResourceIdentifier drillId = default, DrillMode? drillMode = default, DrillAttestation? attestation = default, IEnumerable<string> notes = default, IEnumerable<SupportedVerbsForStage> supportedVerbsForStage = default, string currentActiveOperationId = default)
+        public static DrillRunProperties DrillRunProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, UserConsent? executionConfigurationsUserConsent = default, JobTriggeredBy? triggeredBy = default, ResourceIdentifier drillId = default, DrillMode? drillMode = default, DrillAttestation? attestation = default, IEnumerable<string> notes = default, IEnumerable<SupportedVerbsForStage> supportedVerbsForStage = default, string currentActiveOperationId = default)
         {
             retryDetails ??= new ChangeTrackingList<JobRetryDetails>();
             userComments ??= new ChangeTrackingList<JobUserComment>();
@@ -791,8 +791,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
             return new DrillRunProperties(
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 duration,
                 errorDetails,
                 resourceId,
@@ -847,8 +847,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
+        /// <param name="startsOn"> The start time of the job execution. </param>
+        /// <param name="endsOn"> The end time of the job execution. </param>
         /// <param name="duration"> The time elapsed during the execution of this job. </param>
         /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
         /// <param name="resourceId"> The resource for which this job was created. This is typically the resource that the job is intended to manage or operate on. </param>
@@ -863,15 +863,15 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="protectionSolutionType"> A setting that indicates the protection solution selected. </param>
         /// <param name="recoveryGroupActionSettings"> The recovery action settings. </param>
         /// <returns> A new <see cref="Models.RecoveryJobResourceProperties"/> instance for mocking. </returns>
-        public static RecoveryJobResourceProperties RecoveryJobResourceProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, string jobId = default, string taskId = default, string taskName = default, ResilienceManagementProvisioningState? provisioningState = default, ResourceProtectionSolutionType? protectionSolutionType = default, RecoveryGroupActionSettings recoveryGroupActionSettings = default)
+        public static RecoveryJobResourceProperties RecoveryJobResourceProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, string jobId = default, string taskId = default, string taskName = default, ResilienceManagementProvisioningState? provisioningState = default, ResourceProtectionSolutionType? protectionSolutionType = default, RecoveryGroupActionSettings recoveryGroupActionSettings = default)
         {
             retryDetails ??= new ChangeTrackingList<JobRetryDetails>();
             userComments ??= new ChangeTrackingList<JobUserComment>();
 
             return new RecoveryJobResourceProperties(
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 duration,
                 errorDetails,
                 resourceId,
@@ -907,8 +907,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
+        /// <param name="startsOn"> The start time of the job execution. </param>
+        /// <param name="endsOn"> The end time of the job execution. </param>
         /// <param name="duration"> The time elapsed during the execution of this job. </param>
         /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
         /// <param name="resourceId"> The resource for which this job was created. This is typically the resource that the job is intended to manage or operate on. </param>
@@ -921,15 +921,15 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="taskName"> Friendly name of the job-task to which this job resource is associated. </param>
         /// <param name="jobResourceType"> Discriminator for the JobResource object hierarchy. </param>
         /// <returns> A new <see cref="Models.JobResourceProperties"/> instance for mocking. </returns>
-        public static JobResourceProperties JobResourceProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, string jobId = default, string taskId = default, string taskName = default, string jobResourceType = default)
+        public static JobResourceProperties JobResourceProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, string jobId = default, string taskId = default, string taskName = default, string jobResourceType = default)
         {
             retryDetails ??= new ChangeTrackingList<JobRetryDetails>();
             userComments ??= new ChangeTrackingList<JobUserComment>();
 
             return new UnknownJobResourceProperties(
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 duration,
                 errorDetails,
                 resourceId,
@@ -945,8 +945,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <param name="status"> The current status of the job execution. </param>
-        /// <param name="startOn"> The start time of the job execution. </param>
-        /// <param name="endOn"> The end time of the job execution. </param>
+        /// <param name="startsOn"> The start time of the job execution. </param>
+        /// <param name="endsOn"> The end time of the job execution. </param>
         /// <param name="duration"> The time elapsed during the execution of this job. </param>
         /// <param name="errorDetails"> Details of any errors that occurred during the execution of this job. </param>
         /// <param name="resourceId"> The resource for which this job was created. This is typically the resource that the job is intended to manage or operate on. </param>
@@ -959,15 +959,15 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="taskName"> Friendly name of the job-task to which this job resource is associated. </param>
         /// <param name="provisioningState"> The provisioning state of the Drill Run Resource. </param>
         /// <returns> A new <see cref="Models.DrillRunResourceProperties"/> instance for mocking. </returns>
-        public static DrillRunResourceProperties DrillRunResourceProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, string jobId = default, string taskId = default, string taskName = default, ResilienceManagementProvisioningState? provisioningState = default)
+        public static DrillRunResourceProperties DrillRunResourceProperties(ResilienceManagementJobStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default, JobErrorInfo errorDetails = default, ResourceIdentifier resourceId = default, string operation = default, IEnumerable<JobRetryDetails> retryDetails = default, JobExtendedInfo jobExtendedInfo = default, IEnumerable<JobUserComment> userComments = default, string jobId = default, string taskId = default, string taskName = default, ResilienceManagementProvisioningState? provisioningState = default)
         {
             retryDetails ??= new ChangeTrackingList<JobRetryDetails>();
             userComments ??= new ChangeTrackingList<JobUserComment>();
 
             return new DrillRunResourceProperties(
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 duration,
                 errorDetails,
                 resourceId,

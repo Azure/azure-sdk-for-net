@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.Avs.Models
                 default,
                 licenseKey,
                 cores,
-                endOn,
+                default,
                 broadcomSiteId,
                 broadcomContractNumber,
                 (labels ?? new ChangeTrackingList<AvsLicenseLabel>()).ToList());
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Avs.Models
                 impact,
                 isScheduledByMicrosoft,
                 state,
-                scheduledStartOn,
+                default,
                 estimatedDurationInMinutes,
                 provisioningState,
                 (operations ?? new ChangeTrackingList<AvsMaintenanceManagementOperation>()).ToList(),
@@ -1010,7 +1010,7 @@ namespace Azure.ResourceManager.Avs.Models
                 default,
                 licenseKey,
                 cores,
-                endOn,
+                default,
                 broadcomSiteId,
                 broadcomContractNumber,
                 (labels ?? new ChangeTrackingList<AvsLicenseLabel>()).ToList());

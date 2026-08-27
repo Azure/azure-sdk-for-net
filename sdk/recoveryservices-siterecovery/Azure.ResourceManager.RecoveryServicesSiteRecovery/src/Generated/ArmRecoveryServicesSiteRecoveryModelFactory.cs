@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <returns> A new <see cref="Models.CurrentScenarioDetails"/> instance for mocking. </returns>
         public static CurrentScenarioDetails CurrentScenarioDetails(string scenarioName = default, ResourceIdentifier jobId = default, DateTimeOffset? startOn = default)
         {
-            return new CurrentScenarioDetails(scenarioName, jobId, startOn, default);
+            return new CurrentScenarioDetails(scenarioName, jobId, default, default);
         }
 
         /// <param name="instanceType"> Gets the Instance type. </param>
@@ -1159,7 +1159,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 resyncTotalTransferredBytes,
                 resyncLast15MinutesTransferredBytes,
                 resyncLastDataTransferOn,
-                resyncStartOn,
+                default,
                 progressHealth,
                 progressStatus,
                 secondsToTakeSwitchProvider,
@@ -1276,7 +1276,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 (protectedDisks ?? new ChangeTrackingList<InMageRcmFailbackProtectedDiskDetails>()).ToList(),
                 mobilityAgentDetails,
                 (vmNics ?? new ChangeTrackingList<InMageRcmFailbackNicDetails>()).ToList(),
-                lastPlannedFailoverStartOn,
+                default,
                 lastPlannedFailoverStatus,
                 discoveredVmDetails,
                 lastUsedPolicyId,
@@ -1981,7 +1981,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 resyncTotalTransferredBytes,
                 resyncLast15MinutesTransferredBytes,
                 resyncLastDataTransferTimeUTC,
-                resyncStartOn,
+                default,
                 progressHealth,
                 progressStatus,
                 default);
@@ -5953,7 +5953,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <returns> A new <see cref="Models.CurrentJobDetails"/> instance for mocking. </returns>
         public static CurrentJobDetails CurrentJobDetails(string jobName = default, ResourceIdentifier jobId = default, DateTimeOffset? startOn = default)
         {
-            return new CurrentJobDetails(jobName, jobId, startOn, default);
+            return new CurrentJobDetails(jobName, jobId, default, default);
         }
 
         /// <param name="jobName"> The job name. </param>
@@ -5963,7 +5963,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <returns> A new <see cref="Models.CriticalJobHistoryDetails"/> instance for mocking. </returns>
         public static CriticalJobHistoryDetails CriticalJobHistoryDetails(string jobName = default, ResourceIdentifier jobId = default, DateTimeOffset? startOn = default, string jobStatus = default)
         {
-            return new CriticalJobHistoryDetails(jobName, jobId, startOn, jobStatus, default);
+            return new CriticalJobHistoryDetails(jobName, jobId, default, jobStatus, default);
         }
 
         /// <param name="instanceType"> Gets the instance type. </param>
@@ -7315,8 +7315,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 stateDescription,
                 (tasks ?? new ChangeTrackingList<AsrTask>()).ToList(),
                 (errors ?? new ChangeTrackingList<SiteRecoveryJobErrorDetails>()).ToList(),
-                startOn,
-                endOn,
+                default,
+                default,
                 (allowedActions ?? new ChangeTrackingList<string>()).ToList(),
                 targetObjectId,
                 targetObjectName,
@@ -7346,8 +7346,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             return new AsrTask(
                 taskId,
                 name,
-                startOn,
-                endOn,
+                default,
+                default,
                 (allowedActions ?? new ChangeTrackingList<string>()).ToList(),
                 friendlyName,
                 state,

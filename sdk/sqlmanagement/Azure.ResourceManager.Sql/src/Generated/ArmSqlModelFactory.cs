@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                partnerServer is null && partnerDatabase is null && partnerDatabaseId is null && partnerLocation is null && role is null && partnerRole is null && replicationMode is null && startOn is null && percentComplete is null && replicationState is null && isTerminationAllowed is null && linkType is null ? default : new ReplicationLinkProperties(
+                partnerServer is null && partnerDatabase is null && partnerDatabaseId is null && partnerLocation is null && role is null && partnerRole is null && replicationMode is null && percentComplete is null && replicationState is null && isTerminationAllowed is null && linkType is null ? default : new ReplicationLinkProperties(
                     partnerServer,
                     partnerDatabase,
                     partnerDatabaseId,
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.Sql.Models
                     role,
                     partnerRole,
                     replicationMode,
-                    startOn,
+                    default,
                     percentComplete,
                     replicationState,
                     isTerminationAllowed,
@@ -1394,9 +1394,9 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="isExecutableAction"> Gets if this recommended action is actionable by user. </param>
         /// <param name="isRevertableAction"> Gets if changes applied by this recommended action can be reverted by user. </param>
         /// <param name="isArchivedAction"> Gets if this recommended action was suggested some time ago but user chose to ignore this and system added a new recommended action again. </param>
-        /// <param name="executeActionStartOn"> Gets the time when system started applying this recommended action on the user resource. e.g., index creation start time. </param>
+        /// <param name="executeActionStartsOn"> Gets the time when system started applying this recommended action on the user resource. e.g., index creation start time. </param>
         /// <param name="executeActionDuration"> Gets the time taken for applying this recommended action on user resource. e.g., time taken for index creation. </param>
-        /// <param name="revertActionStartOn"> Gets the time when system started reverting changes of this recommended action on user resource. e.g., time when index drop is executed. </param>
+        /// <param name="revertActionStartsOn"> Gets the time when system started reverting changes of this recommended action on user resource. e.g., time when index drop is executed. </param>
         /// <param name="revertActionDuration"> Gets the time taken for reverting changes of this recommended action on user resource. e.g., time taken for dropping the created index. </param>
         /// <param name="executeActionInitiatedBy"> Gets if approval for applying this recommended action was given by user/system. </param>
         /// <param name="executeActionInitiatedOn"> Gets the time when this recommended action was approved for execution. </param>
@@ -1413,14 +1413,14 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="kind"> Resource kind. </param>
         /// <param name="location"> Resource location. </param>
         /// <returns> A new <see cref="Sql.RecommendedActionData"/> instance for mocking. </returns>
-        public static RecommendedActionData RecommendedActionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string recommendationReason = default, DateTimeOffset? validSince = default, DateTimeOffset? lastRefresh = default, RecommendedActionStateInfo state = default, bool? isExecutableAction = default, bool? isRevertableAction = default, bool? isArchivedAction = default, DateTimeOffset? executeActionStartOn = default, TimeSpan? executeActionDuration = default, DateTimeOffset? revertActionStartOn = default, TimeSpan? revertActionDuration = default, RecommendedActionInitiatedBy? executeActionInitiatedBy = default, DateTimeOffset? executeActionInitiatedOn = default, RecommendedActionInitiatedBy? revertActionInitiatedBy = default, DateTimeOffset? revertActionInitiatedOn = default, int? score = default, RecommendedActionImplementationInfo implementationDetails = default, RecommendedActionErrorInfo errorDetails = default, IEnumerable<RecommendedActionImpactRecord> estimatedImpact = default, IEnumerable<RecommendedActionImpactRecord> observedImpact = default, IEnumerable<RecommendedActionMetricInfo> timeSeries = default, IEnumerable<string> linkedObjects = default, IReadOnlyDictionary<string, string> actionDetails = default, string kind = default, AzureLocation? location = default)
+        public static RecommendedActionData RecommendedActionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string recommendationReason = default, DateTimeOffset? validSince = default, DateTimeOffset? lastRefresh = default, RecommendedActionStateInfo state = default, bool? isExecutableAction = default, bool? isRevertableAction = default, bool? isArchivedAction = default, DateTimeOffset? executeActionStartsOn = default, TimeSpan? executeActionDuration = default, DateTimeOffset? revertActionStartsOn = default, TimeSpan? revertActionDuration = default, RecommendedActionInitiatedBy? executeActionInitiatedBy = default, DateTimeOffset? executeActionInitiatedOn = default, RecommendedActionInitiatedBy? revertActionInitiatedBy = default, DateTimeOffset? revertActionInitiatedOn = default, int? score = default, RecommendedActionImplementationInfo implementationDetails = default, RecommendedActionErrorInfo errorDetails = default, IEnumerable<RecommendedActionImpactRecord> estimatedImpact = default, IEnumerable<RecommendedActionImpactRecord> observedImpact = default, IEnumerable<RecommendedActionMetricInfo> timeSeries = default, IEnumerable<string> linkedObjects = default, IReadOnlyDictionary<string, string> actionDetails = default, string kind = default, AzureLocation? location = default)
         {
             return new RecommendedActionData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                recommendationReason is null && validSince is null && lastRefresh is null && state is null && isExecutableAction is null && isRevertableAction is null && isArchivedAction is null && executeActionStartOn is null && executeActionDuration is null && revertActionStartOn is null && revertActionDuration is null && executeActionInitiatedBy is null && executeActionInitiatedOn is null && revertActionInitiatedBy is null && revertActionInitiatedOn is null && score is null && implementationDetails is null && errorDetails is null && estimatedImpact is null && observedImpact is null && timeSeries is null && linkedObjects is null && actionDetails is null ? default : new RecommendedActionProperties(
+                recommendationReason is null && validSince is null && lastRefresh is null && state is null && isExecutableAction is null && isRevertableAction is null && isArchivedAction is null && executeActionStartsOn is null && executeActionDuration is null && revertActionStartsOn is null && revertActionDuration is null && executeActionInitiatedBy is null && executeActionInitiatedOn is null && revertActionInitiatedBy is null && revertActionInitiatedOn is null && score is null && implementationDetails is null && errorDetails is null && estimatedImpact is null && observedImpact is null && timeSeries is null && linkedObjects is null && actionDetails is null ? default : new RecommendedActionProperties(
                     recommendationReason,
                     validSince,
                     lastRefresh,
@@ -1428,9 +1428,9 @@ namespace Azure.ResourceManager.Sql.Models
                     isExecutableAction,
                     isRevertableAction,
                     isArchivedAction,
-                    executeActionStartOn,
+                    executeActionStartsOn,
                     executeActionDuration,
-                    revertActionStartOn,
+                    revertActionStartsOn,
                     revertActionDuration,
                     executeActionInitiatedBy,
                     executeActionInitiatedOn,
@@ -1504,7 +1504,7 @@ namespace Azure.ResourceManager.Sql.Models
                 metricName,
                 unit,
                 timeGrain,
-                startOn,
+                default,
                 value,
                 default);
         }
@@ -1765,12 +1765,12 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                scanId is null && triggerType is null && state is null && startOn is null && endOn is null && errors is null && server is null && database is null && sqlVersion is null && highSeverityFailedRulesCount is null && mediumSeverityFailedRulesCount is null && lowSeverityFailedRulesCount is null && totalPassedRulesCount is null && totalFailedRulesCount is null && totalRulesCount is null && isBaselineApplied is null && lastScanOn is null ? default : new SqlVulnerabilityAssessmentScanRecordProperties(
+                scanId is null && triggerType is null && state is null && errors is null && server is null && database is null && sqlVersion is null && highSeverityFailedRulesCount is null && mediumSeverityFailedRulesCount is null && lowSeverityFailedRulesCount is null && totalPassedRulesCount is null && totalFailedRulesCount is null && totalRulesCount is null && isBaselineApplied is null && lastScanOn is null ? default : new SqlVulnerabilityAssessmentScanRecordProperties(
                     scanId,
                     triggerType,
                     state,
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     (errors ?? new ChangeTrackingList<SqlVulnerabilityAssessmentScanError>()).ToList(),
                     server,
                     database,
@@ -1872,12 +1872,12 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                scanId is null && triggerType is null && state is null && startOn is null && endOn is null && errors is null && storageContainerPath is null && numberOfFailedSecurityChecks is null ? default : new VulnerabilityAssessmentScanRecordProperties(
+                scanId is null && triggerType is null && state is null && errors is null && storageContainerPath is null && numberOfFailedSecurityChecks is null ? default : new VulnerabilityAssessmentScanRecordProperties(
                     scanId,
                     triggerType,
                     state,
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     (errors ?? new ChangeTrackingList<VulnerabilityAssessmentScanError>()).ToList(),
                     storageContainerPath,
                     numberOfFailedSecurityChecks,
@@ -3010,12 +3010,12 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                instancePoolName is null && operation is null && operationFriendlyName is null && percentComplete is null && startOn is null && state is null && errorCode is null && errorDescription is null && errorSeverity is null && errorType is null && estimatedCompleteOn is null && description is null && isCancellable is null ? default : new InstancePoolOperationProperties(
+                instancePoolName is null && operation is null && operationFriendlyName is null && percentComplete is null && state is null && errorCode is null && errorDescription is null && errorSeverity is null && errorType is null && estimatedCompleteOn is null && description is null && isCancellable is null ? default : new InstancePoolOperationProperties(
                     instancePoolName,
                     operation,
                     operationFriendlyName,
                     percentComplete,
-                    startOn,
+                    default,
                     state,
                     errorCode,
                     errorDescription,
@@ -3120,7 +3120,7 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                jobVersion is null && stepName is null && stepId is null && jobExecutionId is null && lifecycle is null && provisioningState is null && createOn is null && startOn is null && endOn is null && currentAttempts is null && currentAttemptStartOn is null && lastMessage is null && target is null ? default : new JobExecutionProperties(
+                jobVersion is null && stepName is null && stepId is null && jobExecutionId is null && lifecycle is null && provisioningState is null && createOn is null && currentAttempts is null && lastMessage is null && target is null ? default : new JobExecutionProperties(
                     jobVersion,
                     stepName,
                     stepId,
@@ -3128,10 +3128,10 @@ namespace Azure.ResourceManager.Sql.Models
                     lifecycle,
                     provisioningState,
                     createOn,
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     currentAttempts,
-                    currentAttemptStartOn,
+                    default,
                     lastMessage,
                     target,
                     default),
@@ -3234,17 +3234,17 @@ namespace Azure.ResourceManager.Sql.Models
                 default);
         }
 
-        /// <param name="startOn"> Schedule start time. </param>
-        /// <param name="endOn"> Schedule end time. </param>
+        /// <param name="startsOn"> Schedule start time. </param>
+        /// <param name="endsOn"> Schedule end time. </param>
         /// <param name="scheduleType"> Schedule interval type. </param>
         /// <param name="isEnabled"> Whether or not the schedule is enabled. </param>
         /// <param name="interval"> Value of the schedule's recurring interval, if the ScheduleType is recurring. ISO8601 duration format. </param>
         /// <returns> A new <see cref="Models.SqlServerJobSchedule"/> instance for mocking. </returns>
-        public static SqlServerJobSchedule SqlServerJobSchedule(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, SqlServerJobScheduleType? scheduleType = default, bool? isEnabled = default, TimeSpan? interval = default)
+        public static SqlServerJobSchedule SqlServerJobSchedule(DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, SqlServerJobScheduleType? scheduleType = default, bool? isEnabled = default, TimeSpan? interval = default)
         {
             return new SqlServerJobSchedule(
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 scheduleType,
                 isEnabled,
                 interval,
@@ -3801,12 +3801,12 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                managedInstanceName is null && operation is null && operationFriendlyName is null && percentComplete is null && startOn is null && state is null && errorCode is null && errorDescription is null && errorSeverity is null && isUserError is null && estimatedCompleteOn is null && description is null && isCancellable is null && operationParameters is null && operationSteps is null ? default : new ManagedInstanceOperationProperties(
+                managedInstanceName is null && operation is null && operationFriendlyName is null && percentComplete is null && state is null && errorCode is null && errorDescription is null && errorSeverity is null && isUserError is null && estimatedCompleteOn is null && description is null && isCancellable is null && operationParameters is null && operationSteps is null ? default : new ManagedInstanceOperationProperties(
                     managedInstanceName,
                     operation,
                     operationFriendlyName,
                     percentComplete,
-                    startOn,
+                    default,
                     state,
                     errorCode,
                     errorDescription,
@@ -3860,8 +3860,8 @@ namespace Azure.ResourceManager.Sql.Models
         public static UpsertManagedServerOperationStep UpsertManagedServerOperationStep(DateTimeOffset? stepStartOn = default, DateTimeOffset? stepEndOn = default, string timeElapsed = default, int? order = default, string name = default, UpsertManagedServerOperationStepStatus? status = default)
         {
             return new UpsertManagedServerOperationStep(
-                stepStartOn,
-                stepEndOn,
+                default,
+                default,
                 timeElapsed,
                 order,
                 name,
@@ -5035,13 +5035,13 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                databaseName is null && operation is null && operationFriendlyName is null && percentComplete is null && serverName is null && startOn is null && state is null && errorCode is null && errorDescription is null && errorSeverity is null && isUserError is null && estimatedCompleteOn is null && description is null && isCancellable is null && operationPhaseDetails is null ? default : new DatabaseOperationProperties(
+                databaseName is null && operation is null && operationFriendlyName is null && percentComplete is null && serverName is null && state is null && errorCode is null && errorDescription is null && errorSeverity is null && isUserError is null && estimatedCompleteOn is null && description is null && isCancellable is null && operationPhaseDetails is null ? default : new DatabaseOperationProperties(
                     databaseName,
                     operation,
                     operationFriendlyName,
                     percentComplete,
                     serverName,
-                    startOn,
+                    default,
                     state,
                     errorCode,
                     errorDescription,
@@ -5144,12 +5144,12 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                operation is null && operationFriendlyName is null && percentComplete is null && serverName is null && startOn is null && state is null && errorCode is null && errorDescription is null && errorSeverity is null && isUserError is null && estimatedCompleteOn is null && description is null && isCancellable is null ? default : new ServerOperationProperties(
+                operation is null && operationFriendlyName is null && percentComplete is null && serverName is null && state is null && errorCode is null && errorDescription is null && errorSeverity is null && isUserError is null && estimatedCompleteOn is null && description is null && isCancellable is null ? default : new ServerOperationProperties(
                     operation,
                     operationFriendlyName,
                     percentComplete,
                     serverName,
-                    startOn,
+                    default,
                     state,
                     errorCode,
                     errorDescription,
@@ -5445,13 +5445,13 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                elasticPoolName is null && operation is null && operationFriendlyName is null && percentComplete is null && serverName is null && startOn is null && state is null && errorCode is null && errorDescription is null && errorSeverity is null && isUserError is null && estimatedCompleteOn is null && description is null && isCancellable is null ? default : new ElasticPoolOperationProperties(
+                elasticPoolName is null && operation is null && operationFriendlyName is null && percentComplete is null && serverName is null && state is null && errorCode is null && errorDescription is null && errorSeverity is null && isUserError is null && estimatedCompleteOn is null && description is null && isCancellable is null ? default : new ElasticPoolOperationProperties(
                     elasticPoolName,
                     operation,
                     operationFriendlyName,
                     percentComplete,
                     serverName,
-                    startOn,
+                    default,
                     state,
                     errorCode,
                     errorDescription,
@@ -6503,7 +6503,7 @@ namespace Azure.ResourceManager.Sql.Models
                 name,
                 resourceType,
                 systemData,
-                recommendationReason is null && validSince is null && lastRefresh is null && state is null && isExecutableAction is null && isRevertableAction is null && isArchivedAction is null && executeActionStartOn is null && executeActionDuration is null && revertActionStartOn is null && revertActionDuration is null && executeActionInitiatedBy is null && executeActionInitiatedOn is null && revertActionInitiatedBy is null && revertActionInitiatedOn is null && score is null && implementationDetails is null && errorDetails is null && estimatedImpact is null && observedImpact is null && timeSeries is null && linkedObjects is null ? default : new RecommendedActionProperties(
+                recommendationReason is null && validSince is null && lastRefresh is null && state is null && isExecutableAction is null && isRevertableAction is null && isArchivedAction is null && executeActionDuration is null && revertActionDuration is null && executeActionInitiatedBy is null && executeActionInitiatedOn is null && revertActionInitiatedBy is null && revertActionInitiatedOn is null && score is null && implementationDetails is null && errorDetails is null && estimatedImpact is null && observedImpact is null && timeSeries is null && linkedObjects is null ? default : new RecommendedActionProperties(
                     recommendationReason,
                     validSince,
                     lastRefresh,
@@ -6511,9 +6511,9 @@ namespace Azure.ResourceManager.Sql.Models
                     isExecutableAction,
                     isRevertableAction,
                     isArchivedAction,
-                    executeActionStartOn,
+                    default,
                     executeActionDuration,
-                    revertActionStartOn,
+                    default,
                     revertActionDuration,
                     executeActionInitiatedBy,
                     executeActionInitiatedOn,

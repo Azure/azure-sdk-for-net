@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             resourceIds ??= new ChangeTrackingList<string>();
             quickAssessments ??= new ChangeTrackingList<QuickAssessment>();
 
-            return new TriggerEvaluationProperty(triggerOn, evaluationEndOn, (resourceIds ?? new ChangeTrackingList<string>()).ToList(), (quickAssessments ?? new ChangeTrackingList<QuickAssessment>()).ToList(), default);
+            return new TriggerEvaluationProperty(triggerOn, default, (resourceIds ?? new ChangeTrackingList<string>()).ToList(), (quickAssessments ?? new ChangeTrackingList<QuickAssessment>()).ToList(), default);
         }
 
         /// <param name="resourceId"> Resource id. </param>

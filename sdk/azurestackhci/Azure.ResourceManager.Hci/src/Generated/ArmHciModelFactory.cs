@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Hci.Models
         /// <returns> A new <see cref="Models.ArcPasswordCredential"/> instance for mocking. </returns>
         public static ArcPasswordCredential ArcPasswordCredential(string secretText = default, string keyId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default)
         {
-            return new ArcPasswordCredential(secretText, keyId, startOn, endOn, default);
+            return new ArcPasswordCredential(secretText, keyId, default, default, default);
         }
 
         /// <param name="arcApplicationClientId"> Gets the ArcApplicationClientId. </param>
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Hci.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && status is null && connectivityStatus is null && cloudId is null && cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && aadApplicationObjectId is null && aadServicePrincipalObjectId is null && softwareAssuranceProperties is null && isManagementCluster is null && logCollectionProperties is null && remoteSupportProperties is null && desiredProperties is null && reportedProperties is null && isolatedVmAttestationConfiguration is null && trialDaysRemaining is null && billingModel is null && nextBillingModel is null && registrationTimestamp is null && lastSyncTimestamp is null && lastBillingTimestamp is null && serviceEndpoint is null && resourceProviderObjectId is null && secretsLocations is null && clusterPattern is null && localAvailabilityZones is null && identityProvider is null && storageType is null ? default : new ClusterProperties(
+                provisioningState is null && status is null && connectivityStatus is null && cloudId is null && cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && aadApplicationObjectId is null && aadServicePrincipalObjectId is null && softwareAssuranceProperties is null && isManagementCluster is null && logCollectionProperties is null && remoteSupportProperties is null && desiredProperties is null && reportedProperties is null && isolatedVmAttestationConfiguration is null && trialDaysRemaining is null && billingModel is null && nextBillingModel is null && serviceEndpoint is null && resourceProviderObjectId is null && secretsLocations is null && clusterPattern is null && localAvailabilityZones is null && identityProvider is null && storageType is null ? default : new ClusterProperties(
                     provisioningState,
                     status,
                     connectivityStatus,
@@ -181,9 +181,9 @@ namespace Azure.ResourceManager.Hci.Models
                     trialDaysRemaining,
                     billingModel,
                     new ClusterBillingProperties(nextBillingModel, default),
-                    registrationTimestamp,
-                    lastSyncTimestamp,
-                    lastBillingTimestamp,
+                    default,
+                    default,
+                    default,
                     serviceEndpoint,
                     resourceProviderObjectId,
                     (secretsLocations ?? new ChangeTrackingList<SecretsLocationDetails>()).ToList(),
@@ -231,8 +231,8 @@ namespace Azure.ResourceManager.Hci.Models
         public static LogCollectionSession LogCollectionSession(DateTimeOffset? logStartOn = default, DateTimeOffset? logEndOn = default, DateTimeOffset? timeCollected = default, long? logSize = default, LogCollectionStatus? logCollectionStatus = default, string correlationId = default, LogCollectionJobType? logCollectionJobType = default, DateTimeOffset? endTimeCollected = default, LogCollectionError logCollectionError = default)
         {
             return new LogCollectionSession(
-                logStartOn,
-                logEndOn,
+                default,
+                default,
                 timeCollected,
                 logSize,
                 logCollectionStatus,
@@ -283,8 +283,8 @@ namespace Azure.ResourceManager.Hci.Models
         public static PerNodeRemoteSupportSession PerNodeRemoteSupportSession(DateTimeOffset? sessionStartOn = default, DateTimeOffset? sessionEndOn = default, string nodeName = default, long? duration = default, HciClusterAccessLevel? accessLevel = default, string transcriptLocation = default)
         {
             return new PerNodeRemoteSupportSession(
-                sessionStartOn,
-                sessionEndOn,
+                default,
+                default,
                 nodeName,
                 duration,
                 accessLevel,
@@ -877,7 +877,7 @@ namespace Azure.ResourceManager.Hci.Models
                 family,
                 publisher,
                 sbeManifestSource,
-                sbeManifestCreationOn,
+                default,
                 default);
         }
 
@@ -1131,8 +1131,8 @@ namespace Azure.ResourceManager.Hci.Models
         {
             return new RemoteSupportSession(
                 sessionId,
-                sessionStartOn,
-                sessionEndOn,
+                default,
+                default,
                 accessLevel,
                 transcriptLocation,
                 default);
@@ -2074,7 +2074,7 @@ namespace Azure.ResourceManager.Hci.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && status is null && connectivityStatus is null && cloudId is null && cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && aadApplicationObjectId is null && aadServicePrincipalObjectId is null && softwareAssuranceProperties is null && logCollectionProperties is null && remoteSupportProperties is null && desiredProperties is null && reportedProperties is null && isolatedVmAttestationConfiguration is null && trialDaysRemaining is null && billingModel is null && billingModel is null && trialDaysRemaining is null && registrationTimestamp is null && lastSyncTimestamp is null && lastBillingTimestamp is null && serviceEndpoint is null && resourceProviderObjectId is null ? default : new ClusterProperties(
+                provisioningState is null && status is null && connectivityStatus is null && cloudId is null && cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && aadApplicationObjectId is null && aadServicePrincipalObjectId is null && softwareAssuranceProperties is null && logCollectionProperties is null && remoteSupportProperties is null && desiredProperties is null && reportedProperties is null && isolatedVmAttestationConfiguration is null && trialDaysRemaining is null && billingModel is null && billingModel is null && trialDaysRemaining is null && serviceEndpoint is null && resourceProviderObjectId is null ? default : new ClusterProperties(
                     provisioningState,
                     status,
                     connectivityStatus,
@@ -2094,9 +2094,9 @@ namespace Azure.ResourceManager.Hci.Models
                     trialDaysRemaining,
                     billingModel,
                     new ClusterBillingProperties(new NextBillingModel(billingModel, default, trialDaysRemaining, default), default),
-                    registrationTimestamp,
-                    lastSyncTimestamp,
-                    lastBillingTimestamp,
+                    default,
+                    default,
+                    default,
                     serviceEndpoint,
                     resourceProviderObjectId,
                     default,
@@ -2125,8 +2125,8 @@ namespace Azure.ResourceManager.Hci.Models
         public static LogCollectionSession LogCollectionSession(DateTimeOffset? logStartOn = default, DateTimeOffset? logEndOn = default, DateTimeOffset? timeCollected = default, long? logSize = default, LogCollectionStatus? logCollectionStatus = default, LogCollectionJobType? logCollectionJobType = default, string correlationId = default, DateTimeOffset? endTimeCollected = default, LogCollectionError logCollectionError = default)
         {
             return new LogCollectionSession(
-                logStartOn,
-                logEndOn,
+                default,
+                default,
                 timeCollected,
                 logSize,
                 logCollectionStatus,
@@ -2168,8 +2168,8 @@ namespace Azure.ResourceManager.Hci.Models
         public static PerNodeRemoteSupportSession PerNodeRemoteSupportSession(DateTimeOffset? sessionStartOn = default, DateTimeOffset? sessionEndOn = default, string nodeName = default, long? duration = default, HciClusterAccessLevel? accessLevel = default)
         {
             return new PerNodeRemoteSupportSession(
-                sessionStartOn,
-                sessionEndOn,
+                default,
+                default,
                 nodeName,
                 duration,
                 accessLevel,
@@ -2551,7 +2551,7 @@ namespace Azure.ResourceManager.Hci.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && status is null && cloudId is null && cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && aadApplicationObjectId is null && aadServicePrincipalObjectId is null && softwareAssuranceProperties is null && desiredProperties is null && reportedProperties is null && trialDaysRemaining is null && billingModel is null && billingModel is null && trialDaysRemaining is null && registrationTimestamp is null && lastSyncTimestamp is null && lastBillingTimestamp is null && serviceEndpoint is null && resourceProviderObjectId is null ? default : new ClusterProperties(
+                provisioningState is null && status is null && cloudId is null && cloudManagementEndpoint is null && aadClientId is null && aadTenantId is null && aadApplicationObjectId is null && aadServicePrincipalObjectId is null && softwareAssuranceProperties is null && desiredProperties is null && reportedProperties is null && trialDaysRemaining is null && billingModel is null && billingModel is null && trialDaysRemaining is null && serviceEndpoint is null && resourceProviderObjectId is null ? default : new ClusterProperties(
                     provisioningState,
                     status,
                     default,
@@ -2571,9 +2571,9 @@ namespace Azure.ResourceManager.Hci.Models
                     trialDaysRemaining,
                     billingModel,
                     new ClusterBillingProperties(new NextBillingModel(billingModel, default, trialDaysRemaining, default), default),
-                    registrationTimestamp,
-                    lastSyncTimestamp,
-                    lastBillingTimestamp,
+                    default,
+                    default,
+                    default,
                     serviceEndpoint,
                     resourceProviderObjectId,
                     default,

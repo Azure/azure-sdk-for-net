@@ -51,11 +51,11 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> The start DateTime of the Timeseries in UTC. </summary>
         [WirePath("properties.startDateTimeUTC")]
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     Properties = new TimeseriesProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
         /// <summary> The end DateTime of the Timeseries in UTC. </summary>
         [WirePath("properties.endDateTimeUTC")]
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 {
                     Properties = new TimeseriesProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 

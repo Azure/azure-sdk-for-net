@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 lastLSN,
                 backupType,
                 (listOfBackupFiles ?? new ChangeTrackingList<DataMigrationSqlBackupFileInfo>()).ToList(),
-                backupStartOn,
+                default,
                 backupFinishOn,
                 isBackupRestored,
                 hasBackupChecksums,
@@ -3106,7 +3106,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 backupType,
                 (listOfBackupFiles ?? new ChangeTrackingList<DataMigrationBackupFileInfo>()).ToList(),
                 databaseName,
-                backupStartOn,
+                default,
                 backupFinishedOn,
                 isBackupRestored,
                 default);

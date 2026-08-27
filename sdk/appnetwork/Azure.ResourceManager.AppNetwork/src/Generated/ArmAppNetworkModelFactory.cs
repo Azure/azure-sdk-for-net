@@ -148,18 +148,18 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 default);
         }
 
-        /// <param name="startOn"> Start timestamp. </param>
-        /// <param name="endOn"> End timestamp. </param>
+        /// <param name="startsOn"> Start timestamp. </param>
+        /// <param name="endsOn"> End timestamp. </param>
         /// <param name="initiatedBy"> Upgrade initiator. </param>
         /// <param name="fromVersion"> Version upgraded from. </param>
         /// <param name="toVersion"> Version upgraded to. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <returns> A new <see cref="Models.AppLinkUpgradeHistoryProperties"/> instance for mocking. </returns>
-        public static AppLinkUpgradeHistoryProperties AppLinkUpgradeHistoryProperties(DateTimeOffset startOn = default, DateTimeOffset? endOn = default, string initiatedBy = default, string fromVersion = default, string toVersion = default, AppLinkProvisioningState? provisioningState = default)
+        public static AppLinkUpgradeHistoryProperties AppLinkUpgradeHistoryProperties(DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, string initiatedBy = default, string fromVersion = default, string toVersion = default, AppLinkProvisioningState? provisioningState = default)
         {
             return new AppLinkUpgradeHistoryProperties(
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 initiatedBy,
                 fromVersion,
                 toVersion,

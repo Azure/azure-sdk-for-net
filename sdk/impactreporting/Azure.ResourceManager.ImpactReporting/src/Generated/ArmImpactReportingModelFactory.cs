@@ -36,8 +36,8 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         }
 
         /// <param name="provisioningState"> Resource provisioning state. </param>
-        /// <param name="startOn"> Time at which impact was observed . </param>
-        /// <param name="endOn"> Time at which impact has ended . </param>
+        /// <param name="startsOn"> Time at which impact was observed . </param>
+        /// <param name="endsOn"> Time at which impact has ended . </param>
         /// <param name="impactedResourceId"> Azure resource id of the impacted resource. </param>
         /// <param name="impactUniqueId"> Unique ID of the impact (UUID). </param>
         /// <param name="reportedTimeUtc"> Time at which impact is reported. </param>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="confidenceLevel"> Degree of confidence on the impact being a platform issue. </param>
         /// <param name="clientIncidentDetails"> Client incident details ex: incidentId , incident source. </param>
         /// <returns> A new <see cref="Models.WorkloadImpactProperties"/> instance for mocking. </returns>
-        public static WorkloadImpactProperties WorkloadImpactProperties(ImpactReportingProvisioningState? provisioningState = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = default, ResourceIdentifier impactedResourceId = default, string impactUniqueId = default, DateTimeOffset? reportedTimeUtc = default, string impactCategory = default, string impactDescription = default, IEnumerable<string> armCorrelationIds = default, IEnumerable<ImpactPerformance> performance = default, ImpactConnectivityDetails connectivity = default, IDictionary<string, BinaryData> additionalProperties = default, ImpactErrorDetails errorDetails = default, ImpactedWorkload workload = default, string impactGroupId = default, ImpactConfidenceLevel? confidenceLevel = default, ImpactClientIncidentDetails clientIncidentDetails = default)
+        public static WorkloadImpactProperties WorkloadImpactProperties(ImpactReportingProvisioningState? provisioningState = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, ResourceIdentifier impactedResourceId = default, string impactUniqueId = default, DateTimeOffset? reportedTimeUtc = default, string impactCategory = default, string impactDescription = default, IEnumerable<string> armCorrelationIds = default, IEnumerable<ImpactPerformance> performance = default, ImpactConnectivityDetails connectivity = default, IDictionary<string, BinaryData> additionalProperties = default, ImpactErrorDetails errorDetails = default, ImpactedWorkload workload = default, string impactGroupId = default, ImpactConfidenceLevel? confidenceLevel = default, ImpactClientIncidentDetails clientIncidentDetails = default)
         {
             armCorrelationIds ??= new ChangeTrackingList<string>();
             performance ??= new ChangeTrackingList<ImpactPerformance>();
@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.ImpactReporting.Models
 
             return new WorkloadImpactProperties(
                 provisioningState,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 impactedResourceId,
                 impactUniqueId,
                 reportedTimeUtc,
@@ -240,13 +240,13 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         }
 
         /// <param name="impactedResourceId"> List of impacted Azure resources. </param>
-        /// <param name="startOn"> Time at which impact was started according to reported impact. </param>
-        /// <param name="endOn"> Time at which impact was ended according to reported impact. </param>
+        /// <param name="startsOn"> Time at which impact was started according to reported impact. </param>
+        /// <param name="endsOn"> Time at which impact was ended according to reported impact. </param>
         /// <param name="impactId"> Azure Id of the impact. </param>
         /// <returns> A new <see cref="Models.ImpactDetails"/> instance for mocking. </returns>
-        public static ImpactDetails ImpactDetails(ResourceIdentifier impactedResourceId = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = default, ResourceIdentifier impactId = default)
+        public static ImpactDetails ImpactDetails(ResourceIdentifier impactedResourceId = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, ResourceIdentifier impactId = default)
         {
-            return new ImpactDetails(impactedResourceId, startOn, endOn, impactId, default);
+            return new ImpactDetails(impactedResourceId, startsOn, endsOn, impactId, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

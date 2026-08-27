@@ -1696,15 +1696,15 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 name,
                 resourceType,
                 systemData,
-                ownerId is null && scope is null && displayName is null && state is null && createdOn is null && startOn is null && expireOn is null && endOn is null && notifiesOn is null && primaryKey is null && secondaryKey is null && stateComment is null && allowTracing is null ? default : new SubscriptionContractProperties(
+                ownerId is null && scope is null && displayName is null && state is null && createdOn is null && expireOn is null && notifiesOn is null && primaryKey is null && secondaryKey is null && stateComment is null && allowTracing is null ? default : new SubscriptionContractProperties(
                     ownerId,
                     scope,
                     displayName,
                     state.GetValueOrDefault(),
                     createdOn,
-                    startOn,
+                    default,
                     expireOn,
-                    endOn,
+                    default,
                     notifiesOn,
                     primaryKey,
                     secondaryKey,
@@ -1737,7 +1737,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
 
         /// <param name="ownerId"> User identifier path: /users/{userId}. </param>
         /// <param name="scope"> Scope like /products/{productId} or /apis or /apis/{apiId}. </param>
-        /// <param name="expireOn"> Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
+        /// <param name="expiresOn"> Subscription expiration date. The setting is for audit purposes only and the subscription is not automatically expired. The subscription lifecycle can be managed by using the `state` property. The date conforms to the following format: `yyyy-MM-ddTHH:mm:ssZ` as specified by the ISO 8601 standard. </param>
         /// <param name="displayName"> Subscription name. </param>
         /// <param name="primaryKey"> Primary subscription key. </param>
         /// <param name="secondaryKey"> Secondary subscription key. </param>
@@ -1745,12 +1745,12 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="stateComment"> Comments describing subscription state change by the administrator when the state is changed to the 'rejected'. </param>
         /// <param name="allowTracing"> Determines whether tracing can be enabled. </param>
         /// <returns> A new <see cref="Models.ApiManagementSubscriptionPatch"/> instance for mocking. </returns>
-        public static ApiManagementSubscriptionPatch ApiManagementSubscriptionPatch(string ownerId = default, string scope = default, DateTimeOffset? expireOn = default, string displayName = default, string primaryKey = default, string secondaryKey = default, SubscriptionState? state = default, string stateComment = default, bool? allowTracing = default)
+        public static ApiManagementSubscriptionPatch ApiManagementSubscriptionPatch(string ownerId = default, string scope = default, DateTimeOffset? expiresOn = default, string displayName = default, string primaryKey = default, string secondaryKey = default, SubscriptionState? state = default, string stateComment = default, bool? allowTracing = default)
         {
-            return new ApiManagementSubscriptionPatch(ownerId is null && scope is null && expireOn is null && displayName is null && primaryKey is null && secondaryKey is null && state is null && stateComment is null && allowTracing is null ? default : new SubscriptionUpdateParameterProperties(
+            return new ApiManagementSubscriptionPatch(ownerId is null && scope is null && expiresOn is null && displayName is null && primaryKey is null && secondaryKey is null && state is null && stateComment is null && allowTracing is null ? default : new SubscriptionUpdateParameterProperties(
                 ownerId,
                 scope,
-                expireOn,
+                expiresOn,
                 displayName,
                 primaryKey,
                 secondaryKey,
@@ -2690,8 +2690,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             return new QuotaCounterContract(
                 counterKey,
                 periodKey,
-                periodStartOn,
-                periodEndOn,
+                default,
+                default,
                 value,
                 default);
         }
@@ -4231,14 +4231,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 name,
                 resourceType,
                 systemData,
-                branch is null && commitId is null && isExported is null && isSynced is null && isGitEnabled is null && syncOn is null && configurationChangeOn is null && lastOperationId is null ? default : new TenantConfigurationSyncStateContractProperties(
+                branch is null && commitId is null && isExported is null && isSynced is null && isGitEnabled is null && syncOn is null && lastOperationId is null ? default : new TenantConfigurationSyncStateContractProperties(
                     branch,
                     commitId,
                     isExported,
                     isSynced,
                     isGitEnabled,
                     syncOn,
-                    configurationChangeOn,
+                    default,
                     lastOperationId,
                     default),
                 default);

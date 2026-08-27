@@ -23,12 +23,12 @@ namespace Azure.ResourceManager.Nginx.Models
 
         /// <summary> Initializes a new instance of <see cref="NginxDeploymentApiKeyRequestProperties"/>. </summary>
         /// <param name="secretText"> Secret text to be used as a Dataplane API Key. This is a write only property that can never be read back, but the first three characters will be returned in the 'hint' property. </param>
-        /// <param name="endOn"> The time after which this Dataplane API Key is no longer valid. </param>
+        /// <param name="endsOn"> The time after which this Dataplane API Key is no longer valid. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NginxDeploymentApiKeyRequestProperties(string secretText, DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal NginxDeploymentApiKeyRequestProperties(string secretText, DateTimeOffset? endsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SecretText = secretText;
-            EndOn = endOn;
+            EndsOn = endsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -36,6 +36,6 @@ namespace Azure.ResourceManager.Nginx.Models
         public string SecretText { get; set; }
 
         /// <summary> The time after which this Dataplane API Key is no longer valid. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
     }
 }

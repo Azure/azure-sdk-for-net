@@ -158,11 +158,11 @@ namespace Azure.ResourceManager.ResourceHealth
         }
 
         /// <summary> It provides the Timestamp for when the health impacting event started. </summary>
-        public DateTimeOffset? ImpactStartOn
+        public DateTimeOffset? ImpactStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.ImpactStartOn;
+                return Properties is null ? default : Properties.ImpactStartsOn;
             }
         }
 

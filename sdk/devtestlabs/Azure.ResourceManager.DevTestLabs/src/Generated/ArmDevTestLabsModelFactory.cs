@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 title,
                 markdown,
                 enabled,
-                expireOn,
+                default,
                 isExpired,
                 provisioningState,
                 uniqueIdentifier,
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DevTestLabVmCreationContent(bulkCreationParametersInstanceCount is null && notes is null && ownerObjectId is null && ownerUserPrincipalName is null && createdOn is null && customImageId is null && size is null && userName is null && password is null && sshKey is null && isAuthenticationWithSshKey is null && labSubnetName is null && labVirtualNetworkId is null && disallowPublicIPAddress is null && artifacts is null && galleryImageReference is null && planId is null && networkInterface is null && expireOn is null && allowClaim is null && storageType is null && environmentId is null && dataDiskParameters is null && scheduleParameters is null ? default : new LabVirtualMachineCreationParameterProperties(
+            return new DevTestLabVmCreationContent(bulkCreationParametersInstanceCount is null && notes is null && ownerObjectId is null && ownerUserPrincipalName is null && createdOn is null && customImageId is null && size is null && userName is null && password is null && sshKey is null && isAuthenticationWithSshKey is null && labSubnetName is null && labVirtualNetworkId is null && disallowPublicIPAddress is null && artifacts is null && galleryImageReference is null && planId is null && networkInterface is null && allowClaim is null && storageType is null && environmentId is null && dataDiskParameters is null && scheduleParameters is null ? default : new LabVirtualMachineCreationParameterProperties(
                 new BulkCreationParameters(bulkCreationParametersInstanceCount, default),
                 notes,
                 ownerObjectId,
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 galleryImageReference,
                 planId,
                 networkInterface,
-                expireOn,
+                default,
                 allowClaim,
                 storageType,
                 environmentId,
@@ -348,11 +348,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         }
 
         /// <param name="blobStorageAbsoluteSasUri"> The blob storage absolute sas uri with write permission to the container which the usage data needs to be uploaded to. </param>
-        /// <param name="usageStartOn"> The start time of the usage. If not provided, usage will be reported since the beginning of data collection. </param>
+        /// <param name="usageStartsOn"> The start time of the usage. If not provided, usage will be reported since the beginning of data collection. </param>
         /// <returns> A new <see cref="Models.DevTestLabExportResourceUsageContent"/> instance for mocking. </returns>
-        public static DevTestLabExportResourceUsageContent DevTestLabExportResourceUsageContent(Uri blobStorageAbsoluteSasUri = default, DateTimeOffset? usageStartOn = default)
+        public static DevTestLabExportResourceUsageContent DevTestLabExportResourceUsageContent(Uri blobStorageAbsoluteSasUri = default, DateTimeOffset? usageStartsOn = default)
         {
-            return new DevTestLabExportResourceUsageContent(blobStorageAbsoluteSasUri, usageStartOn, default);
+            return new DevTestLabExportResourceUsageContent(blobStorageAbsoluteSasUri, usageStartsOn, default);
         }
 
         /// <param name="blobName"> The blob name of the upload URI. </param>
@@ -615,14 +615,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="labCostDetails"> The lab cost details component of the cost data. </param>
         /// <param name="resourceCosts"> The resource cost component of the cost data. </param>
         /// <param name="currencyCode"> The currency code of the cost. </param>
-        /// <param name="startOn"> The start time of the cost data. </param>
-        /// <param name="endOn"> The end time of the cost data. </param>
+        /// <param name="startsOn"> The start time of the cost data. </param>
+        /// <param name="endsOn"> The end time of the cost data. </param>
         /// <param name="createdOn"> The creation date of the cost. </param>
         /// <param name="provisioningState"> The provisioning status of the resource. </param>
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <param name="estimatedLabCost"> The cost component of the cost item. </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabCostData"/> instance for mocking. </returns>
-        public static DevTestLabCostData DevTestLabCostData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DevTestLabTargetCost targetCost = default, IEnumerable<DevTestLabCostDetails> labCostDetails = default, IEnumerable<DevTestLabResourceCost> resourceCosts = default, string currencyCode = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? createdOn = default, string provisioningState = default, Guid? uniqueIdentifier = default, double? estimatedLabCost = default)
+        public static DevTestLabCostData DevTestLabCostData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DevTestLabTargetCost targetCost = default, IEnumerable<DevTestLabCostDetails> labCostDetails = default, IEnumerable<DevTestLabResourceCost> resourceCosts = default, string currencyCode = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, DateTimeOffset? createdOn = default, string provisioningState = default, Guid? uniqueIdentifier = default, double? estimatedLabCost = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -663,8 +663,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 status,
                 target,
                 (costThresholds ?? new ChangeTrackingList<DevTestLabCostThreshold>()).ToList(),
-                cycleStartOn,
-                cycleEndOn,
+                default,
+                default,
                 cycleType,
                 default);
         }
@@ -1715,14 +1715,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                targetCost is null && estimatedLabCost is null && labCostDetails is null && resourceCosts is null && currencyCode is null && startOn is null && endOn is null && createdOn is null && provisioningState is null && uniqueIdentifier is null ? default : new LabCostProperties(
+                targetCost is null && estimatedLabCost is null && labCostDetails is null && resourceCosts is null && currencyCode is null && createdOn is null && provisioningState is null && uniqueIdentifier is null ? default : new LabCostProperties(
                     targetCost,
                     new LabCostSummaryProperties(estimatedLabCost, default),
                     (labCostDetails ?? new ChangeTrackingList<DevTestLabCostDetails>()).ToList(),
                     (resourceCosts ?? new ChangeTrackingList<DevTestLabResourceCost>()).ToList(),
                     currencyCode,
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     createdOn,
                     provisioningState,
                     uniqueIdentifier,

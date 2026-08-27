@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <returns> A new <see cref="Models.NginxDeploymentApiKeyProperties"/> instance for mocking. </returns>
         public static NginxDeploymentApiKeyProperties NginxDeploymentApiKeyProperties(string hint = default, DateTimeOffset? endOn = default)
         {
-            return new NginxDeploymentApiKeyProperties(hint, endOn, default);
+            return new NginxDeploymentApiKeyProperties(hint, default, default);
         }
 
         /// <param name="id"></param>
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.Nginx.Models
         }
 
         /// <param name="secretText"> Secret text to be used as a Dataplane API Key. This is a write only property that can never be read back, but the first three characters will be returned in the 'hint' property. </param>
-        /// <param name="endOn"> The time after which this Dataplane API Key is no longer valid. </param>
+        /// <param name="endsOn"> The time after which this Dataplane API Key is no longer valid. </param>
         /// <returns> A new <see cref="Models.NginxDeploymentApiKeyRequestProperties"/> instance for mocking. </returns>
-        public static NginxDeploymentApiKeyRequestProperties NginxDeploymentApiKeyRequestProperties(string secretText = default, DateTimeOffset? endOn = default)
+        public static NginxDeploymentApiKeyRequestProperties NginxDeploymentApiKeyRequestProperties(string secretText = default, DateTimeOffset? endsOn = default)
         {
-            return new NginxDeploymentApiKeyRequestProperties(secretText, endOn, default);
+            return new NginxDeploymentApiKeyRequestProperties(secretText, endsOn, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

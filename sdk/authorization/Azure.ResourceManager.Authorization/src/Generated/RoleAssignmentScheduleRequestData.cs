@@ -299,11 +299,11 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary> Start DateTime of the role assignment schedule. </summary>
         [WirePath("properties.scheduleInfo.startDateTime")]
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     Properties = new RoleAssignmentScheduleRequestProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
@@ -335,11 +335,11 @@ namespace Azure.ResourceManager.Authorization
 
         /// <summary> End DateTime of the role assignment schedule. </summary>
         [WirePath("properties.scheduleInfo.expiration.endDateTime")]
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     Properties = new RoleAssignmentScheduleRequestProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 

@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Automation.Models
         public static SoftwareUpdateConfigurationScheduleProperties SoftwareUpdateConfigurationScheduleProperties(DateTimeOffset? startOn = default, double? startInMinutes = default, DateTimeOffset? expireOn = default, double? expireInMinutes = default, bool? isEnabled = default, DateTimeOffset? nextRunOn = default, double? nextRunInMinutes = default, long? interval = default, AutomationScheduleFrequency? frequency = default, string timeZone = default, AutomationAdvancedSchedule advancedSchedule = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, string description = default)
         {
             return new SoftwareUpdateConfigurationScheduleProperties(
-                startOn,
+                default,
                 startInMinutes,
                 expireOn,
                 expireInMinutes,
@@ -663,8 +663,8 @@ namespace Azure.ResourceManager.Automation.Models
             return new AutomationAccountStatistics(
                 counterProperty,
                 counterValue,
-                startOn,
-                endOn,
+                default,
+                default,
                 id,
                 default);
         }
@@ -713,15 +713,15 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="startedBy"> Gets or sets the job started by. </param>
         /// <param name="createdOn"> The creation time of the job. </param>
         /// <param name="status"> The status of the job. </param>
-        /// <param name="startOn"> The start time of the job. </param>
-        /// <param name="endOn"> The end time of the job. </param>
+        /// <param name="startsOn"> The start time of the job. </param>
+        /// <param name="endsOn"> The end time of the job. </param>
         /// <param name="lastModifiedOn"> The last modified time of the job. </param>
         /// <param name="provisioningState"> The provisioning state of a resource. </param>
         /// <param name="runOn"> Specifies the runOn group name where the job was executed. </param>
         /// <param name="runbookName"> Gets or sets the name of the runbook. </param>
         /// <param name="runtimeEnvironmentName"> Name of Runtime Environment. </param>
         /// <returns> A new <see cref="Models.AutomationJobCollectionItemData"/> instance for mocking. </returns>
-        public static AutomationJobCollectionItemData AutomationJobCollectionItemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? jobId = default, string startedBy = default, DateTimeOffset? createdOn = default, AutomationJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? lastModifiedOn = default, string provisioningState = default, string runOn = default, string runbookName = default, string runtimeEnvironmentName = default)
+        public static AutomationJobCollectionItemData AutomationJobCollectionItemData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? jobId = default, string startedBy = default, DateTimeOffset? createdOn = default, AutomationJobStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, DateTimeOffset? lastModifiedOn = default, string provisioningState = default, string runOn = default, string runbookName = default, string runtimeEnvironmentName = default)
         {
             return new AutomationJobCollectionItemData(
                 id,
@@ -783,8 +783,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="osType"> Operating system target of the software update configuration triggered this run. </param>
         /// <param name="correlationId"> correlation id of the software update configuration machine run. </param>
         /// <param name="sourceComputerId"> source computer id of the software update configuration machine run. </param>
-        /// <param name="startOn"> Start time of the software update configuration machine run. </param>
-        /// <param name="endOn"> End time of the software update configuration machine run. </param>
+        /// <param name="startsOn"> Start time of the software update configuration machine run. </param>
+        /// <param name="endsOn"> End time of the software update configuration machine run. </param>
         /// <param name="configuredDuration"> configured duration for the software update configuration run. </param>
         /// <param name="createdOn"> Creation time of the resource, which only appears in the response. </param>
         /// <param name="createdBy"> createdBy property, which only appears in the response. </param>
@@ -794,9 +794,9 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="softwareUpdateName"> Name of the software update configuration triggered the software update configuration run. </param>
         /// <param name="jobId"> Id of the job associated with the software update configuration run. </param>
         /// <returns> A new <see cref="Models.SoftwareUpdateConfigurationMachineRun"/> instance for mocking. </returns>
-        public static SoftwareUpdateConfigurationMachineRun SoftwareUpdateConfigurationMachineRun(string name = default, ResourceIdentifier id = default, ResourceIdentifier targetComputerId = default, string targetComputerType = default, string status = default, string osType = default, Guid? correlationId = default, Guid? sourceComputerId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? configuredDuration = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, AutomationResponseError error = default, string softwareUpdateName = default, Guid? jobId = default)
+        public static SoftwareUpdateConfigurationMachineRun SoftwareUpdateConfigurationMachineRun(string name = default, ResourceIdentifier id = default, ResourceIdentifier targetComputerId = default, string targetComputerType = default, string status = default, string osType = default, Guid? correlationId = default, Guid? sourceComputerId = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, TimeSpan? configuredDuration = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, AutomationResponseError error = default, string softwareUpdateName = default, Guid? jobId = default)
         {
-            return new SoftwareUpdateConfigurationMachineRun(name, id, targetComputerId is null && targetComputerType is null && softwareUpdateName is null && status is null && osType is null && correlationId is null && sourceComputerId is null && startOn is null && endOn is null && configuredDuration is null && jobId is null && createdOn is null && createdBy is null && lastModifiedOn is null && lastModifiedBy is null && error is null ? default : new UpdateConfigurationMachineRunProperties(
+            return new SoftwareUpdateConfigurationMachineRun(name, id, targetComputerId is null && targetComputerType is null && softwareUpdateName is null && status is null && osType is null && correlationId is null && sourceComputerId is null && startsOn is null && endsOn is null && configuredDuration is null && jobId is null && createdOn is null && createdBy is null && lastModifiedOn is null && lastModifiedBy is null && error is null ? default : new UpdateConfigurationMachineRunProperties(
                 targetComputerId,
                 targetComputerType,
                 new UpdateConfigurationNavigation(softwareUpdateName, default),
@@ -804,8 +804,8 @@ namespace Azure.ResourceManager.Automation.Models
                 osType,
                 correlationId,
                 sourceComputerId,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 configuredDuration,
                 new JobNavigation(jobId, default),
                 createdOn,
@@ -821,8 +821,8 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="status"> Status of the software update configuration run. </param>
         /// <param name="configuredDuration"> Configured duration for the software update configuration run. </param>
         /// <param name="osType"> Operating system target of the software update configuration triggered this run. </param>
-        /// <param name="startOn"> Start time of the software update configuration run. </param>
-        /// <param name="endOn"> End time of the software update configuration run. </param>
+        /// <param name="startsOn"> Start time of the software update configuration run. </param>
+        /// <param name="endsOn"> End time of the software update configuration run. </param>
         /// <param name="computerCount"> Number of computers in the software update configuration run. </param>
         /// <param name="failedCount"> Number of computers with failed status. </param>
         /// <param name="createdOn"> Creation time of the resource, which only appears in the response. </param>
@@ -832,15 +832,15 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="tasks"> Software update configuration tasks triggered in this run. </param>
         /// <param name="softwareUpdateName"> Name of the software update configuration triggered the software update configuration run. </param>
         /// <returns> A new <see cref="Models.SoftwareUpdateConfigurationRun"/> instance for mocking. </returns>
-        public static SoftwareUpdateConfigurationRun SoftwareUpdateConfigurationRun(string name = default, ResourceIdentifier id = default, string status = default, TimeSpan? configuredDuration = default, string osType = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, int? computerCount = default, int? failedCount = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, SoftwareUpdateConfigurationRunTasks tasks = default, string softwareUpdateName = default)
+        public static SoftwareUpdateConfigurationRun SoftwareUpdateConfigurationRun(string name = default, ResourceIdentifier id = default, string status = default, TimeSpan? configuredDuration = default, string osType = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, int? computerCount = default, int? failedCount = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, SoftwareUpdateConfigurationRunTasks tasks = default, string softwareUpdateName = default)
         {
-            return new SoftwareUpdateConfigurationRun(name, id, softwareUpdateName is null && status is null && configuredDuration is null && osType is null && startOn is null && endOn is null && computerCount is null && failedCount is null && createdOn is null && createdBy is null && lastModifiedOn is null && lastModifiedBy is null && tasks is null ? default : new SoftwareUpdateConfigurationRunProperties(
+            return new SoftwareUpdateConfigurationRun(name, id, softwareUpdateName is null && status is null && configuredDuration is null && osType is null && startsOn is null && endsOn is null && computerCount is null && failedCount is null && createdOn is null && createdBy is null && lastModifiedOn is null && lastModifiedBy is null && tasks is null ? default : new SoftwareUpdateConfigurationRunProperties(
                 new UpdateConfigurationNavigation(softwareUpdateName, default),
                 status,
                 configuredDuration,
                 osType,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 computerCount,
                 failedCount,
                 createdOn,
@@ -999,9 +999,9 @@ namespace Azure.ResourceManager.Automation.Models
             ipV6Addresses ??= new ChangeTrackingList<string>();
 
             return new DscNodeReport(
-                endOn,
+                default,
                 lastModifiedOn,
-                startOn,
+                default,
                 dscNodeReportType,
                 reportId,
                 status,
@@ -1065,7 +1065,7 @@ namespace Azure.ResourceManager.Automation.Models
                 error,
                 status,
                 durationInSeconds,
-                startOn,
+                default,
                 default);
         }
 
@@ -1868,8 +1868,8 @@ namespace Azure.ResourceManager.Automation.Models
                 status,
                 statusDetails,
                 runOn,
-                startOn,
-                endOn,
+                default,
+                default,
                 exception,
                 lastModifiedOn,
                 lastStatusModifiedOn,
@@ -1904,8 +1904,8 @@ namespace Azure.ResourceManager.Automation.Models
                 name,
                 resourceType,
                 systemData,
-                startOn is null && startInMinutes is null && expireOn is null && expireInMinutes is null && isEnabled is null && nextRunOn is null && nextRunInMinutes is null && interval is null && frequency is null && timeZone is null && advancedSchedule is null && createdOn is null && lastModifiedOn is null && description is null ? default : new ScheduleProperties(
-                    startOn,
+                startInMinutes is null && expireOn is null && expireInMinutes is null && isEnabled is null && nextRunOn is null && nextRunInMinutes is null && interval is null && frequency is null && timeZone is null && advancedSchedule is null && createdOn is null && lastModifiedOn is null && description is null ? default : new ScheduleProperties(
+                    default,
                     startInMinutes,
                     expireOn,
                     expireInMinutes,
@@ -2066,12 +2066,12 @@ namespace Azure.ResourceManager.Automation.Models
                 name,
                 resourceType,
                 systemData,
-                sourceControlSyncJobId is null && createdOn is null && provisioningState is null && startOn is null && endOn is null && syncType is null ? default : new SourceControlSyncJobProperties(
+                sourceControlSyncJobId is null && createdOn is null && provisioningState is null && syncType is null ? default : new SourceControlSyncJobProperties(
                     sourceControlSyncJobId,
                     createdOn,
                     provisioningState,
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     syncType,
                     default),
                 default);
@@ -2088,12 +2088,12 @@ namespace Azure.ResourceManager.Automation.Models
         /// <returns> A new <see cref="Models.SourceControlSyncJobResult"/> instance for mocking. </returns>
         public static SourceControlSyncJobResult SourceControlSyncJobResult(ResourceIdentifier id = default, string sourceControlSyncJobId = default, DateTimeOffset? createdOn = default, SourceControlProvisioningState? provisioningState = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, SourceControlSyncType? syncType = default, string exception = default)
         {
-            return new SourceControlSyncJobResult(id, sourceControlSyncJobId is null && createdOn is null && provisioningState is null && startOn is null && endOn is null && syncType is null && exception is null ? default : new SourceControlSyncJobByIdProperties(
+            return new SourceControlSyncJobResult(id, sourceControlSyncJobId is null && createdOn is null && provisioningState is null && syncType is null && exception is null ? default : new SourceControlSyncJobByIdProperties(
                 sourceControlSyncJobId,
                 createdOn,
                 provisioningState,
-                startOn,
-                endOn,
+                default,
+                default,
                 syncType,
                 exception,
                 default), default);
@@ -2673,7 +2673,7 @@ namespace Azure.ResourceManager.Automation.Models
                 name,
                 resourceType,
                 systemData,
-                runbookName is null && startedBy is null && runOn is null && jobId is null && createdOn is null && status is null && statusDetails is null && startOn is null && endOn is null && exception is null && lastModifiedOn is null && lastStatusModifiedOn is null && parameters is null && provisioningState is null ? default : new JobProperties(
+                runbookName is null && startedBy is null && runOn is null && jobId is null && createdOn is null && status is null && statusDetails is null && exception is null && lastModifiedOn is null && lastStatusModifiedOn is null && parameters is null && provisioningState is null ? default : new JobProperties(
                     new RunbookAssociationProperty(runbookName, default),
                     startedBy,
                     runOn,
@@ -2682,8 +2682,8 @@ namespace Azure.ResourceManager.Automation.Models
                     createdOn,
                     status,
                     statusDetails,
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     exception,
                     lastModifiedOn,
                     lastStatusModifiedOn,
@@ -2716,14 +2716,14 @@ namespace Azure.ResourceManager.Automation.Models
                 name,
                 resourceType,
                 systemData,
-                runbookName is null && jobId is null && createdOn is null && status is null && startOn is null && endOn is null && lastModifiedOn is null && provisioningState is null && runOn is null ? default : new JobCollectionItemProperties(
+                runbookName is null && jobId is null && createdOn is null && status is null && lastModifiedOn is null && provisioningState is null && runOn is null ? default : new JobCollectionItemProperties(
                     new RunbookAssociationProperty(runbookName, default),
                     jobId,
                     default,
                     createdOn,
                     status,
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     lastModifiedOn,
                     provisioningState,
                     default,
@@ -2752,13 +2752,13 @@ namespace Azure.ResourceManager.Automation.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SoftwareUpdateConfigurationRun SoftwareUpdateConfigurationRun(string name = default, ResourceIdentifier id = default, string softwareUpdateName = default, string status = default, TimeSpan? configuredDuration = default, string osType = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, int? computerCount = default, int? failedCount = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, SoftwareUpdateConfigurationRunTasks tasks = default)
         {
-            return new SoftwareUpdateConfigurationRun(name, id, softwareUpdateName is null && status is null && configuredDuration is null && osType is null && startOn is null && endOn is null && computerCount is null && failedCount is null && createdOn is null && createdBy is null && lastModifiedOn is null && lastModifiedBy is null && tasks is null ? default : new SoftwareUpdateConfigurationRunProperties(
+            return new SoftwareUpdateConfigurationRun(name, id, softwareUpdateName is null && status is null && configuredDuration is null && osType is null && computerCount is null && failedCount is null && createdOn is null && createdBy is null && lastModifiedOn is null && lastModifiedBy is null && tasks is null ? default : new SoftwareUpdateConfigurationRunProperties(
                 new UpdateConfigurationNavigation(softwareUpdateName, default),
                 status,
                 configuredDuration,
                 osType,
-                startOn,
-                endOn,
+                default,
+                default,
                 computerCount,
                 failedCount,
                 createdOn,
@@ -2792,7 +2792,7 @@ namespace Azure.ResourceManager.Automation.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SoftwareUpdateConfigurationMachineRun SoftwareUpdateConfigurationMachineRun(string name = default, ResourceIdentifier id = default, ResourceIdentifier targetComputerId = default, string targetComputerType = default, string softwareUpdateName = default, string status = default, string osType = default, Guid? correlationId = default, Guid? sourceComputerId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? configuredDuration = default, Guid? jobId = default, DateTimeOffset? createdOn = default, string createdBy = default, DateTimeOffset? lastModifiedOn = default, string lastModifiedBy = default, AutomationResponseError error = default)
         {
-            return new SoftwareUpdateConfigurationMachineRun(name, id, targetComputerId is null && targetComputerType is null && softwareUpdateName is null && status is null && osType is null && correlationId is null && sourceComputerId is null && startOn is null && endOn is null && configuredDuration is null && jobId is null && createdOn is null && createdBy is null && lastModifiedOn is null && lastModifiedBy is null && error is null ? default : new UpdateConfigurationMachineRunProperties(
+            return new SoftwareUpdateConfigurationMachineRun(name, id, targetComputerId is null && targetComputerType is null && softwareUpdateName is null && status is null && osType is null && correlationId is null && sourceComputerId is null && configuredDuration is null && jobId is null && createdOn is null && createdBy is null && lastModifiedOn is null && lastModifiedBy is null && error is null ? default : new UpdateConfigurationMachineRunProperties(
                 targetComputerId,
                 targetComputerType,
                 new UpdateConfigurationNavigation(softwareUpdateName, default),
@@ -2800,8 +2800,8 @@ namespace Azure.ResourceManager.Automation.Models
                 osType,
                 correlationId,
                 sourceComputerId,
-                startOn,
-                endOn,
+                default,
+                default,
                 configuredDuration,
                 new JobNavigation(jobId, default),
                 createdOn,

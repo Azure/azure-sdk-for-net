@@ -95,15 +95,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 writer.WritePropertyName("vm"u8);
                 writer.WriteObjectValue(Vm, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             Guid? reportId = default;
             GuestConfigurationAssignmentInfo assignment = default;
             GuestConfigurationVmInfo vm = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             AssignedGuestConfigurationMachineComplianceStatus? complianceStatus = default;
             GuestConfigurationAssignmentReportType? operationType = default;
             IList<AssignmentReportResourceInfo> resources = default;
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("complianceStatus"u8))
@@ -275,8 +275,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 reportId,
                 assignment,
                 vm,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 complianceStatus,
                 operationType,
                 resources ?? new ChangeTrackingList<AssignmentReportResourceInfo>(),

@@ -583,30 +583,30 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="maintenanceType"> The maintenance type (e.g., 'PlannedMaintenance'). </param>
         /// <param name="description"> The human-readable description of the maintenance event. </param>
         /// <param name="status"> The customer-facing status of the maintenance event. </param>
-        /// <param name="startOn"> The scheduled start time of the maintenance event (UTC). </param>
-        /// <param name="endOn"> The scheduled end time of the maintenance event (UTC). </param>
+        /// <param name="startsOn"> The scheduled start time of the maintenance event (UTC). </param>
+        /// <param name="endsOn"> The scheduled end time of the maintenance event (UTC). </param>
         /// <param name="estimatedDowntime"> The estimated downtime as an ISO 8601 duration string (e.g., 'PT60S' = 60 seconds). </param>
         /// <param name="isDeferrable"> A value indicating whether this maintenance event can be rescheduled by the customer. </param>
         /// <param name="deferralDeadlineOn"> The latest date/time this maintenance event can be postponed to (UTC). Present only when deferrable is true. </param>
         /// <param name="rescheduledFromOn"> The previous scheduled start time before the most recent reschedule (UTC). Null if the event has never been rescheduled. </param>
         /// <param name="lastUpdatedOn"> The time this maintenance event record was last updated (UTC). </param>
-        /// <param name="originalStartOn"> The initial scheduled start time before any reschedule (UTC). Equals startTime when the event has never been rescheduled. </param>
+        /// <param name="originalStartsOn"> The initial scheduled start time before any reschedule (UTC). Equals startTime when the event has never been rescheduled. </param>
         /// <returns> A new <see cref="Models.MaintenanceEventProperties"/> instance for mocking. </returns>
-        public static MaintenanceEventProperties MaintenanceEventProperties(string maintenanceEventId = default, PostgreSqlFlexibleServerMaintenanceType maintenanceType = default, string description = default, MaintenanceEventStatus status = default, DateTimeOffset startOn = default, DateTimeOffset endOn = default, string estimatedDowntime = default, bool isDeferrable = default, DateTimeOffset? deferralDeadlineOn = default, DateTimeOffset? rescheduledFromOn = default, DateTimeOffset? lastUpdatedOn = default, DateTimeOffset originalStartOn = default)
+        public static MaintenanceEventProperties MaintenanceEventProperties(string maintenanceEventId = default, PostgreSqlFlexibleServerMaintenanceType maintenanceType = default, string description = default, MaintenanceEventStatus status = default, DateTimeOffset startsOn = default, DateTimeOffset endsOn = default, string estimatedDowntime = default, bool isDeferrable = default, DateTimeOffset? deferralDeadlineOn = default, DateTimeOffset? rescheduledFromOn = default, DateTimeOffset? lastUpdatedOn = default, DateTimeOffset originalStartsOn = default)
         {
             return new MaintenanceEventProperties(
                 maintenanceEventId,
                 maintenanceType,
                 description,
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 estimatedDowntime,
                 isDeferrable,
                 deferralDeadlineOn,
                 rescheduledFromOn,
                 lastUpdatedOn,
-                originalStartOn,
+                originalStartsOn,
                 default);
         }
 
@@ -620,19 +620,19 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="maintenanceEventId"> The maintenance event name (maintenance ID). </param>
         /// <param name="serverId"> The full Azure resource ID of the server. </param>
         /// <param name="status"> The status of the maintenance event. </param>
-        /// <param name="plannedStartOn"> The planned start time of the maintenance event (UTC). </param>
-        /// <param name="plannedEndOn"> The planned end time of the maintenance event (UTC). </param>
+        /// <param name="plannedStartsOn"> The planned start time of the maintenance event (UTC). </param>
+        /// <param name="plannedEndsOn"> The planned end time of the maintenance event (UTC). </param>
         /// <param name="isAppliedNow"> A value indicating whether this was an apply-now (immediate) action. True for ApplyNow; false for Reschedule. </param>
         /// <param name="lastUpdatedOn"> The time this maintenance event record was last updated (UTC). </param>
         /// <returns> A new <see cref="Models.MaintenanceEventActionResult"/> instance for mocking. </returns>
-        public static MaintenanceEventActionResult MaintenanceEventActionResult(string maintenanceEventId = default, ResourceIdentifier serverId = default, MaintenanceEventStatus? status = default, DateTimeOffset? plannedStartOn = default, DateTimeOffset? plannedEndOn = default, bool? isAppliedNow = default, DateTimeOffset? lastUpdatedOn = default)
+        public static MaintenanceEventActionResult MaintenanceEventActionResult(string maintenanceEventId = default, ResourceIdentifier serverId = default, MaintenanceEventStatus? status = default, DateTimeOffset? plannedStartsOn = default, DateTimeOffset? plannedEndsOn = default, bool? isAppliedNow = default, DateTimeOffset? lastUpdatedOn = default)
         {
             return new MaintenanceEventActionResult(
                 maintenanceEventId,
                 serverId,
                 status,
-                plannedStartOn,
-                plannedEndOn,
+                plannedStartsOn,
+                plannedEndsOn,
                 isAppliedNow,
                 lastUpdatedOn,
                 default);
@@ -1034,14 +1034,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerLtrBackupResult"/> instance for mocking. </returns>
         public static PostgreSqlFlexibleServerLtrBackupResult PostgreSqlFlexibleServerLtrBackupResult(long? datasourceSizeInBytes = default, long? dataTransferredInBytes = default, string backupName = default, string backupMetadata = default, PostgreSqlExecutionStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, double? percentComplete = default, string errorCode = default, string errorMessage = default)
         {
-            return new PostgreSqlFlexibleServerLtrBackupResult(datasourceSizeInBytes is null && dataTransferredInBytes is null && backupName is null && backupMetadata is null && status is null && startOn is null && endOn is null && percentComplete is null && errorCode is null && errorMessage is null ? default : new LtrBackupOperationResponseProperties(
+            return new PostgreSqlFlexibleServerLtrBackupResult(datasourceSizeInBytes is null && dataTransferredInBytes is null && backupName is null && backupMetadata is null && status is null && percentComplete is null && errorCode is null && errorMessage is null ? default : new LtrBackupOperationResponseProperties(
                 datasourceSizeInBytes,
                 dataTransferredInBytes,
                 backupName,
                 backupMetadata,
                 status.GetValueOrDefault(),
-                startOn.GetValueOrDefault(),
-                endOn,
+                default,
+                default,
                 percentComplete,
                 errorCode,
                 errorMessage,
@@ -1070,14 +1070,14 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 name,
                 resourceType,
                 systemData,
-                datasourceSizeInBytes is null && dataTransferredInBytes is null && backupName is null && backupMetadata is null && status is null && startOn is null && endOn is null && percentComplete is null && errorCode is null && errorMessage is null ? default : new LtrBackupOperationResponseProperties(
+                datasourceSizeInBytes is null && dataTransferredInBytes is null && backupName is null && backupMetadata is null && status is null && percentComplete is null && errorCode is null && errorMessage is null ? default : new LtrBackupOperationResponseProperties(
                     datasourceSizeInBytes,
                     dataTransferredInBytes,
                     backupName,
                     backupMetadata,
                     status.GetValueOrDefault(),
-                    startOn.GetValueOrDefault(),
-                    endOn,
+                    default,
+                    default,
                     percentComplete,
                     errorCode,
                     errorMessage,
@@ -1188,13 +1188,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             return new ObjectRecommendationImplementationDetails(@method, script, default);
         }
 
-        /// <param name="startOn"> Start time (UTC) of the workload analyzed. </param>
-        /// <param name="endOn"> End time (UTC) of the workload analyzed. </param>
+        /// <param name="startsOn"> Start time (UTC) of the workload analyzed. </param>
+        /// <param name="endsOn"> End time (UTC) of the workload analyzed. </param>
         /// <param name="queryCount"> Number of queries from the workload that were examined to produce this recommendation. For DROP INDEX recommendations it's 0 (zero). </param>
         /// <returns> A new <see cref="Models.ObjectRecommendationAnalyzedWorkload"/> instance for mocking. </returns>
-        public static ObjectRecommendationAnalyzedWorkload ObjectRecommendationAnalyzedWorkload(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, int? queryCount = default)
+        public static ObjectRecommendationAnalyzedWorkload ObjectRecommendationAnalyzedWorkload(DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, int? queryCount = default)
         {
-            return new ObjectRecommendationAnalyzedWorkload(startOn, endOn, queryCount, default);
+            return new ObjectRecommendationAnalyzedWorkload(startsOn, endsOn, queryCount, default);
         }
 
         /// <param name="dimensionName"> Dimension name. </param>

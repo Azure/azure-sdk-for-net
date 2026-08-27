@@ -956,7 +956,7 @@ namespace Azure.ResourceManager.Storage.Models
                 permissions,
                 ipAddressOrRange,
                 protocols,
-                sharedAccessStartOn,
+                default,
                 sharedAccessExpireOn,
                 keyToSign,
                 default);
@@ -996,7 +996,7 @@ namespace Azure.ResourceManager.Storage.Models
                 permissions,
                 ipAddressOrRange,
                 protocols,
-                sharedAccessStartOn,
+                default,
                 sharedAccessExpiryOn,
                 identifier,
                 partitionKeyStart,
@@ -1027,13 +1027,13 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageSignedIdentifier(id, accessPolicy, default);
         }
 
-        /// <param name="startOn"> Start time of the access policy. </param>
+        /// <param name="startsOn"> Start time of the access policy. </param>
         /// <param name="expireOn"> Expiry time of the access policy. </param>
         /// <param name="permission"> List of abbreviated permissions. </param>
         /// <returns> A new <see cref="Models.StorageServiceAccessPolicy"/> instance for mocking. </returns>
-        public static StorageServiceAccessPolicy StorageServiceAccessPolicy(DateTimeOffset? startOn = default, DateTimeOffset? expireOn = default, string permission = default)
+        public static StorageServiceAccessPolicy StorageServiceAccessPolicy(DateTimeOffset? startsOn = default, DateTimeOffset? expireOn = default, string permission = default)
         {
-            return new StorageServiceAccessPolicy(startOn, expireOn, permission, default);
+            return new StorageServiceAccessPolicy(startsOn, expireOn, permission, default);
         }
 
         /// <param name="paidBurstingEnabled"> Indicates whether paid bursting is enabled for the share. This property is only for file shares created under Files Provisioned v1 SSD account type. </param>
@@ -2223,13 +2223,13 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageTableSignedIdentifier(id, accessPolicy, default);
         }
 
-        /// <param name="startOn"> Start time of the access policy. </param>
+        /// <param name="startsOn"> Start time of the access policy. </param>
         /// <param name="expireOn"> Expiry time of the access policy. </param>
         /// <param name="permission"> Required. List of abbreviated permissions. Supported permission values include 'r','a','u','d'. </param>
         /// <returns> A new <see cref="Models.StorageTableAccessPolicy"/> instance for mocking. </returns>
-        public static StorageTableAccessPolicy StorageTableAccessPolicy(DateTimeOffset? startOn = default, DateTimeOffset? expireOn = default, string permission = default)
+        public static StorageTableAccessPolicy StorageTableAccessPolicy(DateTimeOffset? startsOn = default, DateTimeOffset? expireOn = default, string permission = default)
         {
-            return new StorageTableAccessPolicy(startOn, expireOn, permission, default);
+            return new StorageTableAccessPolicy(startsOn, expireOn, permission, default);
         }
 
         /// <param name="name"> The SKU name. Required for account creation; optional for update. Note that in older versions, SKU name was called accountType. </param>
@@ -3567,7 +3567,7 @@ namespace Azure.ResourceManager.Storage.Models
                 name,
                 resourceType,
                 systemData,
-                lastModifiedOn is null && metadata is null && shareQuota is null && enabledProtocol is null && rootSquash is null && version is null && isDeleted is null && deletedOn is null && remainingRetentionDays is null && accessTier is null && accessTierChangeOn is null && accessTierStatus is null && shareUsageBytes is null && leaseStatus is null && leaseState is null && leaseDuration is null && signedIdentifiers is null && snapshotOn is null ? default : new FileShareProperties(
+                lastModifiedOn is null && metadata is null && shareQuota is null && enabledProtocol is null && rootSquash is null && version is null && isDeleted is null && deletedOn is null && remainingRetentionDays is null && accessTier is null && accessTierStatus is null && shareUsageBytes is null && leaseStatus is null && leaseState is null && leaseDuration is null && signedIdentifiers is null && snapshotOn is null ? default : new FileShareProperties(
                     lastModifiedOn,
                     metadata ?? new ChangeTrackingDictionary<string, string>(),
                     shareQuota,
@@ -3585,7 +3585,7 @@ namespace Azure.ResourceManager.Storage.Models
                     deletedOn,
                     remainingRetentionDays,
                     accessTier,
-                    accessTierChangeOn,
+                    default,
                     accessTierStatus,
                     shareUsageBytes,
                     leaseStatus,

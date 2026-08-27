@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.BackupPolicyMigrationState"/> instance for mocking. </returns>
         public static BackupPolicyMigrationState BackupPolicyMigrationState(BackupPolicyMigrationStatus? status = default, BackupPolicyType? targetType = default, DateTimeOffset? startOn = default)
         {
-            return new BackupPolicyMigrationState(status, targetType, startOn, default);
+            return new BackupPolicyMigrationState(status, targetType, default, default);
         }
 
         /// <param name="migrationState"> The object representing the state of the migration between the backup policies. </param>
@@ -589,8 +589,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             metricValues ??= new ChangeTrackingList<CosmosDBMetricValue>();
 
             return new CosmosDBBaseMetric(
-                startOn,
-                endOn,
+                default,
+                default,
                 timeGrain,
                 unit,
                 name,
@@ -1293,7 +1293,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <returns> A new <see cref="Models.CosmosDBBackupInformation"/> instance for mocking. </returns>
         public static CosmosDBBackupInformation CosmosDBBackupInformation(DateTimeOffset? continuousBackupInformationLatestRestorableTimestamp = default)
         {
-            return new CosmosDBBackupInformation(continuousBackupInformationLatestRestorableTimestamp is null ? default : new ContinuousBackupInformation(continuousBackupInformationLatestRestorableTimestamp, default), default);
+            return new CosmosDBBackupInformation(default, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2634,8 +2634,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             metricValues ??= new ChangeTrackingList<PercentileMetricValue>();
 
             return new CosmosDBPercentileMetric(
-                startOn,
-                endOn,
+                default,
+                default,
                 timeGrain,
                 unit,
                 name,
@@ -2690,8 +2690,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             metricValues ??= new ChangeTrackingList<CosmosDBMetricValue>();
 
             return new PartitionMetric(
-                startOn,
-                endOn,
+                default,
+                default,
                 timeGrain,
                 unit,
                 name,

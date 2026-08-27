@@ -480,17 +480,17 @@ namespace Azure.ResourceManager.ImageBuilder.Models
             return new ImageBuilderProvisioningError(provisioningErrorCode, message, default);
         }
 
-        /// <param name="startOn"> Start time of the last run (UTC). </param>
-        /// <param name="endOn"> End time of the last run (UTC). </param>
+        /// <param name="startsOn"> Start time of the last run (UTC). </param>
+        /// <param name="endsOn"> End time of the last run (UTC). </param>
         /// <param name="runState"> State of the last run. </param>
         /// <param name="runSubState"> Sub-state of the last run. </param>
         /// <param name="message"> Verbose information about the last run state. </param>
         /// <returns> A new <see cref="Models.ImageTemplateLastRunStatus"/> instance for mocking. </returns>
-        public static ImageTemplateLastRunStatus ImageTemplateLastRunStatus(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, ImageTemplateRunState? runState = default, ImageTemplateRunSubState? runSubState = default, string message = default)
+        public static ImageTemplateLastRunStatus ImageTemplateLastRunStatus(DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, ImageTemplateRunState? runState = default, ImageTemplateRunSubState? runSubState = default, string message = default)
         {
             return new ImageTemplateLastRunStatus(
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 runState,
                 runSubState,
                 message,

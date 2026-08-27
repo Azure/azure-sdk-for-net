@@ -85,15 +85,15 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WritePropertyName("grafanaResourceId"u8);
                 writer.WriteStringValue(GrafanaResourceId);
             }
-            if (Optional.IsDefined(TrialStartOn))
+            if (Optional.IsDefined(TrialStartsOn))
             {
                 writer.WritePropertyName("trialStartAt"u8);
-                writer.WriteStringValue(TrialStartOn.Value, "O");
+                writer.WriteStringValue(TrialStartsOn.Value, "O");
             }
-            if (Optional.IsDefined(TrialEndOn))
+            if (Optional.IsDefined(TrialEndsOn))
             {
                 writer.WritePropertyName("trialEndAt"u8);
-                writer.WriteStringValue(TrialEndOn.Value, "O");
+                writer.WriteStringValue(TrialEndsOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -139,8 +139,8 @@ namespace Azure.ResourceManager.Grafana.Models
             }
             AvailablePromotion? availablePromotion = default;
             ResourceIdentifier grafanaResourceId = default;
-            DateTimeOffset? trialStartOn = default;
-            DateTimeOffset? trialEndOn = default;
+            DateTimeOffset? trialStartsOn = default;
+            DateTimeOffset? trialEndsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    trialStartOn = prop.Value.GetDateTimeOffset("O");
+                    trialStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("trialEndAt"u8))
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     {
                         continue;
                     }
-                    trialEndOn = prop.Value.GetDateTimeOffset("O");
+                    trialEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Grafana.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MarketplaceTrialQuota(availablePromotion, grafanaResourceId, trialStartOn, trialEndOn, additionalBinaryDataProperties);
+            return new MarketplaceTrialQuota(availablePromotion, grafanaResourceId, trialStartsOn, trialEndsOn, additionalBinaryDataProperties);
         }
     }
 }

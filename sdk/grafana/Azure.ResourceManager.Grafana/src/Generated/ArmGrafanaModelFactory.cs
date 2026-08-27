@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <returns> A new <see cref="Models.SubscriptionTerm"/> instance for mocking. </returns>
         public static SubscriptionTerm SubscriptionTerm(string termUnit = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default)
         {
-            return new SubscriptionTerm(termUnit, startOn, endOn, default);
+            return new SubscriptionTerm(termUnit, default, default, default);
         }
 
         /// <param name="availablePromotion"> Available enterprise promotion for the subscription. </param>
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// <returns> A new <see cref="Models.MarketplaceTrialQuota"/> instance for mocking. </returns>
         public static MarketplaceTrialQuota MarketplaceTrialQuota(AvailablePromotion? availablePromotion = default, ResourceIdentifier grafanaResourceId = default, DateTimeOffset? trialStartOn = default, DateTimeOffset? trialEndOn = default)
         {
-            return new MarketplaceTrialQuota(availablePromotion, grafanaResourceId, trialStartOn, trialEndOn, default);
+            return new MarketplaceTrialQuota(availablePromotion, grafanaResourceId, default, default, default);
         }
 
         /// <param name="pluginId"> Grafana plugin id. </param>
