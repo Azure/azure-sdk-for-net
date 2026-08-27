@@ -220,10 +220,10 @@ namespace Azure.Storage.Blobs.Test
                 It.IsAny<DownloadTransferValidationOptions>(),
                 It.IsAny<IProgress<long>>(),
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
-                _async,
-                s_cancellationToken,
                 It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
-                It.IsAny<string>())).ThrowsAsync(e);
+                It.IsAny<string>(),
+                _async,
+                s_cancellationToken)).ThrowsAsync(e);
 
             PartitionedDownloader downloader = new PartitionedDownloader(
                 blockClient.Object,
@@ -574,12 +574,12 @@ namespace Azure.Storage.Blobs.Test
                     options != null && options != s_validationOptions && !options.AutoValidateChecksum),
                 It.IsAny<IProgress<long>>(),
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
-                _async,
-                s_cancellationToken,
                 It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
-                It.IsAny<string>())
-            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, string>(
-                async (range, conditions, validation, progress, operationName, async, cancellation, layoutCache, LayoutEndpoint) =>
+                It.IsAny<string>(),
+                _async,
+                s_cancellationToken)
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, string, bool, CancellationToken>(
+                async (range, conditions, validation, progress, operationName, layoutCache, LayoutEndpoint, async, cancellation) =>
                 {
                     if (layoutCache != null)
                     {
@@ -835,12 +835,12 @@ namespace Azure.Storage.Blobs.Test
                     options != null && options != s_validationOptions && !options.AutoValidateChecksum),
                 It.IsAny<IProgress<long>>(),
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
-                _async,
-                s_cancellationToken,
                 It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
-                It.IsAny<string>())
-            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, string>(
-                (range, conditions, validation, progress, operationName, async, cancellation, layoutCache, LayoutEndpoint) =>
+                It.IsAny<string>(),
+                _async,
+                s_cancellationToken)
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, string, bool, CancellationToken>(
+                (range, conditions, validation, progress, operationName, layoutCache, LayoutEndpoint, async, cancellation) =>
                 {
                     lock (capturedCalls)
                     {
@@ -1039,12 +1039,12 @@ namespace Azure.Storage.Blobs.Test
                 It.Is<DownloadTransferValidationOptions>(options => options != null && !options.AutoValidateChecksum),
                 It.IsAny<IProgress<long>>(),
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
-                _async,
-                It.IsAny<CancellationToken>(),
                 It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
-                It.IsAny<string>())
-            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, string>(
-                (range, conditions, validation, progress, operationName, async, cancellation, layoutCache, layoutEndpoint) =>
+                It.IsAny<string>(),
+                _async,
+                It.IsAny<CancellationToken>())
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, string, bool, CancellationToken>(
+                (range, conditions, validation, progress, operationName, layoutCache, layoutEndpoint, async, cancellation) =>
                     handler(range, conditions, validation, progress, async, cancellation));
         }
 
@@ -1120,12 +1120,12 @@ namespace Azure.Storage.Blobs.Test
                     options != null && options != s_validationOptions && !options.AutoValidateChecksum),
                 It.IsAny<IProgress<long>>(),
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
-                _async,
-                s_cancellationToken,
                 It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
-                It.IsAny<string>())
-            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, string>(
-                (range, conditions, validation, progress, operationName, async, cancellation, layoutCache, LayoutEndpoint) => async
+                It.IsAny<string>(),
+                _async,
+                s_cancellationToken)
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, string, bool, CancellationToken>(
+                (range, conditions, validation, progress, operationName, layoutCache, LayoutEndpoint, async, cancellation) => async
                     ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
                     : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation)));
         }
@@ -1140,10 +1140,10 @@ namespace Azure.Storage.Blobs.Test
                     options != null && options.ChecksumAlgorithm != StorageChecksumAlgorithm.None && !options.AutoValidateChecksum),
                 It.IsAny<IProgress<long>>(),
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
-                _async,
-                s_cancellationToken,
                 It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
-                It.IsAny<string>())
+                It.IsAny<string>(),
+                _async,
+                s_cancellationToken)
             ).ThrowsAsync(new RequestFailedException(
                 status: 416,
                 errorCode: BlobErrorCode.InvalidRange.ToString(),
@@ -1158,12 +1158,12 @@ namespace Azure.Storage.Blobs.Test
                     options != null && options.ChecksumAlgorithm == StorageChecksumAlgorithm.None),
                 It.IsAny<IProgress<long>>(),
                 $"{nameof(BlobBaseClient)}.{nameof(BlobBaseClient.DownloadStreaming)}",
-                _async,
-                s_cancellationToken,
                 It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
-                It.IsAny<string>())
-            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, string>(
-                (range, conditions, validation, progress, operationName, async, cancellation, layoutCache, LayoutEndpoint) => async
+                It.IsAny<string>(),
+                _async,
+                s_cancellationToken)
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, string, bool, CancellationToken>(
+                (range, conditions, validation, progress, operationName, layoutCache, LayoutEndpoint, async, cancellation) => async
                     ? dataSource.GetStreamAsync(range, conditions, validation, progress: progress, cancellation)
                     : new ValueTask<Response<BlobDownloadStreamingResult>>(dataSource.GetStream(range, conditions, validation, progress: progress, cancellation)));
         }

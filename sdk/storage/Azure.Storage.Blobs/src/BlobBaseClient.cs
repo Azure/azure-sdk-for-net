@@ -1103,6 +1103,7 @@ namespace Azure.Storage.Blobs.Specialized
                 rangeGetContentHash.ToValidationOptions(),
                 progressHandler: default,
                 $"{nameof(BlobBaseClient)}.{nameof(Download)}",
+                layoutEndpoint: null,
                 async,
                 cancellationToken).ConfigureAwait(false);
 
@@ -1343,6 +1344,7 @@ namespace Azure.Storage.Blobs.Specialized
                 rangeGetContentHash.ToValidationOptions(),
                 progressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
+                layoutEndpoint: null,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -1421,6 +1423,7 @@ namespace Azure.Storage.Blobs.Specialized
                 rangeGetContentHash.ToValidationOptions(),
                 progressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
+                layoutEndpoint: null,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1476,9 +1479,9 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.TransferValidation,
                 options?.ProgressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
+                layoutEndpoint: options?.LayoutEndpoint,
                 async: false,
-                cancellationToken,
-                layoutEndpoint: options?.LayoutEndpoint).EnsureCompleted();
+                cancellationToken).EnsureCompleted();
         }
 
         /// <summary>
@@ -1526,9 +1529,9 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.TransferValidation,
                 options?.ProgressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadStreaming)}",
+                layoutEndpoint: options?.LayoutEndpoint,
                 async: true,
-                cancellationToken,
-                layoutEndpoint: options?.LayoutEndpoint).ConfigureAwait(false);
+                cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -1554,9 +1557,9 @@ namespace Azure.Storage.Blobs.Specialized
             DownloadTransferValidationOptions transferValidationOverride,
             IProgress<long> progressHandler,
             string operationName,
+            string layoutEndpoint,
             bool async,
-            CancellationToken cancellationToken,
-            string layoutEndpoint = null)
+            CancellationToken cancellationToken)
         {
             HttpRange requestedRange = range;
             long cseStartRegion = 0;
@@ -1568,7 +1571,7 @@ namespace Azure.Storage.Blobs.Specialized
                 }
             }
 
-            var response = await DownloadStreamingInternal(range, conditions, transferValidationOverride, progressHandler, operationName, async, cancellationToken, layoutEndpoint: layoutEndpoint).ConfigureAwait(false);
+            var response = await DownloadStreamingInternal(range, conditions, transferValidationOverride, progressHandler, operationName, layoutCache: null, layoutEndpoint: layoutEndpoint, async, cancellationToken).ConfigureAwait(false);
 
             // if using clientside encryption, wrap the auto-retry stream in a decryptor
             // we already return a nonseekable stream; returning a crypto stream is fine
@@ -1631,10 +1634,10 @@ namespace Azure.Storage.Blobs.Specialized
             DownloadTransferValidationOptions transferValidationOverride,
             IProgress<long> progressHandler,
             string operationName,
+            AutoRefreshingCache<BlobLayoutSegmentCacheValue> layoutCache,
+            string layoutEndpoint,
             bool async,
-            CancellationToken cancellationToken,
-            AutoRefreshingCache<BlobLayoutSegmentCacheValue> layoutCache = null,
-            string layoutEndpoint = null)
+            CancellationToken cancellationToken)
         {
             DownloadTransferValidationOptions validationOptions = transferValidationOverride ?? ClientConfiguration.TransferValidation.Download;
             using (ClientConfiguration.Pipeline.BeginLoggingScope(nameof(BlobBaseClient)))
@@ -2158,6 +2161,7 @@ namespace Azure.Storage.Blobs.Specialized
                 progressHandler: default,
                 range: default,
                 transferValidationOverride: default,
+                layoutEndpoint: null,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -2216,6 +2220,7 @@ namespace Azure.Storage.Blobs.Specialized
                 progressHandler: default,
                 range: default,
                 transferValidationOverride: default,
+                layoutEndpoint: null,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2283,6 +2288,7 @@ namespace Azure.Storage.Blobs.Specialized
                 progressHandler,
                 range,
                 transferValidationOverride: default,
+                layoutEndpoint: null,
                 false, // async
                 cancellationToken)
                 .EnsureCompleted();
@@ -2350,6 +2356,7 @@ namespace Azure.Storage.Blobs.Specialized
                 progressHandler,
                 range,
                 transferValidationOverride: default,
+                layoutEndpoint: null,
                 true, // async
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -2404,9 +2411,9 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ProgressHandler,
                 options?.Range ?? default,
                 options?.TransferValidation,
+                layoutEndpoint: options?.LayoutEndpoint,
                 async: false,
-                cancellationToken,
-                layoutEndpoint: options?.LayoutEndpoint).EnsureCompleted();
+                cancellationToken).EnsureCompleted();
 
         /// <summary>
         /// The <see cref="DownloadContentAsync(BlobDownloadOptions, CancellationToken)"/>
@@ -2458,18 +2465,18 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.ProgressHandler,
                 options?.Range ?? default,
                 options?.TransferValidation,
+                layoutEndpoint: options?.LayoutEndpoint,
                 async: true,
-                cancellationToken,
-                layoutEndpoint: options?.LayoutEndpoint).ConfigureAwait(false);
+                cancellationToken).ConfigureAwait(false);
 
         private async Task<Response<BlobDownloadResult>> DownloadContentInternal(
             BlobRequestConditions conditions,
             IProgress<long> progressHandler,
             HttpRange range,
             DownloadTransferValidationOptions transferValidationOverride,
+            string layoutEndpoint,
             bool async,
-            CancellationToken cancellationToken,
-            string layoutEndpoint = null)
+            CancellationToken cancellationToken)
         {
             conditions.ValidateConditionsNotPresent(
                 invalidConditions:
@@ -2484,9 +2491,9 @@ namespace Azure.Storage.Blobs.Specialized
                 transferValidationOverride: transferValidationOverride,
                 progressHandler,
                 $"{nameof(BlobBaseClient)}.{nameof(DownloadContent)}",
+                layoutEndpoint: layoutEndpoint,
                 async: async,
-                cancellationToken: cancellationToken,
-                layoutEndpoint: layoutEndpoint).ConfigureAwait(false);
+                cancellationToken: cancellationToken).ConfigureAwait(false);
 
             // Return an exploding Response on 304
             if (response.IsUnavailable())
@@ -3593,9 +3600,10 @@ namespace Azure.Storage.Blobs.Specialized
                                 transferValidationOverride: downloadValidationOptions,
                                 progressHandler: default,
                                 operationName,
+                                layoutCache: layoutCache,
+                                layoutEndpoint: null,
                                 async,
-                                cancellationToken,
-                                layoutCache: layoutCache).ConfigureAwait(false);
+                                cancellationToken).ConfigureAwait(false);
 
                             if (decryptor != null)
                             {

@@ -1652,12 +1652,12 @@ namespace Azure.Storage.Blobs.Test
                 It.IsAny<DownloadTransferValidationOptions>(),
                 It.IsAny<IProgress<long>>(),
                 It.IsAny<string>(),
-                IsAsync,
-                It.IsAny<CancellationToken>(),
                 It.IsAny<AutoRefreshingCache<BlobLayoutSegmentCacheValue>>(),
-                It.IsAny<string>())
-            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, bool, CancellationToken, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, string>(
-                (range, conditions, validation, progress, operationName, async, cancellation, layoutCache, layoutEndpoint) =>
+                It.IsAny<string>(),
+                IsAsync,
+                It.IsAny<CancellationToken>())
+            ).Returns<HttpRange, BlobRequestConditions, DownloadTransferValidationOptions, IProgress<long>, string, AutoRefreshingCache<BlobLayoutSegmentCacheValue>, string, bool, CancellationToken>(
+                (range, conditions, validation, progress, operationName, layoutCache, layoutEndpoint, async, cancellation) =>
                 {
                     lock (capturedCalls)
                     {

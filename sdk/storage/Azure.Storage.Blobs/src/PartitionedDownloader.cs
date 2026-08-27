@@ -208,6 +208,8 @@ namespace Azure.Storage.Blobs
                         ValidationOptions,
                         _progress,
                         _innerOperationName,
+                        layoutCache: null,
+                        layoutEndpoint: null,
                         async,
                         cancellationToken).ConfigureAwait(false);
                 }
@@ -226,6 +228,8 @@ namespace Azure.Storage.Blobs
                         validationOptionsNone,
                         _progress,
                         _innerOperationName,
+                        layoutCache: null,
+                        layoutEndpoint: null,
                         async,
                         cancellationToken).ConfigureAwait(false);
 
@@ -482,9 +486,10 @@ namespace Azure.Storage.Blobs
                     ValidationOptions,
                     _progress,
                     _innerOperationName,
+                    layoutCache,
+                    layoutEndpoint: null,
                     async,
-                    cancellationToken,
-                    layoutCache).ConfigureAwait(false)
+                    cancellationToken).ConfigureAwait(false)
                 ));
 
             foreach (Func<Task<Response<BlobDownloadStreamingResult>>> getResponse in allResponses)
@@ -599,9 +604,10 @@ namespace Azure.Storage.Blobs
                 ValidationOptions,
                 _progress,
                 _innerOperationName,
+                layoutCache,
+                layoutEndpoint: null,
                 async: true,
-                cancellationToken,
-                layoutCache).ConfigureAwait(false);
+                cancellationToken).ConfigureAwait(false);
 
             return await BufferResponseAsync(response, cancellationToken).ConfigureAwait(false);
         }
