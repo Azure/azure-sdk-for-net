@@ -176,8 +176,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 status,
                 statusDetails,
                 error,
-                startOn,
-                endOn,
+                default,
+                default,
                 jobId,
                 default,
                 azureStorageBlobContainerUri,
@@ -197,8 +197,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 status,
                 statusDetails,
                 error,
-                startOn,
-                endOn,
+                default,
+                default,
                 jobId,
                 default);
         }

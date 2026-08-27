@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 reportId,
                 assignment,
                 vm,
-                startOn,
-                endOn,
+                default,
+                default,
                 complianceStatus,
                 operationType,
                 (resources ?? new ChangeTrackingList<AssignmentReportResourceInfo>()).ToList(),
@@ -252,8 +252,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 reportId,
                 assignment,
                 vm,
-                startOn,
-                endOn,
+                default,
+                default,
                 details,
                 vmssResourceId,
                 default);
@@ -272,8 +272,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
             return new GuestConfigurationAssignmentReportDetails(
                 complianceStatus,
-                startOn,
-                endOn,
+                default,
+                default,
                 jobId,
                 operationType,
                 (resources ?? new ChangeTrackingList<AssignmentReportResourceInfo>()).ToList(),

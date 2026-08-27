@@ -193,11 +193,11 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary> The timestamp in UTC when the billing starts. </summary>
         [WirePath("properties.productProfile.billingStartDate")]
-        public DateTimeOffset? BillingStartOn
+        public DateTimeOffset? BillingStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.BillingStartOn;
+                return Properties is null ? default : Properties.BillingStartsOn;
             }
         }
 
@@ -213,11 +213,11 @@ namespace Azure.ResourceManager.HybridCompute
 
         /// <summary> The timestamp in UTC when the billing ends. </summary>
         [WirePath("properties.productProfile.billingEndDate")]
-        public DateTimeOffset? BillingEndOn
+        public DateTimeOffset? BillingEndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.BillingEndOn;
+                return Properties is null ? default : Properties.BillingEndsOn;
             }
         }
 
