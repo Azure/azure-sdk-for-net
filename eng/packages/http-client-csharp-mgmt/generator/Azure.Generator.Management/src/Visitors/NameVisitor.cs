@@ -134,15 +134,15 @@ internal class NameVisitor : ScmLibraryVisitor
         "Start",
     };
 
-    private static readonly HashSet<string> _mtgDateTimeSuffixes = new(StringComparer.OrdinalIgnoreCase)
-    {
+    private static readonly string[] _mtgDateTimeSuffixes =
+    [
         "Timestamp",
         "DateTime",
         "Time",
         "Date",
         "On",
         "At",
-    };
+    ];
 
     internal static bool IsMtgRenamedDateTimeProperty(PropertyProvider? property)
     {
@@ -212,16 +212,15 @@ internal class NameVisitor : ScmLibraryVisitor
 
     private static int GetMtgDateTimeSuffixLength(string name)
     {
-        var matchedLength = 0;
         foreach (var candidate in _mtgDateTimeSuffixes)
         {
-            if (candidate.Length > matchedLength && name.EndsWith(candidate, StringComparison.OrdinalIgnoreCase))
+            if (name.EndsWith(candidate, StringComparison.OrdinalIgnoreCase))
             {
-                matchedLength = candidate.Length;
+                return candidate.Length;
             }
         }
 
-        return matchedLength;
+        return 0;
     }
 
     private static bool HasExcludedMtgDateTimeComponent(string name, int suffixLength)
