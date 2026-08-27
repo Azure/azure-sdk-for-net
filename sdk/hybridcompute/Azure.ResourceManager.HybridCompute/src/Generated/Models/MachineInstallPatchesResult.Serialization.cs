@@ -128,10 +128,10 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("failedPatchCount"u8);
                 writer.WriteNumberValue(FailedPatchCount.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             int? pendingPatchCount = default;
             int? installedPatchCount = default;
             int? failedPatchCount = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             DateTimeOffset? lastModifiedOn = default;
             PatchOperationStartedBy? startedBy = default;
             PatchServiceUsed? patchServiceUsed = default;
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedDateTime"u8))
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 pendingPatchCount,
                 installedPatchCount,
                 failedPatchCount,
-                startOn,
+                startsOn,
                 lastModifiedOn,
                 startedBy,
                 patchServiceUsed,

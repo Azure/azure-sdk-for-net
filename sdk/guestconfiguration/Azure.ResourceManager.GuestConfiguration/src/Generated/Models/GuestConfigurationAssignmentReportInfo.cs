@@ -29,20 +29,20 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
         /// <param name="reportId"> GUID that identifies the guest configuration assignment report under a subscription, resource group. </param>
         /// <param name="assignment"> Configuration details of the guest configuration assignment. </param>
         /// <param name="vm"> Information about the VM. </param>
-        /// <param name="startOn"> Start date and time of the guest configuration assignment compliance status check. </param>
-        /// <param name="endOn"> End date and time of the guest configuration assignment compliance status check. </param>
+        /// <param name="startsOn"> Start date and time of the guest configuration assignment compliance status check. </param>
+        /// <param name="endsOn"> End date and time of the guest configuration assignment compliance status check. </param>
         /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
         /// <param name="operationType"> Type of report, Consistency or Initial. </param>
         /// <param name="resources"> The list of resources for which guest configuration assignment compliance is checked. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GuestConfigurationAssignmentReportInfo(ResourceIdentifier id, Guid? reportId, GuestConfigurationAssignmentInfo assignment, GuestConfigurationVmInfo vm, DateTimeOffset? startOn, DateTimeOffset? endOn, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, GuestConfigurationAssignmentReportType? operationType, IList<AssignmentReportResourceInfo> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GuestConfigurationAssignmentReportInfo(ResourceIdentifier id, Guid? reportId, GuestConfigurationAssignmentInfo assignment, GuestConfigurationVmInfo vm, DateTimeOffset? startsOn, DateTimeOffset? endsOn, AssignedGuestConfigurationMachineComplianceStatus? complianceStatus, GuestConfigurationAssignmentReportType? operationType, IList<AssignmentReportResourceInfo> resources, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             ReportId = reportId;
             Assignment = assignment;
             Vm = vm;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             ComplianceStatus = complianceStatus;
             OperationType = operationType;
             Resources = resources;
@@ -67,11 +67,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
         /// <summary> Start date and time of the guest configuration assignment compliance status check. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> End date and time of the guest configuration assignment compliance status check. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> A value indicating compliance status of the machine for the assigned guest configuration. </summary>
         [WirePath("complianceStatus")]
