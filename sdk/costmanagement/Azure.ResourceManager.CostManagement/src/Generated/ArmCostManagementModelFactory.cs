@@ -131,20 +131,20 @@ namespace Azure.ResourceManager.CostManagement.Models
                 default);
         }
 
-        /// <param name="startOn">
+        /// <param name="startsOn">
         /// The start date for the budget.
         /// <list type="bullet"><item><description>Constraints for <b>CategoryType: Cost</b> - Must be first of the month and should be less than the end date. Budget start date must be on or after June 1, 2017. Future start date should not be more than twelve months. Past start date should  be selected within the timegrain period.</description></item></list>
         /// <list type="bullet"><item><description>Constraints for <b>CategoryType: ReservationUtilization</b> - Must be on or after the current date and less than the end date.</description></item></list>
         /// </param>
-        /// <param name="endOn">
+        /// <param name="endsOn">
         /// The end date for the budget.
         /// <list type="bullet"><item><description>Constraints for <b>CategoryType: Cost</b> - No constraints. If not provided, we default this to 10 years from the start date.</description></item></list>
         /// <list type="bullet"><item><description>Constraints for <b>CategoryType: ReservationUtilization</b> - End date cannot be more than 3 years after the start date.</description></item></list>
         /// </param>
         /// <returns> A new <see cref="Models.BudgetTimePeriod"/> instance for mocking. </returns>
-        public static BudgetTimePeriod BudgetTimePeriod(DateTimeOffset startOn = default, DateTimeOffset? endOn = default)
+        public static BudgetTimePeriod BudgetTimePeriod(DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default)
         {
-            return new BudgetTimePeriod(startOn, endOn, default);
+            return new BudgetTimePeriod(startsOn, endsOn, default);
         }
 
         /// <param name="and">
@@ -481,15 +481,15 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                executionType is null && status is null && submittedBy is null && submittedOn is null && processingStartOn is null && processingEndOn is null && startOn is null && endOn is null && fileName is null && manifestFile is null && runSettings is null && error is null ? default : new ExportRunProperties(
+                executionType is null && status is null && submittedBy is null && submittedOn is null && fileName is null && manifestFile is null && runSettings is null && error is null ? default : new ExportRunProperties(
                     executionType,
                     status,
                     submittedBy,
                     submittedOn,
-                    processingStartOn,
-                    processingEndOn,
-                    startOn,
-                    endOn,
+                    default,
+                    default,
+                    default,
+                    default,
                     fileName,
                     manifestFile,
                     runSettings,
@@ -895,8 +895,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                 (daysOfWeek ?? new ChangeTrackingList<ScheduledActionDaysOfWeek>()).ToList(),
                 (weeksOfMonth ?? new ChangeTrackingList<ScheduledActionWeeksOfMonth>()).ToList(),
                 dayOfMonth,
-                startOn,
-                endOn,
+                default,
+                default,
                 default);
         }
 
@@ -1391,11 +1391,11 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="benefitOrderId"> Benefit order id the benefit utilization summaries report is for. Required for benefit order and benefit id scopes. Not supported for any billing scopes. </param>
         /// <param name="benefitId"> Benefit id the benefit utilization summaries report is for. Required for benefit id scope. Not supported for benefit order or any billing scopes. </param>
         /// <param name="grain"> The grain the summaries data is served at in the report. Accepted values are 'Daily' or 'Monthly'. </param>
-        /// <param name="startOn"> The start date of the summaries data that will be served in the report. </param>
-        /// <param name="endOn"> The end date of the summaries data that will be served in the report. </param>
+        /// <param name="startsOn"> The start date of the summaries data that will be served in the report. </param>
+        /// <param name="endsOn"> The end date of the summaries data that will be served in the report. </param>
         /// <param name="kind"> The type of benefit data requested. Required for billing account and billing profile scopes. Implied and not to be passed at benefit scopes. Supported values are Reservation and SavingsPlan. </param>
         /// <returns> A new <see cref="Models.BenefitUtilizationSummariesContent"/> instance for mocking. </returns>
-        public static BenefitUtilizationSummariesContent BenefitUtilizationSummariesContent(string billingAccountId = default, string billingProfileId = default, string benefitOrderId = default, string benefitId = default, BenefitRecommendationUsageGrain grain = default, DateTimeOffset startOn = default, DateTimeOffset endOn = default, BillingAccountBenefitKind? kind = default)
+        public static BenefitUtilizationSummariesContent BenefitUtilizationSummariesContent(string billingAccountId = default, string billingProfileId = default, string benefitOrderId = default, string benefitId = default, BenefitRecommendationUsageGrain grain = default, DateTimeOffset startsOn = default, DateTimeOffset endsOn = default, BillingAccountBenefitKind? kind = default)
         {
             return new BenefitUtilizationSummariesContent(
                 billingAccountId,
@@ -1403,8 +1403,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                 benefitOrderId,
                 benefitId,
                 grain,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 kind,
                 default);
         }
@@ -1801,8 +1801,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                 meterSubCategory,
                 meterRegion,
                 tierMinimumUnits,
-                effectiveStartOn,
-                effectiveEndOn,
+                default,
+                default,
                 unitPrice,
                 basePrice,
                 marketPrice,
@@ -1928,13 +1928,13 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                executionType is null && status is null && submittedBy is null && submittedOn is null && processingStartOn is null && processingEndOn is null && fileName is null && runSettings is null && error is null ? default : new ExportRunProperties(
+                executionType is null && status is null && submittedBy is null && submittedOn is null && fileName is null && runSettings is null && error is null ? default : new ExportRunProperties(
                     executionType,
                     status,
                     submittedBy,
                     submittedOn,
-                    processingStartOn,
-                    processingEndOn,
+                    default,
+                    default,
                     default,
                     default,
                     fileName,
