@@ -1481,6 +1481,7 @@ namespace Azure.Provisioning.CosmosDB
         public Azure.Provisioning.BicepValue<int> DefaultTtl { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.FullTextPolicy FullTextPolicy { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.CosmosDBIndexingPolicy IndexingPolicy { get { throw null; } set { } }
+        public Azure.Provisioning.CosmosDB.MaterializedViewDefinition MaterializedViewDefinition { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.CosmosDBContainerPartitionKey PartitionKey { get { throw null; } set { } }
         public Azure.Provisioning.CosmosDB.ResourceRestoreParameters RestoreParameters { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.CosmosDB.CosmosDBUniqueKey> UniqueKeys { get { throw null; } set { } }
@@ -2801,6 +2802,14 @@ namespace Azure.Provisioning.CosmosDB
         {
             public static readonly string V2026_03_15;
         }
+    }
+    public partial class MaterializedViewDefinition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public MaterializedViewDefinition() { }
+        public Azure.Provisioning.BicepValue<string> Definition { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SourceCollectionId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SourceCollectionRid { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
     }
     public partial class MaterializedViewsBuilderRegionalService : Azure.Provisioning.CosmosDB.CosmosDBRegionalService
     {
