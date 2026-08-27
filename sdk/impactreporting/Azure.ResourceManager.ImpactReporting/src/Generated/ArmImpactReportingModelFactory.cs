@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
     public static partial class ArmImpactReportingModelFactory
     {
 
+        /// <summary> Workload Impact properties. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -35,9 +36,10 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 default);
         }
 
+        /// <summary> Workload impact properties. </summary>
         /// <param name="provisioningState"> Resource provisioning state. </param>
-        /// <param name="startOn"> Time at which impact was observed . </param>
-        /// <param name="endOn"> Time at which impact has ended . </param>
+        /// <param name="startsOn"> Time at which impact was observed . </param>
+        /// <param name="endsOn"> Time at which impact has ended . </param>
         /// <param name="impactedResourceId"> Azure resource id of the impacted resource. </param>
         /// <param name="impactUniqueId"> Unique ID of the impact (UUID). </param>
         /// <param name="reportedTimeUtc"> Time at which impact is reported. </param>
@@ -53,7 +55,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
         /// <param name="confidenceLevel"> Degree of confidence on the impact being a platform issue. </param>
         /// <param name="clientIncidentDetails"> Client incident details ex: incidentId , incident source. </param>
         /// <returns> A new <see cref="Models.WorkloadImpactProperties"/> instance for mocking. </returns>
-        public static WorkloadImpactProperties WorkloadImpactProperties(ImpactReportingProvisioningState? provisioningState = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = default, ResourceIdentifier impactedResourceId = default, string impactUniqueId = default, DateTimeOffset? reportedTimeUtc = default, string impactCategory = default, string impactDescription = default, IEnumerable<string> armCorrelationIds = default, IEnumerable<ImpactPerformance> performance = default, ImpactConnectivityDetails connectivity = default, IDictionary<string, BinaryData> additionalProperties = default, ImpactErrorDetails errorDetails = default, ImpactedWorkload workload = default, string impactGroupId = default, ImpactConfidenceLevel? confidenceLevel = default, ImpactClientIncidentDetails clientIncidentDetails = default)
+        public static WorkloadImpactProperties WorkloadImpactProperties(ImpactReportingProvisioningState? provisioningState = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, ResourceIdentifier impactedResourceId = default, string impactUniqueId = default, DateTimeOffset? reportedTimeUtc = default, string impactCategory = default, string impactDescription = default, IEnumerable<string> armCorrelationIds = default, IEnumerable<ImpactPerformance> performance = default, ImpactConnectivityDetails connectivity = default, IDictionary<string, BinaryData> additionalProperties = default, ImpactErrorDetails errorDetails = default, ImpactedWorkload workload = default, string impactGroupId = default, ImpactConfidenceLevel? confidenceLevel = default, ImpactClientIncidentDetails clientIncidentDetails = default)
         {
             armCorrelationIds ??= new ChangeTrackingList<string>();
             performance ??= new ChangeTrackingList<ImpactPerformance>();
@@ -61,8 +63,8 @@ namespace Azure.ResourceManager.ImpactReporting.Models
 
             return new WorkloadImpactProperties(
                 provisioningState,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 impactedResourceId,
                 impactUniqueId,
                 reportedTimeUtc,
@@ -80,6 +82,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 default);
         }
 
+        /// <summary> Details about impacted performance metrics. Applicable for performance related impact. </summary>
         /// <param name="metricName"> Name of the Metric examples:  Disk, IOPs, CPU, GPU, Memory, details can be found from /impactCategories API. </param>
         /// <param name="expected"> Threshold value for the metric. </param>
         /// <param name="actual"> Observed value for the metric. </param>
@@ -97,6 +100,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 default);
         }
 
+        /// <summary> Max and Min Threshold values for the metric. </summary>
         /// <param name="min"> Min threshold value for the metric. </param>
         /// <param name="max"> Max threshold value for the metric. </param>
         /// <returns> A new <see cref="Models.ImpactMetricExpectedValueRange"/> instance for mocking. </returns>
@@ -115,6 +119,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             return new ImpactConnectivityDetails(protocol, port, sourceAzureResourceId is null ? default : new ImpactSourceOrTarget(sourceAzureResourceId, default), targetAzureResourceId is null ? default : new ImpactSourceOrTarget(targetAzureResourceId, default), default);
         }
 
+        /// <summary> ARM error code and error message associated with the impact. </summary>
         /// <param name="errorCode"> ARM Error code associated with the impact. </param>
         /// <param name="errorMessage"> ARM Error Message associated with the impact. </param>
         /// <returns> A new <see cref="Models.ImpactErrorDetails"/> instance for mocking. </returns>
@@ -123,6 +128,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             return new ImpactErrorDetails(errorCode, errorMessage, default);
         }
 
+        /// <summary> Information about the impacted workload. </summary>
         /// <param name="context"> the scenario for the workload. </param>
         /// <param name="toolset"> Tool used to interact with Azure. SDK, AzPortal, etc.., Other. </param>
         /// <returns> A new <see cref="Models.ImpactedWorkload"/> instance for mocking. </returns>
@@ -131,6 +137,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             return new ImpactedWorkload(context, toolset, default);
         }
 
+        /// <summary> Client incident details ex: incidentId , incident source. </summary>
         /// <param name="clientIncidentId"> Client incident id. ex : id of the incident created to investigate and address the impact if any. </param>
         /// <param name="clientIncidentSource"> Client incident source. ex : source system name where the incident is created. </param>
         /// <returns> A new <see cref="Models.ImpactClientIncidentDetails"/> instance for mocking. </returns>
@@ -139,6 +146,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             return new ImpactClientIncidentDetails(clientIncidentId, clientIncidentSource, default);
         }
 
+        /// <summary> ImpactCategory resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -156,6 +164,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 default);
         }
 
+        /// <summary> Impact category properties. </summary>
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="categoryId"> Unique ID of the category. </param>
         /// <param name="parentCategoryId"> Unique ID of the parent category. </param>
@@ -175,6 +184,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 default);
         }
 
+        /// <summary> Required impact properties. </summary>
         /// <param name="name"> Name of the property. </param>
         /// <param name="allowedValues"> Allowed values values for the property. </param>
         /// <returns> A new <see cref="Models.RequiredImpactProperties"/> instance for mocking. </returns>
@@ -185,6 +195,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             return new RequiredImpactProperties(name, (allowedValues ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Insight resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -202,6 +213,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 default);
         }
 
+        /// <summary> Impact category properties. </summary>
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="category"> category of the insight. </param>
         /// <param name="status"> status of the insight. example resolved, repaired, other. </param>
@@ -231,6 +243,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 default);
         }
 
+        /// <summary> Article details of the insight like title, description etc. </summary>
         /// <param name="title"> Title of the insight. </param>
         /// <param name="description"> Description of the insight. </param>
         /// <returns> A new <see cref="Models.ImpactInsightContent"/> instance for mocking. </returns>
@@ -239,16 +252,18 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             return new ImpactInsightContent(title, description, default);
         }
 
+        /// <summary> details of of the impact for which insight has been generated. </summary>
         /// <param name="impactedResourceId"> List of impacted Azure resources. </param>
-        /// <param name="startOn"> Time at which impact was started according to reported impact. </param>
-        /// <param name="endOn"> Time at which impact was ended according to reported impact. </param>
+        /// <param name="startsOn"> Time at which impact was started according to reported impact. </param>
+        /// <param name="endsOn"> Time at which impact was ended according to reported impact. </param>
         /// <param name="impactId"> Azure Id of the impact. </param>
         /// <returns> A new <see cref="Models.ImpactDetails"/> instance for mocking. </returns>
-        public static ImpactDetails ImpactDetails(ResourceIdentifier impactedResourceId = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = default, ResourceIdentifier impactId = default)
+        public static ImpactDetails ImpactDetails(ResourceIdentifier impactedResourceId = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, ResourceIdentifier impactId = default)
         {
-            return new ImpactDetails(impactedResourceId, startOn, endOn, impactId, default);
+            return new ImpactDetails(impactedResourceId, startsOn, endsOn, impactId, default);
         }
 
+        /// <summary> A connector is a resource that can be used to proactively report impacts against workloads in Azure to Microsoft. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -266,6 +281,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 default);
         }
 
+        /// <summary> Details of the Connector. </summary>
         /// <param name="provisioningState"> Resource provisioning state. </param>
         /// <param name="connectorId"> unique id of the connector. </param>
         /// <param name="tenantId"> tenant id of this connector. </param>
