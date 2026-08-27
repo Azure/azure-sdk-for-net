@@ -20,40 +20,44 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.HardwareSecurityModules
 {
     /// <summary>
-    /// A class representing a DedicatedHsm along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="DedicatedHsmResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetDedicatedHsms method.
+    /// A class representing a PaymentHsmCluster along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="PaymentHsmClusterResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetPaymentHsmClusters method.
     /// </summary>
-    public partial class DedicatedHsmResource : ArmResource
+    public partial class PaymentHsmClusterResource : ArmResource
     {
-        private readonly ClientDiagnostics _dedicatedHsmsClientDiagnostics;
-        private readonly DedicatedHsms _dedicatedHsmsRestClient;
-        private readonly DedicatedHsmData _data;
+        private readonly ClientDiagnostics _paymentHsmClustersClientDiagnostics;
+        private readonly PaymentHsmClusters _paymentHsmClustersRestClient;
+        private readonly ClientDiagnostics _paymentHsmClusterPrivateLinkResourcesClientDiagnostics;
+        private readonly PaymentHsmClusterPrivateLinkResources _paymentHsmClusterPrivateLinkResourcesRestClient;
+        private readonly PaymentHsmClusterData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.HardwareSecurityModules/dedicatedHSMs";
+        public static readonly ResourceType ResourceType = "Microsoft.HardwareSecurityModules/paymentHsmClusters";
 
-        /// <summary> Initializes a new instance of DedicatedHsmResource for mocking. </summary>
-        protected DedicatedHsmResource()
+        /// <summary> Initializes a new instance of PaymentHsmClusterResource for mocking. </summary>
+        protected PaymentHsmClusterResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DedicatedHsmResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaymentHsmClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal DedicatedHsmResource(ArmClient client, DedicatedHsmData data) : this(client, data.Id)
+        internal PaymentHsmClusterResource(ArmClient client, PaymentHsmClusterData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DedicatedHsmResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="PaymentHsmClusterResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal DedicatedHsmResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal PaymentHsmClusterResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string dedicatedHsmApiVersion);
-            _dedicatedHsmsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ResourceType.Namespace, Diagnostics);
-            _dedicatedHsmsRestClient = new DedicatedHsms(_dedicatedHsmsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dedicatedHsmApiVersion ?? "2025-12-01-preview");
+            TryGetApiVersion(ResourceType, out string paymentHsmClusterApiVersion);
+            _paymentHsmClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ResourceType.Namespace, Diagnostics);
+            _paymentHsmClustersRestClient = new PaymentHsmClusters(_paymentHsmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, paymentHsmClusterApiVersion ?? "2025-12-01-preview");
+            _paymentHsmClusterPrivateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HardwareSecurityModules", ResourceType.Namespace, Diagnostics);
+            _paymentHsmClusterPrivateLinkResourcesRestClient = new PaymentHsmClusterPrivateLinkResources(_paymentHsmClusterPrivateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, paymentHsmClusterApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -61,7 +65,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual DedicatedHsmData Data
+        public virtual PaymentHsmClusterData Data
         {
             get
             {
@@ -76,10 +80,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <summary> Generate the resource identifier for this resource. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
+        /// <param name="paymentHsmClusterName"> The paymentHsmClusterName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string paymentHsmClusterName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/paymentHsmClusters/{paymentHsmClusterName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -94,15 +98,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary>
-        /// Gets the specified Azure dedicated HSM.
+        /// Gets the specified Payment HSM Cluster
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/paymentHsmClusters/{paymentHsmClusterName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DedicatedHsms_Get. </description>
+        /// <description> PaymentHsmClusters_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -110,14 +114,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DedicatedHsmResource"/>. </description>
+        /// <description> <see cref="PaymentHsmClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<DedicatedHsmResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PaymentHsmClusterResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.Get");
+            using DiagnosticScope scope = _paymentHsmClustersClientDiagnostics.CreateScope("PaymentHsmClusterResource.Get");
             scope.Start();
             try
             {
@@ -125,14 +129,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<DedicatedHsmData> response = Response.FromValue(DedicatedHsmData.FromResponse(result), result);
+                Response<PaymentHsmClusterData> response = Response.FromValue(PaymentHsmClusterData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DedicatedHsmResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PaymentHsmClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -142,15 +146,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary>
-        /// Gets the specified Azure dedicated HSM.
+        /// Gets the specified Payment HSM Cluster
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/paymentHsmClusters/{paymentHsmClusterName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DedicatedHsms_Get. </description>
+        /// <description> PaymentHsmClusters_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -158,14 +162,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DedicatedHsmResource"/>. </description>
+        /// <description> <see cref="PaymentHsmClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<DedicatedHsmResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<PaymentHsmClusterResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.Get");
+            using DiagnosticScope scope = _paymentHsmClustersClientDiagnostics.CreateScope("PaymentHsmClusterResource.Get");
             scope.Start();
             try
             {
@@ -173,14 +177,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<DedicatedHsmData> response = Response.FromValue(DedicatedHsmData.FromResponse(result), result);
+                Response<PaymentHsmClusterData> response = Response.FromValue(PaymentHsmClusterData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new DedicatedHsmResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new PaymentHsmClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -190,15 +194,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary>
-        /// Update a dedicated HSM in the specified subscription.
+        /// Update a Payment HSM Cluster in the specified subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/paymentHsmClusters/{paymentHsmClusterName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DedicatedHsms_Update. </description>
+        /// <description> PaymentHsmClusters_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -206,19 +210,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DedicatedHsmResource"/>. </description>
+        /// <description> <see cref="PaymentHsmClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> Parameters to patch the dedicated HSM. </param>
+        /// <param name="patch"> Parameters to create Payment HSM Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<ArmOperation<DedicatedHsmResource>> UpdateAsync(WaitUntil waitUntil, DedicatedHsmPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<PaymentHsmClusterResource>> UpdateAsync(WaitUntil waitUntil, PaymentHsmClusterPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.Update");
+            using DiagnosticScope scope = _paymentHsmClustersClientDiagnostics.CreateScope("PaymentHsmClusterResource.Update");
             scope.Start();
             try
             {
@@ -226,11 +230,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHsmsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DedicatedHsmPatch.ToRequestContent(patch), context);
+                HttpMessage message = _paymentHsmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PaymentHsmClusterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HardwareSecurityModulesArmOperation<DedicatedHsmResource> operation = new HardwareSecurityModulesArmOperation<DedicatedHsmResource>(
-                    new DedicatedHsmResourceOperationSource(Client),
-                    _dedicatedHsmsClientDiagnostics,
+                HardwareSecurityModulesArmOperation<PaymentHsmClusterResource> operation = new HardwareSecurityModulesArmOperation<PaymentHsmClusterResource>(
+                    new PaymentHsmClusterResourceOperationSource(Client),
+                    _paymentHsmClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -249,15 +253,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary>
-        /// Update a dedicated HSM in the specified subscription.
+        /// Update a Payment HSM Cluster in the specified subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/paymentHsmClusters/{paymentHsmClusterName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DedicatedHsms_Update. </description>
+        /// <description> PaymentHsmClusters_Update. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -265,19 +269,19 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DedicatedHsmResource"/>. </description>
+        /// <description> <see cref="PaymentHsmClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="patch"> Parameters to patch the dedicated HSM. </param>
+        /// <param name="patch"> Parameters to create Payment HSM Cluster. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual ArmOperation<DedicatedHsmResource> Update(WaitUntil waitUntil, DedicatedHsmPatch patch, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<PaymentHsmClusterResource> Update(WaitUntil waitUntil, PaymentHsmClusterPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.Update");
+            using DiagnosticScope scope = _paymentHsmClustersClientDiagnostics.CreateScope("PaymentHsmClusterResource.Update");
             scope.Start();
             try
             {
@@ -285,11 +289,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHsmsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, DedicatedHsmPatch.ToRequestContent(patch), context);
+                HttpMessage message = _paymentHsmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PaymentHsmClusterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                HardwareSecurityModulesArmOperation<DedicatedHsmResource> operation = new HardwareSecurityModulesArmOperation<DedicatedHsmResource>(
-                    new DedicatedHsmResourceOperationSource(Client),
-                    _dedicatedHsmsClientDiagnostics,
+                HardwareSecurityModulesArmOperation<PaymentHsmClusterResource> operation = new HardwareSecurityModulesArmOperation<PaymentHsmClusterResource>(
+                    new PaymentHsmClusterResourceOperationSource(Client),
+                    _paymentHsmClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
                     response,
@@ -308,15 +312,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary>
-        /// Deletes the specified Azure Dedicated HSM.
+        /// Deletes the specified Payment HSM Cluster
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/paymentHsmClusters/{paymentHsmClusterName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DedicatedHsms_Delete. </description>
+        /// <description> PaymentHsmClusters_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -324,7 +328,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DedicatedHsmResource"/>. </description>
+        /// <description> <see cref="PaymentHsmClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,7 +336,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.Delete");
+            using DiagnosticScope scope = _paymentHsmClustersClientDiagnostics.CreateScope("PaymentHsmClusterResource.Delete");
             scope.Start();
             try
             {
@@ -340,9 +344,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHsmsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _paymentHsmClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                HardwareSecurityModulesArmOperation operation = new HardwareSecurityModulesArmOperation(_dedicatedHsmsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                HardwareSecurityModulesArmOperation operation = new HardwareSecurityModulesArmOperation(_paymentHsmClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -357,15 +361,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary>
-        /// Deletes the specified Azure Dedicated HSM.
+        /// Deletes the specified Payment HSM Cluster
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/paymentHsmClusters/{paymentHsmClusterName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DedicatedHsms_Delete. </description>
+        /// <description> PaymentHsmClusters_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -373,7 +377,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DedicatedHsmResource"/>. </description>
+        /// <description> <see cref="PaymentHsmClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,7 +385,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.Delete");
+            using DiagnosticScope scope = _paymentHsmClustersClientDiagnostics.CreateScope("PaymentHsmClusterResource.Delete");
             scope.Start();
             try
             {
@@ -389,9 +393,9 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _dedicatedHsmsRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                HttpMessage message = _paymentHsmClustersRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                HardwareSecurityModulesArmOperation operation = new HardwareSecurityModulesArmOperation(_dedicatedHsmsClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
+                HardwareSecurityModulesArmOperation operation = new HardwareSecurityModulesArmOperation(_paymentHsmClustersClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
@@ -406,15 +410,15 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         }
 
         /// <summary>
-        /// Gets a list of egress endpoints (network endpoints of all outbound dependencies) in the specified dedicated hsm resource. The operation returns properties of each egress endpoint.
+        /// Gets the private link resources supported for the Payment Hsm Cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}/outboundNetworkDependenciesEndpoints. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/paymentHsmClusters/{paymentHsmClusterName}/privateLinkResources. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DedicatedHsms_ListOutboundNetworkDependenciesEndpoints. </description>
+        /// <description> PaymentHsmClusters_ListByPaymentHsmCluster. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -422,37 +426,37 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DedicatedHsmResource"/>. </description>
+        /// <description> <see cref="PaymentHsmClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DedicatedHsmEgressEndpoint"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<DedicatedHsmEgressEndpoint> GetOutboundNetworkDependenciesEndpointsAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CloudHsmClusterPrivateLinkData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CloudHsmClusterPrivateLinkData> GetByPaymentHsmClusterAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new DedicatedHsmsGetOutboundNetworkDependenciesEndpointsAsyncCollectionResultOfT(
-                _dedicatedHsmsRestClient,
+            return new PaymentHsmClusterPrivateLinkResourcesGetByPaymentHsmClusterAsyncCollectionResultOfT(
+                _paymentHsmClusterPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "DedicatedHsmResource.GetOutboundNetworkDependenciesEndpoints");
+                "PaymentHsmClusterResource.GetByPaymentHsmCluster");
         }
 
         /// <summary>
-        /// Gets a list of egress endpoints (network endpoints of all outbound dependencies) in the specified dedicated hsm resource. The operation returns properties of each egress endpoint.
+        /// Gets the private link resources supported for the Payment Hsm Cluster.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/dedicatedHSMs/{name}/outboundNetworkDependenciesEndpoints. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.HardwareSecurityModules/paymentHsmClusters/{paymentHsmClusterName}/privateLinkResources. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> DedicatedHsms_ListOutboundNetworkDependenciesEndpoints. </description>
+        /// <description> PaymentHsmClusters_ListByPaymentHsmCluster. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -460,25 +464,25 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="DedicatedHsmResource"/>. </description>
+        /// <description> <see cref="PaymentHsmClusterResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="DedicatedHsmEgressEndpoint"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<DedicatedHsmEgressEndpoint> GetOutboundNetworkDependenciesEndpoints(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="CloudHsmClusterPrivateLinkData"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CloudHsmClusterPrivateLinkData> GetByPaymentHsmCluster(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new DedicatedHsmsGetOutboundNetworkDependenciesEndpointsCollectionResultOfT(
-                _dedicatedHsmsRestClient,
+            return new PaymentHsmClusterPrivateLinkResourcesGetByPaymentHsmClusterCollectionResultOfT(
+                _paymentHsmClusterPrivateLinkResourcesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 context,
-                "DedicatedHsmResource.GetOutboundNetworkDependenciesEndpoints");
+                "PaymentHsmClusterResource.GetByPaymentHsmCluster");
         }
 
         /// <summary> Add a tag to the current resource. </summary>
@@ -486,12 +490,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<DedicatedHsmResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PaymentHsmClusterResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.AddTag");
+            using DiagnosticScope scope = _paymentHsmClustersClientDiagnostics.CreateScope("PaymentHsmClusterResource.AddTag");
             scope.Start();
             try
             {
@@ -504,21 +508,21 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DedicatedHsmData> response = Response.FromValue(DedicatedHsmData.FromResponse(result), result);
-                    return Response.FromValue(new DedicatedHsmResource(Client, response.Value), response.GetRawResponse());
+                    Response<PaymentHsmClusterData> response = Response.FromValue(PaymentHsmClusterData.FromResponse(result), result);
+                    return Response.FromValue(new PaymentHsmClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DedicatedHsmData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DedicatedHsmPatch patch = new DedicatedHsmPatch();
+                    PaymentHsmClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    PaymentHsmClusterPatch patch = new PaymentHsmClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<DedicatedHsmResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<PaymentHsmClusterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -534,12 +538,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<DedicatedHsmResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<PaymentHsmClusterResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.AddTag");
+            using DiagnosticScope scope = _paymentHsmClustersClientDiagnostics.CreateScope("PaymentHsmClusterResource.AddTag");
             scope.Start();
             try
             {
@@ -552,21 +556,21 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DedicatedHsmData> response = Response.FromValue(DedicatedHsmData.FromResponse(result), result);
-                    return Response.FromValue(new DedicatedHsmResource(Client, response.Value), response.GetRawResponse());
+                    Response<PaymentHsmClusterData> response = Response.FromValue(PaymentHsmClusterData.FromResponse(result), result);
+                    return Response.FromValue(new PaymentHsmClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DedicatedHsmData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DedicatedHsmPatch patch = new DedicatedHsmPatch();
+                    PaymentHsmClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    PaymentHsmClusterPatch patch = new PaymentHsmClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    ArmOperation<DedicatedHsmResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<PaymentHsmClusterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -581,11 +585,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<DedicatedHsmResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PaymentHsmClusterResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.SetTags");
+            using DiagnosticScope scope = _paymentHsmClustersClientDiagnostics.CreateScope("PaymentHsmClusterResource.SetTags");
             scope.Start();
             try
             {
@@ -599,17 +603,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DedicatedHsmData> response = Response.FromValue(DedicatedHsmData.FromResponse(result), result);
-                    return Response.FromValue(new DedicatedHsmResource(Client, response.Value), response.GetRawResponse());
+                    Response<PaymentHsmClusterData> response = Response.FromValue(PaymentHsmClusterData.FromResponse(result), result);
+                    return Response.FromValue(new PaymentHsmClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DedicatedHsmData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DedicatedHsmPatch patch = new DedicatedHsmPatch();
+                    PaymentHsmClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    PaymentHsmClusterPatch patch = new PaymentHsmClusterPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DedicatedHsmResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<PaymentHsmClusterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -624,11 +628,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<DedicatedHsmResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<PaymentHsmClusterResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.SetTags");
+            using DiagnosticScope scope = _paymentHsmClustersClientDiagnostics.CreateScope("PaymentHsmClusterResource.SetTags");
             scope.Start();
             try
             {
@@ -642,17 +646,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DedicatedHsmData> response = Response.FromValue(DedicatedHsmData.FromResponse(result), result);
-                    return Response.FromValue(new DedicatedHsmResource(Client, response.Value), response.GetRawResponse());
+                    Response<PaymentHsmClusterData> response = Response.FromValue(PaymentHsmClusterData.FromResponse(result), result);
+                    return Response.FromValue(new PaymentHsmClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DedicatedHsmData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DedicatedHsmPatch patch = new DedicatedHsmPatch();
+                    PaymentHsmClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    PaymentHsmClusterPatch patch = new PaymentHsmClusterPatch();
                     patch.Tags.ReplaceWith(tags);
-                    ArmOperation<DedicatedHsmResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<PaymentHsmClusterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -667,11 +671,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<DedicatedHsmResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PaymentHsmClusterResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.RemoveTag");
+            using DiagnosticScope scope = _paymentHsmClustersClientDiagnostics.CreateScope("PaymentHsmClusterResource.RemoveTag");
             scope.Start();
             try
             {
@@ -684,21 +688,21 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                    Response<DedicatedHsmData> response = Response.FromValue(DedicatedHsmData.FromResponse(result), result);
-                    return Response.FromValue(new DedicatedHsmResource(Client, response.Value), response.GetRawResponse());
+                    Response<PaymentHsmClusterData> response = Response.FromValue(PaymentHsmClusterData.FromResponse(result), result);
+                    return Response.FromValue(new PaymentHsmClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DedicatedHsmData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    DedicatedHsmPatch patch = new DedicatedHsmPatch();
+                    PaymentHsmClusterData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    PaymentHsmClusterPatch patch = new PaymentHsmClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<DedicatedHsmResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    ArmOperation<PaymentHsmClusterResource> result = await UpdateAsync(WaitUntil.Completed, patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -713,11 +717,11 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<DedicatedHsmResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<PaymentHsmClusterResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using DiagnosticScope scope = _dedicatedHsmsClientDiagnostics.CreateScope("DedicatedHsmResource.RemoveTag");
+            using DiagnosticScope scope = _paymentHsmClustersClientDiagnostics.CreateScope("PaymentHsmClusterResource.RemoveTag");
             scope.Start();
             try
             {
@@ -730,21 +734,21 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                     {
                         CancellationToken = cancellationToken
                     };
-                    HttpMessage message = _dedicatedHsmsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                    HttpMessage message = _paymentHsmClustersRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                     Response result = Pipeline.ProcessMessage(message, context);
-                    Response<DedicatedHsmData> response = Response.FromValue(DedicatedHsmData.FromResponse(result), result);
-                    return Response.FromValue(new DedicatedHsmResource(Client, response.Value), response.GetRawResponse());
+                    Response<PaymentHsmClusterData> response = Response.FromValue(PaymentHsmClusterData.FromResponse(result), result);
+                    return Response.FromValue(new PaymentHsmClusterResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    DedicatedHsmData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    DedicatedHsmPatch patch = new DedicatedHsmPatch();
+                    PaymentHsmClusterData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    PaymentHsmClusterPatch patch = new PaymentHsmClusterPatch();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    ArmOperation<DedicatedHsmResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
+                    ArmOperation<PaymentHsmClusterResource> result = Update(WaitUntil.Completed, patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
@@ -753,6 +757,39 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of PaymentHsmClusterPrivateEndpointConnections in the <see cref="PaymentHsmClusterResource"/>. </summary>
+        /// <returns> An object representing collection of PaymentHsmClusterPrivateEndpointConnections and their operations over a PaymentHsmClusterPrivateEndpointConnectionResource. </returns>
+        public virtual PaymentHsmClusterPrivateEndpointConnectionCollection GetPaymentHsmClusterPrivateEndpointConnections()
+        {
+            return GetCachedClient(client => new PaymentHsmClusterPrivateEndpointConnectionCollection(client, Id));
+        }
+
+        /// <summary> Gets the private endpoint connection for the Payment Hsm Cluster. </summary>
+        /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Payment HSM Cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<PaymentHsmClusterPrivateEndpointConnectionResource>> GetPaymentHsmClusterPrivateEndpointConnectionAsync(string peConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
+
+            return await GetPaymentHsmClusterPrivateEndpointConnections().GetAsync(peConnectionName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets the private endpoint connection for the Payment Hsm Cluster. </summary>
+        /// <param name="peConnectionName"> Name of the private endpoint connection associated with the Payment HSM Cluster. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="peConnectionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="peConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<PaymentHsmClusterPrivateEndpointConnectionResource> GetPaymentHsmClusterPrivateEndpointConnection(string peConnectionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(peConnectionName, nameof(peConnectionName));
+
+            return GetPaymentHsmClusterPrivateEndpointConnections().Get(peConnectionName, cancellationToken);
         }
     }
 }

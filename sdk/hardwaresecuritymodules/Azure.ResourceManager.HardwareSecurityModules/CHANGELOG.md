@@ -1,14 +1,15 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2026-08-19)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded API version to `2025-12-01-preview`.
+- Added support for Payment HSM Cluster resources: `PaymentHsmClusterResource`, `PaymentHsmClusterCollection`, `PaymentHsmClusterData`, and related models.
+- Added `PaymentHsmClusterPrivateEndpointConnectionResource` and `PaymentHsmClusterPrivateEndpointConnectionCollection`.
+- Added `PaymentHsmProperties`, `PaymentHsmClusterSku`, `PaymentHsmClusterSkuName`, `PaymentHsmClusterSkuFamily`, and `PaymentHsmClusterProperties` models.
+- Added `HardwareSecurityModuleState` model.
+- Added additional values to `CloudHsmClusterSkuName`.
 
 ## 1.0.1 (2026-04-24)
 
