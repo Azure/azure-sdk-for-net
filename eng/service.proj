@@ -207,18 +207,13 @@
   <Target Name="_GenerateRepositoryProjectGraphRecordsWithProjectGraph">
     <ItemGroup>
       <_RepositoryProjectGraphReaderProject Include="$(RepoRoot)sdk/*/**/src/**/*.csproj;$(RepoRoot)sdk/*/**/gen/**/*.csproj;$(RepoRoot)sdk/*/**/shared/**/*.csproj;$(RepoRoot)common/**/*.csproj;$(RepoRoot)sdk/*/**/tests/**/*.csproj;$(RepoRoot)sdk/*/**/integration/**/*.csproj" />
+      <_RepositoryProjectGraphRoot Include="@(ProjectReference)" Condition="'$(SkipServiceProjectImports)' != 'true'" />
     </ItemGroup>
     <RemoveDuplicates Inputs="@(_RepositoryProjectGraphReaderProject)">
       <Output TaskParameter="Filtered" ItemName="_DistinctRepositoryProjectGraphReaderProject" />
     </RemoveDuplicates>
     <RepositoryProjectGraphTask Projects="@(_DistinctRepositoryProjectGraphReaderProject)"
-                                RootProjects="@(ProjectReference)" Condition="'$(SkipServiceProjectImports)' != 'true'"
-                                RecordsPath="$(RepositoryProjectGraphReaderRecordsPath)"
-                                IncludeInputs="$(IncludeRepositoryProjectGraphInputs)"
-                                Configurations="$(RepositoryProjectGraphConfigurations)"
-                                DegreeOfParallelism="$(RepositoryProjectGraphReaderDegreeOfParallelism)" />
-    <RepositoryProjectGraphTask Projects="@(_DistinctRepositoryProjectGraphReaderProject)"
-                                Condition="'$(SkipServiceProjectImports)' == 'true'"
+                                RootProjects="@(_RepositoryProjectGraphRoot)"
                                 RecordsPath="$(RepositoryProjectGraphReaderRecordsPath)"
                                 IncludeInputs="$(IncludeRepositoryProjectGraphInputs)"
                                 Configurations="$(RepositoryProjectGraphConfigurations)"

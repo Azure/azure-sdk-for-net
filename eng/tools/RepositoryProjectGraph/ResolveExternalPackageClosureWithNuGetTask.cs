@@ -138,30 +138,39 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
 
     private RestoreGraphInput ReadInput()
     {
-        string[] lines = File.ReadAllLines(RecordsPath);
+        var records = new List<RepositoryProjectGraphRecord>();
+        foreach (string line in File.ReadLines(RecordsPath))
+        {
+            RepositoryProjectGraphRecord record = RepositoryProjectGraphRecord.ParseRestoreInput(line);
+            if (record is not null)
+            {
+                records.Add(record);
+            }
+        }
+
         var projects = new Dictionary<string, ProjectDefinition>(StringComparer.OrdinalIgnoreCase);
         var localPackages = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
-        foreach (string line in lines)
+        // Materialize every project/TFM first so record ordering does not affect reference lookup.
+        foreach (RepositoryProjectGraphRecord.Node node in records.OfType<RepositoryProjectGraphRecord.Node>())
         {
-            string[] parts = line.Split('|');
-            if (parts.Length < 10 || parts[0] != "Node" ||
-                string.IsNullOrEmpty(parts[1]) || string.IsNullOrEmpty(parts[2]))
+            if (string.IsNullOrEmpty(node.ProjectPath) || string.IsNullOrEmpty(node.TargetFramework))
             {
                 continue;
             }
 
-            if (parts.Length >= 11 && parts[10].Equals("true", StringComparison.OrdinalIgnoreCase))
+            if (node.CentralPackageTransitivePinningEnabled.Equals("true", StringComparison.OrdinalIgnoreCase))
             {
                 throw new InvalidOperationException(
-                    $"CentralPackageTransitivePinningEnabled is not supported by the NuGet restore graph spike: '{parts[1]}' ({parts[2]}).");
+                    $"CentralPackageTransitivePinningEnabled is not supported by the NuGet restore graph spike: '{node.ProjectPath}' ({node.TargetFramework}).");
             }
-            if (parts[9].Equals("true", StringComparison.OrdinalIgnoreCase) && !string.IsNullOrEmpty(parts[3]))
+            if (node.IsShippingLibrary.Equals("true", StringComparison.OrdinalIgnoreCase) &&
+                !string.IsNullOrEmpty(node.PackageId))
             {
-                localPackages.Add(parts[3]);
+                localPackages.Add(node.PackageId);
             }
 
-            string projectPath = Path.GetFullPath(parts[1]);
+            string projectPath = Path.GetFullPath(node.ProjectPath);
             if (!projects.TryGetValue(projectPath, out ProjectDefinition project))
             {
                 project = new ProjectDefinition(projectPath);
@@ -170,14 +179,14 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
 
             var framework = new FrameworkDefinition(
                 projectPath,
-                parts[2],
-                parts.Length >= 12 ? parts[11] : string.Empty,
-                parts.Length >= 13 ? parts[12] : string.Empty,
-                parts.Length >= 14 ? parts[13] : string.Empty,
-                parts.Length >= 15 && parts[14].Equals("true", StringComparison.OrdinalIgnoreCase),
-                parts.Length >= 16 ? parts[15] : string.Empty,
-                parts.Length >= 17 ? parts[16] : string.Empty,
-                parts.Length >= 18 ? parts[17] : string.Empty);
+                node.TargetFramework,
+                node.AssetTargetFallback,
+                node.PackageTargetFallback,
+                node.RuntimeIdentifierGraphPath,
+                node.TreatWarningsAsErrors.Equals("true", StringComparison.OrdinalIgnoreCase),
+                node.WarningsAsErrors,
+                node.NoWarn,
+                node.WarningsNotAsErrors);
             if (project.Frameworks.TryGetValue(framework.TargetFramework, out FrameworkDefinition existingFramework))
             {
                 if (!existingFramework.HasSameRestoreProperties(framework))
@@ -192,48 +201,63 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
             }
         }
 
-        foreach (string line in lines)
+        foreach (RepositoryProjectGraphRecord record in records)
         {
-            string[] parts = line.Split('|');
-            if (parts.Length >= 8 && parts[0] == "PackageReference" &&
-                !string.IsNullOrEmpty(parts[1]) && !string.IsNullOrEmpty(parts[2]) && !string.IsNullOrEmpty(parts[3]))
+            if (record is RepositoryProjectGraphRecord.PackageReference packageRecord &&
+                !string.IsNullOrEmpty(packageRecord.ProjectPath) &&
+                !string.IsNullOrEmpty(packageRecord.TargetFramework) &&
+                !string.IsNullOrEmpty(packageRecord.PackageId))
             {
-                FrameworkDefinition framework = GetFramework(projects, parts[1], parts[2]);
-                if (string.IsNullOrWhiteSpace(parts[7]) || !VersionRange.TryParse(parts[7], out _))
+                FrameworkDefinition framework = GetFramework(
+                    projects,
+                    packageRecord.ProjectPath,
+                    packageRecord.TargetFramework);
+                if (string.IsNullOrWhiteSpace(packageRecord.VersionSpec) ||
+                    !VersionRange.TryParse(packageRecord.VersionSpec, out _))
                 {
                     throw new InvalidOperationException(
-                        $"Package '{parts[3]}' in '{parts[1]}' ({parts[2]}) has no valid evaluated version.");
+                        $"Package '{packageRecord.PackageId}' in '{packageRecord.ProjectPath}' ({packageRecord.TargetFramework}) has no valid evaluated version.");
                 }
 
-                var package = new DirectPackage(parts[3], parts[7], parts[4], parts[5], parts[6]);
+                var package = new DirectPackage(
+                    packageRecord.PackageId,
+                    packageRecord.VersionSpec,
+                    packageRecord.PrivateAssets,
+                    packageRecord.IncludeAssets,
+                    packageRecord.ExcludeAssets);
                 if (framework.Packages.TryGetValue(package.Id, out DirectPackage existing) && existing != package)
                 {
                     throw new InvalidOperationException(
-                        $"Package '{package.Id}' has conflicting evaluated references in '{parts[1]}' ({parts[2]}).");
+                        $"Package '{package.Id}' has conflicting evaluated references in '{packageRecord.ProjectPath}' ({packageRecord.TargetFramework}).");
                 }
                 framework.Packages[package.Id] = package;
             }
-            else if (parts.Length >= 6 && parts[0] == "ProjectReference" &&
-                !string.IsNullOrEmpty(parts[1]) && !string.IsNullOrEmpty(parts[2]) && !string.IsNullOrEmpty(parts[3]))
+            else if (record is RepositoryProjectGraphRecord.ProjectReference projectRecord &&
+                !string.IsNullOrEmpty(projectRecord.ProjectPath) &&
+                !string.IsNullOrEmpty(projectRecord.TargetFramework) &&
+                !string.IsNullOrEmpty(projectRecord.ReferencedProjectPath))
             {
                 // NuGet's restore targets omit non-assembly project references from ProjectRestoreMetadata.
                 // Keep those records in the source graph, but do not let analyzer/tooling projects affect package resolution.
-                if (parts[4].Equals("false", StringComparison.OrdinalIgnoreCase))
+                if (projectRecord.ReferenceOutputAssembly.Equals("false", StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
                 }
 
-                FrameworkDefinition framework = GetFramework(projects, parts[1], parts[2]);
+                FrameworkDefinition framework = GetFramework(
+                    projects,
+                    projectRecord.ProjectPath,
+                    projectRecord.TargetFramework);
                 var reference = new DirectProjectReference(
-                    Path.GetFullPath(parts[3]),
-                    parts.Length >= 7 ? parts[6] : string.Empty,
-                    parts.Length >= 8 ? parts[7] : string.Empty,
-                    parts.Length >= 9 ? parts[8] : string.Empty);
+                    Path.GetFullPath(projectRecord.ReferencedProjectPath),
+                    projectRecord.PrivateAssets,
+                    projectRecord.IncludeAssets,
+                    projectRecord.ExcludeAssets);
                 if (framework.ProjectReferences.TryGetValue(reference.ProjectPath, out DirectProjectReference existing) &&
                     existing != reference)
                 {
                     throw new InvalidOperationException(
-                        $"Project reference '{reference.ProjectPath}' has conflicting metadata in '{parts[1]}' ({parts[2]}).");
+                        $"Project reference '{reference.ProjectPath}' has conflicting metadata in '{projectRecord.ProjectPath}' ({projectRecord.TargetFramework}).");
                 }
                 framework.ProjectReferences[reference.ProjectPath] = reference;
             }
@@ -546,8 +570,7 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
                 {
                     roots.Add(new RootResult(
                         root,
-                        string.Empty,
-                        Array.Empty<ReachedPackage>(),
+                        Array.Empty<string>(),
                         new[] { $"NuGet restore did not resolve direct package '{root.Id}' {root.VersionSpec}." }));
                     continue;
                 }
@@ -556,8 +579,7 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
                 {
                     roots.Add(new RootResult(
                         root,
-                        rootLibrary.Version.ToNormalizedString(),
-                        Array.Empty<ReachedPackage>(),
+                        Array.Empty<string>(),
                         Array.Empty<string>()));
                     continue;
                 }
@@ -565,8 +587,7 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
                 {
                     roots.Add(new RootResult(
                         root,
-                        string.Empty,
-                        Array.Empty<ReachedPackage>(),
+                        Array.Empty<string>(),
                         new[] { $"NuGet resolved direct package '{root.Id}' {root.VersionSpec} as unexpected library type '{rootLibrary.Type}'." }));
                     continue;
                 }
@@ -585,15 +606,14 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
         IReadOnlyDictionary<string, LockFileTargetLibrary> libraries,
         IReadOnlySet<string> localPackages)
     {
-        var reached = new Dictionary<string, ReachedPackage>(StringComparer.OrdinalIgnoreCase);
+        var reached = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         var visited = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
-        var queue = new Queue<PackageVisit>();
-        string rootIdentity = FormatIdentity(rootLibrary);
-        queue.Enqueue(new PackageVisit(rootLibrary.Name, rootIdentity));
+        var queue = new Queue<string>();
+        queue.Enqueue(rootLibrary.Name);
         while (queue.Count > 0)
         {
-            PackageVisit visit = queue.Dequeue();
-            if (!visited.Add(visit.PackageId) || !libraries.TryGetValue(visit.PackageId, out LockFileTargetLibrary library))
+            string packageId = queue.Dequeue();
+            if (!visited.Add(packageId) || !libraries.TryGetValue(packageId, out LockFileTargetLibrary library))
             {
                 continue;
             }
@@ -606,22 +626,17 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
                     continue;
                 }
 
-                string path = $"{visit.Path}>{FormatIdentity(dependencyLibrary)}";
-                if (localPackages.Contains(dependency.Id))
+                if (localPackages.Contains(dependency.Id) && HasCompileAssets(dependencyLibrary))
                 {
-                    if (HasCompileAssets(dependencyLibrary))
-                    {
-                        reached.TryAdd(dependency.Id, new ReachedPackage(dependency.Id, path));
-                    }
+                    reached.Add(dependency.Id);
                 }
-                queue.Enqueue(new PackageVisit(dependency.Id, path));
+                queue.Enqueue(dependency.Id);
             }
         }
 
         return new RootResult(
             root,
-            rootLibrary.Version.ToNormalizedString(),
-            reached.Values.OrderBy(package => package.PackageId, StringComparer.OrdinalIgnoreCase).ToArray(),
+            reached.OrderBy(package => package, StringComparer.OrdinalIgnoreCase).ToArray(),
             Array.Empty<string>());
     }
 
@@ -645,8 +660,7 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
             framework.GetPackageRoots()
                 .Select(package => new RootResult(
                     package,
-                    string.Empty,
-                    Array.Empty<ReachedPackage>(),
+                    Array.Empty<string>(),
                     new[] { error }))
                 .ToArray());
 
@@ -684,23 +698,17 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
                         unresolvedRoots++;
                     }
 
-                    foreach (ReachedPackage package in root.ReachedPackages)
+                    foreach (string packageId in root.ReachedPackageIds)
                     {
-                        records.Add(string.Join(
-                            "|",
-                            "TransitivePackageReference",
+                        records.Add(new RepositoryProjectGraphRecord.TransitivePackageReference(
                             framework.Framework.ProjectPath,
                             framework.Framework.TargetFramework,
-                            package.PackageId,
-                            root.Root.Id,
-                            root.SelectedVersion,
-                            Sanitize(package.Path)));
+                            packageId).Serialize());
                     }
                     foreach (string error in root.Errors)
                     {
-                        records.Add(string.Join(
-                            "|",
-                            "UnresolvedPackageClosure",
+                        records.Add(RepositoryProjectGraphRecord.Format(
+                            RepositoryProjectGraphRecord.UnresolvedPackageClosureKind,
                             framework.Framework.ProjectPath,
                             framework.Framework.TargetFramework,
                             root.Root.Id,
@@ -712,24 +720,25 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
         }
 
         int derivedEdgeCount = records.Count(record =>
-            record.StartsWith("TransitivePackageReference|", StringComparison.Ordinal));
-        records.Add(string.Join(
-            "|",
-            "PackageClosureSummary",
-            rootCount,
-            resolvedRoots,
-            derivedEdgeCount,
-            unresolvedRoots,
-            0,
-            0,
-            0,
+            record.StartsWith(
+                RepositoryProjectGraphRecord.TransitivePackageReferenceKind + "|",
+                StringComparison.Ordinal));
+        records.Add(RepositoryProjectGraphRecord.Format(
+            RepositoryProjectGraphRecord.PackageClosureSummaryKind,
+            rootCount.ToString(),
+            resolvedRoots.ToString(),
+            derivedEdgeCount.ToString(),
+            unresolvedRoots.ToString(),
+            "0",
+            "0",
+            "0",
             elapsed.TotalSeconds.ToString("F3", System.Globalization.CultureInfo.InvariantCulture),
             "nuget-restore-graph",
-            false,
-            true,
-            projectContextCount,
-            results.Count,
-            selectedPackages));
+            bool.FalseString,
+            bool.TrueString,
+            projectContextCount.ToString(),
+            results.Count.ToString(),
+            selectedPackages.ToString()));
 
         string temporaryPath = fullOutputPath + "." + Guid.NewGuid().ToString("N") + ".tmp";
         try
@@ -762,9 +771,6 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
         library.CompileTimeAssemblies.Any(asset =>
             !asset.Path.EndsWith("/_._", StringComparison.OrdinalIgnoreCase) &&
             !asset.Path.Equals("_._", StringComparison.OrdinalIgnoreCase));
-
-    private static string FormatIdentity(LockFileTargetLibrary library) =>
-        $"{library.Name} {library.Version.ToNormalizedString()}";
 
     private static string Sanitize(string value) => value
         .Replace('|', '/')
@@ -879,13 +885,8 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
 
     private sealed record RootResult(
         DirectPackage Root,
-        string SelectedVersion,
-        IReadOnlyList<ReachedPackage> ReachedPackages,
+        IReadOnlyList<string> ReachedPackageIds,
         IReadOnlyList<string> Errors);
-
-    private sealed record ReachedPackage(string PackageId, string Path);
-
-    private sealed record PackageVisit(string PackageId, string Path);
 
     private readonly record struct ClosureStatistics(
         int ProjectContextCount,
