@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmHybridComputeModelFactory
     {
+        /// <summary> Describes the Machine Extension Upgrade Properties. </summary>
         /// <param name="extensionTargets"> Describes the Extension Target Properties. </param>
         /// <returns> A new <see cref="Models.MachineExtensionUpgrade"/> instance for mocking. </returns>
         public static MachineExtensionUpgrade MachineExtensionUpgrade(IDictionary<string, ExtensionTargetProperties> extensionTargets = default)
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new MachineExtensionUpgrade(extensionTargets ?? new ChangeTrackingDictionary<string, ExtensionTargetProperties>(), default);
         }
 
+        /// <summary> Describes the Machine Extension Target Version Properties. </summary>
         /// <param name="targetVersion"> Properties for the specified Extension to Upgrade. </param>
         /// <returns> A new <see cref="Models.ExtensionTargetProperties"/> instance for mocking. </returns>
         public static ExtensionTargetProperties ExtensionTargetProperties(string targetVersion = default)
@@ -35,6 +37,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new ExtensionTargetProperties(targetVersion, default);
         }
 
+        /// <summary> The SetupExtensionContent. </summary>
         /// <param name="extensions"> The list of extensions. </param>
         /// <returns> A new <see cref="Models.SetupExtensionContent"/> instance for mocking. </returns>
         public static SetupExtensionContent SetupExtensionContent(IEnumerable<MachineExtensionProperties> extensions = default)
@@ -44,6 +47,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new SetupExtensionContent((extensions ?? new ChangeTrackingList<MachineExtensionProperties>()).ToList(), default);
         }
 
+        /// <summary> Describes the properties of a Machine Extension. </summary>
         /// <param name="forceUpdateTag"> How the extension handler should be forced to update even if the extension configuration has not changed. </param>
         /// <param name="publisher"> The name of the extension handler publisher. </param>
         /// <param name="machineExtensionPropertiesType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
@@ -74,6 +78,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default);
         }
 
+        /// <summary> Describes the Machine Extension Instance View. </summary>
         /// <param name="name"> The machine extension name. </param>
         /// <param name="machineExtensionInstanceViewType"> Specifies the type of the extension; an example is "CustomScriptExtension". </param>
         /// <param name="typeHandlerVersion"> Specifies the version of the script handler. </param>
@@ -84,6 +89,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new MachineExtensionInstanceView(name, machineExtensionInstanceViewType, typeHandlerVersion, status, default);
         }
 
+        /// <summary> Instance view status. </summary>
         /// <param name="code"> The status code. </param>
         /// <param name="level"> The level code. </param>
         /// <param name="displayStatus"> The short localizable label for the status. </param>
@@ -101,6 +107,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default);
         }
 
+        /// <summary> Describes the properties of a Compute Operation value. </summary>
         /// <param name="origin"> The origin of the compute operation. </param>
         /// <param name="name"> The name of the compute operation. </param>
         /// <param name="display"> Display properties. </param>
@@ -111,6 +118,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeOperationValue(origin, name, display, isDataAction, default);
         }
 
+        /// <summary> Describes the properties of a Hybrid Compute Operation Value Display. </summary>
         /// <param name="operation"> The display name of the compute operation. </param>
         /// <param name="resource"> The display name of the resource the operation applies to. </param>
         /// <param name="description"> The description of the operation. </param>
@@ -147,6 +155,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default);
         }
 
+        /// <summary> Describes the properties of a License. </summary>
         /// <param name="state"> Describes the state of the license. </param>
         /// <param name="target"> Describes the license target server. </param>
         /// <param name="edition"> Describes the edition of the license. The values are either Standard or Datacenter. </param>
@@ -172,6 +181,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default);
         }
 
+        /// <summary> The VolumeLicenseDetails. </summary>
         /// <param name="programYear"> Describes the program year the volume license is for. </param>
         /// <param name="invoiceId"> The invoice id for the volume license. </param>
         /// <returns> A new <see cref="Models.VolumeLicenseDetails"/> instance for mocking. </returns>
@@ -201,6 +211,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default), default));
         }
 
+        /// <summary> The Update Resource model definition. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.HybridComputeResourceUpdate"/> instance for mocking. </returns>
         public static HybridComputeResourceUpdate HybridComputeResourceUpdate(IDictionary<string, string> tags = default)
@@ -316,6 +327,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default);
         }
 
+        /// <summary> Metadata pertaining to the geographic location of the resource. </summary>
         /// <param name="name"> A canonical name for the geographic or physical location. </param>
         /// <param name="city"> The city or locality where the resource is located. </param>
         /// <param name="district"> The district, state, or province where the resource is located. </param>
@@ -326,6 +338,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeLocation(name, city, district, countryOrRegion, default);
         }
 
+        /// <summary> Configurable properties that the user can set locally via the azcmagent config command, or remotely via ARM. </summary>
         /// <param name="proxyUri"> Specifies the URL of the proxy to be used. </param>
         /// <param name="incomingConnectionsPorts"> Specifies the list of ports that the agent will be able to listen on. </param>
         /// <param name="extensionsAllowList"> Array of extensions that are allowed to be installed or updated. </param>
@@ -354,6 +367,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default);
         }
 
+        /// <summary> Describes properties that can identify extensions. </summary>
         /// <param name="publisher"> Publisher of the extension. </param>
         /// <param name="configurationExtensionType"> Type of the extension. </param>
         /// <returns> A new <see cref="Models.HybridComputeConfigurationExtension"/> instance for mocking. </returns>
@@ -362,6 +376,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeConfigurationExtension(publisher, configurationExtensionType, default);
         }
 
+        /// <summary> Reports the state and behavior of dependent services. </summary>
         /// <param name="extensionService"> The state of the extension service on the Arc-enabled machine. </param>
         /// <param name="guestConfigurationService"> The state of the guest configuration service on the Arc-enabled machine. </param>
         /// <returns> A new <see cref="Models.HybridComputeServiceStatuses"/> instance for mocking. </returns>
@@ -370,6 +385,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeServiceStatuses(extensionService, guestConfigurationService, default);
         }
 
+        /// <summary> Describes the status and behavior of a service. </summary>
         /// <param name="status"> The current status of the service. </param>
         /// <param name="startupType"> The behavior of the service when the Arc-enabled machine starts up. </param>
         /// <returns> A new <see cref="Models.HybridComputeServiceStatus"/> instance for mocking. </returns>
@@ -378,6 +394,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeServiceStatus(status, startupType, default);
         }
 
+        /// <summary> Describes the hardware of the machine. </summary>
         /// <param name="totalPhysicalMemoryInBytes"> The total physical memory on the machine. </param>
         /// <param name="numberOfCpuSockets"> The total number of CPU sockets available on the machine. </param>
         /// <param name="processors"> The physical processors of the machine. </param>
@@ -389,6 +406,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeHardwareProfile(totalPhysicalMemoryInBytes, numberOfCpuSockets, (processors ?? new ChangeTrackingList<HybridComputeProcessor>()).ToList(), default);
         }
 
+        /// <summary> Describes the firmware of the machine. </summary>
         /// <param name="name"> The name of the processor. </param>
         /// <param name="numberOfCores"> The total number of physical cores on the processor. </param>
         /// <returns> A new <see cref="Models.HybridComputeProcessor"/> instance for mocking. </returns>
@@ -397,6 +415,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeProcessor(name, numberOfCores, default);
         }
 
+        /// <summary> Describes a disk on the machine. </summary>
         /// <param name="path"> The path of the disk. </param>
         /// <param name="diskType"> The type of the disk. </param>
         /// <param name="generatedId"> The generated ID of the disk. </param>
@@ -418,6 +437,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default);
         }
 
+        /// <summary> Describes the firmware of the machine. </summary>
         /// <param name="serialNumber"> The serial number of the firmware. </param>
         /// <param name="firmwareProfileType"> The type of the firmware. </param>
         /// <returns> A new <see cref="Models.HybridComputeFirmwareProfile"/> instance for mocking. </returns>
@@ -426,6 +446,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeFirmwareProfile(serialNumber, firmwareProfileType, default);
         }
 
+        /// <summary> The info w.r.t Agent Upgrade. </summary>
         /// <param name="desiredVersion"> Specifies the version info w.r.t AgentUpgrade for the machine. </param>
         /// <param name="correlationId"> The correlation ID associated with an agent upgrade operation. </param>
         /// <param name="isAutomaticUpgradeEnabled"> Specifies if the machine's agent should be upgraded. </param>
@@ -447,6 +468,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default);
         }
 
+        /// <summary> Specifies the operating system settings for the hybrid machine. </summary>
         /// <param name="computerName"> Specifies the host OS name of the hybrid machine. </param>
         /// <param name="windowsConfiguration"> Specifies the windows configuration for update management. </param>
         /// <param name="linuxConfiguration"> Specifies the linux configuration for update management. </param>
@@ -456,6 +478,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeOSProfile(computerName, windowsConfiguration, linuxConfiguration, default);
         }
 
+        /// <summary> Status of the hotpatch capability enrollment or disenrollment. </summary>
         /// <param name="hotpatchEnablementStatus"> Indicates the current status of the hotpatch being enabled or disabled. </param>
         /// <param name="error"> The errors that were encountered during the hotpatch capability enrollment or disenrollment. </param>
         /// <returns> A new <see cref="Models.HybridComputePatchSettingsStatus"/> instance for mocking. </returns>
@@ -484,19 +507,20 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 licenseChannel,
                 isSoftwareAssuranceCustomer is null ? default : new LicenseProfileMachineInstanceViewSoftwareAssurance(isSoftwareAssuranceCustomer, default),
                 esuProfile,
-                subscriptionStatus is null && productType is null && enrollmentOn is null && billingStartOn is null && disenrollmentOn is null && billingEndOn is null && error is null && productFeatures is null ? default : new LicenseProfileArmProductProfileProperties(
+                subscriptionStatus is null && productType is null && enrollmentOn is null && disenrollmentOn is null && error is null && productFeatures is null ? default : new LicenseProfileArmProductProfileProperties(
                     subscriptionStatus,
                     productType,
                     enrollmentOn,
-                    billingStartOn,
+                    default,
                     disenrollmentOn,
-                    billingEndOn,
+                    default,
                     error,
                     (productFeatures ?? new ChangeTrackingList<HybridComputeProductFeature>()).ToList(),
                     default),
                 default);
         }
 
+        /// <summary> Describes the properties of a License Profile ARM model. </summary>
         /// <param name="assignedLicenseImmutableId"> The guid id of the license. </param>
         /// <param name="esuKeys"> The list of ESU keys. </param>
         /// <param name="serverType"> The type of the Esu servers. </param>
@@ -516,6 +540,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 esuKeyState);
         }
 
+        /// <summary> License profile storage model for ESU properties. </summary>
         /// <param name="assignedLicenseImmutableId"> The guid id of the license. </param>
         /// <param name="esuKeys"> The list of ESU keys. </param>
         /// <returns> A new <see cref="Models.LicenseProfileStorageModelEsuProperties"/> instance for mocking. </returns>
@@ -540,13 +565,14 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 name,
                 subscriptionStatus,
                 enrollmentOn,
-                billingStartOn,
+                default,
                 disenrollmentOn,
-                billingEndOn,
+                default,
                 error,
                 default);
         }
 
+        /// <summary> Describes the network information on this machine. </summary>
         /// <param name="networkInterfaces"> The list of network interfaces. </param>
         /// <returns> A new <see cref="Models.HybridComputeNetworkProfile"/> instance for mocking. </returns>
         public static HybridComputeNetworkProfile HybridComputeNetworkProfile(IEnumerable<HybridComputeNetworkInterface> networkInterfaces = default)
@@ -556,6 +582,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeNetworkProfile((networkInterfaces ?? new ChangeTrackingList<HybridComputeNetworkInterface>()).ToList(), default);
         }
 
+        /// <summary> Describes a network interface. </summary>
         /// <param name="macAddress"> Represents MAC address of the network interface. </param>
         /// <param name="id"> Represents the ID of the network interface. </param>
         /// <param name="name"> Represents the name of the network interface. </param>
@@ -577,6 +604,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeIPAddress(address, ipAddressVersion, subnetAddressPrefix is null ? default : new HybridComputeSubnet(subnetAddressPrefix, default), default);
         }
 
+        /// <summary> Describes a Machine Extension. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -646,7 +674,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 assessmentActivityId,
                 isRebootPending,
                 availablePatchCountByClassification,
-                startOn,
+                default,
                 lastModifiedOn,
                 startedBy,
                 patchServiceUsed,
@@ -655,6 +683,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default);
         }
 
+        /// <summary> Summarization of patches available for installation on the machine by classification. </summary>
         /// <param name="security"> Number of security patches available for installation. </param>
         /// <param name="critical"> Number of critical patches available for installation. </param>
         /// <param name="definition"> Number of definition patches available for installation. </param>
@@ -680,6 +709,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default);
         }
 
+        /// <summary> Input for InstallPatches as directly received by the API. </summary>
         /// <param name="maximumDuration"> Specifies the maximum amount of time that the operation will run. It must be an ISO 8601-compliant duration string such as PT4H (4 hours). </param>
         /// <param name="rebootSetting"> Defines when it is acceptable to reboot a VM during a software update operation. </param>
         /// <param name="windowsParameters"> Input for InstallPatches on a Windows VM, as directly received by the API. </param>
@@ -690,6 +720,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new MachineInstallPatchesContent(maximumDuration, rebootSetting, windowsParameters, linuxParameters, default);
         }
 
+        /// <summary> Input for InstallPatches on a Windows VM, as directly received by the API. </summary>
         /// <param name="classificationsToInclude"> The update classifications to select when installing patches for Windows. </param>
         /// <param name="kbNumbersToInclude"> Kbs to include in the patch operation. </param>
         /// <param name="kbNumbersToExclude"> Kbs to exclude in the patch operation. </param>
@@ -717,6 +748,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default);
         }
 
+        /// <summary> Input for InstallPatches on a Linux VM, as directly received by the API. </summary>
         /// <param name="classificationsToInclude"> The update classifications to select when installing patches for Linux. </param>
         /// <param name="packageNameMasksToInclude"> packages to include in the patch operation. Format: packageName_packageVersion. </param>
         /// <param name="packageNameMasksToExclude"> packages to exclude in the patch operation. Format: packageName_packageVersion. </param>
@@ -758,7 +790,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 pendingPatchCount,
                 installedPatchCount,
                 failedPatchCount,
-                startOn,
+                default,
                 lastModifiedOn,
                 startedBy,
                 patchServiceUsed,
@@ -801,7 +833,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                softwareAssuranceCustomer is null && assignedLicenseImmutableId is null && esuKeys is null && serverType is null && esuEligibility is null && esuKeyState is null && assignedLicense is null && subscriptionStatus is null && productType is null && enrollmentOn is null && billingStartOn is null && disenrollmentOn is null && billingEndOn is null && error is null && productFeatures is null && provisioningState is null ? default : new LicenseProfileProperties(new LicenseProfilePropertiesSoftwareAssurance(softwareAssuranceCustomer, default), new LicenseProfileArmEsuProperties(
+                softwareAssuranceCustomer is null && assignedLicenseImmutableId is null && esuKeys is null && serverType is null && esuEligibility is null && esuKeyState is null && assignedLicense is null && subscriptionStatus is null && productType is null && enrollmentOn is null && disenrollmentOn is null && error is null && productFeatures is null && provisioningState is null ? default : new LicenseProfileProperties(new LicenseProfilePropertiesSoftwareAssurance(softwareAssuranceCustomer, default), new LicenseProfileArmEsuProperties(
                     assignedLicenseImmutableId,
                     (esuKeys ?? new ChangeTrackingList<EsuKey>()).ToList(),
                     default,
@@ -812,9 +844,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     subscriptionStatus,
                     productType,
                     enrollmentOn,
-                    billingStartOn,
+                    default,
                     disenrollmentOn,
-                    billingEndOn,
+                    default,
                     error,
                     (productFeatures ?? new ChangeTrackingList<HybridComputeProductFeature>()).ToList(),
                     default), provisioningState, default),
@@ -835,6 +867,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeLicenseProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, softwareAssuranceCustomer is null && assignedLicense is null && subscriptionStatus is null && productType is null && productFeatures is null ? default : new LicenseProfileUpdateProperties(new LicenseProfileUpdatePropertiesSoftwareAssurance(softwareAssuranceCustomer, default), new EsuProfileUpdateProperties(assignedLicense, default), new ProductProfileUpdateProperties(subscriptionStatus, productType, (productFeatures ?? new ChangeTrackingList<HybridComputeProductFeatureUpdate>()).ToList(), default), default));
         }
 
+        /// <summary> Product Feature. </summary>
         /// <param name="name"> Product feature name. </param>
         /// <param name="subscriptionStatus"> Indicates the new status of the product feature. </param>
         /// <returns> A new <see cref="Models.HybridComputeProductFeatureUpdate"/> instance for mocking. </returns>
@@ -918,6 +951,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default);
         }
 
+        /// <summary> Describes the script sources for run command. Use only one of script, scriptUri, commandId. </summary>
         /// <param name="script"> Specifies the script content to be executed on the machine. </param>
         /// <param name="scriptUri"> Specifies the script download location. It can be either SAS URI of an Azure storage blob with read access or public URI. </param>
         /// <param name="commandId"> Specifies the commandId of predefined built-in script. </param>
@@ -928,6 +962,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new MachineRunCommandScriptSource(script, scriptUri, commandId, scriptUriManagedIdentity, default);
         }
 
+        /// <summary> Contains clientId or objectId (use only one, not both) of a user-assigned managed identity that has access to storage blob used in Run Command. Use an empty RunCommandManagedIdentity object in case of system-assigned identity. Make sure the Azure storage blob exists in case of scriptUri, and managed identity has been given access to blob's container with 'Storage Blob Data Reader' role assignment with scriptUri blob and 'Storage Blob Data Contributor' for Append blobs(outputBlobUri, errorBlobUri). In case of user assigned identity, make sure you add it under VM's identity. For more info on managed identity and Run Command, refer https://aka.ms/ManagedIdentity and https://aka.ms/RunCommandManaged. </summary>
         /// <param name="clientId"> Client Id (GUID value) of the user-assigned managed identity. ObjectId should not be used if this is provided. </param>
         /// <param name="objectId"> Object Id (GUID value) of the user-assigned managed identity. ClientId should not be used if this is provided. </param>
         /// <returns> A new <see cref="Models.RunCommandManagedIdentity"/> instance for mocking. </returns>
@@ -936,6 +971,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new RunCommandManagedIdentity(clientId, objectId, default);
         }
 
+        /// <summary> Describes the properties of a run command parameter. </summary>
         /// <param name="name"> The run command parameter name. </param>
         /// <param name="value"> The run command parameter value. </param>
         /// <returns> A new <see cref="Models.RunCommandInputContent"/> instance for mocking. </returns>
@@ -963,12 +999,13 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 exitCode,
                 output,
                 error,
-                startOn,
-                endOn,
+                default,
+                default,
                 (statuses ?? new ChangeTrackingList<ExtensionsResourceStatus>()).ToList(),
                 default);
         }
 
+        /// <summary> Instance view status. </summary>
         /// <param name="code"> The status code. </param>
         /// <param name="level"> The level code. </param>
         /// <param name="displayStatus"> The short localizable label for the status. </param>
@@ -1032,6 +1069,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new ArcGatewayPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default, allowedFeatures is null && gatewayBypass is null ? default : new GatewayUpdateProperties((allowedFeatures ?? new ChangeTrackingList<string>()).ToList(), (gatewayBypass ?? new ChangeTrackingList<string>()).ToList(), default));
         }
 
+        /// <summary> A private link resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1049,6 +1087,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default);
         }
 
+        /// <summary> Properties of a private link resource. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> Required DNS zone names of the the private link resource. </param>
@@ -1061,6 +1100,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputePrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> A private endpoint connection. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1078,6 +1118,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default);
         }
 
+        /// <summary> State of the private endpoint connection. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The private link service connection description. </param>
         /// <param name="actionsRequired"> The actions required for private link service connection. </param>
@@ -1141,6 +1182,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeAccessRule(name, direction is null && addressPrefixes is null ? default : new AccessRuleProperties(direction, (addressPrefixes ?? new ChangeTrackingList<string>()).ToList(), default), default);
         }
 
+        /// <summary> Properties that define a Network Security Perimeter resource. </summary>
         /// <param name="id"> Azure resource Id. </param>
         /// <param name="perimeterGuid"> Guid of the Network Security Perimeter. </param>
         /// <param name="location"> Regional location of the perimeter. </param>
@@ -1150,6 +1192,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new NetworkSecurityPerimeter(id, perimeterGuid, location, default);
         }
 
+        /// <summary> Properties that define a Resource Association. </summary>
         /// <param name="name"> Name of the Resource Association. </param>
         /// <param name="accessMode"> The access mode. </param>
         /// <returns> A new <see cref="Models.HybridComputeResourceAssociation"/> instance for mocking. </returns>
@@ -1158,6 +1201,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeResourceAssociation(name, accessMode, default);
         }
 
+        /// <summary> Network Security Perimeter profile. </summary>
         /// <param name="name"> Name of the resource. </param>
         /// <param name="accessRulesVersion"> Access rules version number. </param>
         /// <param name="accessRules"> Collection of access rules for the profile. </param>
@@ -1178,6 +1222,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default);
         }
 
+        /// <summary> Result of network security perimeter configurations. </summary>
         /// <param name="location"> The URL of the resource used to check the status of the asynchronous operation. </param>
         /// <returns> A new <see cref="Models.NetworkSecurityPerimeterConfigurationReconcileResult"/> instance for mocking. </returns>
         public static NetworkSecurityPerimeterConfigurationReconcileResult NetworkSecurityPerimeterConfigurationReconcileResult(AzureLocation? location = default)
@@ -1185,6 +1230,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new NetworkSecurityPerimeterConfigurationReconcileResult(location, default);
         }
 
+        /// <summary> The PrivateLinkScopeValidationDetails. </summary>
         /// <param name="id"> Azure resource Id. </param>
         /// <param name="publicNetworkAccess"> Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints. </param>
         /// <param name="connectionDetails"> List of Private Endpoint Connection details. </param>
@@ -1196,6 +1242,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new PrivateLinkScopeValidationDetails(id, publicNetworkAccess, (connectionDetails ?? new ChangeTrackingList<HybridComputeConnectionDetail>()).ToList(), default);
         }
 
+        /// <summary> The HybridComputeConnectionDetail. </summary>
         /// <param name="id"> Azure resource Id. </param>
         /// <param name="privateIPAddress"> The private endpoint connection private ip address. </param>
         /// <param name="linkIdentifier"> The private endpoint connection link identifier. </param>
@@ -1213,6 +1260,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default);
         }
 
+        /// <summary> An Azure Arc PrivateLinkScope definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1236,6 +1284,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default);
         }
 
+        /// <summary> Properties that define a Azure Arc PrivateLinkScope resource. </summary>
         /// <param name="publicNetworkAccess"> Indicates whether machines associated with the private link scope can also use public Azure Arc service endpoints. </param>
         /// <param name="provisioningState"> Current state of this PrivateLinkScope: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Provisioning ,Succeeded, Canceled and Failed. </param>
         /// <param name="privateLinkScopeId"> The Guid id of the private link scope. </param>
@@ -1256,6 +1305,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default);
         }
 
+        /// <summary> The Data Model for a Private Endpoint Connection associated with a Private Link Scope. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1273,6 +1323,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default);
         }
 
+        /// <summary> Enable private link validation for an Azure Arc Extension. </summary>
         /// <param name="serviceExtensionType"> The name of the Azure Arc Extension. </param>
         /// <param name="serviceExtensionPublicNetworkAccess"> The network access policy to determine if the specified Azure Arc Extension can use public Azure Arc Extension service endpoints. </param>
         /// <returns> A new <see cref="Models.HybridComputeServiceExtension"/> instance for mocking. </returns>
@@ -1281,6 +1332,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeServiceExtension(serviceExtensionType, serviceExtensionPublicNetworkAccess, default);
         }
 
+        /// <summary> A container holding only the Tags for a resource, allowing the user to update the tags on a PrivateLinkScope instance. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.HybridComputePrivateLinkScopePatch"/> instance for mocking. </returns>
         public static HybridComputePrivateLinkScopePatch HybridComputePrivateLinkScopePatch(IDictionary<string, string> tags = default)
@@ -1358,6 +1410,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 default);
         }
 
+        /// <summary> Describes an Extension Type. </summary>
         /// <param name="id"> The ID of the extension type. </param>
         /// <param name="name"> The name of the extension type. </param>
         /// <returns> A new <see cref="Models.HybridComputeExtensionType"/> instance for mocking. </returns>
@@ -1366,6 +1419,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeExtensionType(id, name, default);
         }
 
+        /// <summary> Describes an Extension Publisher. </summary>
         /// <param name="id"> The ID of the extension publisher. </param>
         /// <param name="name"> The name of the extension publisher. </param>
         /// <returns> A new <see cref="Models.HybridComputeExtensionPublisher"/> instance for mocking. </returns>
@@ -1374,16 +1428,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeExtensionPublisher(id, name, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LicenseProfileMachineInstanceView"/>. </summary>
+        /// <summary> License Profile Instance View in Machine Properties. </summary>
         /// <param name="licenseStatus"> Indicates the license status of the OS. </param>
         /// <param name="licenseChannel"> Indicates the license channel. </param>
         /// <param name="esuProfile"> Properties for the Machine ESU profile. </param>
         /// <param name="subscriptionStatus"> Indicates the subscription status of the product. </param>
         /// <param name="productType"> Indicates the product type of the license. </param>
         /// <param name="enrollmentOn"> The timestamp in UTC when the user enrolls the feature. </param>
-        /// <param name="billingStartOn"> The timestamp in UTC when the billing starts. </param>
+        /// <param name="billingStartOn"></param>
         /// <param name="disenrollmentOn"> The timestamp in UTC when the user disenrolled the feature. </param>
-        /// <param name="billingEndOn"> The timestamp in UTC when the billing ends. </param>
+        /// <param name="billingEndOn"></param>
         /// <param name="error"> The errors that were encountered during the feature enrollment or disenrollment. </param>
         /// <param name="productFeatures"> The list of product features. </param>
         /// <param name="isSoftwareAssuranceCustomer"> Specifies if this machine is licensed as part of a Software Assurance agreement. </param>
@@ -1396,20 +1450,20 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 licenseChannel,
                 isSoftwareAssuranceCustomer is null ? default : new LicenseProfileMachineInstanceViewSoftwareAssurance(isSoftwareAssuranceCustomer, default),
                 esuProfile,
-                subscriptionStatus is null && productType is null && enrollmentOn is null && billingStartOn is null && disenrollmentOn is null && billingEndOn is null && error is null && productFeatures is null ? default : new LicenseProfileArmProductProfileProperties(
+                subscriptionStatus is null && productType is null && enrollmentOn is null && disenrollmentOn is null && error is null && productFeatures is null ? default : new LicenseProfileArmProductProfileProperties(
                     subscriptionStatus,
                     productType,
                     enrollmentOn,
-                    billingStartOn,
+                    default,
                     disenrollmentOn,
-                    billingEndOn,
+                    default,
                     error,
                     (productFeatures ?? new ChangeTrackingList<HybridComputeProductFeature>()).ToList(),
                     default),
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HybridComputeNetworkInterface"/>. </summary>
+        /// <summary> Describes a network interface. </summary>
         /// <param name="ipAddresses"> The list of IP addresses in this interface. </param>
         /// <returns> A new <see cref="Models.HybridComputeNetworkInterface"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -1418,20 +1472,20 @@ namespace Azure.ResourceManager.HybridCompute.Models
             return new HybridComputeNetworkInterface(default, default, default, (ipAddresses ?? new ChangeTrackingList<HybridComputeIPAddress>()).ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridCompute.HybridComputeLicenseProfileData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Describes a license profile in a hybrid machine. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
         /// <param name="subscriptionStatus"> Indicates the subscription status of the product. </param>
         /// <param name="productType"> Indicates the product type of the license. </param>
         /// <param name="enrollmentOn"> The timestamp in UTC when the user enrolls the feature. </param>
-        /// <param name="billingStartOn"> The timestamp in UTC when the billing starts. </param>
+        /// <param name="billingStartOn"></param>
         /// <param name="disenrollmentOn"> The timestamp in UTC when the user disenrolled the feature. </param>
-        /// <param name="billingEndOn"> The timestamp in UTC when the billing ends. </param>
+        /// <param name="billingEndOn"></param>
         /// <param name="error"> The errors that were encountered during the feature enrollment or disenrollment. </param>
         /// <param name="productFeatures"> The list of product features. </param>
         /// <param name="assignedLicenseImmutableId"> The guid id of the license. </param>
@@ -1452,7 +1506,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                softwareAssuranceCustomer is null && assignedLicenseImmutableId is null && esuKeys is null && serverType is null && esuEligibility is null && esuKeyState is null && assignedLicense is null && subscriptionStatus is null && productType is null && enrollmentOn is null && billingStartOn is null && disenrollmentOn is null && billingEndOn is null && error is null && productFeatures is null && provisioningState is null ? default : new LicenseProfileProperties(new LicenseProfilePropertiesSoftwareAssurance(softwareAssuranceCustomer, default), new LicenseProfileArmEsuProperties(
+                softwareAssuranceCustomer is null && assignedLicenseImmutableId is null && esuKeys is null && serverType is null && esuEligibility is null && esuKeyState is null && assignedLicense is null && subscriptionStatus is null && productType is null && enrollmentOn is null && disenrollmentOn is null && error is null && productFeatures is null && provisioningState is null ? default : new LicenseProfileProperties(new LicenseProfilePropertiesSoftwareAssurance(softwareAssuranceCustomer, default), new LicenseProfileArmEsuProperties(
                     assignedLicenseImmutableId,
                     (esuKeys ?? new ChangeTrackingList<EsuKey>()).ToList(),
                     default,
@@ -1463,9 +1517,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     subscriptionStatus,
                     productType,
                     enrollmentOn,
-                    billingStartOn,
+                    default,
                     disenrollmentOn,
-                    billingEndOn,
+                    default,
                     error,
                     (productFeatures ?? new ChangeTrackingList<HybridComputeProductFeature>()).ToList(),
                     default), provisioningState, default),
