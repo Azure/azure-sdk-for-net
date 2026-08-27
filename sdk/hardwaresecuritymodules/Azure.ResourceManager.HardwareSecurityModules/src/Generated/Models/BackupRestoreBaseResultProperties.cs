@@ -26,17 +26,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         /// <param name="status"> Status of the backup/restore operation. </param>
         /// <param name="statusDetails"> The status details of backup/restore operation. </param>
         /// <param name="error"> Error encountered, if any, during the backup/restore operation. </param>
-        /// <param name="startOn"> The start time of the backup/restore operation in UTC. </param>
-        /// <param name="endOn"> The end time of the backup/restore operation in UTC. </param>
+        /// <param name="startsOn"> The start time of the backup/restore operation in UTC. </param>
+        /// <param name="endsOn"> The end time of the backup/restore operation in UTC. </param>
         /// <param name="jobId"> Identifier for the backup/restore operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupRestoreBaseResultProperties(BackupRestoreOperationStatus? status, string statusDetails, ResponseError error, DateTimeOffset? startOn, DateTimeOffset? endOn, string jobId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupRestoreBaseResultProperties(BackupRestoreOperationStatus? status, string statusDetails, ResponseError error, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string jobId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
             StatusDetails = statusDetails;
             Error = error;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             JobId = jobId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
         public ResponseError Error { get; }
 
         /// <summary> The start time of the backup/restore operation in UTC. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The end time of the backup/restore operation in UTC. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Identifier for the backup/restore operation. </summary>
         public string JobId { get; }

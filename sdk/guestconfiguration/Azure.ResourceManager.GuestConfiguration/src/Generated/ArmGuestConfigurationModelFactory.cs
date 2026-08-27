@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
     public static partial class ArmGuestConfigurationModelFactory
     {
 
+        /// <summary> Guest configuration assignment is an association between a machine and guest configuration. </summary>
         /// <param name="id"> ARM resource id of the guest configuration assignment. </param>
         /// <param name="name"> The guest configuration assignment name. </param>
         /// <param name="location"> Region where the VM is located. </param>
@@ -35,6 +36,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 properties);
         }
 
+        /// <summary> Guest configuration assignment properties. </summary>
         /// <param name="targetResourceId"> VM resource Id. </param>
         /// <param name="guestConfiguration"> The guest configuration to assign. </param>
         /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
@@ -68,6 +70,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 default);
         }
 
+        /// <summary> Guest configuration is an artifact that encapsulates DSC configuration and its dependencies. The artifact is a zip file containing DSC configuration (as MOF) and dependent resources and other dependencies like modules. </summary>
         /// <param name="kind"> Kind of the guest configuration. For example:DSC. </param>
         /// <param name="name"> Name of the guest configuration. </param>
         /// <param name="version"> Version of the guest configuration. </param>
@@ -102,6 +105,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 default);
         }
 
+        /// <summary> Represents a configuration parameter. </summary>
         /// <param name="name"> Name of the configuration parameter. </param>
         /// <param name="value"> Value of the configuration parameter. </param>
         /// <returns> A new <see cref="Models.GuestConfigurationParameter"/> instance for mocking. </returns>
@@ -110,6 +114,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             return new GuestConfigurationParameter(name, value, default);
         }
 
+        /// <summary> Configuration setting of LCM (Local Configuration Manager). </summary>
         /// <param name="configurationMode"> Specifies how the LCM(Local Configuration Manager) actually applies the configuration to the target nodes. Possible values are ApplyOnly, ApplyAndMonitor, and ApplyAndAutoCorrect. </param>
         /// <param name="isModuleOverwriteAllowed"> If true - new configurations downloaded from the pull service are allowed to overwrite the old ones on the target node. Otherwise, false. </param>
         /// <param name="actionAfterReboot"> Specifies what happens after a reboot during the application of a configuration. The possible values are ContinueConfiguration and StopConfiguration. </param>
@@ -148,14 +153,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 reportId,
                 assignment,
                 vm,
-                startOn,
-                endOn,
+                default,
+                default,
                 complianceStatus,
                 operationType,
                 (resources ?? new ChangeTrackingList<AssignmentReportResourceInfo>()).ToList(),
                 default);
         }
 
+        /// <summary> Information about the guest configuration assignment. </summary>
         /// <param name="name"> Name of the guest configuration assignment. </param>
         /// <param name="configuration"> Information about the configuration. </param>
         /// <returns> A new <see cref="Models.GuestConfigurationAssignmentInfo"/> instance for mocking. </returns>
@@ -164,6 +170,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             return new GuestConfigurationAssignmentInfo(name, configuration, default);
         }
 
+        /// <summary> Information about the configuration. </summary>
         /// <param name="name"> Name of the configuration. </param>
         /// <param name="version"> Version of the configuration. </param>
         /// <returns> A new <see cref="Models.GuestConfigurationInfo"/> instance for mocking. </returns>
@@ -172,6 +179,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             return new GuestConfigurationInfo(name, version, default);
         }
 
+        /// <summary> Information about the VM. </summary>
         /// <param name="id"> Azure resource Id of the VM. </param>
         /// <param name="uuid"> UUID(Universally Unique Identifier) of the VM. </param>
         /// <returns> A new <see cref="Models.GuestConfigurationVmInfo"/> instance for mocking. </returns>
@@ -180,6 +188,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             return new GuestConfigurationVmInfo(id, uuid, default);
         }
 
+        /// <summary> The guest configuration assignment resource. </summary>
         /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
         /// <param name="assignmentResourceSettingName"> Name of the guest configuration assignment resource setting. </param>
         /// <param name="reasons"> Compliance reason and reason code for a resource. </param>
@@ -192,6 +201,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             return new AssignmentReportResourceInfo(complianceStatus, assignmentResourceSettingName, (reasons ?? new ChangeTrackingList<AssignmentReportResourceComplianceReason>()).ToList(), properties, default);
         }
 
+        /// <summary> Reason and code for the compliance of the guest configuration assignment resource. </summary>
         /// <param name="phrase"> Reason for the compliance of the guest configuration assignment resource. </param>
         /// <param name="code"> Code for the compliance of the guest configuration assignment resource. </param>
         /// <returns> A new <see cref="Models.AssignmentReportResourceComplianceReason"/> instance for mocking. </returns>
@@ -200,6 +210,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             return new AssignmentReportResourceComplianceReason(phrase, code, default);
         }
 
+        /// <summary> Information about VMSS VM. </summary>
         /// <param name="vmId"> UUID of the VM. </param>
         /// <param name="vmResourceId"> Azure resource Id of the VM. </param>
         /// <param name="complianceStatus"> A value indicating compliance status of the machine for the assigned guest configuration. </param>
@@ -217,6 +228,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 default);
         }
 
+        /// <summary> ARM proxy resource. </summary>
         /// <param name="id"> ARM resource id of the guest configuration assignment. </param>
         /// <param name="name"> The guest configuration assignment name. </param>
         /// <param name="location"> Region where the VM is located. </param>
@@ -227,6 +239,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             return new GuestConfigurationResourceData(id, name, location, resourceType, default);
         }
 
+        /// <summary> Report for the guest configuration assignment. Report contains information such as compliance status, reason, and more. </summary>
         /// <param name="id"> ARM resource id of the report for the guest configuration assignment. </param>
         /// <param name="name"> GUID that identifies the guest configuration assignment report under a subscription, resource group. </param>
         /// <param name="properties"> Properties of the guest configuration report. </param>
@@ -252,8 +265,8 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 reportId,
                 assignment,
                 vm,
-                startOn,
-                endOn,
+                default,
+                default,
                 details,
                 vmssResourceId,
                 default);
@@ -272,15 +285,15 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
 
             return new GuestConfigurationAssignmentReportDetails(
                 complianceStatus,
-                startOn,
-                endOn,
+                default,
+                default,
                 jobId,
                 operationType,
                 (resources ?? new ChangeTrackingList<AssignmentReportResourceInfo>()).ToList(),
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GuestConfigurationNavigation"/>. </summary>
+        /// <summary> Guest configuration is an artifact that encapsulates DSC configuration and its dependencies. The artifact is a zip file containing DSC configuration (as MOF) and dependent resources and other dependencies like modules. </summary>
         /// <param name="kind"> Kind of the guest configuration. For example:DSC. </param>
         /// <param name="name"> Name of the guest configuration. </param>
         /// <param name="version"> Version of the guest configuration. </param>

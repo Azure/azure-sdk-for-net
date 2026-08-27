@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmKubernetesModelFactory
     {
+        /// <summary> Represents a connected cluster. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -54,7 +55,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="distributionVersion"> The Kubernetes distribution version on this connected cluster. </param>
         /// <param name="infrastructure"> The infrastructure on which the Kubernetes cluster represented by this connected cluster is running on. </param>
         /// <param name="offering"> Connected cluster offering. </param>
-        /// <param name="managedIdentityCertificateExpirationOn"> Expiration time of the managed identity certificate. </param>
+        /// <param name="managedIdentityCertificateExpiresOn"> Expiration time of the managed identity certificate. </param>
         /// <param name="lastConnectivityOn"> Time representing the last instance when heart beat was received from the cluster. </param>
         /// <param name="connectivityStatus"> Represents the connectivity status of the connected cluster. </param>
         /// <param name="privateLinkState"> Property which describes the state of private link on a connected cluster resource. </param>
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
         /// <param name="arcAgentryConfigurations"> Configuration settings for customizing the behavior of the connected cluster. </param>
         /// <param name="miscellaneousProperties"> More properties related to the Connected Cluster. </param>
         /// <returns> A new <see cref="Models.ConnectedClusterProperties"/> instance for mocking. </returns>
-        public static ConnectedClusterProperties ConnectedClusterProperties(string agentPublicKeyCertificate = default, string kubernetesVersion = default, int? totalNodeCount = default, int? totalCoreCount = default, string agentVersion = default, ConnectedClusterProvisioningState? provisioningState = default, string distribution = default, string distributionVersion = default, string infrastructure = default, string offering = default, DateTimeOffset? managedIdentityCertificateExpirationOn = default, DateTimeOffset? lastConnectivityOn = default, ConnectedClusterConnectivityStatus? connectivityStatus = default, ConnectedClusterPrivateLinkState? privateLinkState = default, ResourceIdentifier privateLinkScopeResourceId = default, ConnectedClusterAzureHybridBenefit? azureHybridBenefit = default, ConnectedClusterAadProfile aadProfile = default, ConnectedClusterArcAgentProfile arcAgentProfile = default, bool? isWorkloadIdentityEnabled = default, ConnectedClusterOidcIssuerProfile oidcIssuerProfile = default, bool? isGatewayEnabled = default, IEnumerable<ConnectedClusterArcAgentryConfiguration> arcAgentryConfigurations = default, IReadOnlyDictionary<string, string> miscellaneousProperties = default)
+        public static ConnectedClusterProperties ConnectedClusterProperties(string agentPublicKeyCertificate = default, string kubernetesVersion = default, int? totalNodeCount = default, int? totalCoreCount = default, string agentVersion = default, ConnectedClusterProvisioningState? provisioningState = default, string distribution = default, string distributionVersion = default, string infrastructure = default, string offering = default, DateTimeOffset? managedIdentityCertificateExpiresOn = default, DateTimeOffset? lastConnectivityOn = default, ConnectedClusterConnectivityStatus? connectivityStatus = default, ConnectedClusterPrivateLinkState? privateLinkState = default, ResourceIdentifier privateLinkScopeResourceId = default, ConnectedClusterAzureHybridBenefit? azureHybridBenefit = default, ConnectedClusterAadProfile aadProfile = default, ConnectedClusterArcAgentProfile arcAgentProfile = default, bool? isWorkloadIdentityEnabled = default, ConnectedClusterOidcIssuerProfile oidcIssuerProfile = default, bool? isGatewayEnabled = default, IEnumerable<ConnectedClusterArcAgentryConfiguration> arcAgentryConfigurations = default, IReadOnlyDictionary<string, string> miscellaneousProperties = default)
         {
             arcAgentryConfigurations ??= new ChangeTrackingList<ConnectedClusterArcAgentryConfiguration>();
             miscellaneousProperties ??= new ChangeTrackingDictionary<string, string>();
@@ -84,7 +85,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 distributionVersion,
                 infrastructure,
                 offering,
-                managedIdentityCertificateExpirationOn,
+                managedIdentityCertificateExpiresOn,
                 lastConnectivityOn,
                 connectivityStatus,
                 privateLinkState,
@@ -100,6 +101,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 default);
         }
 
+        /// <summary> AAD Profile specifies attributes for Azure Active Directory integration. </summary>
         /// <param name="enableAzureRbac"> Whether to enable Azure RBAC for Kubernetes authorization. </param>
         /// <param name="adminGroupObjectIds"> The list of AAD group object IDs that will have admin role of the cluster. </param>
         /// <param name="tenantId"> The AAD tenant ID to use for authentication. If not specified, will use the tenant of the deployment subscription. </param>
@@ -111,6 +113,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             return new ConnectedClusterAadProfile(enableAzureRbac, (adminGroupObjectIds ?? new ChangeTrackingList<string>()).ToList(), tenantId, default);
         }
 
+        /// <summary> Defines the Arc Agent properties for the clusters. </summary>
         /// <param name="desiredAgentVersion"> Version of the Arc agents to be installed on the cluster resource. </param>
         /// <param name="agentAutoUpgrade"> Indicates whether the Arc agents on the be upgraded automatically to the latest version. Defaults to Enabled. </param>
         /// <param name="systemComponents"> List of system extensions that are installed on the cluster resource. </param>
@@ -131,6 +134,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 default);
         }
 
+        /// <summary> System extensions and its current versions installed on the cluster resource. </summary>
         /// <param name="type"> Type of the system extension. </param>
         /// <param name="userSpecifiedVersion"> Version of the system extension to be installed on the cluster resource. </param>
         /// <param name="majorVersion"> Major Version of the system extension that is currently installed on the cluster resource. </param>
@@ -141,6 +145,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             return new ConnectedClusterSystemComponent(@type, userSpecifiedVersion, majorVersion, currentVersion, default);
         }
 
+        /// <summary> Agent Errors if any during agent or system component upgrade. </summary>
         /// <param name="message"> Agent error message. </param>
         /// <param name="severity"> Severity of the error message. </param>
         /// <param name="component"> Agent component where error message occured. </param>
@@ -151,6 +156,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             return new ConnectedClusterAgentError(message, severity, component, occurredOn, default);
         }
 
+        /// <summary> OIDC Issuer Profile specifies attributes for workload identity integration. </summary>
         /// <param name="enabled"> Whether to enable oidc issuer for workload identity integration. </param>
         /// <param name="issuerUri"> The issuer url for hybrid clusters connected to Arc used for the workload identity feature. </param>
         /// <param name="selfHostedIssuerUri"> The issuer url for public cloud clusters - AKS, EKS, GKE - used for the workload identity feature. </param>
@@ -160,6 +166,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             return new ConnectedClusterOidcIssuerProfile(enabled, issuerUri, selfHostedIssuerUri, default);
         }
 
+        /// <summary> The ConnectedClusterArcAgentryConfiguration. </summary>
         /// <param name="feature"> Specifies the name of the feature for the configuration setting. </param>
         /// <param name="settings"> The configuration settings for the feature that do not contain any sensitive or secret information. </param>
         /// <param name="protectedSettings"> The configuration settings for the feature that contain any sensitive or secret information. </param>
@@ -172,6 +179,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             return new ConnectedClusterArcAgentryConfiguration(feature, settings ?? new ChangeTrackingDictionary<string, string>(), protectedSettings ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Object containing updates for patch operations. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> Describes the connected cluster resource properties that can be updated during PATCH operation. </param>
         /// <returns> A new <see cref="Models.ConnectedClusterPatch"/> instance for mocking. </returns>
@@ -192,6 +200,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             return new ConnectedClusterPatchProperties(distribution, distributionVersion, azureHybridBenefit, isGatewayEnabled is null ? default : new Gateway(isGatewayEnabled, default), default);
         }
 
+        /// <summary> The GetClusterUserCredentialContent. </summary>
         /// <param name="authenticationMethod"> The mode of client authentication. </param>
         /// <param name="useClientProxy"> Boolean value to indicate whether the request is for client side proxy or not. </param>
         /// <returns> A new <see cref="Models.GetClusterUserCredentialContent"/> instance for mocking. </returns>
@@ -200,6 +209,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             return new GetClusterUserCredentialContent(authenticationMethod, useClientProxy, default);
         }
 
+        /// <summary> The list of credential result response. </summary>
         /// <param name="hybridConnectionConfig"> Contains the REP (rendezvous endpoint) and “Sender” access token. </param>
         /// <param name="kubeconfigs"> Base64-encoded Kubernetes configuration file. </param>
         /// <returns> A new <see cref="Models.ClusterUserCredentialsResult"/> instance for mocking. </returns>
@@ -210,6 +220,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             return new ClusterUserCredentialsResult(hybridConnectionConfig, (kubeconfigs ?? new ChangeTrackingList<ClusterUserCredentialResult>()).ToList(), default);
         }
 
+        /// <summary> Contains the REP (rendezvous endpoint) and “Sender” access token. </summary>
         /// <param name="expirationTimeInSeconds"> Timestamp when this token will be expired. </param>
         /// <param name="hybridConnectionName"> Name of the connection. </param>
         /// <param name="relay"> Name of the relay. </param>
@@ -229,6 +240,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 default);
         }
 
+        /// <summary> The credential result response. </summary>
         /// <param name="name"> The name of the credential. </param>
         /// <param name="value"> Base64-encoded Kubernetes configuration file. </param>
         /// <returns> A new <see cref="Models.ClusterUserCredentialResult"/> instance for mocking. </returns>
