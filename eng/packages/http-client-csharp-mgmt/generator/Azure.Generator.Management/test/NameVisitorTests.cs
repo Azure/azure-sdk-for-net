@@ -38,6 +38,28 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(type?.Properties[0].Name, Is.EqualTo(testPropertyName.Replace("Url", "Uri")));
         }
 
+        [Test]
+        public void DateTimePropertyRenamingIsOwnedByMtg()
+        {
+            var dateTime = new InputDateTimeType(
+                DateTimeKnownEncoding.Rfc3339,
+                "utcDateTime",
+                "TypeSpec.utcDateTime",
+                InputPrimitiveType.String);
+            var inputProperty = InputFactory.Property("StartTime", dateTime, isRequired: true);
+            var inputModel = InputFactory.Model("TestModel", properties: [inputProperty]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var property = plugin.Object.TypeFactory.CreateModel(inputModel)!.Properties.Single();
+            property.Update(name: "StartTime");
+
+            typeof(Management.Visitors.NameVisitor).GetMethod(
+                    "PreVisitProperty",
+                    System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)!
+                .Invoke(new Management.Visitors.NameVisitor(), [inputProperty, property]);
+
+            Assert.That(property.Name, Is.EqualTo("StartTime"));
+        }
+
         [TestCase("StartTime", "StartsOn")]
         [TestCase("EndTime", "EndsOn")]
         [TestCase("CreationTime", "CreatedOn")]

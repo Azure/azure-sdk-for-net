@@ -24,6 +24,14 @@ namespace Azure.Generator.Management.Visitors
     /// </summary>
     internal static class ModelFactoryBackwardCompatHelper
     {
+        private static readonly Dictionary<string, string> _legacyDateTimeNounToVerb = new(StringComparer.OrdinalIgnoreCase)
+        {
+            ["Creation"] = "Created",
+            ["Deletion"] = "Deleted",
+            ["Expiration"] = "Expire",
+            ["Modification"] = "Modified",
+        };
+
         internal static void FixModelFactoryConstructorCalls(IReadOnlyList<MethodProvider> methods)
         {
             foreach (var method in methods)
@@ -855,9 +863,34 @@ namespace Azure.Generator.Management.Visitors
                 return null;
             }
 
-            return NameVisitor.NormalizeDateTimePropertyName(
-                property.WireInfo.SerializedName,
-                isDateTime: true).ToVariableName();
+            return GetLegacyDateTimePropertyName(property.WireInfo.SerializedName).ToVariableName();
+        }
+
+        private static string GetLegacyDateTimePropertyName(string propertyName)
+        {
+            if (propertyName.StartsWith("From", StringComparison.OrdinalIgnoreCase) ||
+                propertyName.StartsWith("To", StringComparison.OrdinalIgnoreCase) ||
+                propertyName.EndsWith("PointInTime", StringComparison.OrdinalIgnoreCase))
+            {
+                return propertyName;
+            }
+
+            var suffixLength = propertyName.EndsWith("DateTime", StringComparison.OrdinalIgnoreCase) ? "DateTime".Length
+                : propertyName.EndsWith("Time", StringComparison.OrdinalIgnoreCase) || propertyName.EndsWith("Date", StringComparison.OrdinalIgnoreCase) ? "Time".Length
+                : propertyName.EndsWith("At", StringComparison.OrdinalIgnoreCase) ? "At".Length
+                : 0;
+            if (suffixLength == 0 || suffixLength == propertyName.Length)
+            {
+                return propertyName;
+            }
+
+            var prefix = propertyName[..^suffixLength];
+            if (!_legacyDateTimeNounToVerb.TryGetValue(prefix, out var verb))
+            {
+                return prefix + "On";
+            }
+
+            return (char.IsLower(prefix[0]) ? char.ToLowerInvariant(verb[0]) + verb[1..] : verb) + "On";
         }
 
         /// <summary>
