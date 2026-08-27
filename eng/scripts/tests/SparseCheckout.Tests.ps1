@@ -38,7 +38,7 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
         } | ConvertTo-Json | Set-Content (Join-Path $packageInfo 'Azure.A.json')
 
         [ordered]@{
-            schemaVersion = 3
+            schemaVersion = 4
             repositoryRoot = $repo.Replace('\', '/')
             sourceCommit = $sourceCommit
             nodes = @(
@@ -53,10 +53,10 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
                 @{ kind = 'ProjectReference'; fromProject = 'sdk/alpha/A/tests/A.Tests.csproj'; fromTargetFramework = 'net9.0'; to = 'sdk/gamma/C/src/C.csproj'; toTargetFramework = 'net9.0' }
                 @{ kind = 'PackageReference'; fromProject = 'sdk/alpha/A/tests/A.Tests.csproj'; fromTargetFramework = 'net8.0'; to = 'Azure.D'; toTargetFramework = '' }
                 # NuGet identities are case-insensitive; serialized projection keys are not.
-                @{ kind = 'TransitivePackageReference'; fromProject = 'sdk/delta/D/src/D.csproj'; fromTargetFramework = 'net8.0'; to = 'azure.e'; toTargetFramework = '' }
+                @{ kind = 'PackageReference'; fromProject = 'sdk/delta/D/src/D.csproj'; fromTargetFramework = 'net8.0'; to = 'azure.e' }
             )
             inputs = @(
-                @{ projectPath = 'sdk/alpha/A/tests/A.Tests.csproj'; targetFrameworks = @('net8.0'); kind = 'Compile'; path = 'sdk/shared/Shared/Shared.cs' }
+                @{ projectPath = 'sdk/alpha/A/tests/A.Tests.csproj'; targetFrameworks = @('net8.0'); path = 'sdk/shared/Shared/Shared.cs' }
             )
             diagnostics = @{
                 isComplete = $true

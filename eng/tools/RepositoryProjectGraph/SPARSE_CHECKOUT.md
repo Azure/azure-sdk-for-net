@@ -50,13 +50,13 @@ This is conservative repository identity reachability, not proof of normal
 restore/build equivalence. The source graph continues to report
 `restoreEquivalent=false`.
 
-- **Target frameworks:** schema 3 preserves source-TFM to destination-TFM edges.
+- **Target frameworks:** schema 4 preserves source-TFM to destination-TFM edges.
   When MSBuild exposes an outer-build project reference, every concrete destination
   inner build is retained. Checkout may over-select incompatible destination TFMs,
   but it does not invent a nearest-framework policy that could omit source.
 - **Build configurations:** CI uses `Debug+Release`; the plus separator is deliberate
   because MSBuild treats commas and semicolons as command-line property separators.
-  Dependency-bearing records must be equivalent before schema 3 collapses the two
+  Dependency-bearing records must be equivalent before schema 4 collapses the two
   configurations. Evaluated inputs are unioned. Duplicate records are removed in
   the task before PowerShell builds the JSON artifact.
 - **Test reference modes:** the source graph is evaluated in normal package-reference
@@ -80,12 +80,12 @@ restore/build equivalence. The source graph continues to report
   Projection requires the same `Build.SourceVersion`, `Debug+Release`, and evaluated
   inputs, verifies `HEAD`, and rejects tracked worktree changes. Every test job verifies
   the same commit before using the projected graph.
-- **Identity:** schema 3 rejects dependency-only global-property nodes and
+- **Identity:** schema 4 rejects dependency-only global-property nodes and
   dependency-bearing Debug/Release conflicts rather than silently dropping an
   alternate MSBuild node.
 
-The compact graph explicitly recognizes `ProjectReference`, `PackageReference`, and
-`TransitivePackageReference` configuration edges. A new edge kind, unknown artifact,
+The compact graph explicitly recognizes `ProjectReference` and `PackageReference`
+configuration edges. A new edge kind, unknown artifact,
 duplicate malformed artifact, missing index, unresolved package root, or non-NuGet
 source graph causes a full-checkout fallback.
 
