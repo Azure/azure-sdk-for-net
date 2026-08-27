@@ -192,6 +192,265 @@ public class SsePipelineResponseHandlerTests
     }
 
     [Test]
+    public void FailedSendAsyncRestoresCallerClassifier()
+    {
+        var handler = new MockHttpClientHandler(_ =>
+            Task.FromResult(CreateRedirect(
+                HttpStatusCode.TemporaryRedirect,
+                "https://redirected.test/events")));
+        ClientPipeline pipeline = CreatePipeline(handler);
+        PipelineMessageClassifier classifier =
+            PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        using PipelineMessage message = CreateSseMessage(
+            pipeline,
+            classifier);
+
+        Assert.ThrowsAsync<InvalidOperationException>(
+            async () => await pipeline.SendAsync(message));
+
+        Assert.AreSame(
+            classifier,
+            message.ResponseClassifier,
+            "A failed send must leave the caller's message holding the " +
+            "classifier it supplied, not the private SSE classifier.");
+    }
+
+    [Test]
+    public void FailedSendRestoresCallerClassifier()
+    {
+        var handler = new SyncTrackingHandler(_ =>
+            CreateRedirect(
+                HttpStatusCode.TemporaryRedirect,
+                "https://redirected.test/events"));
+        ClientPipeline pipeline = CreatePipeline(handler);
+        PipelineMessageClassifier classifier =
+            PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        using PipelineMessage message = CreateSseMessage(
+            pipeline,
+            classifier);
+
+        Assert.Throws<InvalidOperationException>(
+            () => pipeline.Send(message));
+
+        Assert.AreSame(
+            classifier,
+            message.ResponseClassifier,
+            "The synchronous path must restore the classifier too.");
+    }
+
+    [Test]
+    public void TransportFailureRestoresCallerClassifier()
+    {
+        var handler = new MockHttpClientHandler(_ =>
+            throw new IOException("transport down"));
+        ClientPipeline pipeline = CreatePipeline(
+            handler,
+            new ImmediateRetryPolicy(0));
+        PipelineMessageClassifier classifier =
+            PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        using PipelineMessage message = CreateSseMessage(
+            pipeline,
+            classifier);
+
+        Assert.CatchAsync(
+            async () => await pipeline.SendAsync(message));
+
+        Assert.AreSame(
+            classifier,
+            message.ResponseClassifier,
+            "A failure inside the pipeline must restore the classifier " +
+            "before the exception reaches the caller.");
+    }
+
+    [Test]
+    public async Task SuccessfulSendRestoresCallerClassifier()
+    {
+        var handler = new MockHttpClientHandler(_ =>
+            Task.FromResult(CreateResponse(
+                HttpStatusCode.OK,
+                "retry: 0\ndata: one\n\n")));
+        ClientPipeline pipeline = CreatePipeline(handler);
+        PipelineMessageClassifier classifier =
+            PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
+        using PipelineMessage message = CreateSseMessage(
+            pipeline,
+            classifier);
+
+        await pipeline.SendAsync(message);
+
+        Assert.AreSame(
+            classifier,
+            message.ResponseClassifier,
+            "The private classifier must not outlive the send.");
+    }
+
+    [Test]
+    public async Task ZeroQualityAcceptIsNotWrapped()
+    {
+        int requestCount = 0;
+        var handler = new MockHttpClientHandler(_ =>
+        {
+            requestCount++;
+            return Task.FromResult(
+                requestCount == 1
+                    ? CreateDroppedResponse(
+                        "retry: 0\ndata: one\n\n")
+                    : CreateResponse(
+                        HttpStatusCode.OK,
+                        "retry: 0\ndata: two\n\n"));
+        });
+        ClientPipeline pipeline = CreatePipeline(handler);
+        using PipelineResponse response = await SendResponseAsync(
+            pipeline,
+            new Uri("https://example.test/events"),
+            accept: "text/event-stream; q=0");
+        Stream stream = response.ContentStream!;
+        var buffer = new byte[1024];
+
+        int read = await stream.ReadAsync(buffer, 0, buffer.Length);
+
+        Assert.AreEqual(
+            "retry: 0\ndata: one\n\n",
+            Encoding.UTF8.GetString(buffer, 0, read));
+        Assert.ThrowsAsync<IOException>(
+            async () => await ExpectNoFurtherReadAsync(stream, buffer),
+            "RFC 9110 gives a weight of zero the meaning 'not " +
+            "acceptable', so the stream must not have been wrapped.");
+        Assert.AreEqual(1, requestCount);
+    }
+
+    [Test]
+    public async Task ZeroQualityAmongOtherMediaTypesIsNotWrapped()
+    {
+        int requestCount = 0;
+        var handler = new MockHttpClientHandler(_ =>
+        {
+            requestCount++;
+            return Task.FromResult(
+                requestCount == 1
+                    ? CreateDroppedResponse(
+                        "retry: 0\ndata: one\n\n")
+                    : CreateResponse(
+                        HttpStatusCode.OK,
+                        "retry: 0\ndata: two\n\n"));
+        });
+        ClientPipeline pipeline = CreatePipeline(handler);
+        using PipelineResponse response = await SendResponseAsync(
+            pipeline,
+            new Uri("https://example.test/events"),
+            accept: "application/json, text/event-stream;q=0.000");
+        Stream stream = response.ContentStream!;
+        var buffer = new byte[1024];
+
+        int read = await stream.ReadAsync(buffer, 0, buffer.Length);
+
+        Assert.AreEqual(
+            "retry: 0\ndata: one\n\n",
+            Encoding.UTF8.GetString(buffer, 0, read));
+        Assert.ThrowsAsync<IOException>(
+            async () => await ExpectNoFurtherReadAsync(stream, buffer));
+        Assert.AreEqual(1, requestCount);
+    }
+
+    [TestCase("text/event-stream")]
+    [TestCase("text/event-stream;q=1")]
+    [TestCase("text/event-stream; q=0.5")]
+    [TestCase("text/event-stream ; Q = 0.001")]
+    [TestCase("text/event-stream;charset=utf-8;q=1.0")]
+    [TestCase("application/json;q=0, text/event-stream")]
+    [TestCase("text/event-stream;q=0.5;profile=x")]
+    public async Task PositiveQualityAcceptIsWrapped(string accept)
+    {
+        int requestCount = 0;
+        var handler = new MockHttpClientHandler(_ =>
+        {
+            requestCount++;
+            return Task.FromResult(
+                requestCount == 1
+                    ? CreateDroppedResponse(
+                        "retry: 0\ndata: one\n\n")
+                    : CreateResponse(
+                        HttpStatusCode.OK,
+                        "retry: 0\ndata: two\n\n"));
+        });
+        ClientPipeline pipeline = CreatePipeline(handler);
+        using PipelineResponse response = await SendResponseAsync(
+            pipeline,
+            new Uri("https://example.test/events"),
+            accept: accept);
+
+        string content = await ReadToEndAsync(response.ContentStream!);
+
+        Assert.AreEqual(
+            "retry: 0\ndata: one\n\nretry: 0\ndata: two\n\n",
+            content,
+            "An omitted or positive weight must still opt in.");
+        Assert.AreEqual(2, requestCount);
+    }
+
+    [Test]
+    public async Task ZeroLengthReadAfterDisposeThrows()
+    {
+        var handler = new MockHttpClientHandler(_ =>
+            Task.FromResult(CreateResponse(
+                HttpStatusCode.OK,
+                "retry: 0\ndata: one\n\n")));
+        ClientPipeline pipeline = CreatePipeline(handler);
+        using PipelineResponse response = await SendResponseAsync(
+            pipeline,
+            new Uri("https://example.test/events"));
+        Stream stream = response.ContentStream!;
+        var buffer = new byte[16];
+
+        stream.Dispose();
+
+        // CA2022 guards against assuming a read filled the buffer. These
+        // reads request zero bytes on purpose: the subject is the disposal
+        // contract, not the byte count.
+#pragma warning disable CA2022
+        Assert.Throws<ObjectDisposedException>(
+            () => stream.Read(buffer, 0, 0),
+            "A zero-length read must report disposal rather than " +
+            "silently returning 0.");
+        Assert.ThrowsAsync<ObjectDisposedException>(
+            async () => await stream.ReadAsync(buffer, 0, 0),
+            "The byte[] async overload must behave the same way.");
+#if NET8_0_OR_GREATER
+        Assert.ThrowsAsync<ObjectDisposedException>(
+            async () => await stream.ReadAsync(Memory<byte>.Empty),
+            "The Memory<byte> overload must behave the same way.");
+#endif
+#pragma warning restore CA2022
+    }
+
+    [Test]
+    public async Task ZeroLengthReadOnLiveStreamStillReturnsZero()
+    {
+        var handler = new MockHttpClientHandler(_ =>
+            Task.FromResult(CreateResponse(
+                HttpStatusCode.OK,
+                "retry: 0\ndata: one\n\n")));
+        ClientPipeline pipeline = CreatePipeline(handler);
+        using PipelineResponse response = await SendResponseAsync(
+            pipeline,
+            new Uri("https://example.test/events"));
+        Stream stream = response.ContentStream!;
+        var buffer = new byte[16];
+
+#pragma warning disable CA2022 // zero-byte reads are the subject here
+        Assert.AreEqual(0, stream.Read(buffer, 0, 0));
+        Assert.AreEqual(0, await stream.ReadAsync(buffer, 0, 0));
+#if NET8_0_OR_GREATER
+        Assert.AreEqual(0, await stream.ReadAsync(Memory<byte>.Empty));
+#endif
+#pragma warning restore CA2022
+        Assert.AreEqual(
+            "retry: 0\ndata: one\n\n",
+            await ReadToEndAsync(stream),
+            "A zero-length read must not consume or disturb the stream.");
+    }
+
+    [Test]
     public async Task TemporaryRedirectPreservesPostAndBody()
     {
         var requestUris = new List<Uri?>();
@@ -1366,7 +1625,8 @@ public class SsePipelineResponseHandlerTests
             string method = "GET",
             BinaryData? content = null,
             CancellationToken cancellationToken = default,
-            string? initialLastEventId = null)
+            string? initialLastEventId = null,
+            string accept = "text/event-stream")
     {
         using PipelineMessage message = pipeline.CreateMessage(
             uri,
@@ -1377,7 +1637,7 @@ public class SsePipelineResponseHandlerTests
         message.CancellationToken = cancellationToken;
         message.Request.Headers.Set(
             "Accept",
-            "text/event-stream");
+            accept);
         if (initialLastEventId is not null)
         {
             message.Request.Headers.Set(
@@ -1391,6 +1651,21 @@ public class SsePipelineResponseHandlerTests
 
         await pipeline.SendAsync(message);
         return message.ExtractResponse()!;
+    }
+
+    private static PipelineMessage CreateSseMessage(
+        ClientPipeline pipeline,
+        PipelineMessageClassifier classifier)
+    {
+        PipelineMessage message = pipeline.CreateMessage(
+            new Uri("https://example.test/events"),
+            "GET",
+            classifier);
+        message.BufferResponse = false;
+        message.Request.Headers.Set(
+            "Accept",
+            "text/event-stream");
+        return message;
     }
 
     private static PipelineResponse SendResponse(

@@ -246,6 +246,7 @@ public sealed partial class ClientPipeline
         }
         catch
         {
+            sse?.RestoreClassifier(message);
             sse?.Dispose();
             throw;
         }
@@ -286,6 +287,7 @@ public sealed partial class ClientPipeline
         }
         catch
         {
+            sse?.RestoreClassifier(message);
             sse?.Dispose();
             throw;
         }

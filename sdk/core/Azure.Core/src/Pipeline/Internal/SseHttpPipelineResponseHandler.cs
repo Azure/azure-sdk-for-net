@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Internal;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -721,15 +722,54 @@ namespace Azure.Core.Pipeline
             {
                 foreach (string part in value.Split(','))
                 {
-                    string mediaType = part.Split(';')[0].Trim();
-                    if (string.Equals(
-                        mediaType,
+                    string[] mediaRange = part.Split(';');
+                    if (!string.Equals(
+                        mediaRange[0].Trim(),
                         "text/event-stream",
                         StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+
+                    // RFC 9110 section 12.4.2: a weight of zero means "not
+                    // acceptable". Accept is what opts a request into
+                    // snapshotting and reconnection, so a caller that
+                    // explicitly rejects event streams must not be opted in
+                    // by the same token.
+                    if (!HasZeroWeight(mediaRange))
                     {
                         return true;
                     }
                 }
+            }
+
+            return false;
+        }
+
+        private static bool HasZeroWeight(string[] mediaRange)
+        {
+            for (int i = 1; i < mediaRange.Length; i++)
+            {
+                int separator = mediaRange[i].IndexOf('=');
+                if (separator < 0)
+                {
+                    continue;
+                }
+
+                if (!mediaRange[i].Substring(0, separator).Trim().Equals(
+                    "q",
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                // Only the first weight is a quality value; parameters after
+                // it are accept extensions and do not affect acceptability.
+                return double.TryParse(
+                    mediaRange[i].Substring(separator + 1).Trim(),
+                    NumberStyles.AllowDecimalPoint,
+                    CultureInfo.InvariantCulture,
+                    out double quality) && quality <= 0;
             }
 
             return false;

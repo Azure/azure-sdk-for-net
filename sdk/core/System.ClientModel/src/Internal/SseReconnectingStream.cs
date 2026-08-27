@@ -101,6 +101,7 @@ internal sealed class SseReconnectingStream : Stream
     public override int Read(byte[] buffer, int offset, int count)
     {
         ValidateReadArguments(buffer, offset, count);
+        ThrowIfDisposed();
         if (count == 0)
         {
             return 0;
@@ -180,6 +181,7 @@ internal sealed class SseReconnectingStream : Stream
         CancellationToken cancellationToken)
     {
         ValidateReadArguments(buffer, offset, count);
+        ThrowIfDisposed();
         if (count == 0)
         {
             return 0;
@@ -258,6 +260,7 @@ internal sealed class SseReconnectingStream : Stream
         Memory<byte> buffer,
         CancellationToken cancellationToken = default)
     {
+        ThrowIfDisposed();
         if (buffer.IsEmpty)
         {
             return 0;

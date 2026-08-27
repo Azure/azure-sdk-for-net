@@ -3,6 +3,7 @@
 
 using System.ClientModel.Internal;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -158,6 +159,14 @@ internal sealed class SsePipelineResponseHandler : IDisposable
         message.ResponseClassifier = _classifier;
         WrapEstablishedResponse(response);
     }
+
+    // The caller's message carries a private classifier for the duration of
+    // the send so that a 204 or a redirect is not treated as an error by the
+    // classifier the caller supplied. If the send fails, the message is still
+    // observable to the caller, so the original contract has to be put back
+    // before the exception escapes.
+    internal void RestoreClassifier(PipelineMessage message)
+        => message.ResponseClassifier = _classifier;
 
     private void WrapEstablishedResponse(PipelineResponse response)
     {
@@ -695,7 +704,7 @@ internal sealed class SsePipelineResponseHandler : IDisposable
         => status is 300 or 301 or 302 or 303 or 307 or 308;
 
     private static bool IsContentHeader(string name)
-            => name.StartsWith(
+        => name.StartsWith(
                 "Content-",
                 StringComparison.OrdinalIgnoreCase) ||
             name.Equals(
@@ -711,14 +720,52 @@ internal sealed class SsePipelineResponseHandler : IDisposable
 
         foreach (string value in accept.Split(','))
         {
-            string mediaType = value.Split(';')[0].Trim();
-            if (string.Equals(
-                mediaType,
+            string[] mediaRange = value.Split(';');
+            if (!string.Equals(
+                mediaRange[0].Trim(),
                 "text/event-stream",
                 StringComparison.OrdinalIgnoreCase))
             {
+                continue;
+            }
+
+            // RFC 9110 section 12.4.2: a weight of zero means "not
+            // acceptable". Accept is what opts a request into snapshotting
+            // and reconnection, so a caller that explicitly rejects event
+            // streams must not be opted in by the same token.
+            if (!HasZeroWeight(mediaRange))
+            {
                 return true;
             }
+        }
+
+        return false;
+    }
+
+    private static bool HasZeroWeight(string[] mediaRange)
+    {
+        for (int i = 1; i < mediaRange.Length; i++)
+        {
+            int separator = mediaRange[i].IndexOf('=');
+            if (separator < 0)
+            {
+                continue;
+            }
+
+            if (!mediaRange[i].Substring(0, separator).Trim().Equals(
+                "q",
+                StringComparison.OrdinalIgnoreCase))
+            {
+                continue;
+            }
+
+            // Only the first weight is a quality value; parameters after it
+            // are accept extensions and do not affect acceptability.
+            return double.TryParse(
+                mediaRange[i].Substring(separator + 1).Trim(),
+                NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture,
+                out double quality) && quality <= 0;
         }
 
         return false;

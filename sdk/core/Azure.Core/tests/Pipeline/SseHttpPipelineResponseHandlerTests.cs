@@ -208,6 +208,165 @@ namespace Azure.Core.Tests
         }
 
         [Test]
+        public async Task ZeroQualityAcceptIsNotWrapped()
+        {
+            int requestCount = 0;
+            var transport = new MockTransport(_ =>
+            {
+                requestCount++;
+                return requestCount == 1
+                    ? CreateDroppedResponse("retry: 0\ndata: one\n\n")
+                    : CreateSseResponse("retry: 0\ndata: two\n\n");
+            });
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"),
+                accept: "text/event-stream; q=0");
+
+            await pipeline.SendAsync(message, CancellationToken.None);
+            Stream stream = message.Response.ContentStream!;
+            var buffer = new byte[1024];
+            int read = await stream.ReadAsync(buffer, 0, buffer.Length);
+
+            Assert.AreEqual(
+                "retry: 0\ndata: one\n\n",
+                Encoding.UTF8.GetString(buffer, 0, read));
+            Assert.ThrowsAsync<IOException>(
+                async () => await ExpectNoFurtherReadAsync(stream, buffer),
+                "RFC 9110 gives a weight of zero the meaning 'not " +
+                "acceptable', so the stream must not have been wrapped.");
+            Assert.AreEqual(1, requestCount);
+        }
+
+        [Test]
+        public async Task ZeroQualityAmongOtherMediaTypesIsNotWrapped()
+        {
+            int requestCount = 0;
+            var transport = new MockTransport(_ =>
+            {
+                requestCount++;
+                return requestCount == 1
+                    ? CreateDroppedResponse("retry: 0\ndata: one\n\n")
+                    : CreateSseResponse("retry: 0\ndata: two\n\n");
+            });
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"),
+                accept: "application/json, text/event-stream;q=0.000");
+
+            await pipeline.SendAsync(message, CancellationToken.None);
+            Stream stream = message.Response.ContentStream!;
+            var buffer = new byte[1024];
+            int read = await stream.ReadAsync(buffer, 0, buffer.Length);
+
+            Assert.AreEqual(
+                "retry: 0\ndata: one\n\n",
+                Encoding.UTF8.GetString(buffer, 0, read));
+            Assert.ThrowsAsync<IOException>(
+                async () => await ExpectNoFurtherReadAsync(stream, buffer));
+            Assert.AreEqual(1, requestCount);
+        }
+
+        [TestCase("text/event-stream")]
+        [TestCase("text/event-stream;q=1")]
+        [TestCase("text/event-stream; q=0.5")]
+        [TestCase("text/event-stream ; Q = 0.001")]
+        [TestCase("text/event-stream;charset=utf-8;q=1.0")]
+        [TestCase("application/json;q=0, text/event-stream")]
+        [TestCase("text/event-stream;q=0.5;profile=x")]
+        public async Task PositiveQualityAcceptIsWrapped(string accept)
+        {
+            int requestCount = 0;
+            var transport = new MockTransport(_ =>
+            {
+                requestCount++;
+                return requestCount == 1
+                    ? CreateDroppedResponse("retry: 0\ndata: one\n\n")
+                    : CreateSseResponse("retry: 0\ndata: two\n\n");
+            });
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"),
+                accept: accept);
+
+            await pipeline.SendAsync(message, CancellationToken.None);
+            string content = await ReadToEndAsync(
+                message.Response.ContentStream!);
+
+            Assert.AreEqual(
+                "retry: 0\ndata: one\n\nretry: 0\ndata: two\n\n",
+                content,
+                "An omitted or positive weight must still opt in.");
+            Assert.AreEqual(2, requestCount);
+        }
+
+        [Test]
+        public async Task ZeroLengthReadAfterDisposeThrows()
+        {
+            var transport = new MockTransport(_ =>
+                CreateSseResponse("retry: 0\ndata: one\n\n"));
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"));
+
+            await pipeline.SendAsync(message, CancellationToken.None);
+            Stream stream = message.Response.ContentStream!;
+            var buffer = new byte[16];
+
+            stream.Dispose();
+
+            // CA2022 guards against assuming a read filled the buffer.
+            // These reads request zero bytes on purpose: the subject is the
+            // disposal contract, not the byte count.
+#pragma warning disable CA2022
+            Assert.Throws<ObjectDisposedException>(
+                () => stream.Read(buffer, 0, 0),
+                "A zero-length read must report disposal rather than " +
+                "silently returning 0.");
+            Assert.ThrowsAsync<ObjectDisposedException>(
+                async () => await stream.ReadAsync(buffer, 0, 0),
+                "The byte[] async overload must behave the same way.");
+#if NET8_0_OR_GREATER
+            Assert.ThrowsAsync<ObjectDisposedException>(
+                async () => await stream.ReadAsync(Memory<byte>.Empty),
+                "The Memory<byte> overload must behave the same way.");
+#endif
+#pragma warning restore CA2022
+        }
+
+        [Test]
+        public async Task ZeroLengthReadOnLiveStreamStillReturnsZero()
+        {
+            var transport = new MockTransport(_ =>
+                CreateSseResponse("retry: 0\ndata: one\n\n"));
+            HttpPipeline pipeline = new(transport);
+            using HttpMessage message = CreateMessage(
+                pipeline,
+                new Uri("https://example.test/events"));
+
+            await pipeline.SendAsync(message, CancellationToken.None);
+            Stream stream = message.Response.ContentStream!;
+            var buffer = new byte[16];
+
+#pragma warning disable CA2022 // zero-byte reads are the subject here
+            Assert.AreEqual(0, stream.Read(buffer, 0, 0));
+            Assert.AreEqual(0, await stream.ReadAsync(buffer, 0, 0));
+#if NET8_0_OR_GREATER
+            Assert.AreEqual(0, await stream.ReadAsync(Memory<byte>.Empty));
+#endif
+#pragma warning restore CA2022
+            Assert.AreEqual(
+                "retry: 0\ndata: one\n\n",
+                await ReadToEndAsync(stream),
+                "A zero-length read must not consume or disturb the " +
+                "stream.");
+        }
+
+        [Test]
         public async Task TemporaryRedirectPreservesPostAndBody()
         {
             var requestUris = new List<Uri>();
@@ -1215,7 +1374,8 @@ namespace Azure.Core.Tests
             Uri uri,
             RequestMethod? method = null,
             BinaryData? content = null,
-            string? initialLastEventId = null)
+            string? initialLastEventId = null,
+            string accept = "text/event-stream")
         {
             HttpMessage message = pipeline.CreateMessage();
             message.BufferResponse = false;
@@ -1223,7 +1383,7 @@ namespace Azure.Core.Tests
             message.Request.Uri.Reset(uri);
             message.Request.Headers.Add(
                 "Accept",
-                "text/event-stream");
+                accept);
             if (initialLastEventId != null)
             {
                 message.Request.Headers.Add(
