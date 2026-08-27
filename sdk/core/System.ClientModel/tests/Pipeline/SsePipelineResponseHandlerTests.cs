@@ -277,7 +277,7 @@ public class SsePipelineResponseHandlerTests
         var handler = new SyncTrackingHandler(requestCount =>
             requestCount == 1
                 ? CreateDroppedResponse(
-                    "retry: 0\nid: one\ndata: one\n\n")
+                    "retry: 0\ndata: one\n\n")
                 : new HttpResponseMessage(HttpStatusCode.NoContent));
         ClientPipeline pipeline = CreatePipeline(handler);
         using PipelineResponse response = SendResponse(
@@ -286,7 +286,7 @@ public class SsePipelineResponseHandlerTests
 
         string content = ReadToEnd(response.ContentStream!);
 
-        Assert.AreEqual("retry: 0\nid: one\ndata: one\n\n", content);
+        Assert.AreEqual("retry: 0\ndata: one\n\n", content);
         Assert.AreEqual(2, handler.RequestCount);
     }
 
@@ -450,7 +450,7 @@ public class SsePipelineResponseHandlerTests
             {
                 return Task.FromResult(
                     CreateDroppedResponse(
-                        "retry: 0\nid: one\ndata: one\n\n"));
+                        "retry: 0\ndata: one\n\n"));
             }
 
             return Task.FromResult(
@@ -524,64 +524,73 @@ public class SsePipelineResponseHandlerTests
     }
 
     [Test]
-    public async Task DroppedStreamWithoutEventIdDoesNotReconnect()
+    public async Task DroppedStreamWithoutEventIdStillReconnects()
     {
         int requestCount = 0;
-        var handler = new MockHttpClientHandler(_ =>
+        var sentLastEventIds = new List<string?>();
+        var handler = new MockHttpClientHandler(request =>
         {
             requestCount++;
+            sentLastEventIds.Add(
+                request.Headers.TryGetValues(
+                    "Last-Event-ID",
+                    out IEnumerable<string>? values)
+                        ? string.Join(",", values)
+                        : null);
             return Task.FromResult(
                 requestCount == 1
                     ? CreateDroppedResponse(
                         "retry: 0\ndata: one\n\n")
-                    : new HttpResponseMessage(
-                        HttpStatusCode.NoContent));
+                    : CreateResponse(
+                        HttpStatusCode.OK,
+                        "retry: 0\ndata: two\n\n"));
         });
         ClientPipeline pipeline = CreatePipeline(handler);
         using PipelineResponse response = await SendResponseAsync(
             pipeline,
             new Uri("https://example.test/events"));
-        Stream stream = response.ContentStream!;
-        var buffer = new byte[1024];
 
-        int read = await stream.ReadAsync(buffer, 0, buffer.Length);
+        string content = await ReadToEndAsync(response.ContentStream!);
 
         Assert.AreEqual(
-            "retry: 0\ndata: one\n\n",
-            Encoding.UTF8.GetString(buffer, 0, read),
-            "Events delivered before the drop are still returned.");
-        Assert.ThrowsAsync<IOException>(
-            async () => await ExpectNoFurtherReadAsync(stream, buffer),
-            "A service that sends no id cannot resume, so the drop " +
-            "must surface instead of being silently replayed.");
+            "retry: 0\ndata: one\n\nretry: 0\ndata: two\n\n",
+            content,
+            "The stream continues after the drop even though the " +
+            "service published no resumption token.");
         Assert.AreEqual(
-            1,
+            2,
             requestCount,
-            "Replaying without a last event id would restart " +
-            "generation and splice a divergent completion onto the " +
-            "events already delivered.");
+            "An absent id is an optional SSE field, not a signal to " +
+            "abandon the rest of the stream.");
+        CollectionAssert.AreEqual(
+            new string?[] { null, null },
+            sentLastEventIds,
+            "Last-Event-ID is omitted when there is no id to send.");
     }
 
     [Test]
-    public void SyncDroppedStreamWithoutEventIdDoesNotReconnect()
+    public void SyncDroppedStreamWithoutEventIdStillReconnects()
     {
-        var handler = new SyncTrackingHandler(_ =>
-            CreateDroppedResponse("retry: 0\ndata: one\n\n"));
+        var handler = new SyncTrackingHandler(count =>
+            count == 1
+                ? CreateDroppedResponse("retry: 0\ndata: one\n\n")
+                : CreateResponse(
+                    HttpStatusCode.OK,
+                    "retry: 0\ndata: two\n\n"));
         ClientPipeline pipeline = CreatePipeline(handler);
         using PipelineResponse response = SendResponse(
             pipeline,
             new Uri("https://example.test/events"));
-        Stream stream = response.ContentStream!;
-        var buffer = new byte[1024];
 
-        int read = stream.Read(buffer, 0, buffer.Length);
+        string content = ReadToEnd(response.ContentStream!);
 
         Assert.AreEqual(
-            "retry: 0\ndata: one\n\n",
-            Encoding.UTF8.GetString(buffer, 0, read));
-        Assert.Throws<IOException>(
-            () => ExpectNoFurtherRead(stream, buffer));
-        Assert.AreEqual(1, handler.RequestCount);
+            "retry: 0\ndata: one\n\nretry: 0\ndata: two\n\n",
+            content);
+        Assert.AreEqual(2, handler.RequestCount);
+        Assert.IsNull(
+            handler.LastEventId,
+            "Last-Event-ID is omitted when there is no id to send.");
     }
 
     [Test]
@@ -612,6 +621,99 @@ public class SsePipelineResponseHandlerTests
             requestCount,
             "Restarting from the beginning is exactly correct when " +
             "no event has been dispatched yet.");
+    }
+
+    [Test]
+    public async Task CommentOnlyBlocksDoNotBreakReconnect()
+    {
+        int requestCount = 0;
+        var handler = new MockHttpClientHandler(_ =>
+        {
+            requestCount++;
+            return Task.FromResult(
+                requestCount == 1
+                    ? CreateDroppedResponse(
+                        ": keep-alive\n\n: still here\n\n")
+                    : CreateResponse(
+                        HttpStatusCode.OK,
+                        "retry: 0\ndata: one\n\n"));
+        });
+        ClientPipeline pipeline = CreatePipeline(handler);
+        using PipelineResponse response = await SendResponseAsync(
+            pipeline,
+            new Uri("https://example.test/events"));
+
+        string content = await ReadToEndAsync(response.ContentStream!);
+
+        Assert.AreEqual(
+            ": keep-alive\n\n: still here\n\nretry: 0\ndata: one\n\n",
+            content,
+            "Comment lines are passed through untouched.");
+        Assert.AreEqual(
+            2,
+            requestCount,
+            "A block that carries no data field dispatches no event, " +
+            "so a drop after one must still reconnect.");
+    }
+
+    [Test]
+    public async Task RetryOnlyBlocksDoNotBreakReconnect()
+    {
+        int requestCount = 0;
+        var handler = new MockHttpClientHandler(_ =>
+        {
+            requestCount++;
+            return Task.FromResult(
+                requestCount == 1
+                    ? CreateDroppedResponse("retry: 0\n\n")
+                    : CreateResponse(
+                        HttpStatusCode.OK,
+                        "retry: 0\ndata: one\n\n"));
+        });
+        ClientPipeline pipeline = CreatePipeline(handler);
+        using PipelineResponse response = await SendResponseAsync(
+            pipeline,
+            new Uri("https://example.test/events"));
+
+        string content = await ReadToEndAsync(response.ContentStream!);
+
+        Assert.AreEqual(
+            "retry: 0\n\nretry: 0\ndata: one\n\n",
+            content);
+        Assert.AreEqual(
+            2,
+            requestCount,
+            "A retry field is a reconnection hint, not an event.");
+    }
+
+    [Test]
+    public async Task EmptyEventBlocksAreToleratedAndReconnect()
+    {
+        int requestCount = 0;
+        var handler = new MockHttpClientHandler(_ =>
+        {
+            requestCount++;
+            return Task.FromResult(
+                requestCount == 1
+                    ? CreateDroppedResponse(
+                        "retry: 0\ndata: one\n\n\n\n\n")
+                    : CreateResponse(
+                        HttpStatusCode.OK,
+                        "\n\ndata: two\n\n"));
+        });
+        ClientPipeline pipeline = CreatePipeline(handler);
+        using PipelineResponse response = await SendResponseAsync(
+            pipeline,
+            new Uri("https://example.test/events"));
+
+        string content = await ReadToEndAsync(response.ContentStream!);
+
+        Assert.AreEqual(
+            "retry: 0\ndata: one\n\n\n\n\n\n\ndata: two\n\n",
+            content,
+            "Completely empty events some services emit are passed " +
+            "through and must not terminate or corrupt the stream.");
+        Assert.AreEqual(2, requestCount);
     }
 
     [Test]
@@ -820,7 +922,7 @@ public class SsePipelineResponseHandlerTests
             return Task.FromResult(
                 requestCount == 1
                     ? CreateDroppedResponse(
-                        "retry: 0\nid: a\ndata: one\n\n")
+                        "retry: 0\ndata: one\n\n")
                     : new HttpResponseMessage(
                         HttpStatusCode.NoContent));
         });
@@ -838,7 +940,7 @@ public class SsePipelineResponseHandlerTests
                 0));
         Assert.AreEqual(1, requestCount);
         Assert.AreEqual(
-            "retry: 0\nid: a\ndata: one\n\n",
+            "retry: 0\ndata: one\n\n",
             await ReadToEndAsync(stream));
         Assert.AreEqual(2, requestCount);
         Assert.AreEqual(0, stream.Read(new byte[1], 0, 1));
@@ -985,7 +1087,7 @@ public class SsePipelineResponseHandlerTests
             if (_requestCount == 1)
             {
                 return CreateDroppedResponse(
-                    "retry: 0\nid: one\ndata: one\n\n");
+                    "retry: 0\ndata: one\n\n");
             }
 
             ReconnectStarted.TrySetResult(true);
@@ -1077,7 +1179,7 @@ public class SsePipelineResponseHandlerTests
             {
                 Content = new StreamContent(
                     new ThrowAtEndStream(
-                        "retry: 0\nid: one\ndata: one\n\n"))
+                        "retry: 0\ndata: one\n\n"))
             };
             dropped.Content.Headers.ContentType =
                 new MediaTypeHeaderValue("text/event-stream")
@@ -1115,7 +1217,7 @@ public class SsePipelineResponseHandlerTests
             return Task.FromResult(
                 requestCount == 1
                     ? CreateDroppedResponse(
-                        "retry: 0\nid: first\ndata: one\n\n")
+                        "retry: 0\ndata: one\n\n")
                     : CreateJsonResponse("data: gateway\n\n"));
         });
         ClientPipeline pipeline = CreatePipeline(handler);
@@ -1160,7 +1262,7 @@ public class SsePipelineResponseHandlerTests
             {
                 return Task.FromResult(
                     CreateDroppedResponse(
-                        "retry: 0\nid: one\ndata: one\n\n"));
+                        "retry: 0\ndata: one\n\n"));
             }
 
             // Both attempts of the first reconnect fail, so the retry
@@ -1408,15 +1510,6 @@ public class SsePipelineResponseHandlerTests
         byte[] buffer)
     {
         int read = await stream.ReadAsync(buffer, 0, buffer.Length);
-        Assert.Fail(
-            $"Expected the drop to surface, but read {read} bytes.");
-    }
-
-    private static void ExpectNoFurtherRead(
-        Stream stream,
-        byte[] buffer)
-    {
-        int read = stream.Read(buffer, 0, buffer.Length);
         Assert.Fail(
             $"Expected the drop to surface, but read {read} bytes.");
     }

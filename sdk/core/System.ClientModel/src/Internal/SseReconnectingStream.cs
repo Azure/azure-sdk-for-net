@@ -63,7 +63,6 @@ internal sealed class SseReconnectingStream : Stream
     private bool _reconnectImmediately;
     private bool _endOfStream;
     private bool _currentFaulted;
-    private bool _dispatchedEvent;
     private ExceptionDispatchInfo? _currentFault;
     private volatile bool _disposed;
     private bool _isFirstLine = true;
@@ -335,23 +334,21 @@ internal sealed class SseReconnectingStream : Stream
         _currentFault = ExceptionDispatchInfo.Capture(exception);
     }
 
-    // A reconnect can only land the caller back at the right place in the
-    // stream when the service participates in the SSE resumption contract by
-    // emitting "id:" fields. Without a last event id there is nothing to send
-    // in Last-Event-ID, so the service restarts the stream from the beginning
-    // and every event already handed to the caller would be delivered a second
-    // time. Silently duplicating events is worse than surfacing the drop, so
-    // resumption is only attempted when it can be done faithfully.
+    // Reconnection follows the WHATWG processing model: a lost connection is
+    // retried, and Last-Event-ID is sent only when a last event id is
+    // non-empty. A missing or explicitly cleared id does not stop the
+    // reconnect - it only means the header is omitted and the service may
+    // replay events the caller has already seen, which streaming consumers
+    // are expected to handle. Refusing would guarantee the rest of the stream
+    // could never be received, which is the worse outcome.
     //
-    // A server-issued last event id makes a replay safe on its own: the
-    // service published a resumption token and is expected to continue from
-    // it rather than repeat work. Without one, replaying is only acceptable
-    // when nothing has been dispatched yet and the request method is
-    // idempotent, since RFC 9110 section 9.2.2 forbids automatically retrying
-    // a non-idempotent request that may already have been applied.
+    // The one exception is RFC 9110 section 9.2.2: a non-idempotent request
+    // must not be replayed automatically, because it may already have been
+    // applied. A server-issued last event id lifts that restriction, since
+    // publishing a resumption token is the service asking to be continued
+    // from a point rather than to have the request applied again.
     private bool CanResumeFaithfully
-        => !string.IsNullOrEmpty(_lastEventId) ||
-            (!_dispatchedEvent && !_requireLastEventId);
+        => !string.IsNullOrEmpty(_lastEventId) || !_requireLastEventId;
 
     private bool TryFailUnresumableStream()
     {
@@ -603,7 +600,6 @@ internal sealed class SseReconnectingStream : Stream
                 eventBytes.Array!,
                 eventBytes.Offset,
                 checked((int)_pendingEvent.Length));
-            _dispatchedEvent = true;
         }
 
         _pendingEvent.SetLength(0);
