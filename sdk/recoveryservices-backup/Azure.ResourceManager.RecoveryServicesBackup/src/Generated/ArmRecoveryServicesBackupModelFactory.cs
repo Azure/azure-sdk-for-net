@@ -1766,8 +1766,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 threatDescription,
                 lastUpdatedOn,
                 threatState,
-                threatStartOn,
-                threatEndOn,
+                default,
+                default,
                 threatUri,
                 threatSeverity,
                 default);
@@ -1863,7 +1863,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.PointInTimeRange"/> instance for mocking. </returns>
         public static PointInTimeRange PointInTimeRange(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default)
         {
-            return new PointInTimeRange(startOn, endOn, default);
+            return new PointInTimeRange(default, default, default);
         }
 
         /// <param name="threatStatus"> Threat status of the recovery point. </param>
@@ -4091,7 +4091,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <returns> A new <see cref="Models.BackupHourlySchedule"/> instance for mocking. </returns>
         public static BackupHourlySchedule BackupHourlySchedule(int? interval = default, DateTimeOffset? scheduleWindowStartOn = default, int? scheduleWindowDuration = default)
         {
-            return new BackupHourlySchedule(interval, scheduleWindowStartOn, scheduleWindowDuration, default);
+            return new BackupHourlySchedule(interval, default, scheduleWindowDuration, default);
         }
 
         /// <param name="scheduleRunFrequency"> Frequency of the schedule operation of this policy. </param>
@@ -4437,8 +4437,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 backupManagementType,
                 operation,
                 status,
-                startOn,
-                endOn,
+                default,
+                default,
                 activityId,
                 jobType,
                 default);
@@ -4469,8 +4469,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 backupManagementType,
                 operation,
                 status,
-                startOn,
-                endOn,
+                default,
+                default,
                 activityId,
                 default,
                 default,
@@ -4534,8 +4534,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             return new IaasVmBackupJobTaskDetails(
                 taskId,
-                startOn,
-                endOn,
+                default,
+                default,
                 instanceId,
                 duration,
                 status,
@@ -4568,8 +4568,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 backupManagementType,
                 operation,
                 status,
-                startOn,
-                endOn,
+                default,
+                default,
                 activityId,
                 default,
                 default,
@@ -4606,8 +4606,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 backupManagementType,
                 operation,
                 status,
-                startOn,
-                endOn,
+                default,
+                default,
                 activityId,
                 default,
                 default,
@@ -4674,8 +4674,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 backupManagementType,
                 operation,
                 status,
-                startOn,
-                endOn,
+                default,
+                default,
                 activityId,
                 default,
                 default,
@@ -4751,8 +4751,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 backupManagementType,
                 operation,
                 status,
-                startOn,
-                endOn,
+                default,
+                default,
                 activityId,
                 default,
                 default,
@@ -4798,8 +4798,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             return new DpmBackupJobTaskDetails(
                 taskId,
-                startOn,
-                endOn,
+                default,
+                default,
                 duration,
                 status,
                 default);
@@ -4830,8 +4830,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 backupManagementType,
                 operation,
                 status,
-                startOn,
-                endOn,
+                default,
+                default,
                 activityId,
                 default,
                 default,
@@ -4876,8 +4876,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         {
             return new MabBackupJobTaskDetails(
                 taskId,
-                startOn,
-                endOn,
+                default,
+                default,
                 duration,
                 status,
                 default);
@@ -4905,8 +4905,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 backupManagementType,
                 operation,
                 status,
-                startOn,
-                endOn,
+                default,
+                default,
                 activityId,
                 default,
                 default,
@@ -7097,8 +7097,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// RestoreRequestResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include , , , , , , , , , , , , ,  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include , , , , , , , , , , , , ,  and .
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.TriggerRestoreContent"/> instance for mocking. </returns>
@@ -7126,8 +7126,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// ProtectableContainerResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include  and .
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.ProtectableContainerResource"/> instance for mocking. </returns>
@@ -7155,8 +7155,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// WorkloadItemResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include , , , , ,  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include , , , , ,  and .
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.WorkloadItemResource"/> instance for mocking. </returns>
@@ -7184,8 +7184,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// BackupRequestResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include ,  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include ,  and .
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.TriggerBackupContent"/> instance for mocking. </returns>
@@ -7213,8 +7213,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// ILRRequestResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include  and .
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.ProvisionIlrConnectionContent"/> instance for mocking. </returns>
@@ -7242,8 +7242,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// WorkloadProtectableItemResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include , , , , , , , , , , , ,  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include , , , , , , , , , , , ,  and .
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.WorkloadProtectableItemResource"/> instance for mocking. </returns>

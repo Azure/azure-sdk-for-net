@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(AllowedActions))
             {
@@ -213,8 +213,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             string stateDescription = default;
             IReadOnlyList<AsrTask> tasks = default;
             IReadOnlyList<SiteRecoveryJobErrorDetails> errors = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             IReadOnlyList<string> allowedActions = default;
             string targetObjectId = default;
             string targetObjectName = default;
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("allowedActions"u8))
@@ -352,8 +352,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 stateDescription,
                 tasks ?? new ChangeTrackingList<AsrTask>(),
                 errors ?? new ChangeTrackingList<SiteRecoveryJobErrorDetails>(),
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 allowedActions ?? new ChangeTrackingList<string>(),
                 targetObjectId,
                 targetObjectName,

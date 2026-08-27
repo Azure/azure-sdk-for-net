@@ -530,8 +530,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DataReplicationJobProperties(
                 displayName,
                 state,
-                startOn,
-                endOn,
+                default,
+                default,
                 objectId,
                 objectName,
                 objectInternalId,
@@ -563,8 +563,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             return new DataReplicationTask(
                 taskName,
                 state,
-                startOn,
-                endOn,
+                default,
+                default,
                 customInstanceType is null ? default : new DataReplicationTaskCustomProperties(customInstanceType, default),
                 (childrenJobs ?? new ChangeTrackingList<DataReplicationJobData>()).ToList(),
                 default);
@@ -982,8 +982,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 name,
                 displayName,
                 state,
-                startOn,
-                endOn,
+                default,
+                default,
                 default);
         }
 
