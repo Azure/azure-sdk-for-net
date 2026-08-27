@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -40,5 +40,22 @@ namespace Azure.Storage.Blobs.Models
         /// REST documentation</a> for range limitation details.
         /// </summary>
         public DownloadTransferValidationOptions TransferValidation { get; set; }
+
+        /// <summary>
+        /// Optional. The layout endpoint for this download, optimized for locality.
+        /// When set, the SDK rewrites the outgoing request URI's
+        /// host/port to the specified endpoint while preserving the original Host header.
+        /// <para>
+        /// Enumerate the pages returned by
+        /// <see cref="Specialized.BlobBaseClient.GetLayoutAsync(BlobGetLayoutOptions, System.Threading.CancellationToken)"/>
+        /// and select the endpoint whose layout range covers the offset of the
+        /// requested <see cref="Range"/>; pass that value here.
+        /// </para>
+        /// <para>
+        /// When null (the default), the request is sent to the client's
+        /// configured endpoint with no rewriting.
+        /// </para>
+        /// </summary>
+        public string LayoutEndpoint { get; set; }
     }
 }

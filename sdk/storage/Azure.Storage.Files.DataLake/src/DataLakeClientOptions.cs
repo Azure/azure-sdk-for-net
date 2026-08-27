@@ -242,6 +242,7 @@ namespace Azure.Storage.Files.DataLake
 
             this.Initialize();
             AddHeadersAndQueryParameters();
+            this.AddPolicy(DataLocalityPolicy.Shared, HttpPipelinePosition.PerCall);
         }
 
         /// <summary> Initializes a new instance of DataLakeClientOptions from configuration. </summary>

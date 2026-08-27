@@ -287,6 +287,7 @@ namespace Azure.Storage.Blobs
 
             this.Initialize();
             AddHeadersAndQueryParameters();
+            this.AddPolicy(DataLocalityPolicy.Shared, HttpPipelinePosition.PerCall);
         }
 
         /// <summary> Initializes a new instance of BlobClientOptions from configuration. </summary>

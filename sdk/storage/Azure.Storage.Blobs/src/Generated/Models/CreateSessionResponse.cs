@@ -18,7 +18,7 @@ namespace Azure.Storage.Blobs.Models
 
         /// <summary> Initializes a new instance of <see cref="CreateSessionResponse"/>. </summary>
         /// <param name="id"> A unique identifier for the created session. </param>
-        /// <param name="expiration"> The time when the session will expire. The format follows RFC 1123. </param>
+        /// <param name="expiration"> The time when the session will expire. </param>
         /// <param name="authenticationType"> The type of authentication required to create the session. The only type currently supported is HMAC. </param>
         /// <param name="credentials"> The credentials used to authorize subsequent requests in the session. </param>
         internal CreateSessionResponse(string id, DateTimeOffset? expiration, AuthenticationType? authenticationType, SessionCredentials credentials)
@@ -32,7 +32,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> A unique identifier for the created session. </summary>
         public string Id { get; }
 
-        /// <summary> The time when the session will expire. The format follows RFC 1123. </summary>
+        /// <summary> The time when the session will expire. </summary>
         public DateTimeOffset? Expiration { get; }
 
         /// <summary> The type of authentication required to create the session. The only type currently supported is HMAC. </summary>
