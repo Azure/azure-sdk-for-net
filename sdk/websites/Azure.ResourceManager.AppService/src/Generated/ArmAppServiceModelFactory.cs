@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmAppServiceModelFactory
     {
+        /// <summary> Object with a list of the resources that need to be moved and the resource group they should be moved to. </summary>
         /// <param name="targetResourceGroup"></param>
         /// <param name="resources"></param>
         /// <returns> A new <see cref="Models.CsmMoveResourceEnvelope"/> instance for mocking. </returns>
@@ -69,6 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default), default);
         }
 
+        /// <summary> Description of an App Service Environment. </summary>
         /// <param name="provisioningState"> Provisioning state of the App Service Environment. </param>
         /// <param name="status"> Current status of the App Service Environment. </param>
         /// <param name="virtualNetwork"> Description of the Virtual Network. </param>
@@ -122,6 +124,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Specification for using a Virtual Network. </summary>
         /// <param name="id"> Resource id of the Virtual Network. </param>
         /// <param name="name"> Name of the Virtual Network (read-only). </param>
         /// <param name="resourceType"> Resource type of the Virtual Network (read-only). </param>
@@ -132,6 +135,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceVirtualNetworkProfile(id, name, resourceType, subnet, default);
         }
 
+        /// <summary> Name value pair. </summary>
         /// <param name="name"> Pair name. </param>
         /// <param name="value"> Pair value. </param>
         /// <returns> A new <see cref="Models.AppServiceNameValuePair"/> instance for mocking. </returns>
@@ -140,6 +144,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceNameValuePair(name, value, default);
         }
 
+        /// <summary> Describes the result of resource validation. </summary>
         /// <param name="status"> Result of validation. </param>
         /// <param name="error"> Error details for the case when validation fails. </param>
         /// <returns> A new <see cref="Models.AppServiceValidateResult"/> instance for mocking. </returns>
@@ -148,6 +153,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceValidateResult(status, error, default);
         }
 
+        /// <summary> Error details for when validation fails. </summary>
         /// <param name="code"> Validation error code. </param>
         /// <param name="message"> Validation error message. </param>
         /// <returns> A new <see cref="Models.ValidateResponseError"/> instance for mocking. </returns>
@@ -156,6 +162,10 @@ namespace Azure.ResourceManager.AppService.Models
             return new ValidateResponseError(code, message, default);
         }
 
+        /// <summary>
+        /// List of available locations (regions or App Service Environments) for
+        /// deployment of App Service resources.
+        /// </summary>
         /// <param name="locations"> Available regions. </param>
         /// <param name="hostingEnvironments"> Available App Service Environments with full descriptions of the environments. </param>
         /// <param name="hostingEnvironmentDeploymentInfos"> Available App Service Environments with basic information. </param>
@@ -190,6 +200,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Information needed to create resources on an App Service Environment. </summary>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="location"> Location of the App Service Environment. </param>
         /// <returns> A new <see cref="Models.HostingEnvironmentDeploymentInfo"/> instance for mocking. </returns>
@@ -260,6 +271,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Resource name availability request content. </summary>
         /// <param name="name"> Resource name to verify. </param>
         /// <param name="resourceType"> Resource type used for verification. </param>
         /// <param name="isFqdn"> Is fully qualified domain name. </param>
@@ -270,6 +282,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceNameAvailabilityContent(name, resourceType, isFqdn, environmentId, default);
         }
 
+        /// <summary> Information regarding availability of a resource name. </summary>
         /// <param name="isNameAvailable"> &lt;code&gt;true&lt;/code&gt; indicates name is valid and available. &lt;code&gt;false&lt;/code&gt; indicates the name is invalid, unavailable, or both. </param>
         /// <param name="reason"> &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable. </param>
         /// <param name="message"> If reason == invalid, provide the user with the reason why the given name is invalid, and provide the resource naming requirements so that the user can select a valid name. If reason == AlreadyExists, explain that resource name is already in use, and direct them to select a different name. </param>
@@ -300,6 +313,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Identifies an object. </summary>
         /// <param name="name"> Name of the object. </param>
         /// <returns> A new <see cref="Models.AppServiceDomainNameIdentifier"/> instance for mocking. </returns>
         public static AppServiceDomainNameIdentifier AppServiceDomainNameIdentifier(string name = default)
@@ -307,6 +321,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceDomainNameIdentifier(name, default);
         }
 
+        /// <summary> The DnlResourceNameAvailabilityContent. </summary>
         /// <param name="resourceGroupName"> Resource group name. </param>
         /// <param name="autoGeneratedDomainNameLabelScope">
         /// Indicates the endpoint name reuse scope.The default value is TenantReuse.
@@ -320,6 +335,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DnlResourceNameAvailabilityContent(resourceGroupName, autoGeneratedDomainNameLabelScope, name, resourceType, default);
         }
 
+        /// <summary> Information regarding availability of a resource name for DNL apps with regionalized default hostnames. </summary>
         /// <param name="hostName"></param>
         /// <param name="nameAvailable"> &lt;code&gt;true&lt;/code&gt; indicates name is valid and available. &lt;code&gt;false&lt;/code&gt; indicates the name is invalid, unavailable, or both. </param>
         /// <param name="reason"> &lt;code&gt;Invalid&lt;/code&gt; indicates the name provided does not match Azure App Service naming requirements. &lt;code&gt;AlreadyExists&lt;/code&gt; indicates that the name is already in use and is therefore unavailable. </param>
@@ -369,6 +385,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Collection of SKU information. </summary>
         /// <param name="resourceType"> Resource type that this SKU applies to. </param>
         /// <param name="skus"> List of SKUs the subscription is able to use. </param>
         /// <returns> A new <see cref="Models.AppServiceSkuResult"/> instance for mocking. </returns>
@@ -379,6 +396,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceSkuResult(resourceType, (skus ?? new ChangeTrackingList<GlobalCsmSkuDescription>()).ToList(), default);
         }
 
+        /// <summary> A Global SKU Description. </summary>
         /// <param name="name"> Name of the resource SKU. </param>
         /// <param name="tier"> Service Tier of the resource SKU. </param>
         /// <param name="size"> Size specifier of the resource SKU. </param>
@@ -403,6 +421,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Description of the App Service plan scale options. </summary>
         /// <param name="minimum"> Minimum number of workers for this App Service plan SKU. </param>
         /// <param name="maximum"> Maximum number of workers for this App Service plan SKU. </param>
         /// <param name="elasticMaximum"> Maximum number of Elastic workers for this App Service plan SKU. </param>
@@ -420,6 +439,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Describes the capabilities/features allowed for a specific SKU. </summary>
         /// <param name="name"> Name of the SKU capability. </param>
         /// <param name="value"> Value of the SKU capability. </param>
         /// <param name="reason"> Reason of the SKU capability. </param>
@@ -510,6 +530,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Meta data about operation used for display in portal. </summary>
         /// <param name="provider"></param>
         /// <param name="resource"></param>
         /// <param name="operation"></param>
@@ -520,6 +541,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new CsmOperationDisplay(provider, resource, operation, description, default);
         }
 
+        /// <summary> Resource metrics service provided by Microsoft.Insights resource provider. </summary>
         /// <param name="metricSpecifications"></param>
         /// <param name="logSpecifications"></param>
         /// <returns> A new <see cref="Models.ServiceSpecification"/> instance for mocking. </returns>
@@ -531,6 +553,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ServiceSpecification((metricSpecifications ?? new ChangeTrackingList<MetricSpecification>()).ToList(), (logSpecifications ?? new ChangeTrackingList<LogSpecification>()).ToList(), default);
         }
 
+        /// <summary> Definition of a single resource metric. </summary>
         /// <param name="name"></param>
         /// <param name="displayName"></param>
         /// <param name="displayDescription"></param>
@@ -577,6 +600,10 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary>
+        /// Dimension of a resource metric. For e.g. instance specific HTTP requests for a web app,
+        /// where instance name is dimension of the metric HTTP request
+        /// </summary>
         /// <param name="name"></param>
         /// <param name="displayName"></param>
         /// <param name="internalName"></param>
@@ -587,6 +614,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new MetricDimension(name, displayName, internalName, isToBeExportedForShoebox, default);
         }
 
+        /// <summary> Retention policy of a resource metric. </summary>
         /// <param name="timeGrain"></param>
         /// <param name="blobDuration"></param>
         /// <returns> A new <see cref="Models.MetricAvailability"/> instance for mocking. </returns>
@@ -595,6 +623,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new MetricAvailability(timeGrain, blobDuration, default);
         }
 
+        /// <summary> Log Definition of a single resource metric. </summary>
         /// <param name="name"></param>
         /// <param name="displayName"></param>
         /// <param name="blobDuration"></param>
@@ -636,6 +665,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Description of a SKU for a scalable resource. </summary>
         /// <param name="name"> Name of the resource SKU. </param>
         /// <param name="tier"> Service tier of the resource SKU. </param>
         /// <param name="size"> Size specifier of the resource SKU. </param>
@@ -662,6 +692,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Metadata for the metrics. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -683,6 +714,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Metrics availability and retention. </summary>
         /// <param name="timeGrain"> Time grain . </param>
         /// <param name="retention"> Retention period for the current time grain. </param>
         /// <returns> A new <see cref="Models.ResourceMetricAvailability"/> instance for mocking. </returns>
@@ -691,6 +723,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ResourceMetricAvailability(timeGrain, retention, default);
         }
 
+        /// <summary> SKU discovery information. </summary>
         /// <param name="resourceType"> Resource type that this SKU applies to. </param>
         /// <param name="sku"> Name and tier of the SKU. </param>
         /// <param name="capacity"> Min, max, and default scale values of the SKU. </param>
@@ -797,6 +830,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Stamp capacity information. </summary>
         /// <param name="name"> Name of the stamp. </param>
         /// <param name="availableCapacity"> Available capacity (# of machines, bytes of storage etc...). </param>
         /// <param name="totalCapacity"> Total capacity (# of machines, bytes of storage etc...). </param>
@@ -999,6 +1033,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> SSL-enabled hostname. </summary>
         /// <param name="name"> Hostname. </param>
         /// <param name="sslState"> SSL type. </param>
         /// <param name="virtualIP"> Virtual IP address assigned to the hostname if IP based SSL is enabled. </param>
@@ -1018,6 +1053,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The SiteDnsConfig. </summary>
         /// <param name="dnsServers"> List of custom DNS servers to be used by an app for lookups. Maximum 5 dns servers can be set. </param>
         /// <param name="dnsAltServer"> Alternate DNS server to be used by apps. This property replicates the WEBSITE_DNS_ALT_SERVER app setting. </param>
         /// <param name="dnsRetryAttemptTimeout"> Timeout for a single dns lookup in seconds. Allowed range: 1-30. Default is 3. </param>
@@ -1039,6 +1075,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Outbound traffic options over virtual network. </summary>
         /// <param name="isAllTrafficEnabled"> Enables all other routing options defined in OutboundVnetRouting if this setting is set to true. </param>
         /// <param name="isApplicationTrafficEnabled"> This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. Previously called VnetRouteAllEnabled. </param>
         /// <param name="isContentShareTrafficEnabled"> Enables accessing content over virtual network. Previously called VnetContentShareEnabled. </param>
@@ -1058,6 +1095,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Database connection string information. </summary>
         /// <param name="name"> Name of connection string. </param>
         /// <param name="connectionString"> Connection string value. </param>
         /// <param name="connectionStringType"> Type of database. </param>
@@ -1067,6 +1105,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ConnStringInfo(name, connectionString, connectionStringType, default);
         }
 
+        /// <summary> MachineKey of an app. </summary>
         /// <param name="validation"> MachineKey validation. </param>
         /// <param name="validationKey"> Validation key. </param>
         /// <param name="decryption"> Algorithm used for decryption. </param>
@@ -1077,6 +1116,10 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteMachineKey(validation, validationKey, decryption, decryptionKey, default);
         }
 
+        /// <summary>
+        /// The IIS handler mappings used to define which handler processes HTTP requests with certain extension.
+        /// For example, it is used to configure php-cgi.exe process to handle all HTTP requests with *.php extension.
+        /// </summary>
         /// <param name="extension"> Requests with this extension will be handled using the specified FastCGI application. </param>
         /// <param name="scriptProcessor"> The absolute path to the FastCGI application. </param>
         /// <param name="arguments"> Command-line arguments to be passed to the script processor. </param>
@@ -1086,6 +1129,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new HttpRequestHandlerMapping(extension, scriptProcessor, arguments, default);
         }
 
+        /// <summary> Virtual application in an app. </summary>
         /// <param name="virtualPath"> Virtual path. </param>
         /// <param name="physicalPath"> Physical path. </param>
         /// <param name="isPreloadEnabled"> &lt;code&gt;true&lt;/code&gt; if preloading is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -1098,6 +1142,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new VirtualApplication(virtualPath, physicalPath, isPreloadEnabled, (virtualDirectories ?? new ChangeTrackingList<VirtualDirectory>()).ToList(), default);
         }
 
+        /// <summary> Directory for virtual application. </summary>
         /// <param name="virtualPath"> Path to virtual application. </param>
         /// <param name="physicalPath"> Physical path. </param>
         /// <returns> A new <see cref="Models.VirtualDirectory"/> instance for mocking. </returns>
@@ -1106,6 +1151,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new VirtualDirectory(virtualPath, physicalPath, default);
         }
 
+        /// <summary> Routing rules for ramp up testing. This rule allows to redirect static traffic % to a slot or to gradually change routing % based on performance. </summary>
         /// <param name="actionHostName"> Hostname of a slot to which the traffic will be redirected if decided to. E.g. myapp-stage.azurewebsites.net. </param>
         /// <param name="reroutePercentage"> Percentage of the traffic which will be redirected to &lt;code&gt;ActionHostName&lt;/code&gt;. </param>
         /// <param name="changeStep">
@@ -1133,6 +1179,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Metric limits set on an app. </summary>
         /// <param name="maxPercentageCpu"> Maximum allowed CPU usage percentage. </param>
         /// <param name="maxMemoryInMb"> Maximum allowed memory usage in MB. </param>
         /// <param name="maxDiskSizeInMb"> Maximum allowed disk size usage in MB. </param>
@@ -1142,6 +1189,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteLimits(maxPercentageCpu, maxMemoryInMb, maxDiskSizeInMb, default);
         }
 
+        /// <summary> Rules that can be defined for auto-heal. </summary>
         /// <param name="triggers"> Conditions that describe when to execute the auto-heal actions. </param>
         /// <param name="actions"> Actions to be executed when a rule is triggered. </param>
         /// <returns> A new <see cref="Models.AutoHealRules"/> instance for mocking. </returns>
@@ -1150,6 +1198,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AutoHealRules(triggers, actions, default);
         }
 
+        /// <summary> Triggers for auto-heal. </summary>
         /// <param name="requests"> A rule based on total requests. </param>
         /// <param name="privateBytesInKB"> A rule based on private bytes. </param>
         /// <param name="statusCodes"> A rule based on status codes. </param>
@@ -1173,6 +1222,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Trigger based on total requests. </summary>
         /// <param name="count"> Request Count. </param>
         /// <param name="timeInterval"> Time interval. </param>
         /// <returns> A new <see cref="Models.RequestsBasedTrigger"/> instance for mocking. </returns>
@@ -1181,6 +1231,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new RequestsBasedTrigger(count, timeInterval, default);
         }
 
+        /// <summary> Trigger based on status code. </summary>
         /// <param name="status"> HTTP status code. </param>
         /// <param name="subStatus"> Request Sub Status. </param>
         /// <param name="win32Status"> Win32 error code. </param>
@@ -1200,6 +1251,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Trigger based on request execution time. </summary>
         /// <param name="timeTaken"> Time taken. </param>
         /// <param name="path"> Request Path. </param>
         /// <param name="count"> Request Count. </param>
@@ -1210,6 +1262,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SlowRequestsBasedTrigger(timeTaken, path, count, timeInterval, default);
         }
 
+        /// <summary> Trigger based on range of status codes. </summary>
         /// <param name="statusCodes"> HTTP status code. </param>
         /// <param name="path"></param>
         /// <param name="count"> Request Count. </param>
@@ -1220,6 +1273,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new StatusCodesRangeBasedTrigger(statusCodes, path, count, timeInterval, default);
         }
 
+        /// <summary> Actions which to take by the auto-heal module when a rule is triggered. </summary>
         /// <param name="actionType"> Predefined action to be taken. </param>
         /// <param name="customAction"> Custom action to be taken. </param>
         /// <param name="minProcessExecutionTime">
@@ -1232,6 +1286,10 @@ namespace Azure.ResourceManager.AppService.Models
             return new AutoHealActions(actionType, customAction, minProcessExecutionTime, default);
         }
 
+        /// <summary>
+        /// Custom action to be executed
+        /// when an auto heal rule is triggered.
+        /// </summary>
         /// <param name="exe"> Executable to be run. </param>
         /// <param name="parameters"> Parameters for the executable. </param>
         /// <returns> A new <see cref="Models.AutoHealCustomAction"/> instance for mocking. </returns>
@@ -1240,6 +1298,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AutoHealCustomAction(exe, parameters, default);
         }
 
+        /// <summary> Cross-Origin Resource Sharing (CORS) settings for the app. </summary>
         /// <param name="allowedOrigins">
         /// Gets or sets the list of origins that should be allowed to make cross-origin
         /// calls (for example: http://example.com:12345). Use "*" to allow all.
@@ -1284,6 +1343,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> IP security restriction on an app. </summary>
         /// <param name="ipAddressOrCidr">
         /// IP address the security restriction is valid for.
         /// It can be in form of pure ipv4 address (required SubnetMask property) or
@@ -1332,6 +1392,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Azure Files or Blob Storage access information value for dictionary storage. </summary>
         /// <param name="storageType"> Type of storage. </param>
         /// <param name="accountName"> Name of the storage account. </param>
         /// <param name="shareName"> Name of the file share (container name, for Blob storage). </param>
@@ -1363,6 +1424,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FunctionAppConfig(deploymentStorage is null ? default : new FunctionsDeployment(deploymentStorage, default), runtime, scaleAndConcurrency, siteUpdateStrategyType is null ? default : new FunctionsSiteUpdateStrategy(siteUpdateStrategyType, default), default);
         }
 
+        /// <summary> Storage for deployed package used by the function app. </summary>
         /// <param name="storageType"> Property to select Azure Storage type. Available options: blobContainer. </param>
         /// <param name="azureStorageUriStringValue"> Property to set the URL for the selected Azure Storage type. Example: For blobContainer, the value could be https://&lt;storageAccountName&gt;.blob.core.windows.net/&lt;containerName&gt;. </param>
         /// <param name="authentication"> Authentication method to access the storage account for deployment. </param>
@@ -1372,6 +1434,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FunctionAppStorage(storageType, azureStorageUriStringValue, authentication, default);
         }
 
+        /// <summary> Authentication method to access the storage account for deployment. </summary>
         /// <param name="authenticationType"> Property to select authentication type to access the selected storage account. Available options: SystemAssignedIdentity, UserAssignedIdentity, StorageAccountConnectionString. </param>
         /// <param name="userAssignedIdentityResourceId"> Use this property for UserAssignedIdentity. Set the resource ID of the identity. Do not set a value for this property when using other authentication type. </param>
         /// <param name="storageAccountConnectionStringName"> Use this property for StorageAccountConnectionString. Set the name of the app setting that has the storage account connection string. Do not set a value for this property when using other authentication type. </param>
@@ -1381,6 +1444,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FunctionAppStorageAuthentication(authenticationType, userAssignedIdentityResourceId, storageAccountConnectionStringName, default);
         }
 
+        /// <summary> Function app runtime name and version. </summary>
         /// <param name="name"> Function app runtime name. Available options: dotnet-isolated, node, java, powershell, python, custom. </param>
         /// <param name="version"> Function app runtime version. Example: 8 (for dotnet-isolated). </param>
         /// <returns> A new <see cref="Models.FunctionAppRuntime"/> instance for mocking. </returns>
@@ -1401,6 +1465,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FunctionAppScaleAndConcurrency((alwaysReady ?? new ChangeTrackingList<FunctionAppAlwaysReadyConfig>()).ToList(), functionAppMaximumInstanceCount, functionAppInstanceMemoryMB, triggersConcurrentHttpPerInstanceConcurrency is null ? default : new FunctionsScaleAndConcurrencyTriggers(new FunctionsScaleAndConcurrencyTriggersHttp(triggersConcurrentHttpPerInstanceConcurrency, default), default), default);
         }
 
+        /// <summary> Sets the number of 'Always Ready' instances for a function group or a specific function. </summary>
         /// <param name="name"> Either a function group or a function name is required. For additional information see https://aka.ms/flexconsumption/alwaysready. </param>
         /// <param name="alwaysReadyInstanceCount"> Sets the number of 'Always Ready' instances for a given function group or a specific function. For additional information see https://aka.ms/flexconsumption/alwaysready. </param>
         /// <returns> A new <see cref="Models.FunctionAppAlwaysReadyConfig"/> instance for mocking. </returns>
@@ -1409,6 +1474,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FunctionAppAlwaysReadyConfig(name, alwaysReadyInstanceCount, default);
         }
 
+        /// <summary> App Dapr configuration. </summary>
         /// <param name="isEnabled"> Boolean indicating if the Dapr side car is enabled. </param>
         /// <param name="appId"> Dapr application identifier. </param>
         /// <param name="appPort"> Tells Dapr which port your application is listening on. </param>
@@ -1439,6 +1505,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AiIntegration(apiSpecPath, mcpServers is null ? default : new McpSettings((mcpServers ?? new ChangeTrackingList<McpServerConfig>()).ToList(), default), siteAuth, default);
         }
 
+        /// <summary> Configuration for an individual MCP server. </summary>
         /// <param name="name"> The name of the MCP server. </param>
         /// <param name="description"> The description of the MCP server. </param>
         /// <param name="enabled"> Whether the MCP server is enabled. Defaults to true when not specified on creation. </param>
@@ -1458,6 +1525,10 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary>
+        /// External auth configuration for the MCP endpoint (used when EasyAuth is not enabled).
+        /// At minimum, `scopes` and either `wellKnownOpenIdConfiguration` or `issuer` must be provided.
+        /// </summary>
         /// <param name="jwksUri"> JWKS URL for verifying JWT signatures. </param>
         /// <param name="issuer"> Expected 'iss' claim. Required for custom site authentication if `wellKnownOpenIdConfiguration` is not provided. </param>
         /// <param name="audience"> Expected 'aud' claim. </param>
@@ -1477,6 +1548,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Function app resource requirements. </summary>
         /// <param name="cpu"> Required CPU in cores, e.g. 0.5. </param>
         /// <param name="memory"> Required memory, e.g. "1Gi". </param>
         /// <returns> A new <see cref="Models.FunctionAppResourceConfig"/> instance for mocking. </returns>
@@ -1485,6 +1557,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FunctionAppResourceConfig(cpu, memory, default);
         }
 
+        /// <summary> Specification for an App Service Environment to use for this resource. </summary>
         /// <param name="id"> Resource ID of the App Service Environment. </param>
         /// <param name="name"> Name of the App Service Environment. </param>
         /// <param name="resourceType"> Resource type of the App Service Environment. </param>
@@ -1494,6 +1567,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new HostingEnvironmentProfile(id, name, resourceType, default);
         }
 
+        /// <summary> Information needed for cloning operation. </summary>
         /// <param name="correlationId">
         /// Correlation ID of cloning operation. This ID ties multiple cloning operations
         /// together to use the same snapshot.
@@ -1538,6 +1612,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The status of the last successful slot swap operation. </summary>
         /// <param name="timestampUtc"> The time the last successful slot swap completed. </param>
         /// <param name="sourceSlotName"> The source slot of the last swap operation. </param>
         /// <param name="destinationSlotName"> The destination slot of the last swap operation. </param>
@@ -1547,6 +1622,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SlotSwapStatus(timestampUtc, sourceSlotName, destinationSlotName, default);
         }
 
+        /// <summary> Diagnostics for an App Service Environment. </summary>
         /// <param name="name"> Name/identifier of the diagnostics. </param>
         /// <param name="diagnosticsOutput"> Diagnostics output. </param>
         /// <returns> A new <see cref="Models.HostingEnvironmentDiagnostics"/> instance for mocking. </returns>
@@ -1555,6 +1631,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new HostingEnvironmentDiagnostics(name, diagnosticsOutput, default);
         }
 
+        /// <summary> The IP Addresses and Ports that require inbound network access to and within the subnet of the App Service Environment. </summary>
         /// <param name="description"> Short text describing the purpose of the network traffic. </param>
         /// <param name="endpoints"> The IP addresses that network traffic will originate from in cidr notation. </param>
         /// <param name="ports"> The ports that network traffic will arrive to the App Service Environment at. </param>
@@ -1587,11 +1664,12 @@ namespace Azure.ResourceManager.AppService.Models
                 (errors ?? new ChangeTrackingList<ResponseError>()).ToList(),
                 createdOn,
                 modifiedOn,
-                expireOn,
+                default,
                 geoMasterOperationId,
                 default);
         }
 
+        /// <summary> Body of the error response returned from the API. </summary>
         /// <param name="extendedCode"> Type of error. </param>
         /// <param name="messageTemplate"> Message template. </param>
         /// <param name="parameters"> Parameters for the template. </param>
@@ -1619,6 +1697,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Endpoints accessed for a common purpose that the App Service Environment requires outbound network access to. </summary>
         /// <param name="category"> The type of service accessed by the App Service Environment, e.g., Azure Storage, Azure SQL Database, and Azure Active Directory. </param>
         /// <param name="endpoints"> The endpoints that the App Service Environment reaches the service at. </param>
         /// <returns> A new <see cref="Models.OutboundEnvironmentEndpoint"/> instance for mocking. </returns>
@@ -1629,6 +1708,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new OutboundEnvironmentEndpoint(category, (endpoints ?? new ChangeTrackingList<AppServiceEndpointDependency>()).ToList(), default);
         }
 
+        /// <summary> A domain name that a service is reached at, including details of the current connection status. </summary>
         /// <param name="domainName"> The domain name of the dependency. </param>
         /// <param name="endpointDetails"> The IP Addresses and Ports used when connecting to DomainName. </param>
         /// <returns> A new <see cref="Models.AppServiceEndpointDependency"/> instance for mocking. </returns>
@@ -1639,6 +1719,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceEndpointDependency(domainName, (endpointDetails ?? new ChangeTrackingList<AppServiceEndpointDetail>()).ToList(), default);
         }
 
+        /// <summary> Current TCP connectivity information from the App Service Environment to a single endpoint. </summary>
         /// <param name="ipAddress"> An IP Address that Domain Name currently resolves to. </param>
         /// <param name="port"> The port an endpoint is connected to. </param>
         /// <param name="latency"> The time in milliseconds it takes for a TCP connection to be created from the App Service Environment to this IpAddress at this Port. </param>
@@ -1649,6 +1730,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceEndpointDetail(ipAddress, port, latency, isAccessible, default);
         }
 
+        /// <summary> A private link resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1666,6 +1748,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Properties of a private link resource. </summary>
         /// <param name="groupId"> GroupId of a private link resource. </param>
         /// <param name="requiredMembers"> RequiredMembers of a private link resource. </param>
         /// <param name="requiredZoneNames"> RequiredZoneNames of a private link resource. </param>
@@ -1783,6 +1866,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Specification for a Kubernetes Environment to use for this resource. </summary>
         /// <param name="id"> Resource ID of the Kubernetes Environment. </param>
         /// <param name="name"> Name of the Kubernetes Environment. </param>
         /// <param name="resourceType"> Resource type of the Kubernetes Environment. </param>
@@ -1792,6 +1876,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new KubeEnvironmentProfile(id, name, resourceType, default);
         }
 
+        /// <summary> The DefaultIdentity. </summary>
         /// <param name="managedServiceIdentityType"></param>
         /// <param name="userAssignedIdentityResourceId"></param>
         /// <returns> A new <see cref="Models.DefaultIdentity"/> instance for mocking. </returns>
@@ -1800,6 +1885,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DefaultIdentity(managedServiceIdentityType, userAssignedIdentityResourceId, default);
         }
 
+        /// <summary> Server farm registry adapter configuration. </summary>
         /// <param name="registryKey"> Registry key for the adapter. </param>
         /// <param name="adapterType"> Type of the registry adapter. </param>
         /// <param name="keyVaultSecretReference"> Key vault reference to the value that will be placed in the registry location. </param>
@@ -1809,6 +1895,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new RegistryAdapter(registryKey, adapterType, keyVaultSecretReference, default);
         }
 
+        /// <summary> Object to hold key vault reference and the resolution status. </summary>
         /// <param name="secretUri"> Key vault secret URI. </param>
         /// <param name="referenceStatus"> Reference status of the key vault secret. </param>
         /// <returns> A new <see cref="Models.KeyVaultReferenceWithStatus"/> instance for mocking. </returns>
@@ -1817,6 +1904,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new KeyVaultReferenceWithStatus(secretUri, referenceStatus, default);
         }
 
+        /// <summary> Server farm install script configuration. </summary>
         /// <param name="name"> Name of the install script. </param>
         /// <param name="source"> Source of the install script. </param>
         /// <returns> A new <see cref="Models.InstallScript"/> instance for mocking. </returns>
@@ -1825,6 +1913,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new InstallScript(name, source, default);
         }
 
+        /// <summary> Object to hold install script reference. </summary>
         /// <param name="sourceUri"> Install script source URI where the install script file will be fetched from. </param>
         /// <param name="scriptType"> Type of the install script. </param>
         /// <returns> A new <see cref="Models.InstallScriptSource"/> instance for mocking. </returns>
@@ -1833,6 +1922,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new InstallScriptSource(sourceUri, scriptType, default);
         }
 
+        /// <summary> Server farm storage mount configuration. </summary>
         /// <param name="name"> Name of the storage mount. </param>
         /// <param name="mountType"> Type of the storage mount. </param>
         /// <param name="source"> Source of the fileshare/storage. </param>
@@ -1850,6 +1940,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Usage of the quota resource. </summary>
         /// <param name="unit"> Units of measurement for the quota resource. </param>
         /// <param name="nextResetOn"> Next reset time for the resource counter. </param>
         /// <param name="currentValue"> The current value of the resource counter. </param>
@@ -1867,6 +1958,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Localizable string object containing the name and a localized value. </summary>
         /// <param name="value"> Non-localized name. </param>
         /// <param name="localizedValue"> Localized name. </param>
         /// <returns> A new <see cref="Models.LocalizableString"/> instance for mocking. </returns>
@@ -1959,7 +2051,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                createdOn is null && recommendationId is null && resourceId is null && resourceScope is null && ruleName is null && displayName is null && message is null && level is null && channels is null && categoryTags is null && actionName is null && enabled is null && states is null && startOn is null && endOn is null && nextNotificationOn is null && notificationExpirationOn is null && notifiedOn is null && score is null && isDynamic is null && extensionName is null && bladeName is null && forwardLink is null ? default : new RecommendationProperties(
+                createdOn is null && recommendationId is null && resourceId is null && resourceScope is null && ruleName is null && displayName is null && message is null && level is null && channels is null && categoryTags is null && actionName is null && enabled is null && states is null && nextNotificationOn is null && notifiedOn is null && score is null && isDynamic is null && extensionName is null && bladeName is null && forwardLink is null ? default : new RecommendationProperties(
                     createdOn,
                     recommendationId,
                     resourceId,
@@ -1973,10 +2065,10 @@ namespace Azure.ResourceManager.AppService.Models
                     actionName,
                     enabled,
                     (states ?? new ChangeTrackingList<string>()).ToList(),
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     nextNotificationOn,
-                    notificationExpirationOn,
+                    default,
                     notifiedOn,
                     score,
                     isDynamic,
@@ -2010,6 +2102,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Virtual IP mapping. </summary>
         /// <param name="virtualIP"> Virtual IP address. </param>
         /// <param name="internalHttpPort"> Internal HTTP port. </param>
         /// <param name="internalHttpsPort"> Internal HTTPS port. </param>
@@ -2049,6 +2142,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The state of a private link connection. </summary>
         /// <param name="status"> Status of a private link connection. </param>
         /// <param name="description"> Description of a private link connection. </param>
         /// <param name="actionsRequired"> ActionsRequired for a private link connection. </param>
@@ -2227,6 +2321,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Deployment slot parameters. </summary>
         /// <param name="targetSlot"> Destination deployment slot during swap operation. </param>
         /// <param name="preserveVnet"> &lt;code&gt;true&lt;/code&gt; to preserve Virtual Network to the slot during swap; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <returns> A new <see cref="Models.CsmSlotEntity"/> instance for mocking. </returns>
@@ -2278,11 +2373,12 @@ namespace Azure.ResourceManager.AppService.Models
                 frequencyUnit,
                 shouldKeepAtLeastOneBackup,
                 retentionPeriodInDays,
-                startOn,
+                default,
                 lastExecutedOn,
                 default);
         }
 
+        /// <summary> Database backup settings. </summary>
         /// <param name="databaseType"> Database type (e.g. SqlAzure / MySql). </param>
         /// <param name="name"></param>
         /// <param name="connectionStringName">
@@ -2343,6 +2439,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> String dictionary resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -2575,6 +2672,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> AzureStorageInfo dictionary resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -2596,6 +2694,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> String dictionary resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -2617,6 +2716,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Database connection string value to type pair. </summary>
         /// <param name="value"> Value of pair. </param>
         /// <param name="connectionStringType"> Type of database. </param>
         /// <returns> A new <see cref="Models.ConnStringValueTypePair"/> instance for mocking. </returns>
@@ -2695,6 +2795,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Functions host level keys. </summary>
         /// <param name="masterKey"> Secret key. </param>
         /// <param name="functionKeys"> Host level function keys. </param>
         /// <param name="systemKeys"> System keys. </param>
@@ -2707,6 +2808,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FunctionAppHostKeys(masterKey, functionKeys ?? new ChangeTrackingDictionary<string, string>(), systemKeys ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Function key info. </summary>
         /// <param name="properties"> Properties of function key info. </param>
         /// <returns> A new <see cref="Models.WebAppKeyInfo"/> instance for mocking. </returns>
         public static WebAppKeyInfo WebAppKeyInfo(WebAppKeyInfoProperties properties = default)
@@ -2714,6 +2816,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppKeyInfo(properties, default);
         }
 
+        /// <summary> Properties of function key info. </summary>
         /// <param name="name"> Key name. </param>
         /// <param name="value"> Key value. </param>
         /// <returns> A new <see cref="Models.WebAppKeyInfoProperties"/> instance for mocking. </returns>
@@ -2791,6 +2894,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Represents whether or not an app is cloneable. </summary>
         /// <param name="result"> Name of app. </param>
         /// <param name="blockingFeatures"> List of features enabled on app that prevent cloning. </param>
         /// <param name="unsupportedFeatures">
@@ -2808,6 +2912,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteCloneability(result, (blockingFeatures ?? new ChangeTrackingList<SiteCloneabilityCriterion>()).ToList(), (unsupportedFeatures ?? new ChangeTrackingList<SiteCloneabilityCriterion>()).ToList(), (blockingCharacteristics ?? new ChangeTrackingList<SiteCloneabilityCriterion>()).ToList(), default);
         }
 
+        /// <summary> An app cloneability criterion. </summary>
         /// <param name="name"> Name of criterion. </param>
         /// <param name="description"> Description of criterion. </param>
         /// <returns> A new <see cref="Models.SiteCloneabilityCriterion"/> instance for mocking. </returns>
@@ -2816,6 +2921,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteCloneabilityCriterion(name, description, default);
         }
 
+        /// <summary> Function secrets. </summary>
         /// <param name="key"> Secret key. </param>
         /// <param name="triggerUri"> Trigger URL. </param>
         /// <returns> A new <see cref="Models.FunctionSecrets"/> instance for mocking. </returns>
@@ -2824,6 +2930,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FunctionSecrets(key, triggerUri, default);
         }
 
+        /// <summary> Network trace. </summary>
         /// <param name="path"> Local file path for the captured network trace file. </param>
         /// <param name="status"> Current status of the network trace operation, same as Operation.Status (InProgress/Succeeded/Failed). </param>
         /// <param name="message"> Detailed message of a network trace operation, e.g. error message in case of failure. </param>
@@ -2833,6 +2940,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppNetworkTrace(path, status, message, default);
         }
 
+        /// <summary> Performance monitor API response. </summary>
         /// <param name="code"> The response code. </param>
         /// <param name="message"> The message. </param>
         /// <param name="data"> The performance monitor counters. </param>
@@ -2854,13 +2962,14 @@ namespace Azure.ResourceManager.AppService.Models
 
             return new PerfMonSet(
                 name,
-                startOn,
-                endOn,
+                default,
+                default,
                 timeGrain,
                 (values ?? new ChangeTrackingList<PerfMonSample>()).ToList(),
                 default);
         }
 
+        /// <summary> Performance monitor sample in a set. </summary>
         /// <param name="time"> Point in time for which counter was measured. </param>
         /// <param name="instanceName"> Name of the server on which the measurement is made. </param>
         /// <param name="value"> Value of counter at a certain time. </param>
@@ -2892,6 +3001,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Publishing options for requested profile. </summary>
         /// <param name="format">
         /// Name of the format. Valid values are:
         /// FileZilla3
@@ -2970,6 +3080,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Specifies the web app that snapshot contents will be retrieved from. </summary>
         /// <param name="location"> Geographical location of the source web app, e.g. SouthEastAsia, SouthCentralUS. </param>
         /// <param name="id">
         /// ARM resource ID of the source app.
@@ -3034,6 +3145,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The workflow filter. </summary>
         /// <param name="appSettings"> Application settings of the workflow. </param>
         /// <param name="files"> Files of the app. </param>
         /// <param name="filesToDelete"> Files of the app to delete. </param>
@@ -3046,6 +3158,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WorkflowArtifacts(appSettings, files ?? new ChangeTrackingDictionary<string, BinaryData>(), (filesToDelete ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Workflow properties definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -3067,6 +3180,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Additional workflow properties. </summary>
         /// <param name="files"> Gets or sets the files. </param>
         /// <param name="flowState"> Gets or sets the state of the workflow. </param>
         /// <param name="health"> Gets or sets workflow health. </param>
@@ -3078,6 +3192,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WorkflowEnvelopeProperties(files ?? new ChangeTrackingDictionary<string, BinaryData>(), flowState, health, default);
         }
 
+        /// <summary> Represents the workflow health. </summary>
         /// <param name="state"> Gets or sets the workflow health state. </param>
         /// <param name="error"> Gets or sets the workflow error. </param>
         /// <returns> A new <see cref="Models.WorkflowHealth"/> instance for mocking. </returns>
@@ -3099,7 +3214,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="linuxFxVersion"> Linux App Framework and version. </param>
         /// <param name="windowsFxVersion"> Xenon App Framework and version. </param>
         /// <param name="isRequestTracingEnabled"> &lt;code&gt;true&lt;/code&gt; if request tracing is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="requestTracingExpirationOn"> Request tracing expiration time. </param>
+        /// <param name="requestTracingExpiresOn"> Request tracing expiration time. </param>
         /// <param name="isRemoteDebuggingEnabled"> &lt;code&gt;true&lt;/code&gt; if remote debugging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="remoteDebuggingVersion"> Remote debugging version. </param>
         /// <param name="isHttpLoggingEnabled"> &lt;code&gt;true&lt;/code&gt; if HTTP logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -3182,14 +3297,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="virtualApplications"> Virtual applications. </param>
         /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <returns> A new <see cref="AppService.SiteConfigData"/> instance for mocking. </returns>
-        public static SiteConfigData SiteConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? numberOfWorkers = default, string netFrameworkVersion = default, string phpVersion = default, string pythonVersion = default, string nodeVersion = default, string powerShellVersion = default, string linuxFxVersion = default, string windowsFxVersion = default, bool? isRequestTracingEnabled = default, DateTimeOffset? requestTracingExpirationOn = default, bool? isRemoteDebuggingEnabled = default, string remoteDebuggingVersion = default, bool? isHttpLoggingEnabled = default, bool? useManagedIdentityCreds = default, string acrUserManagedIdentityId = default, int? logsDirectorySizeLimit = default, bool? isDetailedErrorLoggingEnabled = default, string publishingUsername = default, SiteMachineKey machineKey = default, string documentRoot = default, ScmType? scmType = default, bool? use32BitWorkerProcess = default, bool? isWebSocketsEnabled = default, bool? isAlwaysOn = default, string javaVersion = default, string javaContainer = default, string javaContainerVersion = default, string appCommandLine = default, ManagedPipelineMode? managedPipelineMode = default, SiteLoadBalancing? loadBalancing = default, SiteLimits limits = default, bool? isAutoHealEnabled = default, AutoHealRules autoHealRules = default, string tracingOptions = default, string vnetName = default, bool? isVnetRouteAllEnabled = default, int? vnetPrivatePortsCount = default, AppServiceCorsSettings cors = default, WebAppPushSettings push = default, string autoSwapSlotName = default, bool? isLocalMySqlEnabled = default, int? managedServiceIdentityId = default, int? xManagedServiceIdentityId = default, string keyVaultReferenceIdentity = default, SiteDefaultAction? ipSecurityRestrictionsDefaultAction = default, SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction = default, bool? allowIPSecurityRestrictionsForScmToUseMain = default, bool? isHttp20Enabled = default, int? http20ProxyFlag = default, AppServiceSupportedTlsVersion? minTlsVersion = default, AppServiceTlsCipherSuite? minTlsCipherSuite = default, AppServiceSupportedTlsVersion? scmMinTlsVersion = default, AppServiceFtpsState? ftpsState = default, int? preWarmedInstanceCount = default, int? functionAppScaleLimit = default, int? elasticWebAppScaleLimit = default, string healthCheckPath = default, bool? isFunctionsRuntimeScaleMonitoringEnabled = default, string websiteTimeZone = default, int? minimumElasticInstanceCount = default, string publicNetworkAccess = default, IEnumerable<RampUpRule> experimentsRampUpRules = default, string apiDefinitionUriStringValue = default, string apiManagementConfigId = default, Uri apiDefinitionUri = default, IEnumerable<AppServiceNameValuePair> appSettings = default, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts = default, IEnumerable<ConnStringInfo> connectionStrings = default, IEnumerable<string> defaultDocuments = default, IEnumerable<HttpRequestHandlerMapping> handlerMappings = default, IEnumerable<AppServiceIPSecurityRestriction> ipSecurityRestrictions = default, IEnumerable<AppServiceNameValuePair> metadata = default, IEnumerable<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = default, IEnumerable<VirtualApplication> virtualApplications = default, string kind = default)
+        public static SiteConfigData SiteConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? numberOfWorkers = default, string netFrameworkVersion = default, string phpVersion = default, string pythonVersion = default, string nodeVersion = default, string powerShellVersion = default, string linuxFxVersion = default, string windowsFxVersion = default, bool? isRequestTracingEnabled = default, DateTimeOffset? requestTracingExpiresOn = default, bool? isRemoteDebuggingEnabled = default, string remoteDebuggingVersion = default, bool? isHttpLoggingEnabled = default, bool? useManagedIdentityCreds = default, string acrUserManagedIdentityId = default, int? logsDirectorySizeLimit = default, bool? isDetailedErrorLoggingEnabled = default, string publishingUsername = default, SiteMachineKey machineKey = default, string documentRoot = default, ScmType? scmType = default, bool? use32BitWorkerProcess = default, bool? isWebSocketsEnabled = default, bool? isAlwaysOn = default, string javaVersion = default, string javaContainer = default, string javaContainerVersion = default, string appCommandLine = default, ManagedPipelineMode? managedPipelineMode = default, SiteLoadBalancing? loadBalancing = default, SiteLimits limits = default, bool? isAutoHealEnabled = default, AutoHealRules autoHealRules = default, string tracingOptions = default, string vnetName = default, bool? isVnetRouteAllEnabled = default, int? vnetPrivatePortsCount = default, AppServiceCorsSettings cors = default, WebAppPushSettings push = default, string autoSwapSlotName = default, bool? isLocalMySqlEnabled = default, int? managedServiceIdentityId = default, int? xManagedServiceIdentityId = default, string keyVaultReferenceIdentity = default, SiteDefaultAction? ipSecurityRestrictionsDefaultAction = default, SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction = default, bool? allowIPSecurityRestrictionsForScmToUseMain = default, bool? isHttp20Enabled = default, int? http20ProxyFlag = default, AppServiceSupportedTlsVersion? minTlsVersion = default, AppServiceTlsCipherSuite? minTlsCipherSuite = default, AppServiceSupportedTlsVersion? scmMinTlsVersion = default, AppServiceFtpsState? ftpsState = default, int? preWarmedInstanceCount = default, int? functionAppScaleLimit = default, int? elasticWebAppScaleLimit = default, string healthCheckPath = default, bool? isFunctionsRuntimeScaleMonitoringEnabled = default, string websiteTimeZone = default, int? minimumElasticInstanceCount = default, string publicNetworkAccess = default, IEnumerable<RampUpRule> experimentsRampUpRules = default, string apiDefinitionUriStringValue = default, string apiManagementConfigId = default, Uri apiDefinitionUri = default, IEnumerable<AppServiceNameValuePair> appSettings = default, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts = default, IEnumerable<ConnStringInfo> connectionStrings = default, IEnumerable<string> defaultDocuments = default, IEnumerable<HttpRequestHandlerMapping> handlerMappings = default, IEnumerable<AppServiceIPSecurityRestriction> ipSecurityRestrictions = default, IEnumerable<AppServiceNameValuePair> metadata = default, IEnumerable<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = default, IEnumerable<VirtualApplication> virtualApplications = default, string kind = default)
         {
             return new SiteConfigData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                numberOfWorkers is null && defaultDocuments is null && netFrameworkVersion is null && phpVersion is null && pythonVersion is null && nodeVersion is null && powerShellVersion is null && linuxFxVersion is null && windowsFxVersion is null && isRequestTracingEnabled is null && requestTracingExpirationOn is null && isRemoteDebuggingEnabled is null && remoteDebuggingVersion is null && isHttpLoggingEnabled is null && useManagedIdentityCreds is null && acrUserManagedIdentityId is null && logsDirectorySizeLimit is null && isDetailedErrorLoggingEnabled is null && publishingUsername is null && appSettings is null && metadata is null && connectionStrings is null && machineKey is null && handlerMappings is null && documentRoot is null && scmType is null && use32BitWorkerProcess is null && isWebSocketsEnabled is null && isAlwaysOn is null && javaVersion is null && javaContainer is null && javaContainerVersion is null && appCommandLine is null && managedPipelineMode is null && virtualApplications is null && loadBalancing is null && experimentsRampUpRules is null && limits is null && isAutoHealEnabled is null && autoHealRules is null && tracingOptions is null && vnetName is null && isVnetRouteAllEnabled is null && vnetPrivatePortsCount is null && cors is null && push is null && apiDefinitionUriStringValue is null && apiManagementConfigId is null && autoSwapSlotName is null && isLocalMySqlEnabled is null && managedServiceIdentityId is null && xManagedServiceIdentityId is null && keyVaultReferenceIdentity is null && ipSecurityRestrictions is null && ipSecurityRestrictionsDefaultAction is null && scmIPSecurityRestrictions is null && scmIPSecurityRestrictionsDefaultAction is null && allowIPSecurityRestrictionsForScmToUseMain is null && isHttp20Enabled is null && http20ProxyFlag is null && minTlsVersion is null && minTlsCipherSuite is null && scmMinTlsVersion is null && ftpsState is null && preWarmedInstanceCount is null && functionAppScaleLimit is null && elasticWebAppScaleLimit is null && healthCheckPath is null && isFunctionsRuntimeScaleMonitoringEnabled is null && websiteTimeZone is null && minimumElasticInstanceCount is null && azureStorageAccounts is null && publicNetworkAccess is null ? default : new SiteConfigProperties(
+                numberOfWorkers is null && defaultDocuments is null && netFrameworkVersion is null && phpVersion is null && pythonVersion is null && nodeVersion is null && powerShellVersion is null && linuxFxVersion is null && windowsFxVersion is null && isRequestTracingEnabled is null && requestTracingExpiresOn is null && isRemoteDebuggingEnabled is null && remoteDebuggingVersion is null && isHttpLoggingEnabled is null && useManagedIdentityCreds is null && acrUserManagedIdentityId is null && logsDirectorySizeLimit is null && isDetailedErrorLoggingEnabled is null && publishingUsername is null && appSettings is null && metadata is null && connectionStrings is null && machineKey is null && handlerMappings is null && documentRoot is null && scmType is null && use32BitWorkerProcess is null && isWebSocketsEnabled is null && isAlwaysOn is null && javaVersion is null && javaContainer is null && javaContainerVersion is null && appCommandLine is null && managedPipelineMode is null && virtualApplications is null && loadBalancing is null && experimentsRampUpRules is null && limits is null && isAutoHealEnabled is null && autoHealRules is null && tracingOptions is null && vnetName is null && isVnetRouteAllEnabled is null && vnetPrivatePortsCount is null && cors is null && push is null && apiDefinitionUriStringValue is null && apiManagementConfigId is null && autoSwapSlotName is null && isLocalMySqlEnabled is null && managedServiceIdentityId is null && xManagedServiceIdentityId is null && keyVaultReferenceIdentity is null && ipSecurityRestrictions is null && ipSecurityRestrictionsDefaultAction is null && scmIPSecurityRestrictions is null && scmIPSecurityRestrictionsDefaultAction is null && allowIPSecurityRestrictionsForScmToUseMain is null && isHttp20Enabled is null && http20ProxyFlag is null && minTlsVersion is null && minTlsCipherSuite is null && scmMinTlsVersion is null && ftpsState is null && preWarmedInstanceCount is null && functionAppScaleLimit is null && elasticWebAppScaleLimit is null && healthCheckPath is null && isFunctionsRuntimeScaleMonitoringEnabled is null && websiteTimeZone is null && minimumElasticInstanceCount is null && azureStorageAccounts is null && publicNetworkAccess is null ? default : new SiteConfigProperties(
                     numberOfWorkers,
                     (defaultDocuments ?? new ChangeTrackingList<string>()).ToList(),
                     netFrameworkVersion,
@@ -3200,7 +3315,7 @@ namespace Azure.ResourceManager.AppService.Models
                     linuxFxVersion,
                     windowsFxVersion,
                     isRequestTracingEnabled,
-                    requestTracingExpirationOn,
+                    requestTracingExpiresOn,
                     isRemoteDebuggingEnabled,
                     remoteDebuggingVersion,
                     isHttpLoggingEnabled,
@@ -3268,6 +3383,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Server Farm RDP connection details. </summary>
         /// <param name="rdpPassword"> The RDP password for the server farm. </param>
         /// <param name="rdpPasswordExpiry"> The RDP password expiry date. </param>
         /// <returns> A new <see cref="Models.ServerFarmRdpDetails"/> instance for mocking. </returns>
@@ -3276,6 +3392,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ServerFarmRdpDetails(rdpPassword, rdpPasswordExpiry, default);
         }
 
+        /// <summary> Represents instance details for an app service plan. </summary>
         /// <param name="serverFarmName"> The server farm name. </param>
         /// <param name="instances"> The list of server farm instances. </param>
         /// <param name="instanceCount"> The total number of instances. </param>
@@ -3287,6 +3404,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ServerFarmInstanceDetails(serverFarmName, (instances ?? new ChangeTrackingList<ServerFarmInstance>()).ToList(), instanceCount, default);
         }
 
+        /// <summary> Represents details of a single instance in a server farm. </summary>
         /// <param name="instanceName"> The instance name. </param>
         /// <param name="ipAddress"> The instance IP address. </param>
         /// <param name="status"> The instance status. </param>
@@ -3315,8 +3433,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="maximumElasticWorkerCount"> Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan. </param>
         /// <param name="numberOfSites"> Number of apps assigned to this App Service plan. </param>
         /// <param name="isSpot"> If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances. </param>
-        /// <param name="spotExpirationOn"> The time when the server farm expires. Valid only if it is a spot server farm. </param>
-        /// <param name="freeOfferExpirationOn"> The time when the server farm free offer expires. </param>
+        /// <param name="spotExpiresOn"> The time when the server farm expires. Valid only if it is a spot server farm. </param>
+        /// <param name="freeOfferExpiresOn"> The time when the server farm free offer expires. </param>
         /// <param name="resourceGroup"> Resource group of the App Service plan. </param>
         /// <param name="isReserved"> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
         /// <param name="isXenon"> Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
@@ -3332,14 +3450,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="identity"> Managed service identity. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServicePlanPatch"/> instance for mocking. </returns>
-        public static AppServicePlanPatch AppServicePlanPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string workerTierName = default, AppServicePlanStatus? status = default, string subscription = default, HostingEnvironmentProfile hostingEnvironmentProfile = default, int? maximumNumberOfWorkers = default, int? numberOfWorkers = default, string geoRegion = default, bool? isPerSiteScaling = default, bool? isElasticScaleEnabled = default, int? maximumElasticWorkerCount = default, int? numberOfSites = default, bool? isSpot = default, DateTimeOffset? spotExpirationOn = default, DateTimeOffset? freeOfferExpirationOn = default, string resourceGroup = default, bool? isReserved = default, bool? isXenon = default, bool? isHyperV = default, int? targetWorkerCount = default, int? targetWorkerSizeId = default, ProvisioningState? provisioningState = default, KubeEnvironmentProfile kubeEnvironmentProfile = default, bool? isZoneRedundant = default, ManagedServiceIdentity identity = default, string kind = default)
+        public static AppServicePlanPatch AppServicePlanPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string workerTierName = default, AppServicePlanStatus? status = default, string subscription = default, HostingEnvironmentProfile hostingEnvironmentProfile = default, int? maximumNumberOfWorkers = default, int? numberOfWorkers = default, string geoRegion = default, bool? isPerSiteScaling = default, bool? isElasticScaleEnabled = default, int? maximumElasticWorkerCount = default, int? numberOfSites = default, bool? isSpot = default, DateTimeOffset? spotExpiresOn = default, DateTimeOffset? freeOfferExpiresOn = default, string resourceGroup = default, bool? isReserved = default, bool? isXenon = default, bool? isHyperV = default, int? targetWorkerCount = default, int? targetWorkerSizeId = default, ProvisioningState? provisioningState = default, KubeEnvironmentProfile kubeEnvironmentProfile = default, bool? isZoneRedundant = default, ManagedServiceIdentity identity = default, string kind = default)
         {
             return new AppServicePlanPatch(
                 id,
                 name,
                 resourceType,
                 systemData,
-                workerTierName is null && status is null && subscription is null && hostingEnvironmentProfile is null && maximumNumberOfWorkers is null && numberOfWorkers is null && geoRegion is null && isPerSiteScaling is null && isElasticScaleEnabled is null && maximumElasticWorkerCount is null && numberOfSites is null && isSpot is null && spotExpirationOn is null && freeOfferExpirationOn is null && resourceGroup is null && isReserved is null && isXenon is null && isHyperV is null && targetWorkerCount is null && targetWorkerSizeId is null && provisioningState is null && kubeEnvironmentProfile is null && isZoneRedundant is null ? default : new AppServicePlanPatchResourceProperties(
+                workerTierName is null && status is null && subscription is null && hostingEnvironmentProfile is null && maximumNumberOfWorkers is null && numberOfWorkers is null && geoRegion is null && isPerSiteScaling is null && isElasticScaleEnabled is null && maximumElasticWorkerCount is null && numberOfSites is null && isSpot is null && spotExpiresOn is null && freeOfferExpiresOn is null && resourceGroup is null && isReserved is null && isXenon is null && isHyperV is null && targetWorkerCount is null && targetWorkerSizeId is null && provisioningState is null && kubeEnvironmentProfile is null && isZoneRedundant is null ? default : new AppServicePlanPatchResourceProperties(
                     workerTierName,
                     status,
                     subscription,
@@ -3352,8 +3470,8 @@ namespace Azure.ResourceManager.AppService.Models
                     maximumElasticWorkerCount,
                     numberOfSites,
                     isSpot,
-                    spotExpirationOn,
-                    freeOfferExpirationOn,
+                    spotExpiresOn,
+                    freeOfferExpiresOn,
                     resourceGroup,
                     isReserved,
                     isXenon,
@@ -3443,6 +3561,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Virtual Network information contract. </summary>
         /// <param name="vnetResourceId"> The Virtual Network's resource ID. </param>
         /// <param name="certThumbprintString"> The client certificate thumbprint. </param>
         /// <param name="certBlob"> A certificate file (.cer) blob containing the public key of the private key used to authenticate a \nPoint-To-Site VPN connection. </param>
@@ -3528,6 +3647,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Definition of Detector. </summary>
         /// <param name="id"> Id of detector. </param>
         /// <param name="name"> Name of detector. </param>
         /// <param name="description"> Short description of the detector and its purpose. </param>
@@ -3556,6 +3676,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Defines a unique Support Topic. </summary>
         /// <param name="id"> Support Topic Id. </param>
         /// <param name="pesId"> Unique resource Id. </param>
         /// <returns> A new <see cref="Models.DetectorSupportTopic"/> instance for mocking. </returns>
@@ -3564,6 +3685,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DetectorSupportTopic(id, pesId, default);
         }
 
+        /// <summary> Set of data with rendering instructions. </summary>
         /// <param name="table"> Data in table form. </param>
         /// <param name="renderingProperties"> Properties that describe how the table should be rendered. </param>
         /// <returns> A new <see cref="Models.DiagnosticDataset"/> instance for mocking. </returns>
@@ -3572,6 +3694,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DiagnosticDataset(table, renderingProperties, default);
         }
 
+        /// <summary> Data Table which defines columns and raw row values. </summary>
         /// <param name="tableName"> Name of the table. </param>
         /// <param name="columns"> List of columns with data types. </param>
         /// <param name="rows"> Raw row values. </param>
@@ -3584,6 +3707,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DataTableResponseObject(tableName, (columns ?? new ChangeTrackingList<DataTableResponseColumn>()).ToList(), (rows ?? new ChangeTrackingList<IList<string>>()).ToList(), default);
         }
 
+        /// <summary> Column definition. </summary>
         /// <param name="columnName"> Name of the column. </param>
         /// <param name="dataType"> Data type which looks like 'String' or 'Int32'. </param>
         /// <param name="columnType"> Column Type. </param>
@@ -3593,6 +3717,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DataTableResponseColumn(columnName, dataType, columnType, default);
         }
 
+        /// <summary> Instructions for rendering the data. </summary>
         /// <param name="renderingType"> Rendering Type. </param>
         /// <param name="title"> Title of data. </param>
         /// <param name="description"> Description of the data that will help it be interpreted. </param>
@@ -3602,6 +3727,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DiagnosticDataRendering(renderingType, title, description, default);
         }
 
+        /// <summary> Identify the status of the most severe insight generated by the detector. </summary>
         /// <param name="message"> Descriptive message. </param>
         /// <param name="statusId"> Level of the most severe insight generated by the detector. </param>
         /// <returns> A new <see cref="Models.AppServiceStatusInfo"/> instance for mocking. </returns>
@@ -3610,6 +3736,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceStatusInfo(message, statusId, default);
         }
 
+        /// <summary> Additional configuration for a data providers. </summary>
         /// <param name="providerName"></param>
         /// <param name="propertyBag"> Settings for the data provider. </param>
         /// <returns> A new <see cref="Models.DataProviderMetadata"/> instance for mocking. </returns>
@@ -3620,6 +3747,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DataProviderMetadata(providerName, (propertyBag ?? new ChangeTrackingList<DataProviderKeyValuePair>()).ToList(), default);
         }
 
+        /// <summary> The DataProviderKeyValuePair. </summary>
         /// <param name="key"></param>
         /// <param name="value"> Any object. </param>
         /// <returns> A new <see cref="Models.DataProviderKeyValuePair"/> instance for mocking. </returns>
@@ -3628,6 +3756,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DataProviderKeyValuePair(key, value, default);
         }
 
+        /// <summary> Suggested utterances where the detector can be applicable. </summary>
         /// <param name="query"> Search Query. </param>
         /// <param name="results"> Array of utterance results for search query. </param>
         /// <returns> A new <see cref="Models.QueryUtterancesResults"/> instance for mocking. </returns>
@@ -3638,6 +3767,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new QueryUtterancesResults(query, (results ?? new ChangeTrackingList<QueryUtterancesResult>()).ToList(), default);
         }
 
+        /// <summary> Result for utterances query. </summary>
         /// <param name="sampleUtterance"> A sample utterance. </param>
         /// <param name="score"> Score of a sample utterance. </param>
         /// <returns> A new <see cref="Models.QueryUtterancesResult"/> instance for mocking. </returns>
@@ -3646,6 +3776,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new QueryUtterancesResult(sampleUtterance, score, default);
         }
 
+        /// <summary> Sample utterance. </summary>
         /// <param name="text"> Text attribute of sample utterance. </param>
         /// <param name="links"> Links attribute of sample utterance. </param>
         /// <param name="qid"> Question id of sample utterance (for stackoverflow questions titles). </param>
@@ -3675,9 +3806,9 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                startOn is null && endOn is null && abnormalTimePeriods is null && payload is null && nonCorrelatedDetectors is null ? default : new DiagnosticAnalysisProperties(
-                    startOn,
-                    endOn,
+                abnormalTimePeriods is null && payload is null && nonCorrelatedDetectors is null ? default : new DiagnosticAnalysisProperties(
+                    default,
+                    default,
                     (abnormalTimePeriods ?? new ChangeTrackingList<AbnormalTimePeriod>()).ToList(),
                     (payload ?? new ChangeTrackingList<AnalysisDetectorEvidences>()).ToList(),
                     (nonCorrelatedDetectors ?? new ChangeTrackingList<DetectorDefinition>()).ToList(),
@@ -3686,21 +3817,23 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <param name="startOn"> Start time of the downtime. </param>
-        /// <param name="endOn"> End time of the downtime. </param>
+        /// <summary> Class representing Abnormal Time Period identified in diagnosis. </summary>
+        /// <param name="startsOn"> Start time of the downtime. </param>
+        /// <param name="endsOn"> End time of the downtime. </param>
         /// <param name="events"> List of Possible Cause of downtime. </param>
         /// <param name="solutions"> List of proposed solutions. </param>
         /// <returns> A new <see cref="Models.AbnormalTimePeriod"/> instance for mocking. </returns>
-        public static AbnormalTimePeriod AbnormalTimePeriod(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<DetectorAbnormalTimePeriod> events = default, IEnumerable<DiagnosticSolution> solutions = default)
+        public static AbnormalTimePeriod AbnormalTimePeriod(DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<DetectorAbnormalTimePeriod> events = default, IEnumerable<DiagnosticSolution> solutions = default)
         {
             events ??= new ChangeTrackingList<DetectorAbnormalTimePeriod>();
             solutions ??= new ChangeTrackingList<DiagnosticSolution>();
 
-            return new AbnormalTimePeriod(startOn, endOn, (events ?? new ChangeTrackingList<DetectorAbnormalTimePeriod>()).ToList(), (solutions ?? new ChangeTrackingList<DiagnosticSolution>()).ToList(), default);
+            return new AbnormalTimePeriod(startsOn, endsOn, (events ?? new ChangeTrackingList<DetectorAbnormalTimePeriod>()).ToList(), (solutions ?? new ChangeTrackingList<DiagnosticSolution>()).ToList(), default);
         }
 
-        /// <param name="startOn"> Start time of the correlated event. </param>
-        /// <param name="endOn"> End time of the correlated event. </param>
+        /// <summary> Class representing Abnormal Time Period detected. </summary>
+        /// <param name="startsOn"> Start time of the correlated event. </param>
+        /// <param name="endsOn"> End time of the correlated event. </param>
         /// <param name="message"> Message describing the event. </param>
         /// <param name="source"> Represents the name of the Detector. </param>
         /// <param name="priority"> Represents the rank of the Detector. </param>
@@ -3708,14 +3841,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="issueType"> Represents the type of the Detector. </param>
         /// <param name="solutions"> List of proposed solutions. </param>
         /// <returns> A new <see cref="Models.DetectorAbnormalTimePeriod"/> instance for mocking. </returns>
-        public static DetectorAbnormalTimePeriod DetectorAbnormalTimePeriod(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string message = default, string source = default, double? priority = default, IEnumerable<IList<AppServiceNameValuePair>> metaData = default, DetectorIssueType? issueType = default, IEnumerable<DiagnosticSolution> solutions = default)
+        public static DetectorAbnormalTimePeriod DetectorAbnormalTimePeriod(DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, string message = default, string source = default, double? priority = default, IEnumerable<IList<AppServiceNameValuePair>> metaData = default, DetectorIssueType? issueType = default, IEnumerable<DiagnosticSolution> solutions = default)
         {
             metaData ??= new ChangeTrackingList<IList<AppServiceNameValuePair>>();
             solutions ??= new ChangeTrackingList<DiagnosticSolution>();
 
             return new DetectorAbnormalTimePeriod(
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 message,
                 source,
                 priority,
@@ -3725,6 +3858,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Class Representing Solution for problems detected. </summary>
         /// <param name="id"> Solution Id. </param>
         /// <param name="displayName"> Display Name of the solution. </param>
         /// <param name="order"> Order of the solution. </param>
@@ -3769,6 +3903,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Class representing detector definition. </summary>
         /// <param name="displayName"> Display name of the detector. </param>
         /// <param name="description"> Description of the detector. </param>
         /// <param name="rank"> Detector Rank. </param>
@@ -3779,27 +3914,29 @@ namespace Azure.ResourceManager.AppService.Models
             return new DetectorDefinition(displayName, description, rank, isEnabled, default);
         }
 
+        /// <summary> Class representing Diagnostic Metric information. </summary>
         /// <param name="name"> Name of the metric. </param>
         /// <param name="unit"> Metric's unit. </param>
-        /// <param name="startOn"> Start time of the period. </param>
-        /// <param name="endOn"> End time of the period. </param>
+        /// <param name="startsOn"> Start time of the period. </param>
+        /// <param name="endsOn"> End time of the period. </param>
         /// <param name="timeGrain"> Presented time grain. Supported grains at the moment are PT1M, PT1H, P1D. </param>
         /// <param name="values"> Collection of metric values for the selected period based on the {Microsoft.Web.Hosting.Administration.DiagnosticMetricSet.TimeGrain}. </param>
         /// <returns> A new <see cref="Models.DiagnosticMetricSet"/> instance for mocking. </returns>
-        public static DiagnosticMetricSet DiagnosticMetricSet(string name = default, string unit = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string timeGrain = default, IEnumerable<DiagnosticMetricSample> values = default)
+        public static DiagnosticMetricSet DiagnosticMetricSet(string name = default, string unit = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, string timeGrain = default, IEnumerable<DiagnosticMetricSample> values = default)
         {
             values ??= new ChangeTrackingList<DiagnosticMetricSample>();
 
             return new DiagnosticMetricSet(
                 name,
                 unit,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 timeGrain,
                 (values ?? new ChangeTrackingList<DiagnosticMetricSample>()).ToList(),
                 default);
         }
 
+        /// <summary> Class representing Diagnostic Metric. </summary>
         /// <param name="timestamp"> Time at which metric is measured. </param>
         /// <param name="roleInstance">
         /// Role Instance. Null if this counter is not per instance
@@ -3824,6 +3961,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Class representing data source used by the detectors. </summary>
         /// <param name="instructions"> Instructions if any for the data source. </param>
         /// <param name="dataSourceUri"> Datasource Uri Links. </param>
         /// <returns> A new <see cref="Models.DetectorDataSource"/> instance for mocking. </returns>
@@ -3878,9 +4016,9 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                startOn is null && endOn is null && issueDetected is null && detectorDefinition is null && metrics is null && abnormalTimePeriods is null && data is null && dataSource is null ? default : new DiagnosticDetectorResponseProperties(
-                    startOn,
-                    endOn,
+                issueDetected is null && detectorDefinition is null && metrics is null && abnormalTimePeriods is null && data is null && dataSource is null ? default : new DiagnosticDetectorResponseProperties(
+                    default,
+                    default,
                     issueDetected,
                     detectorDefinition,
                     (metrics ?? new ChangeTrackingList<DiagnosticMetricSet>()).ToList(),
@@ -3968,6 +4106,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The AppLogsConfiguration. </summary>
         /// <param name="destination"></param>
         /// <param name="logAnalyticsConfiguration"></param>
         /// <returns> A new <see cref="Models.AppLogsConfiguration"/> instance for mocking. </returns>
@@ -3976,6 +4115,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppLogsConfiguration(destination, logAnalyticsConfiguration, default);
         }
 
+        /// <summary> The LogAnalyticsConfiguration. </summary>
         /// <param name="customerId"></param>
         /// <param name="sharedKey"></param>
         /// <returns> A new <see cref="Models.LogAnalyticsConfiguration"/> instance for mocking. </returns>
@@ -3984,6 +4124,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new LogAnalyticsConfiguration(customerId, sharedKey, default);
         }
 
+        /// <summary> The ContainerAppsConfiguration. </summary>
         /// <param name="daprAIInstrumentationKey"> Azure Monitor instrumentation key used by Dapr to export Service to Service communication telemetry. </param>
         /// <param name="platformReservedCidr"> IP range in CIDR notation that can be reserved for environment infrastructure IP addresses. It must not overlap with any other Subnet IP ranges. </param>
         /// <param name="platformReservedDnsIP"> An IP address from the IP range defined by platformReservedCidr that will be reserved for the internal DNS server. </param>
@@ -4129,6 +4270,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Detailed view of a Network Security Perimeter Configured for the site. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -4148,6 +4290,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Network Security Perimeter Configuration Properties. </summary>
         /// <param name="provisioningState"> Reflects state of association persistence and configuration propagation to App Service Data Plane. </param>
         /// <param name="provisioningIssues"> Reflects any misconfigurations and failures detected while provisioning the association or while processing configuration changes. </param>
         /// <param name="networkSecurityPerimeter"> Associated Network Security Perimeter resource. </param>
@@ -4167,6 +4310,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Network Security Perimeter Association Provisioning Issue. </summary>
         /// <param name="name"> Provisioning Issue Name. </param>
         /// <param name="properties"> Provisioning Issue Properties. </param>
         /// <returns> A new <see cref="Models.AppServiceNetworkSecurityPerimeterProfileProvisioningIssue"/> instance for mocking. </returns>
@@ -4175,6 +4319,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceNetworkSecurityPerimeterProfileProvisioningIssue(name, properties, default);
         }
 
+        /// <summary> Network Security Perimeter Association Provisioning Issue Properties. </summary>
         /// <param name="issueType"> Provisioning Issue Type. </param>
         /// <param name="severity"> Provisioning Issue Severity. </param>
         /// <param name="description"> Provisioning Issue Description. </param>
@@ -4195,6 +4340,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Network Security Perimeter. </summary>
         /// <param name="id"> ARM URI of the Network Security Perimeter resource. </param>
         /// <param name="perimeterGuid"> GUID of the Network Security Perimeter resource. </param>
         /// <param name="location"> Location where the Network Security Perimeter resource. </param>
@@ -4204,6 +4350,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceNetworkSecurityPerimeter(id, perimeterGuid, location, default);
         }
 
+        /// <summary> Network Security Perimeter Resource Association. </summary>
         /// <param name="name"> Network Security Perimeter Resource Association Name. </param>
         /// <param name="accessMode"> Network Security Perimeter Association Access Mode (Learning/Enforced). </param>
         /// <returns> A new <see cref="Models.AppServiceNetworkSecurityPerimeterProfileResourceAssociation"/> instance for mocking. </returns>
@@ -4212,6 +4359,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceNetworkSecurityPerimeterProfileResourceAssociation(name, accessMode, default);
         }
 
+        /// <summary> Network Security Perimeter Profile. </summary>
         /// <param name="name"> Name of the Network Security Perimeter Profile. </param>
         /// <param name="accessRulesVersion"> Access Rules Version for the Network Security Perimeter Profile. </param>
         /// <param name="accessRules"> Access Rules for the Network Security Perimeter Profile. </param>
@@ -4232,6 +4380,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Network Security Perimeter Profile Access Rule. </summary>
         /// <param name="name"> Name of the Network Security Perimeter Profile Access Rule. </param>
         /// <param name="properties"> Name of the Network Security Perimeter Profile Access Rule. </param>
         /// <returns> A new <see cref="Models.AppServiceNetworkSecurityPerimeterProfileAccessRule"/> instance for mocking. </returns>
@@ -4240,6 +4389,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceNetworkSecurityPerimeterProfileAccessRule(name, properties, default);
         }
 
+        /// <summary> Network Security Perimeter Profile Access Rule Properties. </summary>
         /// <param name="direction"> Direction of Access Rule (Inbound/Outbound). </param>
         /// <param name="addressPrefixes"> IP Address Ranges of Access Rule. </param>
         /// <param name="serviceTags"> Service Tags of Access Rule. </param>
@@ -4274,6 +4424,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Network Security Perimeter Profile Access Rule Granular Feature. </summary>
         /// <param name="resourceType"> Resource Type of Granular Feature. </param>
         /// <param name="features"> Names of applied Granular Features. </param>
         /// <returns> A new <see cref="Models.AppServiceNetworkSecurityPerimeterProfileGranularFeature"/> instance for mocking. </returns>
@@ -4284,6 +4435,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceNetworkSecurityPerimeterProfileGranularFeature(resourceType, (features ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Network Security Perimeter Subscription. </summary>
         /// <param name="id"> Network Security Perimeter Subscription Id. </param>
         /// <returns> A new <see cref="Models.AppServiceNetworkSecurityPerimeterProfileSubscription"/> instance for mocking. </returns>
         public static AppServiceNetworkSecurityPerimeterProfileSubscription AppServiceNetworkSecurityPerimeterProfileSubscription(string id = default)
@@ -4291,6 +4443,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceNetworkSecurityPerimeterProfileSubscription(id, default);
         }
 
+        /// <summary> The access key regenerate action content. </summary>
         /// <param name="keyType"> The key type. </param>
         /// <returns> A new <see cref="Models.WorkflowRegenerateActionContent"/> instance for mocking. </returns>
         public static WorkflowRegenerateActionContent WorkflowRegenerateActionContent(WebAppKeyType? keyType = default)
@@ -4298,6 +4451,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WorkflowRegenerateActionContent(keyType, default);
         }
 
+        /// <summary> Error properties indicate why the Logic service was not able to process the incoming request. The reason is provided in the error message. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message indicating why the operation failed. </param>
         /// <returns> A new <see cref="Models.WebAppErrorProperties"/> instance for mocking. </returns>
@@ -4359,6 +4513,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The endpoints configuration. </summary>
         /// <param name="workflow"> The workflow endpoints. </param>
         /// <param name="connector"> The connector endpoints. </param>
         /// <returns> A new <see cref="Models.FlowEndpointsConfiguration"/> instance for mocking. </returns>
@@ -4367,6 +4522,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FlowEndpointsConfiguration(workflow, connector, default);
         }
 
+        /// <summary> The flow endpoints configuration. </summary>
         /// <param name="outgoingIPAddresses"> The outgoing ip address. </param>
         /// <param name="accessEndpointIPAddresses"> The access endpoint ip address. </param>
         /// <returns> A new <see cref="Models.FlowEndpoints"/> instance for mocking. </returns>
@@ -4378,6 +4534,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FlowEndpoints((outgoingIPAddresses ?? new ChangeTrackingList<WebAppIPAddress>()).ToList(), (accessEndpointIPAddresses ?? new ChangeTrackingList<WebAppIPAddress>()).ToList(), default);
         }
 
+        /// <summary> The ip address. </summary>
         /// <param name="address"> The address. </param>
         /// <returns> A new <see cref="Models.WebAppIPAddress"/> instance for mocking. </returns>
         public static WebAppIPAddress WebAppIPAddress(string address = default)
@@ -4385,6 +4542,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppIPAddress(address, default);
         }
 
+        /// <summary> The access control configuration. </summary>
         /// <param name="triggers"> The access control configuration for invoking workflow triggers. </param>
         /// <param name="contents"> The access control configuration for accessing workflow run contents. </param>
         /// <param name="actions"> The access control configuration for workflow actions. </param>
@@ -4405,6 +4563,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FlowAccessControlConfigurationPolicy((allowedCallerIPAddresses ?? new ChangeTrackingList<WebAppIPAddressRange>()).ToList(), openAuthenticationPolicyList is null ? default : new OpenAuthenticationAccessPolicies(openAuthenticationPolicyList ?? new ChangeTrackingDictionary<string, OpenAuthenticationAccessPolicy>(), default), default);
         }
 
+        /// <summary> The ip address range. </summary>
         /// <param name="addressRange"> The IP address range. </param>
         /// <returns> A new <see cref="Models.WebAppIPAddressRange"/> instance for mocking. </returns>
         public static WebAppIPAddressRange WebAppIPAddressRange(string addressRange = default)
@@ -4412,6 +4571,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppIPAddressRange(addressRange, default);
         }
 
+        /// <summary> Open authentication access policy defined by user. </summary>
         /// <param name="providerType"> Type of provider for OAuth. </param>
         /// <param name="claims"> The access policy claims. </param>
         /// <returns> A new <see cref="Models.OpenAuthenticationAccessPolicy"/> instance for mocking. </returns>
@@ -4422,6 +4582,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new OpenAuthenticationAccessPolicy(providerType, (claims ?? new ChangeTrackingList<OpenAuthenticationPolicyClaim>()).ToList(), default);
         }
 
+        /// <summary> Open authentication policy claim. </summary>
         /// <param name="name"> The name of the claim. </param>
         /// <param name="value"> The value of the claim. </param>
         /// <returns> A new <see cref="Models.OpenAuthenticationPolicyClaim"/> instance for mocking. </returns>
@@ -4430,6 +4591,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new OpenAuthenticationPolicyClaim(name, value, default);
         }
 
+        /// <summary> The sku type. </summary>
         /// <param name="name"> The name. </param>
         /// <param name="plan"> The reference to plan. </param>
         /// <returns> A new <see cref="Models.WorkflowSku"/> instance for mocking. </returns>
@@ -4438,6 +4600,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WorkflowSku(name, plan, default);
         }
 
+        /// <summary> The resource reference. </summary>
         /// <param name="id"> The resource id. </param>
         /// <param name="name"> Gets the resource name. </param>
         /// <param name="resourceType"> Gets the resource type. </param>
@@ -4447,6 +4610,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WorkflowResourceReference(id, name, resourceType, default);
         }
 
+        /// <summary> The workflow parameters. </summary>
         /// <param name="webAppParameterType"> The type. </param>
         /// <param name="value"> The value. </param>
         /// <param name="metadata"> The metadata. </param>
@@ -4522,6 +4686,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> A static site. </summary>
         /// <param name="defaultHostname"> The default autogenerated hostname for the static site. </param>
         /// <param name="repositoryUri"> URL for the repository of the static site. </param>
         /// <param name="branch"> The target branch in the repository. </param>
@@ -4571,6 +4736,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Build properties for the static site. </summary>
         /// <param name="appLocation"> The path to the app code within the repository. </param>
         /// <param name="apiLocation"> The path to the api code within the repository. </param>
         /// <param name="appArtifactLocation"> Deprecated: The path of the app artifacts after building (deprecated in favor of OutputLocation). </param>
@@ -4594,6 +4760,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Message envelope that contains the common Azure resource manager properties and the resource provider specific content. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -4630,6 +4797,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The plan object in Azure Resource Manager, represents a marketplace plan. </summary>
         /// <param name="name"> The name. </param>
         /// <param name="publisher"> The publisher. </param>
         /// <param name="product"> The product. </param>
@@ -4669,6 +4837,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Template Options for the static site. </summary>
         /// <param name="templateRepositoryUri"> URL of the template repository. The newly generated repository will be based on this one. </param>
         /// <param name="owner"> Owner of the newly generated repository. </param>
         /// <param name="repositoryName"> Name of the newly generated repository. </param>
@@ -4707,6 +4876,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Static Site Linked Backend ARM resource. </summary>
         /// <param name="backendResourceId"> The resource id of the backend linked to the static site. </param>
         /// <param name="region"> The region of the backend linked to the static site. </param>
         /// <param name="createdOn"> The date and time on which the backend was linked to the static site. </param>
@@ -4717,6 +4887,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new StaticSiteLinkedBackendInfo(backendResourceId, region, createdOn, provisioningState, default);
         }
 
+        /// <summary> Static Site Database Connection overview. </summary>
         /// <param name="resourceId"> The resource id of the database. </param>
         /// <param name="connectionIdentity"> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </param>
         /// <param name="region"> The region of the database resource. </param>
@@ -4736,6 +4907,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> A database connection configuration file. </summary>
         /// <param name="fileName"> The name of the configuration file. </param>
         /// <param name="contents"> The Base64 encoding of the file contents. </param>
         /// <param name="staticSiteDatabaseConnectionConfigurationFileOverviewType"> The type of configuration file. </param>
@@ -4891,6 +5063,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> String list resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -5138,6 +5311,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Status object for a static sites asynchronous operation. </summary>
         /// <param name="id"> The fully qualified ID for the staticSitesOperationStatus.  For example, /subscriptions/{subscriptionId}/providers/Microsoft.Web/staticSitesOperationStatuses/{operationId}. </param>
         /// <param name="type"> The type of the resource.  For example, Microsoft.Web/staticSitesOperationStatuses. </param>
         /// <param name="name"> The name of the staticSitesOperationStatus. For example, a1f6e015-a5de-468f-ad54-9c75638d7134. </param>
@@ -5188,6 +5362,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The type used for updating tags in AiGateway resources. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.AiGatewayPatch"/> instance for mocking. </returns>
         public static AiGatewayPatch AiGatewayPatch(IDictionary<string, string> tags = default)
@@ -5226,6 +5401,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The configuration settings of the platform of App Service Authentication/Authorization. </summary>
         /// <param name="isEnabled"> &lt;code&gt;true&lt;/code&gt; if the Authentication / Authorization feature is enabled for the current app; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="runtimeVersion">
         /// The RuntimeVersion of the Authentication / Authorization feature in use for the current app.
@@ -5241,6 +5417,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AuthPlatform(isEnabled, runtimeVersion, configFilePath, default);
         }
 
+        /// <summary> The configuration settings that determines the validation flow of users using App Service Authentication/Authorization. </summary>
         /// <param name="isAuthenticationRequired"> &lt;code&gt;true&lt;/code&gt; if the authentication flow is required any request is made; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="unauthenticatedClientAction"> The action to take when an unauthenticated client attempts to access the app. </param>
         /// <param name="redirectToProvider">
@@ -5257,6 +5434,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new GlobalValidation(isAuthenticationRequired, unauthenticatedClientAction, redirectToProvider, (excludedPaths ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> The configuration settings of each of the identity providers used to configure App Service Authentication/Authorization. </summary>
         /// <param name="azureActiveDirectory"> The configuration settings of the Azure Active directory provider. </param>
         /// <param name="facebook"> The configuration settings of the Facebook provider. </param>
         /// <param name="gitHub"> The configuration settings of the GitHub provider. </param>
@@ -5287,6 +5465,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The configuration settings of the Azure Active directory provider. </summary>
         /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Azure Active Directory provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="registration"> The configuration settings of the Azure Active Directory app registration. </param>
         /// <param name="login"> The configuration settings of the Azure Active Directory login flow. </param>
@@ -5308,6 +5487,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The configuration settings of the Azure Active Directory app registration. </summary>
         /// <param name="openIdIssuer">
         /// The OpenID Connect Issuer URI that represents the entity which issues access tokens for this application.
         /// When using Azure Active Directory, this value is the URI of the directory tenant, e.g. `https://login.microsoftonline.com/v2.0/{tenant-guid}/`.
@@ -5346,6 +5526,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The configuration settings of the Azure Active Directory login flow. </summary>
         /// <param name="loginParameters">
         /// Login parameters to send to the OpenID Connect authorization endpoint when
         /// a user logs in. Each parameter must be in the form "key=value".
@@ -5359,6 +5540,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceAadLoginFlow((loginParameters ?? new ChangeTrackingList<string>()).ToList(), isWwwAuthenticateDisabled, default);
         }
 
+        /// <summary> The configuration settings of the Azure Active Directory token validation flow. </summary>
         /// <param name="jwtClaimChecks"> The configuration settings of the checks that should be made while validating the JWT Claims. </param>
         /// <param name="allowedAudiences"> The list of audiences that can make successful authentication/authorization requests. </param>
         /// <param name="defaultAuthorizationPolicy"> The configuration settings of the default authorization policy. </param>
@@ -5370,6 +5552,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceAadValidation(jwtClaimChecks, (allowedAudiences ?? new ChangeTrackingList<string>()).ToList(), defaultAuthorizationPolicy, default);
         }
 
+        /// <summary> The configuration settings of the checks that should be made while validating the JWT Claims. </summary>
         /// <param name="allowedGroups"> The list of the allowed groups. </param>
         /// <param name="allowedClientApplications"> The list of the allowed client applications. </param>
         /// <returns> A new <see cref="Models.JwtClaimChecks"/> instance for mocking. </returns>
@@ -5381,6 +5564,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new JwtClaimChecks((allowedGroups ?? new ChangeTrackingList<string>()).ToList(), (allowedClientApplications ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> The configuration settings of the Azure Active Directory default authorization policy. </summary>
         /// <param name="allowedPrincipals"> The configuration settings of the Azure Active Directory allowed principals. </param>
         /// <param name="allowedApplications"> The configuration settings of the Azure Active Directory allowed applications. </param>
         /// <returns> A new <see cref="Models.DefaultAuthorizationPolicy"/> instance for mocking. </returns>
@@ -5391,6 +5575,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new DefaultAuthorizationPolicy(allowedPrincipals, (allowedApplications ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> The configuration settings of the Azure Active Directory allowed principals. </summary>
         /// <param name="groups"> The list of the allowed groups. </param>
         /// <param name="identities"> The list of the allowed identities. </param>
         /// <returns> A new <see cref="Models.AppServiceAadAllowedPrincipals"/> instance for mocking. </returns>
@@ -5412,6 +5597,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceFacebookProvider(isEnabled, registration, graphApiVersion, loginScopes is null ? default : new LoginScopes((loginScopes ?? new ChangeTrackingList<string>()).ToList(), default), default);
         }
 
+        /// <summary> The configuration settings of the app registration for providers that have app ids and app secrets. </summary>
         /// <param name="appId"> The App ID of the app used for login. </param>
         /// <param name="appSecretSettingName"> The app setting name that contains the app secret. </param>
         /// <returns> A new <see cref="Models.AppRegistration"/> instance for mocking. </returns>
@@ -5429,6 +5615,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceGitHubProvider(isEnabled, registration, loginScopes is null ? default : new LoginScopes((loginScopes ?? new ChangeTrackingList<string>()).ToList(), default), default);
         }
 
+        /// <summary> The configuration settings of the app registration for providers that have client ids and client secrets. </summary>
         /// <param name="clientId"> The Client ID of the app used for login. </param>
         /// <param name="clientSecretSettingName"> The app setting name that contains the client secret. </param>
         /// <returns> A new <see cref="Models.ClientRegistration"/> instance for mocking. </returns>
@@ -5457,6 +5644,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new LegacyMicrosoftAccount(isEnabled, registration, loginScopes is null ? default : new LoginScopes((loginScopes ?? new ChangeTrackingList<string>()).ToList(), default), validationAllowedAudiences is null ? default : new AllowedAudiencesValidation((validationAllowedAudiences ?? new ChangeTrackingList<string>()).ToList(), default), default);
         }
 
+        /// <summary> The configuration settings of the Twitter provider. </summary>
         /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the Twitter provider should not be enabled despite the set registration; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="registration"> The configuration settings of the app registration for the Twitter provider. </param>
         /// <returns> A new <see cref="Models.AppServiceTwitterProvider"/> instance for mocking. </returns>
@@ -5465,6 +5653,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceTwitterProvider(isEnabled, registration, default);
         }
 
+        /// <summary> The configuration settings of the app registration for the Twitter provider. </summary>
         /// <param name="consumerKey">
         /// The OAuth 1.0a consumer key of the Twitter application used for sign-in.
         /// This setting is required for enabling Twitter Sign-In.
@@ -5489,6 +5678,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceAppleProvider(isEnabled, registration, loginScopes is null ? default : new LoginScopes((loginScopes ?? new ChangeTrackingList<string>()).ToList(), default), default);
         }
 
+        /// <summary> The configuration settings of the registration for the Apple provider. </summary>
         /// <param name="clientId"> The Client ID of the app used for login. </param>
         /// <param name="clientSecretSettingName"> The app setting name that contains the client secret. </param>
         /// <returns> A new <see cref="Models.AppServiceAppleRegistration"/> instance for mocking. </returns>
@@ -5505,6 +5695,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceStaticWebAppsProvider(isEnabled, registrationClientId is null ? default : new AppServiceStaticWebAppsRegistration(registrationClientId, default), default);
         }
 
+        /// <summary> The configuration settings of the custom Open ID Connect provider. </summary>
         /// <param name="isEnabled"> &lt;code&gt;false&lt;/code&gt; if the custom Open ID provider provider should not be enabled; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="registration"> The configuration settings of the app registration for the custom Open ID Connect provider. </param>
         /// <param name="login"> The configuration settings of the login flow of the custom Open ID Connect provider. </param>
@@ -5514,6 +5705,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new CustomOpenIdConnectProvider(isEnabled, registration, login, default);
         }
 
+        /// <summary> The configuration settings of the app registration for the custom Open ID Connect provider. </summary>
         /// <param name="clientId"> The client id of the custom Open ID Connect provider. </param>
         /// <param name="clientCredential"> The authentication credentials of the custom Open ID Connect provider. </param>
         /// <param name="openIdConnectConfiguration"> The configuration settings of the endpoints used for the custom Open ID Connect provider. </param>
@@ -5523,6 +5715,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new OpenIdConnectRegistration(clientId, clientCredential, openIdConnectConfiguration, default);
         }
 
+        /// <summary> The authentication client credentials of the custom Open ID Connect provider. </summary>
         /// <param name="method"> The method that should be used to authenticate the user. </param>
         /// <param name="clientSecretSettingName"> The app setting that contains the client secret for the custom Open ID Connect provider. </param>
         /// <returns> A new <see cref="Models.OpenIdConnectClientCredential"/> instance for mocking. </returns>
@@ -5531,6 +5724,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new OpenIdConnectClientCredential(@method, clientSecretSettingName, default);
         }
 
+        /// <summary> The configuration settings of the endpoints used for the custom Open ID Connect provider. </summary>
         /// <param name="authorizationEndpoint"> The endpoint to be used to make an authorization request. </param>
         /// <param name="tokenEndpoint"> The endpoint to be used to request a token. </param>
         /// <param name="issuer"> The endpoint that issues the token. </param>
@@ -5548,6 +5742,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The configuration settings of the login flow of the custom Open ID Connect provider. </summary>
         /// <param name="nameClaimType"> The name of the claim that contains the users name. </param>
         /// <param name="scopes"> A list of the scopes that should be requested while authenticating. </param>
         /// <returns> A new <see cref="Models.OpenIdConnectLogin"/> instance for mocking. </returns>
@@ -5599,6 +5794,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceTokenStore(isEnabled, tokenRefreshExtensionHours, fileSystemDirectory is null ? default : new FileSystemTokenStore(fileSystemDirectory, default), azureBlobStorageSasUrlSettingName is null ? default : new AppServiceBlobStorageTokenStore(azureBlobStorageSasUrlSettingName, default), default);
         }
 
+        /// <summary> The configuration settings of the session cookie's expiration. </summary>
         /// <param name="convention"> The convention used when determining the session cookie's expiration. </param>
         /// <param name="timeToExpiration"> The time after the request is made when the session cookie should expire. </param>
         /// <returns> A new <see cref="Models.WebAppCookieExpiration"/> instance for mocking. </returns>
@@ -5607,6 +5803,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppCookieExpiration(convention, timeToExpiration, default);
         }
 
+        /// <summary> The configuration settings of the nonce used in the login flow. </summary>
         /// <param name="validateNonce"> &lt;code&gt;false&lt;/code&gt; if the nonce should not be validated while completing the login flow; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
         /// <param name="nonceExpirationInterval"> The time after the request is made when the nonce should expire. </param>
         /// <returns> A new <see cref="Models.LoginFlowNonceSettings"/> instance for mocking. </returns>
@@ -5624,6 +5821,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceHttpSettings(isHttpsRequired, routesApiPrefix is null ? default : new AppServiceHttpSettingsRoutes(routesApiPrefix, default), forwardProxy, default);
         }
 
+        /// <summary> The configuration settings of a forward proxy used to make the requests. </summary>
         /// <param name="convention"> The convention used to determine the url of the request made. </param>
         /// <param name="customHostHeaderName"> The name of the header containing the host of the request. </param>
         /// <param name="customProtoHeaderName"> The name of the header containing the scheme of the request. </param>
@@ -5701,6 +5899,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ApplicationLogsConfig(fileSystemLevel is null ? default : new FileSystemApplicationLogsConfig(fileSystemLevel, default), azureTableStorage, azureBlobStorage, default);
         }
 
+        /// <summary> Application logs to Azure table storage configuration. </summary>
         /// <param name="level"> Log level. </param>
         /// <param name="sasUriString"> SAS URL to an Azure table with add/query/delete permissions. </param>
         /// <returns> A new <see cref="Models.AppServiceTableStorageApplicationLogsConfig"/> instance for mocking. </returns>
@@ -5709,6 +5908,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceTableStorageApplicationLogsConfig(level, sasUriString, default);
         }
 
+        /// <summary> Application logs azure blob storage configuration. </summary>
         /// <param name="level"> Log level. </param>
         /// <param name="sasUri"> SAS url to a azure blob container with read/write/list/delete permissions. </param>
         /// <param name="retentionInDays">
@@ -5722,6 +5922,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceBlobStorageApplicationLogsConfig(level, sasUri, retentionInDays, default);
         }
 
+        /// <summary> Http logs configuration. </summary>
         /// <param name="fileSystem"> Http logs to file system configuration. </param>
         /// <param name="azureBlobStorage"> Http logs to azure blob storage configuration. </param>
         /// <returns> A new <see cref="Models.AppServiceHttpLogsConfig"/> instance for mocking. </returns>
@@ -5730,6 +5931,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceHttpLogsConfig(fileSystem, azureBlobStorage, default);
         }
 
+        /// <summary> Http logs to file system configuration. </summary>
         /// <param name="retentionInMb">
         /// Maximum size in megabytes that http log files can use.
         /// When reached old log files will be removed to make space for new ones.
@@ -5747,6 +5949,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FileSystemHttpLogsConfig(retentionInMb, retentionInDays, isEnabled, default);
         }
 
+        /// <summary> Http logs to azure blob storage configuration. </summary>
         /// <param name="sasUri"> SAS url to a azure blob container with read/write/list/delete permissions. </param>
         /// <param name="retentionInDays">
         /// Retention in days.
@@ -5856,14 +6059,14 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                status is null && message is null && author is null && deployer is null && authorEmail is null && startOn is null && endOn is null && isActive is null && details is null ? default : new DeploymentProperties(
+                status is null && message is null && author is null && deployer is null && authorEmail is null && isActive is null && details is null ? default : new DeploymentProperties(
                     status,
                     message,
                     author,
                     deployer,
                     authorEmail,
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     isActive,
                     details,
                     default),
@@ -5889,11 +6092,11 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                deployer is null && provisioningState is null && startOn is null && endOn is null && isComplete is null ? default : new MSDeployStatusProperties(
+                deployer is null && provisioningState is null && isComplete is null ? default : new MSDeployStatusProperties(
                     deployer,
                     provisioningState,
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     isComplete,
                     default),
                 kind,
@@ -5944,6 +6147,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> MSDeploy ARM PUT core information. </summary>
         /// <param name="packageUri"> Package URI. </param>
         /// <param name="connectionString"> SQL Connection String. </param>
         /// <param name="dbType"> Database Type. </param>
@@ -5994,6 +6198,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> MSDeploy log entry. </summary>
         /// <param name="time"> Timestamp of log entry. </param>
         /// <param name="entryType"> Log entry type. </param>
         /// <param name="message"> Log entry message. </param>
@@ -6118,6 +6323,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The ContainerInfo. </summary>
         /// <param name="currentTimeStamp"></param>
         /// <param name="previousTimeStamp"></param>
         /// <param name="currentCpuStats"></param>
@@ -6141,6 +6347,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The ContainerCpuStatistics. </summary>
         /// <param name="cpuUsage"></param>
         /// <param name="systemCpuUsage"></param>
         /// <param name="onlineCpuCount"></param>
@@ -6151,6 +6358,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ContainerCpuStatistics(cpuUsage, systemCpuUsage, onlineCpuCount, throttlingData, default);
         }
 
+        /// <summary> The ContainerCpuUsage. </summary>
         /// <param name="totalUsage"></param>
         /// <param name="perCpuUsage"></param>
         /// <param name="kernelModeUsage"></param>
@@ -6163,6 +6371,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ContainerCpuUsage(totalUsage, (perCpuUsage ?? new ChangeTrackingList<long>()).ToList(), kernelModeUsage, userModeUsage, default);
         }
 
+        /// <summary> The ContainerThrottlingInfo. </summary>
         /// <param name="periods"></param>
         /// <param name="throttledPeriods"></param>
         /// <param name="throttledTime"></param>
@@ -6172,6 +6381,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ContainerThrottlingInfo(periods, throttledPeriods, throttledTime, default);
         }
 
+        /// <summary> The ContainerMemoryStatistics. </summary>
         /// <param name="usage"></param>
         /// <param name="maxUsage"></param>
         /// <param name="limit"></param>
@@ -6181,6 +6391,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new ContainerMemoryStatistics(usage, maxUsage, limit, default);
         }
 
+        /// <summary> The ContainerNetworkInterfaceStatistics. </summary>
         /// <param name="rxBytes"></param>
         /// <param name="rxPackets"></param>
         /// <param name="rxErrors"></param>
@@ -6253,7 +6464,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                identifier is null && deploymentName is null && href is null && minidump is null && isProfileRunning is null && isIisProfileRunning is null && iisProfileTimeoutInSeconds is null && parent is null && children is null && processThreads is null && openFileHandles is null && modules is null && fileName is null && commandLine is null && userName is null && handleCount is null && moduleCount is null && threadCount is null && startOn is null && totalCpuTime is null && userCpuTime is null && privilegedCpuTime is null && workingSet is null && peakWorkingSet is null && privateMemory is null && virtualMemory is null && peakVirtualMemory is null && pagedSystemMemory is null && nonPagedSystemMemory is null && pagedMemory is null && peakPagedMemory is null && timeStamp is null && environmentVariables is null && isScmSite is null && isWebjob is null && description is null ? default : new ProcessInfoProperties(
+                identifier is null && deploymentName is null && href is null && minidump is null && isProfileRunning is null && isIisProfileRunning is null && iisProfileTimeoutInSeconds is null && parent is null && children is null && processThreads is null && openFileHandles is null && modules is null && fileName is null && commandLine is null && userName is null && handleCount is null && moduleCount is null && threadCount is null && totalCpuTime is null && userCpuTime is null && privilegedCpuTime is null && workingSet is null && peakWorkingSet is null && privateMemory is null && virtualMemory is null && peakVirtualMemory is null && pagedSystemMemory is null && nonPagedSystemMemory is null && pagedMemory is null && peakPagedMemory is null && timeStamp is null && environmentVariables is null && isScmSite is null && isWebjob is null && description is null ? default : new ProcessInfoProperties(
                     identifier,
                     deploymentName,
                     href,
@@ -6272,7 +6483,7 @@ namespace Azure.ResourceManager.AppService.Models
                     handleCount,
                     moduleCount,
                     threadCount,
-                    startOn,
+                    default,
                     totalCpuTime,
                     userCpuTime,
                     privilegedCpuTime,
@@ -6295,6 +6506,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Process Thread properties. </summary>
         /// <param name="id"> Thread ID. </param>
         /// <param name="href"> HRef URI. </param>
         /// <param name="state"> Thread state. </param>
@@ -6345,6 +6557,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Process Thread Information. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -6476,6 +6689,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Description of a Virtual Network that is useable for private site access. </summary>
         /// <param name="name"> The name of the Virtual Network. </param>
         /// <param name="key"> The key (ID) of the Virtual Network. </param>
         /// <param name="resourceId"> The ARM uri of the Virtual Network. </param>
@@ -6488,6 +6702,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new PrivateAccessVirtualNetwork(name, key, resourceId, (subnets ?? new ChangeTrackingList<PrivateAccessSubnet>()).ToList(), default);
         }
 
+        /// <summary> Description of a Virtual Network subnet that is useable for private site access. </summary>
         /// <param name="name"> The name of the subnet. </param>
         /// <param name="key"> The key (ID) of the subnet. </param>
         /// <returns> A new <see cref="Models.PrivateAccessSubnet"/> instance for mocking. </returns>
@@ -6517,6 +6732,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The SiteContainerVolumeMount. </summary>
         /// <param name="volumeSubPath"> Sub path in the volume where volume is mounted from. </param>
         /// <param name="containerMountPath"> Target path on the container where volume is mounted on. </param>
         /// <param name="data"> Config Data to be mounted on the volume. </param>
@@ -6527,6 +6743,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteContainerVolumeMount(volumeSubPath, containerMountPath, data, isReadOnly, default);
         }
 
+        /// <summary> The WebAppEnvironmentVariable. </summary>
         /// <param name="name"> Environment variable name. </param>
         /// <param name="value"> The value of this environment variable must be the name of an AppSetting. The actual value of the environment variable in container will be retrieved from the specified AppSetting at runtime. If the AppSetting is not found, the value will be set to an empty string in the container at runtime. </param>
         /// <returns> A new <see cref="Models.WebAppEnvironmentVariable"/> instance for mocking. </returns>
@@ -6627,6 +6844,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The GitHub action configuration. </summary>
         /// <param name="codeConfiguration"> GitHub Action code configuration. </param>
         /// <param name="containerConfiguration"> GitHub Action container configuration. </param>
         /// <param name="isLinux"> This will help determine the workflow configuration to select. </param>
@@ -6637,6 +6855,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new GitHubActionConfiguration(codeConfiguration, containerConfiguration, isLinux, generateWorkflowFile, default);
         }
 
+        /// <summary> The GitHub action code configuration. </summary>
         /// <param name="runtimeStack"> Runtime stack is used to determine the workflow file content for code base apps. </param>
         /// <param name="runtimeVersion"> Runtime version is used to determine what build version to set in the workflow file. </param>
         /// <returns> A new <see cref="Models.GitHubActionCodeConfiguration"/> instance for mocking. </returns>
@@ -6645,6 +6864,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new GitHubActionCodeConfiguration(runtimeStack, runtimeVersion, default);
         }
 
+        /// <summary> The GitHub action container configuration. </summary>
         /// <param name="serverUri"> The server URL for the container registry where the build will be hosted. </param>
         /// <param name="imageName"> The image name for the build. </param>
         /// <param name="username"> The username used to upload the image to the container registry. </param>
@@ -6698,11 +6918,12 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Triggered Web Job Run Information. </summary>
         /// <param name="webJobId"> Job ID. </param>
         /// <param name="webJobName"> Job name. </param>
         /// <param name="status"> Job status. </param>
-        /// <param name="startOn"> Start time. </param>
-        /// <param name="endOn"> End time. </param>
+        /// <param name="startsOn"> Start time. </param>
+        /// <param name="endsOn"> End time. </param>
         /// <param name="duration"> Job duration. </param>
         /// <param name="outputUri"> Output URL. </param>
         /// <param name="errorUri"> Error URL. </param>
@@ -6710,14 +6931,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="jobName"> Job name. </param>
         /// <param name="trigger"> Job trigger. </param>
         /// <returns> A new <see cref="Models.TriggeredJobRun"/> instance for mocking. </returns>
-        public static TriggeredJobRun TriggeredJobRun(string webJobId = default, string webJobName = default, TriggeredWebJobStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, TimeSpan? duration = default, Uri outputUri = default, Uri errorUri = default, Uri uri = default, string jobName = default, string trigger = default)
+        public static TriggeredJobRun TriggeredJobRun(string webJobId = default, string webJobName = default, TriggeredWebJobStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, TimeSpan? duration = default, Uri outputUri = default, Uri errorUri = default, Uri uri = default, string jobName = default, string trigger = default)
         {
             return new TriggeredJobRun(
                 webJobId,
                 webJobName,
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 duration,
                 outputUri,
                 errorUri,
@@ -6783,9 +7004,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="waitEndOn"> Gets the wait end time. </param>
-        /// <param name="startOn"> Gets the start time. </param>
-        /// <param name="endOn"> Gets the end time. </param>
+        /// <param name="waitEndsOn"> Gets the wait end time. </param>
+        /// <param name="startsOn"> Gets the start time. </param>
+        /// <param name="endsOn"> Gets the end time. </param>
         /// <param name="status"> Gets the status. </param>
         /// <param name="code"> Gets the code. </param>
         /// <param name="error"> Gets the error. </param>
@@ -6796,17 +7017,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="response"> Gets the response of the flow run. </param>
         /// <param name="correlationClientTrackingId"> The client tracking id. </param>
         /// <returns> A new <see cref="AppService.WorkflowRunData"/> instance for mocking. </returns>
-        public static WorkflowRunData WorkflowRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? waitEndOn = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, WorkflowStatus? status = default, string code = default, BinaryData error = default, string correlationId = default, WorkflowResourceReference workflow = default, WorkflowRunTrigger trigger = default, IReadOnlyDictionary<string, WorkflowOutputContent> outputs = default, WorkflowRunTrigger response = default, string correlationClientTrackingId = default)
+        public static WorkflowRunData WorkflowRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? waitEndsOn = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, WorkflowStatus? status = default, string code = default, BinaryData error = default, string correlationId = default, WorkflowResourceReference workflow = default, WorkflowRunTrigger trigger = default, IReadOnlyDictionary<string, WorkflowOutputContent> outputs = default, WorkflowRunTrigger response = default, string correlationClientTrackingId = default)
         {
             return new WorkflowRunData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                waitEndOn is null && startOn is null && endOn is null && status is null && code is null && error is null && correlationId is null && correlationClientTrackingId is null && workflow is null && trigger is null && outputs is null && response is null ? default : new WorkflowRunProperties(
-                    waitEndOn,
-                    startOn,
-                    endOn,
+                waitEndsOn is null && startsOn is null && endsOn is null && status is null && code is null && error is null && correlationId is null && correlationClientTrackingId is null && workflow is null && trigger is null && outputs is null && response is null ? default : new WorkflowRunProperties(
+                    waitEndsOn,
+                    startsOn,
+                    endsOn,
                     status,
                     code,
                     error,
@@ -6844,8 +7065,8 @@ namespace Azure.ResourceManager.AppService.Models
                 outputs,
                 outputsLink,
                 scheduledOn,
-                startOn,
-                endOn,
+                default,
+                default,
                 trackingId,
                 correlationClientTrackingId is null ? default : new Correlation(correlationClientTrackingId, default),
                 code,
@@ -6855,6 +7076,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The content link. </summary>
         /// <param name="uri"> The content link URI. </param>
         /// <param name="contentVersion"> The content version. </param>
         /// <param name="contentSize"> The content size. </param>
@@ -6872,6 +7094,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The content hash. </summary>
         /// <param name="algorithm"> The algorithm of the content hash. </param>
         /// <param name="value"> The value of the content hash. </param>
         /// <returns> A new <see cref="Models.WebAppContentHash"/> instance for mocking. </returns>
@@ -6880,6 +7103,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppContentHash(algorithm, value, default);
         }
 
+        /// <summary> The workflow output parameter. </summary>
         /// <param name="webAppParameterType"> The type. </param>
         /// <param name="value"> The value. </param>
         /// <param name="metadata"> The metadata. </param>
@@ -6920,9 +7144,9 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                startOn is null && endOn is null && status is null && code is null && error is null && trackingId is null && correlation is null && inputsLink is null && outputsLink is null && trackedProperties is null && retryHistory is null ? default : new WorkflowRunActionProperties(
-                    startOn,
-                    endOn,
+                status is null && code is null && error is null && trackingId is null && correlation is null && inputsLink is null && outputsLink is null && trackedProperties is null && retryHistory is null ? default : new WorkflowRunActionProperties(
+                    default,
+                    default,
                     status,
                     code,
                     error,
@@ -6936,6 +7160,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The workflow run action correlation properties. </summary>
         /// <param name="clientTrackingId"> The client tracking identifier. </param>
         /// <param name="clientKeywords"> The client keywords. </param>
         /// <param name="actionTrackingId"> The action tracking identifier. </param>
@@ -6947,6 +7172,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppRunActionCorrelation(clientTrackingId, (clientKeywords ?? new ChangeTrackingList<string>()).ToList(), default, actionTrackingId);
         }
 
+        /// <summary> The correlation properties. </summary>
         /// <param name="clientTrackingId"> The client tracking identifier. </param>
         /// <param name="clientKeywords"> The client keywords. </param>
         /// <returns> A new <see cref="Models.WebAppRunCorrelation"/> instance for mocking. </returns>
@@ -6957,18 +7183,18 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppRunCorrelation(clientTrackingId, (clientKeywords ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
-        /// <param name="startOn"> Gets the start time. </param>
-        /// <param name="endOn"> Gets the end time. </param>
+        /// <param name="startsOn"> Gets the start time. </param>
+        /// <param name="endsOn"> Gets the end time. </param>
         /// <param name="code"> Gets the status code. </param>
         /// <param name="clientRequestId"> Gets the client request Id. </param>
         /// <param name="serviceRequestId"> Gets the service request Id. </param>
         /// <param name="errorInfo"> The error properties. </param>
         /// <returns> A new <see cref="Models.WebAppRetryHistory"/> instance for mocking. </returns>
-        public static WebAppRetryHistory WebAppRetryHistory(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string code = default, string clientRequestId = default, string serviceRequestId = default, WebAppErrorProperties errorInfo = default)
+        public static WebAppRetryHistory WebAppRetryHistory(DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, string code = default, string clientRequestId = default, string serviceRequestId = default, WebAppErrorProperties errorInfo = default)
         {
             return new WebAppRetryHistory(
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 code,
                 clientRequestId,
                 serviceRequestId,
@@ -6976,6 +7202,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The expression root. </summary>
         /// <param name="text"> The text. </param>
         /// <param name="value"> Anything. </param>
         /// <param name="subexpressions"> The sub expressions. </param>
@@ -6995,6 +7222,7 @@ namespace Azure.ResourceManager.AppService.Models
                 path);
         }
 
+        /// <summary> The expression. </summary>
         /// <param name="text"> The text. </param>
         /// <param name="value"> Anything. </param>
         /// <param name="subexpressions"> The sub expressions. </param>
@@ -7007,6 +7235,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WorkflowExpression(text, value, (subexpressions ?? new ChangeTrackingList<WorkflowExpression>()).ToList(), error, default);
         }
 
+        /// <summary> The azure resource error info. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <param name="details"> The error details. </param>
@@ -7018,6 +7247,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WorkflowExpressionResourceErrorInfo(code, default, message, (details ?? new ChangeTrackingList<WorkflowExpressionResourceErrorInfo>()).ToList());
         }
 
+        /// <summary> The error info. </summary>
         /// <param name="code"> The error code. </param>
         /// <returns> A new <see cref="Models.WebAppErrorInfo"/> instance for mocking. </returns>
         public static WebAppErrorInfo WebAppErrorInfo(string code = default)
@@ -7078,6 +7308,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The workflow run action repetition index. </summary>
         /// <param name="scopeName"> The scope. </param>
         /// <param name="itemIndex"> The index. </param>
         /// <returns> A new <see cref="Models.WorkflowRunActionRepetitionIndex"/> instance for mocking. </returns>
@@ -7086,6 +7317,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WorkflowRunActionRepetitionIndex(scopeName, itemIndex, default);
         }
 
+        /// <summary> The request history. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -7109,16 +7341,18 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <param name="startOn"> The time the request started. </param>
-        /// <param name="endOn"> The time the request ended. </param>
+        /// <summary> The request history. </summary>
+        /// <param name="startsOn"> The time the request started. </param>
+        /// <param name="endsOn"> The time the request ended. </param>
         /// <param name="request"> The request. </param>
         /// <param name="response"> The response. </param>
         /// <returns> A new <see cref="Models.WebAppRequestHistoryProperties"/> instance for mocking. </returns>
-        public static WebAppRequestHistoryProperties WebAppRequestHistoryProperties(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, WebAppRequest request = default, WebAppResponse response = default)
+        public static WebAppRequestHistoryProperties WebAppRequestHistoryProperties(DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, WebAppRequest request = default, WebAppResponse response = default)
         {
-            return new WebAppRequestHistoryProperties(startOn, endOn, request, response, default);
+            return new WebAppRequestHistoryProperties(startsOn, endsOn, request, response, default);
         }
 
+        /// <summary> A request. </summary>
         /// <param name="headers"> A list of all the headers attached to the request. </param>
         /// <param name="uri"> The destination for the request. </param>
         /// <param name="method"> The HTTP method used for the request. </param>
@@ -7128,6 +7362,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppRequest(headers, uri, @method, default);
         }
 
+        /// <summary> A response. </summary>
         /// <param name="headers"> A list of all the headers attached to the response. </param>
         /// <param name="statusCode"> The status code of the response. </param>
         /// <param name="bodyLink"> Details on the location of the body content. </param>
@@ -7172,6 +7407,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The workflow trigger recurrence. </summary>
         /// <param name="frequency"> The frequency. </param>
         /// <param name="interval"> The interval. </param>
         /// <param name="startTime"> The start time. </param>
@@ -7191,6 +7427,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The recurrence schedule. </summary>
         /// <param name="minutes"> The minutes. </param>
         /// <param name="hours"> The hours. </param>
         /// <param name="weekDays"> The days of the week. </param>
@@ -7214,6 +7451,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The recurrence schedule occurrence. </summary>
         /// <param name="day"> The day of the week. </param>
         /// <param name="occurrence"> The occurrence. </param>
         /// <returns> A new <see cref="Models.RecurrenceScheduleOccurrence"/> instance for mocking. </returns>
@@ -7222,6 +7460,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new RecurrenceScheduleOccurrence(day, occurrence, default);
         }
 
+        /// <summary> The workflow trigger callback URL. </summary>
         /// <param name="value"> Gets the workflow trigger callback URL. </param>
         /// <param name="method"> Gets the workflow trigger callback URL HTTP method. </param>
         /// <param name="basePath"> Gets the workflow trigger callback URL base path. </param>
@@ -7243,6 +7482,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Gets the workflow trigger callback URL query parameters. </summary>
         /// <param name="apiVersion"> The api version. </param>
         /// <param name="sasPermission"> The SAS permissions. </param>
         /// <param name="sasVersion"> The SAS version. </param>
@@ -7260,6 +7500,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> The JSON schema. </summary>
         /// <param name="title"> The JSON title. </param>
         /// <param name="content"> The JSON content. </param>
         /// <returns> A new <see cref="Models.WebAppJsonSchema"/> instance for mocking. </returns>
@@ -7272,8 +7513,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="startOn"> Gets the start time. </param>
-        /// <param name="endOn"> Gets the end time. </param>
+        /// <param name="startsOn"> Gets the start time. </param>
+        /// <param name="endsOn"> Gets the end time. </param>
         /// <param name="scheduledOn"> The scheduled time. </param>
         /// <param name="status"> Gets the status. </param>
         /// <param name="code"> Gets the code. </param>
@@ -7285,16 +7526,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="run"> Gets the reference to workflow run. </param>
         /// <param name="correlationClientTrackingId"> The client tracking id. </param>
         /// <returns> A new <see cref="AppService.WorkflowTriggerHistoryData"/> instance for mocking. </returns>
-        public static WorkflowTriggerHistoryData WorkflowTriggerHistoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? scheduledOn = default, WorkflowStatus? status = default, string code = default, BinaryData error = default, string trackingId = default, WebAppContentLink inputsLink = default, WebAppContentLink outputsLink = default, bool? isFired = default, WorkflowResourceReference run = default, string correlationClientTrackingId = default)
+        public static WorkflowTriggerHistoryData WorkflowTriggerHistoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, DateTimeOffset? scheduledOn = default, WorkflowStatus? status = default, string code = default, BinaryData error = default, string trackingId = default, WebAppContentLink inputsLink = default, WebAppContentLink outputsLink = default, bool? isFired = default, WorkflowResourceReference run = default, string correlationClientTrackingId = default)
         {
             return new WorkflowTriggerHistoryData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                startOn is null && endOn is null && scheduledOn is null && status is null && code is null && error is null && trackingId is null && correlationClientTrackingId is null && inputsLink is null && outputsLink is null && isFired is null && run is null ? default : new WorkflowTriggerHistoryProperties(
-                    startOn,
-                    endOn,
+                startsOn is null && endsOn is null && scheduledOn is null && status is null && code is null && error is null && trackingId is null && correlationClientTrackingId is null && inputsLink is null && outputsLink is null && isFired is null && run is null ? default : new WorkflowTriggerHistoryProperties(
+                    startsOn,
+                    endsOn,
                     scheduledOn,
                     status,
                     code,
@@ -7387,6 +7628,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Application stack. </summary>
         /// <param name="stackName"> Application stack name. </param>
         /// <param name="display"> Application stack display name. </param>
         /// <param name="dependency"> Application stack dependency. </param>
@@ -7410,6 +7652,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Application stack major version. </summary>
         /// <param name="displayVersion"> Application stack major version (display only). </param>
         /// <param name="runtimeVersion"> Application stack major version (runtime only). </param>
         /// <param name="isDefault"> &lt;code&gt;true&lt;/code&gt; if this is the default major version; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -7451,6 +7694,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Application stack minor version. </summary>
         /// <param name="displayVersion"> Application stack minor version (display only). </param>
         /// <param name="runtimeVersion"> Application stack minor version (runtime only). </param>
         /// <param name="isDefault"> &lt;code&gt;true&lt;/code&gt; if this is the default minor version; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -7485,6 +7729,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Function App stack major version. </summary>
         /// <param name="displayText"> Function App stack major version (display only). </param>
         /// <param name="value"> Function App stack major version name. </param>
         /// <param name="minorVersions"> Minor versions associated with the major version. </param>
@@ -7496,6 +7741,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FunctionAppMajorVersion(displayText, value, (minorVersions ?? new ChangeTrackingList<FunctionAppMinorVersion>()).ToList(), default);
         }
 
+        /// <summary> Function App stack minor version. </summary>
         /// <param name="displayText"> Function App stack (display only). </param>
         /// <param name="value"> Function App stack name. </param>
         /// <param name="stackSettings"> Settings associated with the minor version. </param>
@@ -7505,6 +7751,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FunctionAppMinorVersion(displayText, value, stackSettings, default);
         }
 
+        /// <summary> Function App stack runtimes. </summary>
         /// <param name="linuxRuntimeSettings"> Linux-specific settings associated with the minor version. </param>
         /// <param name="windowsRuntimeSettings"> Windows-specific settings associated with the minor version. </param>
         /// <returns> A new <see cref="Models.FunctionAppRuntimes"/> instance for mocking. </returns>
@@ -7513,6 +7760,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new FunctionAppRuntimes(linuxRuntimeSettings, windowsRuntimeSettings, default);
         }
 
+        /// <summary> Function App runtime settings. </summary>
         /// <param name="runtimeVersion"> Function App stack minor version (runtime only). </param>
         /// <param name="isRemoteDebuggingSupported"> &lt;code&gt;true&lt;/code&gt; if remote debugging is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="appInsightsSettings"> Application Insights settings associated with the minor version. </param>
@@ -7551,6 +7799,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> App Insights Web App stack settings. </summary>
         /// <param name="isSupported"> &lt;code&gt;true&lt;/code&gt; if remote Application Insights is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isDefaultOff"> &lt;code&gt;true&lt;/code&gt; if Application Insights is disabled by default for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <returns> A new <see cref="Models.AppInsightsWebAppStackSettings"/> instance for mocking. </returns>
@@ -7559,6 +7808,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppInsightsWebAppStackSettings(isSupported, isDefaultOff, default);
         }
 
+        /// <summary> GitHub Actions Web App stack settings. </summary>
         /// <param name="isSupported"> &lt;code&gt;true&lt;/code&gt; if GitHub Actions is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="supportedVersion"> The minor version that is supported for GitHub Actions. </param>
         /// <returns> A new <see cref="Models.GitHubActionWebAppStackSettings"/> instance for mocking. </returns>
@@ -7567,6 +7817,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new GitHubActionWebAppStackSettings(isSupported, supportedVersion, default);
         }
 
+        /// <summary> Site config properties dictionary. </summary>
         /// <param name="use32BitWorkerProcess"> &lt;code&gt;true&lt;/code&gt; if use32BitWorkerProcess should be set to true for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="linuxFxVersion"> LinuxFxVersion configuration setting. </param>
         /// <param name="javaVersion"> JavaVersion configuration setting. </param>
@@ -7601,6 +7852,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Web App stack major version. </summary>
         /// <param name="displayText"> Web App stack major version (display only). </param>
         /// <param name="value"> Web App stack major version name. </param>
         /// <param name="minorVersions"> Minor versions associated with the major version. </param>
@@ -7612,6 +7864,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppMajorVersion(displayText, value, (minorVersions ?? new ChangeTrackingList<WebAppMinorVersion>()).ToList(), default);
         }
 
+        /// <summary> Web App stack minor version. </summary>
         /// <param name="displayText"> Web App stack minor version (display only). </param>
         /// <param name="value"> Web App stack major version name. </param>
         /// <param name="stackSettings"> Settings associated with the minor version. </param>
@@ -7621,6 +7874,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppMinorVersion(displayText, value, stackSettings, default);
         }
 
+        /// <summary> Web App stack runtimes. </summary>
         /// <param name="linuxRuntimeSettings"> Linux-specific settings associated with the minor version. </param>
         /// <param name="windowsRuntimeSettings"> Windows-specific settings associated with the minor version. </param>
         /// <param name="linuxContainerSettings"> Linux-specific settings associated with the Java container minor version. </param>
@@ -7631,6 +7885,7 @@ namespace Azure.ResourceManager.AppService.Models
             return new WebAppRuntimes(linuxRuntimeSettings, windowsRuntimeSettings, linuxContainerSettings, windowsContainerSettings, default);
         }
 
+        /// <summary> Web App runtime settings. </summary>
         /// <param name="runtimeVersion"> Web App stack minor version (runtime only). </param>
         /// <param name="isRemoteDebuggingSupported"> &lt;code&gt;true&lt;/code&gt; if remote debugging is supported for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="appInsightsSettings"> Application Insights settings associated with the minor version. </param>
@@ -7658,6 +7913,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Linux Java Container settings. </summary>
         /// <param name="java11Runtime"> Java 11 version (runtime only). </param>
         /// <param name="java8Runtime"> Java 8 version (runtime only). </param>
         /// <param name="isPreview"> &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -7681,6 +7937,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
+        /// <summary> Windows Java Container settings. </summary>
         /// <param name="javaContainer"> Java container (runtime only). </param>
         /// <param name="javaContainerVersion"> Java container version (runtime only). </param>
         /// <param name="isPreview"> &lt;code&gt;true&lt;/code&gt; if the stack is in preview; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -7745,13 +8002,13 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.WebSiteData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> A web app, a mobile app backend, or an API app. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> Managed service identity. </param>
         /// <param name="extendedLocation"> Extended Location. </param>
         /// <param name="state"> Current state of the app. </param>
@@ -7761,7 +8018,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isEnabled"> &lt;code&gt;true&lt;/code&gt; if the app is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. Setting this value to false disables the app (takes the app offline). </param>
         /// <param name="enabledHostNames">
         /// Enabled hostnames for the app.Hostnames need to be assigned (see HostNames) AND enabled. Otherwise,
-        ///             the app is not served on those hostnames.
+        /// the app is not served on those hostnames.
         /// </param>
         /// <param name="availabilityState"> Management information availability state for the app. </param>
         /// <param name="hostNameSslStates"> Hostname SSL states are used to manage the SSL bindings for app's hostnames. </param>
@@ -7771,11 +8028,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isHyperV"> Hyper-V sandbox. </param>
         /// <param name="lastModifiedTimeUtc"> Last time the app was modified, in UTC. Read-only. </param>
         /// <param name="dnsConfiguration"> Property to configure various DNS related settings for a site. </param>
-        /// <param name="isVnetRouteAllEnabled"> Virtual Network Route All enabled. This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. </param>
-        /// <param name="isVnetImagePullEnabled"> To enable pulling image over Virtual Network. </param>
-        /// <param name="isVnetContentShareEnabled"> To enable accessing content over virtual network. </param>
-        /// <param name="isVnetBackupRestoreEnabled"> To enable Backup and Restore operations over virtual network. </param>
-        /// <param name="siteConfig"> Configuration of the app. </param>
+        /// <param name="isVnetRouteAllEnabled"></param>
+        /// <param name="isVnetImagePullEnabled"></param>
+        /// <param name="isVnetContentShareEnabled"></param>
+        /// <param name="isVnetBackupRestoreEnabled"></param>
+        /// <param name="siteConfig"> Configuration of an App Service app. This property is not returned in response to normal create and read requests since it may contain sensitive information. </param>
         /// <param name="functionAppConfig"> Configuration specific of the Azure Function app. </param>
         /// <param name="daprConfig"> Dapr configuration of the app. </param>
         /// <param name="workloadProfileName"> Workload profile name for function app to execute on. </param>
@@ -7788,16 +8045,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isClientCertEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client certificate authentication (TLS mutual authentication); otherwise, &lt;code&gt;false&lt;/code&gt;. Default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="clientCertMode">
         /// This composes with ClientCertEnabled setting.
-        ///             - ClientCertEnabled: false means ClientCert is ignored.
-        ///             - ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.
-        ///             - ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.
+        /// <list type="bullet"><item><description>ClientCertEnabled: false means ClientCert is ignored.</description></item><item><description>ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.</description></item><item><description>ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.</description></item></list>
         /// </param>
         /// <param name="clientCertExclusionPaths"> client certificate authentication comma-separated exclusion paths. </param>
         /// <param name="ipMode"> Specifies the IP mode of the app. </param>
         /// <param name="isEndToEndEncryptionEnabled"> Whether to use end to end encryption between the FrontEnd and the Worker. </param>
         /// <param name="isHostNameDisabled">
         /// &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///              If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
+        /// If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
         /// </param>
         /// <param name="customDomainVerificationId"> Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification. </param>
         /// <param name="outboundIPAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </param>
@@ -7807,7 +8062,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="suspendOn"> App suspended till in case memory-time quota is exceeded. </param>
         /// <param name="maxNumberOfWorkers">
         /// Maximum number of workers.
-        ///             This only applies to Functions container.
+        /// This only applies to Functions container.
         /// </param>
         /// <param name="cloningInfo"> If specified during app creation, the app is cloned from a source app. </param>
         /// <param name="resourceGroup"> Name of the resource group the app belongs to. Read-only. </param>
@@ -7816,7 +8071,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="slotSwapStatus"> Status of the last deployment slot swap operation. </param>
         /// <param name="isHttpsOnly">
         /// HttpsOnly: configures a web site to accept only https requests. Issues redirect for
-        ///             http requests
+        /// http requests
         /// </param>
         /// <param name="redundancyMode"> Site redundancy mode. </param>
         /// <param name="inProgressOperationId"> Specifies an operation id if this site has a pending operation. </param>
@@ -7826,7 +8081,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="autoGeneratedDomainNameLabelScope"> Specifies the scope of uniqueness for the default hostname during resource creation. </param>
         /// <param name="virtualNetworkSubnetId">
         /// Azure Resource Manager ID of the Virtual network and subnet to be joined by Regional VNET Integration.
-        ///             This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
+        /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </param>
         /// <param name="managedEnvironmentId"> Azure Resource Manager ID of the customer's selected Managed Environment on which to host this app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}. </param>
         /// <param name="sku"> Current SKU of application based on associated App Service Plan. Some valid SKU values are Free, Shared, Basic, Dynamic, FlexConsumption, Standard, Premium, PremiumV2, PremiumV3, Isolated, IsolatedV2. </param>
@@ -7909,13 +8164,13 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.WebSiteData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> A web app, a mobile app backend, or an API app. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> Managed service identity. </param>
         /// <param name="extendedLocation"> Extended Location. </param>
         /// <param name="state"> Current state of the app. </param>
@@ -7925,7 +8180,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isEnabled"> &lt;code&gt;true&lt;/code&gt; if the app is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. Setting this value to false disables the app (takes the app offline). </param>
         /// <param name="enabledHostNames">
         /// Enabled hostnames for the app.Hostnames need to be assigned (see HostNames) AND enabled. Otherwise,
-        ///             the app is not served on those hostnames.
+        /// the app is not served on those hostnames.
         /// </param>
         /// <param name="availabilityState"> Management information availability state for the app. </param>
         /// <param name="hostNameSslStates"> Hostname SSL states are used to manage the SSL bindings for app's hostnames. </param>
@@ -7935,11 +8190,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isHyperV"> Hyper-V sandbox. </param>
         /// <param name="lastModifiedTimeUtc"> Last time the app was modified, in UTC. Read-only. </param>
         /// <param name="dnsConfiguration"> Property to configure various DNS related settings for a site. </param>
-        /// <param name="isVnetRouteAllEnabled"> Virtual Network Route All enabled. This causes all outbound traffic to have Virtual Network Security Groups and User Defined Routes applied. </param>
-        /// <param name="isVnetImagePullEnabled"> To enable pulling image over Virtual Network. </param>
-        /// <param name="isVnetContentShareEnabled"> To enable accessing content over virtual network. </param>
-        /// <param name="isVnetBackupRestoreEnabled"> To enable Backup and Restore operations over virtual network. </param>
-        /// <param name="siteConfig"> Configuration of the app. </param>
+        /// <param name="isVnetRouteAllEnabled"></param>
+        /// <param name="isVnetImagePullEnabled"></param>
+        /// <param name="isVnetContentShareEnabled"></param>
+        /// <param name="isVnetBackupRestoreEnabled"></param>
+        /// <param name="siteConfig"> Configuration of an App Service app. This property is not returned in response to normal create and read requests since it may contain sensitive information. </param>
         /// <param name="functionAppConfig"> Configuration specific of the Azure Function app. </param>
         /// <param name="daprConfig"> Dapr configuration of the app. </param>
         /// <param name="workloadProfileName"> Workload profile name for function app to execute on. </param>
@@ -7952,14 +8207,12 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isClientCertEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client certificate authentication (TLS mutual authentication); otherwise, &lt;code&gt;false&lt;/code&gt;. Default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="clientCertMode">
         /// This composes with ClientCertEnabled setting.
-        ///             - ClientCertEnabled: false means ClientCert is ignored.
-        ///             - ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.
-        ///             - ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.
+        /// <list type="bullet"><item><description>ClientCertEnabled: false means ClientCert is ignored.</description></item><item><description>ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.</description></item><item><description>ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.</description></item></list>
         /// </param>
         /// <param name="clientCertExclusionPaths"> client certificate authentication comma-separated exclusion paths. </param>
         /// <param name="isHostNameDisabled">
         /// &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///             If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
+        /// If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
         /// </param>
         /// <param name="customDomainVerificationId"> Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification. </param>
         /// <param name="outboundIPAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </param>
@@ -7969,7 +8222,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="suspendOn"> App suspended till in case memory-time quota is exceeded. </param>
         /// <param name="maxNumberOfWorkers">
         /// Maximum number of workers.
-        ///             This only applies to Functions container.
+        /// This only applies to Functions container.
         /// </param>
         /// <param name="cloningInfo"> If specified during app creation, the app is cloned from a source app. </param>
         /// <param name="resourceGroup"> Name of the resource group the app belongs to. Read-only. </param>
@@ -7978,7 +8231,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="slotSwapStatus"> Status of the last deployment slot swap operation. </param>
         /// <param name="isHttpsOnly">
         /// HttpsOnly: configures a web site to accept only https requests. Issues redirect for
-        ///             http requests
+        /// http requests
         /// </param>
         /// <param name="redundancyMode"> Site redundancy mode. </param>
         /// <param name="inProgressOperationId"> Specifies an operation id if this site has a pending operation. </param>
@@ -7987,10 +8240,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
         /// <param name="virtualNetworkSubnetId">
         /// Azure Resource Manager ID of the Virtual network and subnet to be joined by Regional VNET Integration.
-        ///             This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
+        /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </param>
         /// <param name="managedEnvironmentId"> Azure Resource Manager ID of the customer's selected Managed Environment on which to host this app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <returns> A new <see cref="AppService.WebSiteData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WebSiteData WebSiteData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ExtendedLocation extendedLocation, string state, IEnumerable<string> hostNames, string repositorySiteName, AppServiceUsageState? usageState, bool? isEnabled, IEnumerable<string> enabledHostNames, WebSiteAvailabilityState? availabilityState, IEnumerable<HostNameSslState> hostNameSslStates, ResourceIdentifier appServicePlanId, bool? isReserved, bool? isXenon, bool? isHyperV, DateTimeOffset? lastModifiedTimeUtc, SiteDnsConfig dnsConfiguration, bool? isVnetRouteAllEnabled, bool? isVnetImagePullEnabled, bool? isVnetContentShareEnabled, bool? isVnetBackupRestoreEnabled, SiteConfigProperties siteConfig, FunctionAppConfig functionAppConfig, AppDaprConfig daprConfig, string workloadProfileName, FunctionAppResourceConfig resourceConfig, IEnumerable<string> trafficManagerHostNames, bool? isScmSiteAlsoStopped, string targetSwapSlot, HostingEnvironmentProfile hostingEnvironmentProfile, bool? isClientAffinityEnabled, bool? isClientCertEnabled, ClientCertMode? clientCertMode, string clientCertExclusionPaths, bool? isHostNameDisabled, string customDomainVerificationId, string outboundIPAddresses, string possibleOutboundIPAddresses, int? containerSize, int? dailyMemoryTimeQuota, DateTimeOffset? suspendOn, int? maxNumberOfWorkers, CloningInfo cloningInfo, string resourceGroup, bool? isDefaultContainer, string defaultHostName, SlotSwapStatus slotSwapStatus, bool? isHttpsOnly, RedundancyMode? redundancyMode, Guid? inProgressOperationId, string publicNetworkAccess, bool? isStorageAccountRequired, string keyVaultReferenceIdentity, ResourceIdentifier virtualNetworkSubnetId, string managedEnvironmentId, string kind)
@@ -8069,11 +8322,11 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.SiteConfigData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Web app configuration ARM resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="numberOfWorkers"> Number of workers. </param>
         /// <param name="defaultDocuments"> Default documents. </param>
         /// <param name="netFrameworkVersion"> .NET Framework version. </param>
@@ -8084,7 +8337,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="linuxFxVersion"> Linux App Framework and version. </param>
         /// <param name="windowsFxVersion"> Xenon App Framework and version. </param>
         /// <param name="isRequestTracingEnabled"> &lt;code&gt;true&lt;/code&gt; if request tracing is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="requestTracingExpirationOn"> Request tracing expiration time. </param>
+        /// <param name="requestTracingExpirationOn"></param>
         /// <param name="isRemoteDebuggingEnabled"> &lt;code&gt;true&lt;/code&gt; if remote debugging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="remoteDebuggingVersion"> Remote debugging version. </param>
         /// <param name="isHttpLoggingEnabled"> &lt;code&gt;true&lt;/code&gt; if HTTP logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -8110,7 +8363,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="managedPipelineMode"> Managed pipeline mode. </param>
         /// <param name="virtualApplications"> Virtual applications. </param>
         /// <param name="loadBalancing"> Site load balancing. </param>
-        /// <param name="experimentsRampUpRules"> This is work around for polymorphic types. </param>
+        /// <param name="experimentsRampUpRules"> List of ramp-up rules. </param>
         /// <param name="limits"> Site limits. </param>
         /// <param name="isAutoHealEnabled"> &lt;code&gt;true&lt;/code&gt; if Auto Heal is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="autoHealRules"> Auto Heal rules. </param>
@@ -8120,8 +8373,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="vnetPrivatePortsCount"> The number of private ports assigned to this app. These will be assigned dynamically on runtime. </param>
         /// <param name="cors"> Cross-Origin Resource Sharing (CORS) settings. </param>
         /// <param name="push"> Push endpoint settings. </param>
-        /// <param name="apiDefinitionUri"> Information about the formal API definition for the app. </param>
-        /// <param name="apiManagementConfigId"> Azure API management settings linked to the app. </param>
+        /// <param name="apiDefinitionUri"></param>
+        /// <param name="apiManagementConfigId"> APIM-Api Identifier. </param>
         /// <param name="autoSwapSlotName"> Auto-swap slot name. </param>
         /// <param name="isLocalMySqlEnabled"> &lt;code&gt;true&lt;/code&gt; to enable local MySQL; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="managedServiceIdentityId"> Managed Service Identity Id. </param>
@@ -8140,30 +8393,30 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="ftpsState"> State of FTP / FTPS service. </param>
         /// <param name="preWarmedInstanceCount">
         /// Number of preWarmed instances.
-        ///             This setting only applies to the Consumption and Elastic Plans
+        /// This setting only applies to the Consumption and Elastic Plans
         /// </param>
         /// <param name="functionAppScaleLimit">
         /// Maximum number of workers that a site can scale out to.
-        ///             This setting only applies to the Consumption and Elastic Premium Plans
+        /// This setting only applies to the Consumption and Elastic Premium Plans
         /// </param>
         /// <param name="elasticWebAppScaleLimit">
         /// Maximum number of workers that a site can scale out to.
-        ///             This setting only applies to apps in plans where ElasticScaleEnabled is &lt;code&gt;true&lt;/code&gt;
+        /// This setting only applies to apps in plans where ElasticScaleEnabled is &lt;code&gt;true&lt;/code&gt;
         /// </param>
         /// <param name="healthCheckPath"> Health check path. </param>
         /// <param name="isFunctionsRuntimeScaleMonitoringEnabled">
         /// Gets or sets a value indicating whether functions runtime scale monitoring is enabled. When enabled,
-        ///             the ScaleController will not monitor event sources directly, but will instead call to the
-        ///             runtime to get scale status.
+        /// the ScaleController will not monitor event sources directly, but will instead call to the
+        /// runtime to get scale status.
         /// </param>
         /// <param name="websiteTimeZone"> Sets the time zone a site uses for generating timestamps. Compatible with Linux and Windows App Service. Setting the WEBSITE_TIME_ZONE app setting takes precedence over this config. For Linux, expects tz database values https://www.iana.org/time-zones (for a quick reference see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). For Windows, expects one of the time zones listed under HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones. </param>
         /// <param name="minimumElasticInstanceCount">
         /// Number of minimum instance count for a site
-        ///             This setting only applies to the Elastic Plans
+        /// This setting only applies to the Elastic Plans
         /// </param>
         /// <param name="azureStorageAccounts"> List of Azure Storage Accounts. </param>
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <returns> A new <see cref="AppService.SiteConfigData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SiteConfigData SiteConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? numberOfWorkers = default, IEnumerable<string> defaultDocuments = default, string netFrameworkVersion = default, string phpVersion = default, string pythonVersion = default, string nodeVersion = default, string powerShellVersion = default, string linuxFxVersion = default, string windowsFxVersion = default, bool? isRequestTracingEnabled = default, DateTimeOffset? requestTracingExpirationOn = default, bool? isRemoteDebuggingEnabled = default, string remoteDebuggingVersion = default, bool? isHttpLoggingEnabled = default, bool? useManagedIdentityCreds = default, string acrUserManagedIdentityId = default, int? logsDirectorySizeLimit = default, bool? isDetailedErrorLoggingEnabled = default, string publishingUsername = default, IEnumerable<AppServiceNameValuePair> appSettings = default, IEnumerable<AppServiceNameValuePair> metadata = default, IEnumerable<ConnStringInfo> connectionStrings = default, SiteMachineKey machineKey = default, IEnumerable<HttpRequestHandlerMapping> handlerMappings = default, string documentRoot = default, ScmType? scmType = default, bool? use32BitWorkerProcess = default, bool? isWebSocketsEnabled = default, bool? isAlwaysOn = default, string javaVersion = default, string javaContainer = default, string javaContainerVersion = default, string appCommandLine = default, ManagedPipelineMode? managedPipelineMode = default, IEnumerable<VirtualApplication> virtualApplications = default, SiteLoadBalancing? loadBalancing = default, IEnumerable<RampUpRule> experimentsRampUpRules = default, SiteLimits limits = default, bool? isAutoHealEnabled = default, AutoHealRules autoHealRules = default, string tracingOptions = default, string vnetName = default, bool? isVnetRouteAllEnabled = default, int? vnetPrivatePortsCount = default, AppServiceCorsSettings cors = default, WebAppPushSettings push = default, Uri apiDefinitionUri = default, string apiManagementConfigId = default, string autoSwapSlotName = default, bool? isLocalMySqlEnabled = default, int? managedServiceIdentityId = default, int? xManagedServiceIdentityId = default, string keyVaultReferenceIdentity = default, IEnumerable<AppServiceIPSecurityRestriction> ipSecurityRestrictions = default, SiteDefaultAction? ipSecurityRestrictionsDefaultAction = default, IEnumerable<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions = default, SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction = default, bool? allowIPSecurityRestrictionsForScmToUseMain = default, bool? isHttp20Enabled = default, int? http20ProxyFlag = default, AppServiceSupportedTlsVersion? minTlsVersion = default, AppServiceTlsCipherSuite? minTlsCipherSuite = default, AppServiceSupportedTlsVersion? scmMinTlsVersion = default, AppServiceFtpsState? ftpsState = default, int? preWarmedInstanceCount = default, int? functionAppScaleLimit = default, int? elasticWebAppScaleLimit = default, string healthCheckPath = default, bool? isFunctionsRuntimeScaleMonitoringEnabled = default, string websiteTimeZone = default, int? minimumElasticInstanceCount = default, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts = default, string publicNetworkAccess = default, string kind = default)
@@ -8173,7 +8426,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                numberOfWorkers is null && defaultDocuments is null && netFrameworkVersion is null && phpVersion is null && pythonVersion is null && nodeVersion is null && powerShellVersion is null && linuxFxVersion is null && windowsFxVersion is null && isRequestTracingEnabled is null && requestTracingExpirationOn is null && isRemoteDebuggingEnabled is null && remoteDebuggingVersion is null && isHttpLoggingEnabled is null && useManagedIdentityCreds is null && acrUserManagedIdentityId is null && logsDirectorySizeLimit is null && isDetailedErrorLoggingEnabled is null && publishingUsername is null && appSettings is null && metadata is null && connectionStrings is null && machineKey is null && handlerMappings is null && documentRoot is null && scmType is null && use32BitWorkerProcess is null && isWebSocketsEnabled is null && isAlwaysOn is null && javaVersion is null && javaContainer is null && javaContainerVersion is null && appCommandLine is null && managedPipelineMode is null && virtualApplications is null && loadBalancing is null && experimentsRampUpRules is null && limits is null && isAutoHealEnabled is null && autoHealRules is null && tracingOptions is null && vnetName is null && isVnetRouteAllEnabled is null && vnetPrivatePortsCount is null && cors is null && push is null && apiManagementConfigId is null && autoSwapSlotName is null && isLocalMySqlEnabled is null && managedServiceIdentityId is null && xManagedServiceIdentityId is null && keyVaultReferenceIdentity is null && ipSecurityRestrictions is null && ipSecurityRestrictionsDefaultAction is null && scmIPSecurityRestrictions is null && scmIPSecurityRestrictionsDefaultAction is null && allowIPSecurityRestrictionsForScmToUseMain is null && isHttp20Enabled is null && http20ProxyFlag is null && minTlsVersion is null && minTlsCipherSuite is null && scmMinTlsVersion is null && ftpsState is null && preWarmedInstanceCount is null && functionAppScaleLimit is null && elasticWebAppScaleLimit is null && healthCheckPath is null && isFunctionsRuntimeScaleMonitoringEnabled is null && websiteTimeZone is null && minimumElasticInstanceCount is null && azureStorageAccounts is null && publicNetworkAccess is null ? default : new SiteConfigProperties(
+                numberOfWorkers is null && defaultDocuments is null && netFrameworkVersion is null && phpVersion is null && pythonVersion is null && nodeVersion is null && powerShellVersion is null && linuxFxVersion is null && windowsFxVersion is null && isRequestTracingEnabled is null && isRemoteDebuggingEnabled is null && remoteDebuggingVersion is null && isHttpLoggingEnabled is null && useManagedIdentityCreds is null && acrUserManagedIdentityId is null && logsDirectorySizeLimit is null && isDetailedErrorLoggingEnabled is null && publishingUsername is null && appSettings is null && metadata is null && connectionStrings is null && machineKey is null && handlerMappings is null && documentRoot is null && scmType is null && use32BitWorkerProcess is null && isWebSocketsEnabled is null && isAlwaysOn is null && javaVersion is null && javaContainer is null && javaContainerVersion is null && appCommandLine is null && managedPipelineMode is null && virtualApplications is null && loadBalancing is null && experimentsRampUpRules is null && limits is null && isAutoHealEnabled is null && autoHealRules is null && tracingOptions is null && vnetName is null && isVnetRouteAllEnabled is null && vnetPrivatePortsCount is null && cors is null && push is null && apiManagementConfigId is null && autoSwapSlotName is null && isLocalMySqlEnabled is null && managedServiceIdentityId is null && xManagedServiceIdentityId is null && keyVaultReferenceIdentity is null && ipSecurityRestrictions is null && ipSecurityRestrictionsDefaultAction is null && scmIPSecurityRestrictions is null && scmIPSecurityRestrictionsDefaultAction is null && allowIPSecurityRestrictionsForScmToUseMain is null && isHttp20Enabled is null && http20ProxyFlag is null && minTlsVersion is null && minTlsCipherSuite is null && scmMinTlsVersion is null && ftpsState is null && preWarmedInstanceCount is null && functionAppScaleLimit is null && elasticWebAppScaleLimit is null && healthCheckPath is null && isFunctionsRuntimeScaleMonitoringEnabled is null && websiteTimeZone is null && minimumElasticInstanceCount is null && azureStorageAccounts is null && publicNetworkAccess is null ? default : new SiteConfigProperties(
                     numberOfWorkers,
                     (defaultDocuments ?? new ChangeTrackingList<string>()).ToList(),
                     netFrameworkVersion,
@@ -8184,7 +8437,7 @@ namespace Azure.ResourceManager.AppService.Models
                     linuxFxVersion,
                     windowsFxVersion,
                     isRequestTracingEnabled,
-                    requestTracingExpirationOn,
+                    default,
                     isRemoteDebuggingEnabled,
                     remoteDebuggingVersion,
                     isHttpLoggingEnabled,
@@ -8252,11 +8505,11 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.SiteConfigData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Web app configuration ARM resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="numberOfWorkers"> Number of workers. </param>
         /// <param name="defaultDocuments"> Default documents. </param>
         /// <param name="netFrameworkVersion"> .NET Framework version. </param>
@@ -8267,7 +8520,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="linuxFxVersion"> Linux App Framework and version. </param>
         /// <param name="windowsFxVersion"> Xenon App Framework and version. </param>
         /// <param name="isRequestTracingEnabled"> &lt;code&gt;true&lt;/code&gt; if request tracing is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="requestTracingExpirationOn"> Request tracing expiration time. </param>
+        /// <param name="requestTracingExpirationOn"></param>
         /// <param name="isRemoteDebuggingEnabled"> &lt;code&gt;true&lt;/code&gt; if remote debugging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="remoteDebuggingVersion"> Remote debugging version. </param>
         /// <param name="isHttpLoggingEnabled"> &lt;code&gt;true&lt;/code&gt; if HTTP logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -8276,9 +8529,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="logsDirectorySizeLimit"> HTTP logs directory size limit. </param>
         /// <param name="isDetailedErrorLoggingEnabled"> &lt;code&gt;true&lt;/code&gt; if detailed error logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="publishingUsername"> Publishing user name. </param>
-        /// <param name="appSettings"> Application settings. </param>
+        /// <param name="appSettings"> Application settings. This property is not returned in response to normal create and read requests since it may contain sensitive information. </param>
         /// <param name="metadata"> Application metadata. This property cannot be retrieved, since it may contain secrets. </param>
-        /// <param name="connectionStrings"> Connection strings. </param>
+        /// <param name="connectionStrings"> Connection strings. This property is not returned in response to normal create and read requests since it may contain sensitive information. </param>
         /// <param name="machineKey"> Site MachineKey. </param>
         /// <param name="handlerMappings"> Handler mappings. </param>
         /// <param name="documentRoot"> Document root. </param>
@@ -8293,7 +8546,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="managedPipelineMode"> Managed pipeline mode. </param>
         /// <param name="virtualApplications"> Virtual applications. </param>
         /// <param name="loadBalancing"> Site load balancing. </param>
-        /// <param name="experimentsRampUpRules"> This is work around for polymorphic types. </param>
+        /// <param name="experimentsRampUpRules"> List of ramp-up rules. </param>
         /// <param name="limits"> Site limits. </param>
         /// <param name="isAutoHealEnabled"> &lt;code&gt;true&lt;/code&gt; if Auto Heal is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="autoHealRules"> Auto Heal rules. </param>
@@ -8303,8 +8556,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="vnetPrivatePortsCount"> The number of private ports assigned to this app. These will be assigned dynamically on runtime. </param>
         /// <param name="cors"> Cross-Origin Resource Sharing (CORS) settings. </param>
         /// <param name="push"> Push endpoint settings. </param>
-        /// <param name="apiDefinitionUri"> Information about the formal API definition for the app. </param>
-        /// <param name="apiManagementConfigId"> Azure API management settings linked to the app. </param>
+        /// <param name="apiDefinitionUri"></param>
+        /// <param name="apiManagementConfigId"> APIM-Api Identifier. </param>
         /// <param name="autoSwapSlotName"> Auto-swap slot name. </param>
         /// <param name="isLocalMySqlEnabled"> &lt;code&gt;true&lt;/code&gt; to enable local MySQL; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="managedServiceIdentityId"> Managed Service Identity Id. </param>
@@ -8322,30 +8575,30 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="ftpsState"> State of FTP / FTPS service. </param>
         /// <param name="preWarmedInstanceCount">
         /// Number of preWarmed instances.
-        ///             This setting only applies to the Consumption and Elastic Plans
+        /// This setting only applies to the Consumption and Elastic Plans
         /// </param>
         /// <param name="functionAppScaleLimit">
         /// Maximum number of workers that a site can scale out to.
-        ///             This setting only applies to the Consumption and Elastic Premium Plans
+        /// This setting only applies to the Consumption and Elastic Premium Plans
         /// </param>
         /// <param name="elasticWebAppScaleLimit">
         /// Maximum number of workers that a site can scale out to.
-        ///             This setting only applies to apps in plans where ElasticScaleEnabled is &lt;code&gt;true&lt;/code&gt;
+        /// This setting only applies to apps in plans where ElasticScaleEnabled is &lt;code&gt;true&lt;/code&gt;
         /// </param>
         /// <param name="healthCheckPath"> Health check path. </param>
         /// <param name="isFunctionsRuntimeScaleMonitoringEnabled">
         /// Gets or sets a value indicating whether functions runtime scale monitoring is enabled. When enabled,
-        ///             the ScaleController will not monitor event sources directly, but will instead call to the
-        ///             runtime to get scale status.
+        /// the ScaleController will not monitor event sources directly, but will instead call to the
+        /// runtime to get scale status.
         /// </param>
         /// <param name="websiteTimeZone"> Sets the time zone a site uses for generating timestamps. Compatible with Linux and Windows App Service. Setting the WEBSITE_TIME_ZONE app setting takes precedence over this config. For Linux, expects tz database values https://www.iana.org/time-zones (for a quick reference see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). For Windows, expects one of the time zones listed under HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones. </param>
         /// <param name="minimumElasticInstanceCount">
         /// Number of minimum instance count for a site
-        ///             This setting only applies to the Elastic Plans
+        /// This setting only applies to the Elastic Plans
         /// </param>
         /// <param name="azureStorageAccounts"> List of Azure Storage Accounts. </param>
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <returns> A new <see cref="AppService.SiteConfigData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SiteConfigData SiteConfigData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, int? numberOfWorkers, IEnumerable<string> defaultDocuments, string netFrameworkVersion, string phpVersion, string pythonVersion, string nodeVersion, string powerShellVersion, string linuxFxVersion, string windowsFxVersion, bool? isRequestTracingEnabled, DateTimeOffset? requestTracingExpirationOn, bool? isRemoteDebuggingEnabled, string remoteDebuggingVersion, bool? isHttpLoggingEnabled, bool? useManagedIdentityCreds, string acrUserManagedIdentityId, int? logsDirectorySizeLimit, bool? isDetailedErrorLoggingEnabled, string publishingUsername, IEnumerable<AppServiceNameValuePair> appSettings, IEnumerable<AppServiceNameValuePair> metadata, IEnumerable<ConnStringInfo> connectionStrings, SiteMachineKey machineKey, IEnumerable<HttpRequestHandlerMapping> handlerMappings, string documentRoot, ScmType? scmType, bool? use32BitWorkerProcess, bool? isWebSocketsEnabled, bool? isAlwaysOn, string javaVersion, string javaContainer, string javaContainerVersion, string appCommandLine, ManagedPipelineMode? managedPipelineMode, IEnumerable<VirtualApplication> virtualApplications, SiteLoadBalancing? loadBalancing, IEnumerable<RampUpRule> experimentsRampUpRules, SiteLimits limits, bool? isAutoHealEnabled, AutoHealRules autoHealRules, string tracingOptions, string vnetName, bool? isVnetRouteAllEnabled, int? vnetPrivatePortsCount, AppServiceCorsSettings cors, WebAppPushSettings push, Uri apiDefinitionUri, string apiManagementConfigId, string autoSwapSlotName, bool? isLocalMySqlEnabled, int? managedServiceIdentityId, int? xManagedServiceIdentityId, string keyVaultReferenceIdentity, IEnumerable<AppServiceIPSecurityRestriction> ipSecurityRestrictions, SiteDefaultAction? ipSecurityRestrictionsDefaultAction, IEnumerable<AppServiceIPSecurityRestriction> scmIPSecurityRestrictions, SiteDefaultAction? scmIPSecurityRestrictionsDefaultAction, bool? allowIPSecurityRestrictionsForScmToUseMain, bool? isHttp20Enabled, AppServiceSupportedTlsVersion? minTlsVersion, AppServiceTlsCipherSuite? minTlsCipherSuite, AppServiceSupportedTlsVersion? scmMinTlsVersion, AppServiceFtpsState? ftpsState, int? preWarmedInstanceCount, int? functionAppScaleLimit, int? elasticWebAppScaleLimit, string healthCheckPath, bool? isFunctionsRuntimeScaleMonitoringEnabled, string websiteTimeZone, int? minimumElasticInstanceCount, IDictionary<string, AppServiceStorageAccessInfo> azureStorageAccounts, string publicNetworkAccess, string kind)
@@ -8355,7 +8608,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                numberOfWorkers is null && defaultDocuments is null && netFrameworkVersion is null && phpVersion is null && pythonVersion is null && nodeVersion is null && powerShellVersion is null && linuxFxVersion is null && windowsFxVersion is null && isRequestTracingEnabled is null && requestTracingExpirationOn is null && isRemoteDebuggingEnabled is null && remoteDebuggingVersion is null && isHttpLoggingEnabled is null && useManagedIdentityCreds is null && acrUserManagedIdentityId is null && logsDirectorySizeLimit is null && isDetailedErrorLoggingEnabled is null && publishingUsername is null && appSettings is null && metadata is null && connectionStrings is null && machineKey is null && handlerMappings is null && documentRoot is null && scmType is null && use32BitWorkerProcess is null && isWebSocketsEnabled is null && isAlwaysOn is null && javaVersion is null && javaContainer is null && javaContainerVersion is null && appCommandLine is null && managedPipelineMode is null && virtualApplications is null && loadBalancing is null && experimentsRampUpRules is null && limits is null && isAutoHealEnabled is null && autoHealRules is null && tracingOptions is null && vnetName is null && isVnetRouteAllEnabled is null && vnetPrivatePortsCount is null && cors is null && push is null && apiManagementConfigId is null && autoSwapSlotName is null && isLocalMySqlEnabled is null && managedServiceIdentityId is null && xManagedServiceIdentityId is null && keyVaultReferenceIdentity is null && ipSecurityRestrictions is null && ipSecurityRestrictionsDefaultAction is null && scmIPSecurityRestrictions is null && scmIPSecurityRestrictionsDefaultAction is null && allowIPSecurityRestrictionsForScmToUseMain is null && isHttp20Enabled is null && minTlsVersion is null && minTlsCipherSuite is null && scmMinTlsVersion is null && ftpsState is null && preWarmedInstanceCount is null && functionAppScaleLimit is null && elasticWebAppScaleLimit is null && healthCheckPath is null && isFunctionsRuntimeScaleMonitoringEnabled is null && websiteTimeZone is null && minimumElasticInstanceCount is null && azureStorageAccounts is null && publicNetworkAccess is null ? default : new SiteConfigProperties(
+                numberOfWorkers is null && defaultDocuments is null && netFrameworkVersion is null && phpVersion is null && pythonVersion is null && nodeVersion is null && powerShellVersion is null && linuxFxVersion is null && windowsFxVersion is null && isRequestTracingEnabled is null && isRemoteDebuggingEnabled is null && remoteDebuggingVersion is null && isHttpLoggingEnabled is null && useManagedIdentityCreds is null && acrUserManagedIdentityId is null && logsDirectorySizeLimit is null && isDetailedErrorLoggingEnabled is null && publishingUsername is null && appSettings is null && metadata is null && connectionStrings is null && machineKey is null && handlerMappings is null && documentRoot is null && scmType is null && use32BitWorkerProcess is null && isWebSocketsEnabled is null && isAlwaysOn is null && javaVersion is null && javaContainer is null && javaContainerVersion is null && appCommandLine is null && managedPipelineMode is null && virtualApplications is null && loadBalancing is null && experimentsRampUpRules is null && limits is null && isAutoHealEnabled is null && autoHealRules is null && tracingOptions is null && vnetName is null && isVnetRouteAllEnabled is null && vnetPrivatePortsCount is null && cors is null && push is null && apiManagementConfigId is null && autoSwapSlotName is null && isLocalMySqlEnabled is null && managedServiceIdentityId is null && xManagedServiceIdentityId is null && keyVaultReferenceIdentity is null && ipSecurityRestrictions is null && ipSecurityRestrictionsDefaultAction is null && scmIPSecurityRestrictions is null && scmIPSecurityRestrictionsDefaultAction is null && allowIPSecurityRestrictionsForScmToUseMain is null && isHttp20Enabled is null && minTlsVersion is null && minTlsCipherSuite is null && scmMinTlsVersion is null && ftpsState is null && preWarmedInstanceCount is null && functionAppScaleLimit is null && elasticWebAppScaleLimit is null && healthCheckPath is null && isFunctionsRuntimeScaleMonitoringEnabled is null && websiteTimeZone is null && minimumElasticInstanceCount is null && azureStorageAccounts is null && publicNetworkAccess is null ? default : new SiteConfigProperties(
                     numberOfWorkers,
                     (defaultDocuments ?? new ChangeTrackingList<string>()).ToList(),
                     netFrameworkVersion,
@@ -8366,7 +8619,7 @@ namespace Azure.ResourceManager.AppService.Models
                     linuxFxVersion,
                     windowsFxVersion,
                     isRequestTracingEnabled,
-                    requestTracingExpirationOn,
+                    default,
                     isRemoteDebuggingEnabled,
                     remoteDebuggingVersion,
                     isHttpLoggingEnabled,
@@ -8434,7 +8687,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SiteConfigProperties"/>. </summary>
+        /// <summary> Configuration of an App Service app. </summary>
         /// <param name="numberOfWorkers"> Number of workers. </param>
         /// <param name="defaultDocuments"> Default documents. </param>
         /// <param name="netFrameworkVersion"> .NET Framework version. </param>
@@ -8445,7 +8698,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="linuxFxVersion"> Linux App Framework and version. </param>
         /// <param name="windowsFxVersion"> Xenon App Framework and version. </param>
         /// <param name="isRequestTracingEnabled"> &lt;code&gt;true&lt;/code&gt; if request tracing is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="requestTracingExpirationOn"> Request tracing expiration time. </param>
+        /// <param name="requestTracingExpirationOn"></param>
         /// <param name="isRemoteDebuggingEnabled"> &lt;code&gt;true&lt;/code&gt; if remote debugging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="remoteDebuggingVersion"> Remote debugging version. </param>
         /// <param name="isHttpLoggingEnabled"> &lt;code&gt;true&lt;/code&gt; if HTTP logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -8471,7 +8724,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="managedPipelineMode"> Managed pipeline mode. </param>
         /// <param name="virtualApplications"> Virtual applications. </param>
         /// <param name="loadBalancing"> Site load balancing. </param>
-        /// <param name="experimentsRampUpRules"> This is work around for polymorphic types. </param>
+        /// <param name="experimentsRampUpRules"> List of ramp-up rules. </param>
         /// <param name="limits"> Site limits. </param>
         /// <param name="isAutoHealEnabled"> &lt;code&gt;true&lt;/code&gt; if Auto Heal is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="autoHealRules"> Auto Heal rules. </param>
@@ -8481,8 +8734,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="vnetPrivatePortsCount"> The number of private ports assigned to this app. These will be assigned dynamically on runtime. </param>
         /// <param name="cors"> Cross-Origin Resource Sharing (CORS) settings. </param>
         /// <param name="push"> Push endpoint settings. </param>
-        /// <param name="apiDefinitionUri"> Information about the formal API definition for the app. </param>
-        /// <param name="apiManagementConfigId"> Azure API management settings linked to the app. </param>
+        /// <param name="apiDefinitionUri"></param>
+        /// <param name="apiManagementConfigId"> APIM-Api Identifier. </param>
         /// <param name="autoSwapSlotName"> Auto-swap slot name. </param>
         /// <param name="isLocalMySqlEnabled"> &lt;code&gt;true&lt;/code&gt; to enable local MySQL; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="managedServiceIdentityId"> Managed Service Identity Id. </param>
@@ -8501,26 +8754,26 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="ftpsState"> State of FTP / FTPS service. </param>
         /// <param name="preWarmedInstanceCount">
         /// Number of preWarmed instances.
-        ///             This setting only applies to the Consumption and Elastic Plans
+        /// This setting only applies to the Consumption and Elastic Plans
         /// </param>
         /// <param name="functionAppScaleLimit">
         /// Maximum number of workers that a site can scale out to.
-        ///             This setting only applies to the Consumption and Elastic Premium Plans
+        /// This setting only applies to the Consumption and Elastic Premium Plans
         /// </param>
         /// <param name="elasticWebAppScaleLimit">
         /// Maximum number of workers that a site can scale out to.
-        ///             This setting only applies to apps in plans where ElasticScaleEnabled is &lt;code&gt;true&lt;/code&gt;
+        /// This setting only applies to apps in plans where ElasticScaleEnabled is &lt;code&gt;true&lt;/code&gt;
         /// </param>
         /// <param name="healthCheckPath"> Health check path. </param>
         /// <param name="isFunctionsRuntimeScaleMonitoringEnabled">
         /// Gets or sets a value indicating whether functions runtime scale monitoring is enabled. When enabled,
-        ///             the ScaleController will not monitor event sources directly, but will instead call to the
-        ///             runtime to get scale status.
+        /// the ScaleController will not monitor event sources directly, but will instead call to the
+        /// runtime to get scale status.
         /// </param>
         /// <param name="websiteTimeZone"> Sets the time zone a site uses for generating timestamps. Compatible with Linux and Windows App Service. Setting the WEBSITE_TIME_ZONE app setting takes precedence over this config. For Linux, expects tz database values https://www.iana.org/time-zones (for a quick reference see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). For Windows, expects one of the time zones listed under HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones. </param>
         /// <param name="minimumElasticInstanceCount">
         /// Number of minimum instance count for a site
-        ///             This setting only applies to the Elastic Plans
+        /// This setting only applies to the Elastic Plans
         /// </param>
         /// <param name="azureStorageAccounts"> List of Azure Storage Accounts. </param>
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. </param>
@@ -8539,7 +8792,7 @@ namespace Azure.ResourceManager.AppService.Models
                 linuxFxVersion,
                 windowsFxVersion,
                 isRequestTracingEnabled,
-                requestTracingExpirationOn,
+                default,
                 isRemoteDebuggingEnabled,
                 remoteDebuggingVersion,
                 isHttpLoggingEnabled,
@@ -8605,7 +8858,7 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SiteConfigProperties"/>. </summary>
+        /// <summary> Configuration of an App Service app. </summary>
         /// <param name="numberOfWorkers"> Number of workers. </param>
         /// <param name="defaultDocuments"> Default documents. </param>
         /// <param name="netFrameworkVersion"> .NET Framework version. </param>
@@ -8616,7 +8869,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="linuxFxVersion"> Linux App Framework and version. </param>
         /// <param name="windowsFxVersion"> Xenon App Framework and version. </param>
         /// <param name="isRequestTracingEnabled"> &lt;code&gt;true&lt;/code&gt; if request tracing is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
-        /// <param name="requestTracingExpirationOn"> Request tracing expiration time. </param>
+        /// <param name="requestTracingExpirationOn"></param>
         /// <param name="isRemoteDebuggingEnabled"> &lt;code&gt;true&lt;/code&gt; if remote debugging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="remoteDebuggingVersion"> Remote debugging version. </param>
         /// <param name="isHttpLoggingEnabled"> &lt;code&gt;true&lt;/code&gt; if HTTP logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
@@ -8625,9 +8878,9 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="logsDirectorySizeLimit"> HTTP logs directory size limit. </param>
         /// <param name="isDetailedErrorLoggingEnabled"> &lt;code&gt;true&lt;/code&gt; if detailed error logging is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="publishingUsername"> Publishing user name. </param>
-        /// <param name="appSettings"> Application settings. </param>
+        /// <param name="appSettings"> Application settings. This property is not returned in response to normal create and read requests since it may contain sensitive information. </param>
         /// <param name="metadata"> Application metadata. This property cannot be retrieved, since it may contain secrets. </param>
-        /// <param name="connectionStrings"> Connection strings. </param>
+        /// <param name="connectionStrings"> Connection strings. This property is not returned in response to normal create and read requests since it may contain sensitive information. </param>
         /// <param name="machineKey"> Site MachineKey. </param>
         /// <param name="handlerMappings"> Handler mappings. </param>
         /// <param name="documentRoot"> Document root. </param>
@@ -8642,7 +8895,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="managedPipelineMode"> Managed pipeline mode. </param>
         /// <param name="virtualApplications"> Virtual applications. </param>
         /// <param name="loadBalancing"> Site load balancing. </param>
-        /// <param name="experimentsRampUpRules"> This is work around for polymorphic types. </param>
+        /// <param name="experimentsRampUpRules"> List of ramp-up rules. </param>
         /// <param name="limits"> Site limits. </param>
         /// <param name="isAutoHealEnabled"> &lt;code&gt;true&lt;/code&gt; if Auto Heal is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="autoHealRules"> Auto Heal rules. </param>
@@ -8652,8 +8905,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="vnetPrivatePortsCount"> The number of private ports assigned to this app. These will be assigned dynamically on runtime. </param>
         /// <param name="cors"> Cross-Origin Resource Sharing (CORS) settings. </param>
         /// <param name="push"> Push endpoint settings. </param>
-        /// <param name="apiDefinitionUri"> Information about the formal API definition for the app. </param>
-        /// <param name="apiManagementConfigId"> Azure API management settings linked to the app. </param>
+        /// <param name="apiDefinitionUri"></param>
+        /// <param name="apiManagementConfigId"> APIM-Api Identifier. </param>
         /// <param name="autoSwapSlotName"> Auto-swap slot name. </param>
         /// <param name="isLocalMySqlEnabled"> &lt;code&gt;true&lt;/code&gt; to enable local MySQL; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="managedServiceIdentityId"> Managed Service Identity Id. </param>
@@ -8671,26 +8924,26 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="ftpsState"> State of FTP / FTPS service. </param>
         /// <param name="preWarmedInstanceCount">
         /// Number of preWarmed instances.
-        ///             This setting only applies to the Consumption and Elastic Plans
+        /// This setting only applies to the Consumption and Elastic Plans
         /// </param>
         /// <param name="functionAppScaleLimit">
         /// Maximum number of workers that a site can scale out to.
-        ///             This setting only applies to the Consumption and Elastic Premium Plans
+        /// This setting only applies to the Consumption and Elastic Premium Plans
         /// </param>
         /// <param name="elasticWebAppScaleLimit">
         /// Maximum number of workers that a site can scale out to.
-        ///             This setting only applies to apps in plans where ElasticScaleEnabled is &lt;code&gt;true&lt;/code&gt;
+        /// This setting only applies to apps in plans where ElasticScaleEnabled is &lt;code&gt;true&lt;/code&gt;
         /// </param>
         /// <param name="healthCheckPath"> Health check path. </param>
         /// <param name="isFunctionsRuntimeScaleMonitoringEnabled">
         /// Gets or sets a value indicating whether functions runtime scale monitoring is enabled. When enabled,
-        ///             the ScaleController will not monitor event sources directly, but will instead call to the
-        ///             runtime to get scale status.
+        /// the ScaleController will not monitor event sources directly, but will instead call to the
+        /// runtime to get scale status.
         /// </param>
         /// <param name="websiteTimeZone"> Sets the time zone a site uses for generating timestamps. Compatible with Linux and Windows App Service. Setting the WEBSITE_TIME_ZONE app setting takes precedence over this config. For Linux, expects tz database values https://www.iana.org/time-zones (for a quick reference see https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). For Windows, expects one of the time zones listed under HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Time Zones. </param>
         /// <param name="minimumElasticInstanceCount">
         /// Number of minimum instance count for a site
-        ///             This setting only applies to the Elastic Plans
+        /// This setting only applies to the Elastic Plans
         /// </param>
         /// <param name="azureStorageAccounts"> List of Azure Storage Accounts. </param>
         /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. </param>
@@ -8709,7 +8962,7 @@ namespace Azure.ResourceManager.AppService.Models
                 linuxFxVersion,
                 windowsFxVersion,
                 isRequestTracingEnabled,
-                requestTracingExpirationOn,
+                default,
                 isRemoteDebuggingEnabled,
                 remoteDebuggingVersion,
                 isHttpLoggingEnabled,
@@ -8775,11 +9028,11 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.SiteContainerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Container of a site. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="image"> Image Name. </param>
         /// <param name="targetPort"> Target Port. </param>
         /// <param name="isMain"> &lt;code&gt;true&lt;/code&gt; if the container is the main site container; &lt;code&gt;false&lt;/code&gt; otherwise. </param>
@@ -8821,11 +9074,11 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.WebSiteInstanceStatusData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="state"></param>
         /// <param name="statusUri"> Link to the GetStatusApi in Kudu. </param>
         /// <param name="detectorUri"> Link to the Diagnose and Solve Portal. </param>
@@ -8855,18 +9108,18 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.AppCertificateData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> SSL certificate for an app. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="password"> Certificate password. </param>
         /// <param name="friendlyName"> Friendly name of the certificate. </param>
         /// <param name="subjectName"> Subject name of the certificate. </param>
         /// <param name="hostNames"> Host names the certificate applies to. </param>
-        /// <param name="pfxBlob"> Pfx blob. </param>
+        /// <param name="pfxBlob"></param>
         /// <param name="siteName"> App name. </param>
         /// <param name="selfLink"> Self link. </param>
         /// <param name="issuer"> Certificate issuer. </param>
@@ -8874,7 +9127,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="expireOn"> Certificate expiration date. </param>
         /// <param name="thumbprintString"> Certificate thumbprint. </param>
         /// <param name="isValid"> Is the certificate valid?. </param>
-        /// <param name="cerBlob"> Raw bytes of .cer file. </param>
+        /// <param name="cerBlob"></param>
         /// <param name="publicKeyHash"> Public key hash. </param>
         /// <param name="hostingEnvironmentProfile"> Specification for the App Service Environment to use for the certificate. </param>
         /// <param name="keyVaultId"> Azure Key Vault Csm resource Id. </param>
@@ -8922,17 +9175,14 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceVirtualNetworkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Virtual Network information ARM resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="vnetResourceId"> The Virtual Network's resource ID. </param>
         /// <param name="certThumbprintString"> The client certificate thumbprint. </param>
-        /// <param name="certBlob">
-        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a
-        ///             Point-To-Site VPN connection.
-        /// </param>
+        /// <param name="certBlob"> A certificate file (.cer) blob containing the public key of the private key used to authenticate a \nPoint-To-Site VPN connection. </param>
         /// <param name="routes"> The routes that this Virtual Network connection uses. </param>
         /// <param name="isResyncRequired"> &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="dnsServers"> DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses. </param>
@@ -8960,18 +9210,18 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceWorkerPoolData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Worker pool of an App Service Environment ARM resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="sku"> Description of a SKU for a scalable resource. </param>
         /// <param name="workerSizeId"> Worker size ID for referencing this worker pool. </param>
         /// <param name="computeMode"> Shared or dedicated app hosting. </param>
         /// <param name="workerSize"> VM size of the worker pool instances. </param>
         /// <param name="workerCount"> Number of instances in the worker pool. </param>
         /// <param name="instanceNames"> Names of all instances in the worker pool (read only). </param>
-        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <returns> A new <see cref="AppService.AppServiceWorkerPoolData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppServiceWorkerPoolData AppServiceWorkerPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AppServiceSkuDescription sku, int? workerSizeId, ComputeModeOption? computeMode, string workerSize = default, int? workerCount = default, IEnumerable<string> instanceNames = default, string kind = default)
@@ -8993,13 +9243,13 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.KubeEnvironmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> A Kubernetes cluster specialized for web workloads by Azure App Service. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="extendedLocation"> Extended Location. </param>
         /// <param name="provisioningState"> Provisioning state of the Kubernetes Environment. </param>
         /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
@@ -9009,17 +9259,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="environmentType"> Type of Kubernetes Environment. Only supported for Container App Environments with value as Managed. </param>
         /// <param name="arcConfiguration">
         /// Cluster configuration which determines the ARC cluster
-        ///             components types. Eg: Choosing between BuildService kind,
-        ///             FrontEnd Service ArtifactsStorageType etc.
+        /// components types. Eg: Choosing between BuildService kind,
+        /// FrontEnd Service ArtifactsStorageType etc.
         /// </param>
         /// <param name="appLogsConfiguration">
         /// Cluster configuration which enables the log daemon to export
-        ///             app logs to a destination. Currently only "log-analytics" is
-        ///             supported
+        /// app logs to a destination. Currently only "log-analytics" is
+        /// supported
         /// </param>
         /// <param name="containerAppsConfiguration"> Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration. </param>
         /// <param name="aksResourceId"></param>
-        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.KubeEnvironmentData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static KubeEnvironmentData KubeEnvironmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedLocation extendedLocation = default, KubeEnvironmentProvisioningState? provisioningState = default, string deploymentErrors = default, bool? isInternalLoadBalancerEnabled = default, string defaultDomain = default, string staticIP = default, string environmentType = default, ArcConfiguration arcConfiguration = default, AppLogsConfiguration appLogsConfiguration = default, ContainerAppsConfiguration containerAppsConfiguration = default, ResourceIdentifier aksResourceId = default, string kind = default)
@@ -9048,12 +9298,12 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.PublicCertificateData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="blob"> Public Certificate byte array. </param>
+        /// <summary> Public certificate object. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="blob"></param>
         /// <param name="publicCertificateLocation"> Public Certificate Location. </param>
         /// <param name="thumbprintString"> Certificate Thumbprint. </param>
         /// <param name="kind"> Kind of resource. </param>
@@ -9071,13 +9321,13 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.RemotePrivateEndpointConnectionARMResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Remote Private Endpoint Connection ARM resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"></param>
-        /// <param name="privateEndpointId"> PrivateEndpoint of a remote private endpoint connection. </param>
+        /// <param name="privateEndpointId"></param>
         /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
         /// <param name="ipAddresses"> Private IPAddresses mapped to the remote private endpoint. </param>
         /// <param name="kind"> Kind of resource. </param>
@@ -9095,13 +9345,13 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> Description of a SKU for a scalable resource. </param>
         /// <param name="identity"> Managed service identity. </param>
         /// <param name="defaultHostname"> The default autogenerated hostname for the static site. </param>
@@ -9122,7 +9372,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="enterpriseGradeCdnStatus"> State indicating the status of the enterprise grade CDN serving traffic to the static web app. </param>
         /// <param name="publicNetworkAccess"> State indicating whether public traffic are allowed or not for a static web app. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
         /// <param name="databaseConnections"> Database connections for the static site. </param>
-        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="AppService.StaticSiteData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StaticSiteData StaticSiteData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AppServiceSkuDescription sku = default, ManagedServiceIdentity identity = default, string defaultHostname = default, Uri repositoryUri = default, string branch = default, IEnumerable<string> customDomains = default, string repositoryToken = default, StaticSiteBuildProperties buildProperties = default, IEnumerable<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = default, StagingEnvironmentPolicy? stagingEnvironmentPolicy = default, bool? allowConfigFileUpdates = default, StaticSiteTemplate templateProperties = default, string contentDistributionEndpoint = default, string keyVaultReferenceIdentity = default, IEnumerable<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default, IEnumerable<StaticSiteLinkedBackendInfo> linkedBackends = default, string provider = default, EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus = default, string publicNetworkAccess = default, IEnumerable<StaticSiteDatabaseConnectionOverview> databaseConnections = default, string kind = default)
@@ -9160,13 +9410,13 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.WebSiteData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> A web app, a mobile app backend, or an API app. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> Managed service identity. </param>
         /// <param name="extendedLocation"> Extended Location. </param>
         /// <param name="state"> Current state of the app. </param>
@@ -9176,7 +9426,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isEnabled"> &lt;code&gt;true&lt;/code&gt; if the app is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. Setting this value to false disables the app (takes the app offline). </param>
         /// <param name="enabledHostNames">
         /// Enabled hostnames for the app.Hostnames need to be assigned (see HostNames) AND enabled. Otherwise,
-        ///             the app is not served on those hostnames.
+        /// the app is not served on those hostnames.
         /// </param>
         /// <param name="availabilityState"> Management information availability state for the app. </param>
         /// <param name="hostNameSslStates"> Hostname SSL states are used to manage the SSL bindings for app's hostnames. </param>
@@ -9202,9 +9452,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isClientCertEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client certificate authentication (TLS mutual authentication); otherwise, &lt;code&gt;false&lt;/code&gt;. Default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="clientCertMode">
         /// This composes with ClientCertEnabled setting.
-        ///             - ClientCertEnabled: false means ClientCert is ignored.
-        ///             - ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.
-        ///             - ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.
+        /// <list type="bullet"><item><description>ClientCertEnabled: false means ClientCert is ignored.</description></item><item><description>ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.</description></item><item><description>ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.</description></item></list>
         /// </param>
         /// <param name="clientCertExclusionPaths"> client certificate authentication comma-separated exclusion paths. </param>
         /// <param name="ipMode"> Specifies the IP mode of the app. </param>
@@ -9212,7 +9460,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isSshEnabled"> Whether to enable ssh access. </param>
         /// <param name="isHostNameDisabled">
         /// &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///              If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
+        /// If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
         /// </param>
         /// <param name="customDomainVerificationId"> Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification. </param>
         /// <param name="outboundIPAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </param>
@@ -9222,7 +9470,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="suspendOn"> App suspended till in case memory-time quota is exceeded. </param>
         /// <param name="maxNumberOfWorkers">
         /// Maximum number of workers.
-        ///             This only applies to Functions container.
+        /// This only applies to Functions container.
         /// </param>
         /// <param name="cloningInfo"> If specified during app creation, the app is cloned from a source app. </param>
         /// <param name="resourceGroup"> Name of the resource group the app belongs to. Read-only. </param>
@@ -9231,7 +9479,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="slotSwapStatus"> Status of the last deployment slot swap operation. </param>
         /// <param name="isHttpsOnly">
         /// HttpsOnly: configures a web site to accept only https requests. Issues redirect for
-        ///             http requests
+        /// http requests
         /// </param>
         /// <param name="redundancyMode"> Site redundancy mode. </param>
         /// <param name="inProgressOperationId"> Specifies an operation id if this site has a pending operation. </param>
@@ -9241,7 +9489,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="autoGeneratedDomainNameLabelScope"> Specifies the scope of uniqueness for the default hostname during resource creation. </param>
         /// <param name="virtualNetworkSubnetId">
         /// Azure Resource Manager ID of the Virtual network and subnet to be joined by Regional VNET Integration.
-        ///             This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
+        /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </param>
         /// <param name="managedEnvironmentId"> Azure Resource Manager ID of the customer's selected Managed Environment on which to host this app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}. </param>
         /// <param name="sku"> Current SKU of application based on associated App Service Plan. Some valid SKU values are Free, Shared, Basic, Dynamic, FlexConsumption, Standard, Premium, PremiumV2, PremiumV3, Isolated, IsolatedV2. </param>
@@ -9324,11 +9572,11 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.WorkflowEnvelopeData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Workflow properties definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="kind"> The resource kind. </param>
         /// <param name="location"> The resource location. </param>
         /// <param name="properties"> Additional workflow properties. </param>
@@ -9347,35 +9595,17 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.PublishingUserData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: User.kind
-        /// </param>
-        /// <param name="publishingUserName">
-        /// Username used for publishing.
-        ///             Serialized Name: User.properties.publishingUserName
-        /// </param>
-        /// <param name="publishingPassword">
-        /// Password used for publishing.
-        ///             Serialized Name: User.properties.publishingPassword
-        /// </param>
-        /// <param name="publishingPasswordHash">
-        /// Password hash used for publishing.
-        ///             Serialized Name: User.properties.publishingPasswordHash
-        /// </param>
-        /// <param name="publishingPasswordHashSalt">
-        /// Password hash salt used for publishing.
-        ///             Serialized Name: User.properties.publishingPasswordHashSalt
-        /// </param>
-        /// <param name="scmUri">
-        /// Url of SCM site.
-        ///             Serialized Name: User.properties.scmUri
-        /// </param>
+        /// <summary> User credentials used for publishing activity. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="publishingUserName"> Username used for publishing. </param>
+        /// <param name="publishingPassword"> Password used for publishing. </param>
+        /// <param name="publishingPasswordHash"> Password hash used for publishing. </param>
+        /// <param name="publishingPasswordHashSalt"> Password hash salt used for publishing. </param>
+        /// <param name="scmUri"> Url of SCM site. </param>
         /// <returns> A new <see cref="AppService.PublishingUserData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PublishingUserData PublishingUserData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string publishingUserName = default, string publishingPassword = default, string publishingPasswordHash = default, string publishingPasswordHashSalt = default, Uri scmUri = default)
@@ -9396,31 +9626,16 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceSourceControlData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: SourceControl.kind
-        /// </param>
-        /// <param name="token">
-        /// OAuth access token.
-        ///             Serialized Name: SourceControl.properties.token
-        /// </param>
-        /// <param name="tokenSecret">
-        /// OAuth access token secret.
-        ///             Serialized Name: SourceControl.properties.tokenSecret
-        /// </param>
-        /// <param name="refreshToken">
-        /// OAuth refresh token.
-        ///             Serialized Name: SourceControl.properties.refreshToken
-        /// </param>
-        /// <param name="expireOn">
-        /// OAuth token expiration.
-        ///             Serialized Name: SourceControl.properties.expirationTime
-        /// </param>
+        /// <summary> The source control OAuth token. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="token"> OAuth access token. </param>
+        /// <param name="tokenSecret"> OAuth access token secret. </param>
+        /// <param name="refreshToken"> OAuth refresh token. </param>
+        /// <param name="expireOn"></param>
         /// <returns> A new <see cref="AppService.AppServiceSourceControlData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppServiceSourceControlData AppServiceSourceControlData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string token = default, string tokenSecret = default, string refreshToken = default, DateTimeOffset? expireOn = default)
@@ -9430,106 +9645,40 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                token is null && tokenSecret is null && refreshToken is null && expireOn is null ? default : new SourceControlProperties(token, tokenSecret, refreshToken, expireOn, default),
+                token is null && tokenSecret is null && refreshToken is null ? default : new SourceControlProperties(token, tokenSecret, refreshToken, default, default),
                 kind,
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.AppCertificateData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="kind">
-        /// Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind.
-        ///             Serialized Name: Certificate.kind
-        /// </param>
-        /// <param name="password">
-        /// Certificate password.
-        ///             Serialized Name: Certificate.properties.password
-        /// </param>
-        /// <param name="friendlyName">
-        /// Friendly name of the certificate.
-        ///             Serialized Name: Certificate.properties.friendlyName
-        /// </param>
-        /// <param name="subjectName">
-        /// Subject name of the certificate.
-        ///             Serialized Name: Certificate.properties.subjectName
-        /// </param>
-        /// <param name="hostNames">
-        /// Host names the certificate applies to.
-        ///             Serialized Name: Certificate.properties.hostNames
-        /// </param>
-        /// <param name="pfxBlob">
-        /// Pfx blob.
-        ///             Serialized Name: Certificate.properties.pfxBlob
-        /// </param>
-        /// <param name="siteName">
-        /// App name.
-        ///             Serialized Name: Certificate.properties.siteName
-        /// </param>
-        /// <param name="selfLink">
-        /// Self link.
-        ///             Serialized Name: Certificate.properties.selfLink
-        /// </param>
-        /// <param name="issuer">
-        /// Certificate issuer.
-        ///             Serialized Name: Certificate.properties.issuer
-        /// </param>
-        /// <param name="issueOn">
-        /// Certificate issue Date.
-        ///             Serialized Name: Certificate.properties.issueDate
-        /// </param>
-        /// <param name="expireOn">
-        /// Certificate expiration date.
-        ///             Serialized Name: Certificate.properties.expirationDate
-        /// </param>
-        /// <param name="thumbprintString">
-        /// Certificate thumbprint.
-        ///             Serialized Name: Certificate.properties.thumbprint
-        /// </param>
-        /// <param name="isValid">
-        /// Is the certificate valid?.
-        ///             Serialized Name: Certificate.properties.valid
-        /// </param>
-        /// <param name="cerBlob">
-        /// Raw bytes of .cer file
-        ///             Serialized Name: Certificate.properties.cerBlob
-        /// </param>
-        /// <param name="publicKeyHash">
-        /// Public key hash.
-        ///             Serialized Name: Certificate.properties.publicKeyHash
-        /// </param>
-        /// <param name="hostingEnvironmentProfile">
-        /// Specification for the App Service Environment to use for the certificate.
-        ///             Serialized Name: Certificate.properties.hostingEnvironmentProfile
-        /// </param>
-        /// <param name="keyVaultId">
-        /// Azure Key Vault Csm resource Id.
-        ///             Serialized Name: Certificate.properties.keyVaultId
-        /// </param>
-        /// <param name="keyVaultSecretName">
-        /// Azure Key Vault secret name.
-        ///             Serialized Name: Certificate.properties.keyVaultSecretName
-        /// </param>
-        /// <param name="keyVaultSecretStatus">
-        /// Status of the Key Vault secret.
-        ///             Serialized Name: Certificate.properties.keyVaultSecretStatus
-        /// </param>
-        /// <param name="serverFarmId">
-        /// Resource ID of the associated App Service plan.
-        ///             Serialized Name: Certificate.properties.serverFarmId
-        /// </param>
-        /// <param name="canonicalName">
-        /// CNAME of the certificate to be issued via free certificate
-        ///             Serialized Name: Certificate.properties.canonicalName
-        /// </param>
-        /// <param name="domainValidationMethod">
-        /// Method of domain validation for free cert
-        ///             Serialized Name: Certificate.properties.domainValidationMethod
-        /// </param>
+        /// <summary> SSL certificate for an app. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
+        /// <param name="password"> Certificate password. </param>
+        /// <param name="friendlyName"> Friendly name of the certificate. </param>
+        /// <param name="subjectName"> Subject name of the certificate. </param>
+        /// <param name="hostNames"> Host names the certificate applies to. </param>
+        /// <param name="pfxBlob"></param>
+        /// <param name="siteName"> App name. </param>
+        /// <param name="selfLink"> Self link. </param>
+        /// <param name="issuer"> Certificate issuer. </param>
+        /// <param name="issueOn"> Certificate issue Date. </param>
+        /// <param name="expireOn"> Certificate expiration date. </param>
+        /// <param name="thumbprintString"> Certificate thumbprint. </param>
+        /// <param name="isValid"> Is the certificate valid?. </param>
+        /// <param name="cerBlob"></param>
+        /// <param name="publicKeyHash"> Public key hash. </param>
+        /// <param name="hostingEnvironmentProfile"> Specification for the App Service Environment to use for the certificate. </param>
+        /// <param name="keyVaultId"> Azure Key Vault Csm resource Id. </param>
+        /// <param name="keyVaultSecretName"> Azure Key Vault secret name. </param>
+        /// <param name="keyVaultSecretStatus"> Status of the Key Vault secret. </param>
+        /// <param name="serverFarmId"> Resource ID of the associated App Service plan. </param>
+        /// <param name="canonicalName"> CNAME of the certificate to be issued via free certificate. </param>
+        /// <param name="domainValidationMethod"> Method of domain validation for free cert. </param>
         /// <returns> A new <see cref="AppService.AppCertificateData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppCertificateData AppCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string kind = default, string password = default, string friendlyName = default, string subjectName = default, IEnumerable<string> hostNames = default, byte[] pfxBlob = default, string siteName = default, string selfLink = default, string issuer = default, DateTimeOffset? issueOn = default, DateTimeOffset? expireOn = default, string thumbprintString = default, bool? isValid = default, byte[] cerBlob = default, string publicKeyHash = default, HostingEnvironmentProfile hostingEnvironmentProfile = default, ResourceIdentifier keyVaultId = default, string keyVaultSecretName = default, KeyVaultSecretStatus? keyVaultSecretStatus = default, ResourceIdentifier serverFarmId = default, string canonicalName = default, string domainValidationMethod = default)
@@ -9568,47 +9717,20 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.DeletedSiteData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: DeletedSite.kind
-        /// </param>
-        /// <param name="deletedSiteId">
-        /// Numeric id for the deleted site
-        ///             Serialized Name: DeletedSite.properties.deletedSiteId
-        /// </param>
-        /// <param name="deletedTimestamp">
-        /// Time in UTC when the app was deleted.
-        ///             Serialized Name: DeletedSite.properties.deletedTimestamp
-        /// </param>
-        /// <param name="subscription">
-        /// Subscription containing the deleted site
-        ///             Serialized Name: DeletedSite.properties.subscription
-        /// </param>
-        /// <param name="resourceGroup">
-        /// ResourceGroup that contained the deleted site
-        ///             Serialized Name: DeletedSite.properties.resourceGroup
-        /// </param>
-        /// <param name="deletedSiteName">
-        /// Name of the deleted site
-        ///             Serialized Name: DeletedSite.properties.deletedSiteName
-        /// </param>
-        /// <param name="slot">
-        /// Slot of the deleted site
-        ///             Serialized Name: DeletedSite.properties.slot
-        /// </param>
-        /// <param name="kindPropertiesKind">
-        /// Kind of site that was deleted
-        ///             Serialized Name: DeletedSite.properties.kind
-        /// </param>
-        /// <param name="geoRegionName">
-        /// Geo Region of the deleted site
-        ///             Serialized Name: DeletedSite.properties.geoRegionName
-        /// </param>
+        /// <summary> A deleted app. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="deletedSiteId"> Numeric id for the deleted site. </param>
+        /// <param name="deletedTimestamp"> Time in UTC when the app was deleted. </param>
+        /// <param name="subscription"> Subscription containing the deleted site. </param>
+        /// <param name="resourceGroup"> ResourceGroup that contained the deleted site. </param>
+        /// <param name="deletedSiteName"> Name of the deleted site. </param>
+        /// <param name="slot"> Slot of the deleted site. </param>
+        /// <param name="kindPropertiesKind"> Kind of site that was deleted. </param>
+        /// <param name="geoRegionName"> Geo Region of the deleted site. </param>
         /// <returns> A new <see cref="AppService.DeletedSiteData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DeletedSiteData DeletedSiteData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, int? deletedSiteId = default, string deletedTimestamp = default, string subscription = default, string resourceGroup = default, string deletedSiteName = default, string slot = default, string kindPropertiesKind = default, string geoRegionName = default)
@@ -9632,29 +9754,17 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.CustomDnsSuffixConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: CustomDnsSuffixConfiguration.kind
-        /// </param>
-        /// <param name="provisioningState"> Serialized Name: CustomDnsSuffixConfiguration.properties.provisioningState. </param>
-        /// <param name="provisioningDetails"> Serialized Name: CustomDnsSuffixConfiguration.properties.provisioningDetails. </param>
-        /// <param name="dnsSuffix">
-        /// The default custom domain suffix to use for all sites deployed on the ASE.
-        ///             Serialized Name: CustomDnsSuffixConfiguration.properties.dnsSuffix
-        /// </param>
-        /// <param name="certificateUri">
-        /// The URL referencing the Azure Key Vault certificate secret that should be used as the default SSL/TLS certificate for sites with the custom domain suffix.
-        ///             Serialized Name: CustomDnsSuffixConfiguration.properties.certificateUrl
-        /// </param>
-        /// <param name="keyVaultReferenceIdentity">
-        /// The user-assigned identity to use for resolving the key vault certificate reference. If not specified, the system-assigned ASE identity will be used if available.
-        ///             Serialized Name: CustomDnsSuffixConfiguration.properties.keyVaultReferenceIdentity
-        /// </param>
+        /// <summary> Full view of the custom domain suffix configuration for ASEv3. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="provisioningState"></param>
+        /// <param name="provisioningDetails"></param>
+        /// <param name="dnsSuffix"> The default custom domain suffix to use for all sites deployed on the ASE. </param>
+        /// <param name="certificateUri"> The URL referencing the Azure Key Vault certificate secret that should be used as the default SSL/TLS certificate for sites with the custom domain suffix. </param>
+        /// <param name="keyVaultReferenceIdentity"> The user-assigned identity to use for resolving the key vault certificate reference. If not specified, the system-assigned ASE identity will be used if available. </param>
         /// <returns> A new <see cref="AppService.CustomDnsSuffixConfigurationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CustomDnsSuffixConfigurationData CustomDnsSuffixConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, CustomDnsSuffixProvisioningState? provisioningState = default, string provisioningDetails = default, string dnsSuffix = default, Uri certificateUri = default, string keyVaultReferenceIdentity = default)
@@ -9675,35 +9785,20 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.AseV3NetworkingConfigurationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: AseV3NetworkingConfiguration.kind
-        /// </param>
-        /// <param name="windowsOutboundIPAddresses"> Serialized Name: AseV3NetworkingConfiguration.properties.windowsOutboundIpAddresses. </param>
-        /// <param name="linuxOutboundIPAddresses"> Serialized Name: AseV3NetworkingConfiguration.properties.linuxOutboundIpAddresses. </param>
-        /// <param name="externalInboundIPAddresses"> Serialized Name: AseV3NetworkingConfiguration.properties.externalInboundIpAddresses. </param>
-        /// <param name="internalInboundIPAddresses"> Serialized Name: AseV3NetworkingConfiguration.properties.internalInboundIpAddresses. </param>
-        /// <param name="allowNewPrivateEndpointConnections">
-        /// Property to enable and disable new private endpoint connection creation on ASE
-        ///             Serialized Name: AseV3NetworkingConfiguration.properties.allowNewPrivateEndpointConnections
-        /// </param>
-        /// <param name="isFtpEnabled">
-        /// Property to enable and disable FTP on ASEV3
-        ///             Serialized Name: AseV3NetworkingConfiguration.properties.ftpEnabled
-        /// </param>
-        /// <param name="isRemoteDebugEnabled">
-        /// Property to enable and disable Remote Debug on ASEV3
-        ///             Serialized Name: AseV3NetworkingConfiguration.properties.remoteDebugEnabled
-        /// </param>
-        /// <param name="inboundIPAddressOverride">
-        /// Customer provided Inbound IP Address. Only able to be set on Ase create.
-        ///             Serialized Name: AseV3NetworkingConfiguration.properties.inboundIpAddressOverride
-        /// </param>
+        /// <summary> Full view of networking configuration for an ASE. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="windowsOutboundIPAddresses"></param>
+        /// <param name="linuxOutboundIPAddresses"></param>
+        /// <param name="externalInboundIPAddresses"></param>
+        /// <param name="internalInboundIPAddresses"></param>
+        /// <param name="allowNewPrivateEndpointConnections"> Property to enable and disable new private endpoint connection creation on ASE. </param>
+        /// <param name="isFtpEnabled"> Property to enable and disable FTP on ASEV3. </param>
+        /// <param name="isRemoteDebugEnabled"> Property to enable and disable Remote Debug on ASEV3. </param>
+        /// <param name="inboundIPAddressOverride"> Customer provided Inbound IP Address. Only able to be set on Ase create. </param>
         /// <returns> A new <see cref="AppService.AseV3NetworkingConfigurationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AseV3NetworkingConfigurationData AseV3NetworkingConfigurationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, IEnumerable<IPAddress> windowsOutboundIPAddresses = default, IEnumerable<IPAddress> linuxOutboundIPAddresses = default, IEnumerable<IPAddress> externalInboundIPAddresses = default, IEnumerable<IPAddress> internalInboundIPAddresses = default, bool? allowNewPrivateEndpointConnections = default, bool? isFtpEnabled = default, bool? isRemoteDebugEnabled = default, string inboundIPAddressOverride = default)
@@ -9727,98 +9822,37 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceEnvironmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="kind">
-        /// Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind.
-        ///             Serialized Name: AppServiceEnvironmentResource.kind
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning state of the App Service Environment.
-        ///             Serialized Name: AppServiceEnvironmentResource.properties.provisioningState
-        /// </param>
-        /// <param name="status">
-        /// Current status of the App Service Environment.
-        ///             Serialized Name: AppServiceEnvironmentResource.properties.status
-        /// </param>
-        /// <param name="virtualNetwork">
-        /// Description of the Virtual Network.
-        ///             Serialized Name: AppServiceEnvironmentResource.properties.virtualNetwork
-        /// </param>
-        /// <param name="internalLoadBalancingMode">
-        /// Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment.
-        ///             Serialized Name: AppServiceEnvironmentResource.properties.internalLoadBalancingMode
-        /// </param>
-        /// <param name="multiSize">
-        /// Front-end VM size, e.g. "Medium", "Large".
-        ///             Serialized Name: AppServiceEnvironmentResource.properties.multiSize
-        /// </param>
-        /// <param name="multiRoleCount">
-        /// Number of front-end instances.
-        ///             Serialized Name: AppServiceEnvironmentResource.properties.multiRoleCount
-        /// </param>
-        /// <param name="ipSslAddressCount">
-        /// Number of IP SSL addresses reserved for the App Service Environment.
-        ///             Serialized Name: AppServiceEnvironmentResource.properties.ipsslAddressCount
-        /// </param>
-        /// <param name="dnsSuffix">
-        /// DNS suffix of the App Service Environment.
-        ///             Serialized Name: AppServiceEnvironmentResource.properties.dnsSuffix
-        /// </param>
-        /// <param name="maximumNumberOfMachines">
-        /// Maximum number of VMs in the App Service Environment.
-        ///             Serialized Name: AppServiceEnvironmentResource.properties.maximumNumberOfMachines
-        /// </param>
-        /// <param name="frontEndScaleFactor">
-        /// Scale factor for front-ends.
-        ///             Serialized Name: AppServiceEnvironmentResource.properties.frontEndScaleFactor
-        /// </param>
+        /// <summary> App Service Environment ARM resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
+        /// <param name="provisioningState"> Provisioning state of the App Service Environment. </param>
+        /// <param name="status"> Current status of the App Service Environment. </param>
+        /// <param name="virtualNetwork"> Description of the Virtual Network. </param>
+        /// <param name="internalLoadBalancingMode"> Specifies which endpoints to serve internally in the Virtual Network for the App Service Environment. </param>
+        /// <param name="multiSize"> Front-end VM size, e.g. "Medium", "Large". </param>
+        /// <param name="multiRoleCount"> Number of front-end instances. </param>
+        /// <param name="ipSslAddressCount"> Number of IP SSL addresses reserved for the App Service Environment. </param>
+        /// <param name="dnsSuffix"> DNS suffix of the App Service Environment. </param>
+        /// <param name="maximumNumberOfMachines"> Maximum number of VMs in the App Service Environment. </param>
+        /// <param name="frontEndScaleFactor"> Scale factor for front-ends. </param>
         /// <param name="isSuspended">
         /// &lt;code&gt;true&lt;/code&gt; if the App Service Environment is suspended; otherwise, &lt;code&gt;false&lt;/code&gt;. The environment can be suspended, e.g. when the management endpoint is no longer available
-        ///             (most likely because NSG blocked the incoming traffic).
-        ///             Serialized Name: AppServiceEnvironmentResource.properties.suspended
+        /// (most likely because NSG blocked the incoming traffic).
         /// </param>
-        /// <param name="clusterSettings">
-        /// Custom settings for changing the behavior of the App Service Environment.
-        ///             Serialized Name: AppServiceEnvironmentResource.properties.clusterSettings
-        /// </param>
-        /// <param name="userWhitelistedIPRanges">
-        /// User added ip ranges to whitelist on ASE db
-        ///             Serialized Name: AppServiceEnvironmentResource.properties.userWhitelistedIpRanges
-        /// </param>
-        /// <param name="hasLinuxWorkers">
-        /// Flag that displays whether an ASE has linux workers or not
-        ///             Serialized Name: AppServiceEnvironmentResource.properties.hasLinuxWorkers
-        /// </param>
-        /// <param name="upgradePreference">
-        /// Upgrade Preference
-        ///             Serialized Name: AppServiceEnvironmentResource.properties.upgradePreference
-        /// </param>
-        /// <param name="dedicatedHostCount">
-        /// Dedicated Host Count
-        ///             Serialized Name: AppServiceEnvironmentResource.properties.dedicatedHostCount
-        /// </param>
-        /// <param name="isZoneRedundant">
-        /// Whether or not this App Service Environment is zone-redundant.
-        ///             Serialized Name: AppServiceEnvironmentResource.properties.zoneRedundant
-        /// </param>
-        /// <param name="customDnsSuffixConfiguration">
-        /// Full view of the custom domain suffix configuration for ASEv3.
-        ///             Serialized Name: AppServiceEnvironmentResource.properties.customDnsSuffixConfiguration
-        /// </param>
-        /// <param name="networkingConfiguration">
-        /// Full view of networking configuration for an ASE.
-        ///             Serialized Name: AppServiceEnvironmentResource.properties.networkingConfiguration
-        /// </param>
-        /// <param name="upgradeAvailability">
-        /// Whether an upgrade is available for this App Service Environment.
-        ///             Serialized Name: AppServiceEnvironmentResource.properties.upgradeAvailability
-        /// </param>
+        /// <param name="clusterSettings"> Custom settings for changing the behavior of the App Service Environment. </param>
+        /// <param name="userWhitelistedIPRanges"> User added ip ranges to whitelist on ASE db. </param>
+        /// <param name="hasLinuxWorkers"> Flag that displays whether an ASE has linux workers or not. </param>
+        /// <param name="upgradePreference"> Upgrade Preference. </param>
+        /// <param name="dedicatedHostCount"> Dedicated Host Count. </param>
+        /// <param name="isZoneRedundant"> Whether or not this App Service Environment is zone-redundant. </param>
+        /// <param name="customDnsSuffixConfiguration"> Full view of the custom domain suffix configuration for ASEv3. </param>
+        /// <param name="networkingConfiguration"> Full view of networking configuration for an ASE. </param>
+        /// <param name="upgradeAvailability"> Whether an upgrade is available for this App Service Environment. </param>
         /// <returns> A new <see cref="AppService.AppServiceEnvironmentData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppServiceEnvironmentData AppServiceEnvironmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string kind = default, ProvisioningState? provisioningState = default, HostingEnvironmentStatus? status = default, AppServiceVirtualNetworkProfile virtualNetwork = default, LoadBalancingMode? internalLoadBalancingMode = default, string multiSize = default, int? multiRoleCount = default, int? ipSslAddressCount = default, string dnsSuffix = default, int? maximumNumberOfMachines = default, int? frontEndScaleFactor = default, bool? isSuspended = default, IEnumerable<AppServiceNameValuePair> clusterSettings = default, IEnumerable<string> userWhitelistedIPRanges = default, bool? hasLinuxWorkers = default, AppServiceEnvironmentUpgradePreference? upgradePreference = default, int? dedicatedHostCount = default, bool? isZoneRedundant = default, CustomDnsSuffixConfigurationData customDnsSuffixConfiguration = default, AseV3NetworkingConfigurationData networkingConfiguration = default, AppServiceEnvironmentUpgradeAvailability? upgradeAvailability = default)
@@ -9856,62 +9890,33 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.KubeEnvironmentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="extendedLocation">
-        /// Extended Location.
-        ///             Serialized Name: KubeEnvironment.extendedLocation
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: KubeEnvironment.kind
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning state of the Kubernetes Environment.
-        ///             Serialized Name: KubeEnvironment.properties.provisioningState
-        /// </param>
-        /// <param name="deploymentErrors">
-        /// Any errors that occurred during deployment or deployment validation
-        ///             Serialized Name: KubeEnvironment.properties.deploymentErrors
-        /// </param>
-        /// <param name="isInternalLoadBalancerEnabled">
-        /// Only visible within Vnet/Subnet
-        ///             Serialized Name: KubeEnvironment.properties.internalLoadBalancerEnabled
-        /// </param>
-        /// <param name="defaultDomain">
-        /// Default Domain Name for the cluster
-        ///             Serialized Name: KubeEnvironment.properties.defaultDomain
-        /// </param>
-        /// <param name="staticIP">
-        /// Static IP of the KubeEnvironment
-        ///             Serialized Name: KubeEnvironment.properties.staticIp
-        /// </param>
-        /// <param name="environmentType">
-        /// Type of Kubernetes Environment. Only supported for Container App Environments with value as Managed
-        ///             Serialized Name: KubeEnvironment.properties.environmentType
-        /// </param>
+        /// <summary> A Kubernetes cluster specialized for web workloads by Azure App Service. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="extendedLocation"> Extended Location. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the Kubernetes Environment. </param>
+        /// <param name="deploymentErrors"> Any errors that occurred during deployment or deployment validation. </param>
+        /// <param name="isInternalLoadBalancerEnabled"> Only visible within Vnet/Subnet. </param>
+        /// <param name="defaultDomain"> Default Domain Name for the cluster. </param>
+        /// <param name="staticIP"> Static IP of the KubeEnvironment. </param>
+        /// <param name="environmentType"> Type of Kubernetes Environment. Only supported for Container App Environments with value as Managed. </param>
         /// <param name="arcConfiguration">
         /// Cluster configuration which determines the ARC cluster
-        ///             components types. Eg: Choosing between BuildService kind,
-        ///             FrontEnd Service ArtifactsStorageType etc.
-        ///             Serialized Name: KubeEnvironment.properties.arcConfiguration
+        /// components types. Eg: Choosing between BuildService kind,
+        /// FrontEnd Service ArtifactsStorageType etc.
         /// </param>
         /// <param name="appLogsConfiguration">
         /// Cluster configuration which enables the log daemon to export
-        ///             app logs to a destination. Currently only "log-analytics" is
-        ///             supported
-        ///             Serialized Name: KubeEnvironment.properties.appLogsConfiguration
+        /// app logs to a destination. Currently only "log-analytics" is
+        /// supported
         /// </param>
-        /// <param name="containerAppsConfiguration">
-        /// Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration
-        ///             Serialized Name: KubeEnvironment.properties.containerAppsConfiguration
-        /// </param>
-        /// <param name="aksResourceId"> Serialized Name: KubeEnvironment.properties.aksResourceID. </param>
+        /// <param name="containerAppsConfiguration"> Cluster configuration for Container Apps Environments to configure Dapr Instrumentation Key and VNET Configuration. </param>
+        /// <param name="aksResourceId"></param>
         /// <returns> A new <see cref="AppService.KubeEnvironmentData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static KubeEnvironmentData KubeEnvironmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ExtendedLocation extendedLocation = default, string kind = default, KubeEnvironmentProvisioningState? provisioningState = default, string deploymentErrors = default, bool? isInternalLoadBalancerEnabled = default, string defaultDomain = default, string staticIP = default, string environmentType = default, ArcConfiguration arcConfiguration = default, AppLogsConfiguration appLogsConfiguration = default, ContainerAppsConfiguration containerAppsConfiguration = default, ResourceIdentifier aksResourceId = default)
@@ -9940,23 +9945,14 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.ResourceHealthMetadataData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: ResourceHealthMetadata.kind
-        /// </param>
-        /// <param name="category">
-        /// The category that the resource matches in the RHC Policy File
-        ///             Serialized Name: ResourceHealthMetadata.properties.category
-        /// </param>
-        /// <param name="isSignalAvailable">
-        /// Is there a health signal for the resource
-        ///             Serialized Name: ResourceHealthMetadata.properties.signalAvailability
-        /// </param>
+        /// <summary> Used for getting ResourceHealthCheck settings. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="category"> The category that the resource matches in the RHC Policy File. </param>
+        /// <param name="isSignalAvailable"> Is there a health signal for the resource. </param>
         /// <returns> A new <see cref="AppService.ResourceHealthMetadataData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ResourceHealthMetadataData ResourceHealthMetadataData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string category = default, bool? isSignalAvailable = default)
@@ -9971,156 +9967,59 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.AppServicePlanData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="sku">
-        /// Description of a SKU for a scalable resource.
-        ///             Serialized Name: AppServicePlan.sku
-        /// </param>
-        /// <param name="extendedLocation">
-        /// Extended Location.
-        ///             Serialized Name: AppServicePlan.extendedLocation
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind.
-        ///             Serialized Name: AppServicePlan.kind
-        /// </param>
-        /// <param name="identity">
-        /// Managed service identity.
-        ///             Serialized Name: AppServicePlan.identity
-        /// </param>
-        /// <param name="workerTierName">
-        /// Target worker tier assigned to the App Service plan.
-        ///             Serialized Name: AppServicePlan.properties.workerTierName
-        /// </param>
-        /// <param name="status">
-        /// App Service plan status.
-        ///             Serialized Name: AppServicePlan.properties.status
-        /// </param>
-        /// <param name="subscription">
-        /// App Service plan subscription.
-        ///             Serialized Name: AppServicePlan.properties.subscription
-        /// </param>
-        /// <param name="hostingEnvironmentProfile">
-        /// Specification for the App Service Environment to use for the App Service plan.
-        ///             Serialized Name: AppServicePlan.properties.hostingEnvironmentProfile
-        /// </param>
-        /// <param name="maximumNumberOfWorkers">
-        /// Maximum number of instances that can be assigned to this App Service plan.
-        ///             Serialized Name: AppServicePlan.properties.maximumNumberOfWorkers
-        /// </param>
-        /// <param name="numberOfWorkers">
-        /// The number of instances that are assigned to this App Service plan.
-        ///             Serialized Name: AppServicePlan.properties.numberOfWorkers
-        /// </param>
-        /// <param name="geoRegion">
-        /// Geographical location for the App Service plan.
-        ///             Serialized Name: AppServicePlan.properties.geoRegion
-        /// </param>
+        /// <summary> App Service plan. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="sku"> Description of a SKU for a scalable resource. </param>
+        /// <param name="extendedLocation"> Extended Location. </param>
+        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
+        /// <param name="identity"> Managed service identity. </param>
+        /// <param name="workerTierName"> Target worker tier assigned to the App Service plan. </param>
+        /// <param name="status"> App Service plan status. </param>
+        /// <param name="subscription"> App Service plan subscription. </param>
+        /// <param name="hostingEnvironmentProfile"> Specification for the App Service Environment to use for the App Service plan. </param>
+        /// <param name="maximumNumberOfWorkers"> Maximum number of instances that can be assigned to this App Service plan. </param>
+        /// <param name="numberOfWorkers"> The number of instances that are assigned to this App Service plan. </param>
+        /// <param name="geoRegion"> Geographical location for the App Service plan. </param>
         /// <param name="isPerSiteScaling">
         /// If &lt;code&gt;true&lt;/code&gt;, apps assigned to this App Service plan can be scaled independently.
-        ///             If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan will scale to all instances of the plan.
-        ///             Serialized Name: AppServicePlan.properties.perSiteScaling
+        /// If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan will scale to all instances of the plan.
         /// </param>
-        /// <param name="isElasticScaleEnabled">
-        /// ServerFarm supports ElasticScale. Apps in this plan will scale as if the ServerFarm was ElasticPremium sku
-        ///             Serialized Name: AppServicePlan.properties.elasticScaleEnabled
-        /// </param>
-        /// <param name="maximumElasticWorkerCount">
-        /// Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan
-        ///             Serialized Name: AppServicePlan.properties.maximumElasticWorkerCount
-        /// </param>
-        /// <param name="numberOfSites">
-        /// Number of apps assigned to this App Service plan.
-        ///             Serialized Name: AppServicePlan.properties.numberOfSites
-        /// </param>
-        /// <param name="isSpot">
-        /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances.
-        ///             Serialized Name: AppServicePlan.properties.isSpot
-        /// </param>
-        /// <param name="spotExpireOn">
-        /// The time when the server farm expires. Valid only if it is a spot server farm.
-        ///             Serialized Name: AppServicePlan.properties.spotExpirationTime
-        /// </param>
-        /// <param name="freeOfferExpireOn">
-        /// The time when the server farm free offer expires.
-        ///             Serialized Name: AppServicePlan.properties.freeOfferExpirationTime
-        /// </param>
-        /// <param name="resourceGroup">
-        /// Resource group of the App Service plan.
-        ///             Serialized Name: AppServicePlan.properties.resourceGroup
-        /// </param>
-        /// <param name="isReserved">
-        /// If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise.
-        ///             Serialized Name: AppServicePlan.properties.reserved
-        /// </param>
-        /// <param name="isXenon">
-        /// Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise.
-        ///             Serialized Name: AppServicePlan.properties.isXenon
-        /// </param>
-        /// <param name="isHyperV">
-        /// If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise.
-        ///             Serialized Name: AppServicePlan.properties.hyperV
-        /// </param>
-        /// <param name="targetWorkerCount">
-        /// Scaling worker count.
-        ///             Serialized Name: AppServicePlan.properties.targetWorkerCount
-        /// </param>
-        /// <param name="targetWorkerSizeId">
-        /// Scaling worker size ID.
-        ///             Serialized Name: AppServicePlan.properties.targetWorkerSizeId
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning state of the App Service Plan.
-        ///             Serialized Name: AppServicePlan.properties.provisioningState
-        /// </param>
-        /// <param name="kubeEnvironmentProfile">
-        /// Specification for the Kubernetes Environment to use for the App Service plan.
-        ///             Serialized Name: AppServicePlan.properties.kubeEnvironmentProfile
-        /// </param>
+        /// <param name="isElasticScaleEnabled"> ServerFarm supports ElasticScale. Apps in this plan will scale as if the ServerFarm was ElasticPremium sku. </param>
+        /// <param name="maximumElasticWorkerCount"> Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan. </param>
+        /// <param name="numberOfSites"> Number of apps assigned to this App Service plan. </param>
+        /// <param name="isSpot"> If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances. </param>
+        /// <param name="spotExpireOn"> The time when the server farm expires. Valid only if it is a spot server farm. </param>
+        /// <param name="freeOfferExpireOn"> The time when the server farm free offer expires. </param>
+        /// <param name="resourceGroup"> Resource group of the App Service plan. </param>
+        /// <param name="isReserved"> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
+        /// <param name="isXenon"> Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
+        /// <param name="isHyperV"> If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
+        /// <param name="targetWorkerCount"> Scaling worker count. </param>
+        /// <param name="targetWorkerSizeId"> Scaling worker size ID. </param>
+        /// <param name="provisioningState"> Provisioning state of the App Service Plan. </param>
+        /// <param name="kubeEnvironmentProfile"> Specification for the Kubernetes Environment to use for the App Service plan. </param>
         /// <param name="isZoneRedundant">
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform availability zone balancing.
-        ///             If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
-        ///             Serialized Name: AppServicePlan.properties.zoneRedundant
+        /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </param>
         /// <param name="isAsyncScalingEnabled">
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will attempt to scale asynchronously if there are insufficient workers to scale synchronously.
-        ///             If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will only attempt sync scaling.
-        ///             Serialized Name: AppServicePlan.properties.asyncScalingEnabled
+        /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will only attempt sync scaling.
         /// </param>
-        /// <param name="planDefaultIdentity">
-        /// Identity to use by platform for various features and integrations using managed identity.
-        ///             Serialized Name: AppServicePlan.properties.planDefaultIdentity
-        /// </param>
-        /// <param name="isCustomMode">
-        /// Whether this server farm is in custom mode.
-        ///             Serialized Name: AppServicePlan.properties.isCustomMode
-        /// </param>
-        /// <param name="registryAdapters">
-        /// Registry adapters associated with this App Service plan.
-        ///             Serialized Name: AppServicePlan.properties.registryAdapters
-        /// </param>
-        /// <param name="installScripts">
-        /// Install scripts associated with this App Service plan.
-        ///             Serialized Name: AppServicePlan.properties.installScripts
-        /// </param>
-        /// <param name="virtualNetworkSubnetId">
-        /// All network settings for the server farm.
-        ///             Serialized Name: AppServicePlan.properties.network
-        /// </param>
-        /// <param name="storageMounts">
-        /// Storage mounts associated with this App Service plan.
-        ///             Serialized Name: AppServicePlan.properties.storageMounts
-        /// </param>
+        /// <param name="planDefaultIdentity"> Identity to use by platform for various features and integrations using managed identity. </param>
+        /// <param name="isCustomMode"> Whether this server farm is in custom mode. </param>
+        /// <param name="registryAdapters"> Registry adapters associated with this App Service plan. </param>
+        /// <param name="installScripts"> Install scripts associated with this App Service plan. </param>
+        /// <param name="virtualNetworkSubnetId"> Azure Resource Manager ID of the Virtual network and subnet to be joined by Regional VNET Integration. This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}. </param>
+        /// <param name="storageMounts"> Storage mounts associated with this App Service plan. </param>
         /// <param name="rdpEnabled">
         /// If &lt;code&gt;true&lt;/code&gt;, RDP access is enabled for this App Service plan. Only applicable for IsCustomMode ASPs.
-        ///             If &lt;code&gt;false&lt;/code&gt;, RDP access is disabled.
-        ///             Serialized Name: AppServicePlan.properties.rdpEnabled
+        /// If &lt;code&gt;false&lt;/code&gt;, RDP access is disabled.
         /// </param>
         /// <returns> A new <see cref="AppService.AppServicePlanData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -10173,257 +10072,90 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.WebSiteData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity">
-        /// Managed service identity.
-        ///             Serialized Name: Site.identity
-        /// </param>
-        /// <param name="extendedLocation">
-        /// Extended Location.
-        ///             Serialized Name: Site.extendedLocation
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind.
-        ///             Serialized Name: Site.kind
-        /// </param>
-        /// <param name="state">
-        /// Current state of the app.
-        ///             Serialized Name: Site.properties.state
-        /// </param>
-        /// <param name="hostNames">
-        /// Hostnames associated with the app.
-        ///             Serialized Name: Site.properties.hostNames
-        /// </param>
-        /// <param name="repositorySiteName">
-        /// Name of the repository site.
-        ///             Serialized Name: Site.properties.repositorySiteName
-        /// </param>
-        /// <param name="usageState">
-        /// State indicating whether the app has exceeded its quota usage. Read-only.
-        ///             Serialized Name: Site.properties.usageState
-        /// </param>
-        /// <param name="isEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; if the app is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. Setting this value to false disables the app (takes the app offline).
-        ///             Serialized Name: Site.properties.enabled
-        /// </param>
+        /// <summary> A web app, a mobile app backend, or an API app. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Managed service identity. </param>
+        /// <param name="extendedLocation"> Extended Location. </param>
+        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
+        /// <param name="state"> Current state of the app. </param>
+        /// <param name="hostNames"> Hostnames associated with the app. </param>
+        /// <param name="repositorySiteName"> Name of the repository site. </param>
+        /// <param name="usageState"> State indicating whether the app has exceeded its quota usage. Read-only. </param>
+        /// <param name="isEnabled"> &lt;code&gt;true&lt;/code&gt; if the app is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. Setting this value to false disables the app (takes the app offline). </param>
         /// <param name="enabledHostNames">
         /// Enabled hostnames for the app.Hostnames need to be assigned (see HostNames) AND enabled. Otherwise,
-        ///             the app is not served on those hostnames.
-        ///             Serialized Name: Site.properties.enabledHostNames
+        /// the app is not served on those hostnames.
         /// </param>
-        /// <param name="availabilityState">
-        /// Management information availability state for the app.
-        ///             Serialized Name: Site.properties.availabilityState
-        /// </param>
-        /// <param name="hostNameSslStates">
-        /// Hostname SSL states are used to manage the SSL bindings for app's hostnames.
-        ///             Serialized Name: Site.properties.hostNameSslStates
-        /// </param>
-        /// <param name="appServicePlanId">
-        /// Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}".
-        ///             Serialized Name: Site.properties.serverFarmId
-        /// </param>
-        /// <param name="isReserved">
-        /// &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///             Serialized Name: Site.properties.reserved
-        /// </param>
-        /// <param name="isXenon">
-        /// Obsolete: Hyper-V sandbox.
-        ///             Serialized Name: Site.properties.isXenon
-        /// </param>
-        /// <param name="isHyperV">
-        /// Hyper-V sandbox.
-        ///             Serialized Name: Site.properties.hyperV
-        /// </param>
-        /// <param name="lastModifiedTimeUtc">
-        /// Last time the app was modified, in UTC. Read-only.
-        ///             Serialized Name: Site.properties.lastModifiedTimeUtc
-        /// </param>
-        /// <param name="dnsConfiguration">
-        /// Property to configure various DNS related settings for a site.
-        ///             Serialized Name: Site.properties.dnsConfiguration
-        /// </param>
-        /// <param name="outboundVnetRouting">
-        /// Property to configure various outbound traffic routing options over virtual network for a site
-        ///             Serialized Name: Site.properties.outboundVnetRouting
-        /// </param>
-        /// <param name="siteConfig">
-        /// Configuration of an App Service app. This property is not returned in response to normal create and read requests since it may contain sensitive information.
-        ///             Serialized Name: Site.properties.siteConfig
-        /// </param>
-        /// <param name="functionAppConfig">
-        /// Configuration specific of the Azure Function app.
-        ///             Serialized Name: Site.properties.functionAppConfig
-        /// </param>
-        /// <param name="daprConfig">
-        /// Dapr configuration of the app.
-        ///             Serialized Name: Site.properties.daprConfig
-        /// </param>
-        /// <param name="workloadProfileName">
-        /// Workload profile name for function app to execute on.
-        ///             Serialized Name: Site.properties.workloadProfileName
-        /// </param>
-        /// <param name="resourceConfig">
-        /// Function app resource requirements.
-        ///             Serialized Name: Site.properties.resourceConfig
-        /// </param>
-        /// <param name="trafficManagerHostNames">
-        /// Azure Traffic Manager hostnames associated with the app. Read-only.
-        ///             Serialized Name: Site.properties.trafficManagerHostNames
-        /// </param>
-        /// <param name="isScmSiteAlsoStopped">
-        /// &lt;code&gt;true&lt;/code&gt; to stop SCM (KUDU) site when the app is stopped; otherwise, &lt;code&gt;false&lt;/code&gt;. The default is &lt;code&gt;false&lt;/code&gt;.
-        ///             Serialized Name: Site.properties.scmSiteAlsoStopped
-        /// </param>
-        /// <param name="targetSwapSlot">
-        /// Specifies which deployment slot this app will swap into. Read-only.
-        ///             Serialized Name: Site.properties.targetSwapSlot
-        /// </param>
-        /// <param name="hostingEnvironmentProfile">
-        /// App Service Environment to use for the app.
-        ///             Serialized Name: Site.properties.hostingEnvironmentProfile
-        /// </param>
-        /// <param name="isClientAffinityEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; to enable client affinity; &lt;code&gt;false&lt;/code&gt; to stop sending session affinity cookies, which route client requests in the same session to the same instance. Default is &lt;code&gt;true&lt;/code&gt;.
-        ///             Serialized Name: Site.properties.clientAffinityEnabled
-        /// </param>
-        /// <param name="isClientAffinityPartitioningEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; to enable client affinity partitioning using CHIPS cookies, this will add the &lt;code&gt;partitioned&lt;/code&gt; property to the affinity cookies; &lt;code&gt;false&lt;/code&gt; to stop sending partitioned affinity cookies. Default is &lt;code&gt;false&lt;/code&gt;.
-        ///             Serialized Name: Site.properties.clientAffinityPartitioningEnabled
-        /// </param>
-        /// <param name="isClientAffinityProxyEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; to override client affinity cookie domain with X-Forwarded-Host request header. &lt;code&gt;false&lt;/code&gt; to use default domain. Default is &lt;code&gt;false&lt;/code&gt;.
-        ///             Serialized Name: Site.properties.clientAffinityProxyEnabled
-        /// </param>
-        /// <param name="isClientCertEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; to enable client certificate authentication (TLS mutual authentication); otherwise, &lt;code&gt;false&lt;/code&gt;. Default is &lt;code&gt;false&lt;/code&gt;.
-        ///             Serialized Name: Site.properties.clientCertEnabled
-        /// </param>
+        /// <param name="availabilityState"> Management information availability state for the app. </param>
+        /// <param name="hostNameSslStates"> Hostname SSL states are used to manage the SSL bindings for app's hostnames. </param>
+        /// <param name="appServicePlanId"> Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}". </param>
+        /// <param name="isReserved"> &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isXenon"> Obsolete: Hyper-V sandbox. </param>
+        /// <param name="isHyperV"> Hyper-V sandbox. </param>
+        /// <param name="lastModifiedTimeUtc"> Last time the app was modified, in UTC. Read-only. </param>
+        /// <param name="dnsConfiguration"> Property to configure various DNS related settings for a site. </param>
+        /// <param name="outboundVnetRouting"> Property to configure various outbound traffic routing options over virtual network for a site. </param>
+        /// <param name="siteConfig"> Configuration of an App Service app. This property is not returned in response to normal create and read requests since it may contain sensitive information. </param>
+        /// <param name="functionAppConfig"> Configuration specific of the Azure Function app. </param>
+        /// <param name="daprConfig"> Dapr configuration of the app. </param>
+        /// <param name="workloadProfileName"> Workload profile name for function app to execute on. </param>
+        /// <param name="resourceConfig"> Function app resource requirements. </param>
+        /// <param name="trafficManagerHostNames"> Azure Traffic Manager hostnames associated with the app. Read-only. </param>
+        /// <param name="isScmSiteAlsoStopped"> &lt;code&gt;true&lt;/code&gt; to stop SCM (KUDU) site when the app is stopped; otherwise, &lt;code&gt;false&lt;/code&gt;. The default is &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="targetSwapSlot"> Specifies which deployment slot this app will swap into. Read-only. </param>
+        /// <param name="hostingEnvironmentProfile"> App Service Environment to use for the app. </param>
+        /// <param name="isClientAffinityEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client affinity; &lt;code&gt;false&lt;/code&gt; to stop sending session affinity cookies, which route client requests in the same session to the same instance. Default is &lt;code&gt;true&lt;/code&gt;. </param>
+        /// <param name="isClientAffinityPartitioningEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client affinity partitioning using CHIPS cookies, this will add the &lt;code&gt;partitioned&lt;/code&gt; property to the affinity cookies; &lt;code&gt;false&lt;/code&gt; to stop sending partitioned affinity cookies. Default is &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isClientAffinityProxyEnabled"> &lt;code&gt;true&lt;/code&gt; to override client affinity cookie domain with X-Forwarded-Host request header. &lt;code&gt;false&lt;/code&gt; to use default domain. Default is &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isClientCertEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client certificate authentication (TLS mutual authentication); otherwise, &lt;code&gt;false&lt;/code&gt;. Default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="clientCertMode">
         /// This composes with ClientCertEnabled setting.
-        ///             - ClientCertEnabled: false means ClientCert is ignored.
-        ///             - ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.
-        ///             - ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.
-        ///             Serialized Name: Site.properties.clientCertMode
+        /// <list type="bullet"><item><description>ClientCertEnabled: false means ClientCert is ignored.</description></item><item><description>ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.</description></item><item><description>ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.</description></item></list>
         /// </param>
-        /// <param name="clientCertExclusionPaths">
-        /// client certificate authentication comma-separated exclusion paths
-        ///             Serialized Name: Site.properties.clientCertExclusionPaths
-        /// </param>
-        /// <param name="ipMode">
-        /// Specifies the IP mode of the app.
-        ///             Serialized Name: Site.properties.ipMode
-        /// </param>
-        /// <param name="isEndToEndEncryptionEnabled">
-        /// Whether to use end to end encryption between the FrontEnd and the Worker
-        ///             Serialized Name: Site.properties.endToEndEncryptionEnabled
-        /// </param>
-        /// <param name="isSshEnabled">
-        /// Whether to enable ssh access.
-        ///             Serialized Name: Site.properties.sshEnabled
-        /// </param>
+        /// <param name="clientCertExclusionPaths"> client certificate authentication comma-separated exclusion paths. </param>
+        /// <param name="ipMode"> Specifies the IP mode of the app. </param>
+        /// <param name="isEndToEndEncryptionEnabled"> Whether to use end to end encryption between the FrontEnd and the Worker. </param>
+        /// <param name="isSshEnabled"> Whether to enable ssh access. </param>
         /// <param name="isHostNameDisabled">
         /// &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///             If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
-        ///             Serialized Name: Site.properties.hostNamesDisabled
+        /// If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
         /// </param>
-        /// <param name="customDomainVerificationId">
-        /// Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification.
-        ///             Serialized Name: Site.properties.customDomainVerificationId
-        /// </param>
-        /// <param name="outboundIPAddresses">
-        /// List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only.
-        ///             Serialized Name: Site.properties.outboundIpAddresses
-        /// </param>
-        /// <param name="possibleOutboundIPAddresses">
-        /// List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from all tenants except dataComponent. Read-only.
-        ///             Serialized Name: Site.properties.possibleOutboundIpAddresses
-        /// </param>
-        /// <param name="containerSize">
-        /// Size of the function container.
-        ///             Serialized Name: Site.properties.containerSize
-        /// </param>
-        /// <param name="dailyMemoryTimeQuota">
-        /// Maximum allowed daily memory-time quota (applicable on dynamic apps only).
-        ///             Serialized Name: Site.properties.dailyMemoryTimeQuota
-        /// </param>
-        /// <param name="suspendOn">
-        /// App suspended till in case memory-time quota is exceeded.
-        ///             Serialized Name: Site.properties.suspendedTill
-        /// </param>
+        /// <param name="customDomainVerificationId"> Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification. </param>
+        /// <param name="outboundIPAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </param>
+        /// <param name="possibleOutboundIPAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from all tenants except dataComponent. Read-only. </param>
+        /// <param name="containerSize"> Size of the function container. </param>
+        /// <param name="dailyMemoryTimeQuota"> Maximum allowed daily memory-time quota (applicable on dynamic apps only). </param>
+        /// <param name="suspendOn"> App suspended till in case memory-time quota is exceeded. </param>
         /// <param name="maxNumberOfWorkers">
         /// Maximum number of workers.
-        ///             This only applies to Functions container.
-        ///             Serialized Name: Site.properties.maxNumberOfWorkers
+        /// This only applies to Functions container.
         /// </param>
-        /// <param name="cloningInfo">
-        /// If specified during app creation, the app is cloned from a source app.
-        ///             Serialized Name: Site.properties.cloningInfo
-        /// </param>
-        /// <param name="resourceGroup">
-        /// Name of the resource group the app belongs to. Read-only.
-        ///             Serialized Name: Site.properties.resourceGroup
-        /// </param>
-        /// <param name="isDefaultContainer">
-        /// &lt;code&gt;true&lt;/code&gt; if the app is a default container; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///             Serialized Name: Site.properties.isDefaultContainer
-        /// </param>
-        /// <param name="defaultHostName">
-        /// Default hostname of the app. Read-only.
-        ///             Serialized Name: Site.properties.defaultHostName
-        /// </param>
-        /// <param name="slotSwapStatus">
-        /// Status of the last deployment slot swap operation.
-        ///             Serialized Name: Site.properties.slotSwapStatus
-        /// </param>
+        /// <param name="cloningInfo"> If specified during app creation, the app is cloned from a source app. </param>
+        /// <param name="resourceGroup"> Name of the resource group the app belongs to. Read-only. </param>
+        /// <param name="isDefaultContainer"> &lt;code&gt;true&lt;/code&gt; if the app is a default container; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="defaultHostName"> Default hostname of the app. Read-only. </param>
+        /// <param name="slotSwapStatus"> Status of the last deployment slot swap operation. </param>
         /// <param name="isHttpsOnly">
         /// HttpsOnly: configures a web site to accept only https requests. Issues redirect for
-        ///             http requests
-        ///             Serialized Name: Site.properties.httpsOnly
+        /// http requests
         /// </param>
-        /// <param name="redundancyMode">
-        /// Site redundancy mode
-        ///             Serialized Name: Site.properties.redundancyMode
-        /// </param>
-        /// <param name="inProgressOperationId">
-        /// Specifies an operation id if this site has a pending operation.
-        ///             Serialized Name: Site.properties.inProgressOperationId
-        /// </param>
-        /// <param name="publicNetworkAccess">
-        /// Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string.
-        ///             Serialized Name: Site.properties.publicNetworkAccess
-        /// </param>
-        /// <param name="isStorageAccountRequired">
-        /// Checks if Customer provided storage account is required
-        ///             Serialized Name: Site.properties.storageAccountRequired
-        /// </param>
-        /// <param name="keyVaultReferenceIdentity">
-        /// Identity to use for Key Vault Reference authentication.
-        ///             Serialized Name: Site.properties.keyVaultReferenceIdentity
-        /// </param>
-        /// <param name="autoGeneratedDomainNameLabelScope">
-        /// Specifies the scope of uniqueness for the default hostname during resource creation
-        ///             Serialized Name: Site.properties.autoGeneratedDomainNameLabelScope
-        /// </param>
+        /// <param name="redundancyMode"> Site redundancy mode. </param>
+        /// <param name="inProgressOperationId"> Specifies an operation id if this site has a pending operation. </param>
+        /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
+        /// <param name="isStorageAccountRequired"> Checks if Customer provided storage account is required. </param>
+        /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
+        /// <param name="autoGeneratedDomainNameLabelScope"> Specifies the scope of uniqueness for the default hostname during resource creation. </param>
         /// <param name="virtualNetworkSubnetId">
         /// Azure Resource Manager ID of the Virtual network and subnet to be joined by Regional VNET Integration.
-        ///             This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
-        ///             Serialized Name: Site.properties.virtualNetworkSubnetId
+        /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </param>
-        /// <param name="managedEnvironmentId">
-        /// Azure Resource Manager ID of the customer's selected Managed Environment on which to host this app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}
-        ///             Serialized Name: Site.properties.managedEnvironmentId
-        /// </param>
-        /// <param name="sku">
-        /// Current SKU of application based on associated App Service Plan. Some valid SKU values are Free, Shared, Basic, Dynamic, FlexConsumption, Standard, Premium, PremiumV2, PremiumV3, Isolated, IsolatedV2
-        ///             Serialized Name: Site.properties.sku
-        /// </param>
+        /// <param name="managedEnvironmentId"> Azure Resource Manager ID of the customer's selected Managed Environment on which to host this app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}. </param>
+        /// <param name="sku"> Current SKU of application based on associated App Service Plan. Some valid SKU values are Free, Shared, Basic, Dynamic, FlexConsumption, Standard, Premium, PremiumV2, PremiumV3, Isolated, IsolatedV2. </param>
         /// <returns> A new <see cref="AppService.WebSiteData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WebSiteData WebSiteData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, ExtendedLocation extendedLocation = default, string kind = default, string state = default, IEnumerable<string> hostNames = default, string repositorySiteName = default, AppServiceUsageState? usageState = default, bool? isEnabled = default, IEnumerable<string> enabledHostNames = default, WebSiteAvailabilityState? availabilityState = default, IEnumerable<HostNameSslState> hostNameSslStates = default, ResourceIdentifier appServicePlanId = default, bool? isReserved = default, bool? isXenon = default, bool? isHyperV = default, DateTimeOffset? lastModifiedTimeUtc = default, SiteDnsConfig dnsConfiguration = default, OutboundVnetRouting outboundVnetRouting = default, SiteConfigProperties siteConfig = default, FunctionAppConfig functionAppConfig = default, AppDaprConfig daprConfig = default, string workloadProfileName = default, FunctionAppResourceConfig resourceConfig = default, IEnumerable<string> trafficManagerHostNames = default, bool? isScmSiteAlsoStopped = default, string targetSwapSlot = default, HostingEnvironmentProfile hostingEnvironmentProfile = default, bool? isClientAffinityEnabled = default, bool? isClientAffinityPartitioningEnabled = default, bool? isClientAffinityProxyEnabled = default, bool? isClientCertEnabled = default, ClientCertMode? clientCertMode = default, string clientCertExclusionPaths = default, AppServiceIPMode? ipMode = default, bool? isEndToEndEncryptionEnabled = default, bool? isSshEnabled = default, bool? isHostNameDisabled = default, string customDomainVerificationId = default, string outboundIPAddresses = default, string possibleOutboundIPAddresses = default, int? containerSize = default, int? dailyMemoryTimeQuota = default, DateTimeOffset? suspendOn = default, int? maxNumberOfWorkers = default, CloningInfo cloningInfo = default, string resourceGroup = default, bool? isDefaultContainer = default, string defaultHostName = default, SlotSwapStatus slotSwapStatus = default, bool? isHttpsOnly = default, RedundancyMode? redundancyMode = default, Guid? inProgressOperationId = default, string publicNetworkAccess = default, bool? isStorageAccountRequired = default, string keyVaultReferenceIdentity = default, AutoGeneratedDomainNameLabelScope? autoGeneratedDomainNameLabelScope = default, ResourceIdentifier virtualNetworkSubnetId = default, string managedEnvironmentId = default, string sku = default)
@@ -10502,97 +10234,34 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: StaticSiteARMResource.kind
-        /// </param>
-        /// <param name="sku">
-        /// Description of a SKU for a scalable resource.
-        ///             Serialized Name: StaticSiteARMResource.sku
-        /// </param>
-        /// <param name="identity">
-        /// Managed service identity.
-        ///             Serialized Name: StaticSiteARMResource.identity
-        /// </param>
-        /// <param name="defaultHostname">
-        /// The default autogenerated hostname for the static site.
-        ///             Serialized Name: StaticSiteARMResource.properties.defaultHostname
-        /// </param>
-        /// <param name="repositoryUri">
-        /// URL for the repository of the static site.
-        ///             Serialized Name: StaticSiteARMResource.properties.repositoryUrl
-        /// </param>
-        /// <param name="branch">
-        /// The target branch in the repository.
-        ///             Serialized Name: StaticSiteARMResource.properties.branch
-        /// </param>
-        /// <param name="customDomains">
-        /// The custom domains associated with this static site.
-        ///             Serialized Name: StaticSiteARMResource.properties.customDomains
-        /// </param>
-        /// <param name="repositoryToken">
-        /// A user's github repository token. This is used to setup the Github Actions workflow file and API secrets.
-        ///             Serialized Name: StaticSiteARMResource.properties.repositoryToken
-        /// </param>
-        /// <param name="buildProperties">
-        /// Build properties to configure on the repository.
-        ///             Serialized Name: StaticSiteARMResource.properties.buildProperties
-        /// </param>
-        /// <param name="privateEndpointConnections">
-        /// Private endpoint connections
-        ///             Serialized Name: StaticSiteARMResource.properties.privateEndpointConnections
-        /// </param>
-        /// <param name="stagingEnvironmentPolicy">
-        /// State indicating whether staging environments are allowed or not allowed for a static web app.
-        ///             Serialized Name: StaticSiteARMResource.properties.stagingEnvironmentPolicy
-        /// </param>
-        /// <param name="allowConfigFileUpdates">
-        /// &lt;code&gt;false&lt;/code&gt; if config file is locked for this static web app; otherwise, &lt;code&gt;true&lt;/code&gt;.
-        ///             Serialized Name: StaticSiteARMResource.properties.allowConfigFileUpdates
-        /// </param>
-        /// <param name="templateProperties">
-        /// Template options for generating a new repository.
-        ///             Serialized Name: StaticSiteARMResource.properties.templateProperties
-        /// </param>
-        /// <param name="contentDistributionEndpoint">
-        /// The content distribution endpoint for the static site.
-        ///             Serialized Name: StaticSiteARMResource.properties.contentDistributionEndpoint
-        /// </param>
-        /// <param name="keyVaultReferenceIdentity">
-        /// Identity to use for Key Vault Reference authentication.
-        ///             Serialized Name: StaticSiteARMResource.properties.keyVaultReferenceIdentity
-        /// </param>
-        /// <param name="userProvidedFunctionApps">
-        /// User provided function apps registered with the static site
-        ///             Serialized Name: StaticSiteARMResource.properties.userProvidedFunctionApps
-        /// </param>
-        /// <param name="linkedBackends">
-        /// Backends linked to the static side
-        ///             Serialized Name: StaticSiteARMResource.properties.linkedBackends
-        /// </param>
-        /// <param name="provider">
-        /// The provider that submitted the last deployment to the primary environment of the static site.
-        ///             Serialized Name: StaticSiteARMResource.properties.provider
-        /// </param>
-        /// <param name="enterpriseGradeCdnStatus">
-        /// State indicating the status of the enterprise grade CDN serving traffic to the static web app.
-        ///             Serialized Name: StaticSiteARMResource.properties.enterpriseGradeCdnStatus
-        /// </param>
-        /// <param name="publicNetworkAccess">
-        /// State indicating whether public traffic are allowed or not for a static web app. Allowed Values: 'Enabled', 'Disabled' or an empty string.
-        ///             Serialized Name: StaticSiteARMResource.properties.publicNetworkAccess
-        /// </param>
-        /// <param name="databaseConnections">
-        /// Database connections for the static site
-        ///             Serialized Name: StaticSiteARMResource.properties.databaseConnections
-        /// </param>
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="sku"> Description of a SKU for a scalable resource. </param>
+        /// <param name="identity"> Managed service identity. </param>
+        /// <param name="defaultHostname"> The default autogenerated hostname for the static site. </param>
+        /// <param name="repositoryUri"> URL for the repository of the static site. </param>
+        /// <param name="branch"> The target branch in the repository. </param>
+        /// <param name="customDomains"> The custom domains associated with this static site. </param>
+        /// <param name="repositoryToken"> A user's github repository token. This is used to setup the Github Actions workflow file and API secrets. </param>
+        /// <param name="buildProperties"> Build properties to configure on the repository. </param>
+        /// <param name="privateEndpointConnections"> Private endpoint connections. </param>
+        /// <param name="stagingEnvironmentPolicy"> State indicating whether staging environments are allowed or not allowed for a static web app. </param>
+        /// <param name="allowConfigFileUpdates"> &lt;code&gt;false&lt;/code&gt; if config file is locked for this static web app; otherwise, &lt;code&gt;true&lt;/code&gt;. </param>
+        /// <param name="templateProperties"> Template options for generating a new repository. </param>
+        /// <param name="contentDistributionEndpoint"> The content distribution endpoint for the static site. </param>
+        /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
+        /// <param name="userProvidedFunctionApps"> User provided function apps registered with the static site. </param>
+        /// <param name="linkedBackends"> Backends linked to the static side. </param>
+        /// <param name="provider"> The provider that submitted the last deployment to the primary environment of the static site. </param>
+        /// <param name="enterpriseGradeCdnStatus"> State indicating the status of the enterprise grade CDN serving traffic to the static web app. </param>
+        /// <param name="publicNetworkAccess"> State indicating whether public traffic are allowed or not for a static web app. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
+        /// <param name="databaseConnections"> Database connections for the static site. </param>
         /// <returns> A new <see cref="AppService.StaticSiteData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StaticSiteData StaticSiteData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string kind = default, AppServiceSkuDescription sku = default, ManagedServiceIdentity identity = default, string defaultHostname = default, Uri repositoryUri = default, string branch = default, IEnumerable<string> customDomains = default, string repositoryToken = default, StaticSiteBuildProperties buildProperties = default, IEnumerable<ResponseMessageEnvelopeRemotePrivateEndpointConnection> privateEndpointConnections = default, StagingEnvironmentPolicy? stagingEnvironmentPolicy = default, bool? allowConfigFileUpdates = default, StaticSiteTemplate templateProperties = default, string contentDistributionEndpoint = default, string keyVaultReferenceIdentity = default, IEnumerable<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default, IEnumerable<StaticSiteLinkedBackendInfo> linkedBackends = default, string provider = default, EnterpriseGradeCdnStatus? enterpriseGradeCdnStatus = default, string publicNetworkAccess = default, IEnumerable<StaticSiteDatabaseConnectionOverview> databaseConnections = default)
@@ -10630,28 +10299,16 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RemotePrivateEndpointConnection"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="provisioningState"> Serialized Name: RemotePrivateEndpointConnection.properties.provisioningState. </param>
-        /// <param name="privateEndpointId">
-        /// PrivateEndpoint of a remote private endpoint connection
-        ///             Serialized Name: RemotePrivateEndpointConnection.properties.privateEndpoint
-        /// </param>
-        /// <param name="privateLinkServiceConnectionState">
-        /// The state of a private link connection
-        ///             Serialized Name: RemotePrivateEndpointConnection.properties.privateLinkServiceConnectionState
-        /// </param>
-        /// <param name="ipAddresses">
-        /// Private IPAddresses mapped to the remote private endpoint
-        ///             Serialized Name: RemotePrivateEndpointConnection.properties.ipAddresses
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <summary> A remote private endpoint connection. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="provisioningState"></param>
+        /// <param name="privateEndpointId"></param>
+        /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
+        /// <param name="ipAddresses"> Private IPAddresses mapped to the remote private endpoint. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.RemotePrivateEndpointConnection"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RemotePrivateEndpointConnection RemotePrivateEndpointConnection(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string provisioningState = default, ResourceIdentifier privateEndpointId = default, PrivateLinkConnectionState privateLinkServiceConnectionState = default, IEnumerable<IPAddress> ipAddresses = default, string kind = default)
@@ -10666,27 +10323,15 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteUserProvidedFunctionAppData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: StaticSiteUserProvidedFunctionAppARMResource.kind
-        /// </param>
-        /// <param name="functionAppResourceId">
-        /// The resource id of the function app registered with the static site
-        ///             Serialized Name: StaticSiteUserProvidedFunctionAppARMResource.properties.functionAppResourceId
-        /// </param>
-        /// <param name="functionAppRegion">
-        /// The region of the function app registered with the static site
-        ///             Serialized Name: StaticSiteUserProvidedFunctionAppARMResource.properties.functionAppRegion
-        /// </param>
-        /// <param name="createdOn">
-        /// The date and time on which the function app was registered with the static site.
-        ///             Serialized Name: StaticSiteUserProvidedFunctionAppARMResource.properties.createdOn
-        /// </param>
+        /// <summary> Static Site User Provided Function App ARM resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="functionAppResourceId"> The resource id of the function app registered with the static site. </param>
+        /// <param name="functionAppRegion"> The region of the function app registered with the static site. </param>
+        /// <param name="createdOn"> The date and time on which the function app was registered with the static site. </param>
         /// <returns> A new <see cref="AppService.StaticSiteUserProvidedFunctionAppData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StaticSiteUserProvidedFunctionAppData StaticSiteUserProvidedFunctionAppData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, ResourceIdentifier functionAppResourceId = default, string functionAppRegion = default, DateTimeOffset? createdOn = default)
@@ -10701,99 +10346,33 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AppCertificatePatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="password">
-        /// Certificate password.
-        ///             Serialized Name: CertificatePatchResource.properties.password
-        /// </param>
-        /// <param name="friendlyName">
-        /// Friendly name of the certificate.
-        ///             Serialized Name: CertificatePatchResource.properties.friendlyName
-        /// </param>
-        /// <param name="subjectName">
-        /// Subject name of the certificate.
-        ///             Serialized Name: CertificatePatchResource.properties.subjectName
-        /// </param>
-        /// <param name="hostNames">
-        /// Host names the certificate applies to.
-        ///             Serialized Name: CertificatePatchResource.properties.hostNames
-        /// </param>
-        /// <param name="pfxBlob">
-        /// Pfx blob.
-        ///             Serialized Name: CertificatePatchResource.properties.pfxBlob
-        /// </param>
-        /// <param name="siteName">
-        /// App name.
-        ///             Serialized Name: CertificatePatchResource.properties.siteName
-        /// </param>
-        /// <param name="selfLink">
-        /// Self link.
-        ///             Serialized Name: CertificatePatchResource.properties.selfLink
-        /// </param>
-        /// <param name="issuer">
-        /// Certificate issuer.
-        ///             Serialized Name: CertificatePatchResource.properties.issuer
-        /// </param>
-        /// <param name="issueOn">
-        /// Certificate issue Date.
-        ///             Serialized Name: CertificatePatchResource.properties.issueDate
-        /// </param>
-        /// <param name="expireOn">
-        /// Certificate expiration date.
-        ///             Serialized Name: CertificatePatchResource.properties.expirationDate
-        /// </param>
-        /// <param name="thumbprintString">
-        /// Certificate thumbprint.
-        ///             Serialized Name: CertificatePatchResource.properties.thumbprint
-        /// </param>
-        /// <param name="isValid">
-        /// Is the certificate valid?.
-        ///             Serialized Name: CertificatePatchResource.properties.valid
-        /// </param>
-        /// <param name="cerBlob">
-        /// Raw bytes of .cer file
-        ///             Serialized Name: CertificatePatchResource.properties.cerBlob
-        /// </param>
-        /// <param name="publicKeyHash">
-        /// Public key hash.
-        ///             Serialized Name: CertificatePatchResource.properties.publicKeyHash
-        /// </param>
-        /// <param name="hostingEnvironmentProfile">
-        /// Specification for the App Service Environment to use for the certificate.
-        ///             Serialized Name: CertificatePatchResource.properties.hostingEnvironmentProfile
-        /// </param>
-        /// <param name="keyVaultId">
-        /// Key Vault Csm resource Id.
-        ///             Serialized Name: CertificatePatchResource.properties.keyVaultId
-        /// </param>
-        /// <param name="keyVaultSecretName">
-        /// Key Vault secret name.
-        ///             Serialized Name: CertificatePatchResource.properties.keyVaultSecretName
-        /// </param>
-        /// <param name="keyVaultSecretStatus">
-        /// Status of the Key Vault secret.
-        ///             Serialized Name: CertificatePatchResource.properties.keyVaultSecretStatus
-        /// </param>
-        /// <param name="serverFarmId">
-        /// Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}".
-        ///             Serialized Name: CertificatePatchResource.properties.serverFarmId
-        /// </param>
-        /// <param name="canonicalName">
-        /// CNAME of the certificate to be issued via free certificate
-        ///             Serialized Name: CertificatePatchResource.properties.canonicalName
-        /// </param>
-        /// <param name="domainValidationMethod">
-        /// Method of domain validation for free cert
-        ///             Serialized Name: CertificatePatchResource.properties.domainValidationMethod
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <summary> ARM resource for a certificate. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="password"> Certificate password. </param>
+        /// <param name="friendlyName"> Friendly name of the certificate. </param>
+        /// <param name="subjectName"> Subject name of the certificate. </param>
+        /// <param name="hostNames"> Host names the certificate applies to. </param>
+        /// <param name="pfxBlob"></param>
+        /// <param name="siteName"> App name. </param>
+        /// <param name="selfLink"> Self link. </param>
+        /// <param name="issuer"> Certificate issuer. </param>
+        /// <param name="issueOn"> Certificate issue Date. </param>
+        /// <param name="expireOn"></param>
+        /// <param name="thumbprintString"> Certificate thumbprint. </param>
+        /// <param name="isValid"> Is the certificate valid?. </param>
+        /// <param name="cerBlob"></param>
+        /// <param name="publicKeyHash"> Public key hash. </param>
+        /// <param name="hostingEnvironmentProfile"> Specification for the App Service Environment to use for the certificate. </param>
+        /// <param name="keyVaultId"> Key Vault Csm resource Id. </param>
+        /// <param name="keyVaultSecretName"> Key Vault secret name. </param>
+        /// <param name="keyVaultSecretStatus"> Status of the Key Vault secret. </param>
+        /// <param name="serverFarmId"> Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}". </param>
+        /// <param name="canonicalName"> CNAME of the certificate to be issued via free certificate. </param>
+        /// <param name="domainValidationMethod"> Method of domain validation for free cert. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppCertificatePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppCertificatePatch AppCertificatePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string password = default, string friendlyName = default, string subjectName = default, IEnumerable<string> hostNames = default, byte[] pfxBlob = default, string siteName = default, string selfLink = default, string issuer = default, DateTimeOffset? issueOn = default, DateTimeOffset? expireOn = default, string thumbprintString = default, bool? isValid = default, byte[] cerBlob = default, string publicKeyHash = default, HostingEnvironmentProfile hostingEnvironmentProfile = default, ResourceIdentifier keyVaultId = default, string keyVaultSecretName = default, KeyVaultSecretStatus? keyVaultSecretStatus = default, ResourceIdentifier serverFarmId = default, string canonicalName = default, string domainValidationMethod = default, string kind = default)
@@ -10803,7 +10382,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                password is null && friendlyName is null && subjectName is null && hostNames is null && siteName is null && selfLink is null && issuer is null && issueOn is null && expireOn is null && thumbprintString is null && isValid is null && publicKeyHash is null && hostingEnvironmentProfile is null && keyVaultId is null && keyVaultSecretName is null && keyVaultSecretStatus is null && serverFarmId is null && canonicalName is null && domainValidationMethod is null ? default : new CertificatePatchResourceProperties(
+                password is null && friendlyName is null && subjectName is null && hostNames is null && siteName is null && selfLink is null && issuer is null && issueOn is null && thumbprintString is null && isValid is null && publicKeyHash is null && hostingEnvironmentProfile is null && keyVaultId is null && keyVaultSecretName is null && keyVaultSecretStatus is null && serverFarmId is null && canonicalName is null && domainValidationMethod is null ? default : new CertificatePatchResourceProperties(
                     password,
                     friendlyName,
                     subjectName,
@@ -10813,7 +10392,7 @@ namespace Azure.ResourceManager.AppService.Models
                     selfLink,
                     issuer,
                     issueOn,
-                    expireOn,
+                    default,
                     thumbprintString,
                     isValid,
                     default,
@@ -10830,35 +10409,17 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceDetectorData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: DetectorResponse.kind
-        /// </param>
-        /// <param name="metadata">
-        /// metadata for the detector
-        ///             Serialized Name: DetectorResponse.properties.metadata
-        /// </param>
-        /// <param name="dataset">
-        /// Data Set
-        ///             Serialized Name: DetectorResponse.properties.dataset
-        /// </param>
-        /// <param name="status">
-        /// Indicates status of the most severe insight.
-        ///             Serialized Name: DetectorResponse.properties.status
-        /// </param>
-        /// <param name="dataProvidersMetadata">
-        /// Additional configuration for different data providers to be used by the UI
-        ///             Serialized Name: DetectorResponse.properties.dataProvidersMetadata
-        /// </param>
-        /// <param name="suggestedUtterances">
-        /// Suggested utterances where the detector can be applicable.
-        ///             Serialized Name: DetectorResponse.properties.suggestedUtterances
-        /// </param>
+        /// <summary> Class representing Response from Detector. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="metadata"> metadata for the detector. </param>
+        /// <param name="dataset"> Data Set. </param>
+        /// <param name="status"> Indicates status of the most severe insight. </param>
+        /// <param name="dataProvidersMetadata"> Additional configuration for different data providers to be used by the UI. </param>
+        /// <param name="suggestedUtterances"> Suggested utterances where the detector can be applicable. </param>
         /// <returns> A new <see cref="AppService.AppServiceDetectorData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppServiceDetectorData AppServiceDetectorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, DetectorInfo metadata = default, IEnumerable<DiagnosticDataset> dataset = default, AppServiceStatusInfo status = default, IEnumerable<DataProviderMetadata> dataProvidersMetadata = default, QueryUtterancesResults suggestedUtterances = default)
@@ -10879,39 +10440,18 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceWorkerPoolData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="sku">
-        /// Description of a SKU for a scalable resource.
-        ///             Serialized Name: WorkerPoolResource.sku
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind.
-        ///             Serialized Name: WorkerPoolResource.kind
-        /// </param>
-        /// <param name="workerSizeId">
-        /// Worker size ID for referencing this worker pool.
-        ///             Serialized Name: WorkerPoolResource.properties.workerSizeId
-        /// </param>
-        /// <param name="computeMode">
-        /// Shared or dedicated app hosting.
-        ///             Serialized Name: WorkerPoolResource.properties.computeMode
-        /// </param>
-        /// <param name="workerSize">
-        /// VM size of the worker pool instances.
-        ///             Serialized Name: WorkerPoolResource.properties.workerSize
-        /// </param>
-        /// <param name="workerCount">
-        /// Number of instances in the worker pool.
-        ///             Serialized Name: WorkerPoolResource.properties.workerCount
-        /// </param>
-        /// <param name="instanceNames">
-        /// Names of all instances in the worker pool (read only).
-        ///             Serialized Name: WorkerPoolResource.properties.instanceNames
-        /// </param>
+        /// <summary> Worker pool of an App Service Environment ARM resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="sku"> Description of a SKU for a scalable resource. </param>
+        /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
+        /// <param name="workerSizeId"> Worker size ID for referencing this worker pool. </param>
+        /// <param name="computeMode"> Shared or dedicated app hosting. </param>
+        /// <param name="workerSize"> VM size of the worker pool instances. </param>
+        /// <param name="workerCount"> Number of instances in the worker pool. </param>
+        /// <param name="instanceNames"> Names of all instances in the worker pool (read only). </param>
         /// <returns> A new <see cref="AppService.AppServiceWorkerPoolData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppServiceWorkerPoolData AppServiceWorkerPoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AppServiceSkuDescription sku = default, string kind = default, int? workerSizeId = default, ComputeModeOption? computeMode = default, string workerSize = default, int? workerCount = default, IEnumerable<string> instanceNames = default)
@@ -10933,35 +10473,17 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceMetricDefinition"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="unit">
-        /// Unit of the metric.
-        ///             Serialized Name: ResourceMetricDefinition.properties.unit
-        /// </param>
-        /// <param name="primaryAggregationType">
-        /// Primary aggregation type.
-        ///             Serialized Name: ResourceMetricDefinition.properties.primaryAggregationType
-        /// </param>
-        /// <param name="metricAvailabilities">
-        /// List of time grains supported for the metric together with retention period.
-        ///             Serialized Name: ResourceMetricDefinition.properties.metricAvailabilities
-        /// </param>
-        /// <param name="resourceUri">
-        /// Resource URI.
-        ///             Serialized Name: ResourceMetricDefinition.properties.resourceUri
-        /// </param>
-        /// <param name="properties">
-        /// Resource metric definition properties.
-        ///             Serialized Name: ResourceMetricDefinition.properties.properties
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <summary> Metadata for the metrics. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="unit"></param>
+        /// <param name="primaryAggregationType"></param>
+        /// <param name="metricAvailabilities"></param>
+        /// <param name="resourceUri"></param>
+        /// <param name="properties"> ResourceMetricDefinition resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.ResourceMetricDefinition"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ResourceMetricDefinition ResourceMetricDefinition(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string unit = default, string primaryAggregationType = default, IEnumerable<ResourceMetricAvailability> metricAvailabilities = default, Uri resourceUri = default, IReadOnlyDictionary<string, string> properties = default, string kind = default)
@@ -10976,28 +10498,16 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.RemotePrivateEndpointConnectionARMResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: RemotePrivateEndpointConnectionARMResource.kind
-        /// </param>
-        /// <param name="provisioningState"> Serialized Name: RemotePrivateEndpointConnectionARMResource.properties.provisioningState. </param>
-        /// <param name="privateEndpointId">
-        /// PrivateEndpoint of a remote private endpoint connection
-        ///             Serialized Name: RemotePrivateEndpointConnectionARMResource.properties.privateEndpoint
-        /// </param>
-        /// <param name="privateLinkServiceConnectionState">
-        /// The state of a private link connection
-        ///             Serialized Name: RemotePrivateEndpointConnectionARMResource.properties.privateLinkServiceConnectionState
-        /// </param>
-        /// <param name="ipAddresses">
-        /// Private IPAddresses mapped to the remote private endpoint
-        ///             Serialized Name: RemotePrivateEndpointConnectionARMResource.properties.ipAddresses
-        /// </param>
+        /// <summary> Remote Private Endpoint Connection ARM resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="provisioningState"></param>
+        /// <param name="privateEndpointId"></param>
+        /// <param name="privateLinkServiceConnectionState"> The state of a private link connection. </param>
+        /// <param name="ipAddresses"> Private IPAddresses mapped to the remote private endpoint. </param>
         /// <returns> A new <see cref="AppService.RemotePrivateEndpointConnectionARMResourceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RemotePrivateEndpointConnectionARMResourceData RemotePrivateEndpointConnectionARMResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string provisioningState = default, ResourceIdentifier privateEndpointId = default, PrivateLinkConnectionState privateLinkServiceConnectionState = default, IEnumerable<IPAddress> ipAddresses = default)
@@ -11012,68 +10522,28 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.RecommendationRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: RecommendationRule.kind
-        /// </param>
-        /// <param name="recommendationName">
-        /// Unique name of the rule.
-        ///             Serialized Name: RecommendationRule.properties.recommendationName
-        /// </param>
-        /// <param name="displayName">
-        /// UI friendly name of the rule.
-        ///             Serialized Name: RecommendationRule.properties.displayName
-        /// </param>
-        /// <param name="message">
-        /// Localized name of the rule (Good for UI).
-        ///             Serialized Name: RecommendationRule.properties.message
-        /// </param>
+        /// <summary> Represents a recommendation rule that the recommendation engine can perform. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="recommendationName"> Unique name of the rule. </param>
+        /// <param name="displayName"> UI friendly name of the rule. </param>
+        /// <param name="message"> Localized name of the rule (Good for UI). </param>
         /// <param name="recommendationId">
         /// Recommendation ID of an associated recommendation object tied to the rule, if exists.
-        ///             If such an object doesn't exist, it is set to null.
-        ///             Serialized Name: RecommendationRule.properties.recommendationId
+        /// If such an object doesn't exist, it is set to null.
         /// </param>
-        /// <param name="description">
-        /// Localized detailed description of the rule.
-        ///             Serialized Name: RecommendationRule.properties.description
-        /// </param>
-        /// <param name="actionName">
-        /// Name of action that is recommended by this rule in string.
-        ///             Serialized Name: RecommendationRule.properties.actionName
-        /// </param>
-        /// <param name="level">
-        /// Level of impact indicating how critical this rule is.
-        ///             Serialized Name: RecommendationRule.properties.level
-        /// </param>
-        /// <param name="channels">
-        /// List of available channels that this rule applies.
-        ///             Serialized Name: RecommendationRule.properties.channels
-        /// </param>
-        /// <param name="categoryTags">
-        /// The list of category tags that this recommendation rule belongs to.
-        ///             Serialized Name: RecommendationRule.properties.categoryTags
-        /// </param>
-        /// <param name="isDynamic">
-        /// True if this is associated with a dynamically added rule
-        ///             Serialized Name: RecommendationRule.properties.isDynamic
-        /// </param>
-        /// <param name="extensionName">
-        /// Extension name of the portal if exists. Applicable to dynamic rule only.
-        ///             Serialized Name: RecommendationRule.properties.extensionName
-        /// </param>
-        /// <param name="bladeName">
-        /// Deep link to a blade on the portal. Applicable to dynamic rule only.
-        ///             Serialized Name: RecommendationRule.properties.bladeName
-        /// </param>
-        /// <param name="forwardLink">
-        /// Forward link to an external document associated with the rule. Applicable to dynamic rule only.
-        ///             Serialized Name: RecommendationRule.properties.forwardLink
-        /// </param>
+        /// <param name="description"> Localized detailed description of the rule. </param>
+        /// <param name="actionName"> Name of action that is recommended by this rule in string. </param>
+        /// <param name="level"> Level of impact indicating how critical this rule is. </param>
+        /// <param name="channels"> List of available channels that this rule applies. </param>
+        /// <param name="categoryTags"> The list of category tags that this recommendation rule belongs to. </param>
+        /// <param name="isDynamic"> True if this is associated with a dynamically added rule. </param>
+        /// <param name="extensionName"> Extension name of the portal if exists. Applicable to dynamic rule only. </param>
+        /// <param name="bladeName"> Deep link to a blade on the portal. Applicable to dynamic rule only. </param>
+        /// <param name="forwardLink"> Forward link to an external document associated with the rule. Applicable to dynamic rule only. </param>
         /// <returns> A new <see cref="AppService.RecommendationRuleData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RecommendationRuleData RecommendationRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string recommendationName = default, string displayName = default, string message = default, Guid? recommendationId = default, string description = default, string actionName = default, NotificationLevel? level = default, RecommendationChannel? channels = default, IEnumerable<string> categoryTags = default, bool? isDynamic = default, string extensionName = default, string bladeName = default, string forwardLink = default)
@@ -11102,113 +10572,42 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AppServicePlanPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity">
-        /// Managed service identity.
-        ///             Serialized Name: AppServicePlanPatchResource.identity
-        /// </param>
-        /// <param name="workerTierName">
-        /// Target worker tier assigned to the App Service plan.
-        ///             Serialized Name: AppServicePlanPatchResource.properties.workerTierName
-        /// </param>
-        /// <param name="status">
-        /// App Service plan status.
-        ///             Serialized Name: AppServicePlanPatchResource.properties.status
-        /// </param>
-        /// <param name="subscription">
-        /// App Service plan subscription.
-        ///             Serialized Name: AppServicePlanPatchResource.properties.subscription
-        /// </param>
-        /// <param name="hostingEnvironmentProfile">
-        /// Specification for the App Service Environment to use for the App Service plan.
-        ///             Serialized Name: AppServicePlanPatchResource.properties.hostingEnvironmentProfile
-        /// </param>
-        /// <param name="maximumNumberOfWorkers">
-        /// Maximum number of instances that can be assigned to this App Service plan.
-        ///             Serialized Name: AppServicePlanPatchResource.properties.maximumNumberOfWorkers
-        /// </param>
-        /// <param name="numberOfWorkers">
-        /// The number of instances that are assigned to this App Service plan.
-        ///             Serialized Name: AppServicePlanPatchResource.properties.numberOfWorkers
-        /// </param>
-        /// <param name="geoRegion">
-        /// Geographical location for the App Service plan.
-        ///             Serialized Name: AppServicePlanPatchResource.properties.geoRegion
-        /// </param>
+        /// <summary> ARM resource for a app service plan. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="identity"> Managed service identity. </param>
+        /// <param name="workerTierName"> Target worker tier assigned to the App Service plan. </param>
+        /// <param name="status"> App Service plan status. </param>
+        /// <param name="subscription"> App Service plan subscription. </param>
+        /// <param name="hostingEnvironmentProfile"> Specification for the App Service Environment to use for the App Service plan. </param>
+        /// <param name="maximumNumberOfWorkers"> Maximum number of instances that can be assigned to this App Service plan. </param>
+        /// <param name="numberOfWorkers"> The number of instances that are assigned to this App Service plan. </param>
+        /// <param name="geoRegion"> Geographical location for the App Service plan. </param>
         /// <param name="isPerSiteScaling">
         /// If &lt;code&gt;true&lt;/code&gt;, apps assigned to this App Service plan can be scaled independently.
-        ///             If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan will scale to all instances of the plan.
-        ///             Serialized Name: AppServicePlanPatchResource.properties.perSiteScaling
+        /// If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan will scale to all instances of the plan.
         /// </param>
-        /// <param name="isElasticScaleEnabled">
-        /// ServerFarm supports ElasticScale. Apps in this plan will scale as if the ServerFarm was ElasticPremium sku
-        ///             Serialized Name: AppServicePlanPatchResource.properties.elasticScaleEnabled
-        /// </param>
-        /// <param name="maximumElasticWorkerCount">
-        /// Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan
-        ///             Serialized Name: AppServicePlanPatchResource.properties.maximumElasticWorkerCount
-        /// </param>
-        /// <param name="numberOfSites">
-        /// Number of apps assigned to this App Service plan.
-        ///             Serialized Name: AppServicePlanPatchResource.properties.numberOfSites
-        /// </param>
-        /// <param name="isSpot">
-        /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances.
-        ///             Serialized Name: AppServicePlanPatchResource.properties.isSpot
-        /// </param>
-        /// <param name="spotExpirationOn">
-        /// The time when the server farm expires. Valid only if it is a spot server farm.
-        ///             Serialized Name: AppServicePlanPatchResource.properties.spotExpirationTime
-        /// </param>
-        /// <param name="freeOfferExpirationOn">
-        /// The time when the server farm free offer expires.
-        ///             Serialized Name: AppServicePlanPatchResource.properties.freeOfferExpirationTime
-        /// </param>
-        /// <param name="resourceGroup">
-        /// Resource group of the App Service plan.
-        ///             Serialized Name: AppServicePlanPatchResource.properties.resourceGroup
-        /// </param>
-        /// <param name="isReserved">
-        /// If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise.
-        ///             Serialized Name: AppServicePlanPatchResource.properties.reserved
-        /// </param>
-        /// <param name="isXenon">
-        /// Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise.
-        ///             Serialized Name: AppServicePlanPatchResource.properties.isXenon
-        /// </param>
-        /// <param name="isHyperV">
-        /// If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise.
-        ///             Serialized Name: AppServicePlanPatchResource.properties.hyperV
-        /// </param>
-        /// <param name="targetWorkerCount">
-        /// Scaling worker count.
-        ///             Serialized Name: AppServicePlanPatchResource.properties.targetWorkerCount
-        /// </param>
-        /// <param name="targetWorkerSizeId">
-        /// Scaling worker size ID.
-        ///             Serialized Name: AppServicePlanPatchResource.properties.targetWorkerSizeId
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning state of the App Service Plan.
-        ///             Serialized Name: AppServicePlanPatchResource.properties.provisioningState
-        /// </param>
-        /// <param name="kubeEnvironmentProfile">
-        /// Specification for the Kubernetes Environment to use for the App Service plan.
-        ///             Serialized Name: AppServicePlanPatchResource.properties.kubeEnvironmentProfile
-        /// </param>
+        /// <param name="isElasticScaleEnabled"> ServerFarm supports ElasticScale. Apps in this plan will scale as if the ServerFarm was ElasticPremium sku. </param>
+        /// <param name="maximumElasticWorkerCount"> Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan. </param>
+        /// <param name="numberOfSites"> Number of apps assigned to this App Service plan. </param>
+        /// <param name="isSpot"> If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances. </param>
+        /// <param name="spotExpirationOn"></param>
+        /// <param name="freeOfferExpirationOn"></param>
+        /// <param name="resourceGroup"> Resource group of the App Service plan. </param>
+        /// <param name="isReserved"> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
+        /// <param name="isXenon"> Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
+        /// <param name="isHyperV"> If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
+        /// <param name="targetWorkerCount"> Scaling worker count. </param>
+        /// <param name="targetWorkerSizeId"> Scaling worker size ID. </param>
+        /// <param name="provisioningState"> Provisioning state of the App Service Plan. </param>
+        /// <param name="kubeEnvironmentProfile"> Specification for the Kubernetes Environment to use for the App Service plan. </param>
         /// <param name="isZoneRedundant">
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform availability zone balancing.
-        ///             If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
-        ///             Serialized Name: AppServicePlanPatchResource.properties.zoneRedundant
+        /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServicePlanPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppServicePlanPatch AppServicePlanPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedServiceIdentity identity = default, string workerTierName = default, AppServicePlanStatus? status = default, string subscription = default, HostingEnvironmentProfile hostingEnvironmentProfile = default, int? maximumNumberOfWorkers = default, int? numberOfWorkers = default, string geoRegion = default, bool? isPerSiteScaling = default, bool? isElasticScaleEnabled = default, int? maximumElasticWorkerCount = default, int? numberOfSites = default, bool? isSpot = default, DateTimeOffset? spotExpirationOn = default, DateTimeOffset? freeOfferExpirationOn = default, string resourceGroup = default, bool? isReserved = default, bool? isXenon = default, bool? isHyperV = default, int? targetWorkerCount = default, int? targetWorkerSizeId = default, ProvisioningState? provisioningState = default, KubeEnvironmentProfile kubeEnvironmentProfile = default, bool? isZoneRedundant = default, string kind = default)
@@ -11218,7 +10617,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                workerTierName is null && status is null && subscription is null && hostingEnvironmentProfile is null && maximumNumberOfWorkers is null && numberOfWorkers is null && geoRegion is null && isPerSiteScaling is null && isElasticScaleEnabled is null && maximumElasticWorkerCount is null && numberOfSites is null && isSpot is null && spotExpirationOn is null && freeOfferExpirationOn is null && resourceGroup is null && isReserved is null && isXenon is null && isHyperV is null && targetWorkerCount is null && targetWorkerSizeId is null && provisioningState is null && kubeEnvironmentProfile is null && isZoneRedundant is null ? default : new AppServicePlanPatchResourceProperties(
+                workerTierName is null && status is null && subscription is null && hostingEnvironmentProfile is null && maximumNumberOfWorkers is null && numberOfWorkers is null && geoRegion is null && isPerSiteScaling is null && isElasticScaleEnabled is null && maximumElasticWorkerCount is null && numberOfSites is null && isSpot is null && resourceGroup is null && isReserved is null && isXenon is null && isHyperV is null && targetWorkerCount is null && targetWorkerSizeId is null && provisioningState is null && kubeEnvironmentProfile is null && isZoneRedundant is null ? default : new AppServicePlanPatchResourceProperties(
                     workerTierName,
                     status,
                     subscription,
@@ -11231,8 +10630,8 @@ namespace Azure.ResourceManager.AppService.Models
                     maximumElasticWorkerCount,
                     numberOfSites,
                     isSpot,
-                    spotExpirationOn,
-                    freeOfferExpirationOn,
+                    default,
+                    default,
                     resourceGroup,
                     isReserved,
                     isXenon,
@@ -11248,48 +10647,23 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.HybridConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: HybridConnection.kind
-        /// </param>
-        /// <param name="serviceBusNamespace">
-        /// The name of the Service Bus namespace.
-        ///             Serialized Name: HybridConnection.properties.serviceBusNamespace
-        /// </param>
-        /// <param name="relayName">
-        /// The name of the Service Bus relay.
-        ///             Serialized Name: HybridConnection.properties.relayName
-        /// </param>
-        /// <param name="relayArmId">
-        /// The ARM URI to the Service Bus relay.
-        ///             Serialized Name: HybridConnection.properties.relayArmUri
-        /// </param>
-        /// <param name="hostname">
-        /// The hostname of the endpoint.
-        ///             Serialized Name: HybridConnection.properties.hostname
-        /// </param>
-        /// <param name="port">
-        /// The port of the endpoint.
-        ///             Serialized Name: HybridConnection.properties.port
-        /// </param>
-        /// <param name="sendKeyName">
-        /// The name of the Service Bus key which has Send permissions. This is used to authenticate to Service Bus.
-        ///             Serialized Name: HybridConnection.properties.sendKeyName
-        /// </param>
+        /// <summary> Hybrid Connection contract. This is used to configure a Hybrid Connection. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="serviceBusNamespace"> The name of the Service Bus namespace. </param>
+        /// <param name="relayName"> The name of the Service Bus relay. </param>
+        /// <param name="relayArmId"> The ARM URI to the Service Bus relay. </param>
+        /// <param name="hostname"> The hostname of the endpoint. </param>
+        /// <param name="port"> The port of the endpoint. </param>
+        /// <param name="sendKeyName"> The name of the Service Bus key which has Send permissions. This is used to authenticate to Service Bus. </param>
         /// <param name="sendKeyValue">
         /// The value of the Service Bus key. This is used to authenticate to Service Bus. In ARM this key will not be returned
-        ///             normally, use the POST /listKeys API instead.
-        ///             Serialized Name: HybridConnection.properties.sendKeyValue
+        /// normally, use the POST /listKeys API instead.
         /// </param>
-        /// <param name="serviceBusSuffix">
-        /// The suffix for the service bus endpoint. By default this is .servicebus.windows.net
-        ///             Serialized Name: HybridConnection.properties.serviceBusSuffix
-        /// </param>
+        /// <param name="serviceBusSuffix"> The suffix for the service bus endpoint. By default this is .servicebus.windows.net. </param>
         /// <returns> A new <see cref="AppService.HybridConnectionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HybridConnectionData HybridConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string serviceBusNamespace = default, string relayName = default, ResourceIdentifier relayArmId = default, string hostname = default, int? port = default, string sendKeyName = default, string sendKeyValue = default, string serviceBusSuffix = default)
@@ -11313,23 +10687,14 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.HybridConnectionLimitData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: HybridConnectionLimits.kind
-        /// </param>
-        /// <param name="current">
-        /// The current number of Hybrid Connections.
-        ///             Serialized Name: HybridConnectionLimits.properties.current
-        /// </param>
-        /// <param name="maximum">
-        /// The maximum number of Hybrid Connections allowed.
-        ///             Serialized Name: HybridConnectionLimits.properties.maximum
-        /// </param>
+        /// <summary> Hybrid Connection limits contract. This is used to return the plan limits of Hybrid Connections. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="current"> The current number of Hybrid Connections. </param>
+        /// <param name="maximum"> The maximum number of Hybrid Connections allowed. </param>
         /// <returns> A new <see cref="AppService.HybridConnectionLimitData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HybridConnectionLimitData HybridConnectionLimitData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, int? current = default, int? maximum = default)
@@ -11344,43 +10709,19 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceVirtualNetworkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: VnetInfoResource.kind
-        /// </param>
-        /// <param name="vnetResourceId">
-        /// The Virtual Network's resource ID.
-        ///             Serialized Name: VnetInfoResource.properties.vnetResourceId
-        /// </param>
-        /// <param name="certThumbprintString">
-        /// The client certificate thumbprint.
-        ///             Serialized Name: VnetInfoResource.properties.certThumbprint
-        /// </param>
-        /// <param name="certBlob">
-        /// A certificate file (.cer) blob containing the public key of the private key used to authenticate a \nPoint-To-Site VPN connection.
-        ///             Serialized Name: VnetInfoResource.properties.certBlob
-        /// </param>
-        /// <param name="routes">
-        /// The routes that this Virtual Network connection uses.
-        ///             Serialized Name: VnetInfoResource.properties.routes
-        /// </param>
-        /// <param name="isResyncRequired">
-        /// &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///             Serialized Name: VnetInfoResource.properties.resyncRequired
-        /// </param>
-        /// <param name="dnsServers">
-        /// DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses.
-        ///             Serialized Name: VnetInfoResource.properties.dnsServers
-        /// </param>
-        /// <param name="isSwift">
-        /// Flag that is used to denote if this is VNET injection
-        ///             Serialized Name: VnetInfoResource.properties.isSwift
-        /// </param>
+        /// <summary> Virtual Network information ARM resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="vnetResourceId"> The Virtual Network's resource ID. </param>
+        /// <param name="certThumbprintString"> The client certificate thumbprint. </param>
+        /// <param name="certBlob"> A certificate file (.cer) blob containing the public key of the private key used to authenticate a \nPoint-To-Site VPN connection. </param>
+        /// <param name="routes"> The routes that this Virtual Network connection uses. </param>
+        /// <param name="isResyncRequired"> &lt;code&gt;true&lt;/code&gt; if a resync is required; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="dnsServers"> DNS servers to be used by this Virtual Network. This should be a comma-separated list of IP addresses. </param>
+        /// <param name="isSwift"> Flag that is used to denote if this is VNET injection. </param>
         /// <returns> A new <see cref="AppService.AppServiceVirtualNetworkData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppServiceVirtualNetworkData AppServiceVirtualNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, ResourceIdentifier vnetResourceId = default, string certThumbprintString = default, string certBlob = default, IEnumerable<AppServiceVirtualNetworkRoute> routes = default, bool? isResyncRequired = default, string dnsServers = default, bool? isSwift = default)
@@ -11403,31 +10744,20 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AppServiceVirtualNetworkRoute"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///              Serialized Name: VnetRoute.kind
-        /// </param>
-        /// <param name="startAddress">
-        /// The starting address for this route. This may also include a CIDR notation, in which case the end address must not be specified.
-        ///              Serialized Name: VnetRoute.properties.startAddress
-        /// </param>
-        /// <param name="endAddress">
-        /// The ending address for this route. If the start address is specified in CIDR notation, this must be omitted.
-        ///              Serialized Name: VnetRoute.properties.endAddress
-        /// </param>
+        /// <summary> Virtual Network route contract used to pass routing information for a Virtual Network. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="startAddress"> The starting address for this route. This may also include a CIDR notation, in which case the end address must not be specified. </param>
+        /// <param name="endAddress"> The ending address for this route. If the start address is specified in CIDR notation, this must be omitted. </param>
         /// <param name="routeType">
         /// The type of route this is:
-        ///              DEFAULT - By default, every app has routes to the local address ranges specified by RFC1918
-        ///              INHERITED - Routes inherited from the real Virtual Network routes
-        ///              STATIC - Static route set on the app only
-        ///             
-        ///              These values will be used for syncing an app's routes with those from a Virtual Network.
-        ///              Serialized Name: VnetRoute.properties.routeType
+        /// DEFAULT - By default, every app has routes to the local address ranges specified by RFC1918
+        /// INHERITED - Routes inherited from the real Virtual Network routes
+        /// STATIC - Static route set on the app only
+        /// These values will be used for syncing an app's routes with those from a Virtual Network.
         /// </param>
         /// <returns> A new <see cref="Models.AppServiceVirtualNetworkRoute"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -11443,23 +10773,14 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.AppServiceVirtualNetworkGatewayData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: VnetGateway.kind
-        /// </param>
-        /// <param name="vnetName">
-        /// The Virtual Network name.
-        ///             Serialized Name: VnetGateway.properties.vnetName
-        /// </param>
-        /// <param name="vpnPackageUri">
-        /// The URI where the VPN package can be downloaded.
-        ///             Serialized Name: VnetGateway.properties.vpnPackageUri
-        /// </param>
+        /// <summary> The Virtual Network gateway contract. This is used to give the Virtual Network gateway access to the VPN package. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="vnetName"> The Virtual Network name. </param>
+        /// <param name="vpnPackageUri"> The URI where the VPN package can be downloaded. </param>
         /// <returns> A new <see cref="AppService.AppServiceVirtualNetworkGatewayData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AppServiceVirtualNetworkGatewayData AppServiceVirtualNetworkGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string vnetName = default, Uri vpnPackageUri = default)
@@ -11474,202 +10795,72 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SitePatchInfo"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="identity">
-        /// Managed service identity.
-        ///             Serialized Name: SitePatchResource.identity
-        /// </param>
-        /// <param name="state">
-        /// Current state of the app.
-        ///             Serialized Name: SitePatchResource.properties.state
-        /// </param>
-        /// <param name="hostNames">
-        /// Hostnames associated with the app.
-        ///             Serialized Name: SitePatchResource.properties.hostNames
-        /// </param>
-        /// <param name="repositorySiteName">
-        /// Name of the repository site.
-        ///             Serialized Name: SitePatchResource.properties.repositorySiteName
-        /// </param>
-        /// <param name="usageState">
-        /// State indicating whether the app has exceeded its quota usage. Read-only.
-        ///             Serialized Name: SitePatchResource.properties.usageState
-        /// </param>
-        /// <param name="isEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; if the app is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. Setting this value to false disables the app (takes the app offline).
-        ///             Serialized Name: SitePatchResource.properties.enabled
-        /// </param>
+        /// <summary> ARM resource for a site. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="identity"> Managed service identity. </param>
+        /// <param name="state"> Current state of the app. </param>
+        /// <param name="hostNames"> Hostnames associated with the app. </param>
+        /// <param name="repositorySiteName"> Name of the repository site. </param>
+        /// <param name="usageState"> State indicating whether the app has exceeded its quota usage. Read-only. </param>
+        /// <param name="isEnabled"> &lt;code&gt;true&lt;/code&gt; if the app is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. Setting this value to false disables the app (takes the app offline). </param>
         /// <param name="enabledHostNames">
         /// Enabled hostnames for the app.Hostnames need to be assigned (see HostNames) AND enabled. Otherwise,
-        ///             the app is not served on those hostnames.
-        ///             Serialized Name: SitePatchResource.properties.enabledHostNames
+        /// the app is not served on those hostnames.
         /// </param>
-        /// <param name="availabilityState">
-        /// Management information availability state for the app.
-        ///             Serialized Name: SitePatchResource.properties.availabilityState
-        /// </param>
-        /// <param name="hostNameSslStates">
-        /// Hostname SSL states are used to manage the SSL bindings for app's hostnames.
-        ///             Serialized Name: SitePatchResource.properties.hostNameSslStates
-        /// </param>
-        /// <param name="serverFarmId">
-        /// Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}".
-        ///             Serialized Name: SitePatchResource.properties.serverFarmId
-        /// </param>
-        /// <param name="isReserved">
-        /// &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///             Serialized Name: SitePatchResource.properties.reserved
-        /// </param>
-        /// <param name="isXenon">
-        /// Obsolete: Hyper-V sandbox.
-        ///             Serialized Name: SitePatchResource.properties.isXenon
-        /// </param>
-        /// <param name="isHyperV">
-        /// Hyper-V sandbox.
-        ///             Serialized Name: SitePatchResource.properties.hyperV
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// Last time the app was modified, in UTC. Read-only.
-        ///             Serialized Name: SitePatchResource.properties.lastModifiedTimeUtc
-        /// </param>
-        /// <param name="dnsConfiguration">
-        /// Property to configure various DNS related settings for a site.
-        ///             Serialized Name: SitePatchResource.properties.dnsConfiguration
-        /// </param>
-        /// <param name="siteConfig">
-        /// Configuration of the app.
-        ///             Serialized Name: SitePatchResource.properties.siteConfig
-        /// </param>
-        /// <param name="trafficManagerHostNames">
-        /// Azure Traffic Manager hostnames associated with the app. Read-only.
-        ///             Serialized Name: SitePatchResource.properties.trafficManagerHostNames
-        /// </param>
-        /// <param name="isScmSiteAlsoStopped">
-        /// &lt;code&gt;true&lt;/code&gt; to stop SCM (KUDU) site when the app is stopped; otherwise, &lt;code&gt;false&lt;/code&gt;. The default is &lt;code&gt;false&lt;/code&gt;.
-        ///             Serialized Name: SitePatchResource.properties.scmSiteAlsoStopped
-        /// </param>
-        /// <param name="targetSwapSlot">
-        /// Specifies which deployment slot this app will swap into. Read-only.
-        ///             Serialized Name: SitePatchResource.properties.targetSwapSlot
-        /// </param>
-        /// <param name="hostingEnvironmentProfile">
-        /// App Service Environment to use for the app.
-        ///             Serialized Name: SitePatchResource.properties.hostingEnvironmentProfile
-        /// </param>
-        /// <param name="isClientAffinityEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; to enable client affinity; &lt;code&gt;false&lt;/code&gt; to stop sending session affinity cookies, which route client requests in the same session to the same instance. Default is &lt;code&gt;true&lt;/code&gt;.
-        ///             Serialized Name: SitePatchResource.properties.clientAffinityEnabled
-        /// </param>
-        /// <param name="isClientAffinityProxyEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; to override client affinity cookie domain with X-Forwarded-Host request header. &lt;code&gt;false&lt;/code&gt; to use default domain. Default is &lt;code&gt;false&lt;/code&gt;.
-        ///             Serialized Name: SitePatchResource.properties.clientAffinityProxyEnabled
-        /// </param>
-        /// <param name="isClientCertEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; to enable client certificate authentication (TLS mutual authentication); otherwise, &lt;code&gt;false&lt;/code&gt;. Default is &lt;code&gt;false&lt;/code&gt;.
-        ///             Serialized Name: SitePatchResource.properties.clientCertEnabled
-        /// </param>
+        /// <param name="availabilityState"> Management information availability state for the app. </param>
+        /// <param name="hostNameSslStates"> Hostname SSL states are used to manage the SSL bindings for app's hostnames. </param>
+        /// <param name="serverFarmId"> Resource ID of the associated App Service plan, formatted as: "/subscriptions/{subscriptionID}/resourceGroups/{groupName}/providers/Microsoft.Web/serverfarms/{appServicePlanName}". </param>
+        /// <param name="isReserved"> &lt;code&gt;true&lt;/code&gt; if reserved; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isXenon"> Obsolete: Hyper-V sandbox. </param>
+        /// <param name="isHyperV"> Hyper-V sandbox. </param>
+        /// <param name="lastModifiedOn"> Last time the app was modified, in UTC. Read-only. </param>
+        /// <param name="dnsConfiguration"> Property to configure various DNS related settings for a site. </param>
+        /// <param name="siteConfig"> Configuration of the app. </param>
+        /// <param name="trafficManagerHostNames"> Azure Traffic Manager hostnames associated with the app. Read-only. </param>
+        /// <param name="isScmSiteAlsoStopped"> &lt;code&gt;true&lt;/code&gt; to stop SCM (KUDU) site when the app is stopped; otherwise, &lt;code&gt;false&lt;/code&gt;. The default is &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="targetSwapSlot"> Specifies which deployment slot this app will swap into. Read-only. </param>
+        /// <param name="hostingEnvironmentProfile"> App Service Environment to use for the app. </param>
+        /// <param name="isClientAffinityEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client affinity; &lt;code&gt;false&lt;/code&gt; to stop sending session affinity cookies, which route client requests in the same session to the same instance. Default is &lt;code&gt;true&lt;/code&gt;. </param>
+        /// <param name="isClientAffinityProxyEnabled"> &lt;code&gt;true&lt;/code&gt; to override client affinity cookie domain with X-Forwarded-Host request header. &lt;code&gt;false&lt;/code&gt; to use default domain. Default is &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isClientCertEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client certificate authentication (TLS mutual authentication); otherwise, &lt;code&gt;false&lt;/code&gt;. Default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="clientCertMode">
         /// This composes with ClientCertEnabled setting.
-        ///             - ClientCertEnabled: false means ClientCert is ignored.
-        ///             - ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.
-        ///             - ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.
-        ///             Serialized Name: SitePatchResource.properties.clientCertMode
+        /// <list type="bullet"><item><description>ClientCertEnabled: false means ClientCert is ignored.</description></item><item><description>ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.</description></item><item><description>ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.</description></item></list>
         /// </param>
-        /// <param name="clientCertExclusionPaths">
-        /// client certificate authentication comma-separated exclusion paths
-        ///             Serialized Name: SitePatchResource.properties.clientCertExclusionPaths
-        /// </param>
-        /// <param name="isHostNameDisabled">
-        /// &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.\n If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
-        ///             Serialized Name: SitePatchResource.properties.hostNamesDisabled
-        /// </param>
-        /// <param name="customDomainVerificationId">
-        /// Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification.
-        ///             Serialized Name: SitePatchResource.properties.customDomainVerificationId
-        /// </param>
-        /// <param name="outboundIPAddresses">
-        /// List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only.
-        ///             Serialized Name: SitePatchResource.properties.outboundIpAddresses
-        /// </param>
-        /// <param name="possibleOutboundIPAddresses">
-        /// List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from all tenants except dataComponent. Read-only.
-        ///             Serialized Name: SitePatchResource.properties.possibleOutboundIpAddresses
-        /// </param>
-        /// <param name="containerSize">
-        /// Size of the function container.
-        ///             Serialized Name: SitePatchResource.properties.containerSize
-        /// </param>
-        /// <param name="dailyMemoryTimeQuota">
-        /// Maximum allowed daily memory-time quota (applicable on dynamic apps only).
-        ///             Serialized Name: SitePatchResource.properties.dailyMemoryTimeQuota
-        /// </param>
-        /// <param name="suspendOn">
-        /// App suspended till in case memory-time quota is exceeded.
-        ///             Serialized Name: SitePatchResource.properties.suspendedTill
-        /// </param>
+        /// <param name="clientCertExclusionPaths"> client certificate authentication comma-separated exclusion paths. </param>
+        /// <param name="isHostNameDisabled"> &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.\n If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process. </param>
+        /// <param name="customDomainVerificationId"> Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification. </param>
+        /// <param name="outboundIPAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </param>
+        /// <param name="possibleOutboundIPAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from all tenants except dataComponent. Read-only. </param>
+        /// <param name="containerSize"> Size of the function container. </param>
+        /// <param name="dailyMemoryTimeQuota"> Maximum allowed daily memory-time quota (applicable on dynamic apps only). </param>
+        /// <param name="suspendOn"> App suspended till in case memory-time quota is exceeded. </param>
         /// <param name="maxNumberOfWorkers">
         /// Maximum number of workers.
-        ///             This only applies to Functions container.
-        ///             Serialized Name: SitePatchResource.properties.maxNumberOfWorkers
+        /// This only applies to Functions container.
         /// </param>
-        /// <param name="cloningInfo">
-        /// If specified during app creation, the app is cloned from a source app.
-        ///             Serialized Name: SitePatchResource.properties.cloningInfo
-        /// </param>
-        /// <param name="resourceGroup">
-        /// Name of the resource group the app belongs to. Read-only.
-        ///             Serialized Name: SitePatchResource.properties.resourceGroup
-        /// </param>
-        /// <param name="isDefaultContainer">
-        /// &lt;code&gt;true&lt;/code&gt; if the app is a default container; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///             Serialized Name: SitePatchResource.properties.isDefaultContainer
-        /// </param>
-        /// <param name="defaultHostName">
-        /// Default hostname of the app. Read-only.
-        ///             Serialized Name: SitePatchResource.properties.defaultHostName
-        /// </param>
-        /// <param name="slotSwapStatus">
-        /// Status of the last deployment slot swap operation.
-        ///             Serialized Name: SitePatchResource.properties.slotSwapStatus
-        /// </param>
+        /// <param name="cloningInfo"> If specified during app creation, the app is cloned from a source app. </param>
+        /// <param name="resourceGroup"> Name of the resource group the app belongs to. Read-only. </param>
+        /// <param name="isDefaultContainer"> &lt;code&gt;true&lt;/code&gt; if the app is a default container; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="defaultHostName"> Default hostname of the app. Read-only. </param>
+        /// <param name="slotSwapStatus"> Status of the last deployment slot swap operation. </param>
         /// <param name="isHttpsOnly">
         /// HttpsOnly: configures a web site to accept only https requests. Issues redirect for
-        ///             http requests
-        ///             Serialized Name: SitePatchResource.properties.httpsOnly
+        /// http requests
         /// </param>
-        /// <param name="redundancyMode">
-        /// Site redundancy mode
-        ///             Serialized Name: SitePatchResource.properties.redundancyMode
-        /// </param>
-        /// <param name="inProgressOperationId">
-        /// Specifies an operation id if this site has a pending operation.
-        ///             Serialized Name: SitePatchResource.properties.inProgressOperationId
-        /// </param>
-        /// <param name="publicNetworkAccess">
-        /// Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string.
-        ///             Serialized Name: SitePatchResource.properties.publicNetworkAccess
-        /// </param>
-        /// <param name="isStorageAccountRequired">
-        /// Checks if Customer provided storage account is required
-        ///             Serialized Name: SitePatchResource.properties.storageAccountRequired
-        /// </param>
-        /// <param name="keyVaultReferenceIdentity">
-        /// Identity to use for Key Vault Reference authentication.
-        ///             Serialized Name: SitePatchResource.properties.keyVaultReferenceIdentity
-        /// </param>
+        /// <param name="redundancyMode"> Site redundancy mode. </param>
+        /// <param name="inProgressOperationId"> Specifies an operation id if this site has a pending operation. </param>
+        /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
+        /// <param name="isStorageAccountRequired"> Checks if Customer provided storage account is required. </param>
+        /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
         /// <param name="virtualNetworkSubnetId">
         /// Azure Resource Manager ID of the Virtual network and subnet to be joined by Regional VNET Integration.
-        ///             This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
-        ///             Serialized Name: SitePatchResource.properties.virtualNetworkSubnetId
+        /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.SitePatchInfo"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SitePatchInfo SitePatchInfo(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ManagedServiceIdentity identity = default, string state = default, IEnumerable<string> hostNames = default, string repositorySiteName = default, AppServiceUsageState? usageState = default, bool? isEnabled = default, IEnumerable<string> enabledHostNames = default, WebSiteAvailabilityState? availabilityState = default, IEnumerable<HostNameSslState> hostNameSslStates = default, ResourceIdentifier serverFarmId = default, bool? isReserved = default, bool? isXenon = default, bool? isHyperV = default, DateTimeOffset? lastModifiedOn = default, SiteDnsConfig dnsConfiguration = default, SiteConfigProperties siteConfig = default, IEnumerable<string> trafficManagerHostNames = default, bool? isScmSiteAlsoStopped = default, string targetSwapSlot = default, HostingEnvironmentProfile hostingEnvironmentProfile = default, bool? isClientAffinityEnabled = default, bool? isClientAffinityProxyEnabled = default, bool? isClientCertEnabled = default, ClientCertMode? clientCertMode = default, string clientCertExclusionPaths = default, bool? isHostNameDisabled = default, string customDomainVerificationId = default, string outboundIPAddresses = default, string possibleOutboundIPAddresses = default, int? containerSize = default, int? dailyMemoryTimeQuota = default, DateTimeOffset? suspendOn = default, int? maxNumberOfWorkers = default, CloningInfo cloningInfo = default, string resourceGroup = default, bool? isDefaultContainer = default, string defaultHostName = default, SlotSwapStatus slotSwapStatus = default, bool? isHttpsOnly = default, RedundancyMode? redundancyMode = default, Guid? inProgressOperationId = default, string publicNetworkAccess = default, bool? isStorageAccountRequired = default, string keyVaultReferenceIdentity = default, ResourceIdentifier virtualNetworkSubnetId = default, string kind = default)
@@ -11732,59 +10923,23 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CustomHostnameAnalysisResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="isHostnameAlreadyVerified">
-        /// &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///             Serialized Name: CustomHostnameAnalysisResult.properties.isHostnameAlreadyVerified
-        /// </param>
-        /// <param name="customDomainVerificationTest">
-        /// DNS verification test result.
-        ///             Serialized Name: CustomHostnameAnalysisResult.properties.customDomainVerificationTest
-        /// </param>
-        /// <param name="customDomainVerificationFailureInfo">
-        /// Raw failure information if DNS verification fails.
-        ///             Serialized Name: CustomHostnameAnalysisResult.properties.customDomainVerificationFailureInfo
-        /// </param>
-        /// <param name="hasConflictOnScaleUnit">
-        /// &lt;code&gt;true&lt;/code&gt; if there is a conflict on a scale unit; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///             Serialized Name: CustomHostnameAnalysisResult.properties.hasConflictOnScaleUnit
-        /// </param>
-        /// <param name="hasConflictAcrossSubscription">
-        /// &lt;code&gt;true&lt;/code&gt; if there is a conflict across subscriptions; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///             Serialized Name: CustomHostnameAnalysisResult.properties.hasConflictAcrossSubscription
-        /// </param>
-        /// <param name="conflictingAppResourceId">
-        /// Name of the conflicting app on scale unit if it's within the same subscription.
-        ///             Serialized Name: CustomHostnameAnalysisResult.properties.conflictingAppResourceId
-        /// </param>
-        /// <param name="cNameRecords">
-        /// CName records controller can see for this hostname.
-        ///             Serialized Name: CustomHostnameAnalysisResult.properties.cNameRecords
-        /// </param>
-        /// <param name="txtRecords">
-        /// TXT records controller can see for this hostname.
-        ///             Serialized Name: CustomHostnameAnalysisResult.properties.txtRecords
-        /// </param>
-        /// <param name="aRecords">
-        /// A records controller can see for this hostname.
-        ///             Serialized Name: CustomHostnameAnalysisResult.properties.aRecords
-        /// </param>
-        /// <param name="alternateCNameRecords">
-        /// Alternate CName records controller can see for this hostname.
-        ///             Serialized Name: CustomHostnameAnalysisResult.properties.alternateCNameRecords
-        /// </param>
-        /// <param name="alternateTxtRecords">
-        /// Alternate TXT records controller can see for this hostname.
-        ///             Serialized Name: CustomHostnameAnalysisResult.properties.alternateTxtRecords
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <summary> Custom domain analysis. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="isHostnameAlreadyVerified"> &lt;code&gt;true&lt;/code&gt; if hostname is already verified; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="customDomainVerificationTest"> DNS verification test result. </param>
+        /// <param name="customDomainVerificationFailureInfo"></param>
+        /// <param name="hasConflictOnScaleUnit"> &lt;code&gt;true&lt;/code&gt; if there is a conflict on a scale unit; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="hasConflictAcrossSubscription"> &lt;code&gt;true&lt;/code&gt; if there is a conflict across subscriptions; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="conflictingAppResourceId"> Name of the conflicting app on scale unit if it's within the same subscription. </param>
+        /// <param name="cNameRecords"> CName records controller can see for this hostname. </param>
+        /// <param name="txtRecords"> TXT records controller can see for this hostname. </param>
+        /// <param name="aRecords"> A records controller can see for this hostname. </param>
+        /// <param name="alternateCNameRecords"> Alternate CName records controller can see for this hostname. </param>
+        /// <param name="alternateTxtRecords"> Alternate TXT records controller can see for this hostname. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.CustomHostnameAnalysisResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CustomHostnameAnalysisResult CustomHostnameAnalysisResult(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, bool? isHostnameAlreadyVerified = default, DnsVerificationTestResult? customDomainVerificationTest = default, ResponseError customDomainVerificationFailureInfo = default, bool? hasConflictOnScaleUnit = default, bool? hasConflictAcrossSubscription = default, string conflictingAppResourceId = default, IEnumerable<string> cNameRecords = default, IEnumerable<string> txtRecords = default, IEnumerable<string> aRecords = default, IEnumerable<string> alternateCNameRecords = default, IEnumerable<string> alternateTxtRecords = default, string kind = default)
@@ -11811,71 +10966,26 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.WebAppBackupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: BackupItem.kind
-        /// </param>
-        /// <param name="backupId">
-        /// Id of the backup.
-        ///             Serialized Name: BackupItem.properties.id
-        /// </param>
-        /// <param name="storageAccountUri">
-        /// SAS URL for the storage account container which contains this backup.
-        ///             Serialized Name: BackupItem.properties.storageAccountUrl
-        /// </param>
-        /// <param name="blobName">
-        /// Name of the blob which contains data for this backup.
-        ///             Serialized Name: BackupItem.properties.blobName
-        /// </param>
-        /// <param name="backupName">
-        /// Name of this backup.
-        ///             Serialized Name: BackupItem.properties.name
-        /// </param>
-        /// <param name="status">
-        /// Backup status.
-        ///             Serialized Name: BackupItem.properties.status
-        /// </param>
-        /// <param name="sizeInBytes">
-        /// Size of the backup in bytes.
-        ///             Serialized Name: BackupItem.properties.sizeInBytes
-        /// </param>
-        /// <param name="createdOn">
-        /// Timestamp of the backup creation.
-        ///             Serialized Name: BackupItem.properties.created
-        /// </param>
-        /// <param name="log">
-        /// Details regarding this backup. Might contain an error message.
-        ///             Serialized Name: BackupItem.properties.log
-        /// </param>
-        /// <param name="databases">
-        /// List of databases included in the backup.
-        ///             Serialized Name: BackupItem.properties.databases
-        /// </param>
-        /// <param name="isScheduled">
-        /// True if this backup has been created due to a schedule being triggered.
-        ///             Serialized Name: BackupItem.properties.scheduled
-        /// </param>
-        /// <param name="lastRestoreOn">
-        /// Timestamp of a last restore operation which used this backup.
-        ///             Serialized Name: BackupItem.properties.lastRestoreTimeStamp
-        /// </param>
-        /// <param name="finishedOn">
-        /// Timestamp when this backup finished.
-        ///             Serialized Name: BackupItem.properties.finishedTimeStamp
-        /// </param>
-        /// <param name="correlationId">
-        /// Unique correlation identifier. Please use this along with the timestamp while communicating with Azure support.
-        ///             Serialized Name: BackupItem.properties.correlationId
-        /// </param>
-        /// <param name="websiteSizeInBytes">
-        /// Size of the original web app which has been backed up.
-        ///             Serialized Name: BackupItem.properties.websiteSizeInBytes
-        /// </param>
+        /// <summary> Backup description. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="backupId"> Id of the backup. </param>
+        /// <param name="storageAccountUri"> SAS URL for the storage account container which contains this backup. </param>
+        /// <param name="blobName"> Name of the blob which contains data for this backup. </param>
+        /// <param name="backupName"> Name of this backup. </param>
+        /// <param name="status"> Backup status. </param>
+        /// <param name="sizeInBytes"> Size of the backup in bytes. </param>
+        /// <param name="createdOn"> Timestamp of the backup creation. </param>
+        /// <param name="log"> Details regarding this backup. Might contain an error message. </param>
+        /// <param name="databases"> List of databases included in the backup. </param>
+        /// <param name="isScheduled"> True if this backup has been created due to a schedule being triggered. </param>
+        /// <param name="lastRestoreOn"> Timestamp of a last restore operation which used this backup. </param>
+        /// <param name="finishedOn"> Timestamp when this backup finished. </param>
+        /// <param name="correlationId"> Unique correlation identifier. Please use this along with the timestamp while communicating with Azure support. </param>
+        /// <param name="websiteSizeInBytes"> Size of the original web app which has been backed up. </param>
         /// <returns> A new <see cref="AppService.WebAppBackupData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WebAppBackupData WebAppBackupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, int? backupId = default, Uri storageAccountUri = default, string blobName = default, string backupName = default, WebAppBackupStatus? status = default, long? sizeInBytes = default, DateTimeOffset? createdOn = default, string log = default, IEnumerable<AppServiceDatabaseBackupSetting> databases = default, bool? isScheduled = default, DateTimeOffset? lastRestoreOn = default, DateTimeOffset? finishedOn = default, string correlationId = default, long? websiteSizeInBytes = default)
@@ -11905,19 +11015,13 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.CsmPublishingCredentialsPoliciesEntityData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: CsmPublishingCredentialsPoliciesEntity.kind
-        /// </param>
-        /// <param name="allow">
-        /// &lt;code&gt;true&lt;/code&gt; to allow access to a publishing method; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///             Serialized Name: CsmPublishingCredentialsPoliciesEntity.properties.allow
-        /// </param>
+        /// <summary> Publishing Credentials Policies parameters. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="allow"> &lt;code&gt;true&lt;/code&gt; to allow access to a publishing method; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <returns> A new <see cref="AppService.CsmPublishingCredentialsPoliciesEntityData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static CsmPublishingCredentialsPoliciesEntityData CsmPublishingCredentialsPoliciesEntityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, bool? allow = default)
@@ -11932,27 +11036,21 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.ApiKeyVaultReferenceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: ApiKVReference.kind
-        /// </param>
-        /// <param name="reference"> Serialized Name: ApiKVReference.properties.reference. </param>
-        /// <param name="status"> Serialized Name: ApiKVReference.properties.status. </param>
-        /// <param name="vaultName"> Serialized Name: ApiKVReference.properties.vaultName. </param>
-        /// <param name="secretName"> Serialized Name: ApiKVReference.properties.secretName. </param>
-        /// <param name="secretVersion"> Serialized Name: ApiKVReference.properties.secretVersion. </param>
-        /// <param name="identity">
-        /// Managed service identity.
-        ///             Serialized Name: ApiKVReference.properties.identityType
-        /// </param>
-        /// <param name="details"> Serialized Name: ApiKVReference.properties.details. </param>
-        /// <param name="source"> Serialized Name: ApiKVReference.properties.source. </param>
-        /// <param name="activeVersion"> Serialized Name: ApiKVReference.properties.activeVersion. </param>
+        /// <summary> Description of site key vault references. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="reference"></param>
+        /// <param name="status"></param>
+        /// <param name="vaultName"></param>
+        /// <param name="secretName"></param>
+        /// <param name="secretVersion"></param>
+        /// <param name="identity"> Managed service identity. </param>
+        /// <param name="details"></param>
+        /// <param name="source"></param>
+        /// <param name="activeVersion"></param>
         /// <returns> A new <see cref="AppService.ApiKeyVaultReferenceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ApiKeyVaultReferenceData ApiKeyVaultReferenceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string reference = default, ResolveStatus? status = default, string vaultName = default, string secretName = default, string secretVersion = default, ManagedServiceIdentity identity = default, string details = default, ConfigReferenceSource? source = default, string activeVersion = default)
@@ -11977,31 +11075,16 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.SiteLogsConfigData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: SiteLogsConfig.kind
-        /// </param>
-        /// <param name="applicationLogs">
-        /// Application logs configuration.
-        ///             Serialized Name: SiteLogsConfig.properties.applicationLogs
-        /// </param>
-        /// <param name="httpLogs">
-        /// HTTP logs configuration.
-        ///             Serialized Name: SiteLogsConfig.properties.httpLogs
-        /// </param>
-        /// <param name="isFailedRequestsTracingEnabled">
-        /// Failed requests tracing configuration.
-        ///             Serialized Name: SiteLogsConfig.properties.failedRequestsTracing
-        /// </param>
-        /// <param name="isDetailedErrorMessagesEnabled">
-        /// Detailed error messages configuration.
-        ///             Serialized Name: SiteLogsConfig.properties.detailedErrorMessages
-        /// </param>
+        /// <summary> Configuration of App Service site logs. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="applicationLogs"> Application logs configuration. </param>
+        /// <param name="httpLogs"> HTTP logs configuration. </param>
+        /// <param name="isFailedRequestsTracingEnabled"> True if configuration is enabled, false if it is disabled and null if configuration is not set. </param>
+        /// <param name="isDetailedErrorMessagesEnabled"> True if configuration is enabled, false if it is disabled and null if configuration is not set. </param>
         /// <returns> A new <see cref="AppService.SiteLogsConfigData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SiteLogsConfigData SiteLogsConfigData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, ApplicationLogsConfig applicationLogs = default, AppServiceHttpLogsConfig httpLogs = default, bool? isFailedRequestsTracingEnabled = default, bool? isDetailedErrorMessagesEnabled = default)
@@ -12016,27 +11099,15 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.SlotConfigNamesResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: SlotConfigNamesResource.kind
-        /// </param>
-        /// <param name="connectionStringNames">
-        /// List of connection string names.
-        ///             Serialized Name: SlotConfigNamesResource.properties.connectionStringNames
-        /// </param>
-        /// <param name="appSettingNames">
-        /// List of application settings names.
-        ///             Serialized Name: SlotConfigNamesResource.properties.appSettingNames
-        /// </param>
-        /// <param name="azureStorageConfigNames">
-        /// List of external Azure storage account identifiers.
-        ///             Serialized Name: SlotConfigNamesResource.properties.azureStorageConfigNames
-        /// </param>
+        /// <summary> Slot Config names azure resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="connectionStringNames"> List of connection string names. </param>
+        /// <param name="appSettingNames"> List of application settings names. </param>
+        /// <param name="azureStorageConfigNames"> List of external Azure storage account identifiers. </param>
         /// <returns> A new <see cref="AppService.SlotConfigNamesResourceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SlotConfigNamesResourceData SlotConfigNamesResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, IEnumerable<string> connectionStringNames = default, IEnumerable<string> appSettingNames = default, IEnumerable<string> azureStorageConfigNames = default)
@@ -12051,55 +11122,22 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.ContinuousWebJobData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: ContinuousWebJob.kind
-        /// </param>
-        /// <param name="status">
-        /// Job status.
-        ///             Serialized Name: ContinuousWebJob.properties.status
-        /// </param>
-        /// <param name="detailedStatus">
-        /// Detailed status.
-        ///             Serialized Name: ContinuousWebJob.properties.detailed_status
-        /// </param>
-        /// <param name="logUri">
-        /// Log URL.
-        ///             Serialized Name: ContinuousWebJob.properties.log_url
-        /// </param>
-        /// <param name="runCommand">
-        /// Run command.
-        ///             Serialized Name: ContinuousWebJob.properties.run_command
-        /// </param>
-        /// <param name="uri">
-        /// Job URL.
-        ///             Serialized Name: ContinuousWebJob.properties.url
-        /// </param>
-        /// <param name="extraInfoUri">
-        /// Extra Info URL.
-        ///             Serialized Name: ContinuousWebJob.properties.extra_info_url
-        /// </param>
-        /// <param name="webJobType">
-        /// Job type.
-        ///             Serialized Name: ContinuousWebJob.properties.web_job_type
-        /// </param>
-        /// <param name="error">
-        /// Error information.
-        ///             Serialized Name: ContinuousWebJob.properties.error
-        /// </param>
-        /// <param name="isUsingSdk">
-        /// Using SDK?
-        ///             Serialized Name: ContinuousWebJob.properties.using_sdk
-        /// </param>
-        /// <param name="settings">
-        /// Job settings.
-        ///             Serialized Name: ContinuousWebJob.properties.settings
-        /// </param>
+        /// <summary> Continuous Web Job Information. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="status"> Job status. </param>
+        /// <param name="detailedStatus"> Detailed status. </param>
+        /// <param name="logUri"> Log URL. </param>
+        /// <param name="runCommand"> Run command. </param>
+        /// <param name="uri"> Job URL. </param>
+        /// <param name="extraInfoUri"> Extra Info URL. </param>
+        /// <param name="webJobType"> Job type. </param>
+        /// <param name="error"> Error information. </param>
+        /// <param name="isUsingSdk"> Using SDK?. </param>
+        /// <param name="settings"> Job settings. </param>
         /// <returns> A new <see cref="AppService.ContinuousWebJobData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ContinuousWebJobData ContinuousWebJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, ContinuousWebJobStatus? status = default, string detailedStatus = default, Uri logUri = default, string runCommand = default, Uri uri = default, Uri extraInfoUri = default, WebJobType? webJobType = default, string error = default, bool? isUsingSdk = default, IDictionary<string, BinaryData> settings = default)
@@ -12125,51 +11163,21 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.WebAppDeploymentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: Deployment.kind
-        /// </param>
-        /// <param name="status">
-        /// Deployment status.
-        ///             Serialized Name: Deployment.properties.status
-        /// </param>
-        /// <param name="message">
-        /// Details about deployment status.
-        ///             Serialized Name: Deployment.properties.message
-        /// </param>
-        /// <param name="author">
-        /// Who authored the deployment.
-        ///             Serialized Name: Deployment.properties.author
-        /// </param>
-        /// <param name="deployer">
-        /// Who performed the deployment.
-        ///             Serialized Name: Deployment.properties.deployer
-        /// </param>
-        /// <param name="authorEmail">
-        /// Author email.
-        ///             Serialized Name: Deployment.properties.author_email
-        /// </param>
-        /// <param name="startOn">
-        /// Start time.
-        ///             Serialized Name: Deployment.properties.start_time
-        /// </param>
-        /// <param name="endOn">
-        /// End time.
-        ///             Serialized Name: Deployment.properties.end_time
-        /// </param>
-        /// <param name="isActive">
-        /// True if deployment is currently active, false if completed and null if not started.
-        ///             Serialized Name: Deployment.properties.active
-        /// </param>
-        /// <param name="details">
-        /// Details on deployment.
-        ///             Serialized Name: Deployment.properties.details
-        /// </param>
+        /// <summary> User credentials used for publishing activity. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="status"> Deployment status. </param>
+        /// <param name="message"> Details about deployment status. </param>
+        /// <param name="author"> Who authored the deployment. </param>
+        /// <param name="deployer"> Who performed the deployment. </param>
+        /// <param name="authorEmail"> Author email. </param>
+        /// <param name="startOn"></param>
+        /// <param name="endOn"></param>
+        /// <param name="isActive"> True if deployment is currently active, false if completed and null if not started. </param>
+        /// <param name="details"> Details on deployment. </param>
         /// <returns> A new <see cref="AppService.WebAppDeploymentData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WebAppDeploymentData WebAppDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, int? status = default, string message = default, string author = default, string deployer = default, string authorEmail = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, bool? isActive = default, string details = default)
@@ -12179,14 +11187,14 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                status is null && message is null && author is null && deployer is null && authorEmail is null && startOn is null && endOn is null && isActive is null && details is null ? default : new DeploymentProperties(
+                status is null && message is null && author is null && deployer is null && authorEmail is null && isActive is null && details is null ? default : new DeploymentProperties(
                     status,
                     message,
                     author,
                     deployer,
                     authorEmail,
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     isActive,
                     details,
                     default),
@@ -12194,31 +11202,16 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.DetectorDefinitionResourceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: DetectorDefinitionResource.kind
-        /// </param>
-        /// <param name="displayName">
-        /// Display name of the detector
-        ///             Serialized Name: DetectorDefinitionResource.properties.displayName
-        /// </param>
-        /// <param name="description">
-        /// Description of the detector
-        ///             Serialized Name: DetectorDefinitionResource.properties.description
-        /// </param>
-        /// <param name="rank">
-        /// Detector Rank
-        ///             Serialized Name: DetectorDefinitionResource.properties.rank
-        /// </param>
-        /// <param name="isEnabled">
-        /// Flag representing whether detector is enabled or not.
-        ///             Serialized Name: DetectorDefinitionResource.properties.isEnabled
-        /// </param>
+        /// <summary> ARM resource for a detector definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="displayName"> Display name of the detector. </param>
+        /// <param name="description"> Description of the detector. </param>
+        /// <param name="rank"> Detector Rank. </param>
+        /// <param name="isEnabled"> Flag representing whether detector is enabled or not. </param>
         /// <returns> A new <see cref="AppService.DetectorDefinitionResourceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DetectorDefinitionResourceData DetectorDefinitionResourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string displayName = default, string description = default, double? rank = default, bool? isEnabled = default)
@@ -12233,35 +11226,17 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.MSDeployStatusData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: MSDeployStatus.kind
-        /// </param>
-        /// <param name="deployer">
-        /// Username of deployer
-        ///             Serialized Name: MSDeployStatus.properties.deployer
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning state
-        ///             Serialized Name: MSDeployStatus.properties.provisioningState
-        /// </param>
-        /// <param name="startOn">
-        /// Start time of deploy operation
-        ///             Serialized Name: MSDeployStatus.properties.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// End time of deploy operation
-        ///             Serialized Name: MSDeployStatus.properties.endTime
-        /// </param>
-        /// <param name="isComplete">
-        /// Whether the deployment operation has completed
-        ///             Serialized Name: MSDeployStatus.properties.complete
-        /// </param>
+        /// <summary> MSDeploy ARM response. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="deployer"> Username of deployer. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
+        /// <param name="startOn"></param>
+        /// <param name="endOn"></param>
+        /// <param name="isComplete"> Whether the deployment operation has completed. </param>
         /// <returns> A new <see cref="AppService.MSDeployStatusData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MSDeployStatusData MSDeployStatusData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string deployer = default, MSDeployProvisioningState? provisioningState = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, bool? isComplete = default)
@@ -12271,62 +11246,39 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                deployer is null && provisioningState is null && startOn is null && endOn is null && isComplete is null ? default : new MSDeployStatusProperties(
+                deployer is null && provisioningState is null && isComplete is null ? default : new MSDeployStatusProperties(
                     deployer,
                     provisioningState,
-                    startOn,
-                    endOn,
+                    default,
+                    default,
                     isComplete,
                     default),
                 kind,
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.WebAppMSDeploy"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="packageUri">
-        /// Package URI
-        ///             Serialized Name: MSDeploy.properties.packageUri
-        /// </param>
-        /// <param name="connectionString">
-        /// SQL Connection String
-        ///             Serialized Name: MSDeploy.properties.connectionString
-        /// </param>
-        /// <param name="dbType">
-        /// Database Type
-        ///             Serialized Name: MSDeploy.properties.dbType
-        /// </param>
-        /// <param name="setParametersXmlFileUri">
-        /// URI of MSDeploy Parameters file. Must not be set if SetParameters is used.
-        ///             Serialized Name: MSDeploy.properties.setParametersXmlFileUri
-        /// </param>
-        /// <param name="setParameters">
-        /// MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used.
-        ///             Serialized Name: MSDeploy.properties.setParameters
-        /// </param>
+        /// <summary> MSDeploy ARM PUT information. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="packageUri"> Package URI. </param>
+        /// <param name="connectionString"> SQL Connection String. </param>
+        /// <param name="dbType"> Database Type. </param>
+        /// <param name="setParametersXmlFileUri"> URI of MSDeploy Parameters file. Must not be set if SetParameters is used. </param>
+        /// <param name="setParameters"> MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used. </param>
         /// <param name="skipAppData">
         /// Controls whether the MSDeploy operation skips the App_Data directory.
-        ///             If set to &lt;code&gt;true&lt;/code&gt;, the existing App_Data directory on the destination
-        ///             will not be deleted, and any App_Data directory in the source will be ignored.
-        ///             Setting is &lt;code&gt;false&lt;/code&gt; by default.
-        ///             Serialized Name: MSDeploy.properties.skipAppData
+        /// If set to &lt;code&gt;true&lt;/code&gt;, the existing App_Data directory on the destination
+        /// will not be deleted, and any App_Data directory in the source will be ignored.
+        /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </param>
         /// <param name="isAppOffline">
         /// Sets the AppOffline rule while the MSDeploy operation executes.
-        ///             Setting is &lt;code&gt;false&lt;/code&gt; by default.
-        ///             Serialized Name: MSDeploy.properties.appOffline
+        /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </param>
-        /// <param name="addOnPackages">
-        /// List of Add-On packages. Add-On packages implicitly enable the Do Not Delete MSDeploy rule.
-        ///             Serialized Name: MSDeploy.properties.addOnPackages
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: ProxyOnlyResource.kind
-        /// </param>
+        /// <param name="addOnPackages"> List of Add-On packages. Add-On packages implicitly enable the Do Not Delete MSDeploy rule. </param>
+        /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.WebAppMSDeploy"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WebAppMSDeploy WebAppMSDeploy(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Uri packageUri = default, string connectionString = default, string dbType = default, Uri setParametersXmlFileUri = default, IDictionary<string, string> setParameters = default, bool? skipAppData = default, bool? isAppOffline = default, IEnumerable<MSDeployCore> addOnPackages = default, string kind = default)
@@ -12350,67 +11302,25 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.FunctionEnvelopeData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: FunctionEnvelope.kind
-        /// </param>
-        /// <param name="functionAppId">
-        /// Function App ID.
-        ///             Serialized Name: FunctionEnvelope.properties.function_app_id
-        /// </param>
-        /// <param name="scriptRootPathHref">
-        /// Script root path URI.
-        ///             Serialized Name: FunctionEnvelope.properties.script_root_path_href
-        /// </param>
-        /// <param name="scriptHref">
-        /// Script URI.
-        ///             Serialized Name: FunctionEnvelope.properties.script_href
-        /// </param>
-        /// <param name="configHref">
-        /// Config URI.
-        ///             Serialized Name: FunctionEnvelope.properties.config_href
-        /// </param>
-        /// <param name="testDataHref">
-        /// Test data URI.
-        ///             Serialized Name: FunctionEnvelope.properties.test_data_href
-        /// </param>
-        /// <param name="secretsFileHref">
-        /// Secrets file URI.
-        ///             Serialized Name: FunctionEnvelope.properties.secrets_file_href
-        /// </param>
-        /// <param name="href">
-        /// Function URI.
-        ///             Serialized Name: FunctionEnvelope.properties.href
-        /// </param>
-        /// <param name="config">
-        /// Config information.
-        ///             Serialized Name: FunctionEnvelope.properties.config
-        /// </param>
-        /// <param name="files">
-        /// File list.
-        ///             Serialized Name: FunctionEnvelope.properties.files
-        /// </param>
-        /// <param name="testData">
-        /// Test data used when testing via the Azure Portal.
-        ///             Serialized Name: FunctionEnvelope.properties.test_data
-        /// </param>
-        /// <param name="invokeUrlTemplate">
-        /// The invocation URL
-        ///             Serialized Name: FunctionEnvelope.properties.invoke_url_template
-        /// </param>
-        /// <param name="language">
-        /// The function language
-        ///             Serialized Name: FunctionEnvelope.properties.language
-        /// </param>
-        /// <param name="isDisabled">
-        /// Gets or sets a value indicating whether the function is disabled
-        ///             Serialized Name: FunctionEnvelope.properties.isDisabled
-        /// </param>
+        /// <summary> Function information. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="functionAppId"> Function App ID. </param>
+        /// <param name="scriptRootPathHref"> Script root path URI. </param>
+        /// <param name="scriptHref"> Script URI. </param>
+        /// <param name="configHref"> Config URI. </param>
+        /// <param name="testDataHref"> Test data URI. </param>
+        /// <param name="secretsFileHref"> Secrets file URI. </param>
+        /// <param name="href"> Function URI. </param>
+        /// <param name="config"> Config information. </param>
+        /// <param name="files"> File list. </param>
+        /// <param name="testData"> Test data used when testing via the Azure Portal. </param>
+        /// <param name="invokeUrlTemplate"> The invocation URL. </param>
+        /// <param name="language"> The function language. </param>
+        /// <param name="isDisabled"> Gets or sets a value indicating whether the function is disabled. </param>
         /// <returns> A new <see cref="AppService.FunctionEnvelopeData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FunctionEnvelopeData FunctionEnvelopeData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string functionAppId = default, string scriptRootPathHref = default, string scriptHref = default, string configHref = default, string testDataHref = default, string secretsFileHref = default, string href = default, BinaryData config = default, IDictionary<string, string> files = default, string testData = default, string invokeUrlTemplate = default, string language = default, bool? isDisabled = default)
@@ -12439,51 +11349,21 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.HostNameBindingData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: HostNameBinding.kind
-        /// </param>
-        /// <param name="siteName">
-        /// App Service app name.
-        ///             Serialized Name: HostNameBinding.properties.siteName
-        /// </param>
-        /// <param name="domainId">
-        /// Fully qualified ARM domain resource URI.
-        ///             Serialized Name: HostNameBinding.properties.domainId
-        /// </param>
-        /// <param name="azureResourceName">
-        /// Azure resource name.
-        ///             Serialized Name: HostNameBinding.properties.azureResourceName
-        /// </param>
-        /// <param name="azureResourceType">
-        /// Azure resource type.
-        ///             Serialized Name: HostNameBinding.properties.azureResourceType
-        /// </param>
-        /// <param name="customHostNameDnsRecordType">
-        /// Custom DNS record type.
-        ///             Serialized Name: HostNameBinding.properties.customHostNameDnsRecordType
-        /// </param>
-        /// <param name="hostNameType">
-        /// Hostname type.
-        ///             Serialized Name: HostNameBinding.properties.hostNameType
-        /// </param>
-        /// <param name="sslState">
-        /// SSL type
-        ///             Serialized Name: HostNameBinding.properties.sslState
-        /// </param>
-        /// <param name="thumbprintString">
-        /// SSL certificate thumbprint
-        ///             Serialized Name: HostNameBinding.properties.thumbprint
-        /// </param>
-        /// <param name="virtualIP">
-        /// Virtual IP address assigned to the hostname if IP based SSL is enabled.
-        ///             Serialized Name: HostNameBinding.properties.virtualIP
-        /// </param>
+        /// <summary> A hostname binding object. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="siteName"> App Service app name. </param>
+        /// <param name="domainId"> Fully qualified ARM domain resource URI. </param>
+        /// <param name="azureResourceName"> Azure resource name. </param>
+        /// <param name="azureResourceType"> Azure resource type. </param>
+        /// <param name="customHostNameDnsRecordType"> Custom DNS record type. </param>
+        /// <param name="hostNameType"> Hostname type. </param>
+        /// <param name="sslState"> SSL type. </param>
+        /// <param name="thumbprintString"> SSL certificate thumbprint. </param>
+        /// <param name="virtualIP"> Virtual IP address assigned to the hostname if IP based SSL is enabled. </param>
         /// <returns> A new <see cref="AppService.HostNameBindingData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static HostNameBindingData HostNameBindingData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string siteName = default, string domainId = default, string azureResourceName = default, AppServiceResourceType? azureResourceType = default, CustomHostNameDnsRecordType? customHostNameDnsRecordType = default, AppServiceHostNameType? hostNameType = default, HostNameBindingSslState? sslState = default, string thumbprintString = default, string virtualIP = default)
@@ -12508,59 +11388,23 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.WorkflowRunData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="waitEndOn">
-        /// Gets the wait end time.
-        ///             Serialized Name: WorkflowRun.properties.waitEndTime
-        /// </param>
-        /// <param name="startOn">
-        /// Gets the start time.
-        ///             Serialized Name: WorkflowRun.properties.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// Gets the end time.
-        ///             Serialized Name: WorkflowRun.properties.endTime
-        /// </param>
-        /// <param name="status">
-        /// Gets the status.
-        ///             Serialized Name: WorkflowRun.properties.status
-        /// </param>
-        /// <param name="code">
-        /// Gets the code.
-        ///             Serialized Name: WorkflowRun.properties.code
-        /// </param>
-        /// <param name="error">
-        /// Gets the error.
-        ///             Serialized Name: WorkflowRun.properties.error
-        /// </param>
-        /// <param name="correlationId">
-        /// Gets the correlation id.
-        ///             Serialized Name: WorkflowRun.properties.correlationId
-        /// </param>
-        /// <param name="correlationClientTrackingId">
-        /// The run correlation.
-        ///             Serialized Name: WorkflowRun.properties.correlation
-        /// </param>
-        /// <param name="workflow">
-        /// Gets the reference to workflow version.
-        ///             Serialized Name: WorkflowRun.properties.workflow
-        /// </param>
-        /// <param name="trigger">
-        /// Gets the fired trigger.
-        ///             Serialized Name: WorkflowRun.properties.trigger
-        /// </param>
-        /// <param name="outputs">
-        /// Gets the outputs.
-        ///             Serialized Name: WorkflowRun.properties.outputs
-        /// </param>
-        /// <param name="response">
-        /// Gets the response of the flow run.
-        ///             Serialized Name: WorkflowRun.properties.response
-        /// </param>
+        /// <summary> The workflow run. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="waitEndOn"></param>
+        /// <param name="startOn"></param>
+        /// <param name="endOn"></param>
+        /// <param name="status"> Gets the status. </param>
+        /// <param name="code"> Gets the code. </param>
+        /// <param name="error"> Gets the error. </param>
+        /// <param name="correlationId"> Gets the correlation id. </param>
+        /// <param name="correlationClientTrackingId"> The client tracking id. </param>
+        /// <param name="workflow"> Gets the reference to workflow version. </param>
+        /// <param name="trigger"> Gets the fired trigger. </param>
+        /// <param name="outputs"> Gets the outputs. </param>
+        /// <param name="response"> Gets the response of the flow run. </param>
         /// <returns> A new <see cref="AppService.WorkflowRunData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WorkflowRunData WorkflowRunData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? waitEndOn = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, WorkflowStatus? status = default, string code = default, BinaryData error = default, string correlationId = default, string correlationClientTrackingId = default, WorkflowResourceReference workflow = default, WorkflowRunTrigger trigger = default, IReadOnlyDictionary<string, WorkflowOutputContent> outputs = default, WorkflowRunTrigger response = default)
@@ -12570,10 +11414,10 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                waitEndOn is null && startOn is null && endOn is null && status is null && code is null && error is null && correlationId is null && correlationClientTrackingId is null && workflow is null && trigger is null && outputs is null && response is null ? default : new WorkflowRunProperties(
-                    waitEndOn,
-                    startOn,
-                    endOn,
+                status is null && code is null && error is null && correlationId is null && correlationClientTrackingId is null && workflow is null && trigger is null && outputs is null && response is null ? default : new WorkflowRunProperties(
+                    default,
+                    default,
+                    default,
                     status,
                     code,
                     error,
@@ -12587,59 +11431,23 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.WorkflowTriggerHistoryData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="startOn">
-        /// Gets the start time.
-        ///             Serialized Name: WorkflowTriggerHistory.properties.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// Gets the end time.
-        ///             Serialized Name: WorkflowTriggerHistory.properties.endTime
-        /// </param>
-        /// <param name="scheduledOn">
-        /// The scheduled time.
-        ///             Serialized Name: WorkflowTriggerHistory.properties.scheduledTime
-        /// </param>
-        /// <param name="status">
-        /// Gets the status.
-        ///             Serialized Name: WorkflowTriggerHistory.properties.status
-        /// </param>
-        /// <param name="code">
-        /// Gets the code.
-        ///             Serialized Name: WorkflowTriggerHistory.properties.code
-        /// </param>
-        /// <param name="error">
-        /// Gets the error.
-        ///             Serialized Name: WorkflowTriggerHistory.properties.error
-        /// </param>
-        /// <param name="trackingId">
-        /// Gets the tracking id.
-        ///             Serialized Name: WorkflowTriggerHistory.properties.trackingId
-        /// </param>
-        /// <param name="correlationClientTrackingId">
-        /// The run correlation.
-        ///             Serialized Name: WorkflowTriggerHistory.properties.correlation
-        /// </param>
-        /// <param name="inputsLink">
-        /// Gets the link to input parameters.
-        ///             Serialized Name: WorkflowTriggerHistory.properties.inputsLink
-        /// </param>
-        /// <param name="outputsLink">
-        /// Gets the link to output parameters.
-        ///             Serialized Name: WorkflowTriggerHistory.properties.outputsLink
-        /// </param>
-        /// <param name="isFired">
-        /// The value indicating whether trigger was fired.
-        ///             Serialized Name: WorkflowTriggerHistory.properties.fired
-        /// </param>
-        /// <param name="run">
-        /// Gets the reference to workflow run.
-        ///             Serialized Name: WorkflowTriggerHistory.properties.run
-        /// </param>
+        /// <summary> The workflow trigger history. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="startOn"></param>
+        /// <param name="endOn"></param>
+        /// <param name="scheduledOn"> The scheduled time. </param>
+        /// <param name="status"> Gets the status. </param>
+        /// <param name="code"> Gets the code. </param>
+        /// <param name="error"> Gets the error. </param>
+        /// <param name="trackingId"> Gets the tracking id. </param>
+        /// <param name="correlationClientTrackingId"> The client tracking id. </param>
+        /// <param name="inputsLink"> Gets the link to input parameters. </param>
+        /// <param name="outputsLink"> Gets the link to output parameters. </param>
+        /// <param name="isFired"> The value indicating whether trigger was fired. </param>
+        /// <param name="run"> Gets the reference to workflow run. </param>
         /// <returns> A new <see cref="AppService.WorkflowTriggerHistoryData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WorkflowTriggerHistoryData WorkflowTriggerHistoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? scheduledOn = default, WorkflowStatus? status = default, string code = default, BinaryData error = default, string trackingId = default, string correlationClientTrackingId = default, WebAppContentLink inputsLink = default, WebAppContentLink outputsLink = default, bool? isFired = default, WorkflowResourceReference run = default)
@@ -12649,9 +11457,9 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                startOn is null && endOn is null && scheduledOn is null && status is null && code is null && error is null && trackingId is null && correlationClientTrackingId is null && inputsLink is null && outputsLink is null && isFired is null && run is null ? default : new WorkflowTriggerHistoryProperties(
-                    startOn,
-                    endOn,
+                scheduledOn is null && status is null && code is null && error is null && trackingId is null && correlationClientTrackingId is null && inputsLink is null && outputsLink is null && isFired is null && run is null ? default : new WorkflowTriggerHistoryProperties(
+                    default,
+                    default,
                     scheduledOn,
                     status,
                     code,
@@ -12666,73 +11474,28 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.WorkflowData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="identity">
-        /// Managed service identity.
-        ///             Serialized Name: Workflow.identity
-        /// </param>
-        /// <param name="provisioningState">
-        /// Gets the provisioning state.
-        ///             Serialized Name: Workflow.properties.provisioningState
-        /// </param>
-        /// <param name="createdOn">
-        /// Gets the created time.
-        ///             Serialized Name: Workflow.properties.createdTime
-        /// </param>
-        /// <param name="changedOn">
-        /// Gets the changed time.
-        ///             Serialized Name: Workflow.properties.changedTime
-        /// </param>
-        /// <param name="state">
-        /// The state.
-        ///             Serialized Name: Workflow.properties.state
-        /// </param>
-        /// <param name="version">
-        /// Gets the version.
-        ///             Serialized Name: Workflow.properties.version
-        /// </param>
-        /// <param name="accessEndpoint">
-        /// Gets the access endpoint.
-        ///             Serialized Name: Workflow.properties.accessEndpoint
-        /// </param>
-        /// <param name="endpointsConfiguration">
-        /// The endpoints configuration.
-        ///             Serialized Name: Workflow.properties.endpointsConfiguration
-        /// </param>
-        /// <param name="accessControl">
-        /// The access control configuration.
-        ///             Serialized Name: Workflow.properties.accessControl
-        /// </param>
-        /// <param name="sku">
-        /// The sku.
-        ///             Serialized Name: Workflow.properties.sku
-        /// </param>
-        /// <param name="integrationAccount">
-        /// The integration account.
-        ///             Serialized Name: Workflow.properties.integrationAccount
-        /// </param>
-        /// <param name="integrationServiceEnvironment">
-        /// The integration service environment.
-        ///             Serialized Name: Workflow.properties.integrationServiceEnvironment
-        /// </param>
-        /// <param name="definition">
-        /// The definition.
-        ///             Serialized Name: Workflow.properties.definition
-        /// </param>
-        /// <param name="parameters">
-        /// The parameters.
-        ///             Serialized Name: Workflow.properties.parameters
-        /// </param>
-        /// <param name="kind">
-        /// The workflow kind.
-        ///             Serialized Name: Workflow.properties.kind
-        /// </param>
+        /// <summary> The workflow type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="identity"> Managed service identity. </param>
+        /// <param name="provisioningState"> Gets the provisioning state. </param>
+        /// <param name="createdOn"> Gets the created time. </param>
+        /// <param name="changedOn"> Gets the changed time. </param>
+        /// <param name="state"> The state. </param>
+        /// <param name="version"> Gets the version. </param>
+        /// <param name="accessEndpoint"> Gets the access endpoint. </param>
+        /// <param name="endpointsConfiguration"> The endpoints configuration. </param>
+        /// <param name="accessControl"> The access control configuration. </param>
+        /// <param name="sku"> The sku. </param>
+        /// <param name="integrationAccount"> The integration account. </param>
+        /// <param name="integrationServiceEnvironment"> The integration service environment. </param>
+        /// <param name="definition"> The definition. </param>
+        /// <param name="parameters"> The parameters. </param>
+        /// <param name="kind"> The workflow kind. </param>
         /// <returns> A new <see cref="Models.WorkflowData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WorkflowData WorkflowData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ManagedServiceIdentity identity = default, WorkflowProvisioningState? provisioningState = default, DateTimeOffset? createdOn = default, DateTimeOffset? changedOn = default, WorkflowState? state = default, string version = default, string accessEndpoint = default, FlowEndpointsConfiguration endpointsConfiguration = default, FlowAccessControlConfiguration accessControl = default, WorkflowSku sku = default, WorkflowResourceReference integrationAccount = default, WorkflowResourceReference integrationServiceEnvironment = default, BinaryData definition = default, IDictionary<string, WorkflowContent> parameters = default, AppServiceKind? kind = default)
@@ -12764,21 +11527,18 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.RelayServiceConnectionEntityData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: RelayServiceConnectionEntity.kind
-        /// </param>
-        /// <param name="entityName"> Serialized Name: RelayServiceConnectionEntity.properties.entityName. </param>
-        /// <param name="entityConnectionString"> Serialized Name: RelayServiceConnectionEntity.properties.entityConnectionString. </param>
-        /// <param name="resourceConnectionString"> Serialized Name: RelayServiceConnectionEntity.properties.resourceConnectionString. </param>
-        /// <param name="hostname"> Serialized Name: RelayServiceConnectionEntity.properties.hostname. </param>
-        /// <param name="port"> Serialized Name: RelayServiceConnectionEntity.properties.port. </param>
-        /// <param name="biztalkUri"> Serialized Name: RelayServiceConnectionEntity.properties.biztalkUri. </param>
+        /// <summary> Hybrid Connection for an App Service app. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="entityName"></param>
+        /// <param name="entityConnectionString"></param>
+        /// <param name="resourceConnectionString"></param>
+        /// <param name="hostname"></param>
+        /// <param name="port"></param>
+        /// <param name="biztalkUri"></param>
         /// <returns> A new <see cref="AppService.RelayServiceConnectionEntityData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RelayServiceConnectionEntityData RelayServiceConnectionEntityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string entityName = default, string entityConnectionString = default, string resourceConnectionString = default, string hostname = default, int? port = default, Uri biztalkUri = default)
@@ -12800,40 +11560,19 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.WebSiteInstanceStatusData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: WebSiteInstanceStatus.kind
-        /// </param>
-        /// <param name="state"> Serialized Name: WebSiteInstanceStatus.properties.state. </param>
-        /// <param name="statusUri">
-        /// Link to the GetStatusApi in Kudu
-        ///             Serialized Name: WebSiteInstanceStatus.properties.statusUrl
-        /// </param>
-        /// <param name="detectorUri">
-        /// Link to the Diagnose and Solve Portal
-        ///             Serialized Name: WebSiteInstanceStatus.properties.detectorUrl
-        /// </param>
-        /// <param name="consoleUri">
-        /// Link to the console to web app instance
-        ///             Serialized Name: WebSiteInstanceStatus.properties.consoleUrl
-        /// </param>
-        /// <param name="healthCheckUrlString">
-        /// Link to the console to web app instance
-        ///             Serialized Name: WebSiteInstanceStatus.properties.healthCheckUrl
-        /// </param>
-        /// <param name="containers">
-        /// Dictionary of &lt;ContainerInfo&gt;
-        ///             Serialized Name: WebSiteInstanceStatus.properties.containers
-        /// </param>
-        /// <param name="physicalZone">
-        /// The physical zone that the instance is in
-        ///             Serialized Name: WebSiteInstanceStatus.properties.physicalZone
-        /// </param>
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="state"></param>
+        /// <param name="statusUri"> Link to the GetStatusApi in Kudu. </param>
+        /// <param name="detectorUri"> Link to the Diagnose and Solve Portal. </param>
+        /// <param name="consoleUri"> Link to the console to web app instance. </param>
+        /// <param name="healthCheckUrlString"> Link to the console to web app instance. </param>
+        /// <param name="containers"> Dictionary of &lt;ContainerInfo&gt;. </param>
+        /// <param name="physicalZone"> The physical zone that the instance is in. </param>
         /// <returns> A new <see cref="AppService.WebSiteInstanceStatusData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WebSiteInstanceStatusData WebSiteInstanceStatusData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, SiteRuntimeState? state = default, Uri statusUri = default, Uri detectorUri = default, Uri consoleUri = default, string healthCheckUrlString = default, IDictionary<string, ContainerInfo> containers = default, string physicalZone = default)
@@ -12856,159 +11595,48 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.ProcessInfoData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: ProcessInfo.kind
-        /// </param>
-        /// <param name="identifier">
-        /// ARM Identifier for deployment.
-        ///             Serialized Name: ProcessInfo.properties.identifier
-        /// </param>
-        /// <param name="deploymentName">
-        /// Deployment name.
-        ///             Serialized Name: ProcessInfo.properties.deployment_name
-        /// </param>
-        /// <param name="href">
-        /// HRef URI.
-        ///             Serialized Name: ProcessInfo.properties.href
-        /// </param>
-        /// <param name="minidump">
-        /// Minidump URI.
-        ///             Serialized Name: ProcessInfo.properties.minidump
-        /// </param>
-        /// <param name="isProfileRunning">
-        /// Is profile running?
-        ///             Serialized Name: ProcessInfo.properties.is_profile_running
-        /// </param>
-        /// <param name="isIisProfileRunning">
-        /// Is the IIS Profile running?
-        ///             Serialized Name: ProcessInfo.properties.is_iis_profile_running
-        /// </param>
-        /// <param name="iisProfileTimeoutInSeconds">
-        /// IIS Profile timeout (seconds).
-        ///             Serialized Name: ProcessInfo.properties.iis_profile_timeout_in_seconds
-        /// </param>
-        /// <param name="parent">
-        /// Parent process.
-        ///             Serialized Name: ProcessInfo.properties.parent
-        /// </param>
-        /// <param name="children">
-        /// Child process list.
-        ///             Serialized Name: ProcessInfo.properties.children
-        /// </param>
-        /// <param name="processThreads">
-        /// Thread list.
-        ///             Serialized Name: ProcessInfo.properties.threads
-        /// </param>
-        /// <param name="openFileHandles">
-        /// List of open files.
-        ///             Serialized Name: ProcessInfo.properties.open_file_handles
-        /// </param>
-        /// <param name="modules">
-        /// List of modules.
-        ///             Serialized Name: ProcessInfo.properties.modules
-        /// </param>
-        /// <param name="fileName">
-        /// File name of this process.
-        ///             Serialized Name: ProcessInfo.properties.file_name
-        /// </param>
-        /// <param name="commandLine">
-        /// Command line.
-        ///             Serialized Name: ProcessInfo.properties.command_line
-        /// </param>
-        /// <param name="userName">
-        /// User name.
-        ///             Serialized Name: ProcessInfo.properties.user_name
-        /// </param>
-        /// <param name="handleCount">
-        /// Handle count.
-        ///             Serialized Name: ProcessInfo.properties.handle_count
-        /// </param>
-        /// <param name="moduleCount">
-        /// Module count.
-        ///             Serialized Name: ProcessInfo.properties.module_count
-        /// </param>
-        /// <param name="threadCount">
-        /// Thread count.
-        ///             Serialized Name: ProcessInfo.properties.thread_count
-        /// </param>
-        /// <param name="startOn">
-        /// Start time.
-        ///             Serialized Name: ProcessInfo.properties.start_time
-        /// </param>
-        /// <param name="totalCpuTime">
-        /// Total CPU time.
-        ///             Serialized Name: ProcessInfo.properties.total_cpu_time
-        /// </param>
-        /// <param name="userCpuTime">
-        /// User CPU time.
-        ///             Serialized Name: ProcessInfo.properties.user_cpu_time
-        /// </param>
-        /// <param name="privilegedCpuTime">
-        /// Privileged CPU time.
-        ///             Serialized Name: ProcessInfo.properties.privileged_cpu_time
-        /// </param>
-        /// <param name="workingSet">
-        /// Working set.
-        ///             Serialized Name: ProcessInfo.properties.working_set
-        /// </param>
-        /// <param name="peakWorkingSet">
-        /// Peak working set.
-        ///             Serialized Name: ProcessInfo.properties.peak_working_set
-        /// </param>
-        /// <param name="privateMemory">
-        /// Private memory size.
-        ///             Serialized Name: ProcessInfo.properties.private_memory
-        /// </param>
-        /// <param name="virtualMemory">
-        /// Virtual memory size.
-        ///             Serialized Name: ProcessInfo.properties.virtual_memory
-        /// </param>
-        /// <param name="peakVirtualMemory">
-        /// Peak virtual memory usage.
-        ///             Serialized Name: ProcessInfo.properties.peak_virtual_memory
-        /// </param>
-        /// <param name="pagedSystemMemory">
-        /// Paged system memory.
-        ///             Serialized Name: ProcessInfo.properties.paged_system_memory
-        /// </param>
-        /// <param name="nonPagedSystemMemory">
-        /// Non-paged system memory.
-        ///             Serialized Name: ProcessInfo.properties.non_paged_system_memory
-        /// </param>
-        /// <param name="pagedMemory">
-        /// Paged memory.
-        ///             Serialized Name: ProcessInfo.properties.paged_memory
-        /// </param>
-        /// <param name="peakPagedMemory">
-        /// Peak paged memory.
-        ///             Serialized Name: ProcessInfo.properties.peak_paged_memory
-        /// </param>
-        /// <param name="timeStamp">
-        /// Time stamp.
-        ///             Serialized Name: ProcessInfo.properties.time_stamp
-        /// </param>
-        /// <param name="environmentVariables">
-        /// List of environment variables.
-        ///             Serialized Name: ProcessInfo.properties.environment_variables
-        /// </param>
-        /// <param name="isScmSite">
-        /// Is this the SCM site?
-        ///             Serialized Name: ProcessInfo.properties.is_scm_site
-        /// </param>
-        /// <param name="isWebjob">
-        /// Is this a Web Job?
-        ///             Serialized Name: ProcessInfo.properties.is_webjob
-        /// </param>
-        /// <param name="description">
-        /// Description of process.
-        ///             Serialized Name: ProcessInfo.properties.description
-        /// </param>
+        /// <summary> Process Information. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="identifier"> ARM Identifier for deployment. </param>
+        /// <param name="deploymentName"> Deployment name. </param>
+        /// <param name="href"> HRef URI. </param>
+        /// <param name="minidump"> Minidump URI. </param>
+        /// <param name="isProfileRunning"> Is profile running?. </param>
+        /// <param name="isIisProfileRunning"> Is the IIS Profile running?. </param>
+        /// <param name="iisProfileTimeoutInSeconds"> IIS Profile timeout (seconds). </param>
+        /// <param name="parent"> Parent process. </param>
+        /// <param name="children"> Child process list. </param>
+        /// <param name="processThreads"> Thread list. </param>
+        /// <param name="openFileHandles"> List of open files. </param>
+        /// <param name="modules"> List of modules. </param>
+        /// <param name="fileName"> File name of this process. </param>
+        /// <param name="commandLine"> Command line. </param>
+        /// <param name="userName"> User name. </param>
+        /// <param name="handleCount"> Handle count. </param>
+        /// <param name="moduleCount"> Module count. </param>
+        /// <param name="threadCount"> Thread count. </param>
+        /// <param name="startOn"></param>
+        /// <param name="totalCpuTime"> Total CPU time. </param>
+        /// <param name="userCpuTime"> User CPU time. </param>
+        /// <param name="privilegedCpuTime"> Privileged CPU time. </param>
+        /// <param name="workingSet"> Working set. </param>
+        /// <param name="peakWorkingSet"> Peak working set. </param>
+        /// <param name="privateMemory"> Private memory size. </param>
+        /// <param name="virtualMemory"> Virtual memory size. </param>
+        /// <param name="peakVirtualMemory"> Peak virtual memory usage. </param>
+        /// <param name="pagedSystemMemory"> Paged system memory. </param>
+        /// <param name="nonPagedSystemMemory"> Non-paged system memory. </param>
+        /// <param name="pagedMemory"> Paged memory. </param>
+        /// <param name="peakPagedMemory"> Peak paged memory. </param>
+        /// <param name="timeStamp"> Time stamp. </param>
+        /// <param name="environmentVariables"> List of environment variables. </param>
+        /// <param name="isScmSite"> Is this the SCM site?. </param>
+        /// <param name="isWebjob"> Is this a Web Job?. </param>
+        /// <param name="description"> Description of process. </param>
         /// <returns> A new <see cref="AppService.ProcessInfoData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProcessInfoData ProcessInfoData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, int? identifier = default, string deploymentName = default, string href = default, string minidump = default, bool? isProfileRunning = default, bool? isIisProfileRunning = default, double? iisProfileTimeoutInSeconds = default, string parent = default, IEnumerable<string> children = default, IEnumerable<WebAppProcessThreadProperties> processThreads = default, IEnumerable<string> openFileHandles = default, IEnumerable<ProcessModuleInfoData> modules = default, string fileName = default, string commandLine = default, string userName = default, int? handleCount = default, int? moduleCount = default, int? threadCount = default, DateTimeOffset? startOn = default, string totalCpuTime = default, string userCpuTime = default, string privilegedCpuTime = default, long? workingSet = default, long? peakWorkingSet = default, long? privateMemory = default, long? virtualMemory = default, long? peakVirtualMemory = default, long? pagedSystemMemory = default, long? nonPagedSystemMemory = default, long? pagedMemory = default, long? peakPagedMemory = default, DateTimeOffset? timeStamp = default, IDictionary<string, string> environmentVariables = default, bool? isScmSite = default, bool? isWebjob = default, string description = default)
@@ -13018,7 +11646,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                identifier is null && deploymentName is null && href is null && minidump is null && isProfileRunning is null && isIisProfileRunning is null && iisProfileTimeoutInSeconds is null && parent is null && children is null && processThreads is null && openFileHandles is null && modules is null && fileName is null && commandLine is null && userName is null && handleCount is null && moduleCount is null && threadCount is null && startOn is null && totalCpuTime is null && userCpuTime is null && privilegedCpuTime is null && workingSet is null && peakWorkingSet is null && privateMemory is null && virtualMemory is null && peakVirtualMemory is null && pagedSystemMemory is null && nonPagedSystemMemory is null && pagedMemory is null && peakPagedMemory is null && timeStamp is null && environmentVariables is null && isScmSite is null && isWebjob is null && description is null ? default : new ProcessInfoProperties(
+                identifier is null && deploymentName is null && href is null && minidump is null && isProfileRunning is null && isIisProfileRunning is null && iisProfileTimeoutInSeconds is null && parent is null && children is null && processThreads is null && openFileHandles is null && modules is null && fileName is null && commandLine is null && userName is null && handleCount is null && moduleCount is null && threadCount is null && totalCpuTime is null && userCpuTime is null && privilegedCpuTime is null && workingSet is null && peakWorkingSet is null && privateMemory is null && virtualMemory is null && peakVirtualMemory is null && pagedSystemMemory is null && nonPagedSystemMemory is null && pagedMemory is null && peakPagedMemory is null && timeStamp is null && environmentVariables is null && isScmSite is null && isWebjob is null && description is null ? default : new ProcessInfoProperties(
                     identifier,
                     deploymentName,
                     href,
@@ -13037,7 +11665,7 @@ namespace Azure.ResourceManager.AppService.Models
                     handleCount,
                     moduleCount,
                     threadCount,
-                    startOn,
+                    default,
                     totalCpuTime,
                     userCpuTime,
                     privilegedCpuTime,
@@ -13060,59 +11688,23 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.ProcessModuleInfoData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: ProcessModuleInfo.kind
-        /// </param>
-        /// <param name="baseAddress">
-        /// Base address. Used as module identifier in ARM resource URI.
-        ///             Serialized Name: ProcessModuleInfo.properties.base_address
-        /// </param>
-        /// <param name="fileName">
-        /// File name.
-        ///             Serialized Name: ProcessModuleInfo.properties.file_name
-        /// </param>
-        /// <param name="href">
-        /// HRef URI.
-        ///             Serialized Name: ProcessModuleInfo.properties.href
-        /// </param>
-        /// <param name="filePath">
-        /// File path.
-        ///             Serialized Name: ProcessModuleInfo.properties.file_path
-        /// </param>
-        /// <param name="moduleMemorySize">
-        /// Module memory size.
-        ///             Serialized Name: ProcessModuleInfo.properties.module_memory_size
-        /// </param>
-        /// <param name="fileVersion">
-        /// File version.
-        ///             Serialized Name: ProcessModuleInfo.properties.file_version
-        /// </param>
-        /// <param name="fileDescription">
-        /// File description.
-        ///             Serialized Name: ProcessModuleInfo.properties.file_description
-        /// </param>
-        /// <param name="product">
-        /// Product name.
-        ///             Serialized Name: ProcessModuleInfo.properties.product
-        /// </param>
-        /// <param name="productVersion">
-        /// Product version.
-        ///             Serialized Name: ProcessModuleInfo.properties.product_version
-        /// </param>
-        /// <param name="isDebug">
-        /// Is debug?
-        ///             Serialized Name: ProcessModuleInfo.properties.is_debug
-        /// </param>
-        /// <param name="language">
-        /// Module language (locale).
-        ///             Serialized Name: ProcessModuleInfo.properties.language
-        /// </param>
+        /// <summary> Process Module Information. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="baseAddress"> Base address. Used as module identifier in ARM resource URI. </param>
+        /// <param name="fileName"> File name. </param>
+        /// <param name="href"> HRef URI. </param>
+        /// <param name="filePath"> File path. </param>
+        /// <param name="moduleMemorySize"> Module memory size. </param>
+        /// <param name="fileVersion"> File version. </param>
+        /// <param name="fileDescription"> File description. </param>
+        /// <param name="product"> Product name. </param>
+        /// <param name="productVersion"> Product version. </param>
+        /// <param name="isDebug"> Is debug?. </param>
+        /// <param name="language"> Module language (locale). </param>
         /// <returns> A new <see cref="AppService.ProcessModuleInfoData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProcessModuleInfoData ProcessModuleInfoData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string baseAddress = default, string fileName = default, string href = default, string filePath = default, int? moduleMemorySize = default, string fileVersion = default, string fileDescription = default, string product = default, string productVersion = default, bool? isDebug = default, string language = default)
@@ -13139,27 +11731,15 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.MigrateMySqlStatusData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: MigrateMySqlStatus.kind
-        /// </param>
-        /// <param name="migrationOperationStatus">
-        /// Status of the migration task.
-        ///             Serialized Name: MigrateMySqlStatus.properties.migrationOperationStatus
-        /// </param>
-        /// <param name="operationId">
-        /// Operation ID for the migration task.
-        ///             Serialized Name: MigrateMySqlStatus.properties.operationId
-        /// </param>
-        /// <param name="isLocalMySqlEnabled">
-        /// True if the web app has in app MySql enabled
-        ///             Serialized Name: MigrateMySqlStatus.properties.localMySqlEnabled
-        /// </param>
+        /// <summary> MySQL migration status. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="migrationOperationStatus"> Status of the migration task. </param>
+        /// <param name="operationId"> Operation ID for the migration task. </param>
+        /// <param name="isLocalMySqlEnabled"> True if the web app has in app MySql enabled. </param>
         /// <returns> A new <see cref="AppService.MigrateMySqlStatusData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MigrateMySqlStatusData MigrateMySqlStatusData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, AppServiceOperationStatus? migrationOperationStatus = default, string operationId = default, bool? isLocalMySqlEnabled = default)
@@ -13174,23 +11754,14 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.SwiftVirtualNetworkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: SwiftVirtualNetwork.kind
-        /// </param>
-        /// <param name="subnetResourceId">
-        /// The Virtual Network subnet's resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first.
-        ///             Serialized Name: SwiftVirtualNetwork.properties.subnetResourceId
-        /// </param>
-        /// <param name="isSwiftSupported">
-        /// A flag that specifies if the scale unit this Web App is on supports Swift integration.
-        ///             Serialized Name: SwiftVirtualNetwork.properties.swiftSupported
-        /// </param>
+        /// <summary> Swift Virtual Network Contract. This is used to enable the new Swift way of doing virtual network integration. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="subnetResourceId"> The Virtual Network subnet's resource ID. This is the subnet that this Web App will join. This subnet must have a delegation to Microsoft.Web/serverFarms defined first. </param>
+        /// <param name="isSwiftSupported"> A flag that specifies if the scale unit this Web App is on supports Swift integration. </param>
         /// <returns> A new <see cref="AppService.SwiftVirtualNetworkData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SwiftVirtualNetworkData SwiftVirtualNetworkData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, ResourceIdentifier subnetResourceId = default, bool? isSwiftSupported = default)
@@ -13205,31 +11776,16 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.NetworkFeatureData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: NetworkFeatures.kind
-        /// </param>
-        /// <param name="virtualNetworkName">
-        /// The Virtual Network name.
-        ///             Serialized Name: NetworkFeatures.properties.virtualNetworkName
-        /// </param>
-        /// <param name="virtualNetworkConnection">
-        /// The Virtual Network summary view.
-        ///             Serialized Name: NetworkFeatures.properties.virtualNetworkConnection
-        /// </param>
-        /// <param name="hybridConnections">
-        /// The Hybrid Connections summary view.
-        ///             Serialized Name: NetworkFeatures.properties.hybridConnections
-        /// </param>
-        /// <param name="hybridConnectionsV2">
-        /// The Hybrid Connection V2 (Service Bus) view.
-        ///             Serialized Name: NetworkFeatures.properties.hybridConnectionsV2
-        /// </param>
+        /// <summary> Full view of network features for an app (presently VNET integration and Hybrid Connections). </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="virtualNetworkName"> The Virtual Network name. </param>
+        /// <param name="virtualNetworkConnection"> The Virtual Network summary view. </param>
+        /// <param name="hybridConnections"> The Hybrid Connections summary view. </param>
+        /// <param name="hybridConnectionsV2"> The Hybrid Connection V2 (Service Bus) view. </param>
         /// <returns> A new <see cref="AppService.NetworkFeatureData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkFeatureData NetworkFeatureData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string virtualNetworkName = default, AppServiceVirtualNetworkProperties virtualNetworkConnection = default, IEnumerable<RelayServiceConnectionEntityData> hybridConnections = default, IEnumerable<HybridConnectionData> hybridConnectionsV2 = default)
@@ -13244,23 +11800,14 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.PrivateAccessData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: PrivateAccess.kind
-        /// </param>
-        /// <param name="isEnabled">
-        /// Whether private access is enabled or not.
-        ///             Serialized Name: PrivateAccess.properties.enabled
-        /// </param>
-        /// <param name="virtualNetworks">
-        /// The Virtual Networks (and subnets) allowed to access the site privately.
-        ///             Serialized Name: PrivateAccess.properties.virtualNetworks
-        /// </param>
+        /// <summary> Description of the parameters of Private Access for a Web Site. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="isEnabled"> Whether private access is enabled or not. </param>
+        /// <param name="virtualNetworks"> The Virtual Networks (and subnets) allowed to access the site privately. </param>
         /// <returns> A new <see cref="AppService.PrivateAccessData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PrivateAccessData PrivateAccessData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, bool? isEnabled = default, IEnumerable<PrivateAccessVirtualNetwork> virtualNetworks = default)
@@ -13275,27 +11822,15 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.PublicCertificateData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: PublicCertificate.kind
-        /// </param>
-        /// <param name="blob">
-        /// Public Certificate byte array
-        ///             Serialized Name: PublicCertificate.properties.blob
-        /// </param>
-        /// <param name="publicCertificateLocation">
-        /// Public Certificate Location
-        ///             Serialized Name: PublicCertificate.properties.publicCertificateLocation
-        /// </param>
-        /// <param name="thumbprintString">
-        /// Certificate Thumbprint
-        ///             Serialized Name: PublicCertificate.properties.thumbprint
-        /// </param>
+        /// <summary> Public certificate object. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="blob"></param>
+        /// <param name="publicCertificateLocation"> Public Certificate Location. </param>
+        /// <param name="thumbprintString"> Certificate Thumbprint. </param>
         /// <returns> A new <see cref="AppService.PublicCertificateData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static PublicCertificateData PublicCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, byte[] blob = default, PublicCertificateLocation? publicCertificateLocation = default, string thumbprintString = default)
@@ -13310,67 +11845,25 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.SiteContainerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: SiteContainer.kind
-        /// </param>
-        /// <param name="image">
-        /// Image Name
-        ///             Serialized Name: SiteContainer.properties.image
-        /// </param>
-        /// <param name="targetPort">
-        /// Target Port
-        ///             Serialized Name: SiteContainer.properties.targetPort
-        /// </param>
-        /// <param name="isMain">
-        /// &lt;code&gt;true&lt;/code&gt; if the container is the main site container; &lt;code&gt;false&lt;/code&gt; otherwise.
-        ///             Serialized Name: SiteContainer.properties.isMain
-        /// </param>
-        /// <param name="startUpCommand">
-        /// StartUp Command
-        ///             Serialized Name: SiteContainer.properties.startUpCommand
-        /// </param>
-        /// <param name="authType">
-        /// Auth Type
-        ///             Serialized Name: SiteContainer.properties.authType
-        /// </param>
-        /// <param name="userName">
-        /// User Name
-        ///             Serialized Name: SiteContainer.properties.userName
-        /// </param>
-        /// <param name="passwordSecret">
-        /// Password Secret
-        ///             Serialized Name: SiteContainer.properties.passwordSecret
-        /// </param>
-        /// <param name="userManagedIdentityClientId">
-        /// UserManagedIdentity ClientId
-        ///             Serialized Name: SiteContainer.properties.userManagedIdentityClientId
-        /// </param>
-        /// <param name="createdOn">
-        /// Created Time
-        ///             Serialized Name: SiteContainer.properties.createdTime
-        /// </param>
-        /// <param name="lastModifiedOn">
-        /// Last Modified Time
-        ///             Serialized Name: SiteContainer.properties.lastModifiedTime
-        /// </param>
-        /// <param name="volumeMounts">
-        /// List of volume mounts
-        ///             Serialized Name: SiteContainer.properties.volumeMounts
-        /// </param>
-        /// <param name="inheritAppSettingsAndConnectionStrings">
-        /// &lt;code&gt;true&lt;/code&gt; if all AppSettings and ConnectionStrings have to be passed to the container as environment variables; &lt;code&gt;false&lt;/code&gt; otherwise.
-        ///             Serialized Name: SiteContainer.properties.inheritAppSettingsAndConnectionStrings
-        /// </param>
-        /// <param name="environmentVariables">
-        /// List of environment variables
-        ///             Serialized Name: SiteContainer.properties.environmentVariables
-        /// </param>
+        /// <summary> Container of a site. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="image"> Image Name. </param>
+        /// <param name="targetPort"> Target Port. </param>
+        /// <param name="isMain"> &lt;code&gt;true&lt;/code&gt; if the container is the main site container; &lt;code&gt;false&lt;/code&gt; otherwise. </param>
+        /// <param name="startUpCommand"> StartUp Command. </param>
+        /// <param name="authType"> Auth Type. </param>
+        /// <param name="userName"> User Name. </param>
+        /// <param name="passwordSecret"> Password Secret. </param>
+        /// <param name="userManagedIdentityClientId"> UserManagedIdentity ClientId. </param>
+        /// <param name="createdOn"> Created Time. </param>
+        /// <param name="lastModifiedOn"> Last Modified Time. </param>
+        /// <param name="volumeMounts"> List of volume mounts. </param>
+        /// <param name="inheritAppSettingsAndConnectionStrings"> &lt;code&gt;true&lt;/code&gt; if all AppSettings and ConnectionStrings have to be passed to the container as environment variables; &lt;code&gt;false&lt;/code&gt; otherwise. </param>
+        /// <param name="environmentVariables"> List of environment variables. </param>
         /// <returns> A new <see cref="AppService.SiteContainerData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SiteContainerData SiteContainerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string image = default, string targetPort = default, bool? isMain = default, string startUpCommand = default, SiteContainerAuthType? authType = default, string userName = default, string passwordSecret = default, string userManagedIdentityClientId = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastModifiedOn = default, IEnumerable<SiteContainerVolumeMount> volumeMounts = default, bool? inheritAppSettingsAndConnectionStrings = default, IEnumerable<WebAppEnvironmentVariable> environmentVariables = default)
@@ -13399,92 +11892,32 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.SiteExtensionInfoData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: SiteExtensionInfo.kind
-        /// </param>
-        /// <param name="extensionId">
-        /// Site extension ID.
-        ///             Serialized Name: SiteExtensionInfo.properties.extension_id
-        /// </param>
-        /// <param name="title"> Serialized Name: SiteExtensionInfo.properties.title. </param>
-        /// <param name="extensionType">
-        /// Site extension type.
-        ///             Serialized Name: SiteExtensionInfo.properties.extension_type
-        /// </param>
-        /// <param name="summary">
-        /// Summary description.
-        ///             Serialized Name: SiteExtensionInfo.properties.summary
-        /// </param>
-        /// <param name="description">
-        /// Detailed description.
-        ///             Serialized Name: SiteExtensionInfo.properties.description
-        /// </param>
-        /// <param name="version">
-        /// Version information.
-        ///             Serialized Name: SiteExtensionInfo.properties.version
-        /// </param>
-        /// <param name="extensionUri">
-        /// Extension URL.
-        ///             Serialized Name: SiteExtensionInfo.properties.extension_url
-        /// </param>
-        /// <param name="projectUri">
-        /// Project URL.
-        ///             Serialized Name: SiteExtensionInfo.properties.project_url
-        /// </param>
-        /// <param name="iconUri">
-        /// Icon URL.
-        ///             Serialized Name: SiteExtensionInfo.properties.icon_url
-        /// </param>
-        /// <param name="licenseUri">
-        /// License URL.
-        ///             Serialized Name: SiteExtensionInfo.properties.license_url
-        /// </param>
-        /// <param name="feedUri">
-        /// Feed URL.
-        ///             Serialized Name: SiteExtensionInfo.properties.feed_url
-        /// </param>
-        /// <param name="authors">
-        /// List of authors.
-        ///             Serialized Name: SiteExtensionInfo.properties.authors
-        /// </param>
-        /// <param name="installerCommandLineParams">
-        /// Installer command line parameters.
-        ///             Serialized Name: SiteExtensionInfo.properties.installer_command_line_params
-        /// </param>
-        /// <param name="publishedOn">
-        /// Published timestamp.
-        ///             Serialized Name: SiteExtensionInfo.properties.published_date_time
-        /// </param>
-        /// <param name="downloadCount">
-        /// Count of downloads.
-        ///             Serialized Name: SiteExtensionInfo.properties.download_count
-        /// </param>
-        /// <param name="localIsLatestVersion">
-        /// &lt;code&gt;true&lt;/code&gt; if the local version is the latest version; &lt;code&gt;false&lt;/code&gt; otherwise.
-        ///             Serialized Name: SiteExtensionInfo.properties.local_is_latest_version
-        /// </param>
-        /// <param name="localPath">
-        /// Local path.
-        ///             Serialized Name: SiteExtensionInfo.properties.local_path
-        /// </param>
-        /// <param name="installedOn">
-        /// Installed timestamp.
-        ///             Serialized Name: SiteExtensionInfo.properties.installed_date_time
-        /// </param>
-        /// <param name="provisioningState">
-        /// Provisioning state.
-        ///             Serialized Name: SiteExtensionInfo.properties.provisioningState
-        /// </param>
-        /// <param name="comment">
-        /// Site Extension comment.
-        ///             Serialized Name: SiteExtensionInfo.properties.comment
-        /// </param>
+        /// <summary> Site Extension Information. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="extensionId"> Site extension ID. </param>
+        /// <param name="title"></param>
+        /// <param name="extensionType"> Site extension type. </param>
+        /// <param name="summary"> Summary description. </param>
+        /// <param name="description"> Detailed description. </param>
+        /// <param name="version"> Version information. </param>
+        /// <param name="extensionUri"> Extension URL. </param>
+        /// <param name="projectUri"> Project URL. </param>
+        /// <param name="iconUri"> Icon URL. </param>
+        /// <param name="licenseUri"> License URL. </param>
+        /// <param name="feedUri"> Feed URL. </param>
+        /// <param name="authors"> List of authors. </param>
+        /// <param name="installerCommandLineParams"> Installer command line parameters. </param>
+        /// <param name="publishedOn"> Published timestamp. </param>
+        /// <param name="downloadCount"> Count of downloads. </param>
+        /// <param name="localIsLatestVersion"> &lt;code&gt;true&lt;/code&gt; if the local version is the latest version; &lt;code&gt;false&lt;/code&gt; otherwise. </param>
+        /// <param name="localPath"> Local path. </param>
+        /// <param name="installedOn"> Installed timestamp. </param>
+        /// <param name="provisioningState"> Provisioning state. </param>
+        /// <param name="comment"> Site Extension comment. </param>
         /// <returns> A new <see cref="AppService.SiteExtensionInfoData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SiteExtensionInfoData SiteExtensionInfoData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string extensionId = default, string title = default, SiteExtensionType? extensionType = default, string summary = default, string description = default, string version = default, Uri extensionUri = default, Uri projectUri = default, Uri iconUri = default, Uri licenseUri = default, Uri feedUri = default, IEnumerable<string> authors = default, string installerCommandLineParams = default, DateTimeOffset? publishedOn = default, int? downloadCount = default, bool? localIsLatestVersion = default, string localPath = default, DateTimeOffset? installedOn = default, string provisioningState = default, string comment = default)
@@ -13520,43 +11953,19 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.SiteSourceControlData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: SiteSourceControl.kind
-        /// </param>
-        /// <param name="repoUri">
-        /// Repository or source control URL.
-        ///             Serialized Name: SiteSourceControl.properties.repoUrl
-        /// </param>
-        /// <param name="branch">
-        /// Name of branch to use for deployment.
-        ///             Serialized Name: SiteSourceControl.properties.branch
-        /// </param>
-        /// <param name="isManualIntegration">
-        /// &lt;code&gt;true&lt;/code&gt; to limit to manual integration; &lt;code&gt;false&lt;/code&gt; to enable continuous integration (which configures webhooks into online repos like GitHub).
-        ///             Serialized Name: SiteSourceControl.properties.isManualIntegration
-        /// </param>
-        /// <param name="isGitHubAction">
-        /// &lt;code&gt;true&lt;/code&gt; if this is deployed via GitHub action.
-        ///             Serialized Name: SiteSourceControl.properties.isGitHubAction
-        /// </param>
-        /// <param name="isDeploymentRollbackEnabled">
-        /// &lt;code&gt;true&lt;/code&gt; to enable deployment rollback; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///             Serialized Name: SiteSourceControl.properties.deploymentRollbackEnabled
-        /// </param>
-        /// <param name="isMercurial">
-        /// &lt;code&gt;true&lt;/code&gt; for a Mercurial repository; &lt;code&gt;false&lt;/code&gt; for a Git repository.
-        ///             Serialized Name: SiteSourceControl.properties.isMercurial
-        /// </param>
-        /// <param name="gitHubActionConfiguration">
-        /// If GitHub Action is selected, than the associated configuration.
-        ///             Serialized Name: SiteSourceControl.properties.gitHubActionConfiguration
-        /// </param>
+        /// <summary> Source control configuration for an app. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="repoUri"> Repository or source control URL. </param>
+        /// <param name="branch"> Name of branch to use for deployment. </param>
+        /// <param name="isManualIntegration"> &lt;code&gt;true&lt;/code&gt; to limit to manual integration; &lt;code&gt;false&lt;/code&gt; to enable continuous integration (which configures webhooks into online repos like GitHub). </param>
+        /// <param name="isGitHubAction"> &lt;code&gt;true&lt;/code&gt; if this is deployed via GitHub action. </param>
+        /// <param name="isDeploymentRollbackEnabled"> &lt;code&gt;true&lt;/code&gt; to enable deployment rollback; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
+        /// <param name="isMercurial"> &lt;code&gt;true&lt;/code&gt; for a Mercurial repository; &lt;code&gt;false&lt;/code&gt; for a Git repository. </param>
+        /// <param name="gitHubActionConfiguration"> If GitHub Action is selected, than the associated configuration. </param>
         /// <returns> A new <see cref="AppService.SiteSourceControlData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SiteSourceControlData SiteSourceControlData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, Uri repoUri = default, string branch = default, bool? isManualIntegration = default, bool? isGitHubAction = default, bool? isDeploymentRollbackEnabled = default, bool? isMercurial = default, GitHubActionConfiguration gitHubActionConfiguration = default)
@@ -13579,63 +11988,24 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.TriggeredWebJobData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: TriggeredWebJob.kind
-        /// </param>
-        /// <param name="latestRun">
-        /// Latest job run information.
-        ///             Serialized Name: TriggeredWebJob.properties.latest_run
-        /// </param>
-        /// <param name="historyUri">
-        /// History URL.
-        ///             Serialized Name: TriggeredWebJob.properties.history_url
-        /// </param>
-        /// <param name="schedulerLogsUri">
-        /// Scheduler Logs URL.
-        ///             Serialized Name: TriggeredWebJob.properties.scheduler_logs_url
-        /// </param>
-        /// <param name="runCommand">
-        /// Run command.
-        ///             Serialized Name: TriggeredWebJob.properties.run_command
-        /// </param>
-        /// <param name="uri">
-        /// Job URL.
-        ///             Serialized Name: TriggeredWebJob.properties.url
-        /// </param>
-        /// <param name="extraInfoUri">
-        /// Extra Info URL.
-        ///             Serialized Name: TriggeredWebJob.properties.extra_info_url
-        /// </param>
-        /// <param name="webJobType">
-        /// Job type.
-        ///             Serialized Name: TriggeredWebJob.properties.web_job_type
-        /// </param>
-        /// <param name="error">
-        /// Error information.
-        ///             Serialized Name: TriggeredWebJob.properties.error
-        /// </param>
-        /// <param name="isUsingSdk">
-        /// Using SDK?
-        ///             Serialized Name: TriggeredWebJob.properties.using_sdk
-        /// </param>
-        /// <param name="publicNetworkAccess">
-        /// Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string.
-        ///             Serialized Name: TriggeredWebJob.properties.publicNetworkAccess
-        /// </param>
-        /// <param name="isStorageAccountRequired">
-        /// Checks if Customer provided storage account is required
-        ///             Serialized Name: TriggeredWebJob.properties.storageAccountRequired
-        /// </param>
-        /// <param name="settings">
-        /// Job settings.
-        ///             Serialized Name: TriggeredWebJob.properties.settings
-        /// </param>
+        /// <summary> Triggered Web Job Information. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="latestRun"> Latest job run information. </param>
+        /// <param name="historyUri"> History URL. </param>
+        /// <param name="schedulerLogsUri"> Scheduler Logs URL. </param>
+        /// <param name="runCommand"> Run command. </param>
+        /// <param name="uri"> Job URL. </param>
+        /// <param name="extraInfoUri"> Extra Info URL. </param>
+        /// <param name="webJobType"> Job type. </param>
+        /// <param name="error"> Error information. </param>
+        /// <param name="isUsingSdk"> Using SDK?. </param>
+        /// <param name="publicNetworkAccess"> Property to allow or block all public traffic. Allowed Values: 'Enabled', 'Disabled' or an empty string. </param>
+        /// <param name="isStorageAccountRequired"> Checks if Customer provided storage account is required. </param>
+        /// <param name="settings"> Job settings. </param>
         /// <returns> A new <see cref="AppService.TriggeredWebJobData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static TriggeredWebJobData TriggeredWebJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, TriggeredJobRun latestRun = default, Uri historyUri = default, Uri schedulerLogsUri = default, string runCommand = default, Uri uri = default, Uri extraInfoUri = default, WebJobType? webJobType = default, string error = default, bool? isUsingSdk = default, string publicNetworkAccess = default, bool? isStorageAccountRequired = default, IDictionary<string, BinaryData> settings = default)
@@ -13663,19 +12033,13 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.TriggeredJobHistoryData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: TriggeredJobHistory.kind
-        /// </param>
-        /// <param name="runs">
-        /// List of triggered web job runs.
-        ///             Serialized Name: TriggeredJobHistory.properties.runs
-        /// </param>
+        /// <summary> Triggered Web Job History. List of Triggered Web Job Run Information elements. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="runs"> List of triggered web job runs. </param>
         /// <returns> A new <see cref="AppService.TriggeredJobHistoryData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static TriggeredJobHistoryData TriggeredJobHistoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, IEnumerable<TriggeredJobRun> runs = default)
@@ -13690,43 +12054,19 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.WebJobData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: WebJob.kind
-        /// </param>
-        /// <param name="runCommand">
-        /// Run command.
-        ///             Serialized Name: WebJob.properties.run_command
-        /// </param>
-        /// <param name="uri">
-        /// Job URL.
-        ///             Serialized Name: WebJob.properties.url
-        /// </param>
-        /// <param name="extraInfoUri">
-        /// Extra Info URL.
-        ///             Serialized Name: WebJob.properties.extra_info_url
-        /// </param>
-        /// <param name="webJobType">
-        /// Job type.
-        ///             Serialized Name: WebJob.properties.web_job_type
-        /// </param>
-        /// <param name="error">
-        /// Error information.
-        ///             Serialized Name: WebJob.properties.error
-        /// </param>
-        /// <param name="isUsingSdk">
-        /// Using SDK?
-        ///             Serialized Name: WebJob.properties.using_sdk
-        /// </param>
-        /// <param name="settings">
-        /// Job settings.
-        ///             Serialized Name: WebJob.properties.settings
-        /// </param>
+        /// <summary> Web Job Information. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="runCommand"> Run command. </param>
+        /// <param name="uri"> Job URL. </param>
+        /// <param name="extraInfoUri"> Extra Info URL. </param>
+        /// <param name="webJobType"> Job type. </param>
+        /// <param name="error"> Error information. </param>
+        /// <param name="isUsingSdk"> Using SDK?. </param>
+        /// <param name="settings"> Job settings. </param>
         /// <returns> A new <see cref="AppService.WebJobData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WebJobData WebJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string runCommand = default, Uri uri = default, Uri extraInfoUri = default, WebJobType? webJobType = default, string error = default, bool? isUsingSdk = default, IDictionary<string, BinaryData> settings = default)
@@ -13749,35 +12089,17 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteBasicAuthPropertyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: StaticSiteBasicAuthPropertiesARMResource.kind
-        /// </param>
-        /// <param name="password">
-        /// The password for basic auth.
-        ///             Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.password
-        /// </param>
-        /// <param name="secretUri">
-        /// Url to the secret in Key Vault.
-        ///             Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.secretUrl
-        /// </param>
-        /// <param name="applicableEnvironmentsMode">
-        /// State indicating if basic auth is enabled and for what environments it is active.
-        ///             Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.applicableEnvironmentsMode
-        /// </param>
-        /// <param name="environments">
-        /// The list of enabled environments for Basic Auth if ApplicableEnvironmentsMode is set to SpecifiedEnvironments.
-        ///             Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.environments
-        /// </param>
-        /// <param name="secretState">
-        /// State indicating if basic auth has a secret and what type it is.
-        ///             Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.secretState
-        /// </param>
+        /// <summary> Static site basic auth properties ARM resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="password"> The password for basic auth. </param>
+        /// <param name="secretUri"> Url to the secret in Key Vault. </param>
+        /// <param name="applicableEnvironmentsMode"> State indicating if basic auth is enabled and for what environments it is active. </param>
+        /// <param name="environments"> The list of enabled environments for Basic Auth if ApplicableEnvironmentsMode is set to SpecifiedEnvironments. </param>
+        /// <param name="secretState"> State indicating if basic auth has a secret and what type it is. </param>
         /// <returns> A new <see cref="AppService.StaticSiteBasicAuthPropertyData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StaticSiteBasicAuthPropertyData StaticSiteBasicAuthPropertyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string password = default, Uri secretUri = default, string applicableEnvironmentsMode = default, IEnumerable<string> environments = default, string secretState = default)
@@ -13798,55 +12120,22 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteBuildData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: StaticSiteBuildARMResource.kind
-        /// </param>
-        /// <param name="buildId">
-        /// An identifier for the static site build.
-        ///             Serialized Name: StaticSiteBuildARMResource.properties.buildId
-        /// </param>
-        /// <param name="sourceBranch">
-        /// The source branch.
-        ///             Serialized Name: StaticSiteBuildARMResource.properties.sourceBranch
-        /// </param>
-        /// <param name="pullRequestTitle">
-        /// The title of a pull request that a static site build is related to.
-        ///             Serialized Name: StaticSiteBuildARMResource.properties.pullRequestTitle
-        /// </param>
-        /// <param name="hostname">
-        /// The hostname for a static site build.
-        ///             Serialized Name: StaticSiteBuildARMResource.properties.hostname
-        /// </param>
-        /// <param name="createdOn">
-        /// When this build was created.
-        ///             Serialized Name: StaticSiteBuildARMResource.properties.createdTimeUtc
-        /// </param>
-        /// <param name="lastUpdatedOn">
-        /// When this build was updated.
-        ///             Serialized Name: StaticSiteBuildARMResource.properties.lastUpdatedOn
-        /// </param>
-        /// <param name="status">
-        /// The status of the static site build.
-        ///             Serialized Name: StaticSiteBuildARMResource.properties.status
-        /// </param>
-        /// <param name="userProvidedFunctionApps">
-        /// User provided function apps registered with the static site build
-        ///             Serialized Name: StaticSiteBuildARMResource.properties.userProvidedFunctionApps
-        /// </param>
-        /// <param name="linkedBackends">
-        /// Backends linked to the static side build
-        ///             Serialized Name: StaticSiteBuildARMResource.properties.linkedBackends
-        /// </param>
-        /// <param name="databaseConnections">
-        /// Database connections for the static site build
-        ///             Serialized Name: StaticSiteBuildARMResource.properties.databaseConnections
-        /// </param>
+        /// <summary> Static Site Build ARM resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="buildId"> An identifier for the static site build. </param>
+        /// <param name="sourceBranch"> The source branch. </param>
+        /// <param name="pullRequestTitle"> The title of a pull request that a static site build is related to. </param>
+        /// <param name="hostname"> The hostname for a static site build. </param>
+        /// <param name="createdOn"> When this build was created. </param>
+        /// <param name="lastUpdatedOn"> When this build was updated. </param>
+        /// <param name="status"> The status of the static site build. </param>
+        /// <param name="userProvidedFunctionApps"> User provided function apps registered with the static site build. </param>
+        /// <param name="linkedBackends"> Backends linked to the static side build. </param>
+        /// <param name="databaseConnections"> Database connections for the static site build. </param>
         /// <returns> A new <see cref="AppService.StaticSiteBuildData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StaticSiteBuildData StaticSiteBuildData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string buildId = default, string sourceBranch = default, string pullRequestTitle = default, string hostname = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastUpdatedOn = default, StaticSiteBuildStatus? status = default, IEnumerable<StaticSiteUserProvidedFunctionAppData> userProvidedFunctionApps = default, IEnumerable<StaticSiteLinkedBackendInfo> linkedBackends = default, IEnumerable<StaticSiteDatabaseConnectionOverview> databaseConnections = default)
@@ -13872,35 +12161,17 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteDatabaseConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: DatabaseConnection.kind
-        /// </param>
-        /// <param name="resourceId">
-        /// The resource id of the database.
-        ///             Serialized Name: DatabaseConnection.properties.resourceId
-        /// </param>
-        /// <param name="connectionIdentity">
-        /// If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource.
-        ///             Serialized Name: DatabaseConnection.properties.connectionIdentity
-        /// </param>
-        /// <param name="connectionString">
-        /// The connection string to use to connect to the database.
-        ///             Serialized Name: DatabaseConnection.properties.connectionString
-        /// </param>
-        /// <param name="region">
-        /// The region of the database resource.
-        ///             Serialized Name: DatabaseConnection.properties.region
-        /// </param>
-        /// <param name="configurationFiles">
-        /// A list of configuration files associated with this database connection.
-        ///             Serialized Name: DatabaseConnection.properties.configurationFiles
-        /// </param>
+        /// <summary> Static Site Database Connection resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="resourceId"> The resource id of the database. </param>
+        /// <param name="connectionIdentity"> If present, the identity is used in conjunction with connection string to connect to the database. Use of the system-assigned managed identity is indicated with the string 'SystemAssigned', while use of a user-assigned managed identity is indicated with the resource id of the managed identity resource. </param>
+        /// <param name="connectionString"> The connection string to use to connect to the database. </param>
+        /// <param name="region"> The region of the database resource. </param>
+        /// <param name="configurationFiles"> A list of configuration files associated with this database connection. </param>
         /// <returns> A new <see cref="AppService.StaticSiteDatabaseConnectionData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StaticSiteDatabaseConnectionData StaticSiteDatabaseConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, ResourceIdentifier resourceId = default, string connectionIdentity = default, string connectionString = default, string region = default, IEnumerable<StaticSiteDatabaseConnectionConfigurationFileOverview> configurationFiles = default)
@@ -13921,31 +12192,16 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteLinkedBackendData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: StaticSiteLinkedBackendARMResource.kind
-        /// </param>
-        /// <param name="backendResourceId">
-        /// The resource id of the backend linked to the static site
-        ///             Serialized Name: StaticSiteLinkedBackendARMResource.properties.backendResourceId
-        /// </param>
-        /// <param name="region">
-        /// The region of the backend linked to the static site
-        ///             Serialized Name: StaticSiteLinkedBackendARMResource.properties.region
-        /// </param>
-        /// <param name="createdOn">
-        /// The date and time on which the backend was linked to the static site.
-        ///             Serialized Name: StaticSiteLinkedBackendARMResource.properties.createdOn
-        /// </param>
-        /// <param name="provisioningState">
-        /// The provisioning state of the linking process.
-        ///             Serialized Name: StaticSiteLinkedBackendARMResource.properties.provisioningState
-        /// </param>
+        /// <summary> Static Site Linked Backend ARM resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="backendResourceId"> The resource id of the backend linked to the static site. </param>
+        /// <param name="region"> The region of the backend linked to the static site. </param>
+        /// <param name="createdOn"> The date and time on which the backend was linked to the static site. </param>
+        /// <param name="provisioningState"> The provisioning state of the linking process. </param>
         /// <returns> A new <see cref="AppService.StaticSiteLinkedBackendData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StaticSiteLinkedBackendData StaticSiteLinkedBackendData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, ResourceIdentifier backendResourceId = default, string region = default, DateTimeOffset? createdOn = default, string provisioningState = default)
@@ -13960,32 +12216,17 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.StaticSiteCustomDomainOverviewData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        ///             Serialized Name: StaticSiteCustomDomainOverviewARMResource.kind
-        /// </param>
-        /// <param name="domainName">
-        /// The domain name for the static site custom domain.
-        ///             Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.domainName
-        /// </param>
-        /// <param name="createdOn">
-        /// The date and time on which the custom domain was created for the static site.
-        ///             Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.createdOn
-        /// </param>
-        /// <param name="status">
-        /// The status of the custom domain
-        ///             Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.status
-        /// </param>
-        /// <param name="validationToken">
-        /// The TXT record validation token
-        ///             Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.validationToken
-        /// </param>
-        /// <param name="errorMessage"> Serialized Name: StaticSiteCustomDomainOverviewARMResource.properties.errorMessage. </param>
+        /// <summary> Static Site Custom Domain Overview ARM resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="domainName"> The domain name for the static site custom domain. </param>
+        /// <param name="createdOn"> The date and time on which the custom domain was created for the static site. </param>
+        /// <param name="status"> The status of the custom domain. </param>
+        /// <param name="validationToken"> The TXT record validation token. </param>
+        /// <param name="errorMessage"></param>
         /// <returns> A new <see cref="AppService.StaticSiteCustomDomainOverviewData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static StaticSiteCustomDomainOverviewData StaticSiteCustomDomainOverviewData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, string domainName = default, DateTimeOffset? createdOn = default, CustomDomainStatus? status = default, string validationToken = default, string errorMessage = default)
@@ -14006,13 +12247,13 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.AppServicePlanData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> App Service plan. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> Description of a SKU for a scalable resource. </param>
         /// <param name="extendedLocation"> Extended Location. </param>
         /// <param name="workerTierName"> Target worker tier assigned to the App Service plan. </param>
@@ -14024,7 +12265,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="geoRegion"> Geographical location for the App Service plan. </param>
         /// <param name="isPerSiteScaling">
         /// If &lt;code&gt;true&lt;/code&gt;, apps assigned to this App Service plan can be scaled independently.
-        ///             If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan will scale to all instances of the plan.
+        /// If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan will scale to all instances of the plan.
         /// </param>
         /// <param name="isElasticScaleEnabled"> ServerFarm supports ElasticScale. Apps in this plan will scale as if the ServerFarm was ElasticPremium sku. </param>
         /// <param name="maximumElasticWorkerCount"> Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan. </param>
@@ -14042,11 +12283,11 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="kubeEnvironmentProfile"> Specification for the Kubernetes Environment to use for the App Service plan. </param>
         /// <param name="isZoneRedundant">
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform availability zone balancing.
-        ///             If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
+        /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </param>
         /// <param name="isAsyncScalingEnabled">
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will attempt to scale asynchronously if there are insufficient workers to scale synchronously.
-        ///             If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will only attempt sync scaling.
+        /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will only attempt sync scaling.
         /// </param>
         /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <returns> A new <see cref="AppService.AppServicePlanData"/> instance for mocking. </returns>
@@ -14100,11 +12341,11 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AppServicePlanPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> ARM resource for a app service plan. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="workerTierName"> Target worker tier assigned to the App Service plan. </param>
         /// <param name="status"> App Service plan status. </param>
         /// <param name="subscription"> App Service plan subscription. </param>
@@ -14114,14 +12355,14 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="geoRegion"> Geographical location for the App Service plan. </param>
         /// <param name="isPerSiteScaling">
         /// If &lt;code&gt;true&lt;/code&gt;, apps assigned to this App Service plan can be scaled independently.
-        ///             If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan will scale to all instances of the plan.
+        /// If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan will scale to all instances of the plan.
         /// </param>
         /// <param name="isElasticScaleEnabled"> ServerFarm supports ElasticScale. Apps in this plan will scale as if the ServerFarm was ElasticPremium sku. </param>
         /// <param name="maximumElasticWorkerCount"> Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan. </param>
         /// <param name="numberOfSites"> Number of apps assigned to this App Service plan. </param>
         /// <param name="isSpot"> If &lt;code&gt;true&lt;/code&gt;, this App Service Plan owns spot instances. </param>
-        /// <param name="spotExpirationOn"> The time when the server farm expires. Valid only if it is a spot server farm. </param>
-        /// <param name="freeOfferExpirationOn"> The time when the server farm free offer expires. </param>
+        /// <param name="spotExpirationOn"></param>
+        /// <param name="freeOfferExpirationOn"></param>
         /// <param name="resourceGroup"> Resource group of the App Service plan. </param>
         /// <param name="isReserved"> If Linux app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
         /// <param name="isXenon"> Obsolete: If Hyper-V container app service plan &lt;code&gt;true&lt;/code&gt;, &lt;code&gt;false&lt;/code&gt; otherwise. </param>
@@ -14132,7 +12373,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="kubeEnvironmentProfile"> Specification for the Kubernetes Environment to use for the App Service plan. </param>
         /// <param name="isZoneRedundant">
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform availability zone balancing.
-        ///             If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
+        /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.AppServicePlanPatch"/> instance for mocking. </returns>
@@ -14144,7 +12385,7 @@ namespace Azure.ResourceManager.AppService.Models
                 name,
                 resourceType,
                 systemData,
-                workerTierName is null && status is null && subscription is null && hostingEnvironmentProfile is null && maximumNumberOfWorkers is null && numberOfWorkers is null && geoRegion is null && isPerSiteScaling is null && isElasticScaleEnabled is null && maximumElasticWorkerCount is null && numberOfSites is null && isSpot is null && spotExpirationOn is null && freeOfferExpirationOn is null && resourceGroup is null && isReserved is null && isXenon is null && isHyperV is null && targetWorkerCount is null && targetWorkerSizeId is null && provisioningState is null && kubeEnvironmentProfile is null && isZoneRedundant is null ? default : new AppServicePlanPatchResourceProperties(
+                workerTierName is null && status is null && subscription is null && hostingEnvironmentProfile is null && maximumNumberOfWorkers is null && numberOfWorkers is null && geoRegion is null && isPerSiteScaling is null && isElasticScaleEnabled is null && maximumElasticWorkerCount is null && numberOfSites is null && isSpot is null && resourceGroup is null && isReserved is null && isXenon is null && isHyperV is null && targetWorkerCount is null && targetWorkerSizeId is null && provisioningState is null && kubeEnvironmentProfile is null && isZoneRedundant is null ? default : new AppServicePlanPatchResourceProperties(
                     workerTierName,
                     status,
                     subscription,
@@ -14157,8 +12398,8 @@ namespace Azure.ResourceManager.AppService.Models
                     maximumElasticWorkerCount,
                     numberOfSites,
                     isSpot,
-                    spotExpirationOn,
-                    freeOfferExpirationOn,
+                    default,
+                    default,
                     resourceGroup,
                     isReserved,
                     isXenon,
@@ -14174,11 +12415,11 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SitePatchInfo"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> ARM resource for a site. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="identity"> Managed service identity. </param>
         /// <param name="state"> Current state of the app. </param>
         /// <param name="hostNames"> Hostnames associated with the app. </param>
@@ -14187,7 +12428,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isEnabled"> &lt;code&gt;true&lt;/code&gt; if the app is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. Setting this value to false disables the app (takes the app offline). </param>
         /// <param name="enabledHostNames">
         /// Enabled hostnames for the app.Hostnames need to be assigned (see HostNames) AND enabled. Otherwise,
-        ///             the app is not served on those hostnames.
+        /// the app is not served on those hostnames.
         /// </param>
         /// <param name="availabilityState"> Management information availability state for the app. </param>
         /// <param name="hostNameSslStates"> Hostname SSL states are used to manage the SSL bindings for app's hostnames. </param>
@@ -14207,15 +12448,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isClientCertEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client certificate authentication (TLS mutual authentication); otherwise, &lt;code&gt;false&lt;/code&gt;. Default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="clientCertMode">
         /// This composes with ClientCertEnabled setting.
-        ///             - ClientCertEnabled: false means ClientCert is ignored.
-        ///             - ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.
-        ///             - ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.
+        /// <list type="bullet"><item><description>ClientCertEnabled: false means ClientCert is ignored.</description></item><item><description>ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.</description></item><item><description>ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.</description></item></list>
         /// </param>
         /// <param name="clientCertExclusionPaths"> client certificate authentication comma-separated exclusion paths. </param>
-        /// <param name="isHostNameDisabled">
-        /// &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///             If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
-        /// </param>
+        /// <param name="isHostNameDisabled"> &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.\n If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process. </param>
         /// <param name="customDomainVerificationId"> Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification. </param>
         /// <param name="outboundIPAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </param>
         /// <param name="possibleOutboundIPAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from all tenants except dataComponent. Read-only. </param>
@@ -14224,7 +12460,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="suspendOn"> App suspended till in case memory-time quota is exceeded. </param>
         /// <param name="maxNumberOfWorkers">
         /// Maximum number of workers.
-        ///             This only applies to Functions container.
+        /// This only applies to Functions container.
         /// </param>
         /// <param name="cloningInfo"> If specified during app creation, the app is cloned from a source app. </param>
         /// <param name="resourceGroup"> Name of the resource group the app belongs to. Read-only. </param>
@@ -14233,7 +12469,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="slotSwapStatus"> Status of the last deployment slot swap operation. </param>
         /// <param name="isHttpsOnly">
         /// HttpsOnly: configures a web site to accept only https requests. Issues redirect for
-        ///             http requests
+        /// http requests
         /// </param>
         /// <param name="redundancyMode"> Site redundancy mode. </param>
         /// <param name="inProgressOperationId"> Specifies an operation id if this site has a pending operation. </param>
@@ -14241,7 +12477,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
         /// <param name="virtualNetworkSubnetId">
         /// Azure Resource Manager ID of the Virtual network and subnet to be joined by Regional VNET Integration.
-        ///             This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
+        /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.SitePatchInfo"/> instance for mocking. </returns>
@@ -14306,11 +12542,11 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.WebAppMSDeploy"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> MSDeploy ARM PUT information. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="packageUri"> Package URI. </param>
         /// <param name="connectionString"> SQL Connection String. </param>
         /// <param name="dbType"> Database Type. </param>
@@ -14318,13 +12554,13 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="setParameters"> MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used. </param>
         /// <param name="skipAppData">
         /// Controls whether the MSDeploy operation skips the App_Data directory.
-        ///             If set to &lt;code&gt;true&lt;/code&gt;, the existing App_Data directory on the destination
-        ///             will not be deleted, and any App_Data directory in the source will be ignored.
-        ///             Setting is &lt;code&gt;false&lt;/code&gt; by default.
+        /// If set to &lt;code&gt;true&lt;/code&gt;, the existing App_Data directory on the destination
+        /// will not be deleted, and any App_Data directory in the source will be ignored.
+        /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </param>
         /// <param name="isAppOffline">
         /// Sets the AppOffline rule while the MSDeploy operation executes.
-        ///             Setting is &lt;code&gt;false&lt;/code&gt; by default.
+        /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.WebAppMSDeploy"/> instance for mocking. </returns>
@@ -14350,13 +12586,13 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppService.AppServicePlanData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> App Service plan. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> Description of a SKU for a scalable resource. </param>
         /// <param name="extendedLocation"> Extended Location. </param>
         /// <param name="workerTierName"> Target worker tier assigned to the App Service plan. </param>
@@ -14368,7 +12604,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="geoRegion"> Geographical location for the App Service plan. </param>
         /// <param name="isPerSiteScaling">
         /// If &lt;code&gt;true&lt;/code&gt;, apps assigned to this App Service plan can be scaled independently.
-        ///             If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan will scale to all instances of the plan.
+        /// If &lt;code&gt;false&lt;/code&gt;, apps assigned to this App Service plan will scale to all instances of the plan.
         /// </param>
         /// <param name="isElasticScaleEnabled"> ServerFarm supports ElasticScale. Apps in this plan will scale as if the ServerFarm was ElasticPremium sku. </param>
         /// <param name="maximumElasticWorkerCount"> Maximum number of total workers allowed for this ElasticScaleEnabled App Service Plan. </param>
@@ -14386,7 +12622,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="kubeEnvironmentProfile"> Specification for the Kubernetes Environment to use for the App Service plan. </param>
         /// <param name="isZoneRedundant">
         /// If &lt;code&gt;true&lt;/code&gt;, this App Service Plan will perform availability zone balancing.
-        ///             If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
+        /// If &lt;code&gt;false&lt;/code&gt;, this App Service Plan will not perform availability zone balancing.
         /// </param>
         /// <param name="kind"> Kind of resource. If the resource is an app, you can refer to https://github.com/Azure/app-service-linux-docs/blob/master/Things_You_Should_Know/kind_property.md#app-service-resource-kind-reference for details supported values for kind. </param>
         /// <returns> A new <see cref="AppService.AppServicePlanData"/> instance for mocking. </returns>
@@ -14440,11 +12676,11 @@ namespace Azure.ResourceManager.AppService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SitePatchInfo"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> ARM resource for a site. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="identity"> Managed service identity. </param>
         /// <param name="state"> Current state of the app. </param>
         /// <param name="hostNames"> Hostnames associated with the app. </param>
@@ -14453,7 +12689,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isEnabled"> &lt;code&gt;true&lt;/code&gt; if the app is enabled; otherwise, &lt;code&gt;false&lt;/code&gt;. Setting this value to false disables the app (takes the app offline). </param>
         /// <param name="enabledHostNames">
         /// Enabled hostnames for the app.Hostnames need to be assigned (see HostNames) AND enabled. Otherwise,
-        ///             the app is not served on those hostnames.
+        /// the app is not served on those hostnames.
         /// </param>
         /// <param name="availabilityState"> Management information availability state for the app. </param>
         /// <param name="hostNameSslStates"> Hostname SSL states are used to manage the SSL bindings for app's hostnames. </param>
@@ -14472,15 +12708,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="isClientCertEnabled"> &lt;code&gt;true&lt;/code&gt; to enable client certificate authentication (TLS mutual authentication); otherwise, &lt;code&gt;false&lt;/code&gt;. Default is &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="clientCertMode">
         /// This composes with ClientCertEnabled setting.
-        ///             - ClientCertEnabled: false means ClientCert is ignored.
-        ///             - ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.
-        ///             - ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.
+        /// <list type="bullet"><item><description>ClientCertEnabled: false means ClientCert is ignored.</description></item><item><description>ClientCertEnabled: true and ClientCertMode: Required means ClientCert is required.</description></item><item><description>ClientCertEnabled: true and ClientCertMode: Optional means ClientCert is optional or accepted.</description></item></list>
         /// </param>
         /// <param name="clientCertExclusionPaths"> client certificate authentication comma-separated exclusion paths. </param>
-        /// <param name="isHostNameDisabled">
-        /// &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        ///             If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process.
-        /// </param>
+        /// <param name="isHostNameDisabled"> &lt;code&gt;true&lt;/code&gt; to disable the public hostnames of the app; otherwise, &lt;code&gt;false&lt;/code&gt;.\n If &lt;code&gt;true&lt;/code&gt;, the app is only accessible via API management process. </param>
         /// <param name="customDomainVerificationId"> Unique identifier that verifies the custom domains assigned to the app. Customer will add this id to a txt record for verification. </param>
         /// <param name="outboundIPAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from tenants that site can be hosted with current settings. Read-only. </param>
         /// <param name="possibleOutboundIPAddresses"> List of IP addresses that the app uses for outbound connections (e.g. database access). Includes VIPs from all tenants except dataComponent. Read-only. </param>
@@ -14489,7 +12720,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="suspendOn"> App suspended till in case memory-time quota is exceeded. </param>
         /// <param name="maxNumberOfWorkers">
         /// Maximum number of workers.
-        ///             This only applies to Functions container.
+        /// This only applies to Functions container.
         /// </param>
         /// <param name="cloningInfo"> If specified during app creation, the app is cloned from a source app. </param>
         /// <param name="resourceGroup"> Name of the resource group the app belongs to. Read-only. </param>
@@ -14498,7 +12729,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="slotSwapStatus"> Status of the last deployment slot swap operation. </param>
         /// <param name="isHttpsOnly">
         /// HttpsOnly: configures a web site to accept only https requests. Issues redirect for
-        ///             http requests
+        /// http requests
         /// </param>
         /// <param name="redundancyMode"> Site redundancy mode. </param>
         /// <param name="inProgressOperationId"> Specifies an operation id if this site has a pending operation. </param>
@@ -14506,7 +12737,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="keyVaultReferenceIdentity"> Identity to use for Key Vault Reference authentication. </param>
         /// <param name="virtualNetworkSubnetId">
         /// Azure Resource Manager ID of the Virtual network and subnet to be joined by Regional VNET Integration.
-        ///             This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
+        /// This must be of the form /subscriptions/{subscriptionName}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}
         /// </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="Models.SitePatchInfo"/> instance for mocking. </returns>

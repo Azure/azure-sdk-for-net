@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService
             return message;
         }
 
-        internal HttpMessage CreateExecuteRequest(Guid subscriptionId, string resourceGroupName, string siteName, string diagnosticCategory, string detectorName, DateTimeOffset? startTime, DateTimeOffset? endTime, string timeGrain, RequestContext context)
+        internal HttpMessage CreateExecuteRequest(Guid subscriptionId, string resourceGroupName, string siteName, string diagnosticCategory, string detectorName, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string timeGrain, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -140,13 +140,13 @@ namespace Azure.ResourceManager.AppService
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            if (startTime != null)
+            if (startsOn != null)
             {
-                uri.AppendQuery("startTime", TypeFormatters.ConvertToString(startTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("startTime", TypeFormatters.ConvertToString(startsOn, SerializationFormat.DateTime_RFC3339), true);
             }
-            if (endTime != null)
+            if (endsOn != null)
             {
-                uri.AppendQuery("endTime", TypeFormatters.ConvertToString(endTime, SerializationFormat.DateTime_RFC3339), true);
+                uri.AppendQuery("endTime", TypeFormatters.ConvertToString(endsOn, SerializationFormat.DateTime_RFC3339), true);
             }
             if (timeGrain != null)
             {

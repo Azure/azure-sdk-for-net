@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(TimeGrain))
             {
@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.AppService.Models
             }
             string name = default;
             string unit = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             string timeGrain = default;
             IList<DiagnosticMetricSample> values = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("timeGrain"u8))
@@ -215,8 +215,8 @@ namespace Azure.ResourceManager.AppService.Models
             return new DiagnosticMetricSet(
                 name,
                 unit,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 timeGrain,
                 values ?? new ChangeTrackingList<DiagnosticMetricSample>(),
                 additionalBinaryDataProperties);

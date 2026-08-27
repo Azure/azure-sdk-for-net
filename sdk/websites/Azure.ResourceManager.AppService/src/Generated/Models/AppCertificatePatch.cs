@@ -123,11 +123,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Certificate expiration date. </summary>
         [WirePath("properties.expirationDate")]
-        public DateTimeOffset? ExpireOn
+        public DateTimeOffset? ExpiresOn
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
         }
 

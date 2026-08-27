@@ -211,11 +211,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Request tracing expiration time. </summary>
         [WirePath("properties.requestTracingExpirationTime")]
-        public DateTimeOffset? RequestTracingExpirationOn
+        public DateTimeOffset? RequestTracingExpiresOn
         {
             get
             {
-                return Properties is null ? default : Properties.RequestTracingExpirationOn;
+                return Properties is null ? default : Properties.RequestTracingExpiresOn;
             }
             set
             {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new SiteConfigProperties();
                 }
-                Properties.RequestTracingExpirationOn = value;
+                Properties.RequestTracingExpiresOn = value;
             }
         }
 

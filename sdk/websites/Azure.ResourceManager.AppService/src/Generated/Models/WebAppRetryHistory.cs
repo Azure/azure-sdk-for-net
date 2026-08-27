@@ -23,17 +23,17 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppRetryHistory"/>. </summary>
-        /// <param name="startOn"> Gets the start time. </param>
-        /// <param name="endOn"> Gets the end time. </param>
+        /// <param name="startsOn"> Gets the start time. </param>
+        /// <param name="endsOn"> Gets the end time. </param>
         /// <param name="code"> Gets the status code. </param>
         /// <param name="clientRequestId"> Gets the client request Id. </param>
         /// <param name="serviceRequestId"> Gets the service request Id. </param>
         /// <param name="error"> Gets the error response. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebAppRetryHistory(DateTimeOffset? startOn, DateTimeOffset? endOn, string code, string clientRequestId, string serviceRequestId, WebAppErrorResponse error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebAppRetryHistory(DateTimeOffset? startsOn, DateTimeOffset? endsOn, string code, string clientRequestId, string serviceRequestId, WebAppErrorResponse error, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Code = code;
             ClientRequestId = clientRequestId;
             ServiceRequestId = serviceRequestId;
@@ -43,11 +43,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Gets the start time. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> Gets the end time. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Gets the status code. </summary>
         [WirePath("code")]

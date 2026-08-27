@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="DetectorAbnormalTimePeriod"/>. </summary>
-        /// <param name="startOn"> Start time of the correlated event. </param>
-        /// <param name="endOn"> End time of the correlated event. </param>
+        /// <param name="startsOn"> Start time of the correlated event. </param>
+        /// <param name="endsOn"> End time of the correlated event. </param>
         /// <param name="message"> Message describing the event. </param>
         /// <param name="source"> Represents the name of the Detector. </param>
         /// <param name="priority"> Represents the rank of the Detector. </param>
@@ -34,10 +34,10 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="issueType"> Represents the type of the Detector. </param>
         /// <param name="solutions"> List of proposed solutions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DetectorAbnormalTimePeriod(DateTimeOffset? startOn, DateTimeOffset? endOn, string message, string source, double? priority, IList<IList<AppServiceNameValuePair>> metaData, DetectorIssueType? issueType, IList<DiagnosticSolution> solutions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DetectorAbnormalTimePeriod(DateTimeOffset? startsOn, DateTimeOffset? endsOn, string message, string source, double? priority, IList<IList<AppServiceNameValuePair>> metaData, DetectorIssueType? issueType, IList<DiagnosticSolution> solutions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Message = message;
             Source = source;
             Priority = priority;
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Start time of the correlated event. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> End time of the correlated event. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Message describing the event. </summary>
         [WirePath("message")]

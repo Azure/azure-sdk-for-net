@@ -161,20 +161,20 @@ namespace Azure.ResourceManager.StorageCache
         }
 
         /// <summary> Date and time of when the currently running full scan began. </summary>
-        public DateTimeOffset? ScanStartOn
+        public DateTimeOffset? ScanStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.ScanStartOn;
+                return Properties is null ? default : Properties.ScanStartsOn;
             }
         }
 
         /// <summary> Date and time of when the full scan ended. </summary>
-        public DateTimeOffset? ScanEndOn
+        public DateTimeOffset? ScanEndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.ScanEndOn;
+                return Properties is null ? default : Properties.ScanEndsOn;
             }
         }
 

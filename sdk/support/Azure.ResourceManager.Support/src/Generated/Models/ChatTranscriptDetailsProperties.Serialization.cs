@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Support.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Support.Models
                 return null;
             }
             IList<ChatTranscriptMessageProperties> messages = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Support.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Support.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ChatTranscriptDetailsProperties(messages ?? new ChangeTrackingList<ChatTranscriptMessageProperties>(), startOn, additionalBinaryDataProperties);
+            return new ChatTranscriptDetailsProperties(messages ?? new ChangeTrackingList<ChatTranscriptMessageProperties>(), startsOn, additionalBinaryDataProperties);
         }
     }
 }

@@ -226,11 +226,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> The time when the server farm expires. Valid only if it is a spot server farm. </summary>
         [WirePath("properties.spotExpirationTime")]
-        public DateTimeOffset? SpotExpirationOn
+        public DateTimeOffset? SpotExpiresOn
         {
             get
             {
-                return Properties is null ? default : Properties.SpotExpirationOn;
+                return Properties is null ? default : Properties.SpotExpiresOn;
             }
             set
             {
@@ -238,17 +238,17 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new AppServicePlanPatchResourceProperties();
                 }
-                Properties.SpotExpirationOn = value;
+                Properties.SpotExpiresOn = value;
             }
         }
 
         /// <summary> The time when the server farm free offer expires. </summary>
         [WirePath("properties.freeOfferExpirationTime")]
-        public DateTimeOffset? FreeOfferExpirationOn
+        public DateTimeOffset? FreeOfferExpiresOn
         {
             get
             {
-                return Properties is null ? default : Properties.FreeOfferExpirationOn;
+                return Properties is null ? default : Properties.FreeOfferExpiresOn;
             }
             set
             {
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new AppServicePlanPatchResourceProperties();
                 }
-                Properties.FreeOfferExpirationOn = value;
+                Properties.FreeOfferExpiresOn = value;
             }
         }
 
