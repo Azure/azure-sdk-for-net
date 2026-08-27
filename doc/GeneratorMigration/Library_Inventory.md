@@ -16,7 +16,7 @@
 
 ## Summary
 
-- Total libraries: 452
+- Total libraries: 450
 - Management Plane (MPG): 263
   - Autorest/Swagger: 39
   - New Emitter (TypeSpec): 224
@@ -364,6 +364,7 @@ Libraries that provide resource management APIs for Azure services and have been
 | websites | Azure.ResourceManager.AppService | ✅ |
 | weightsandbiases | Azure.ResourceManager.WeightsAndBiases | ✅ |
 | workloadorchestration | Azure.ResourceManager.WorkloadOrchestration | ✅ |
+| workloadssapmonitor | Azure.ResourceManager.WorkloadsSapMonitor | ✅ |
 | workloadssapvirtualinstance | Azure.ResourceManager.WorkloadsSapVirtualInstance | ✅ |
 
 

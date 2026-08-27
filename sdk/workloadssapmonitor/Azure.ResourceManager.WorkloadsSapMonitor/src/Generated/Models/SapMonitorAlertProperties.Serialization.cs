@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
             string providerType = default;
             IList<string> providerNames = default;
             SapMonitorAlertRuleProperties alertRuleProperties = default;
-            WorkloadMonitorProvisioningState? provisioningState = default;
+            WorkloadsSapMonitorProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                     {
                         continue;
                     }
-                    provisioningState = new WorkloadMonitorProvisioningState(prop.Value.GetString());
+                    provisioningState = new WorkloadsSapMonitorProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

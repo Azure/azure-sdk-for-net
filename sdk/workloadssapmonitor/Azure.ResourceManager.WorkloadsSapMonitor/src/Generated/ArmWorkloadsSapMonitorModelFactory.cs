@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         /// <param name="managedResourceGroupName"> Managed resource group name. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="WorkloadsSapMonitor.SapMonitorData"/> instance for mocking. </returns>
-        public static SapMonitorData SapMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkloadMonitorProvisioningState? provisioningState = default, ResponseError errors = default, AzureLocation? appLocation = default, SapRoutingPreference? routingPreference = default, string zoneRedundancyPreference = default, ResourceIdentifier logAnalyticsWorkspaceArmId = default, ResourceIdentifier monitorSubnetId = default, SapMonitorAppServicePlanConfiguration appServicePlanConfiguration = default, ResourceIdentifier msiArmId = default, ResourceIdentifier storageAccountArmId = default, string managedResourceGroupName = default, ManagedServiceIdentity identity = default)
+        public static SapMonitorData SapMonitorData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, WorkloadsSapMonitorProvisioningState? provisioningState = default, ResponseError errors = default, AzureLocation? appLocation = default, SapRoutingPreference? routingPreference = default, string zoneRedundancyPreference = default, ResourceIdentifier logAnalyticsWorkspaceArmId = default, ResourceIdentifier monitorSubnetId = default, SapMonitorAppServicePlanConfiguration appServicePlanConfiguration = default, ResourceIdentifier msiArmId = default, ResourceIdentifier storageAccountArmId = default, string managedResourceGroupName = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         /// <param name="errors"> Defines the provider instance errors. </param>
         /// <param name="providerSettings"> Defines the provider specific properties. </param>
         /// <returns> A new <see cref="WorkloadsSapMonitor.SapProviderInstanceData"/> instance for mocking. </returns>
-        public static SapProviderInstanceData SapProviderInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WorkloadMonitorProvisioningState? provisioningState = default, WorkloadsSapMonitorHealth health = default, ResponseError errors = default, SapProviderInstanceSpecificProperties providerSettings = default)
+        public static SapProviderInstanceData SapProviderInstanceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WorkloadsSapMonitorProvisioningState? provisioningState = default, WorkloadsSapMonitorHealth health = default, ResponseError errors = default, SapProviderInstanceSpecificProperties providerSettings = default)
         {
             return new SapProviderInstanceData(
                 id,
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         /// <param name="alertRuleProperties"> Describes the properties of an alert. </param>
         /// <param name="provisioningState"> State of provisioning of the alert instance. </param>
         /// <returns> A new <see cref="Models.SapMonitorAlertProperties"/> instance for mocking. </returns>
-        public static SapMonitorAlertProperties SapMonitorAlertProperties(ResponseError errors = default, ResourceIdentifier alertRuleResourceId = default, string templateName = default, string providerType = default, IEnumerable<string> providerNames = default, SapMonitorAlertRuleProperties alertRuleProperties = default, WorkloadMonitorProvisioningState? provisioningState = default)
+        public static SapMonitorAlertProperties SapMonitorAlertProperties(ResponseError errors = default, ResourceIdentifier alertRuleResourceId = default, string templateName = default, string providerType = default, IEnumerable<string> providerNames = default, SapMonitorAlertRuleProperties alertRuleProperties = default, WorkloadsSapMonitorProvisioningState? provisioningState = default)
         {
             providerNames ??= new ChangeTrackingList<string>();
 
@@ -431,10 +431,10 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> Alert Template properties. </param>
-        /// <returns> A new <see cref="WorkloadsSapMonitor.AlertTemplateData"/> instance for mocking. </returns>
-        public static AlertTemplateData AlertTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SapMonitorAlertTemplateProperties properties = default)
+        /// <returns> A new <see cref="WorkloadsSapMonitor.SapMonitorAlertTemplateData"/> instance for mocking. </returns>
+        public static SapMonitorAlertTemplateData SapMonitorAlertTemplateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SapMonitorAlertTemplateProperties properties = default)
         {
-            return new AlertTemplateData(
+            return new SapMonitorAlertTemplateData(
                 id,
                 name,
                 resourceType,
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         /// <param name="metricMeasurement"> Describes the properties for metric measurement in alerts template. </param>
         /// <param name="queryInputParameters"> Describes the Query Input Parameter properties in alerts template. </param>
         /// <returns> A new <see cref="Models.SapMonitorAlertTemplateProperties"/> instance for mocking. </returns>
-        public static SapMonitorAlertTemplateProperties SapMonitorAlertTemplateProperties(ResponseError errors = default, WorkloadMonitorProvisioningState? provisioningState = default, string templateDisplayName = default, string providerType = default, string description = default, int? severity = default, string query = default, AlertRuleConditionalOperator? thresholdOperator = default, int? defaultThreshold = default, int? lowerBound = default, int? upperBound = default, AlertTemplateDefaultThresholdInputOption? defaultThresholdInputOption = default, string alertUnit = default, AlertTemplateMetricMeasurement metricMeasurement = default, IEnumerable<AlertTemplateQueryInputContent> queryInputParameters = default)
+        public static SapMonitorAlertTemplateProperties SapMonitorAlertTemplateProperties(ResponseError errors = default, WorkloadsSapMonitorProvisioningState? provisioningState = default, string templateDisplayName = default, string providerType = default, string description = default, int? severity = default, string query = default, AlertRuleConditionalOperator? thresholdOperator = default, int? defaultThreshold = default, int? lowerBound = default, int? upperBound = default, AlertTemplateDefaultThresholdInputOption? defaultThresholdInputOption = default, string alertUnit = default, AlertTemplateMetricMeasurement metricMeasurement = default, IEnumerable<AlertTemplateQueryInputContent> queryInputParameters = default)
         {
             queryInputParameters ??= new ChangeTrackingList<AlertTemplateQueryInputContent>();
 

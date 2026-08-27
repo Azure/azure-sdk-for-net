@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         /// <param name="msiArmId"> The ARM ID of the MSI used for SAP monitoring. </param>
         /// <param name="storageAccountArmId"> The ARM ID of the Storage account used for SAP monitoring. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MonitorProperties(WorkloadMonitorProvisioningState? provisioningState, ResponseError errors, AzureLocation? appLocation, SapRoutingPreference? routingPreference, string zoneRedundancyPreference, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ResourceIdentifier logAnalyticsWorkspaceArmId, ResourceIdentifier monitorSubnetId, SapMonitorAppServicePlanConfiguration appServicePlanConfiguration, ResourceIdentifier msiArmId, ResourceIdentifier storageAccountArmId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MonitorProperties(WorkloadsSapMonitorProvisioningState? provisioningState, ResponseError errors, AzureLocation? appLocation, SapRoutingPreference? routingPreference, string zoneRedundancyPreference, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, ResourceIdentifier logAnalyticsWorkspaceArmId, ResourceIdentifier monitorSubnetId, SapMonitorAppServicePlanConfiguration appServicePlanConfiguration, ResourceIdentifier msiArmId, ResourceIdentifier storageAccountArmId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Errors = errors;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         }
 
         /// <summary> State of provisioning of the SAP monitor. </summary>
-        public WorkloadMonitorProvisioningState? ProvisioningState { get; }
+        public WorkloadsSapMonitorProvisioningState? ProvisioningState { get; }
 
         /// <summary> Defines the SAP monitor errors. </summary>
         public ResponseError Errors { get; }

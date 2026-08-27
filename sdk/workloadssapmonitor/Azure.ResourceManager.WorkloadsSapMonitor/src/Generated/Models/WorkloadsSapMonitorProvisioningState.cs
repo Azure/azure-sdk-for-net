@@ -12,7 +12,7 @@ using Azure.ResourceManager.WorkloadsSapMonitor;
 namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
 {
     /// <summary> State of provisioning of the SAP monitor. </summary>
-    public readonly partial struct WorkloadMonitorProvisioningState : IEquatable<WorkloadMonitorProvisioningState>
+    public readonly partial struct WorkloadsSapMonitorProvisioningState : IEquatable<WorkloadsSapMonitorProvisioningState>
     {
         private readonly string _value;
         /// <summary> The resource request has been accepted. </summary>
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         /// <summary> The resource operation was canceled. </summary>
         private const string CanceledValue = "Canceled";
 
-        /// <summary> Initializes a new instance of <see cref="WorkloadMonitorProvisioningState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="WorkloadsSapMonitorProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public WorkloadMonitorProvisioningState(string value)
+        public WorkloadsSapMonitorProvisioningState(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -43,53 +43,53 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         }
 
         /// <summary> The resource request has been accepted. </summary>
-        public static WorkloadMonitorProvisioningState Accepted { get; } = new WorkloadMonitorProvisioningState(AcceptedValue);
+        public static WorkloadsSapMonitorProvisioningState Accepted { get; } = new WorkloadsSapMonitorProvisioningState(AcceptedValue);
 
         /// <summary> The resource is being created. </summary>
-        public static WorkloadMonitorProvisioningState Creating { get; } = new WorkloadMonitorProvisioningState(CreatingValue);
+        public static WorkloadsSapMonitorProvisioningState Creating { get; } = new WorkloadsSapMonitorProvisioningState(CreatingValue);
 
         /// <summary> The resource is being updated. </summary>
-        public static WorkloadMonitorProvisioningState Updating { get; } = new WorkloadMonitorProvisioningState(UpdatingValue);
+        public static WorkloadsSapMonitorProvisioningState Updating { get; } = new WorkloadsSapMonitorProvisioningState(UpdatingValue);
 
         /// <summary> The resource creation failed. </summary>
-        public static WorkloadMonitorProvisioningState Failed { get; } = new WorkloadMonitorProvisioningState(FailedValue);
+        public static WorkloadsSapMonitorProvisioningState Failed { get; } = new WorkloadsSapMonitorProvisioningState(FailedValue);
 
         /// <summary> The resource creation has succeeded. </summary>
-        public static WorkloadMonitorProvisioningState Succeeded { get; } = new WorkloadMonitorProvisioningState(SucceededValue);
+        public static WorkloadsSapMonitorProvisioningState Succeeded { get; } = new WorkloadsSapMonitorProvisioningState(SucceededValue);
 
         /// <summary> The resource is being deleted. </summary>
-        public static WorkloadMonitorProvisioningState Deleting { get; } = new WorkloadMonitorProvisioningState(DeletingValue);
+        public static WorkloadsSapMonitorProvisioningState Deleting { get; } = new WorkloadsSapMonitorProvisioningState(DeletingValue);
 
         /// <summary> The resource is being migrated. </summary>
-        public static WorkloadMonitorProvisioningState Migrating { get; } = new WorkloadMonitorProvisioningState(MigratingValue);
+        public static WorkloadsSapMonitorProvisioningState Migrating { get; } = new WorkloadsSapMonitorProvisioningState(MigratingValue);
 
         /// <summary> The resource operation was canceled. </summary>
-        public static WorkloadMonitorProvisioningState Canceled { get; } = new WorkloadMonitorProvisioningState(CanceledValue);
+        public static WorkloadsSapMonitorProvisioningState Canceled { get; } = new WorkloadsSapMonitorProvisioningState(CanceledValue);
 
-        /// <summary> Determines if two <see cref="WorkloadMonitorProvisioningState"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="WorkloadsSapMonitorProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(WorkloadMonitorProvisioningState left, WorkloadMonitorProvisioningState right) => left.Equals(right);
+        public static bool operator ==(WorkloadsSapMonitorProvisioningState left, WorkloadsSapMonitorProvisioningState right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="WorkloadMonitorProvisioningState"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="WorkloadsSapMonitorProvisioningState"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(WorkloadMonitorProvisioningState left, WorkloadMonitorProvisioningState right) => !left.Equals(right);
+        public static bool operator !=(WorkloadsSapMonitorProvisioningState left, WorkloadsSapMonitorProvisioningState right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="WorkloadMonitorProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="WorkloadsSapMonitorProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkloadMonitorProvisioningState(string value) => new WorkloadMonitorProvisioningState(value);
+        public static implicit operator WorkloadsSapMonitorProvisioningState(string value) => new WorkloadsSapMonitorProvisioningState(value);
 
-        /// <summary> Converts a string to a <see cref="WorkloadMonitorProvisioningState"/>. </summary>
+        /// <summary> Converts a string to a <see cref="WorkloadsSapMonitorProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator WorkloadMonitorProvisioningState?(string value) => value == null ? null : new WorkloadMonitorProvisioningState(value);
+        public static implicit operator WorkloadsSapMonitorProvisioningState?(string value) => value == null ? null : new WorkloadsSapMonitorProvisioningState(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is WorkloadMonitorProvisioningState other && Equals(other);
+        public override bool Equals(object obj) => obj is WorkloadsSapMonitorProvisioningState other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(WorkloadMonitorProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(WorkloadsSapMonitorProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
             {
                 return null;
             }
-            WorkloadMonitorProvisioningState? provisioningState = default;
+            WorkloadsSapMonitorProvisioningState? provisioningState = default;
             ResponseError errors = default;
             AzureLocation? appLocation = default;
             SapRoutingPreference? routingPreference = default;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                     {
                         continue;
                     }
-                    provisioningState = new WorkloadMonitorProvisioningState(prop.Value.GetString());
+                    provisioningState = new WorkloadsSapMonitorProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("errors"u8))

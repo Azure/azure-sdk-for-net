@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         /// <param name="errors"> Defines the provider instance errors. </param>
         /// <param name="providerSettings"> Defines the provider specific properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProviderInstanceProperties(WorkloadMonitorProvisioningState? provisioningState, WorkloadsSapMonitorHealth health, ResponseError errors, SapProviderInstanceSpecificProperties providerSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProviderInstanceProperties(WorkloadsSapMonitorProvisioningState? provisioningState, WorkloadsSapMonitorHealth health, ResponseError errors, SapProviderInstanceSpecificProperties providerSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Health = health;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         }
 
         /// <summary> State of provisioning of the provider instance. </summary>
-        public WorkloadMonitorProvisioningState? ProvisioningState { get; }
+        public WorkloadsSapMonitorProvisioningState? ProvisioningState { get; }
 
         /// <summary> Resource health details. </summary>
         public WorkloadsSapMonitorHealth Health { get; }

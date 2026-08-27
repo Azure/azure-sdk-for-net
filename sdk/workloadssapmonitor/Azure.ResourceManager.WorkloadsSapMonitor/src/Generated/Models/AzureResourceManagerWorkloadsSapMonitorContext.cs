@@ -17,11 +17,9 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(AlertListResult))]
-    [ModelReaderWriterBuildable(typeof(AlertTemplateData))]
     [ModelReaderWriterBuildable(typeof(AlertTemplateListResult))]
     [ModelReaderWriterBuildable(typeof(AlertTemplateMetricMeasurement))]
     [ModelReaderWriterBuildable(typeof(AlertTemplateQueryInputContent))]
-    [ModelReaderWriterBuildable(typeof(AlertTemplateResource))]
     [ModelReaderWriterBuildable(typeof(DB2ProviderInstanceProperties))]
     [ModelReaderWriterBuildable(typeof(HanaDBProviderInstanceProperties))]
     [ModelReaderWriterBuildable(typeof(ManagedResourceGroupConfiguration))]
@@ -46,7 +44,9 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
     [ModelReaderWriterBuildable(typeof(SapMonitorAlertQueryContent))]
     [ModelReaderWriterBuildable(typeof(SapMonitorAlertResource))]
     [ModelReaderWriterBuildable(typeof(SapMonitorAlertRuleProperties))]
+    [ModelReaderWriterBuildable(typeof(SapMonitorAlertTemplateData))]
     [ModelReaderWriterBuildable(typeof(SapMonitorAlertTemplateProperties))]
+    [ModelReaderWriterBuildable(typeof(SapMonitorAlertTemplateResource))]
     [ModelReaderWriterBuildable(typeof(SapMonitorAppServicePlanConfiguration))]
     [ModelReaderWriterBuildable(typeof(SapMonitorData))]
     [ModelReaderWriterBuildable(typeof(SapMonitorPatch))]

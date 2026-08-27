@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         /// <param name="alertRuleProperties"> Describes the properties of an alert. </param>
         /// <param name="provisioningState"> State of provisioning of the alert instance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SapMonitorAlertProperties(ResponseError errors, ResourceIdentifier alertRuleResourceId, string templateName, string providerType, IList<string> providerNames, SapMonitorAlertRuleProperties alertRuleProperties, WorkloadMonitorProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SapMonitorAlertProperties(ResponseError errors, ResourceIdentifier alertRuleResourceId, string templateName, string providerType, IList<string> providerNames, SapMonitorAlertRuleProperties alertRuleProperties, WorkloadsSapMonitorProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Errors = errors;
             AlertRuleResourceId = alertRuleResourceId;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         public SapMonitorAlertRuleProperties AlertRuleProperties { get; set; }
 
         /// <summary> State of provisioning of the alert instance. </summary>
-        public WorkloadMonitorProvisioningState? ProvisioningState { get; }
+        public WorkloadsSapMonitorProvisioningState? ProvisioningState { get; }
     }
 }

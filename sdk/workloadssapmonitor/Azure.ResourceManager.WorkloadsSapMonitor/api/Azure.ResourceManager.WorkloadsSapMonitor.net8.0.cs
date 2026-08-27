@@ -1,49 +1,5 @@
 namespace Azure.ResourceManager.WorkloadsSapMonitor
 {
-    public partial class AlertTemplateCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateResource>, System.Collections.IEnumerable
-    {
-        protected AlertTemplateCollection() { }
-        public virtual Azure.Response<bool> Exists(string alertTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string alertTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateResource> Get(string alertTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Pageable<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateResource> GetAll(string providerType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.AsyncPageable<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateResource> GetAllAsync(string providerType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateResource>> GetAsync(string alertTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.NullableResponse<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateResource> GetIfExists(string alertTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateResource>> GetIfExistsAsync(string alertTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
-        System.Collections.Generic.IEnumerator<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateResource>.GetEnumerator() { throw null; }
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
-    }
-    public partial class AlertTemplateData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateData>
-    {
-        internal AlertTemplateData() { }
-        public Azure.ResourceManager.WorkloadsSapMonitor.Models.SapMonitorAlertTemplateProperties Properties { get { throw null; } }
-        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class AlertTemplateResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateData>
-    {
-        public static readonly Azure.Core.ResourceType ResourceType;
-        protected AlertTemplateResource() { }
-        public virtual Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateData Data { get { throw null; } }
-        public virtual bool HasData { get { throw null; } }
-        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName, string alertTemplateName) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class AzureResourceManagerWorkloadsSapMonitorContext : System.ClientModel.Primitives.ModelReaderWriterContext
     {
         internal AzureResourceManagerWorkloadsSapMonitorContext() { }
@@ -137,6 +93,50 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class SapMonitorAlertTemplateCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateResource>, System.Collections.IEnumerable
+    {
+        protected SapMonitorAlertTemplateCollection() { }
+        public virtual Azure.Response<bool> Exists(string alertTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string alertTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateResource> Get(string alertTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateResource> GetAll(string providerType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateResource> GetAllAsync(string providerType = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateResource>> GetAsync(string alertTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateResource> GetIfExists(string alertTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateResource>> GetIfExistsAsync(string alertTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SapMonitorAlertTemplateData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateData>
+    {
+        internal SapMonitorAlertTemplateData() { }
+        public Azure.ResourceManager.WorkloadsSapMonitor.Models.SapMonitorAlertTemplateProperties Properties { get { throw null; } }
+        protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SapMonitorAlertTemplateResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SapMonitorAlertTemplateResource() { }
+        public virtual Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string monitorName, string alertTemplateName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class SapMonitorCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorResource>, System.Collections.IEnumerable
     {
         protected SapMonitorCollection() { }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         public string ManagedResourceGroupName { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier MonitorSubnetId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier MsiArmId { get { throw null; } }
-        public Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState? ProvisioningState { get { throw null; } }
         public Azure.ResourceManager.WorkloadsSapMonitor.Models.SapRoutingPreference? RoutingPreference { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier StorageAccountArmId { get { throw null; } }
         public string ZoneRedundancyPreference { get { throw null; } set { } }
@@ -191,14 +191,14 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.Response<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateResource> GetAlertTemplate(string alertTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateResource>> GetAlertTemplateAsync(string alertTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateCollection GetAlertTemplates() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.WorkloadsSapMonitor.SapLandscapeMonitorResource GetSapLandscapeMonitor() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertResource> GetSapMonitorAlert(string alertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertResource>> GetSapMonitorAlertAsync(string alertName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertCollection GetSapMonitorAlerts() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateResource> GetSapMonitorAlertTemplate(string alertTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateResource>> GetSapMonitorAlertTemplateAsync(string alertTemplateName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateCollection GetSapMonitorAlertTemplates() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.WorkloadsSapMonitor.SapProviderInstanceResource> GetSapProviderInstance(string providerInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WorkloadsSapMonitor.SapProviderInstanceResource>> GetSapProviderInstanceAsync(string providerInstanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.WorkloadsSapMonitor.SapProviderInstanceCollection GetSapProviderInstances() { throw null; }
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         public Azure.ResponseError Errors { get { throw null; } }
         public Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorHealth Health { get { throw null; } }
         public Azure.ResourceManager.WorkloadsSapMonitor.Models.SapProviderInstanceSpecificProperties ProviderSettings { get { throw null; } set { } }
-        public Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState? ProvisioningState { get { throw null; } }
         protected virtual Azure.ResourceManager.Models.ResourceData JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Models.ResourceData PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -269,10 +269,10 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
     }
     public static partial class WorkloadsSapMonitorExtensions
     {
-        public static Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateResource GetAlertTemplateResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.WorkloadsSapMonitor.SapLandscapeMonitorResource GetSapLandscapeMonitorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorResource> GetSapMonitor(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertResource GetSapMonitorAlertResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateResource GetSapMonitorAlertTemplateResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorResource>> GetSapMonitorAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string monitorName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorResource GetSapMonitorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorCollection GetSapMonitors(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
@@ -286,9 +286,9 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Mocking
     public partial class MockableWorkloadsSapMonitorArmClient : Azure.ResourceManager.ArmResource
     {
         protected MockableWorkloadsSapMonitorArmClient() { }
-        public virtual Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateResource GetAlertTemplateResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.WorkloadsSapMonitor.SapLandscapeMonitorResource GetSapLandscapeMonitorResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertResource GetSapMonitorAlertResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateResource GetSapMonitorAlertTemplateResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorResource GetSapMonitorResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.WorkloadsSapMonitor.SapProviderInstanceResource GetSapProviderInstanceResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
@@ -473,7 +473,6 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
     }
     public static partial class ArmWorkloadsSapMonitorModelFactory
     {
-        public static Azure.ResourceManager.WorkloadsSapMonitor.AlertTemplateData AlertTemplateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.SapMonitorAlertTemplateProperties properties = null) { throw null; }
         public static Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertTemplateMetricMeasurement AlertTemplateMetricMeasurement(Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertRuleConditionalOperator? thresholdOperator = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertRuleConditionalOperator?), int? threshold = default(int?), Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertTemplateMetricTriggerType? metricTriggerType = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertTemplateMetricTriggerType?), string metricColumn = null, int? frequencyInMinutes = default(int?), int? timeWindowInMinutes = default(int?)) { throw null; }
         public static Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertTemplateQueryInputContent AlertTemplateQueryInputContent(string name = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertTemplateParameterType? type = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertTemplateParameterType?), string description = null, string defaultValue = null, string laQuery = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertTemplateSelectionMode? selectionMode = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertTemplateSelectionMode?), string displayName = null) { throw null; }
         public static Azure.ResourceManager.WorkloadsSapMonitor.Models.DB2ProviderInstanceProperties DB2ProviderInstanceProperties(string hostname = null, string dbName = null, string dbPort = null, string dbUsername = null, string dbPassword = null, System.Uri dbPasswordUri = null, string sapSid = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.SapSslPreference? sslPreference = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.SapSslPreference?), System.Uri sslCertificateUri = null) { throw null; }
@@ -487,15 +486,16 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         public static Azure.ResourceManager.WorkloadsSapMonitor.Models.SapLandscapeMonitorPropertiesGrouping SapLandscapeMonitorPropertiesGrouping(System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadsSapMonitor.Models.SapLandscapeMonitorSidMapping> landscape = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadsSapMonitor.Models.SapLandscapeMonitorSidMapping> sapApplication = null) { throw null; }
         public static Azure.ResourceManager.WorkloadsSapMonitor.Models.SapLandscapeMonitorSidMapping SapLandscapeMonitorSidMapping(string name = null, System.Collections.Generic.IEnumerable<string> topSid = null) { throw null; }
         public static Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertData SapMonitorAlertData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.SapMonitorAlertProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.WorkloadsSapMonitor.Models.SapMonitorAlertProperties SapMonitorAlertProperties(Azure.ResponseError errors = null, Azure.Core.ResourceIdentifier alertRuleResourceId = null, string templateName = null, string providerType = null, System.Collections.Generic.IEnumerable<string> providerNames = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.SapMonitorAlertRuleProperties alertRuleProperties = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.WorkloadsSapMonitor.Models.SapMonitorAlertProperties SapMonitorAlertProperties(Azure.ResponseError errors = null, Azure.Core.ResourceIdentifier alertRuleResourceId = null, string templateName = null, string providerType = null, System.Collections.Generic.IEnumerable<string> providerNames = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.SapMonitorAlertRuleProperties alertRuleProperties = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.WorkloadsSapMonitor.Models.SapMonitorAlertQueryContent SapMonitorAlertQueryContent(string name = null, string value = null) { throw null; }
         public static Azure.ResourceManager.WorkloadsSapMonitor.Models.SapMonitorAlertRuleProperties SapMonitorAlertRuleProperties(Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertRuleStatus? status = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertRuleStatus?), int? severity = default(int?), System.Collections.Generic.IEnumerable<Azure.Core.ResourceIdentifier> actionGroups = null, int? threshold = default(int?), Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertRuleConditionalOperator? thresholdOperator = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertRuleConditionalOperator?), int? windowSize = default(int?), int? evaluationFrequency = default(int?), int? failingPeriodsToAlert = default(int?), Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertRuleConditionalOperator? failingPeriodsOperator = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertRuleConditionalOperator?), int? muteActionsDuration = default(int?), Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertAutoMitigate? autoMitigate = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertAutoMitigate?), string dimension = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadsSapMonitor.Models.SapMonitorAlertQueryContent> alertQueryParameters = null) { throw null; }
-        public static Azure.ResourceManager.WorkloadsSapMonitor.Models.SapMonitorAlertTemplateProperties SapMonitorAlertTemplateProperties(Azure.ResponseError errors = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState?), string templateDisplayName = null, string providerType = null, string description = null, int? severity = default(int?), string query = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertRuleConditionalOperator? thresholdOperator = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertRuleConditionalOperator?), int? defaultThreshold = default(int?), int? lowerBound = default(int?), int? upperBound = default(int?), Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertTemplateDefaultThresholdInputOption? defaultThresholdInputOption = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertTemplateDefaultThresholdInputOption?), string alertUnit = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertTemplateMetricMeasurement metricMeasurement = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertTemplateQueryInputContent> queryInputParameters = null) { throw null; }
+        public static Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorAlertTemplateData SapMonitorAlertTemplateData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.SapMonitorAlertTemplateProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.WorkloadsSapMonitor.Models.SapMonitorAlertTemplateProperties SapMonitorAlertTemplateProperties(Azure.ResponseError errors = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState?), string templateDisplayName = null, string providerType = null, string description = null, int? severity = default(int?), string query = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertRuleConditionalOperator? thresholdOperator = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertRuleConditionalOperator?), int? defaultThreshold = default(int?), int? lowerBound = default(int?), int? upperBound = default(int?), Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertTemplateDefaultThresholdInputOption? defaultThresholdInputOption = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertTemplateDefaultThresholdInputOption?), string alertUnit = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertTemplateMetricMeasurement metricMeasurement = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertTemplateQueryInputContent> queryInputParameters = null) { throw null; }
         public static Azure.ResourceManager.WorkloadsSapMonitor.Models.SapMonitorAppServicePlanConfiguration SapMonitorAppServicePlanConfiguration(Azure.ResourceManager.WorkloadsSapMonitor.Models.SapMonitorAppServicePlanTier? tier = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.SapMonitorAppServicePlanTier?), int? capacity = default(int?)) { throw null; }
-        public static Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorData SapMonitorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState?), Azure.ResponseError errors = null, Azure.Core.AzureLocation? appLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.WorkloadsSapMonitor.Models.SapRoutingPreference? routingPreference = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.SapRoutingPreference?), string zoneRedundancyPreference = null, Azure.Core.ResourceIdentifier logAnalyticsWorkspaceArmId = null, Azure.Core.ResourceIdentifier monitorSubnetId = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.SapMonitorAppServicePlanConfiguration appServicePlanConfiguration = null, Azure.Core.ResourceIdentifier msiArmId = null, Azure.Core.ResourceIdentifier storageAccountArmId = null, string managedResourceGroupName = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
+        public static Azure.ResourceManager.WorkloadsSapMonitor.SapMonitorData SapMonitorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState?), Azure.ResponseError errors = null, Azure.Core.AzureLocation? appLocation = default(Azure.Core.AzureLocation?), Azure.ResourceManager.WorkloadsSapMonitor.Models.SapRoutingPreference? routingPreference = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.SapRoutingPreference?), string zoneRedundancyPreference = null, Azure.Core.ResourceIdentifier logAnalyticsWorkspaceArmId = null, Azure.Core.ResourceIdentifier monitorSubnetId = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.SapMonitorAppServicePlanConfiguration appServicePlanConfiguration = null, Azure.Core.ResourceIdentifier msiArmId = null, Azure.Core.ResourceIdentifier storageAccountArmId = null, string managedResourceGroupName = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.WorkloadsSapMonitor.Models.SapMonitorPatch SapMonitorPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.WorkloadsSapMonitor.Models.SapNetWeaverProviderInstanceProperties SapNetWeaverProviderInstanceProperties(string sapSid = null, string sapHostname = null, string sapInstanceNr = null, System.Collections.Generic.IEnumerable<string> sapHostFileEntries = null, string sapUsername = null, string sapPassword = null, System.Uri sapPasswordUri = null, string sapClientId = null, string sapPortNumber = null, System.Uri sslCertificateUri = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.SapSslPreference? sslPreference = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.SapSslPreference?)) { throw null; }
-        public static Azure.ResourceManager.WorkloadsSapMonitor.SapProviderInstanceData SapProviderInstanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState?), Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorHealth health = null, Azure.ResponseError errors = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.SapProviderInstanceSpecificProperties providerSettings = null) { throw null; }
+        public static Azure.ResourceManager.WorkloadsSapMonitor.SapProviderInstanceData SapProviderInstanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState? provisioningState = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState?), Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorHealth health = null, Azure.ResponseError errors = null, Azure.ResourceManager.WorkloadsSapMonitor.Models.SapProviderInstanceSpecificProperties providerSettings = null) { throw null; }
         public static Azure.ResourceManager.WorkloadsSapMonitor.Models.SapProviderInstanceSpecificProperties SapProviderInstanceSpecificProperties(string providerType = null) { throw null; }
         public static Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorHealth WorkloadsSapMonitorHealth(Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadProviderInstanceHealthState? healthState = default(Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadProviderInstanceHealthState?), string impactingReasons = null) { throw null; }
     }
@@ -699,7 +699,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         public Azure.ResponseError Errors { get { throw null; } }
         public System.Collections.Generic.IList<string> ProviderNames { get { throw null; } }
         public string ProviderType { get { throw null; } set { } }
-        public Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState? ProvisioningState { get { throw null; } }
         public string TemplateName { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.WorkloadsSapMonitor.Models.SapMonitorAlertProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -763,7 +763,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         public int? LowerBound { get { throw null; } }
         public Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertTemplateMetricMeasurement MetricMeasurement { get { throw null; } }
         public string ProviderType { get { throw null; } }
-        public Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState? ProvisioningState { get { throw null; } }
         public string Query { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.WorkloadsSapMonitor.Models.AlertTemplateQueryInputContent> QueryInputParameters { get { throw null; } }
         public int? Severity { get { throw null; } }
@@ -900,29 +900,6 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         public override string ToString() { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct WorkloadMonitorProvisioningState : System.IEquatable<Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public WorkloadMonitorProvisioningState(string value) { throw null; }
-        public static Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState Accepted { get { throw null; } }
-        public static Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState Canceled { get { throw null; } }
-        public static Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState Creating { get { throw null; } }
-        public static Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState Deleting { get { throw null; } }
-        public static Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState Failed { get { throw null; } }
-        public static Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState Migrating { get { throw null; } }
-        public static Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState Succeeded { get { throw null; } }
-        public static Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState Updating { get { throw null; } }
-        public bool Equals(Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState other) { throw null; }
-        public override bool Equals(object obj) { throw null; }
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState left, Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState right) { throw null; }
-        public static implicit operator Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState (string value) { throw null; }
-        public static implicit operator Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState? (string value) { throw null; }
-        public static bool operator !=(Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState left, Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadMonitorProvisioningState right) { throw null; }
-        public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct WorkloadProviderInstanceHealthState : System.IEquatable<Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadProviderInstanceHealthState>
     {
         private readonly object _dummy;
@@ -955,5 +932,28 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorHealth System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorHealth>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorHealth>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorHealth>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct WorkloadsSapMonitorProvisioningState : System.IEquatable<Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public WorkloadsSapMonitorProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState Accepted { get { throw null; } }
+        public static Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState Migrating { get { throw null; } }
+        public static Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState left, Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState (string value) { throw null; }
+        public static implicit operator Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState? (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState left, Azure.ResourceManager.WorkloadsSapMonitor.Models.WorkloadsSapMonitorProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
     }
 }

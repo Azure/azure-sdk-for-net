@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.WorkloadsSapMonitor
 {
     /// <summary>
-    /// A class representing a collection of <see cref="AlertTemplateResource"/> and their operations.
-    /// Each <see cref="AlertTemplateResource"/> in the collection will belong to the same instance of <see cref="SapMonitorResource"/>.
-    /// To get a <see cref="AlertTemplateCollection"/> instance call the GetAlertTemplates method from an instance of <see cref="SapMonitorResource"/>.
+    /// A class representing a collection of <see cref="SapMonitorAlertTemplateResource"/> and their operations.
+    /// Each <see cref="SapMonitorAlertTemplateResource"/> in the collection will belong to the same instance of <see cref="SapMonitorResource"/>.
+    /// To get a <see cref="SapMonitorAlertTemplateCollection"/> instance call the GetSapMonitorAlertTemplates method from an instance of <see cref="SapMonitorResource"/>.
     /// </summary>
-    public partial class AlertTemplateCollection : ArmCollection, IEnumerable<AlertTemplateResource>, IAsyncEnumerable<AlertTemplateResource>
+    public partial class SapMonitorAlertTemplateCollection : ArmCollection, IEnumerable<SapMonitorAlertTemplateResource>, IAsyncEnumerable<SapMonitorAlertTemplateResource>
     {
         private readonly ClientDiagnostics _alertTemplatesClientDiagnostics;
         private readonly AlertTemplates _alertTemplatesRestClient;
 
-        /// <summary> Initializes a new instance of AlertTemplateCollection for mocking. </summary>
-        protected AlertTemplateCollection()
+        /// <summary> Initializes a new instance of SapMonitorAlertTemplateCollection for mocking. </summary>
+        protected SapMonitorAlertTemplateCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertTemplateCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapMonitorAlertTemplateCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AlertTemplateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SapMonitorAlertTemplateCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(AlertTemplateResource.ResourceType, out string alertTemplateApiVersion);
-            _alertTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadsSapMonitor", AlertTemplateResource.ResourceType.Namespace, Diagnostics);
-            _alertTemplatesRestClient = new AlertTemplates(_alertTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, alertTemplateApiVersion ?? "2024-02-01-preview");
+            TryGetApiVersion(SapMonitorAlertTemplateResource.ResourceType, out string sapMonitorAlertTemplateApiVersion);
+            _alertTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadsSapMonitor", SapMonitorAlertTemplateResource.ResourceType.Namespace, Diagnostics);
+            _alertTemplatesRestClient = new AlertTemplates(_alertTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sapMonitorAlertTemplateApiVersion ?? "2024-02-01-preview");
             ValidateResourceId(id);
         }
 
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertTemplateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<AlertTemplateResource>> GetAsync(string alertTemplateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SapMonitorAlertTemplateResource>> GetAsync(string alertTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertTemplateName, nameof(alertTemplateName));
 
-            using DiagnosticScope scope = _alertTemplatesClientDiagnostics.CreateScope("AlertTemplateCollection.Get");
+            using DiagnosticScope scope = _alertTemplatesClientDiagnostics.CreateScope("SapMonitorAlertTemplateCollection.Get");
             scope.Start();
             try
             {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                 };
                 HttpMessage message = _alertTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, alertTemplateName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AlertTemplateData> response = Response.FromValue(AlertTemplateData.FromResponse(result), result);
+                Response<SapMonitorAlertTemplateData> response = Response.FromValue(SapMonitorAlertTemplateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertTemplateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SapMonitorAlertTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertTemplateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<AlertTemplateResource> Get(string alertTemplateName, CancellationToken cancellationToken = default)
+        public virtual Response<SapMonitorAlertTemplateResource> Get(string alertTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertTemplateName, nameof(alertTemplateName));
 
-            using DiagnosticScope scope = _alertTemplatesClientDiagnostics.CreateScope("AlertTemplateCollection.Get");
+            using DiagnosticScope scope = _alertTemplatesClientDiagnostics.CreateScope("SapMonitorAlertTemplateCollection.Get");
             scope.Start();
             try
             {
@@ -138,12 +138,12 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                 };
                 HttpMessage message = _alertTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, alertTemplateName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AlertTemplateData> response = Response.FromValue(AlertTemplateData.FromResponse(result), result);
+                Response<SapMonitorAlertTemplateData> response = Response.FromValue(SapMonitorAlertTemplateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertTemplateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SapMonitorAlertTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -171,21 +171,21 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         /// </summary>
         /// <param name="providerType"> The provider type for filtering alert templates. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AlertTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AlertTemplateResource> GetAllAsync(string providerType = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SapMonitorAlertTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SapMonitorAlertTemplateResource> GetAllAsync(string providerType = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<AlertTemplateData, AlertTemplateResource>(new AlertTemplatesGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SapMonitorAlertTemplateData, SapMonitorAlertTemplateResource>(new AlertTemplatesGetAllAsyncCollectionResultOfT(
                 _alertTemplatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 providerType,
                 context,
-                "AlertTemplateCollection.GetAll"), data => new AlertTemplateResource(Client, data));
+                "SapMonitorAlertTemplateCollection.GetAll"), data => new SapMonitorAlertTemplateResource(Client, data));
         }
 
         /// <summary>
@@ -207,21 +207,21 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         /// </summary>
         /// <param name="providerType"> The provider type for filtering alert templates. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AlertTemplateResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AlertTemplateResource> GetAll(string providerType = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SapMonitorAlertTemplateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SapMonitorAlertTemplateResource> GetAll(string providerType = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<AlertTemplateData, AlertTemplateResource>(new AlertTemplatesGetAllCollectionResultOfT(
+            return new PageableWrapper<SapMonitorAlertTemplateData, SapMonitorAlertTemplateResource>(new AlertTemplatesGetAllCollectionResultOfT(
                 _alertTemplatesRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 Id.Name,
                 providerType,
                 context,
-                "AlertTemplateCollection.GetAll"), data => new AlertTemplateResource(Client, data));
+                "SapMonitorAlertTemplateCollection.GetAll"), data => new SapMonitorAlertTemplateResource(Client, data));
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         {
             Argument.AssertNotNullOrEmpty(alertTemplateName, nameof(alertTemplateName));
 
-            using DiagnosticScope scope = _alertTemplatesClientDiagnostics.CreateScope("AlertTemplateCollection.Exists");
+            using DiagnosticScope scope = _alertTemplatesClientDiagnostics.CreateScope("SapMonitorAlertTemplateCollection.Exists");
             scope.Start();
             try
             {
@@ -260,14 +260,14 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                 HttpMessage message = _alertTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, alertTemplateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AlertTemplateData> response = default;
+                Response<SapMonitorAlertTemplateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AlertTemplateData.FromResponse(result), result);
+                        response = Response.FromValue(SapMonitorAlertTemplateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AlertTemplateData)null, result);
+                        response = Response.FromValue((SapMonitorAlertTemplateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         {
             Argument.AssertNotNullOrEmpty(alertTemplateName, nameof(alertTemplateName));
 
-            using DiagnosticScope scope = _alertTemplatesClientDiagnostics.CreateScope("AlertTemplateCollection.Exists");
+            using DiagnosticScope scope = _alertTemplatesClientDiagnostics.CreateScope("SapMonitorAlertTemplateCollection.Exists");
             scope.Start();
             try
             {
@@ -317,14 +317,14 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                 HttpMessage message = _alertTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, alertTemplateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AlertTemplateData> response = default;
+                Response<SapMonitorAlertTemplateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AlertTemplateData.FromResponse(result), result);
+                        response = Response.FromValue(SapMonitorAlertTemplateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AlertTemplateData)null, result);
+                        response = Response.FromValue((SapMonitorAlertTemplateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -359,11 +359,11 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertTemplateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<AlertTemplateResource>> GetIfExistsAsync(string alertTemplateName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<SapMonitorAlertTemplateResource>> GetIfExistsAsync(string alertTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertTemplateName, nameof(alertTemplateName));
 
-            using DiagnosticScope scope = _alertTemplatesClientDiagnostics.CreateScope("AlertTemplateCollection.GetIfExists");
+            using DiagnosticScope scope = _alertTemplatesClientDiagnostics.CreateScope("SapMonitorAlertTemplateCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -374,23 +374,23 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                 HttpMessage message = _alertTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, alertTemplateName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<AlertTemplateData> response = default;
+                Response<SapMonitorAlertTemplateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AlertTemplateData.FromResponse(result), result);
+                        response = Response.FromValue(SapMonitorAlertTemplateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AlertTemplateData)null, result);
+                        response = Response.FromValue((SapMonitorAlertTemplateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AlertTemplateResource>(response.GetRawResponse());
+                    return new NoValueResponse<SapMonitorAlertTemplateResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertTemplateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SapMonitorAlertTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -420,11 +420,11 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="alertTemplateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<AlertTemplateResource> GetIfExists(string alertTemplateName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<SapMonitorAlertTemplateResource> GetIfExists(string alertTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertTemplateName, nameof(alertTemplateName));
 
-            using DiagnosticScope scope = _alertTemplatesClientDiagnostics.CreateScope("AlertTemplateCollection.GetIfExists");
+            using DiagnosticScope scope = _alertTemplatesClientDiagnostics.CreateScope("SapMonitorAlertTemplateCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -435,23 +435,23 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                 HttpMessage message = _alertTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, alertTemplateName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<AlertTemplateData> response = default;
+                Response<SapMonitorAlertTemplateData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(AlertTemplateData.FromResponse(result), result);
+                        response = Response.FromValue(SapMonitorAlertTemplateData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((AlertTemplateData)null, result);
+                        response = Response.FromValue((SapMonitorAlertTemplateData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<AlertTemplateResource>(response.GetRawResponse());
+                    return new NoValueResponse<SapMonitorAlertTemplateResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertTemplateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SapMonitorAlertTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
             }
         }
 
-        IEnumerator<AlertTemplateResource> IEnumerable<AlertTemplateResource>.GetEnumerator()
+        IEnumerator<SapMonitorAlertTemplateResource> IEnumerable<SapMonitorAlertTemplateResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<AlertTemplateResource> IAsyncEnumerable<AlertTemplateResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SapMonitorAlertTemplateResource> IAsyncEnumerable<SapMonitorAlertTemplateResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.WorkloadsSapMonitor
 {
     /// <summary>
-    /// A class representing a AlertTemplate along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="AlertTemplateResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SapMonitorResource"/> using the GetAlertTemplates method.
+    /// A class representing a SapMonitorAlertTemplate along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SapMonitorAlertTemplateResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="SapMonitorResource"/> using the GetSapMonitorAlertTemplates method.
     /// </summary>
-    public partial class AlertTemplateResource : ArmResource
+    public partial class SapMonitorAlertTemplateResource : ArmResource
     {
         private readonly ClientDiagnostics _alertTemplatesClientDiagnostics;
         private readonly AlertTemplates _alertTemplatesRestClient;
-        private readonly AlertTemplateData _data;
+        private readonly SapMonitorAlertTemplateData _data;
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Workloads/monitors/alertTemplates";
 
-        /// <summary> Initializes a new instance of AlertTemplateResource for mocking. </summary>
-        protected AlertTemplateResource()
+        /// <summary> Initializes a new instance of SapMonitorAlertTemplateResource for mocking. </summary>
+        protected SapMonitorAlertTemplateResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertTemplateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapMonitorAlertTemplateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal AlertTemplateResource(ArmClient client, AlertTemplateData data) : this(client, data.Id)
+        internal SapMonitorAlertTemplateResource(ArmClient client, SapMonitorAlertTemplateData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AlertTemplateResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SapMonitorAlertTemplateResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal AlertTemplateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SapMonitorAlertTemplateResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string alertTemplateApiVersion);
+            TryGetApiVersion(ResourceType, out string sapMonitorAlertTemplateApiVersion);
             _alertTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadsSapMonitor", ResourceType.Namespace, Diagnostics);
-            _alertTemplatesRestClient = new AlertTemplates(_alertTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, alertTemplateApiVersion ?? "2024-02-01-preview");
+            _alertTemplatesRestClient = new AlertTemplates(_alertTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sapMonitorAlertTemplateApiVersion ?? "2024-02-01-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual AlertTemplateData Data
+        public virtual SapMonitorAlertTemplateData Data
         {
             get
             {
@@ -108,14 +108,14 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AlertTemplateResource"/>. </description>
+        /// <description> <see cref="SapMonitorAlertTemplateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AlertTemplateResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SapMonitorAlertTemplateResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertTemplatesClientDiagnostics.CreateScope("AlertTemplateResource.Get");
+            using DiagnosticScope scope = _alertTemplatesClientDiagnostics.CreateScope("SapMonitorAlertTemplateResource.Get");
             scope.Start();
             try
             {
@@ -125,12 +125,12 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                 };
                 HttpMessage message = _alertTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<AlertTemplateData> response = Response.FromValue(AlertTemplateData.FromResponse(result), result);
+                Response<SapMonitorAlertTemplateData> response = Response.FromValue(SapMonitorAlertTemplateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertTemplateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SapMonitorAlertTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="AlertTemplateResource"/>. </description>
+        /// <description> <see cref="SapMonitorAlertTemplateResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AlertTemplateResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<SapMonitorAlertTemplateResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _alertTemplatesClientDiagnostics.CreateScope("AlertTemplateResource.Get");
+            using DiagnosticScope scope = _alertTemplatesClientDiagnostics.CreateScope("SapMonitorAlertTemplateResource.Get");
             scope.Start();
             try
             {
@@ -173,12 +173,12 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                 };
                 HttpMessage message = _alertTemplatesRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<AlertTemplateData> response = Response.FromValue(AlertTemplateData.FromResponse(result), result);
+                Response<SapMonitorAlertTemplateData> response = Response.FromValue(SapMonitorAlertTemplateData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new AlertTemplateResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SapMonitorAlertTemplateResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

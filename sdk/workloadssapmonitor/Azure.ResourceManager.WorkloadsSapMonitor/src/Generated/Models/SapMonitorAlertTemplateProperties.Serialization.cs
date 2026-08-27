@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                 return null;
             }
             ResponseError errors = default;
-            WorkloadMonitorProvisioningState? provisioningState = default;
+            WorkloadsSapMonitorProvisioningState? provisioningState = default;
             string templateDisplayName = default;
             string providerType = default;
             string description = default;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
                     {
                         continue;
                     }
-                    provisioningState = new WorkloadMonitorProvisioningState(prop.Value.GetString());
+                    provisioningState = new WorkloadsSapMonitorProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("templateDisplayName"u8))

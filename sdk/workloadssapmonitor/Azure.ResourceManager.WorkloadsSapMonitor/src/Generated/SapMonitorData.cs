@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> State of provisioning of the SAP monitor. </summary>
-        public WorkloadMonitorProvisioningState? ProvisioningState
+        public WorkloadsSapMonitorProvisioningState? ProvisioningState
         {
             get
             {

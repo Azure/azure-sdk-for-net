@@ -18,58 +18,58 @@ using Azure.ResourceManager.WorkloadsSapMonitor.Models;
 namespace Azure.ResourceManager.WorkloadsSapMonitor
 {
     /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class AlertTemplateData : ResourceData, IJsonModel<AlertTemplateData>
+    public partial class SapMonitorAlertTemplateData : ResourceData, IJsonModel<SapMonitorAlertTemplateData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertTemplateData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapMonitorAlertTemplateData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeAlertTemplateData(document.RootElement, options);
+                        return DeserializeSapMonitorAlertTemplateData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AlertTemplateData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapMonitorAlertTemplateData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertTemplateData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapMonitorAlertTemplateData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerWorkloadsSapMonitorContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(AlertTemplateData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapMonitorAlertTemplateData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<AlertTemplateData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SapMonitorAlertTemplateData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AlertTemplateData IPersistableModel<AlertTemplateData>.Create(BinaryData data, ModelReaderWriterOptions options) => (AlertTemplateData)PersistableModelCreateCore(data, options);
+        SapMonitorAlertTemplateData IPersistableModel<SapMonitorAlertTemplateData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SapMonitorAlertTemplateData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<AlertTemplateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SapMonitorAlertTemplateData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AlertTemplateData"/> from. </param>
-        internal static AlertTemplateData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SapMonitorAlertTemplateData"/> from. </param>
+        internal static SapMonitorAlertTemplateData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeAlertTemplateData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeSapMonitorAlertTemplateData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<AlertTemplateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SapMonitorAlertTemplateData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertTemplateData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapMonitorAlertTemplateData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertTemplateData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SapMonitorAlertTemplateData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Properties))
@@ -110,24 +110,24 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        AlertTemplateData IJsonModel<AlertTemplateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (AlertTemplateData)JsonModelCreateCore(ref reader, options);
+        SapMonitorAlertTemplateData IJsonModel<SapMonitorAlertTemplateData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SapMonitorAlertTemplateData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<AlertTemplateData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SapMonitorAlertTemplateData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertTemplateData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SapMonitorAlertTemplateData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAlertTemplateData(document.RootElement, options);
+            return DeserializeSapMonitorAlertTemplateData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static AlertTemplateData DeserializeAlertTemplateData(JsonElement element, ModelReaderWriterOptions options)
+        internal static SapMonitorAlertTemplateData DeserializeSapMonitorAlertTemplateData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AlertTemplateData(
+            return new SapMonitorAlertTemplateData(
                 id,
                 name,
                 resourceType,

@@ -62,13 +62,13 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Mocking
             return new SapMonitorAlertResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="AlertTemplateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SapMonitorAlertTemplateResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AlertTemplateResource"/> object. </returns>
-        public virtual AlertTemplateResource GetAlertTemplateResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SapMonitorAlertTemplateResource"/> object. </returns>
+        public virtual SapMonitorAlertTemplateResource GetSapMonitorAlertTemplateResource(ResourceIdentifier id)
         {
-            AlertTemplateResource.ValidateResourceId(id);
-            return new AlertTemplateResource(Client, id);
+            SapMonitorAlertTemplateResource.ValidateResourceId(id);
+            return new SapMonitorAlertTemplateResource(Client, id);
         }
     }
 }

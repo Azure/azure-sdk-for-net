@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         /// <param name="metricMeasurement"> Describes the properties for metric measurement in alerts template. </param>
         /// <param name="queryInputParameters"> Describes the Query Input Parameter properties in alerts template. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SapMonitorAlertTemplateProperties(ResponseError errors, WorkloadMonitorProvisioningState? provisioningState, string templateDisplayName, string providerType, string description, int? severity, string query, AlertRuleConditionalOperator? thresholdOperator, int? defaultThreshold, int? lowerBound, int? upperBound, AlertTemplateDefaultThresholdInputOption? defaultThresholdInputOption, string alertUnit, AlertTemplateMetricMeasurement metricMeasurement, IList<AlertTemplateQueryInputContent> queryInputParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SapMonitorAlertTemplateProperties(ResponseError errors, WorkloadsSapMonitorProvisioningState? provisioningState, string templateDisplayName, string providerType, string description, int? severity, string query, AlertRuleConditionalOperator? thresholdOperator, int? defaultThreshold, int? lowerBound, int? upperBound, AlertTemplateDefaultThresholdInputOption? defaultThresholdInputOption, string alertUnit, AlertTemplateMetricMeasurement metricMeasurement, IList<AlertTemplateQueryInputContent> queryInputParameters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Errors = errors;
             ProvisioningState = provisioningState;
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
         public ResponseError Errors { get; }
 
         /// <summary> State of provisioning of the Alert Template. </summary>
-        public WorkloadMonitorProvisioningState? ProvisioningState { get; }
+        public WorkloadsSapMonitorProvisioningState? ProvisioningState { get; }
 
         /// <summary> Display name of the alert template. </summary>
         public string TemplateDisplayName { get; }

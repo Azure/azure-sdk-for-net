@@ -752,11 +752,11 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
             return GetSapMonitorAlerts().Get(alertName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AlertTemplates in the <see cref="SapMonitorResource"/>. </summary>
-        /// <returns> An object representing collection of AlertTemplates and their operations over a AlertTemplateResource. </returns>
-        public virtual AlertTemplateCollection GetAlertTemplates()
+        /// <summary> Gets a collection of SapMonitorAlertTemplates in the <see cref="SapMonitorResource"/>. </summary>
+        /// <returns> An object representing collection of SapMonitorAlertTemplates and their operations over a SapMonitorAlertTemplateResource. </returns>
+        public virtual SapMonitorAlertTemplateCollection GetSapMonitorAlertTemplates()
         {
-            return GetCachedClient(client => new AlertTemplateCollection(client, Id));
+            return GetCachedClient(client => new SapMonitorAlertTemplateCollection(client, Id));
         }
 
         /// <summary> Gets properties of an alert template for the specified subscription, resource group, SAP monitor name, and resource name. </summary>
@@ -765,11 +765,11 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         /// <exception cref="ArgumentNullException"> <paramref name="alertTemplateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AlertTemplateResource>> GetAlertTemplateAsync(string alertTemplateName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SapMonitorAlertTemplateResource>> GetSapMonitorAlertTemplateAsync(string alertTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertTemplateName, nameof(alertTemplateName));
 
-            return await GetAlertTemplates().GetAsync(alertTemplateName, cancellationToken).ConfigureAwait(false);
+            return await GetSapMonitorAlertTemplates().GetAsync(alertTemplateName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets properties of an alert template for the specified subscription, resource group, SAP monitor name, and resource name. </summary>
@@ -778,11 +778,11 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         /// <exception cref="ArgumentNullException"> <paramref name="alertTemplateName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="alertTemplateName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AlertTemplateResource> GetAlertTemplate(string alertTemplateName, CancellationToken cancellationToken = default)
+        public virtual Response<SapMonitorAlertTemplateResource> GetSapMonitorAlertTemplate(string alertTemplateName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(alertTemplateName, nameof(alertTemplateName));
 
-            return GetAlertTemplates().Get(alertTemplateName, cancellationToken);
+            return GetSapMonitorAlertTemplates().Get(alertTemplateName, cancellationToken);
         }
     }
 }

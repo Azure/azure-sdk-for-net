@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor
         internal ProviderInstanceProperties Properties { get; set; }
 
         /// <summary> State of provisioning of the provider instance. </summary>
-        public WorkloadMonitorProvisioningState? ProvisioningState
+        public WorkloadsSapMonitorProvisioningState? ProvisioningState
         {
             get
             {

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (AlertTemplateData item in Value)
+            foreach (SapMonitorAlertTemplateData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.WorkloadsSapMonitor.Models
             {
                 return null;
             }
-            IList<AlertTemplateData> value = default;
+            IList<SapMonitorAlertTemplateData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<AlertTemplateData> array = new List<AlertTemplateData>();
+                    List<SapMonitorAlertTemplateData> array = new List<SapMonitorAlertTemplateData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AlertTemplateData.DeserializeAlertTemplateData(item, options));
+                        array.Add(SapMonitorAlertTemplateData.DeserializeSapMonitorAlertTemplateData(item, options));
                     }
                     value = array;
                     continue;
