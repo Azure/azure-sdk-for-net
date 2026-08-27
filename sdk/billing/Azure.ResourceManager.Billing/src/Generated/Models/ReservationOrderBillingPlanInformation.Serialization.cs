@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("pricingCurrencyTotal"u8);
                 writer.WriteObjectValue(PricingCurrencyTotal, options);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDate"u8);
-                writer.WriteStringValue(StartOn.Value, "D");
+                writer.WriteStringValue(StartsOn.Value, "D");
             }
             if (Optional.IsDefined(NextPaymentDueOn))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Billing.Models
                 return null;
             }
             BillingPrice pricingCurrencyTotal = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             DateTimeOffset? nextPaymentDueOn = default;
             IList<ReservationPaymentDetail> transactions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("D");
+                    startsOn = prop.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (prop.NameEquals("nextPaymentDueDate"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Billing.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ReservationOrderBillingPlanInformation(pricingCurrencyTotal, startOn, nextPaymentDueOn, transactions ?? new ChangeTrackingList<ReservationPaymentDetail>(), additionalBinaryDataProperties);
+            return new ReservationOrderBillingPlanInformation(pricingCurrencyTotal, startsOn, nextPaymentDueOn, transactions ?? new ChangeTrackingList<ReservationPaymentDetail>(), additionalBinaryDataProperties);
         }
     }
 }

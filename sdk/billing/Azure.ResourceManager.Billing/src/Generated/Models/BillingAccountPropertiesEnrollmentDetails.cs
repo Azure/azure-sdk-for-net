@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Billing.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BillingAccountPropertiesEnrollmentDetails"/>. </summary>
-        /// <param name="startOn"> The start date of the enrollment. </param>
-        /// <param name="endOn"> The end date of the enrollment. </param>
+        /// <param name="startsOn"> The start date of the enrollment. </param>
+        /// <param name="endsOn"> The end date of the enrollment. </param>
         /// <param name="currency"> The billing currency for the enrollment. </param>
         /// <param name="channel"> The channel type of the enrollment. </param>
         /// <param name="language"> The language for the enrollment. </param>
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="indirectRelationshipInfo"> The properties of an enrollment which are applicable only for indirect enrollments. </param>
         /// <param name="invoiceRecipient"> The contact who receives invoices of the enrollment. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingAccountPropertiesEnrollmentDetails(DateTimeOffset? startOn, DateTimeOffset? endOn, string currency, string channel, string language, string countryCode, string billingCycle, ExtendedTermOption? extendedTermOption, BillingEnrollmentSupportLevel? supportLevel, string supportCoverage, string cloud, string poNumber, EnrollmentMarkupStatus? markupStatus, IndirectRelationshipInfo indirectRelationshipInfo, string invoiceRecipient, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(startOn, endOn, currency, channel, language, countryCode, billingCycle, extendedTermOption, supportLevel, supportCoverage, cloud, poNumber, markupStatus, indirectRelationshipInfo, invoiceRecipient, additionalBinaryDataProperties)
+        internal BillingAccountPropertiesEnrollmentDetails(DateTimeOffset? startsOn, DateTimeOffset? endsOn, string currency, string channel, string language, string countryCode, string billingCycle, ExtendedTermOption? extendedTermOption, BillingEnrollmentSupportLevel? supportLevel, string supportCoverage, string cloud, string poNumber, EnrollmentMarkupStatus? markupStatus, IndirectRelationshipInfo indirectRelationshipInfo, string invoiceRecipient, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(startsOn, endsOn, currency, channel, language, countryCode, billingCycle, extendedTermOption, supportLevel, supportCoverage, cloud, poNumber, markupStatus, indirectRelationshipInfo, invoiceRecipient, additionalBinaryDataProperties)
         {
         }
     }

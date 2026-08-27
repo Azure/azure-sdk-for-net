@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> Initializes a new instance of <see cref="BillingSystemOverrides"/>. </summary>
         /// <param name="cancellation"> The policy override for the subscription indicates whether the self-serve cancellation or seat reduction is allowed. </param>
-        /// <param name="cancellationAllowedEndOn"> The end date in UTC time by when the self-serve cancellation ends. </param>
+        /// <param name="cancellationAllowedEndsOn"> The end date in UTC time by when the self-serve cancellation ends. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BillingSystemOverrides(PolicyOverrideCancellation? cancellation, DateTimeOffset? cancellationAllowedEndOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BillingSystemOverrides(PolicyOverrideCancellation? cancellation, DateTimeOffset? cancellationAllowedEndsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Cancellation = cancellation;
-            CancellationAllowedEndOn = cancellationAllowedEndOn;
+            CancellationAllowedEndsOn = cancellationAllowedEndsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.Billing.Models
 
         /// <summary> The end date in UTC time by when the self-serve cancellation ends. </summary>
         [WirePath("cancellationAllowedEndDate")]
-        public DateTimeOffset? CancellationAllowedEndOn { get; }
+        public DateTimeOffset? CancellationAllowedEndsOn { get; }
     }
 }
