@@ -302,24 +302,21 @@ function Build-Graph {
         })
       }
       'PackageClosureSummary' {
-        if ($parts.Length -lt 12) { throw "Invalid package-closure summary record: $line" }
+        if ($parts.Length -lt 9) { throw "Invalid package-closure summary record: $line" }
         $packageClosureSummaryCount++
         $packageClosureSummary = [ordered]@{
           rootCount = [int]$parts[1]
           resolvedRootCount = [int]$parts[2]
           derivedEdgeCount = [int]$parts[3]
           unresolvedRootCount = [int]$parts[4]
-          metadataRequestCount = [int]$parts[5]
-          packageCacheHitCount = [int]$parts[6]
-          remoteMetadataRequestCount = [int]$parts[7]
-          elapsedSeconds = [double]::Parse($parts[8], [System.Globalization.CultureInfo]::InvariantCulture)
-          resolutionMode = $parts[9]
-          restoreEquivalent = [bool]::Parse($parts[10])
-          transitiveDependencyAssetFiltersApplied = [bool]::Parse($parts[11])
+          elapsedSeconds = [double]::Parse($parts[5], [System.Globalization.CultureInfo]::InvariantCulture)
+          resolutionMode = $parts[6]
+          restoreEquivalent = [bool]::Parse($parts[7])
+          transitiveDependencyAssetFiltersApplied = [bool]::Parse($parts[8])
         }
-        if ($parts.Length -ge 13) { $packageClosureSummary['projectContextCount'] = [int]$parts[12] }
-        if ($parts.Length -ge 14) { $packageClosureSummary['restoreRequestCount'] = [int]$parts[13] }
-        if ($parts.Length -ge 15) { $packageClosureSummary['selectedPackageCount'] = [int]$parts[14] }
+        if ($parts.Length -ge 10) { $packageClosureSummary['projectContextCount'] = [int]$parts[9] }
+        if ($parts.Length -ge 11) { $packageClosureSummary['restoreRequestCount'] = [int]$parts[10] }
+        if ($parts.Length -ge 12) { $packageClosureSummary['selectedPackageCount'] = [int]$parts[11] }
       }
       'Input' {
         if ($parts.Length -lt 4) { throw "Invalid input record: $line" }

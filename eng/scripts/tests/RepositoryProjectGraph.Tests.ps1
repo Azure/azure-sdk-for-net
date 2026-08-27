@@ -73,7 +73,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $closureGraphPath = Join-Path $TestDrive "closure.json"
         @(
             "TransitivePackageReference|$testProject|net9.0|Azure.B"
-            "PackageClosureSummary|1|1|1|0|2|2|0|0.125|nuget-restore-graph|false|true|1|1|2"
+            "PackageClosureSummary|1|1|1|0|0.125|nuget-restore-graph|false|true|1|1|2"
         ) | Set-Content $packageRecordsPath
 
         & $scriptPath -Operation Build -GraphPath $closureGraphPath -RecordsPath $recordsPath -PackageRecordsPath $packageRecordsPath -RepoRoot $repoRoot
@@ -94,7 +94,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
     It "fails closed when the package closure summary contradicts its detail records" {
         $packageRecordsPath = Join-Path $TestDrive "inconsistent-package-closure.records"
         $closureGraphPath = Join-Path $TestDrive "inconsistent-closure.json"
-        "PackageClosureSummary|1|0|0|1|1|0|1|0.125|nuget-restore-graph|false|true|1|1|0" | Set-Content $packageRecordsPath
+        "PackageClosureSummary|1|0|0|1|0.125|nuget-restore-graph|false|true|1|1|0" | Set-Content $packageRecordsPath
 
         & $scriptPath -Operation Build -GraphPath $closureGraphPath -RecordsPath $recordsPath -PackageRecordsPath $packageRecordsPath -RepoRoot $repoRoot
         if ($LASTEXITCODE) { throw "Graph build failed with exit code $LASTEXITCODE" }
@@ -129,7 +129,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
             "DeclaredProject|$testProject"
             "Root|$testProject"
         ) | Set-Content $configurationRecordsPath
-        "PackageClosureSummary|1|1|0|0|0|0|0|0.001|nuget-restore-graph|false|true|1|1|1" |
+        "PackageClosureSummary|1|1|0|0|0.001|nuget-restore-graph|false|true|1|1|1" |
             Set-Content $configurationPackageRecordsPath
 
         & $scriptPath -Operation Build -GraphPath $configurationGraphPath -RecordsPath $configurationRecordsPath -PackageRecordsPath $configurationPackageRecordsPath -RepoRoot $repoRoot
@@ -312,9 +312,9 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $closureRecords | Should -Not -Contain "TransitivePackageReference|$nonAssemblyTestProject|net8.0|Azure.B"
         $summary = ($closureRecords | Where-Object { $_ -like "PackageClosureSummary|*" }).Split('|')
         $summary[1..4] | Should -Be @("5", "5", "3", "0")
-        $summary[9..11] | Should -Be @("nuget-restore-graph", "False", "True")
-        $summary[12..13] | Should -Be @("3", "3")
-        [int]$summary[14] | Should -BeGreaterThan 0
+        $summary[6..8] | Should -Be @("nuget-restore-graph", "False", "True")
+        $summary[9..10] | Should -Be @("3", "3")
+        [int]$summary[11] | Should -BeGreaterThan 0
 
         & $scriptPath -Operation Build -GraphPath $closureGraphPath -RecordsPath $inputRecordsPath -PackageRecordsPath $closureRecordsPath -RepoRoot $fixtureRoot
         if ($LASTEXITCODE) { throw "Graph build failed with exit code $LASTEXITCODE" }
