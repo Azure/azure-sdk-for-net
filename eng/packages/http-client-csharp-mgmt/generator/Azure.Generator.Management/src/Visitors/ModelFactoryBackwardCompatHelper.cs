@@ -610,7 +610,8 @@ namespace Azure.Generator.Management.Visitors
             argument = null;
             foreach (var candidate in argumentsByName)
             {
-                if (!string.Equals(candidate.Key, parameterName, StringComparison.OrdinalIgnoreCase))
+                if (!string.Equals(candidate.Key, parameterName, StringComparison.OrdinalIgnoreCase)
+                    && !AreEquivalentDateTimeParameterNames(candidate.Key, parameterName))
                 {
                     continue;
                 }
@@ -818,7 +819,8 @@ namespace Azure.Generator.Management.Visitors
             [NotNullWhen(true)] out ParameterProvider? parameter)
         {
             var matches = method.Signature.Parameters.Where(p =>
-                string.Equals(p.Name, name, StringComparison.OrdinalIgnoreCase)
+                (string.Equals(p.Name, name, StringComparison.OrdinalIgnoreCase)
+                    || AreEquivalentDateTimeParameterNames(p.Name, name))
                 && AreCompatibleParameterTypes(p.Type, expectedType)).ToArray();
             if (matches.Length > 1 && expectedProperty is not null)
             {
@@ -840,6 +842,35 @@ namespace Azure.Generator.Management.Visitors
                 && AreCompatibleParameterTypes(p.Type, nestedParameter.Type)).ToArray();
             parameter = matches.Length == 1 ? matches[0] : null;
             return parameter is not null;
+        }
+
+        /// <summary>
+        /// Determines whether two parameter names differ only by the verb normalization applied to
+        /// legacy <c>StartOn</c>/<c>EndOn</c> date-time names.
+        /// </summary>
+        private static bool AreEquivalentDateTimeParameterNames(string first, string second)
+            => HasEquivalentSuffix(first, second, "startOn", "startsOn")
+                || HasEquivalentSuffix(first, second, "endOn", "endsOn");
+
+        private static bool HasEquivalentSuffix(string first, string second, string legacySuffix, string normalizedSuffix)
+        {
+            if (first.EndsWith(legacySuffix, StringComparison.OrdinalIgnoreCase)
+                && second.EndsWith(normalizedSuffix, StringComparison.OrdinalIgnoreCase))
+            {
+                return first[..^legacySuffix.Length].Equals(
+                    second[..^normalizedSuffix.Length],
+                    StringComparison.OrdinalIgnoreCase);
+            }
+
+            if (first.EndsWith(normalizedSuffix, StringComparison.OrdinalIgnoreCase)
+                && second.EndsWith(legacySuffix, StringComparison.OrdinalIgnoreCase))
+            {
+                return first[..^normalizedSuffix.Length].Equals(
+                    second[..^legacySuffix.Length],
+                    StringComparison.OrdinalIgnoreCase);
+            }
+
+            return false;
         }
 
         /// <summary>
