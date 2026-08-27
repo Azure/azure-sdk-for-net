@@ -31,19 +31,19 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="backupManagementType"> Backup management type to execute the current job. </param>
         /// <param name="operation"> The operation name. </param>
         /// <param name="status"> Job status. </param>
-        /// <param name="startOn"> The start time. </param>
-        /// <param name="endOn"> The end time. </param>
+        /// <param name="startsOn"> The start time. </param>
+        /// <param name="endsOn"> The end time. </param>
         /// <param name="activityId"> ActivityId of job. </param>
         /// <param name="jobType"> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BackupGenericJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, string activityId, string jobType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BackupGenericJob(string entityFriendlyName, BackupManagementType? backupManagementType, string operation, string status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string activityId, string jobType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EntityFriendlyName = entityFriendlyName;
             BackupManagementType = backupManagementType;
             Operation = operation;
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             ActivityId = activityId;
             JobType = jobType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         public string Status { get; set; }
 
         /// <summary> The start time. </summary>
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> The end time. </summary>
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> ActivityId of job. </summary>
         public string ActivityId { get; set; }
