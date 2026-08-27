@@ -27,17 +27,17 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="actionName"> The name of the action status. </param>
         /// <param name="actionId"> The id of the action status. </param>
         /// <param name="status"> The status of the action. </param>
-        /// <param name="startOn"> String that represents the start time of the action. </param>
-        /// <param name="endOn"> String that represents the end time of the action. </param>
+        /// <param name="startsOn"> String that represents the start time of the action. </param>
+        /// <param name="endsOn"> String that represents the end time of the action. </param>
         /// <param name="targets"> The array of targets. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosExperimentRunActionStatus(string actionName, string actionId, string status, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<ExperimentExecutionActionTargetDetailsProperties> targets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ChaosExperimentRunActionStatus(string actionName, string actionId, string status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IReadOnlyList<ExperimentExecutionActionTargetDetailsProperties> targets, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ActionName = actionName;
             ActionId = actionId;
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Targets = targets;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -52,10 +52,10 @@ namespace Azure.ResourceManager.Chaos.Models
         public string Status { get; }
 
         /// <summary> String that represents the start time of the action. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> String that represents the end time of the action. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> The array of targets. </summary>
         public IReadOnlyList<ExperimentExecutionActionTargetDetailsProperties> Targets { get; }

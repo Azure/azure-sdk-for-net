@@ -155,10 +155,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WritePropertyName("purchaseDateTime"u8);
                 writer.WriteStringValue(PurchaseOn.Value, "O");
             }
-            if (Optional.IsDefined(BenefitStartOn))
+            if (Optional.IsDefined(BenefitStartsOn))
             {
                 writer.WritePropertyName("benefitStartTime"u8);
-                writer.WriteStringValue(BenefitStartOn.Value, "O");
+                writer.WriteStringValue(BenefitStartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ExtendedStatusInfo))
             {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             DateTimeOffset? effectOn = default;
             DateTimeOffset? expireOn = default;
             DateTimeOffset? purchaseOn = default;
-            DateTimeOffset? benefitStartOn = default;
+            DateTimeOffset? benefitStartsOn = default;
             BillingBenefitsExtendedStatusInfo extendedStatusInfo = default;
             bool? isRenewed = default;
             BillingBenefitsSavingsPlanUtilization utilization = default;
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    benefitStartOn = prop.Value.GetDateTimeOffset("O");
+                    benefitStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("extendedStatusInfo"u8))
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 effectOn,
                 expireOn,
                 purchaseOn,
-                benefitStartOn,
+                benefitStartsOn,
                 extendedStatusInfo,
                 isRenewed,
                 utilization,
