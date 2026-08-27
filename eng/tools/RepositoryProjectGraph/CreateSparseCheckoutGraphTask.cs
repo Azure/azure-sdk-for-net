@@ -11,13 +11,13 @@ namespace Azure.Sdk.Tools.RepositoryProjectGraph;
 
 /// <summary>
 /// Projects the canonical repository graph into the smaller index distributed to PR test jobs.
-/// Exact graph inputs are intentionally absent from <see cref="SourceGraph"/> so the JSON reader
-/// validates and materializes only the compact checkout roots computed during graph construction.
+/// The source graph contains only SDK service checkout roots, so projection does not need to
+/// materialize file-level inputs or filter generated build paths.
 /// </summary>
 public sealed class CreateSparseCheckoutGraphTask : Task
 {
-    private const int SourceSchemaVersion = 6;
-    private static readonly string[] AlwaysIncludedPaths = ["/*", "!/*/", "/eng", "/.config"];
+    private const int SourceSchemaVersion = 7;
+    private static readonly string[] AlwaysIncludedPaths = ["/*", "!/*/", "/eng", "/.config", "/common"];
     private static readonly StringComparer KeyComparer = StringComparer.OrdinalIgnoreCase;
     private static readonly JsonSerializerOptions ReadOptions = new()
     {
@@ -88,7 +88,7 @@ public sealed class CreateSparseCheckoutGraphTask : Task
             throw new InvalidOperationException($"No package information files were found under '{packageInfoRoot}'.");
         }
 
-        // System.Text.Json streams from the file and skips the large, unknown `inputs` property.
+        // Stream the canonical graph directly into the smaller projection model.
         var phase = Stopwatch.StartNew();
         SourceGraph graph;
         using (FileStream stream = File.OpenRead(graphFullPath))
@@ -108,6 +108,7 @@ public sealed class CreateSparseCheckoutGraphTask : Task
         var configurationsByRepositoryPackage = NewTable();
         var repositoryPackageKeys = new Dictionary<string, string>(KeyComparer);
         var allConfigurations = NewSet();
+        var sdkConfigurations = NewSet();
 
         foreach (SourceNode node in graph.Nodes)
         {
@@ -131,6 +132,10 @@ public sealed class CreateSparseCheckoutGraphTask : Task
                     throw new InvalidOperationException($"Repository graph contains duplicate configuration '{configuration}'.");
                 }
                 AddTableValue(configurationsByProjectPath, projectPath, configuration);
+                if (IsSdkProjectPath(projectPath))
+                {
+                    sdkConfigurations.Add(configuration);
+                }
                 if (!string.IsNullOrEmpty(packageRoot))
                 {
                     AddTableValue(configurationsByPackageRoot, packageRoot, configuration);
@@ -155,8 +160,8 @@ public sealed class CreateSparseCheckoutGraphTask : Task
             }
         }
 
-        // Schema 6 pre-groups file inputs into checkout roots. Require a complete one-to-one
-        // configuration index before any result is allowed to narrow a checkout.
+        // Schema 7 stores only dynamic SDK service roots. Common and build infrastructure are
+        // unconditional, so their configurations correctly have no entry in this index.
         var paths = NewTable();
         foreach ((string configuration, string[] checkoutRoots) in graph.CheckoutRoots)
         {
@@ -170,15 +175,15 @@ public sealed class CreateSparseCheckoutGraphTask : Task
             }
             foreach (string checkoutRoot in checkoutRoots)
             {
-                if (string.IsNullOrWhiteSpace(checkoutRoot) || !checkoutRoot.StartsWith('/'))
+                if (!IsSdkCheckoutRoot(checkoutRoot))
                 {
                     throw new InvalidOperationException(
-                        $"Configuration '{configuration}' contains invalid checkout root '{checkoutRoot}'.");
+                        $"Configuration '{configuration}' contains non-SDK checkout root '{checkoutRoot}'.");
                 }
                 AddTableValue(paths, configuration, checkoutRoot);
             }
         }
-        string missingCheckoutRoot = allConfigurations.FirstOrDefault(configuration => !paths.ContainsKey(configuration));
+        string missingCheckoutRoot = sdkConfigurations.FirstOrDefault(configuration => !paths.ContainsKey(configuration));
         if (missingCheckoutRoot is not null)
         {
             throw new InvalidOperationException($"Repository graph has no checkout roots for '{missingCheckoutRoot}'.");
@@ -290,6 +295,7 @@ public sealed class CreateSparseCheckoutGraphTask : Task
         double artifactSeconds = phase.Elapsed.TotalSeconds;
 
         phase.Restart();
+        int checkoutRootCount = graph.CheckoutRoots.Values.Sum(value => value?.Length ?? 0);
         var outputArtifacts = new SortedDictionary<string, string[]>(StringComparer.Ordinal);
         foreach (ArtifactState artifact in artifacts.Values.OrderBy(value => value.Name, StringComparer.Ordinal))
         {
@@ -311,7 +317,7 @@ public sealed class CreateSparseCheckoutGraphTask : Task
                 ProjectCount = graph.Nodes.Count,
                 ConfigurationCount = allConfigurations.Count,
                 ConfigurationEdgeCount = graph.ConfigurationEdges.Count,
-                InputCount = graph.Diagnostics.InputCount,
+                CheckoutRootCount = checkoutRootCount,
                 ArtifactCount = artifacts.Count,
                 UnavailableArtifactCount = artifacts.Values.Count(value => !value.IsAvailable),
                 ReadSeconds = readSeconds,
@@ -344,11 +350,11 @@ public sealed class CreateSparseCheckoutGraphTask : Task
         long peakWorkingSetMiB = Math.Max(currentProcess.PeakWorkingSet64, currentProcess.WorkingSet64) / (1024 * 1024);
         Log.LogMessage(
             MessageImportance.High,
-            "Sparse checkout graph: projects={0}, configurations={1}, edges={2}, inputs={3}, artifacts={4}, unavailable={5}, bytes={6}, read={7:F2}s, index={8:F2}s, artifact={9:F2}s, write={10:F2}s, elapsed={11:F2}s, peakWorkingSet={12}MiB",
+            "Sparse checkout graph: projects={0}, configurations={1}, edges={2}, checkoutRoots={3}, artifacts={4}, unavailable={5}, bytes={6}, read={7:F2}s, index={8:F2}s, artifact={9:F2}s, write={10:F2}s, elapsed={11:F2}s, peakWorkingSet={12}MiB",
             graph.Nodes.Count,
             allConfigurations.Count,
             graph.ConfigurationEdges.Count,
-            graph.Diagnostics.InputCount,
+            checkoutRootCount,
             artifacts.Count,
             artifacts.Values.Count(value => !value.IsAvailable),
             outputBytes,
@@ -376,10 +382,11 @@ public sealed class CreateSparseCheckoutGraphTask : Task
             throw new InvalidOperationException(
                 $"Sparse checkout requires the NuGet restore graph, but '{graph.Diagnostics.PackageClosure?.ResolutionMode}' was used.");
         }
-        if (graph.Diagnostics.Generation is null || !graph.Diagnostics.Generation.IncludesInputs ||
+        if (graph.Diagnostics.Generation is null || !graph.Diagnostics.Generation.IncludesInputCheckoutRoots ||
             graph.Diagnostics.Generation.Configuration != "Debug")
         {
-            throw new InvalidOperationException("Sparse checkout requires a Debug repository graph with evaluated inputs.");
+            throw new InvalidOperationException(
+                "Sparse checkout requires a Debug repository graph with evaluated input checkout roots.");
         }
         if (graph.Diagnostics.CheckoutRoots is null || !graph.Diagnostics.CheckoutRoots.IsComplete ||
             graph.CheckoutRoots is null)
@@ -487,6 +494,19 @@ public sealed class CreateSparseCheckoutGraphTask : Task
     private static string NormalizeRelativePath(string path) =>
         (path ?? string.Empty).Replace('\\', '/').Trim('/');
 
+    private static bool IsSdkProjectPath(string path) =>
+        NormalizeRelativePath(path).StartsWith("sdk/", StringComparison.OrdinalIgnoreCase);
+
+    private static bool IsSdkCheckoutRoot(string path)
+    {
+        string value = path ?? string.Empty;
+        string[] segments = value.Split('/', StringSplitOptions.RemoveEmptyEntries);
+        return segments.Length == 3 &&
+            segments[0].Equals("sdk", StringComparison.OrdinalIgnoreCase) &&
+            !string.IsNullOrWhiteSpace(segments[1]) && segments[2] == "*" &&
+            value.Equals($"/sdk/{segments[1]}/*", StringComparison.OrdinalIgnoreCase);
+    }
+
     private static bool IsSupportedPackageDirectory(string path)
     {
         string[] segments = path.Split('/', StringSplitOptions.RemoveEmptyEntries);
@@ -542,7 +562,6 @@ public sealed class CreateSparseCheckoutGraphTask : Task
     private sealed class SourceDiagnostics
     {
         public bool IsComplete { get; set; }
-        public int InputCount { get; set; }
         public SourceGeneration Generation { get; set; }
         public PackageClosure PackageClosure { get; set; }
         public CheckoutRootDiagnostics CheckoutRoots { get; set; }
@@ -551,7 +570,7 @@ public sealed class CreateSparseCheckoutGraphTask : Task
     private sealed class SourceGeneration
     {
         public string Configuration { get; set; }
-        public bool IncludesInputs { get; set; }
+        public bool IncludesInputCheckoutRoots { get; set; }
     }
 
     private sealed class PackageClosure
@@ -589,7 +608,7 @@ public sealed class CreateSparseCheckoutGraphTask : Task
         public int ProjectCount { get; set; }
         public int ConfigurationCount { get; set; }
         public int ConfigurationEdgeCount { get; set; }
-        public int InputCount { get; set; }
+        public int CheckoutRootCount { get; set; }
         public int ArtifactCount { get; set; }
         public int UnavailableArtifactCount { get; set; }
         public double ReadSeconds { get; set; }
