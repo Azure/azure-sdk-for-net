@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("issueDate"u8);
                 writer.WriteStringValue(IssueOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Thumbprint))
             {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             byte[] value = default;
             string issuer = default;
             DateTimeOffset? issueOn = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             string thumbprint = default;
             bool? isValid = default;
             string publicKeyHash = default;
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("thumbprint"u8))
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 value,
                 issuer,
                 issueOn,
-                expireOn,
+                expiresOn,
                 thumbprint,
                 isValid,
                 publicKeyHash,

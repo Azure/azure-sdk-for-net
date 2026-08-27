@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(PolicyStartOn))
+            if (options.Format != "W" && Optional.IsDefined(PolicyStartsOn))
             {
                 writer.WritePropertyName("policyStartTime"u8);
-                writer.WriteStringValue(PolicyStartOn.Value, "O");
+                writer.WriteStringValue(PolicyStartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(PolicyExpirationOn))
+            if (options.Format != "W" && Optional.IsDefined(PolicyExpiresOn))
             {
                 writer.WritePropertyName("policyExpirationTime"u8);
-                writer.WriteStringValue(PolicyExpirationOn.Value, "O");
+                writer.WriteStringValue(PolicyExpiresOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(IsPolicyExpired))
             {
@@ -143,8 +143,8 @@ namespace Azure.ResourceManager.Compute.Models
             }
             int? immutabilityDurationDays = default;
             ImmutabilityPolicyType? @type = default;
-            DateTimeOffset? policyStartOn = default;
-            DateTimeOffset? policyExpirationOn = default;
+            DateTimeOffset? policyStartsOn = default;
+            DateTimeOffset? policyExpiresOn = default;
             bool? isPolicyExpired = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    policyStartOn = prop.Value.GetDateTimeOffset("O");
+                    policyStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("policyExpirationTime"u8))
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    policyExpirationOn = prop.Value.GetDateTimeOffset("O");
+                    policyExpiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("isPolicyExpired"u8))
@@ -202,8 +202,8 @@ namespace Azure.ResourceManager.Compute.Models
             return new ImmutabilityPolicy(
                 immutabilityDurationDays,
                 @type,
-                policyStartOn,
-                policyExpirationOn,
+                policyStartsOn,
+                policyExpiresOn,
                 isPolicyExpired,
                 additionalBinaryDataProperties);
         }
