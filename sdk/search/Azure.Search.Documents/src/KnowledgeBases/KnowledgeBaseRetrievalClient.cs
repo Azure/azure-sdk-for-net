@@ -23,8 +23,7 @@ namespace Azure.Search.Documents.KnowledgeBases
     /// <summary>
     /// Azure Cognitive Search client that can be used to query an knowledge base.
     /// </summary>
-    [CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(KnowledgeBaseRetrievalRequest), typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(RequestContent), typeof(string), typeof(string), typeof(RequestContext))]
+    [CodeGenSuppress(nameof(RetrieveStreamAsync), typeof(KnowledgeBaseRetrievalRequest), typeof(string), typeof(string), typeof(CancellationToken))] // disable convvenience overload
     public partial class KnowledgeBaseRetrievalClient
     {
         /// <summary>
@@ -91,49 +90,6 @@ namespace Azure.Search.Documents.KnowledgeBases
         public virtual Task<Response> RetrieveAsync(RequestContent content, RequestContext context) =>
             RetrieveAsync(content, querySourceAuthorization: null, context: context);
 
-#pragma warning disable SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-        /// <summary> Retrieves relevant data and streams raw server-sent events. </summary>
-        public virtual async Task<AsyncStreamingClientResult<SseItem<BinaryData>>> RetrieveStreamAsync(
-            RequestContent content,
-            string querySourceAuthorization = default,
-            string queryWorkIQSourceAuthorization = default,
-            RequestContext context = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("KnowledgeBaseRetrievalClient.RetrieveStream");
-            scope.Start();
-            HttpMessage message = null;
-            Stream extractedContent = null;
-            try
-            {
-                Argument.AssertNotNull(content, nameof(content));
-
-                message = CreateRetrieveStreamRequest(
-                    content,
-                    querySourceAuthorization,
-                    queryWorkIQSourceAuthorization,
-                    context);
-                message.BufferResponse = false;
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-
-                extractedContent = message.ExtractResponseContent()
-                    ?? throw new InvalidOperationException("The streaming response did not contain a content stream.");
-                StreamingPipelineResponse pipelineResponse = new StreamingPipelineResponse(response, extractedContent);
-                extractedContent = null;
-                message.Dispose();
-                message = null;
-
-                return AsyncStreamingClientResult.CreateSse(pipelineResponse);
-            }
-            catch (Exception exception)
-            {
-                extractedContent?.Dispose();
-                message?.Dispose();
-                scope.Failed(exception);
-                throw;
-            }
-        }
-#pragma warning restore SCME0005 // Type is for evaluation purposes only and is subject to change or removal in future updates.
-
         /// <summary>
         /// KnowledgeBase retrieves relevant data from backing stores, streaming progress and results as
         /// server-sent events on the same connection as they become available, instead of waiting for the
@@ -198,102 +154,5 @@ namespace Azure.Search.Documents.KnowledgeBases
 #pragma warning restore AZC0015
 #pragma warning restore AZC0004
 
-        private sealed class StreamingPipelineResponse : PipelineResponse
-        {
-            private readonly int _status;
-            private readonly string _reasonPhrase;
-            private readonly StreamingPipelineResponseHeaders _headers;
-            private Stream _contentStream;
-            private BinaryData _content;
-
-            public StreamingPipelineResponse(Response response, Stream contentStream)
-            {
-                _status = response.Status;
-                _reasonPhrase = response.ReasonPhrase;
-                _headers = new StreamingPipelineResponseHeaders(response.Headers);
-                _contentStream = contentStream;
-            }
-
-            public override int Status => _status;
-
-            public override string ReasonPhrase => _reasonPhrase;
-
-            protected override PipelineResponseHeaders HeadersCore => _headers;
-
-            public override Stream ContentStream
-            {
-                get => _contentStream;
-                set => _contentStream = value;
-            }
-
-            public override BinaryData Content =>
-                _content ?? throw new InvalidOperationException("The streaming response has not been buffered.");
-
-            public override BinaryData BufferContent(CancellationToken cancellationToken = default)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                MemoryStream buffered = new MemoryStream();
-                _contentStream?.CopyTo(buffered);
-                buffered.Position = 0;
-                _content = BinaryData.FromStream(buffered);
-                buffered.Position = 0;
-                _contentStream?.Dispose();
-                _contentStream = buffered;
-                return _content;
-            }
-
-            public override async ValueTask<BinaryData> BufferContentAsync(CancellationToken cancellationToken = default)
-            {
-                MemoryStream buffered = new MemoryStream();
-                if (_contentStream != null)
-                {
-                    await _contentStream.CopyToAsync(buffered, 81920, cancellationToken).ConfigureAwait(false);
-                }
-                buffered.Position = 0;
-                _content = BinaryData.FromStream(buffered);
-                buffered.Position = 0;
-                _contentStream?.Dispose();
-                _contentStream = buffered;
-                return _content;
-            }
-
-            public override void Dispose()
-            {
-                _contentStream?.Dispose();
-                _contentStream = null;
-            }
-        }
-
-        private sealed class StreamingPipelineResponseHeaders : PipelineResponseHeaders
-        {
-            private readonly Dictionary<string, string> _headers =
-                new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
-
-            public StreamingPipelineResponseHeaders(ResponseHeaders headers)
-            {
-                foreach (HttpHeader header in headers)
-                {
-                    _headers[header.Name] = header.Value;
-                }
-            }
-
-            public override bool TryGetValue(string name, out string value) =>
-                _headers.TryGetValue(name, out value);
-
-            public override bool TryGetValues(string name, out IEnumerable<string> values)
-            {
-                if (_headers.TryGetValue(name, out string value))
-                {
-                    values = new[] { value };
-                    return true;
-                }
-
-                values = null;
-                return false;
-            }
-
-            public override IEnumerator<KeyValuePair<string, string>> GetEnumerator() =>
-                _headers.GetEnumerator();
-        }
     }
 }

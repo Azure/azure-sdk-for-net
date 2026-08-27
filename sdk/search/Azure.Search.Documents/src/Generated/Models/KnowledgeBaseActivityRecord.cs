@@ -31,18 +31,18 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
-        /// <param name="startedAt"> The time at which the activity started. </param>
-        /// <param name="completedAt"> The time at which the activity completed. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseActivityRecord(int id, KnowledgeBaseActivityRecordType @type, DateTimeOffset? startedAt, DateTimeOffset? completedAt, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseActivityRecord(int id, KnowledgeBaseActivityRecordType @type, DateTimeOffset? startedOn, DateTimeOffset? completedOn, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Type = @type;
-            StartedAt = startedAt;
-            CompletedAt = completedAt;
+            StartedOn = startedOn;
+            CompletedOn = completedOn;
             ElapsedMs = elapsedMs;
             Error = error;
             Warning = warning;
@@ -56,10 +56,10 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         internal KnowledgeBaseActivityRecordType Type { get; set; }
 
         /// <summary> The time at which the activity started. </summary>
-        public DateTimeOffset? StartedAt { get; }
+        public DateTimeOffset? StartedOn { get; }
 
         /// <summary> The time at which the activity completed. </summary>
-        public DateTimeOffset? CompletedAt { get; }
+        public DateTimeOffset? CompletedOn { get; }
 
         /// <summary> The elapsed time in milliseconds for the retrieval activity. </summary>
         public int? ElapsedMs { get; }

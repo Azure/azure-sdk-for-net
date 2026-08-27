@@ -27,21 +27,21 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <param name="fileId"> The unique identifier for the file. </param>
         /// <param name="fileName"> The original file name. </param>
         /// <param name="fileSizeBytes"> The file size in bytes. </param>
-        /// <param name="createdAt"> The timestamp when the file was created. </param>
-        /// <param name="lastUpdatedAt"> The timestamp when the file was last updated. </param>
+        /// <param name="createdOn"> The timestamp when the file was created. </param>
+        /// <param name="lastUpdatedOn"> The timestamp when the file was last updated. </param>
         /// <param name="errorMessage"> The error message if file processing failed, null otherwise. </param>
         /// <param name="prefix"> The prefix (directory-like path) derived from the full file name. </param>
         /// <param name="metadata"> Custom key/value metadata stored with the file. Returned but not searchable or filterable. </param>
         /// <param name="parsingMode"> The parsing mode applied to the file (auto-detected from the file). </param>
         /// <param name="extractionMode"> The extraction mode applied to the file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeSourceFile(string fileId, string fileName, long? fileSizeBytes, DateTimeOffset? createdAt, DateTimeOffset? lastUpdatedAt, string errorMessage, string prefix, IReadOnlyDictionary<string, string> metadata, BlobIndexerParsingMode? parsingMode, FileKnowledgeSourceExtractionMode? extractionMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeSourceFile(string fileId, string fileName, long? fileSizeBytes, DateTimeOffset? createdOn, DateTimeOffset? lastUpdatedOn, string errorMessage, string prefix, IReadOnlyDictionary<string, string> metadata, BlobIndexerParsingMode? parsingMode, FileKnowledgeSourceExtractionMode? extractionMode, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             FileId = fileId;
             FileName = fileName;
             FileSizeBytes = fileSizeBytes;
-            CreatedAt = createdAt;
-            LastUpdatedAt = lastUpdatedAt;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
             ErrorMessage = errorMessage;
             Prefix = prefix;
             Metadata = metadata;
@@ -60,10 +60,10 @@ namespace Azure.Search.Documents.Indexes.Models
         public long? FileSizeBytes { get; }
 
         /// <summary> The timestamp when the file was created. </summary>
-        public DateTimeOffset? CreatedAt { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The timestamp when the file was last updated. </summary>
-        public DateTimeOffset? LastUpdatedAt { get; }
+        public DateTimeOffset? LastUpdatedOn { get; }
 
         /// <summary> The error message if file processing failed, null otherwise. </summary>
         public string ErrorMessage { get; }

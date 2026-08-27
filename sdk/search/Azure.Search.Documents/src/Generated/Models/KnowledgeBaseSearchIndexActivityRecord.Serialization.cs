@@ -139,8 +139,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
             int id = default;
             KnowledgeBaseActivityRecordType @type = default;
-            DateTimeOffset? startedAt = default;
-            DateTimeOffset? completedAt = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? completedOn = default;
             int? elapsedMs = default;
             KnowledgeBaseErrorDetail error = default;
             string warning = default;
@@ -169,7 +169,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     {
                         continue;
                     }
-                    startedAt = prop.Value.GetDateTimeOffset("O");
+                    startedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("completedAt"u8))
@@ -178,7 +178,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     {
                         continue;
                     }
-                    completedAt = prop.Value.GetDateTimeOffset("O");
+                    completedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("elapsedMs"u8))
@@ -262,8 +262,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             return new KnowledgeBaseSearchIndexActivityRecord(
                 id,
                 @type,
-                startedAt,
-                completedAt,
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
                 warning,

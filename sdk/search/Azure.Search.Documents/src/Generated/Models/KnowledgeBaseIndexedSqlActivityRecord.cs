@@ -22,22 +22,22 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseIndexedSqlActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
-        /// <param name="startedAt"> The time at which the activity started. </param>
-        /// <param name="completedAt"> The time at which the activity completed. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="indexedSqlArguments"> The indexed SQL arguments for the retrieval activity. </param>
         /// <param name="queryHintProcessing"> Details about the expressions generated from query hints for this activity. </param>
-        internal KnowledgeBaseIndexedSqlActivityRecord(int id, KnowledgeBaseActivityRecordType @type, DateTimeOffset? startedAt, DateTimeOffset? completedAt, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, string knowledgeSourceName, DateTimeOffset? queryTime, int? count, ImageServingStatistics imageServing, KnowledgeBaseIndexedSqlActivityArguments indexedSqlArguments, KnowledgeBaseQueryHintProcessing queryHintProcessing) : base(id, @type, startedAt, completedAt, elapsedMs, error, warning, additionalBinaryDataProperties)
+        internal KnowledgeBaseIndexedSqlActivityRecord(int id, KnowledgeBaseActivityRecordType @type, DateTimeOffset? startedOn, DateTimeOffset? completedOn, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, string knowledgeSourceName, DateTimeOffset? queryOn, int? count, ImageServingStatistics imageServing, KnowledgeBaseIndexedSqlActivityArguments indexedSqlArguments, KnowledgeBaseQueryHintProcessing queryHintProcessing) : base(id, @type, startedOn, completedOn, elapsedMs, error, warning, additionalBinaryDataProperties)
         {
             KnowledgeSourceName = knowledgeSourceName;
-            QueryTime = queryTime;
+            QueryOn = queryOn;
             Count = count;
             ImageServing = imageServing;
             IndexedSqlArguments = indexedSqlArguments;
@@ -48,7 +48,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public string KnowledgeSourceName { get; }
 
         /// <summary> The query time for this retrieval activity. </summary>
-        public DateTimeOffset? QueryTime { get; }
+        public DateTimeOffset? QueryOn { get; }
 
         /// <summary> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </summary>
         public int? Count { get; }

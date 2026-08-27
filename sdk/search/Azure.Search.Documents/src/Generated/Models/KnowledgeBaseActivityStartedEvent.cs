@@ -19,25 +19,25 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseActivityStartedEvent"/>. </summary>
         /// <param name="id"> The ID of the activity record, matching the `id` on the corresponding `activity.completed` event. </param>
         /// <param name="type"> The type of the activity that has started. </param>
-        /// <param name="startedAt"> The time at which the activity started. </param>
-        internal KnowledgeBaseActivityStartedEvent(int id, KnowledgeBaseActivityRecordType @type, DateTimeOffset startedAt)
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        internal KnowledgeBaseActivityStartedEvent(int id, KnowledgeBaseActivityRecordType @type, DateTimeOffset startedOn)
         {
             Id = id;
             Type = @type;
-            StartedAt = startedAt;
+            StartedOn = startedOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseActivityStartedEvent"/>. </summary>
         /// <param name="id"> The ID of the activity record, matching the `id` on the corresponding `activity.completed` event. </param>
         /// <param name="type"> The type of the activity that has started. </param>
-        /// <param name="startedAt"> The time at which the activity started. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
         /// <param name="knowledgeSourceName"> The knowledge source used by the activity, when the activity targets a knowledge source. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal KnowledgeBaseActivityStartedEvent(int id, KnowledgeBaseActivityRecordType @type, DateTimeOffset startedAt, string knowledgeSourceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal KnowledgeBaseActivityStartedEvent(int id, KnowledgeBaseActivityRecordType @type, DateTimeOffset startedOn, string knowledgeSourceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             Type = @type;
-            StartedAt = startedAt;
+            StartedOn = startedOn;
             KnowledgeSourceName = knowledgeSourceName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,7 +49,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         public KnowledgeBaseActivityRecordType Type { get; }
 
         /// <summary> The time at which the activity started. </summary>
-        public DateTimeOffset StartedAt { get; }
+        public DateTimeOffset StartedOn { get; }
 
         /// <summary> The knowledge source used by the activity, when the activity targets a knowledge source. </summary>
         public string KnowledgeSourceName { get; }

@@ -22,8 +22,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseAgenticReasoningActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
-        /// <param name="startedAt"> The time at which the activity started. </param>
-        /// <param name="completedAt"> The time at which the activity completed. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
@@ -31,7 +31,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="reasoningTokens"> The number of input tokens for agentic reasoning. </param>
         /// <param name="retrievalReasoningEffort"> The retrieval reasoning effort configuration. </param>
         /// <param name="logicalReasoningEffort"> The logical reasoning effort requested by the customer. This is distinct from `retrievalReasoningEffort`, which reports the reasoning effort used for billing. </param>
-        internal KnowledgeBaseAgenticReasoningActivityRecord(int id, KnowledgeBaseActivityRecordType @type, DateTimeOffset? startedAt, DateTimeOffset? completedAt, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? reasoningTokens, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, KnowledgeRetrievalReasoningEffort logicalReasoningEffort) : base(id, @type, startedAt, completedAt, elapsedMs, error, warning, additionalBinaryDataProperties)
+        internal KnowledgeBaseAgenticReasoningActivityRecord(int id, KnowledgeBaseActivityRecordType @type, DateTimeOffset? startedOn, DateTimeOffset? completedOn, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, int? reasoningTokens, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort, KnowledgeRetrievalReasoningEffort logicalReasoningEffort) : base(id, @type, startedOn, completedOn, elapsedMs, error, warning, additionalBinaryDataProperties)
         {
             ReasoningTokens = reasoningTokens;
             RetrievalReasoningEffort = retrievalReasoningEffort;

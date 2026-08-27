@@ -92,7 +92,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("startedAt"u8);
-            writer.WriteStringValue(StartedAt, "O");
+            writer.WriteStringValue(StartedOn, "O");
             if (Optional.IsDefined(KnowledgeSourceName))
             {
                 writer.WritePropertyName("knowledgeSourceName"u8);
@@ -142,7 +142,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
             int id = default;
             KnowledgeBaseActivityRecordType @type = default;
-            DateTimeOffset startedAt = default;
+            DateTimeOffset startedOn = default;
             string knowledgeSourceName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -159,7 +159,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 }
                 if (prop.NameEquals("startedAt"u8))
                 {
-                    startedAt = prop.Value.GetDateTimeOffset("O");
+                    startedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("knowledgeSourceName"u8))
@@ -172,7 +172,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new KnowledgeBaseActivityStartedEvent(id, @type, startedAt, knowledgeSourceName, additionalBinaryDataProperties);
+            return new KnowledgeBaseActivityStartedEvent(id, @type, startedOn, knowledgeSourceName, additionalBinaryDataProperties);
         }
     }
 }
