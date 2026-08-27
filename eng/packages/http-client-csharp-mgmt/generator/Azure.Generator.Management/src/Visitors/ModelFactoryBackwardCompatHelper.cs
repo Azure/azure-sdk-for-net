@@ -3,6 +3,7 @@
 
 using Azure.Generator.Management.Utilities;
 using Microsoft.TypeSpec.Generator.Expressions;
+using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -24,12 +25,16 @@ namespace Azure.Generator.Management.Visitors
     /// </summary>
     internal static class ModelFactoryBackwardCompatHelper
     {
-        private static readonly Dictionary<string, string> _legacyDateTimeNounToVerb = new(StringComparer.OrdinalIgnoreCase)
+        private static readonly HashSet<string> _mtgDateTimeVerbPrefixes = new(StringComparer.OrdinalIgnoreCase)
         {
-            ["Creation"] = "Created",
-            ["Deletion"] = "Deleted",
-            ["Expiration"] = "Expire",
-            ["Modification"] = "Modified",
+            "Change",
+            "Creation",
+            "Deletion",
+            "End",
+            "Expiration",
+            "Expire",
+            "Modification",
+            "Start",
         };
 
         internal static void FixModelFactoryConstructorCalls(IReadOnlyList<MethodProvider> methods)
@@ -581,9 +586,13 @@ namespace Azure.Generator.Management.Visitors
             var arguments = new List<ValueExpression>(constructorParameters.Count);
             var usedArguments = new HashSet<ValueExpression>();
             var changed = constructorParameters.Count != newInstanceExpression.Parameters.Count;
-            foreach (var constructorParameter in constructorParameters)
+            for (int i = 0; i < constructorParameters.Count; i++)
             {
-                if (TryGetArgumentByName(argumentsByName, constructorParameter, out var argument))
+                var constructorParameter = constructorParameters[i];
+                var positionalFallback = constructorParameters.Count == newInstanceExpression.Parameters.Count
+                    ? newInstanceExpression.Parameters[i]
+                    : null;
+                if (TryGetArgumentByName(argumentsByName, constructorParameter, positionalFallback, out var argument))
                 {
                     arguments.Add(argument);
                     usedArguments.Add(argument);
@@ -608,6 +617,7 @@ namespace Azure.Generator.Management.Visitors
         private static bool TryGetArgumentByName(
             IReadOnlyDictionary<string, ValueExpression> argumentsByName,
             ParameterProvider constructorParameter,
+            ValueExpression? positionalFallback,
             [NotNullWhen(true)] out ValueExpression? argument)
         {
             if (argumentsByName.TryGetValue(constructorParameter.Name, out argument))
@@ -615,12 +625,10 @@ namespace Azure.Generator.Management.Visitors
                 return true;
             }
 
-            var legacyDateTimeName = GetLegacyDateTimeParameterName(constructorParameter.Property);
             argument = null;
             foreach (var candidate in argumentsByName)
             {
-                if (!string.Equals(candidate.Key, constructorParameter.Name, StringComparison.OrdinalIgnoreCase)
-                    && !string.Equals(candidate.Key, legacyDateTimeName, StringComparison.OrdinalIgnoreCase))
+                if (!string.Equals(candidate.Key, constructorParameter.Name, StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
                 }
@@ -634,7 +642,18 @@ namespace Azure.Generator.Management.Visitors
                 argument = candidate.Value;
             }
 
-            return argument is not null;
+            if (argument is not null)
+            {
+                return true;
+            }
+
+            if (positionalFallback is not null && IsMtgRenamedDateTimeProperty(constructorParameter.Property))
+            {
+                argument = positionalFallback;
+                return true;
+            }
+
+            return false;
         }
 
         private static bool TryGetArgumentName(ValueExpression argument, [NotNullWhen(true)] out string? name)
@@ -827,16 +846,20 @@ namespace Azure.Generator.Management.Visitors
             PropertyProvider? expectedProperty,
             [NotNullWhen(true)] out ParameterProvider? parameter)
         {
-            var legacyDateTimeName = GetLegacyDateTimeParameterName(expectedProperty);
             var matches = method.Signature.Parameters.Where(p =>
-                (string.Equals(p.Name, name, StringComparison.OrdinalIgnoreCase)
-                    || string.Equals(p.Name, legacyDateTimeName, StringComparison.OrdinalIgnoreCase))
+                string.Equals(p.Name, name, StringComparison.OrdinalIgnoreCase)
                 && AreCompatibleParameterTypes(p.Type, expectedType)).ToArray();
             if (matches.Length > 1 && expectedProperty is not null)
             {
                 // Some generated factory methods can temporarily contain duplicate semantic parameter names before
                 // the writer disambiguates them. Prefer the parameter from the same source property when available.
                 matches = matches.Where(p => ReferenceEquals(p.Property, expectedProperty)).ToArray();
+            }
+            else if (matches.Length == 0 && expectedProperty is not null && IsMtgRenamedDateTimeProperty(expectedProperty))
+            {
+                matches = method.Signature.Parameters.Where(p =>
+                    ReferenceEquals(p.Property, expectedProperty)
+                    && AreCompatibleParameterTypes(p.Type, expectedType)).ToArray();
             }
 
             parameter = matches.Length == 1 ? matches[0] : null;
@@ -854,43 +877,74 @@ namespace Azure.Generator.Management.Visitors
             return parameter is not null;
         }
 
-        private static string? GetLegacyDateTimeParameterName(PropertyProvider? property)
+        private static bool IsMtgRenamedDateTimeProperty(PropertyProvider? property)
         {
-            if (property?.WireInfo is null ||
-                !property.Type.IsFrameworkType ||
-                property.Type.FrameworkType != typeof(DateTimeOffset))
+            if (property?.WireInfo is not { } wireInfo ||
+                wireInfo.SerializationFormat is not (
+                    SerializationFormat.DateTime_RFC1123 or
+                    SerializationFormat.DateTime_RFC3339 or
+                    SerializationFormat.DateTime_RFC7231 or
+                    SerializationFormat.DateTime_ISO8601 or
+                    SerializationFormat.DateTime_Unix or
+                    SerializationFormat.Date_ISO8601))
             {
-                return null;
+                return false;
             }
 
-            return GetLegacyDateTimePropertyName(property.WireInfo.SerializedName).ToVariableName();
+            var name = wireInfo.SerializedName;
+            var suffixLength = GetMtgDateTimeSuffixLength(name);
+            if (suffixLength == 0 || suffixLength == name.Length || HasExcludedMtgDateTimeComponent(name, suffixLength))
+            {
+                return false;
+            }
+
+            var prefix = name[..^suffixLength];
+            return name.EndsWith("Timestamp", StringComparison.OrdinalIgnoreCase) ||
+                name.EndsWith("TimeStamp", StringComparison.OrdinalIgnoreCase) ||
+                _mtgDateTimeVerbPrefixes.Any(key =>
+                prefix.Equals(key, StringComparison.OrdinalIgnoreCase) ||
+                (prefix.Length > key.Length &&
+                 prefix.EndsWith(key, StringComparison.OrdinalIgnoreCase) &&
+                 char.IsUpper(prefix[^key.Length])));
         }
 
-        private static string GetLegacyDateTimePropertyName(string propertyName)
+        private static int GetMtgDateTimeSuffixLength(string name)
         {
-            if (propertyName.StartsWith("From", StringComparison.OrdinalIgnoreCase) ||
-                propertyName.StartsWith("To", StringComparison.OrdinalIgnoreCase) ||
-                propertyName.EndsWith("PointInTime", StringComparison.OrdinalIgnoreCase))
+            if (name.EndsWith("Timestamp", StringComparison.OrdinalIgnoreCase) ||
+                name.EndsWith("TimeStamp", StringComparison.OrdinalIgnoreCase))
             {
-                return propertyName;
+                return "Timestamp".Length;
             }
 
-            var suffixLength = propertyName.EndsWith("DateTime", StringComparison.OrdinalIgnoreCase) ? "DateTime".Length
-                : propertyName.EndsWith("Time", StringComparison.OrdinalIgnoreCase) || propertyName.EndsWith("Date", StringComparison.OrdinalIgnoreCase) ? "Time".Length
-                : propertyName.EndsWith("At", StringComparison.OrdinalIgnoreCase) ? "At".Length
-                : 0;
-            if (suffixLength == 0 || suffixLength == propertyName.Length)
+            if (name.EndsWith("DateTime", StringComparison.OrdinalIgnoreCase))
             {
-                return propertyName;
+                return "DateTime".Length;
             }
 
-            var prefix = propertyName[..^suffixLength];
-            if (!_legacyDateTimeNounToVerb.TryGetValue(prefix, out var verb))
+            if (name.EndsWith("Time", StringComparison.OrdinalIgnoreCase) ||
+                name.EndsWith("Date", StringComparison.OrdinalIgnoreCase))
             {
-                return prefix + "On";
+                return "Time".Length;
             }
 
-            return (char.IsLower(prefix[0]) ? char.ToLowerInvariant(verb[0]) + verb[1..] : verb) + "On";
+            if (name.EndsWith("On", StringComparison.OrdinalIgnoreCase))
+            {
+                return "On".Length;
+            }
+
+            return name.EndsWith("At", StringComparison.OrdinalIgnoreCase) ? "At".Length : 0;
+        }
+
+        private static bool HasExcludedMtgDateTimeComponent(string name, int suffixLength)
+        {
+            var prefix = name[..^suffixLength];
+            return prefix.Equals("First", StringComparison.OrdinalIgnoreCase) ||
+                prefix.Equals("Last", StringComparison.OrdinalIgnoreCase) ||
+                name.StartsWith("From", StringComparison.OrdinalIgnoreCase) ||
+                name.StartsWith("To", StringComparison.OrdinalIgnoreCase) ||
+                name.EndsWith("PointInTime", StringComparison.OrdinalIgnoreCase) ||
+                name.Equals("StatusTimestamp", StringComparison.OrdinalIgnoreCase) ||
+                name.Equals("StatusTimeStamp", StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>
