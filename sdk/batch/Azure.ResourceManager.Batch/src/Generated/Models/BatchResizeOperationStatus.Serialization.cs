@@ -96,10 +96,10 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("nodeDeallocationOption"u8);
                 writer.WriteStringValue(NodeDeallocationOption.Value.ToSerialString());
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Errors))
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Batch.Models
             int? targetLowPriorityNodes = default;
             TimeSpan? resizeTimeout = default;
             BatchNodeDeallocationOption? nodeDeallocationOption = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             IReadOnlyList<ResponseError> errors = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("errors"u8))
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Batch.Models
                 targetLowPriorityNodes,
                 resizeTimeout,
                 nodeDeallocationOption,
-                startOn,
+                startsOn,
                 errors ?? new ChangeTrackingList<ResponseError>(),
                 additionalBinaryDataProperties);
         }

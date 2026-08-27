@@ -23,8 +23,8 @@ namespace Azure.ResourceManager.Hci.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="LogCollectionSession"/>. </summary>
-        /// <param name="logStartOn"> Start Time of the logs when it was collected. </param>
-        /// <param name="logEndOn"> End Time of the logs when it was collected. </param>
+        /// <param name="logStartsOn"> Start Time of the logs when it was collected. </param>
+        /// <param name="logEndsOn"> End Time of the logs when it was collected. </param>
         /// <param name="timeCollected"> Duration of logs collected. </param>
         /// <param name="logSize"> Size of the logs collected. </param>
         /// <param name="logCollectionStatus"> LogCollection status. </param>
@@ -33,10 +33,10 @@ namespace Azure.ResourceManager.Hci.Models
         /// <param name="endTimeCollected"> End Time of the logs when it was collected. </param>
         /// <param name="logCollectionError"> Log Collection Error details of the cluster. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LogCollectionSession(DateTimeOffset? logStartOn, DateTimeOffset? logEndOn, DateTimeOffset? timeCollected, long? logSize, LogCollectionStatus? logCollectionStatus, string correlationId, LogCollectionJobType? logCollectionJobType, DateTimeOffset? endTimeCollected, LogCollectionError logCollectionError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LogCollectionSession(DateTimeOffset? logStartsOn, DateTimeOffset? logEndsOn, DateTimeOffset? timeCollected, long? logSize, LogCollectionStatus? logCollectionStatus, string correlationId, LogCollectionJobType? logCollectionJobType, DateTimeOffset? endTimeCollected, LogCollectionError logCollectionError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            LogStartOn = logStartOn;
-            LogEndOn = logEndOn;
+            LogStartsOn = logStartsOn;
+            LogEndsOn = logEndsOn;
             TimeCollected = timeCollected;
             LogSize = logSize;
             LogCollectionStatus = logCollectionStatus;
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.Hci.Models
 
         /// <summary> Start Time of the logs when it was collected. </summary>
         [WirePath("logStartTime")]
-        public DateTimeOffset? LogStartOn { get; }
+        public DateTimeOffset? LogStartsOn { get; }
 
         /// <summary> End Time of the logs when it was collected. </summary>
         [WirePath("logEndTime")]
-        public DateTimeOffset? LogEndOn { get; }
+        public DateTimeOffset? LogEndsOn { get; }
 
         /// <summary> Duration of logs collected. </summary>
         [WirePath("timeCollected")]

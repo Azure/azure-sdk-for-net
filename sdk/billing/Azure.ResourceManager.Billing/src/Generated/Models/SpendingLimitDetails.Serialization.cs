@@ -84,15 +84,15 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("currency"u8);
                 writer.WriteStringValue(Currency);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDate"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endDate"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(LimitType))
             {
@@ -148,8 +148,8 @@ namespace Azure.ResourceManager.Billing.Models
             }
             float? amount = default;
             string currency = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             SpendingLimitType? limitType = default;
             SpendingLimitStatus? status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endDate"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("type"u8))
@@ -213,8 +213,8 @@ namespace Azure.ResourceManager.Billing.Models
             return new SpendingLimitDetails(
                 amount,
                 currency,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 limitType,
                 status,
                 additionalBinaryDataProperties);

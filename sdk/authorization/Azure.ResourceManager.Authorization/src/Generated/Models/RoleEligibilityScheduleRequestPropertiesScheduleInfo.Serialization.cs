@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 throw new FormatException($"The model {nameof(RoleEligibilityScheduleRequestPropertiesScheduleInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (Optional.IsDefined(Expiration))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration expiration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expiration"u8))
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RoleEligibilityScheduleRequestPropertiesScheduleInfo(startOn, expiration, additionalBinaryDataProperties);
+            return new RoleEligibilityScheduleRequestPropertiesScheduleInfo(startsOn, expiration, additionalBinaryDataProperties);
         }
     }
 }

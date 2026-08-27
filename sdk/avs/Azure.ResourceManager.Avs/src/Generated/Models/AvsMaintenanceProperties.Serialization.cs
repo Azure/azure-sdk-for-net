@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WritePropertyName("state"u8);
                 writer.WriteObjectValue(State, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(ScheduledStartOn))
+            if (options.Format != "W" && Optional.IsDefined(ScheduledStartsOn))
             {
                 writer.WritePropertyName("scheduledStartTime"u8);
-                writer.WriteStringValue(ScheduledStartOn.Value, "O");
+                writer.WriteStringValue(ScheduledStartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(EstimatedDurationInMinutes))
             {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Avs.Models
             string impact = default;
             bool? isScheduledByMicrosoft = default;
             AvsMaintenanceState state = default;
-            DateTimeOffset? scheduledStartOn = default;
+            DateTimeOffset? scheduledStartsOn = default;
             long? estimatedDurationInMinutes = default;
             AvsMaintenanceProvisioningState? provisioningState = default;
             IReadOnlyList<AvsMaintenanceManagementOperation> operations = default;
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Avs.Models
                     {
                         continue;
                     }
-                    scheduledStartOn = prop.Value.GetDateTimeOffset("O");
+                    scheduledStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("estimatedDurationInMinutes"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Avs.Models
                 impact,
                 isScheduledByMicrosoft,
                 state,
-                scheduledStartOn,
+                scheduledStartsOn,
                 estimatedDurationInMinutes,
                 provisioningState,
                 operations ?? new ChangeTrackingList<AvsMaintenanceManagementOperation>(),
