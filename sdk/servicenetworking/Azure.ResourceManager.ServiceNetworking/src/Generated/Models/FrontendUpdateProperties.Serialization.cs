@@ -14,7 +14,7 @@ using Azure.ResourceManager.ServiceNetworking;
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
     /// <summary> The updatable properties of the Frontend. </summary>
-    internal partial class FrontendUpdateProperties : IJsonModel<FrontendUpdateProperties>
+    public partial class FrontendUpdateProperties : IJsonModel<FrontendUpdateProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -74,6 +74,16 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             {
                 throw new FormatException($"The model {nameof(FrontendUpdateProperties)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(PublicNetworkAccess))
+            {
+                writer.WritePropertyName("publicNetworkAccess"u8);
+                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
+            }
+            if (Optional.IsDefined(Association))
+            {
+                writer.WritePropertyName("association"u8);
+                writer.WriteObjectValue(Association, options);
+            }
             if (Optional.IsDefined(SecurityPolicyConfigurations))
             {
                 writer.WritePropertyName("securityPolicyConfigurations"u8);
@@ -121,10 +131,30 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             {
                 return null;
             }
+            TrafficControllerPublicNetworkAccess? publicNetworkAccess = default;
+            FrontendAssociation association = default;
             SecurityPolicyConfigurations securityPolicyConfigurations = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("publicNetworkAccess"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publicNetworkAccess = new TrafficControllerPublicNetworkAccess(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("association"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    association = FrontendAssociation.DeserializeFrontendAssociation(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("securityPolicyConfigurations"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -139,7 +169,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FrontendUpdateProperties(securityPolicyConfigurations, additionalBinaryDataProperties);
+            return new FrontendUpdateProperties(publicNetworkAccess, association, securityPolicyConfigurations, additionalBinaryDataProperties);
         }
     }
 }

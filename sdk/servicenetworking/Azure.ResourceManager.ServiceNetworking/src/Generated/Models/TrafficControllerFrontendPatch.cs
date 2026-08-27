@@ -38,23 +38,6 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public IDictionary<string, string> Tags { get; }
 
         /// <summary> The resource-specific properties for this resource. </summary>
-        internal FrontendUpdateProperties Properties { get; set; }
-
-        /// <summary> Frontend Security Policy Configuration. </summary>
-        public SecurityPolicyConfigurations FrontendUpdateSecurityPolicyConfigurations
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SecurityPolicyConfigurations;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new FrontendUpdateProperties();
-                }
-                Properties.SecurityPolicyConfigurations = value;
-            }
-        }
+        public FrontendUpdateProperties Properties { get; set; }
     }
 }

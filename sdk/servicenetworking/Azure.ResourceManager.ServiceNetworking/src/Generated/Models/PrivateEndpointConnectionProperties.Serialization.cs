@@ -13,52 +13,57 @@ using Azure.ResourceManager.ServiceNetworking;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
-    /// <summary> Frontend Properties. </summary>
-    internal partial class FrontendProperties : IJsonModel<FrontendProperties>
+    /// <summary> Properties of a Private Endpoint Connection. </summary>
+    internal partial class PrivateEndpointConnectionProperties : IJsonModel<PrivateEndpointConnectionProperties>
     {
+        /// <summary> Initializes a new instance of <see cref="PrivateEndpointConnectionProperties"/> for deserialization. </summary>
+        internal PrivateEndpointConnectionProperties()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FrontendProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual PrivateEndpointConnectionProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontendProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFrontendProperties(document.RootElement, options);
+                        return DeserializePrivateEndpointConnectionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontendProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateEndpointConnectionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontendProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceNetworkingContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FrontendProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateEndpointConnectionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FrontendProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<PrivateEndpointConnectionProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FrontendProperties IPersistableModel<FrontendProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        PrivateEndpointConnectionProperties IPersistableModel<PrivateEndpointConnectionProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FrontendProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PrivateEndpointConnectionProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FrontendProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PrivateEndpointConnectionProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,31 +74,18 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontendProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontendProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateEndpointConnectionProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Fqdn))
+            if (options.Format != "W" && Optional.IsDefined(PrivateEndpoint))
             {
-                writer.WritePropertyName("fqdn"u8);
-                writer.WriteStringValue(Fqdn);
+                writer.WritePropertyName("privateEndpoint"u8);
+                writer.WriteObjectValue(PrivateEndpoint, options);
             }
-            if (Optional.IsDefined(PublicNetworkAccess))
-            {
-                writer.WritePropertyName("publicNetworkAccess"u8);
-                writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
-            }
-            if (Optional.IsDefined(Association))
-            {
-                writer.WritePropertyName("association"u8);
-                writer.WriteObjectValue(Association, options);
-            }
-            if (Optional.IsDefined(SecurityPolicyConfigurations))
-            {
-                writer.WritePropertyName("securityPolicyConfigurations"u8);
-                writer.WriteObjectValue(SecurityPolicyConfigurations, options);
-            }
+            writer.WritePropertyName("privateLinkServiceConnectionState"u8);
+            writer.WriteObjectValue(PrivateLinkServiceConnectionState, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -118,67 +110,47 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FrontendProperties IJsonModel<FrontendProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        PrivateEndpointConnectionProperties IJsonModel<PrivateEndpointConnectionProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FrontendProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual PrivateEndpointConnectionProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FrontendProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PrivateEndpointConnectionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontendProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateEndpointConnectionProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFrontendProperties(document.RootElement, options);
+            return DeserializePrivateEndpointConnectionProperties(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FrontendProperties DeserializeFrontendProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static PrivateEndpointConnectionProperties DeserializePrivateEndpointConnectionProperties(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string fqdn = default;
-            TrafficControllerPublicNetworkAccess? publicNetworkAccess = default;
-            FrontendAssociation association = default;
-            SecurityPolicyConfigurations securityPolicyConfigurations = default;
+            PrivateEndpointReference privateEndpoint = default;
+            ServiceNetworkingPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             ServiceNetworkingProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("fqdn"u8))
-                {
-                    fqdn = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("publicNetworkAccess"u8))
+                if (prop.NameEquals("privateEndpoint"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    publicNetworkAccess = new TrafficControllerPublicNetworkAccess(prop.Value.GetString());
+                    privateEndpoint = PrivateEndpointReference.DeserializePrivateEndpointReference(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("association"u8))
+                if (prop.NameEquals("privateLinkServiceConnectionState"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    association = FrontendAssociation.DeserializeFrontendAssociation(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("securityPolicyConfigurations"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    securityPolicyConfigurations = SecurityPolicyConfigurations.DeserializeSecurityPolicyConfigurations(prop.Value, options);
+                    privateLinkServiceConnectionState = ServiceNetworkingPrivateLinkServiceConnectionState.DeserializeServiceNetworkingPrivateLinkServiceConnectionState(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -195,13 +167,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FrontendProperties(
-                fqdn,
-                publicNetworkAccess,
-                association,
-                securityPolicyConfigurations,
-                provisioningState,
-                additionalBinaryDataProperties);
+            return new PrivateEndpointConnectionProperties(privateEndpoint, privateLinkServiceConnectionState, provisioningState, additionalBinaryDataProperties);
         }
     }
 }

@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
     /// <summary> The updatable properties of the Frontend. </summary>
-    internal partial class FrontendUpdateProperties
+    public partial class FrontendUpdateProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -22,15 +23,38 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FrontendUpdateProperties"/>. </summary>
+        /// <param name="publicNetworkAccess"> Whether public network access is allowed for the frontend. Enabled indicates a public frontend; Disabled indicates a private frontend. </param>
+        /// <param name="association"> Reference to an Association resource that contains the subnet where the private frontend should be deployed. </param>
         /// <param name="securityPolicyConfigurations"> Frontend Security Policy Configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FrontendUpdateProperties(SecurityPolicyConfigurations securityPolicyConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FrontendUpdateProperties(TrafficControllerPublicNetworkAccess? publicNetworkAccess, FrontendAssociation association, SecurityPolicyConfigurations securityPolicyConfigurations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            PublicNetworkAccess = publicNetworkAccess;
+            Association = association;
             SecurityPolicyConfigurations = securityPolicyConfigurations;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Whether public network access is allowed for the frontend. Enabled indicates a public frontend; Disabled indicates a private frontend. </summary>
+        public TrafficControllerPublicNetworkAccess? PublicNetworkAccess { get; set; }
+
+        /// <summary> Reference to an Association resource that contains the subnet where the private frontend should be deployed. </summary>
+        internal FrontendAssociation Association { get; set; }
+
         /// <summary> Frontend Security Policy Configuration. </summary>
         public SecurityPolicyConfigurations SecurityPolicyConfigurations { get; set; }
+
+        /// <summary> Resource ID of the Association. </summary>
+        public ResourceIdentifier AssociationId
+        {
+            get
+            {
+                return Association is null ? default : Association.Id;
+            }
+            set
+            {
+                Association = new FrontendAssociation(value);
+            }
+        }
     }
 }
