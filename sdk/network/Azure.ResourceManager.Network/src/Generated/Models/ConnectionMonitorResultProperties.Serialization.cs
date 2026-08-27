@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(MonitoringStatus))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Network.Models
             string notes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             NetworkProvisioningState? provisioningState = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             string monitoringStatus = default;
             ConnectionMonitorEndpointType? connectionMonitorType = default;
             foreach (var prop in element.EnumerateObject())
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("monitoringStatus"u8))
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Network.Models
                 notes,
                 additionalBinaryDataProperties,
                 provisioningState,
-                startOn,
+                startsOn,
                 monitoringStatus,
                 connectionMonitorType);
         }

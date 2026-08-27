@@ -30,6 +30,9 @@ namespace Azure.ResourceManager.NetApp.Models
             {
                 return null;
             }
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? snapshotCreatedOn = default;
+            DateTimeOffset? completionOn = default;
             NetAppProvisioningState? provisioningState = default;
             long? size = default;
             string label = default;
@@ -43,6 +46,33 @@ namespace Azure.ResourceManager.NetApp.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("creationDate"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("snapshotCreationDate"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    snapshotCreatedOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("completionDate"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    completionOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (prop.NameEquals("provisioningState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -127,6 +157,9 @@ namespace Azure.ResourceManager.NetApp.Models
                 }
             }
             return new ElasticBackupProperties(
+                createdOn,
+                snapshotCreatedOn,
+                completionOn,
                 provisioningState,
                 size,
                 label,
