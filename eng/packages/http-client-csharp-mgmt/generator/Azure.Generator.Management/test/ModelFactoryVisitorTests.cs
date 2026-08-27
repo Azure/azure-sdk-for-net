@@ -468,8 +468,15 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(modelFactory.Methods, Is.Empty);
         }
 
-        [Test]
-        public void RebuildsPrimaryFactoryBodyWithPreservedDateTimeParameterName()
+        [TestCase("StartTime", "startsOn", "startOn")]
+        [TestCase("EndTime", "endsOn", "endOn")]
+        [TestCase("ExpirationTime", "expiresOn", "expireOn")]
+        [TestCase("AccessTierChangeTime", "accessTierChangedOn", "accessTierChangeOn")]
+        [TestCase("LastSyncTimestamp", "lastSyncOn", "lastSyncTimestamp")]
+        public void RebuildsPrimaryFactoryBodyWithPreservedDateTimeParameterName(
+            string inputName,
+            string normalizedName,
+            string gaName)
         {
             var dateTimeType = new InputDateTimeType(
                 DateTimeKnownEncoding.Rfc3339,
@@ -479,19 +486,19 @@ namespace Azure.Generator.Mgmt.Tests
             var inputModel = InputFactory.Model(
                 "TestModel",
                 usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
-                properties: [InputFactory.Property("startTime", dateTimeType)]);
+                properties: [InputFactory.Property(inputName, dateTimeType)]);
 
             var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
             var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
             var method = modelFactory.Methods.Single(m => m.Signature.ReturnType?.Name == "TestModel");
-            method.Signature.Parameters.Single(p => p.Name == "startsOn").Update(name: "startOn");
+            method.Signature.Parameters.Single(p => p.Name == normalizedName).Update(name: gaName);
             method.Update(signature: method.Signature);
 
             Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
 
             var rendered = new TypeProviderWriter(modelFactory).Write().Content;
-            Assert.That(rendered, Does.Contain("global::System.DateTimeOffset? startOn = default"));
-            Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(startOn,"));
+            Assert.That(rendered, Does.Contain($"global::System.DateTimeOffset? {gaName} = default"));
+            Assert.That(rendered, Does.Contain($"return new global::Samples.Models.TestModel({gaName},"));
         }
 
         [Test]

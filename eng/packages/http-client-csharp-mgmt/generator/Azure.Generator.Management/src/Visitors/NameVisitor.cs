@@ -144,7 +144,7 @@ internal class NameVisitor : ScmLibraryVisitor
     }
 
     // Change the property name from XxxTime, XxxDate, XxxDateTime, XxxAt to XxxOn
-    private static readonly Dictionary<string, string> _nounToVerbDicts = new()
+    private static readonly Dictionary<string, string> _nounToVerbDicts = new(StringComparer.OrdinalIgnoreCase)
         {
             {"Creation", "Created"},
             {"Deletion", "Deleted"},
@@ -153,41 +153,59 @@ internal class NameVisitor : ScmLibraryVisitor
         };
     private void DoPreVisitPropertyForTimePropertyName(InputProperty property, PropertyProvider? propertyProvider)
     {
-        if (propertyProvider != null && IsDateTimeInputType(property.Type))
+        if (propertyProvider is null)
         {
-            var propertyName = propertyProvider.Name;
-            // Skip properties that are not following the pattern we want to change
-            if (propertyName.StartsWith("From", StringComparison.Ordinal) ||
-                propertyName.StartsWith("To", StringComparison.Ordinal) ||
-                propertyName.EndsWith("PointInTime", StringComparison.Ordinal))
-            {
-                return;
-            }
-
-            var lengthToCut = 0;
-            if (propertyName.Length > 8 &&
-                propertyName.EndsWith("DateTime", StringComparison.Ordinal))
-            {
-                lengthToCut = 8;
-            }
-            else if (propertyName.Length > 4 &&
-                (propertyName.EndsWith("Time", StringComparison.Ordinal) ||
-                propertyName.EndsWith("Date", StringComparison.Ordinal)))
-            {
-                lengthToCut = 4;
-            }
-            else if (propertyName.Length > 2 &&
-                propertyName.EndsWith("At", StringComparison.Ordinal))
-            {
-                lengthToCut = 2;
-            }
-            if (lengthToCut > 0)
-            {
-                var prefix = propertyName.Substring(0, propertyName.Length - lengthToCut);
-                var newPropertyName = (_nounToVerbDicts.TryGetValue(prefix, out var verb) ? verb : prefix) + "On";
-                propertyProvider.Update(name: newPropertyName);
-            }
+            return;
         }
+
+        var newPropertyName = NormalizeDateTimePropertyName(propertyProvider.Name, property.Type);
+        if (newPropertyName != propertyProvider.Name)
+        {
+            propertyProvider.Update(name: newPropertyName);
+        }
+    }
+
+    internal static string NormalizeDateTimePropertyName(string propertyName, InputType inputType)
+        => NormalizeDateTimePropertyName(propertyName, IsDateTimeInputType(inputType));
+
+    internal static string NormalizeDateTimePropertyName(string propertyName, bool isDateTime)
+    {
+        if (!isDateTime ||
+            propertyName.StartsWith("From", StringComparison.Ordinal) ||
+            propertyName.StartsWith("To", StringComparison.Ordinal) ||
+            propertyName.EndsWith("PointInTime", StringComparison.Ordinal))
+        {
+            return propertyName;
+        }
+
+        var lengthToCut = 0;
+        if (propertyName.Length > 8 && propertyName.EndsWith("DateTime", StringComparison.Ordinal))
+        {
+            lengthToCut = 8;
+        }
+        else if (propertyName.Length > 4 &&
+            (propertyName.EndsWith("Time", StringComparison.Ordinal) ||
+             propertyName.EndsWith("Date", StringComparison.Ordinal)))
+        {
+            lengthToCut = 4;
+        }
+        else if (propertyName.Length > 2 && propertyName.EndsWith("At", StringComparison.Ordinal))
+        {
+            lengthToCut = 2;
+        }
+
+        if (lengthToCut == 0)
+        {
+            return propertyName;
+        }
+
+        var prefix = propertyName.Substring(0, propertyName.Length - lengthToCut);
+        if (!_nounToVerbDicts.TryGetValue(prefix, out var verb))
+        {
+            return prefix + "On";
+        }
+
+        return (char.IsLower(prefix[0]) ? char.ToLowerInvariant(verb[0]) + verb[1..] : verb) + "On";
     }
 
     // Dictionary to hold property name renaming mappings

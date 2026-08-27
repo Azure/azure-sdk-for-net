@@ -575,7 +575,7 @@ namespace Azure.Generator.Management.Visitors
             var changed = constructorParameters.Count != newInstanceExpression.Parameters.Count;
             foreach (var constructorParameter in constructorParameters)
             {
-                if (TryGetArgumentByName(argumentsByName, constructorParameter.Name, out var argument))
+                if (TryGetArgumentByName(argumentsByName, constructorParameter, out var argument))
                 {
                     arguments.Add(argument);
                     usedArguments.Add(argument);
@@ -599,19 +599,20 @@ namespace Azure.Generator.Management.Visitors
 
         private static bool TryGetArgumentByName(
             IReadOnlyDictionary<string, ValueExpression> argumentsByName,
-            string parameterName,
+            ParameterProvider constructorParameter,
             [NotNullWhen(true)] out ValueExpression? argument)
         {
-            if (argumentsByName.TryGetValue(parameterName, out argument))
+            if (argumentsByName.TryGetValue(constructorParameter.Name, out argument))
             {
                 return true;
             }
 
+            var legacyDateTimeName = GetLegacyDateTimeParameterName(constructorParameter.Property);
             argument = null;
             foreach (var candidate in argumentsByName)
             {
-                if (!string.Equals(candidate.Key, parameterName, StringComparison.OrdinalIgnoreCase)
-                    && !AreEquivalentDateTimeParameterNames(candidate.Key, parameterName))
+                if (!string.Equals(candidate.Key, constructorParameter.Name, StringComparison.OrdinalIgnoreCase)
+                    && !string.Equals(candidate.Key, legacyDateTimeName, StringComparison.OrdinalIgnoreCase))
                 {
                     continue;
                 }
@@ -818,9 +819,10 @@ namespace Azure.Generator.Management.Visitors
             PropertyProvider? expectedProperty,
             [NotNullWhen(true)] out ParameterProvider? parameter)
         {
+            var legacyDateTimeName = GetLegacyDateTimeParameterName(expectedProperty);
             var matches = method.Signature.Parameters.Where(p =>
                 (string.Equals(p.Name, name, StringComparison.OrdinalIgnoreCase)
-                    || AreEquivalentDateTimeParameterNames(p.Name, name))
+                    || string.Equals(p.Name, legacyDateTimeName, StringComparison.OrdinalIgnoreCase))
                 && AreCompatibleParameterTypes(p.Type, expectedType)).ToArray();
             if (matches.Length > 1 && expectedProperty is not null)
             {
@@ -844,33 +846,18 @@ namespace Azure.Generator.Management.Visitors
             return parameter is not null;
         }
 
-        /// <summary>
-        /// Determines whether two parameter names differ only by the verb normalization applied to
-        /// legacy <c>StartOn</c>/<c>EndOn</c> date-time names.
-        /// </summary>
-        private static bool AreEquivalentDateTimeParameterNames(string first, string second)
-            => HasEquivalentSuffix(first, second, "startOn", "startsOn")
-                || HasEquivalentSuffix(first, second, "endOn", "endsOn");
-
-        private static bool HasEquivalentSuffix(string first, string second, string legacySuffix, string normalizedSuffix)
+        private static string? GetLegacyDateTimeParameterName(PropertyProvider? property)
         {
-            if (first.EndsWith(legacySuffix, StringComparison.OrdinalIgnoreCase)
-                && second.EndsWith(normalizedSuffix, StringComparison.OrdinalIgnoreCase))
+            if (property?.WireInfo is null ||
+                !property.Type.IsFrameworkType ||
+                property.Type.FrameworkType != typeof(DateTimeOffset))
             {
-                return first[..^legacySuffix.Length].Equals(
-                    second[..^normalizedSuffix.Length],
-                    StringComparison.OrdinalIgnoreCase);
+                return null;
             }
 
-            if (first.EndsWith(normalizedSuffix, StringComparison.OrdinalIgnoreCase)
-                && second.EndsWith(legacySuffix, StringComparison.OrdinalIgnoreCase))
-            {
-                return first[..^normalizedSuffix.Length].Equals(
-                    second[..^legacySuffix.Length],
-                    StringComparison.OrdinalIgnoreCase);
-            }
-
-            return false;
+            return NameVisitor.NormalizeDateTimePropertyName(
+                property.WireInfo.SerializedName,
+                isDateTime: true).ToVariableName();
         }
 
         /// <summary>
