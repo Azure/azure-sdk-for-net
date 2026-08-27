@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code.Value.ToSerialString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastAction))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             RollingUpgradeStatusCode? code = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             RollingUpgradeActionType? lastAction = default;
             DateTimeOffset? lastActionOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastAction"u8))
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Compute.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RollingUpgradeRunningStatus(code, startOn, lastAction, lastActionOn, additionalBinaryDataProperties);
+            return new RollingUpgradeRunningStatus(code, startsOn, lastAction, lastActionOn, additionalBinaryDataProperties);
         }
     }
 }

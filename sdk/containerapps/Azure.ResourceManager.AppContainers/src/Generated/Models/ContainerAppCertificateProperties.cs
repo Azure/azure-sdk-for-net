@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="value"> PFX or PEM blob. </param>
         /// <param name="issuer"> Certificate issuer. </param>
         /// <param name="issueOn"> Certificate issue Date. </param>
-        /// <param name="expireOn"> Certificate expiration date. </param>
+        /// <param name="expiresOn"> Certificate expiration date. </param>
         /// <param name="thumbprint"> Certificate thumbprint. </param>
         /// <param name="isValid"> Is the certificate valid?. </param>
         /// <param name="publicKeyHash"> Public key hash. </param>
         /// <param name="certificateType"> The type of the certificate. Allowed values are `ServerSSLCertificate` and `ImagePullTrustedCA`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState, string deploymentErrors, ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties, string password, string subjectName, IReadOnlyList<string> subjectAlternativeNames, byte[] value, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expireOn, string thumbprint, bool? isValid, string publicKeyHash, CertificateType? certificateType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerAppCertificateProperties(ContainerAppCertificateProvisioningState? provisioningState, string deploymentErrors, ContainerAppCertificateKeyVaultProperties certificateKeyVaultProperties, string password, string subjectName, IReadOnlyList<string> subjectAlternativeNames, byte[] value, string issuer, DateTimeOffset? issueOn, DateTimeOffset? expiresOn, string thumbprint, bool? isValid, string publicKeyHash, CertificateType? certificateType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DeploymentErrors = deploymentErrors;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             Value = value;
             Issuer = issuer;
             IssueOn = issueOn;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             Thumbprint = thumbprint;
             IsValid = isValid;
             PublicKeyHash = publicKeyHash;
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Certificate expiration date. </summary>
         [WirePath("expirationDate")]
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpiresOn { get; }
 
         /// <summary> Certificate thumbprint. </summary>
         [WirePath("thumbprint")]

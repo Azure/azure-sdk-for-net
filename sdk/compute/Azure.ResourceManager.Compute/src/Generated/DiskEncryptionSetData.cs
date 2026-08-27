@@ -122,11 +122,11 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> The time when the active key of this disk encryption set was updated. </summary>
-        public DateTimeOffset? LastKeyRotationTimestamp
+        public DateTimeOffset? LastKeyRotationOn
         {
             get
             {
-                return Properties is null ? default : Properties.LastKeyRotationTimestamp;
+                return Properties is null ? default : Properties.LastKeyRotationOn;
             }
         }
 
