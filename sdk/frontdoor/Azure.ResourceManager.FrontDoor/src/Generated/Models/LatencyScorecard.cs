@@ -83,21 +83,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
 
         /// <summary> The start time of the Latency Scorecard in UTC. </summary>
         [WirePath("properties.startDateTimeUTC")]
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
         /// <summary> The end time of the Latency Scorecard in UTC. </summary>
         [WirePath("properties.endDateTimeUTC")]
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
         }
 

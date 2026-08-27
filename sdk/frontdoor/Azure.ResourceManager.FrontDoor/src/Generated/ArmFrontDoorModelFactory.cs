@@ -693,21 +693,21 @@ namespace Azure.ResourceManager.FrontDoor.Models
         /// <param name="description"> The description of the Latency Scorecard. </param>
         /// <param name="scorecardEndpointA"> The A endpoint in the scorecard. </param>
         /// <param name="scorecardEndpointB"> The B endpoint in the scorecard. </param>
-        /// <param name="startOn"> The start time of the Latency Scorecard in UTC. </param>
-        /// <param name="endOn"> The end time of the Latency Scorecard in UTC. </param>
+        /// <param name="startsOn"> The start time of the Latency Scorecard in UTC. </param>
+        /// <param name="endsOn"> The end time of the Latency Scorecard in UTC. </param>
         /// <param name="country"> The country associated with the Latency Scorecard. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="latencyMetrics"> The latency metrics of the Latency Scorecard. </param>
         /// <returns> A new <see cref="Models.LatencyScorecard"/> instance for mocking. </returns>
-        public static LatencyScorecard LatencyScorecard(string latencyScorecardId = default, string latencyScorecardName = default, string description = default, Uri scorecardEndpointA = default, Uri scorecardEndpointB = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string country = default, IEnumerable<LatencyMetric> latencyMetrics = default)
+        public static LatencyScorecard LatencyScorecard(string latencyScorecardId = default, string latencyScorecardName = default, string description = default, Uri scorecardEndpointA = default, Uri scorecardEndpointB = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, string country = default, IEnumerable<LatencyMetric> latencyMetrics = default)
         {
-            return new LatencyScorecard(latencyScorecardId is null && latencyScorecardName is null && description is null && scorecardEndpointA is null && scorecardEndpointB is null && startOn is null && endOn is null && country is null && latencyMetrics is null ? default : new LatencyScorecardProperties(
+            return new LatencyScorecard(latencyScorecardId is null && latencyScorecardName is null && description is null && scorecardEndpointA is null && scorecardEndpointB is null && startsOn is null && endsOn is null && country is null && latencyMetrics is null ? default : new LatencyScorecardProperties(
                 latencyScorecardId,
                 latencyScorecardName,
                 description,
                 scorecardEndpointA,
                 scorecardEndpointB,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 country,
                 (latencyMetrics ?? new ChangeTrackingList<LatencyMetric>()).ToList(),
                 default), default);
@@ -741,19 +741,19 @@ namespace Azure.ResourceManager.FrontDoor.Models
         }
 
         /// <param name="endpoint"> The endpoint associated with the Timeseries data point. </param>
-        /// <param name="startOn"> The start DateTime of the Timeseries in UTC. </param>
-        /// <param name="endOn"> The end DateTime of the Timeseries in UTC. </param>
+        /// <param name="startsOn"> The start DateTime of the Timeseries in UTC. </param>
+        /// <param name="endsOn"> The end DateTime of the Timeseries in UTC. </param>
         /// <param name="aggregationInterval"> The aggregation interval of the Timeseries. </param>
         /// <param name="timeSeriesType"> The type of Timeseries. </param>
         /// <param name="country"> The country associated with the Timeseries. Values are country ISO codes as specified here- https://www.iso.org/iso-3166-country-codes.html. </param>
         /// <param name="timeSeriesData"> The set of data points for the timeseries. </param>
         /// <returns> A new <see cref="Models.FrontDoorTimeSeriesInfo"/> instance for mocking. </returns>
-        public static FrontDoorTimeSeriesInfo FrontDoorTimeSeriesInfo(Uri endpoint = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, FrontDoorTimeSeriesInfoAggregationInterval? aggregationInterval = default, FrontDoorTimeSeriesType? timeSeriesType = default, string country = default, IEnumerable<FrontDoorTimeSeriesDataPoint> timeSeriesData = default)
+        public static FrontDoorTimeSeriesInfo FrontDoorTimeSeriesInfo(Uri endpoint = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, FrontDoorTimeSeriesInfoAggregationInterval? aggregationInterval = default, FrontDoorTimeSeriesType? timeSeriesType = default, string country = default, IEnumerable<FrontDoorTimeSeriesDataPoint> timeSeriesData = default)
         {
-            return new FrontDoorTimeSeriesInfo(endpoint is null && startOn is null && endOn is null && aggregationInterval is null && timeSeriesType is null && country is null && timeSeriesData is null ? default : new TimeseriesProperties(
+            return new FrontDoorTimeSeriesInfo(endpoint is null && startsOn is null && endsOn is null && aggregationInterval is null && timeSeriesType is null && country is null && timeSeriesData is null ? default : new TimeseriesProperties(
                 endpoint,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 aggregationInterval,
                 timeSeriesType,
                 country,
@@ -999,14 +999,14 @@ namespace Azure.ResourceManager.FrontDoor.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static LatencyScorecard LatencyScorecard(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string latencyScorecardId = default, string latencyScorecardName = default, string description = default, Uri scorecardEndpointA = default, Uri scorecardEndpointB = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, string country = default, IEnumerable<LatencyMetric> latencyMetrics = default)
         {
-            return new LatencyScorecard(latencyScorecardId is null && latencyScorecardName is null && description is null && scorecardEndpointA is null && scorecardEndpointB is null && startOn is null && endOn is null && country is null && latencyMetrics is null ? default : new LatencyScorecardProperties(
+            return new LatencyScorecard(latencyScorecardId is null && latencyScorecardName is null && description is null && scorecardEndpointA is null && scorecardEndpointB is null && country is null && latencyMetrics is null ? default : new LatencyScorecardProperties(
                 latencyScorecardId,
                 latencyScorecardName,
                 description,
                 scorecardEndpointA,
                 scorecardEndpointB,
-                startOn,
-                endOn,
+                default,
+                default,
                 country,
                 (latencyMetrics ?? new ChangeTrackingList<LatencyMetric>()).ToList(),
                 default), default);
@@ -1029,10 +1029,10 @@ namespace Azure.ResourceManager.FrontDoor.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static FrontDoorTimeSeriesInfo FrontDoorTimeSeriesInfo(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, Uri endpoint = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, FrontDoorTimeSeriesInfoAggregationInterval? aggregationInterval = default, FrontDoorTimeSeriesType? timeSeriesType = default, string country = default, IEnumerable<FrontDoorTimeSeriesDataPoint> timeSeriesData = default)
         {
-            return new FrontDoorTimeSeriesInfo(endpoint is null && startOn is null && endOn is null && aggregationInterval is null && timeSeriesType is null && country is null && timeSeriesData is null ? default : new TimeseriesProperties(
+            return new FrontDoorTimeSeriesInfo(endpoint is null && aggregationInterval is null && timeSeriesType is null && country is null && timeSeriesData is null ? default : new TimeseriesProperties(
                 endpoint,
-                startOn,
-                endOn,
+                default,
+                default,
                 aggregationInterval,
                 timeSeriesType,
                 country,
