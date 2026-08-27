@@ -252,5 +252,11 @@ namespace Azure.Storage.Blobs.Models
         /// Supported by x-ms-version 2026-02-06 and later.
         /// </summary>
         public string SmartAccessTier { get; internal set; }
+
+        /// <summary>
+        /// Indicates the download hint for the blob.
+        /// Null if the service did not return a download hint.
+        /// </summary>
+        public DownloadHint? DownloadHint { get; internal set; }
     }
 }

@@ -185,10 +185,15 @@ namespace Azure.Storage.Files.DataLake.Tests
                     TestEnvironment.Credential,
                     options));
 
+            DataLakeFileReadToOptions readToOptions = new DataLakeFileReadToOptions
+            {
+                LayoutAwareRouting = Blobs.Models.LayoutAwareRouting.Disabled
+            };
+
             // Act — download into a destination stream
             countingPolicy.Start();
             using var destination = new MemoryStream();
-            Response response = await oauthFileClient.ReadToAsync(destination);
+            Response response = await oauthFileClient.ReadToAsync(destination, readToOptions);
 
             // Assert
             Assert.AreEqual(data.Length, destination.Length);
@@ -753,6 +758,7 @@ namespace Azure.Storage.Files.DataLake.Tests
                     destination,
                     new DataLakeFileReadToOptions
                     {
+                        LayoutAwareRouting = Blobs.Models.LayoutAwareRouting.Disabled,
                         TransferOptions = new StorageTransferOptions
                         {
                             InitialTransferSize = Constants.KB,

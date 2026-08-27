@@ -158,6 +158,8 @@ namespace Azure.Storage.Files.DataLake
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathInfo>> FlushAsync(long position, bool? retainUncommittedData, bool? close, Azure.Storage.Files.DataLake.Models.PathHttpHeaders httpHeaders, Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions, System.Threading.CancellationToken cancellationToken) { throw null; }
         public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathAccessControl> GetAccessControl(bool? userPrincipalName = default(bool?), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathAccessControl>> GetAccessControlAsync(bool? userPrincipalName = default(bool?), Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutInfo> GetLayout(Azure.Storage.Files.DataLake.Models.DataLakeFileGetLayoutOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutInfo> GetLayoutAsync(Azure.Storage.Files.DataLake.Models.DataLakeFileGetLayoutOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual new Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties> GetProperties(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override System.Threading.Tasks.Task<Azure.Response<Azure.Storage.Files.DataLake.Models.PathProperties>> GetPropertiesAsync(Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions conditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public override Azure.Response<Azure.Storage.Files.DataLake.Models.PathSystemProperties> GetSystemProperties(Azure.Storage.Files.DataLake.Models.PathGetSystemPropertiesOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -624,6 +626,77 @@ namespace Azure.Storage.Files.DataLake.Models
         public string ProposedLeaseId { get { throw null; } set { } }
         public bool? RetainUncommittedData { get { throw null; } set { } }
     }
+    public partial class DataLakeFileGetLayoutOptions
+    {
+        public DataLakeFileGetLayoutOptions() { }
+        public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public Azure.HttpRange Range { get { throw null; } set { } }
+    }
+    public partial class DataLakeFileLayoutEndpoint
+    {
+        internal DataLakeFileLayoutEndpoint() { }
+        public int Index { get { throw null; } }
+        public string Value { get { throw null; } }
+    }
+    public partial class DataLakeFileLayoutEndpoints
+    {
+        internal DataLakeFileLayoutEndpoints() { }
+        public System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutEndpoint> Endpoint { get { throw null; } }
+    }
+    public partial class DataLakeFileLayoutInfo
+    {
+        internal DataLakeFileLayoutInfo() { }
+        public string AcceptRanges { get { throw null; } }
+        public string AccessTier { get { throw null; } }
+        public System.DateTimeOffset AccessTierChangedOn { get { throw null; } }
+        public bool AccessTierInferred { get { throw null; } }
+        public string ArchiveStatus { get { throw null; } }
+        public string CacheControl { get { throw null; } }
+        public string ContentDisposition { get { throw null; } }
+        public string ContentEncoding { get { throw null; } }
+        public byte[] ContentHash { get { throw null; } }
+        public string ContentLanguage { get { throw null; } }
+        public long ContentLength { get { throw null; } }
+        public string ContentType { get { throw null; } }
+        public System.DateTimeOffset CopyCompletedOn { get { throw null; } }
+        public string CopyId { get { throw null; } }
+        public string CopyProgress { get { throw null; } }
+        public System.Uri CopySource { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.CopyStatus? CopyStatus { get { throw null; } }
+        public string CopyStatusDescription { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
+        public string EncryptionKeySha256 { get { throw null; } }
+        public string EncryptionScope { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutEndpoints Endpoints { get { throw null; } }
+        public Azure.ETag ETag { get { throw null; } }
+        public System.DateTimeOffset ExpiresOn { get { throw null; } }
+        public string FileContentEncoding { get { throw null; } }
+        public long FileContentLength { get { throw null; } }
+        public byte[] FileContentMD5 { get { throw null; } }
+        public string FileContentType { get { throw null; } }
+        public System.DateTimeOffset FileCreatedOn { get { throw null; } }
+        public bool IsIncrementalCopy { get { throw null; } }
+        public bool IsServerEncrypted { get { throw null; } }
+        public System.DateTimeOffset LastModified { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration LeaseDuration { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseState LeaseState { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus LeaseStatus { get { throw null; } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
+        public Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutRanges Ranges { get { throw null; } }
+        public string SmartAccessTier { get { throw null; } }
+    }
+    public partial class DataLakeFileLayoutRange
+    {
+        internal DataLakeFileLayoutRange() { }
+        public long End { get { throw null; } }
+        public int EndpointIndex { get { throw null; } }
+        public long Start { get { throw null; } }
+    }
+    public partial class DataLakeFileLayoutRanges
+    {
+        internal DataLakeFileLayoutRanges() { }
+        public System.Collections.Generic.IList<Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutRange> Range { get { throw null; } }
+    }
     public partial class DataLakeFileOpenWriteOptions
     {
         public DataLakeFileOpenWriteOptions() { }
@@ -637,6 +710,7 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         public DataLakeFileReadOptions() { }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public string LayoutEndpoint { get { throw null; } set { } }
         public Azure.HttpRange Range { get { throw null; } set { } }
         public Azure.Storage.DownloadTransferValidationOptions TransferValidation { get { throw null; } set { } }
     }
@@ -657,6 +731,7 @@ namespace Azure.Storage.Files.DataLake.Models
     {
         public DataLakeFileReadToOptions() { }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.LayoutAwareRouting LayoutAwareRouting { get { throw null; } set { } }
         public Azure.Storage.StorageTransferOptions TransferOptions { get { throw null; } set { } }
         public Azure.Storage.DownloadTransferValidationOptions TransferValidation { get { throw null; } set { } }
     }
@@ -755,6 +830,11 @@ namespace Azure.Storage.Files.DataLake.Models
     public static partial class DataLakeModelFactory
     {
         public static Azure.Storage.Files.DataLake.Models.AccessControlChangeResult AccessControlChangeResult(Azure.Storage.Files.DataLake.Models.AccessControlChangeCounters counters, string continuationToken, Azure.Storage.Files.DataLake.Models.AccessControlChangeFailure[] batchFailures) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutEndpoint DataLakeFileLayoutEndpoint(int index, string value) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutEndpoints DataLakeFileLayoutEndpoints(System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutEndpoint> endpoint) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutInfo DataLakeFileLayoutInfo(Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutRanges ranges, Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutEndpoints endpoints, System.DateTimeOffset lastModified, System.DateTimeOffset createdOn, System.Collections.Generic.IDictionary<string, string> metadata, System.DateTimeOffset copyCompletedOn, string copyStatusDescription, string copyId, string copyProgress, System.Uri copySource, Azure.Storage.Files.DataLake.Models.CopyStatus? fileCopyStatus, bool isIncrementalCopy, Azure.Storage.Files.DataLake.Models.DataLakeLeaseDuration leaseDuration, Azure.Storage.Files.DataLake.Models.DataLakeLeaseState leaseState, Azure.Storage.Files.DataLake.Models.DataLakeLeaseStatus leaseStatus, long contentLength, string contentType, Azure.ETag eTag, byte[] contentHash, string contentEncoding, string contentDisposition, string contentLanguage, string cacheControl, string acceptRanges, bool isServerEncrypted, string encryptionKeySha256, string encryptionScope, string accessTier, bool accessTierInferred, string smartAccessTier, string archiveStatus, System.DateTimeOffset accessTierChangedOn, System.DateTimeOffset expiresOn, long fileContentLength, string fileContentType, string fileContentEncoding, byte[] fileContentMD5, System.DateTimeOffset fileCreatedOn) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutRange DataLakeFileLayoutRange(long start, long end, int endpointIndex) { throw null; }
+        public static Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutRanges DataLakeFileLayoutRanges(System.Collections.Generic.IEnumerable<Azure.Storage.Files.DataLake.Models.DataLakeFileLayoutRange> range) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.DataLakeFileReadResult DataLakeFileReadResult(System.BinaryData content, Azure.Storage.Files.DataLake.Models.FileDownloadDetails details) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.DataLakeFileReadStreamingResult DataLakeFileReadStreamingResult(System.IO.Stream content, Azure.Storage.Files.DataLake.Models.FileDownloadDetails details) { throw null; }
         public static Azure.Storage.Files.DataLake.Models.DataLakeQueryError DataLakeQueryError(string name = null, string description = null, bool isFatal = false, long position = (long)0) { throw null; }
@@ -794,6 +874,7 @@ namespace Azure.Storage.Files.DataLake.Models
         public DataLakeOpenReadOptions(bool allowModifications) { }
         public int? BufferSize { get { throw null; } set { } }
         public Azure.Storage.Files.DataLake.Models.DataLakeRequestConditions Conditions { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.LayoutAwareRouting LayoutAwareRouting { get { throw null; } set { } }
         public long Position { get { throw null; } set { } }
         public Azure.Storage.DownloadTransferValidationOptions TransferValidation { get { throw null; } set { } }
     }

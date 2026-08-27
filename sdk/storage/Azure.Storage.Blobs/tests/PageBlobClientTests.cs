@@ -4490,7 +4490,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task GetPageRangesAsync_Sessions_FallbackToBearer()
         {
             var containerName = GetNewContainerName();
-            var countingPolicy = new BlobBaseClientTests.SessionAuthCountingPolicy(containerName);
+            var countingPolicy = new SessionAuthCountingPolicy(containerName);
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
@@ -4525,7 +4525,7 @@ namespace Azure.Storage.Blobs.Test
         public async Task GetPageRangesDiffAsync_Sessions_FallbackToBearer()
         {
             var containerName = GetNewContainerName();
-            var countingPolicy = new BlobBaseClientTests.SessionAuthCountingPolicy(containerName);
+            var countingPolicy = new SessionAuthCountingPolicy(containerName);
             BlobClientOptions options = GetOptions();
             options.SessionOptions = new SessionOptions()
             {
