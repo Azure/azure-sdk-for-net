@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public static ServiceImpactingEvent ServiceImpactingEvent(DateTimeOffset? eventStartOn = default, DateTimeOffset? eventStatusLastModifiedOn = default, string correlationId = default, string statusValue = default, ServiceImpactingEventIncidentProperties incidentProperties = default)
         {
             return new ServiceImpactingEvent(
-                eventStartOn,
+                default,
                 eventStatusLastModifiedOn,
                 correlationId,
                 statusValue is null ? default : new ServiceImpactingEventStatus(statusValue, default),
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 name,
                 resourceType,
                 systemData,
-                eventType is null && eventSubType is null && eventSource is null && status is null && title is null && summary is null && header is null && level is null && eventLevel is null && isEventSensitive is null && externalIncidentId is null && reason is null && article is null && links is null && impactStartOn is null && impactMitigationOn is null && impact is null && recommendedActions is null && faqs is null && isHirEvent is null && isMicrosoftSupportEnabled is null && description is null && isPlatformInitiated is null && isChatWithUsEnabled is null && priority is null && lastUpdateOn is null && hirStage is null && additionalInformationMessage is null && duration is null && impactType is null && eventTags is null && newRate is null && oldRate is null && currencyType is null && billingId is null ? default : new EventProperties(
+                eventType is null && eventSubType is null && eventSource is null && status is null && title is null && summary is null && header is null && level is null && eventLevel is null && isEventSensitive is null && externalIncidentId is null && reason is null && article is null && links is null && impactMitigationOn is null && impact is null && recommendedActions is null && faqs is null && isHirEvent is null && isMicrosoftSupportEnabled is null && description is null && isPlatformInitiated is null && isChatWithUsEnabled is null && priority is null && lastUpdateOn is null && hirStage is null && additionalInformationMessage is null && duration is null && impactType is null && eventTags is null && newRate is null && oldRate is null && currencyType is null && billingId is null ? default : new EventProperties(
                     eventType,
                     eventSubType,
                     eventSource,
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     reason,
                     article,
                     (links ?? new ChangeTrackingList<ResourceHealthEventLink>()).ToList(),
-                    impactStartOn,
+                    default,
                     impactMitigationOn,
                     (impact ?? new ChangeTrackingList<ResourceHealthEventImpact>()).ToList(),
                     recommendedActions,
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 title,
                 description,
                 trackingId,
-                startOn,
+                default,
                 cloud,
                 severity,
                 stage,

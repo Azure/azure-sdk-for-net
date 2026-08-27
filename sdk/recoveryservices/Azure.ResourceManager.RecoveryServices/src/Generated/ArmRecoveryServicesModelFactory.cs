@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
         /// <returns> A new <see cref="Models.DeletedVaultProperties"/> instance for mocking. </returns>
         public static DeletedVaultProperties DeletedVaultProperties(string vaultId = default, DateTimeOffset? vaultDeletionOn = default, DateTimeOffset? purgeOn = default)
         {
-            return new DeletedVaultProperties(vaultId, vaultDeletionOn, purgeOn, default);
+            return new DeletedVaultProperties(vaultId, default, purgeOn, default);
         }
 
         /// <param name="deletedVaultRestoreInputRecoveryResourceGroupId"> Recovery resource group Id. </param>

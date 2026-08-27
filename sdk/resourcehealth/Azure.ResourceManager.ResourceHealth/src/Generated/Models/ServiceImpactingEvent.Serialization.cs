@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 throw new FormatException($"The model {nameof(ServiceImpactingEvent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EventStartOn))
+            if (Optional.IsDefined(EventStartsOn))
             {
                 writer.WritePropertyName("eventStartTime"u8);
-                writer.WriteStringValue(EventStartOn.Value, "O");
+                writer.WriteStringValue(EventStartsOn.Value, "O");
             }
             if (Optional.IsDefined(EventStatusLastModifiedOn))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             {
                 return null;
             }
-            DateTimeOffset? eventStartOn = default;
+            DateTimeOffset? eventStartsOn = default;
             DateTimeOffset? eventStatusLastModifiedOn = default;
             string correlationId = default;
             ServiceImpactingEventStatus status = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                     {
                         continue;
                     }
-                    eventStartOn = prop.Value.GetDateTimeOffset("O");
+                    eventStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("eventStatusLastModifiedTime"u8))
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
             }
             return new ServiceImpactingEvent(
-                eventStartOn,
+                eventStartsOn,
                 eventStatusLastModifiedOn,
                 correlationId,
                 status,

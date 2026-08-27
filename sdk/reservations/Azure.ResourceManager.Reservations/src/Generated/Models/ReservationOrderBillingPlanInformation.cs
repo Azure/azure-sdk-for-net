@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.Reservations.Models
 
         /// <summary> Initializes a new instance of <see cref="ReservationOrderBillingPlanInformation"/>. </summary>
         /// <param name="pricingCurrencyTotal"> Amount of money to be paid for the Order. Tax is not included. </param>
-        /// <param name="startOn"> Date when the billing plan has started. </param>
+        /// <param name="startsOn"> Date when the billing plan has started. </param>
         /// <param name="nextPaymentDueOn"> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </param>
         /// <param name="transactions"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationOrderBillingPlanInformation(PurchasePrice pricingCurrencyTotal, DateTimeOffset? startOn, DateTimeOffset? nextPaymentDueOn, IReadOnlyList<PaymentDetail> transactions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReservationOrderBillingPlanInformation(PurchasePrice pricingCurrencyTotal, DateTimeOffset? startsOn, DateTimeOffset? nextPaymentDueOn, IReadOnlyList<PaymentDetail> transactions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PricingCurrencyTotal = pricingCurrencyTotal;
-            StartOn = startOn;
+            StartsOn = startsOn;
             NextPaymentDueOn = nextPaymentDueOn;
             Transactions = transactions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Reservations.Models
         public PurchasePrice PricingCurrencyTotal { get; }
 
         /// <summary> Date when the billing plan has started. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> For recurring billing plans, indicates the date when next payment will be processed. Null when total is paid off. </summary>
         public DateTimeOffset? NextPaymentDueOn { get; }
