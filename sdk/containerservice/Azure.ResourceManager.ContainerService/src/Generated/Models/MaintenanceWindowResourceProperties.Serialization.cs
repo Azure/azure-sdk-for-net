@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             writer.WritePropertyName("schedule"u8);
             writer.WriteObjectValue(Schedule, options);
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDate"u8);
-                writer.WriteStringValue(StartOn.Value, "D");
+                writer.WriteStringValue(StartsOn.Value, "D");
             }
             writer.WritePropertyName("startTime"u8);
             writer.WriteStringValue(StartTime);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             ContainerServiceProvisioningState? provisioningState = default;
             ContainerServiceMaintenanceSchedule schedule = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             string startTime = default;
             int durationHours = default;
             string utcOffset = default;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("D");
+                    startsOn = prop.Value.GetDateTimeOffset("D");
                     continue;
                 }
                 if (prop.NameEquals("startTime"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             return new MaintenanceWindowResourceProperties(
                 provisioningState,
                 schedule,
-                startOn,
+                startsOn,
                 startTime,
                 durationHours,
                 utcOffset,
