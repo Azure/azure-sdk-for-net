@@ -10,7 +10,7 @@ using System;
 namespace Azure.Communication.CallAutomation
 {
     /// <summary> The TextSource. </summary>
-    internal partial class TextSourceInternal
+    public partial class TextSourceInternal
     {
         /// <summary> Initializes a new instance of <see cref="TextSourceInternal"/>. </summary>
         /// <param name="text"> Text for the cognitive service to be played. </param>

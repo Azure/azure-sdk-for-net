@@ -5,8 +5,8 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    [CodeGenModel("PlaySource")]
-    public partial class PlaySourceInternal
+    [CodeGenModel("DeleteHoldRoomRequest")]
+    public partial class DeleteHoldRoomRequestInternal
     {
     }
 }

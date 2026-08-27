@@ -1305,5 +1305,123 @@ namespace Azure.Communication.CallAutomation
                 throw;
             }
         }
+
+        /// <summary>
+        /// Creates a hold room in the call.
+        /// </summary>
+        /// <param name="callConnectionId">The ID of the call connection.</param>
+        /// <param name="options">An optional object containing Create Hold Room options.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual Response CreateHoldRoom(string callConnectionId, CreateHoldRoomOptions options = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(CreateHoldRoom)}");
+            scope.Start();
+            try
+            {
+                var request = options == default
+                    ? new CreateHoldRoomRequestInternal()
+                    : new CreateHoldRoomRequestInternal()
+                    {
+                        OperationContext = options.OperationContext,
+                        PlaySourceInfo = TranslatePlaySourceToInternal(options.PlaySource)
+                    };
+
+                return CallMediaRestClient.CreateHoldRoom(callConnectionId, request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Creates a hold room in the call.
+        /// </summary>
+        /// <param name="callConnectionId">The ID of the call connection.</param>
+        /// <param name="options">An optional object containing Create Hold Room options.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual async Task<Response> CreateHoldRoomAsync(string callConnectionId, CreateHoldRoomOptions options = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(CreateHoldRoom)}");
+            scope.Start();
+            try
+            {
+                var request = options == default
+                    ? new CreateHoldRoomRequestInternal()
+                    : new CreateHoldRoomRequestInternal()
+                    {
+                        OperationContext = options.OperationContext,
+                        PlaySourceInfo = TranslatePlaySourceToInternal(options.PlaySource)
+                    };
+
+                return await CallMediaRestClient.CreateHoldRoomAsync(callConnectionId, request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a hold room in the call.
+        /// </summary>
+        /// <param name="callConnectionId">The ID of the call connection.</param>
+        /// <param name="options">An optional object containing Delete Hold Room options.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual Response DeleteHoldRoom(string callConnectionId, DeleteHoldRoomOptions options = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(DeleteHoldRoom)}");
+            scope.Start();
+            try
+            {
+                var request = options == default
+                    ? new DeleteHoldRoomRequestInternal()
+                    : new DeleteHoldRoomRequestInternal()
+                    {
+                        OperationContext = options.OperationContext,
+                    };
+
+                return CallMediaRestClient.DeleteHoldRoom(callConnectionId, request, cancellationToken);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Deletes a hold room in the call.
+        /// </summary>
+        /// <param name="callConnectionId">The ID of the call connection.</param>
+        /// <param name="options">An optional object containing Delete Hold Room options.</param>
+        /// <param name="cancellationToken">An optional CancellationToken to cancel the request.</param>
+        /// <returns>Returns an HTTP response with a 202 status code for success, or an HTTP failure error code in case of an error.</returns>
+        public virtual async Task<Response> DeleteHoldRoomAsync(string callConnectionId, DeleteHoldRoomOptions options = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _clientDiagnostics.CreateScope($"{nameof(CallMedia)}.{nameof(DeleteHoldRoom)}");
+            scope.Start();
+            try
+            {
+                var request = options == default
+                    ? new DeleteHoldRoomRequestInternal()
+                    : new DeleteHoldRoomRequestInternal()
+                    {
+                        OperationContext = options.OperationContext,
+                    };
+
+                return await CallMediaRestClient.DeleteHoldRoomAsync(callConnectionId, request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                scope.Failed(ex);
+                throw;
+            }
+        }
     }
 }

@@ -390,6 +390,10 @@ namespace Azure.Communication.CallAutomation
         public virtual string CallConnectionId { get { throw null; } }
         public virtual Azure.Response<Azure.Communication.CallAutomation.CancelAllMediaOperationsResult> CancelAllMediaOperations(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.CancelAllMediaOperationsResult>> CancelAllMediaOperationsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response CreateHoldRoom(string callConnectionId, Azure.Communication.CallAutomation.CreateHoldRoomOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> CreateHoldRoomAsync(string callConnectionId, Azure.Communication.CallAutomation.CreateHoldRoomOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response DeleteHoldRoom(string callConnectionId, Azure.Communication.CallAutomation.DeleteHoldRoomOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response> DeleteHoldRoomAsync(string callConnectionId, Azure.Communication.CallAutomation.DeleteHoldRoomOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.HoldResult> Hold(Azure.Communication.CallAutomation.HoldOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.Communication.CallAutomation.HoldResult>> HoldAsync(Azure.Communication.CallAutomation.HoldOptions options, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.Communication.CallAutomation.InterruptAudioAndAnnounceResult> InterruptAudioAndAnnounce(Azure.Communication.CallAutomation.InterruptAudioAndAnnounceOptions announcementOptions, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -721,6 +725,18 @@ namespace Azure.Communication.CallAutomation
         public Azure.Communication.MicrosoftTeamsAppIdentifier TeamsAppSource { get { throw null; } set { } }
         public Azure.Communication.CallAutomation.TranscriptionOptions TranscriptionOptions { get { throw null; } set { } }
     }
+    public partial class CreateHoldRoomOptions
+    {
+        public CreateHoldRoomOptions() { }
+        public string OperationContext { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.PlaySource PlaySource { get { throw null; } set { } }
+    }
+    public partial class CreateHoldRoomRequestInternal
+    {
+        public CreateHoldRoomRequestInternal() { }
+        public string OperationContext { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.PlaySourceInternal PlaySourceInfo { get { throw null; } set { } }
+    }
     public partial class CustomCallingContext
     {
         internal CustomCallingContext() { }
@@ -734,6 +750,16 @@ namespace Azure.Communication.CallAutomation
             XMSCustom = 0,
             X = 1,
         }
+    }
+    public partial class DeleteHoldRoomOptions
+    {
+        public DeleteHoldRoomOptions() { }
+        public string OperationContext { get { throw null; } set { } }
+    }
+    public partial class DeleteHoldRoomRequestInternal
+    {
+        public DeleteHoldRoomRequestInternal() { }
+        public string OperationContext { get { throw null; } set { } }
     }
     public partial class DialogCompleted : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
@@ -886,6 +912,11 @@ namespace Azure.Communication.CallAutomation
     {
         public FileSource(System.Uri fileUri) { }
         public System.Uri FileUri { get { throw null; } }
+    }
+    public partial class FileSourceInternal
+    {
+        public FileSourceInternal(string uri) { }
+        public string Uri { get { throw null; } }
     }
     public partial class GroupCallLocator : Azure.Communication.CallAutomation.CallLocator
     {
@@ -1337,6 +1368,32 @@ namespace Azure.Communication.CallAutomation
         protected PlaySource() { }
         public string PlaySourceCacheId { get { throw null; } set { } }
     }
+    public partial class PlaySourceInternal
+    {
+        public PlaySourceInternal(Azure.Communication.CallAutomation.PlaySourceTypeInternal kind) { }
+        public Azure.Communication.CallAutomation.FileSourceInternal File { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.PlaySourceTypeInternal Kind { get { throw null; } }
+        public string PlaySourceCacheId { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.SsmlSourceInternal Ssml { get { throw null; } set { } }
+        public Azure.Communication.CallAutomation.TextSourceInternal Text { get { throw null; } set { } }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PlaySourceTypeInternal : System.IEquatable<Azure.Communication.CallAutomation.PlaySourceTypeInternal>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PlaySourceTypeInternal(string value) { throw null; }
+        public static Azure.Communication.CallAutomation.PlaySourceTypeInternal File { get { throw null; } }
+        public static Azure.Communication.CallAutomation.PlaySourceTypeInternal Ssml { get { throw null; } }
+        public static Azure.Communication.CallAutomation.PlaySourceTypeInternal Text { get { throw null; } }
+        public bool Equals(Azure.Communication.CallAutomation.PlaySourceTypeInternal other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Communication.CallAutomation.PlaySourceTypeInternal left, Azure.Communication.CallAutomation.PlaySourceTypeInternal right) { throw null; }
+        public static implicit operator Azure.Communication.CallAutomation.PlaySourceTypeInternal (string value) { throw null; }
+        public static bool operator !=(Azure.Communication.CallAutomation.PlaySourceTypeInternal left, Azure.Communication.CallAutomation.PlaySourceTypeInternal right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public partial class PlayStarted : Azure.Communication.CallAutomation.CallAutomationEventBase
     {
         internal PlayStarted() { }
@@ -1647,6 +1704,12 @@ namespace Azure.Communication.CallAutomation
         public string CustomVoiceEndpointId { get { throw null; } set { } }
         public string SsmlText { get { throw null; } }
     }
+    public partial class SsmlSourceInternal
+    {
+        public SsmlSourceInternal(string ssmlText) { }
+        public string CustomVoiceEndpointId { get { throw null; } set { } }
+        public string SsmlText { get { throw null; } }
+    }
     public partial class StartDialog
     {
         public StartDialog(Azure.Communication.CallAutomation.BaseDialog dialog) { }
@@ -1748,6 +1811,15 @@ namespace Azure.Communication.CallAutomation
         public TextSource(string text) { }
         public TextSource(string text, string voiceName) { }
         public TextSource(string text, string sourceLocale, Azure.Communication.CallAutomation.VoiceKind voiceKind) { }
+        public string CustomVoiceEndpointId { get { throw null; } set { } }
+        public string SourceLocale { get { throw null; } set { } }
+        public string Text { get { throw null; } }
+        public Azure.Communication.CallAutomation.VoiceKind? VoiceKind { get { throw null; } set { } }
+        public string VoiceName { get { throw null; } set { } }
+    }
+    public partial class TextSourceInternal
+    {
+        public TextSourceInternal(string text) { }
         public string CustomVoiceEndpointId { get { throw null; } set { } }
         public string SourceLocale { get { throw null; } set { } }
         public string Text { get { throw null; } }

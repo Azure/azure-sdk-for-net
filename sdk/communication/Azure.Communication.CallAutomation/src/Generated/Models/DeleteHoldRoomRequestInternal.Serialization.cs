@@ -10,13 +10,16 @@ using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
-    public partial class FileSourceInternal : IUtf8JsonSerializable
+    public partial class DeleteHoldRoomRequestInternal : IUtf8JsonSerializable
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            writer.WritePropertyName("uri"u8);
-            writer.WriteStringValue(Uri);
+            if (Optional.IsDefined(OperationContext))
+            {
+                writer.WritePropertyName("operationContext"u8);
+                writer.WriteStringValue(OperationContext);
+            }
             writer.WriteEndObject();
         }
 

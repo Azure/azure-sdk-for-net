@@ -1076,5 +1076,153 @@ namespace Azure.Communication.CallAutomation
                     throw new RequestFailedException(message.Response);
             }
         }
+
+        internal HttpMessage CreateCreateHoldRoomRequest(string callConnectionId, CreateHoldRoomRequestInternal createHoldRoomRequestInternal)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":createHoldRoom", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(createHoldRoomRequestInternal);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Creates a hold room with a pre-created PE and looping play prompt. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="createHoldRoomRequestInternal"> The create hold room request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="createHoldRoomRequestInternal"/> is null. </exception>
+        public async Task<Response> CreateHoldRoomAsync(string callConnectionId, CreateHoldRoomRequestInternal createHoldRoomRequestInternal, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (createHoldRoomRequestInternal == null)
+            {
+                throw new ArgumentNullException(nameof(createHoldRoomRequestInternal));
+            }
+
+            using var message = CreateCreateHoldRoomRequest(callConnectionId, createHoldRoomRequestInternal);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Creates a hold room with a pre-created PE and looping play prompt. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="createHoldRoomRequestInternal"> The create hold room request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="createHoldRoomRequestInternal"/> is null. </exception>
+        public Response CreateHoldRoom(string callConnectionId, CreateHoldRoomRequestInternal createHoldRoomRequestInternal, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (createHoldRoomRequestInternal == null)
+            {
+                throw new ArgumentNullException(nameof(createHoldRoomRequestInternal));
+            }
+
+            using var message = CreateCreateHoldRoomRequest(callConnectionId, createHoldRoomRequestInternal);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 202:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteHoldRoomRequest(string callConnectionId, DeleteHoldRoomRequestInternal deleteHoldRoomRequestInternal)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/calling/callConnections/", false);
+            uri.AppendPath(callConnectionId, true);
+            uri.AppendPath(":deleteHoldRoom", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/json");
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(deleteHoldRoomRequestInternal);
+            request.Content = content;
+            return message;
+        }
+
+        /// <summary> Deletes a hold room, terminating its PE and releasing all held participants. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="deleteHoldRoomRequestInternal"> The delete hold room request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="deleteHoldRoomRequestInternal"/> is null. </exception>
+        public async Task<Response> DeleteHoldRoomAsync(string callConnectionId, DeleteHoldRoomRequestInternal deleteHoldRoomRequestInternal, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (deleteHoldRoomRequestInternal == null)
+            {
+                throw new ArgumentNullException(nameof(deleteHoldRoomRequestInternal));
+            }
+
+            using var message = CreateDeleteHoldRoomRequest(callConnectionId, deleteHoldRoomRequestInternal);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Deletes a hold room, terminating its PE and releasing all held participants. </summary>
+        /// <param name="callConnectionId"> The call connection id. </param>
+        /// <param name="deleteHoldRoomRequestInternal"> The delete hold room request. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="callConnectionId"/> or <paramref name="deleteHoldRoomRequestInternal"/> is null. </exception>
+        public Response DeleteHoldRoom(string callConnectionId, DeleteHoldRoomRequestInternal deleteHoldRoomRequestInternal, CancellationToken cancellationToken = default)
+        {
+            if (callConnectionId == null)
+            {
+                throw new ArgumentNullException(nameof(callConnectionId));
+            }
+            if (deleteHoldRoomRequestInternal == null)
+            {
+                throw new ArgumentNullException(nameof(deleteHoldRoomRequestInternal));
+            }
+
+            using var message = CreateDeleteHoldRoomRequest(callConnectionId, deleteHoldRoomRequestInternal);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
     }
 }
