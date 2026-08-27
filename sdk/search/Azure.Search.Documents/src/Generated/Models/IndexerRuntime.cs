@@ -18,27 +18,27 @@ namespace Azure.Search.Documents.Indexes.Models
 
         /// <summary> Initializes a new instance of <see cref="IndexerRuntime"/>. </summary>
         /// <param name="usedSeconds"> Cumulative runtime of the indexer from the beginningTime to endingTime, in seconds. </param>
-        /// <param name="beginningTime"> Beginning UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
-        /// <param name="endingTime"> End UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
-        internal IndexerRuntime(long usedSeconds, DateTimeOffset beginningTime, DateTimeOffset endingTime)
+        /// <param name="beginningOn"> Beginning UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
+        /// <param name="endingOn"> End UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
+        internal IndexerRuntime(long usedSeconds, DateTimeOffset beginningOn, DateTimeOffset endingOn)
         {
             UsedSeconds = usedSeconds;
-            BeginningTime = beginningTime;
-            EndingTime = endingTime;
+            BeginningOn = beginningOn;
+            EndingOn = endingOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="IndexerRuntime"/>. </summary>
         /// <param name="usedSeconds"> Cumulative runtime of the indexer from the beginningTime to endingTime, in seconds. </param>
         /// <param name="remainingSeconds"> Cumulative runtime remaining for all indexers in the service from the beginningTime to endingTime, in seconds. </param>
-        /// <param name="beginningTime"> Beginning UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
-        /// <param name="endingTime"> End UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
+        /// <param name="beginningOn"> Beginning UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
+        /// <param name="endingOn"> End UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IndexerRuntime(long usedSeconds, long? remainingSeconds, DateTimeOffset beginningTime, DateTimeOffset endingTime, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IndexerRuntime(long usedSeconds, long? remainingSeconds, DateTimeOffset beginningOn, DateTimeOffset endingOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UsedSeconds = usedSeconds;
             RemainingSeconds = remainingSeconds;
-            BeginningTime = beginningTime;
-            EndingTime = endingTime;
+            BeginningOn = beginningOn;
+            EndingOn = endingOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -49,9 +49,9 @@ namespace Azure.Search.Documents.Indexes.Models
         public long? RemainingSeconds { get; }
 
         /// <summary> Beginning UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </summary>
-        public DateTimeOffset BeginningTime { get; }
+        public DateTimeOffset BeginningOn { get; }
 
         /// <summary> End UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </summary>
-        public DateTimeOffset EndingTime { get; }
+        public DateTimeOffset EndingOn { get; }
     }
 }
