@@ -22,15 +22,15 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         & git -C $repoRoot -c user.name=Test -c user.email=test@example.com commit --quiet --allow-empty -m fixture
         $sourceCommit = (& git -C $repoRoot rev-parse HEAD).Trim()
         @(
-            "Node|$projectA|net8.0|Azure.A|Azure.A|$packageA|true|||true"
-            "Node|$projectA|net9.0|Azure.A|Azure.A|$packageA|true|||true"
+            "Node|$projectA|net8.0|Azure.A|$packageA|true||true"
+            "Node|$projectA|net9.0|Azure.A|$packageA|true||true"
             "PackageReference|$projectA|net9.0|Azure.B|||"
-            "Input|$projectA|net8.0|Compile|$inputA"
-            "Node|$projectB|net8.0|Azure.B|Different.Assembly|$packageB|true|||true"
-            "Node|$testProject|net8.0|Azure.A.Tests|Azure.A.Tests|$testPackage|true||true|"
-            "Node|$testProject|net9.0|Azure.A.Tests|Azure.A.Tests|$testPackage|true||true|"
-            "ProjectReference|$testProject|net8.0|$projectA||||||net8.0"
-            "ProjectReference|$testProject|net9.0|$projectA||||||net9.0"
+            "Input|$projectA|net8.0|$inputA"
+            "Node|$projectB|net8.0|Azure.B|$packageB|true||true"
+            "Node|$testProject|net8.0|Azure.A.Tests|$testPackage|true||"
+            "Node|$testProject|net9.0|Azure.A.Tests|$testPackage|true||"
+            "ProjectReference|$testProject|net8.0|$projectA|||||net8.0"
+            "ProjectReference|$testProject|net9.0|$projectA|||||net9.0"
             "PackageReference|$testProject|net9.0|Azure.External|||"
             "DeclaredProject|$projectA"
             "DeclaredProject|$projectB"
@@ -72,7 +72,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $packageRecordsPath = Join-Path $TestDrive "package-closure.records"
         $closureGraphPath = Join-Path $TestDrive "closure.json"
         @(
-            "TransitivePackageReference|$testProject|net9.0|Azure.B|Azure.External|1.2.3|Azure.External 1.2.3>Azure.B [1.0.0, )"
+            "TransitivePackageReference|$testProject|net9.0|Azure.B"
             "PackageClosureSummary|1|1|1|0|2|2|0|0.125|nuget-restore-graph|false|true|1|1|2"
         ) | Set-Content $packageRecordsPath
 
@@ -117,13 +117,13 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $configurationGraphPath = Join-Path $TestDrive "configuration.json"
         $configurationOutputPath = Join-Path $TestDrive "configuration-output.txt"
         @(
-            "Node|$projectA|net8.0|Azure.A|Azure.A|$packageA|true|||true"
-            "Node|$projectA|net9.0|Azure.A|Azure.A|$packageA|true|||true"
+            "Node|$projectA|net8.0|Azure.A|$packageA|true||true"
+            "Node|$projectA|net9.0|Azure.A|$packageA|true||true"
             "PackageReference|$projectA|net9.0|Azure.B||||1.0.0"
-            "Node|$projectB|net8.0|Azure.B|Different.Assembly|$packageB|true|||true"
-            "Node|$testProject|net8.0|Azure.A.Tests|Azure.A.Tests|$testPackage|true||true|"
-            "Node|$testProject|net9.0|Azure.A.Tests|Azure.A.Tests|$testPackage|true||true|"
-            "ProjectReference|$testProject|net8.0|$projectA||||||net8.0"
+            "Node|$projectB|net8.0|Azure.B|$packageB|true||true"
+            "Node|$testProject|net8.0|Azure.A.Tests|$testPackage|true||"
+            "Node|$testProject|net9.0|Azure.A.Tests|$testPackage|true||"
+            "ProjectReference|$testProject|net8.0|$projectA|||||net8.0"
             "DeclaredProject|$projectA"
             "DeclaredProject|$projectB"
             "DeclaredProject|$testProject"
@@ -157,8 +157,8 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $missingRecordsPath = Join-Path $TestDrive "missing.records"
         $missingGraphPath = Join-Path $TestDrive "missing.json"
         @(
-            "Node|$testProject|net8.0|Azure.A.Tests|Azure.A.Tests|$testPackage|true||true|"
-            "ProjectReference|$testProject|net8.0|$(Join-Path $repoRoot 'sdk/example/Missing/src/Missing.csproj')||"
+            "Node|$testProject|net8.0|Azure.A.Tests|$testPackage|true||"
+            "ProjectReference|$testProject|net8.0|$(Join-Path $repoRoot 'sdk/example/Missing/src/Missing.csproj')|"
             "Root|$testProject"
         ) | Set-Content $missingRecordsPath
 
@@ -191,8 +191,8 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $conflictRecordsPath = Join-Path $TestDrive "conflict.records"
         $conflictGraphPath = Join-Path $TestDrive "conflict.json"
         @(
-            "Node|$projectA|net8.0|Azure.A|Azure.A|$packageA|true|||true"
-            "Node|$projectA|net9.0|Azure.Renamed|Azure.A|$packageA|true|||true"
+            "Node|$projectA|net8.0|Azure.A|$packageA|true||true"
+            "Node|$projectA|net9.0|Azure.Renamed|$packageA|true||true"
             "DeclaredProject|$projectA"
             "DeclaredProject|$projectB"
         ) | Set-Content $conflictRecordsPath
@@ -267,19 +267,19 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $testProject = Join-Path $fixtureRoot "sdk/example/A/tests/A.Tests.csproj"
         $nonAssemblyTestProject = Join-Path $fixtureRoot "sdk/example/Excluded/tests/Excluded.Tests.csproj"
         @(
-            "Node|$testProject|net8.0|A.Tests|A.Tests|$(Split-Path (Split-Path $testProject -Parent) -Parent)|true|false|true|false|false"
-            "Node|$testProject|net8.0|A.Tests|A.Tests|$(Split-Path (Split-Path $testProject -Parent) -Parent)|true|false|true|false|false"
-            "Node|$nonAssemblyTestProject|net8.0|Excluded.Tests|Excluded.Tests|$(Split-Path (Split-Path $nonAssemblyTestProject -Parent) -Parent)|true|false|true|false|false"
-            "Node|$childProject|net8.0|Child|Child|$(Split-Path (Split-Path $childProject -Parent) -Parent)|true|false|false|false|false"
-            "Node|$localProjectB|net8.0|Azure.B|Azure.B|$(Split-Path (Split-Path $localProjectB -Parent) -Parent)|true|false|false|true|false"
-            "Node|$localProjectD|net8.0|Azure.D|Azure.D|$(Split-Path (Split-Path $localProjectD -Parent) -Parent)|true|false|false|true|false"
-            "Node|$localContributor|net8.0|Local.Contributor|Local.Contributor|$(Split-Path (Split-Path $localContributor -Parent) -Parent)|true|false|false|true|false"
+            "Node|$testProject|net8.0|A.Tests|$(Split-Path (Split-Path $testProject -Parent) -Parent)|true|false|false|false"
+            "Node|$testProject|net8.0|A.Tests|$(Split-Path (Split-Path $testProject -Parent) -Parent)|true|false|false|false"
+            "Node|$nonAssemblyTestProject|net8.0|Excluded.Tests|$(Split-Path (Split-Path $nonAssemblyTestProject -Parent) -Parent)|true|false|false|false"
+            "Node|$childProject|net8.0|Child|$(Split-Path (Split-Path $childProject -Parent) -Parent)|true|false|false|false"
+            "Node|$localProjectB|net8.0|Azure.B|$(Split-Path (Split-Path $localProjectB -Parent) -Parent)|true|false|true|false"
+            "Node|$localProjectD|net8.0|Azure.D|$(Split-Path (Split-Path $localProjectD -Parent) -Parent)|true|false|true|false"
+            "Node|$localContributor|net8.0|Local.Contributor|$(Split-Path (Split-Path $localContributor -Parent) -Parent)|true|false|true|false"
             "PackageReference|$testProject|net8.0|External.A||all||1.0.0"
             "PackageReference|$testProject|net8.0|External.C||all||1.0.0"
             "PackageReference|$testProject|net8.0|Local.Contributor||all||1.0.0"
-            "ProjectReference|$testProject|net8.0|$childProject||||||net8.0"
+            "ProjectReference|$testProject|net8.0|$childProject|||||net8.0"
             "PackageReference|$nonAssemblyTestProject|net8.0|External.A||all||1.0.0"
-            "ProjectReference|$nonAssemblyTestProject|net8.0|$childProject|false|||||net8.0"
+            "ProjectReference|$nonAssemblyTestProject|net8.0|$childProject|false||||net8.0"
             "PackageReference|$childProject|net8.0|Shared.Dependency||all||2.0.0"
         ) | Set-Content $inputRecordsPath
 
@@ -306,13 +306,12 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $LASTEXITCODE | Should -Be 0
 
         $closureRecords = Get-Content $closureRecordsPath
-        $closureRecords | Should -Contain "TransitivePackageReference|$testProject|net8.0|Azure.B|External.A|1.0.0|External.A 1.0.0>Shared.Dependency 2.0.0>Azure.B 1.0.0"
-        $closureRecords | Should -Contain "TransitivePackageReference|$testProject|net8.0|Azure.D|External.C|1.0.0|External.C 1.0.0>Other.Dependency 2.0.0>Azure.D 1.0.0"
-        $closureRecords | Should -Contain "TransitivePackageReference|$testProject|net8.0|Azure.D|Local.Contributor|1.0.0|Local.Contributor 1.0.0>Other.Dependency 2.0.0>Azure.D 1.0.0"
-        $closureRecords | Should -Contain "TransitivePackageReference|$childProject|net8.0|Azure.B|Shared.Dependency|2.0.0|Shared.Dependency 2.0.0>Azure.B 1.0.0"
-        $closureRecords | Should -Not -Contain "TransitivePackageReference|$nonAssemblyTestProject|net8.0|Azure.B|External.A|1.0.0|External.A 1.0.0>Shared.Dependency 2.0.0>Azure.B 1.0.0"
+        $closureRecords | Should -Contain "TransitivePackageReference|$testProject|net8.0|Azure.B"
+        $closureRecords | Should -Contain "TransitivePackageReference|$testProject|net8.0|Azure.D"
+        $closureRecords | Should -Contain "TransitivePackageReference|$childProject|net8.0|Azure.B"
+        $closureRecords | Should -Not -Contain "TransitivePackageReference|$nonAssemblyTestProject|net8.0|Azure.B"
         $summary = ($closureRecords | Where-Object { $_ -like "PackageClosureSummary|*" }).Split('|')
-        $summary[1..4] | Should -Be @("5", "5", "4", "0")
+        $summary[1..4] | Should -Be @("5", "5", "3", "0")
         $summary[9..11] | Should -Be @("nuget-restore-graph", "False", "True")
         $summary[12..13] | Should -Be @("3", "3")
         [int]$summary[14] | Should -BeGreaterThan 0
@@ -417,7 +416,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         })
         @($taskProjectEdges.fromTargetFramework | Select-Object -Unique) | Should -Be @("net9.0")
         @($taskProjectEdges.toTargetFramework | Sort-Object) | Should -Be @("net8.0", "netstandard2.0")
-        Get-Content $taskRecordsPath | Should -Contain "ProjectReference|$fixtureA|net9.0|$fixtureB|false|||||net8.0"
+        Get-Content $taskRecordsPath | Should -Contain "ProjectReference|$fixtureA|net9.0|$fixtureB|false||||net8.0"
         $hintInput = $taskGraph.inputs | Where-Object path -eq "sdk/shared/lib/Shared.dll"
         $hintInput.targetFrameworks | Should -Be @("net8.0", "net9.0")
         $analyzerInput = $taskGraph.inputs | Where-Object {

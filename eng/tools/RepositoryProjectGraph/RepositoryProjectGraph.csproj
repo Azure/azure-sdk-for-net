@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="RepositoryProjectGraphRecord.cs" />
     <Compile Include="RepositoryProjectGraphTask.cs" />
     <Compile Include="ResolveExternalPackageClosureWithNuGetTask.cs" />
     <Compile Include="RunIsolatedRepositoryProjectGraphTask.cs" />

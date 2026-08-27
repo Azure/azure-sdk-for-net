@@ -206,26 +206,26 @@ function Build-Graph {
         }
       }
       'Node' {
-        if ($parts.Length -lt 10) { throw "Invalid node record: $line" }
+        if ($parts.Length -lt 8) { throw "Invalid node record: $line" }
         $path = Get-RelativePath $root $parts[1]
         if (!$nodes.ContainsKey($path)) {
           $nodes[$path] = [pscustomobject][ordered]@{
             projectPath = $path
             packageId = $parts[3]
-            packageRoot = if ($parts[5]) { Get-RelativePath $root $parts[5] } else { '' }
-            isClientLibrary = $parts[6] -eq 'true'
-            isGeneratorLibrary = $parts[7] -eq 'true'
-            isShippingLibrary = $parts[9] -eq 'true'
+            packageRoot = if ($parts[4]) { Get-RelativePath $root $parts[4] } else { '' }
+            isClientLibrary = $parts[5] -eq 'true'
+            isGeneratorLibrary = $parts[6] -eq 'true'
+            isShippingLibrary = $parts[7] -eq 'true'
             targetFrameworks = (New-CaseInsensitiveSet)
           }
         } else {
-          $packageRoot = if ($parts[5]) { Get-RelativePath $root $parts[5] } else { '' }
+          $packageRoot = if ($parts[4]) { Get-RelativePath $root $parts[4] } else { '' }
           $conflictingFields = [System.Collections.Generic.List[string]]::new()
           if ($nodes[$path].packageId -ne $parts[3]) { $conflictingFields.Add('packageId') }
           if ($nodes[$path].packageRoot -ne $packageRoot) { $conflictingFields.Add('packageRoot') }
-          if ($nodes[$path].isClientLibrary -ne ($parts[6] -eq 'true')) { $conflictingFields.Add('isClientLibrary') }
-          if ($nodes[$path].isGeneratorLibrary -ne ($parts[7] -eq 'true')) { $conflictingFields.Add('isGeneratorLibrary') }
-          if ($nodes[$path].isShippingLibrary -ne ($parts[9] -eq 'true')) { $conflictingFields.Add('isShippingLibrary') }
+          if ($nodes[$path].isClientLibrary -ne ($parts[5] -eq 'true')) { $conflictingFields.Add('isClientLibrary') }
+          if ($nodes[$path].isGeneratorLibrary -ne ($parts[6] -eq 'true')) { $conflictingFields.Add('isGeneratorLibrary') }
+          if ($nodes[$path].isShippingLibrary -ne ($parts[7] -eq 'true')) { $conflictingFields.Add('isShippingLibrary') }
           if ($conflictingFields.Count -gt 0) {
             $nodeMetadataConflicts.Add([ordered]@{
               projectPath = $path
@@ -237,11 +237,11 @@ function Build-Graph {
         if ($parts[2]) { $null = $nodes[$path].targetFrameworks.Add($parts[2]) }
       }
       'ProjectReference' {
-        if ($parts.Length -lt 6) { throw "Invalid project-reference record: $line" }
+        if ($parts.Length -lt 5) { throw "Invalid project-reference record: $line" }
         if (!$parts[3]) { continue }
         $from = Get-RelativePath $root $parts[1]
         $to = Get-RelativePath $root $parts[3]
-        $toTargetFramework = if ($parts.Length -ge 10) { $parts[9] } else { '' }
+        $toTargetFramework = if ($parts.Length -ge 9) { $parts[8] } else { '' }
         $configurationKey = "ProjectReference|$from|$($parts[2])|$to|$toTargetFramework"
         if (!$configurationEdges.ContainsKey($configurationKey)) {
           $configurationEdges[$configurationKey] = [pscustomobject][ordered]@{
@@ -275,7 +275,7 @@ function Build-Graph {
         }
       }
       'TransitivePackageReference' {
-        if ($parts.Length -lt 7) { throw "Invalid transitive package-reference record: $line" }
+        if ($parts.Length -lt 4) { throw "Invalid transitive package-reference record: $line" }
         if (!$parts[3]) { continue }
         $transitivePackageRecordCount++
         $from = Get-RelativePath $root $parts[1]
@@ -322,10 +322,10 @@ function Build-Graph {
         if ($parts.Length -ge 15) { $packageClosureSummary['selectedPackageCount'] = [int]$parts[14] }
       }
       'Input' {
-        if ($parts.Length -lt 5) { throw "Invalid input record: $line" }
-        if (!$parts[4]) { continue }
+        if ($parts.Length -lt 4) { throw "Invalid input record: $line" }
+        if (!$parts[3]) { continue }
         $from = Get-RelativePath $root $parts[1]
-        $path = Get-RelativePath $root $parts[4]
+        $path = Get-RelativePath $root $parts[3]
         $key = "$from|$path"
         if (!$inputs.ContainsKey($key)) {
           $inputs[$key] = [pscustomobject][ordered]@{
