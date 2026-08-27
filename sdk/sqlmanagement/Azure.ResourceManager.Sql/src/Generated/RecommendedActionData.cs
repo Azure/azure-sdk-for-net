@@ -133,11 +133,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets the time when system started applying this recommended action on the user resource. e.g., index creation start time. </summary>
         [WirePath("properties.executeActionStartTime")]
-        public DateTimeOffset? ExecuteActionStartOn
+        public DateTimeOffset? ExecuteActionStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.ExecuteActionStartOn;
+                return Properties is null ? default : Properties.ExecuteActionStartsOn;
             }
         }
 
@@ -153,11 +153,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Gets the time when system started reverting changes of this recommended action on user resource. e.g., time when index drop is executed. </summary>
         [WirePath("properties.revertActionStartTime")]
-        public DateTimeOffset? RevertActionStartOn
+        public DateTimeOffset? RevertActionStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.RevertActionStartOn;
+                return Properties is null ? default : Properties.RevertActionStartsOn;
             }
         }
 
