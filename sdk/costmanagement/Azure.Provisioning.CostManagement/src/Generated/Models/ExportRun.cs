@@ -125,39 +125,39 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
-        /// <summary> Gets the ProcessingStartOn. </summary>
-        public BicepValue<DateTimeOffset> ProcessingStartOn
+        /// <summary> Gets the ProcessingStartsOn. </summary>
+        public BicepValue<DateTimeOffset> ProcessingStartsOn
         {
             get
             {
-                return Properties.ProcessingStartOn;
+                return Properties.ProcessingStartsOn;
             }
         }
 
-        /// <summary> Gets the ProcessingEndOn. </summary>
-        public BicepValue<DateTimeOffset> ProcessingEndOn
+        /// <summary> Gets the ProcessingEndsOn. </summary>
+        public BicepValue<DateTimeOffset> ProcessingEndsOn
         {
             get
             {
-                return Properties.ProcessingEndOn;
+                return Properties.ProcessingEndsOn;
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
-                return Properties.StartOn;
+                return Properties.StartsOn;
             }
         }
 
-        /// <summary> Gets the EndOn. </summary>
-        public BicepValue<DateTimeOffset> EndOn
+        /// <summary> Gets the EndsOn. </summary>
+        public BicepValue<DateTimeOffset> EndsOn
         {
             get
             {
-                return Properties.EndOn;
+                return Properties.EndsOn;
             }
         }
 
