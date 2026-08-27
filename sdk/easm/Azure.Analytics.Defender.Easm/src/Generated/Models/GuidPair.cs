@@ -24,14 +24,14 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Initializes a new instance of <see cref="GuidPair"/>. </summary>
         /// <param name="pageGuid"></param>
         /// <param name="crawlStateGuid"></param>
-        /// <param name="loadDate"></param>
+        /// <param name="loadOn"></param>
         /// <param name="recent"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GuidPair(string pageGuid, string crawlStateGuid, DateTimeOffset? loadDate, bool? recent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GuidPair(string pageGuid, string crawlStateGuid, DateTimeOffset? loadOn, bool? recent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PageGuid = pageGuid;
             CrawlStateGuid = crawlStateGuid;
-            LoadDate = loadDate;
+            LoadOn = loadOn;
             Recent = recent;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -42,8 +42,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the CrawlStateGuid. </summary>
         public string CrawlStateGuid { get; }
 
-        /// <summary> Gets the LoadDate. </summary>
-        public DateTimeOffset? LoadDate { get; }
+        /// <summary> Gets the LoadOn. </summary>
+        public DateTimeOffset? LoadOn { get; }
 
         /// <summary> Gets the Recent. </summary>
         public bool? Recent { get; }

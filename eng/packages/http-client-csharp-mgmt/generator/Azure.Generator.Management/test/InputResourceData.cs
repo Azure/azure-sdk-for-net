@@ -10,7 +10,7 @@ namespace Azure.Generator.Management.Tests.Common
 {
     internal static class InputResourceData
     {
-        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource(bool includeCheckExistence = false, string resourceName = "ResponseType", bool includeZonesList = false, bool isInputModel = false, bool isTagsReadOnly = false, bool includeGetQueryParameter = false)
+        public static (InputClient InputClient, IReadOnlyList<InputModelType> InputModels) ClientWithResource(bool includeCheckExistence = false, string resourceName = "ResponseType", bool includeZonesList = false, bool isInputModel = false, bool isTagsReadOnly = false, bool includeGetQueryParameter = false, bool isDynamicModel = false)
         {
             const string TestClientName = "TestClient";
             const string ResourceModelName = "ResponseType";
@@ -35,7 +35,8 @@ namespace Azure.Generator.Management.Tests.Common
             var responseModel = InputFactory.Model(ResourceModelName,
                         usage: usage,
                         properties: properties,
-                        decorators: []);
+                        decorators: [],
+                        isDynamicModel: isDynamicModel);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: responseModel);
             var noContentResponseType = InputFactory.OperationResponse(statusCodes: [204], bodytype: null);
             var uuidType = new InputPrimitiveType(InputPrimitiveTypeKind.String, "uuid", "Azure.Core.uuid");

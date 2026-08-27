@@ -40,10 +40,10 @@ namespace Azure.AI.Discovery
         /// <param name="assignedTo"> Application or user assigned to this task. </param>
         /// <param name="comments"> Comments or notes about the task. </param>
         /// <param name="status"> The current status of the task. </param>
-        /// <param name="createdAt"> The timestamp when the resource was created. </param>
+        /// <param name="createdOn"> The timestamp when the resource was created. </param>
         /// <param name="createdBy"> The ID of the user who created this resource. </param>
         /// <param name="createdByType"> Type of entity that created the resource (User, Application, System, or custom type). </param>
-        /// <param name="lastModifiedAt"> The timestamp when the resource was last updated. </param>
+        /// <param name="lastModifiedOn"> The timestamp when the resource was last updated. </param>
         /// <param name="lastModifiedBy"> The ID of the user who updated this resource. </param>
         /// <param name="lastModifiedByType"> The type of user who updated this resource. </param>
         /// <param name="executionHistory"> History of execution events for this task. </param>
@@ -51,7 +51,7 @@ namespace Azure.AI.Discovery
         /// <param name="taskResult"> Task execution result with text and storage assets. </param>
         /// <param name="storageAssetIds"> List of storage assets related to the task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveryTask(string name, string title, TaskPriority? priority, string description, IList<string> validationRequirements, string parentId, IList<string> dependsOn, IList<string> relatedTo, TaskAssignee assignedTo, IList<TaskComment> comments, TaskStatus? status, DateTimeOffset? createdAt, string createdBy, DiscoveryActorType? createdByType, DateTimeOffset? lastModifiedAt, string lastModifiedBy, DiscoveryActorType? lastModifiedByType, IReadOnlyList<ExecutionHistoryEntry> executionHistory, string investigationId, TaskResult taskResult, IList<ResourceIdentifier> storageAssetIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DiscoveryTask(string name, string title, TaskPriority? priority, string description, IList<string> validationRequirements, string parentId, IList<string> dependsOn, IList<string> relatedTo, TaskAssignee assignedTo, IList<TaskComment> comments, TaskStatus? status, DateTimeOffset? createdOn, string createdBy, DiscoveryActorType? createdByType, DateTimeOffset? lastModifiedOn, string lastModifiedBy, DiscoveryActorType? lastModifiedByType, IReadOnlyList<ExecutionHistoryEntry> executionHistory, string investigationId, TaskResult taskResult, IList<ResourceIdentifier> storageAssetIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Title = title;
@@ -64,10 +64,10 @@ namespace Azure.AI.Discovery
             AssignedTo = assignedTo;
             Comments = comments;
             Status = status;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
             CreatedBy = createdBy;
             CreatedByType = createdByType;
-            LastModifiedAt = lastModifiedAt;
+            LastModifiedOn = lastModifiedOn;
             LastModifiedBy = lastModifiedBy;
             LastModifiedByType = lastModifiedByType;
             ExecutionHistory = executionHistory;
@@ -111,7 +111,7 @@ namespace Azure.AI.Discovery
         public TaskStatus? Status { get; set; }
 
         /// <summary> The timestamp when the resource was created. </summary>
-        public DateTimeOffset? CreatedAt { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The ID of the user who created this resource. </summary>
         public string CreatedBy { get; }
@@ -120,7 +120,7 @@ namespace Azure.AI.Discovery
         public DiscoveryActorType? CreatedByType { get; set; }
 
         /// <summary> The timestamp when the resource was last updated. </summary>
-        public DateTimeOffset? LastModifiedAt { get; }
+        public DateTimeOffset? LastModifiedOn { get; }
 
         /// <summary> The ID of the user who updated this resource. </summary>
         public string LastModifiedBy { get; }
