@@ -63,8 +63,8 @@ function Read-Graph([string] $Path) {
     throw "Repository project graph does not exist: $Path"
   }
   $graph = Get-Content -Raw $Path | ConvertFrom-Json -Depth 100
-  if ($graph.schemaVersion -ne 3) {
-    throw "Unsupported repository project graph schema version '$($graph.schemaVersion)'. Expected 3."
+  if ($graph.schemaVersion -ne 4) {
+    throw "Unsupported repository project graph schema version '$($graph.schemaVersion)'. Expected 4."
   }
   return $graph
 }
@@ -87,10 +87,10 @@ function New-GraphIndexes($Graph) {
 
   foreach ($edge in $Graph.configurationEdges) {
     $from = Get-ConfigurationKey $edge.fromProject $edge.fromTargetFramework
-    $to = if ($edge.kind -eq 'ProjectReference') {
-      Get-ConfigurationKey $edge.to $edge.toTargetFramework
-    } else {
-      Get-PackageKey $edge.to
+    $to = switch ($edge.kind) {
+      'ProjectReference' { Get-ConfigurationKey $edge.to $edge.toTargetFramework }
+      'PackageReference' { Get-PackageKey $edge.to }
+      default { throw "Unsupported repository project graph edge kind '$($edge.kind)'." }
     }
     Add-AdjacencyEdge $forward $from $to
     Add-AdjacencyEdge $reverse $to $from
@@ -168,8 +168,8 @@ function Build-Graph {
 
   $root = Normalize-AbsolutePath $RepoRoot
   $nodes = @{}
-  $edges = @{}
   $configurationEdges = @{}
+  $directPackageReferences = @{}
   $inputs = @{}
   $declaredProjects = New-CaseInsensitiveSet
   $roots = [System.Collections.Generic.List[string]]::new()
@@ -212,11 +212,9 @@ function Build-Graph {
           $nodes[$path] = [pscustomobject][ordered]@{
             projectPath = $path
             packageId = $parts[3]
-            assemblyName = $parts[4]
             packageRoot = if ($parts[5]) { Get-RelativePath $root $parts[5] } else { '' }
             isClientLibrary = $parts[6] -eq 'true'
             isGeneratorLibrary = $parts[7] -eq 'true'
-            isTestProject = $parts[8] -eq 'true'
             isShippingLibrary = $parts[9] -eq 'true'
             targetFrameworks = (New-CaseInsensitiveSet)
           }
@@ -224,11 +222,9 @@ function Build-Graph {
           $packageRoot = if ($parts[5]) { Get-RelativePath $root $parts[5] } else { '' }
           $conflictingFields = [System.Collections.Generic.List[string]]::new()
           if ($nodes[$path].packageId -ne $parts[3]) { $conflictingFields.Add('packageId') }
-          if ($nodes[$path].assemblyName -ne $parts[4]) { $conflictingFields.Add('assemblyName') }
           if ($nodes[$path].packageRoot -ne $packageRoot) { $conflictingFields.Add('packageRoot') }
           if ($nodes[$path].isClientLibrary -ne ($parts[6] -eq 'true')) { $conflictingFields.Add('isClientLibrary') }
           if ($nodes[$path].isGeneratorLibrary -ne ($parts[7] -eq 'true')) { $conflictingFields.Add('isGeneratorLibrary') }
-          if ($nodes[$path].isTestProject -ne ($parts[8] -eq 'true')) { $conflictingFields.Add('isTestProject') }
           if ($nodes[$path].isShippingLibrary -ne ($parts[9] -eq 'true')) { $conflictingFields.Add('isShippingLibrary') }
           if ($conflictingFields.Count -gt 0) {
             $nodeMetadataConflicts.Add([ordered]@{
@@ -245,27 +241,8 @@ function Build-Graph {
         if (!$parts[3]) { continue }
         $from = Get-RelativePath $root $parts[1]
         $to = Get-RelativePath $root $parts[3]
-        $key = "ProjectReference|$from|$to|$($parts[4])|$($parts[5])"
-        if (!$edges.ContainsKey($key)) {
-          $edges[$key] = [pscustomobject][ordered]@{
-            kind = 'ProjectReference'
-            fromProject = $from
-            to = $to
-            referenceOutputAssembly = $parts[4]
-            outputItemType = $parts[5]
-            privateAssets = ''
-            includeAssets = ''
-            excludeAssets = ''
-            version = ''
-            viaPackage = ''
-            viaVersion = ''
-            dependencyPath = ''
-            targetFrameworks = (New-CaseInsensitiveSet)
-          }
-        }
-        if ($parts[2]) { $null = $edges[$key].targetFrameworks.Add($parts[2]) }
         $toTargetFramework = if ($parts.Length -ge 10) { $parts[9] } else { '' }
-        $configurationKey = "ProjectReference|$from|$($parts[2])|$to|$toTargetFramework|$($parts[4])|$($parts[5])"
+        $configurationKey = "ProjectReference|$from|$($parts[2])|$to|$toTargetFramework"
         if (!$configurationEdges.ContainsKey($configurationKey)) {
           $configurationEdges[$configurationKey] = [pscustomobject][ordered]@{
             kind = 'ProjectReference'
@@ -273,15 +250,6 @@ function Build-Graph {
             fromTargetFramework = $parts[2]
             to = $to
             toTargetFramework = $toTargetFramework
-            referenceOutputAssembly = $parts[4]
-            outputItemType = $parts[5]
-            privateAssets = if ($parts.Length -ge 7) { $parts[6] } else { '' }
-            includeAssets = if ($parts.Length -ge 8) { $parts[7] } else { '' }
-            excludeAssets = if ($parts.Length -ge 9) { $parts[8] } else { '' }
-            version = ''
-            viaPackage = ''
-            viaVersion = ''
-            dependencyPath = ''
           }
         }
       }
@@ -289,43 +257,20 @@ function Build-Graph {
         if ($parts.Length -lt 7) { throw "Invalid package-reference record: $line" }
         if (!$parts[3]) { continue }
         $from = Get-RelativePath $root $parts[1]
-        $version = if ($parts.Length -ge 8) { $parts[7] } else { '' }
-        $key = "PackageReference|$from|$($parts[3])|$($parts[4])|$($parts[5])|$($parts[6])|$version"
-        if (!$edges.ContainsKey($key)) {
-          $edges[$key] = [pscustomobject][ordered]@{
-            kind = 'PackageReference'
+        $packageReferenceKey = "$from|$($parts[3])"
+        if (!$directPackageReferences.ContainsKey($packageReferenceKey)) {
+          $directPackageReferences[$packageReferenceKey] = [pscustomobject][ordered]@{
             fromProject = $from
             to = $parts[3]
-            referenceOutputAssembly = ''
-            outputItemType = ''
-            privateAssets = $parts[4]
-            includeAssets = $parts[5]
-            excludeAssets = $parts[6]
-            version = $version
-            viaPackage = ''
-            viaVersion = ''
-            dependencyPath = ''
-            targetFrameworks = (New-CaseInsensitiveSet)
           }
         }
-        if ($parts[2]) { $null = $edges[$key].targetFrameworks.Add($parts[2]) }
-        $configurationKey = "PackageReference|$from|$($parts[2])|$($parts[3])|$($parts[4])|$($parts[5])|$($parts[6])|$version"
+        $configurationKey = "PackageReference|$from|$($parts[2])|$($parts[3])"
         if (!$configurationEdges.ContainsKey($configurationKey)) {
           $configurationEdges[$configurationKey] = [pscustomobject][ordered]@{
             kind = 'PackageReference'
             fromProject = $from
             fromTargetFramework = $parts[2]
             to = $parts[3]
-            toTargetFramework = ''
-            referenceOutputAssembly = ''
-            outputItemType = ''
-            privateAssets = $parts[4]
-            includeAssets = $parts[5]
-            excludeAssets = $parts[6]
-            version = $version
-            viaPackage = ''
-            viaVersion = ''
-            dependencyPath = ''
           }
         }
       }
@@ -334,42 +279,15 @@ function Build-Graph {
         if (!$parts[3]) { continue }
         $transitivePackageRecordCount++
         $from = Get-RelativePath $root $parts[1]
-        $key = "TransitivePackageReference|$from|$($parts[3])|$($parts[4])|$($parts[5])|$($parts[6])"
-        if (!$edges.ContainsKey($key)) {
-          $edges[$key] = [pscustomobject][ordered]@{
-            kind = 'TransitivePackageReference'
-            fromProject = $from
-            to = $parts[3]
-            referenceOutputAssembly = ''
-            outputItemType = ''
-            privateAssets = ''
-            includeAssets = ''
-            excludeAssets = ''
-            version = ''
-            viaPackage = $parts[4]
-            viaVersion = $parts[5]
-            dependencyPath = $parts[6]
-            targetFrameworks = (New-CaseInsensitiveSet)
-          }
-        }
-        if ($parts[2]) { $null = $edges[$key].targetFrameworks.Add($parts[2]) }
-        $configurationKey = "TransitivePackageReference|$from|$($parts[2])|$($parts[3])|$($parts[4])|$($parts[5])|$($parts[6])"
+        # The NuGet record describes why this repository package was reached. The artifact
+        # stores only the resulting reachability edge, merging duplicate direct/transitive paths.
+        $configurationKey = "PackageReference|$from|$($parts[2])|$($parts[3])"
         if (!$configurationEdges.ContainsKey($configurationKey)) {
           $configurationEdges[$configurationKey] = [pscustomobject][ordered]@{
-            kind = 'TransitivePackageReference'
+            kind = 'PackageReference'
             fromProject = $from
             fromTargetFramework = $parts[2]
             to = $parts[3]
-            toTargetFramework = ''
-            referenceOutputAssembly = ''
-            outputItemType = ''
-            privateAssets = ''
-            includeAssets = ''
-            excludeAssets = ''
-            version = ''
-            viaPackage = $parts[4]
-            viaVersion = $parts[5]
-            dependencyPath = $parts[6]
           }
         }
       }
@@ -408,11 +326,10 @@ function Build-Graph {
         if (!$parts[4]) { continue }
         $from = Get-RelativePath $root $parts[1]
         $path = Get-RelativePath $root $parts[4]
-        $key = "$from|$($parts[3])|$path"
+        $key = "$from|$path"
         if (!$inputs.ContainsKey($key)) {
           $inputs[$key] = [pscustomobject][ordered]@{
             projectPath = $from
-            kind = $parts[3]
             path = $path
             targetFrameworks = (New-CaseInsensitiveSet)
           }
@@ -458,15 +375,6 @@ function Build-Graph {
         fromTargetFramework = $edge.fromTargetFramework
         to = $edge.to
         toTargetFramework = $toTargetFramework
-        referenceOutputAssembly = $edge.referenceOutputAssembly
-        outputItemType = $edge.outputItemType
-        privateAssets = $edge.privateAssets
-        includeAssets = $edge.includeAssets
-        excludeAssets = $edge.excludeAssets
-        version = $edge.version
-        viaPackage = $edge.viaPackage
-        viaVersion = $edge.viaVersion
-        dependencyPath = $edge.dependencyPath
       }
     }
   }
@@ -502,18 +410,19 @@ function Build-Graph {
   $duplicatePackageIds = @($packageProjects.GetEnumerator() | Where-Object { $_.Value.Count -gt 1 } | Sort-Object Key | ForEach-Object {
     [ordered]@{ packageId = $_.Key; projects = @($_.Value | Sort-Object) }
   })
-  $missingProjectReferences = @($edges.Values | Where-Object {
+  $missingProjectReferences = @($configurationEdges.Values | Where-Object {
     $_.kind -eq 'ProjectReference' -and !$nodes.ContainsKey($_.to) -and
       ($_.to.StartsWith('sdk/', [System.StringComparison]::OrdinalIgnoreCase) -or $_.to.StartsWith('common/', [System.StringComparison]::OrdinalIgnoreCase))
-  } | Sort-Object fromProject, to | ForEach-Object {
+  } | Sort-Object fromProject, to -Unique | ForEach-Object {
     [ordered]@{ fromProject = $_.fromProject; toProject = $_.to }
   })
-  $unmappedRepositoryPackages = @($edges.Values | Where-Object {
-    $_.kind -eq 'PackageReference' -and
+  $unmappedRepositoryPackages = @($directPackageReferences.Values | Where-Object {
       ($_.to.StartsWith('Azure.', [System.StringComparison]::OrdinalIgnoreCase) -or $_.to.StartsWith('Microsoft.Azure.', [System.StringComparison]::OrdinalIgnoreCase)) -and
       !$packageProjects.ContainsKey($_.to)
   } | Select-Object -ExpandProperty to -Unique | Sort-Object)
-  $externalPackages = @($edges.Values | Where-Object { $_.kind -eq 'PackageReference' -and !$packageProjects.ContainsKey($_.to) } | Select-Object -ExpandProperty to -Unique | Sort-Object)
+  $externalPackages = @($directPackageReferences.Values | Where-Object {
+    !$packageProjects.ContainsKey($_.to)
+  } | Select-Object -ExpandProperty to -Unique | Sort-Object)
   $missingDeclaredProjects = @($declaredProjects | Where-Object { !$nodes.ContainsKey($_) } | Sort-Object)
   $rootsWithoutNodes = @($roots | Where-Object { !$nodes.ContainsKey($_) } | Sort-Object)
   $packageClosureSummaryConsistent = !$packageClosureAttempted
@@ -531,20 +440,22 @@ function Build-Graph {
   $requiresExactConfigurationGraph = $packageClosureAttempted -and $null -ne $packageClosureSummary -and
     $packageClosureSummary.resolutionMode -eq 'nuget-restore-graph'
 
+  # External package identities are retained in diagnostics, while the query graph contains
+  # only repository package identities that can lead to source or test checkout paths.
+  $repositoryConfigurationEdges = @($configurationEdges.Values | Where-Object {
+    $_.kind -eq 'ProjectReference' -or $packageProjects.ContainsKey($_.to)
+  })
+
   $graph = [ordered]@{
-    schemaVersion = 3
+    schemaVersion = 4
     repositoryRoot = $root.Replace('\', '/')
     sourceCommit = Get-SourceCommit $root
     nodes = @($nodes.Values | Sort-Object projectPath | ForEach-Object {
       $_.targetFrameworks = @($_.targetFrameworks | Sort-Object)
       [pscustomobject]$_
     })
-    edges = @($edges.Values | Sort-Object kind, fromProject, to | ForEach-Object {
-      $_.targetFrameworks = @($_.targetFrameworks | Sort-Object)
-      [pscustomobject]$_
-    })
-    configurationEdges = @($configurationEdges.Values | Sort-Object kind, fromProject, fromTargetFramework, to, toTargetFramework, viaPackage)
-    inputs = @($inputs.Values | Sort-Object projectPath, kind, path | ForEach-Object {
+    configurationEdges = @($repositoryConfigurationEdges | Sort-Object kind, fromProject, fromTargetFramework, to, toTargetFramework)
+    inputs = @($inputs.Values | Sort-Object projectPath, path | ForEach-Object {
       $_.targetFrameworks = @($_.targetFrameworks | Sort-Object)
       [pscustomobject]$_
     })
@@ -558,8 +469,7 @@ function Build-Graph {
         $graphGenerationRecordCount -le 1
       projectCount = $nodes.Count
       configurationCount = $configurationKeys.Count
-      edgeCount = $edges.Count
-      configurationEdgeCount = $configurationEdges.Count
+      configurationEdgeCount = $repositoryConfigurationEdges.Count
       inputCount = $inputs.Count
       duplicatePackageIds = $duplicatePackageIds
       missingProjectReferences = $missingProjectReferences
@@ -587,7 +497,7 @@ function Build-Graph {
   $parent = Split-Path -Parent $GraphPath
   if ($parent) { New-Item -ItemType Directory -Path $parent -Force | Out-Null }
   $graph | ConvertTo-Json -Depth 100 | Set-Content -Path $GraphPath -Encoding utf8
-  Write-Host "Repository project graph: $($nodes.Count) projects, $($configurationKeys.Count) configurations, $($configurationEdges.Count) configuration edges, $($roots.Count) roots, complete=$($graph.diagnostics.isComplete)"
+  Write-Host "Repository project graph: $($nodes.Count) projects, $($configurationKeys.Count) configurations, $($repositoryConfigurationEdges.Count) repository configuration edges, $($roots.Count) roots, complete=$($graph.diagnostics.isComplete)"
 }
 
 function Invoke-ReverseQuery {

@@ -97,8 +97,8 @@ if ($packageInfoFiles.Count -eq 0) {
 }
 
 $graph = Get-Content -LiteralPath $graphFullPath -Raw | ConvertFrom-Json -Depth 100
-if ($graph.schemaVersion -ne 3) {
-  throw "Unsupported repository project graph schema version '$($graph.schemaVersion)'. Expected 3."
+if ($graph.schemaVersion -ne 4) {
+  throw "Unsupported repository project graph schema version '$($graph.schemaVersion)'. Expected 4."
 }
 if (-not $graph.diagnostics.isComplete) {
   throw "Repository project graph is incomplete. See diagnostics in '$graphFullPath'."
@@ -258,7 +258,7 @@ foreach ($edge in $graph.configurationEdges) {
       }
       Add-TableValue $adjacency $from $to
     }
-    { $_ -eq 'PackageReference' -or $_ -eq 'TransitivePackageReference' } {
+    'PackageReference' {
       $referencedPackage = Get-PackageKey ([string] $edge.to)
       if ($repositoryPackages.Contains($referencedPackage)) {
         # JSON object keys are case-sensitive even though NuGet package identities are not.
