@@ -146,7 +146,7 @@ function Get-dotnet-AdditionalValidationPackagesFromPackageSet(
   # same commit-attributed artifact for sparse checkout instead of evaluating the repository again.
   $repositoryProjectGraphPath = Join-Path $RepoRoot "artifacts/obj/RepositoryProjectGraph/repository-project-graph.reader.json"
   $sparseCheckoutGraphArguments = if ($env:AZURESDK_BUILD_SPARSE_CHECKOUT_GRAPH -eq 'true') {
-    " /p:RepositoryProjectGraphConfigurations=Debug+Release /p:IncludeRepositoryProjectGraphInputs=true"
+    " /p:IncludeRepositoryProjectGraphInputs=true"
   } else {
     ""
   }

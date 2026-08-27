@@ -9,7 +9,7 @@ classification, batching, and each job's `ProjectNames` remain unchanged.
 1. During package selection, `Language-Settings.ps1` constructs the reverse-dependency
    graph at the canonical service.proj path
    `artifacts/obj/RepositoryProjectGraph/repository-project-graph.reader.json`.
-   When checkout narrowing is enabled, it requests the `Debug+Release`, input-enabled
+   When checkout narrowing is enabled, it requests the `Debug`, input-enabled
    NuGet graph needed by both dependency analysis and sparse checkout.
 2. The matrix seed reuses that artifact when its commit, generation policy, schema,
    and completeness diagnostics match. Passes that skip dependency analysis construct
@@ -50,15 +50,14 @@ This is conservative repository identity reachability, not proof of normal
 restore/build equivalence. The source graph continues to report
 `restoreEquivalent=false`.
 
-- **Target frameworks:** schema 4 preserves source-TFM to destination-TFM edges.
+- **Target frameworks:** schema 5 preserves source-TFM to destination-TFM edges.
   When MSBuild exposes an outer-build project reference, every concrete destination
   inner build is retained. Checkout may over-select incompatible destination TFMs,
   but it does not invent a nearest-framework policy that could omit source.
-- **Build configurations:** CI uses `Debug+Release`; the plus separator is deliberate
-  because MSBuild treats commas and semicolons as command-line property separators.
-  Dependency-bearing records must be equivalent before schema 4 collapses the two
-  configurations. Evaluated inputs are unioned. Duplicate records are removed in
-  the task before PowerShell builds the JSON artifact.
+- **Build configuration:** the graph always evaluates `Debug`, matching the existing
+  `ProjectDependsOn` query used to select dependent tests. PR test sparse checkout
+  therefore adds no second build-configuration dimension to repository evaluation.
+  Duplicate records are removed in the task before PowerShell builds the JSON artifact.
 - **Test reference modes:** the source graph is evaluated in normal package-reference
   mode so the complete synthetic NuGet restore remains valid. The checkout projection
   follows each reached repository package into every configuration of its shipping
@@ -81,12 +80,12 @@ restore/build equivalence. The source graph continues to report
   root. Only repository root files, `/eng`, and `/.config` are unconditional; SDK
   services are selected by graph reachability rather than a hard-coded allowlist.
 - **Provenance:** the source artifact records its Git commit and generation policy.
-  Projection requires the same `Build.SourceVersion`, `Debug+Release`, and evaluated
+  Projection requires the same `Build.SourceVersion`, `Debug`, and evaluated
   inputs, verifies `HEAD`, and rejects tracked worktree changes. Every test job verifies
   the same commit before using the projected graph.
-- **Identity:** schema 4 rejects dependency-only global-property nodes and
-  dependency-bearing Debug/Release conflicts rather than silently dropping an
-  alternate MSBuild node.
+- **Identity:** schema 5 rejects dependency-only global-property nodes and
+  fails rather than silently dropping an alternate MSBuild node that its path/TFM
+  identity cannot represent.
 
 The compact graph explicitly recognizes `ProjectReference` and `PackageReference`
 configuration edges. A new edge kind, unknown artifact,
@@ -116,26 +115,14 @@ set and emitted 532,685 raw input records. The old per-artifact map loop then ra
 without output for roughly 46 minutes until cancellation. This established the map
 algorithm—not ProjectGraph construction—as the immediate timeout.
 
-Local checks on the current repository (989 projects) found and corrected a second
-issue: `/p:RepositoryProjectGraphConfigurations=Debug%3BRelease` reached the task as
-one escaped configuration. The `Debug+Release` form produced 1,978 entry points,
-7,886 MSBuild graph nodes, and 5,908 emitted configuration nodes before schema-3
-collapse. The complete input-enabled NuGet run produced:
+The initial implementation also evaluated Release and attempted to collapse it into
+the same path/TFM model. That doubled entry points, increased a complete local run to
+about 6.2 GiB peak RSS, and diverged from the established dependency-selection query.
+The configuration-list support and cross-configuration merge were removed. The
+current graph evaluates one Debug entry point per physical project and still expands
+every declared TFM; a fresh hosted input-enabled benchmark is required after this change.
 
-- 2,954 project/TFM keys and 47,898 configuration edges;
-- 189,950 unique graph inputs;
-- 22,903/22,903 resolved NuGet roots, with zero unresolved roots;
-- 367.38 seconds end to end and 6,196,838,400 bytes peak RSS on macOS.
-
-That measurement predates record deduplication in `RepositoryProjectGraphTask`, so
-its 1,198,877-line intermediate record file is a conservative artifact-build cost,
-not the expected final size.
-
-A post-deduplication Debug+Release run with inputs disabled emitted 45,204 unique
-records (rather than duplicating the two configurations) and retained all 1,978 entry
-points and 7,886 MSBuild nodes.
-
-A representative four-artifact projection over that full graph completed in 33.26
+An earlier representative four-artifact projection over the full graph completed in 33.26
 seconds, used about 1.64 GiB peak RSS, and produced a 3,305,237-byte checkout graph.
 Representative closures were:
 
@@ -193,9 +180,9 @@ hosted rerun.
 - The manually assembled NuGet spec is deliberately not authoritative static-restore
   output. Missing roots fail closed; indirect package closure may conservatively
   over-select.
-- The corrected real Debug+Release graph has a higher memory cost than the earlier
-  escaped single-configuration measurements. Hosted validation should confirm agent
-  headroom before enabling this optimization outside the PR test path.
+- The Debug input-enabled graph still has a substantial fixed memory cost. Hosted
+  validation should establish its current runtime and agent headroom before enabling
+  this optimization outside the PR test path.
 - The hosted matrix has exercised Windows, Linux, and macOS net8/net9/net10 plus
   Windows net462 legs, but the corrected artifact seeding still needs a rerun and
   explicit full-versus-sparse output comparisons across linked-input and

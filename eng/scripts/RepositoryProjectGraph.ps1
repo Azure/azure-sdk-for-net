@@ -63,8 +63,8 @@ function Read-Graph([string] $Path) {
     throw "Repository project graph does not exist: $Path"
   }
   $graph = Get-Content -Raw $Path | ConvertFrom-Json -Depth 100
-  if ($graph.schemaVersion -ne 4) {
-    throw "Unsupported repository project graph schema version '$($graph.schemaVersion)'. Expected 4."
+  if ($graph.schemaVersion -ne 5) {
+    throw "Unsupported repository project graph schema version '$($graph.schemaVersion)'. Expected 5."
   }
   return $graph
 }
@@ -201,7 +201,7 @@ function Build-Graph {
         if ($parts.Length -lt 3) { throw "Invalid graph-generation record: $line" }
         $graphGenerationRecordCount++
         $graphGeneration = [ordered]@{
-          configurations = @($parts[1].Split(',', [System.StringSplitOptions]::RemoveEmptyEntries) | Sort-Object -Unique)
+          configuration = $parts[1]
           includesInputs = [bool]::Parse($parts[2])
         }
       }
@@ -444,7 +444,7 @@ function Build-Graph {
   })
 
   $graph = [ordered]@{
-    schemaVersion = 4
+    schemaVersion = 5
     repositoryRoot = $root.Replace('\', '/')
     sourceCommit = Get-SourceCommit $root
     nodes = @($nodes.Values | Sort-Object projectPath | ForEach-Object {

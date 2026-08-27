@@ -18,7 +18,6 @@
     <RepositoryProjectGraphReaderRecordsPath Condition="'$(RepositoryProjectGraphReaderRecordsPath)' == ''">$(RepositoryProjectGraphReaderPath).records</RepositoryProjectGraphReaderRecordsPath>
     <RepositoryProjectGraphPackageRecordsPath Condition="'$(RepositoryProjectGraphPackageRecordsPath)' == ''">$(RepositoryProjectGraphReaderPath).packages.records</RepositoryProjectGraphPackageRecordsPath>
     <RepositoryProjectGraphReaderDegreeOfParallelism Condition="'$(RepositoryProjectGraphReaderDegreeOfParallelism)' == ''">$([System.Environment]::ProcessorCount)</RepositoryProjectGraphReaderDegreeOfParallelism>
-    <RepositoryProjectGraphConfigurations Condition="'$(RepositoryProjectGraphConfigurations)' == ''">$(Configuration)</RepositoryProjectGraphConfigurations>
     <RepositoryProjectGraphNuGetRestoreDirectory Condition="'$(RepositoryProjectGraphNuGetRestoreDirectory)' == ''">$(RepoRoot)artifacts/obj/RepositoryProjectGraph/nuget-restore</RepositoryProjectGraphNuGetRestoreDirectory>
     <RepositoryProjectGraphNuGetDegreeOfParallelism Condition="'$(RepositoryProjectGraphNuGetDegreeOfParallelism)' == ''">4</RepositoryProjectGraphNuGetDegreeOfParallelism>
     <RepositoryProjectGraphTaskProject>$(RepoRoot)eng/tools/RepositoryProjectGraph/RepositoryProjectGraph.csproj</RepositoryProjectGraphTaskProject>
@@ -216,7 +215,6 @@
                                 RootProjects="@(_RepositoryProjectGraphRoot)"
                                 RecordsPath="$(RepositoryProjectGraphReaderRecordsPath)"
                                 IncludeInputs="$(IncludeRepositoryProjectGraphInputs)"
-                                Configurations="$(RepositoryProjectGraphConfigurations)"
                                 DegreeOfParallelism="$(RepositoryProjectGraphReaderDegreeOfParallelism)" />
     <ResolveExternalPackageClosureWithNuGetTask RecordsPath="$(RepositoryProjectGraphReaderRecordsPath)"
                                                 OutputPath="$(RepositoryProjectGraphPackageRecordsPath)"

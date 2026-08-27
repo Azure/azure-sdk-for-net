@@ -39,7 +39,7 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
         } | ConvertTo-Json | Set-Content (Join-Path $packageInfo 'Azure.A.json')
 
         [ordered]@{
-            schemaVersion = 4
+            schemaVersion = 5
             repositoryRoot = $repo.Replace('\', '/')
             sourceCommit = $sourceCommit
             nodes = @(
@@ -65,7 +65,7 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
             diagnostics = @{
                 isComplete = $true
                 generation = @{
-                    configurations = @('Debug', 'Release')
+                    configuration = 'Debug'
                     includesInputs = $true
                 }
                 packageClosure = @{ resolutionMode = 'nuget-restore-graph' }
@@ -115,7 +115,13 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
         $graph.diagnostics.generation.includesInputs = $false
         $graph | ConvertTo-Json -Depth 20 | Set-Content $graphPath
         { & $script:CreateGraphPath -PackageInfoDirectory $packageInfo -RepoRoot $repo -GraphPath $graphPath `
-                -OutputPath $checkoutGraphPath -SourceCommit $sourceCommit } | Should -Throw '*requires a Debug+Release*'
+                -OutputPath $checkoutGraphPath -SourceCommit $sourceCommit } | Should -Throw '*requires a Debug repository graph*'
+
+        $graph.diagnostics.generation.includesInputs = $true
+        $graph.diagnostics.generation.configuration = 'Release'
+        $graph | ConvertTo-Json -Depth 20 | Set-Content $graphPath
+        { & $script:CreateGraphPath -PackageInfoDirectory $packageInfo -RepoRoot $repo -GraphPath $graphPath `
+                -OutputPath $checkoutGraphPath -SourceCommit $sourceCommit } | Should -Throw '*requires a Debug repository graph*'
     }
 
     It 'rejects graph provenance when tracked source differs from the recorded commit' {
