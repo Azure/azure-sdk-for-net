@@ -139,10 +139,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WritePropertyName("smartGroupingReason"u8);
                 writer.WriteStringValue(SmartGroupingReason);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             string sourceCreatedId = default;
             Guid? smartGroupId = default;
             string smartGroupingReason = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             DateTimeOffset? lastModifiedOn = default;
             DateTimeOffset? monitorConditionResolvedOn = default;
             string lastModifiedBy = default;
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedDateTime"u8))
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 sourceCreatedId,
                 smartGroupId,
                 smartGroupingReason,
-                startOn,
+                startsOn,
                 lastModifiedOn,
                 monitorConditionResolvedOn,
                 lastModifiedBy,

@@ -26,7 +26,6 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
         /// <param name="category"> The recommendation alert rule category. </param>
         /// <param name="displayInformation"> A dictionary that provides the display information for an alert rule recommendation. </param>
         /// <param name="ruleArmTemplate"> A complete ARM template to deploy the alert rules. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="alertRuleType"/>, <paramref name="displayInformation"/> or <paramref name="ruleArmTemplate"/> is null. </exception>
         /// <returns> A new <see cref="Models.AlertRuleRecommendation"/> instance for mocking. </returns>
         public static AlertRuleRecommendation AlertRuleRecommendation(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string alertRuleType = default, string category = default, IDictionary<string, string> displayInformation = default, AlertRuleRecommendationArmTemplate ruleArmTemplate = default)
         {
@@ -39,6 +38,7 @@ namespace Azure.ResourceManager.AlertRuleRecommendations.Models
                 default);
         }
 
+        /// <summary> A complete ARM template to deploy the alert rules. </summary>
         /// <param name="schema"> JSON schema reference. </param>
         /// <param name="contentVersion"> A 4 number format for the version number of this template file. For example, 1.0.0.0. </param>
         /// <param name="variables"> Variable definitions. </param>
