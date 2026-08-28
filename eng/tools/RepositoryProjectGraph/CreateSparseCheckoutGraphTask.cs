@@ -531,14 +531,19 @@ public sealed class CreateSparseCheckoutGraphTask : Task
         }
     }
 
+    // Minimal schema-7 input model. System.Text.Json ignores canonical fields that projection does
+    // not consume, keeping the sparse-checkout contract narrower than the source artifact schema.
     private sealed class SourceGraph
     {
+        // Provenance and completeness gates are validated before any narrowing indexes are built.
         public int SchemaVersion { get; set; }
         public string SourceCommit { get; set; }
+        public SourceDiagnostics Diagnostics { get; set; }
+
+        // Repository topology and configuration-to-checkout-root data used by forward traversal.
         public List<SourceNode> Nodes { get; set; }
         public List<SourceEdge> ConfigurationEdges { get; set; }
         public Dictionary<string, string[]> CheckoutRoots { get; set; }
-        public SourceDiagnostics Diagnostics { get; set; }
     }
 
     private sealed class SourceNode
@@ -585,20 +590,28 @@ public sealed class CreateSparseCheckoutGraphTask : Task
 
     private sealed class PackageInfo
     {
+        // Projection needs only the matrix lookup key and the directory used to seed graph
+        // configurations; all other PackageInfo publishing metadata is intentionally ignored.
         public string ArtifactName { get; set; }
         public string DirectoryPath { get; set; }
     }
 
     private sealed class SparseCheckoutProjection
     {
+        // Every test job validates this envelope before using the projection to narrow source.
         public int SchemaVersion { get; set; } = 1;
         public string SourceCommit { get; set; }
         public bool IsComplete { get; set; } = true;
         public string FailureReason { get; set; } = string.Empty;
+
+        // Query indexes: artifact seeds traverse adjacency, then reached configurations map to Git
+        // paths. Infrastructure paths are unconditional and do not participate in traversal.
         public string[] AlwaysIncludedPaths { get; set; }
         public SortedDictionary<string, string[]> Artifacts { get; set; }
         public SortedDictionary<string, string[]> Adjacency { get; set; }
         public SortedDictionary<string, string[]> Paths { get; set; }
+
+        // Observability only; diagnostics never supply paths or alter query reachability.
         public ProjectionDiagnostics Diagnostics { get; set; }
     }
 
