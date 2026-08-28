@@ -29,14 +29,14 @@ Prerequisites: azure-sdk-mcp server must be running.
 3. **Detect SDK breaking Changes** - Run `azure-sdk-mcp:azsdk_package_detect_breaking_change`
 4. **Display detected breaking changes** — If step 3 detects breaking changes, display a `## Detected Breaking Changes` title followed by a Markdown table. Include exactly one breaking change per row with these columns: `Breaking Change`, `Category`, and `Resolution`. Preserve the category and resolution returned by the detection tool; do not replace them with a summary. If no breaking changes are detected, report that result and stop processing the current language.
 5. **Prompt the user to choose breaking changes to mitigate** — Present the list from step 3 as a multiple-choice selection.
-6. **Mitigate SDK breaking changes** - Run `azure-sdk-mcp:azsdk_customized_code_update` with parameters:
+6. **Mitigate selected SDK breaking changes** — If the user selects no changes in step 5, stop processing the current language. Otherwise, run `azure-sdk-mcp:azsdk_customized_code_update` for the selected changes with these parameters:
 
 - packagePath: The SDK package path
 - customizationRequest: resolve the 'breakingChanges' chosen in step 5
 - tspProjectPath: the typespec project path
-- editScope: 2 if in `azure-rest-api-specs`, 1 if in an SDK language repo
+- editScope: 'SpecInputs' if in `azure-rest-api-specs`, 'CustomCode' if in an SDK language repo
 
-If step 6 applies any TypeSpec customization, return to step 2 to regenerate the SDK, then repeat steps 3 through 6. Continue until no breaking changes are detected, the user declines further mitigation, or three iterations have been completed. After the third iteration, stop and report any remaining breaking changes.
+After step 6, begin the next iteration. If the customization modified TypeSpec, first repeat step 2 to regenerate the SDK; otherwise, resume at step 3. Then repeat steps 3 through 6. Run at most three detection-and-mitigation iterations per language, stopping earlier if no breaking changes remain or the user declines further mitigation. After the third mitigation, run step 3 once more to identify and report any remaining breaking changes, then stop without offering a fourth mitigation.
 
 ## Examples
 
