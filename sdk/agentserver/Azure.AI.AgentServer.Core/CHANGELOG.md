@@ -25,6 +25,11 @@
 
 - `UseInMemoryReplay()` now defaults to a bounded 10-minute retention window instead of
   retaining closed streams indefinitely.
+- State-store optimistic-concurrency values now use the standard `Azure.ETag` type.
+  This includes `StateStoreItem.Etag`, `StateStoreItemRef.Etag`,
+  `StateStoreItemKey.Etag`, `FoundryStoragePreconditionException.CurrentETag`, the
+  corresponding model-factory parameters, and `FoundryStateStore.SetItemAsync` /
+  `DeleteItemAsync` `ifMatch` parameters.
 
 ### Bugs Fixed
 
