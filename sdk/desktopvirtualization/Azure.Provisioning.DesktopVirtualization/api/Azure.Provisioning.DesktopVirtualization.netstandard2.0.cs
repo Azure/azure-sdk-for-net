@@ -433,7 +433,7 @@ namespace Azure.Provisioning.DesktopVirtualization
     public partial class HostPoolRegistrationInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public HostPoolRegistrationInfo() { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.DesktopVirtualization.HostPoolRegistrationTokenOperation> RegistrationTokenOperation { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Token { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }

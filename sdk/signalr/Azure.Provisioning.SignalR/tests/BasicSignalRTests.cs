@@ -103,10 +103,8 @@ public class BasicSignalRTests
               name: take('signalr-${uniqueString(resourceGroup().id)}', 63)
               location: location
               properties: {
-                cors: {
-                  allowedOrigins: [
-                    '*'
-                  ]
+                tls: {
+                  clientCertEnabled: false
                 }
                 features: [
                   {
@@ -122,8 +120,20 @@ public class BasicSignalRTests
                     value: 'true'
                   }
                 ]
-                tls: {
-                  clientCertEnabled: false
+                cors: {
+                  allowedOrigins: [
+                    '*'
+                  ]
+                }
+                upstream: {
+                  templates: [
+                    {
+                      hubPattern: '*'
+                      eventPattern: 'connect,disconnect'
+                      categoryPattern: '*'
+                      urlTemplate: 'https://example.com/chat/api/connect'
+                    }
+                  ]
                 }
                 networkACLs: {
                   defaultAction: 'Deny'
@@ -141,24 +151,14 @@ public class BasicSignalRTests
                     }
                   ]
                 }
-                upstream: {
-                  templates: [
-                    {
-                      hubPattern: '*'
-                      eventPattern: 'connect,disconnect'
-                      categoryPattern: '*'
-                      urlTemplate: 'https://example.com/chat/api/connect'
-                    }
-                  ]
-                }
               }
-              identity: {
-                type: 'SystemAssigned'
-              }
-              kind: 'SignalR'
               sku: {
                 name: 'Standard_S1'
                 capacity: 1
+              }
+              kind: 'SignalR'
+              identity: {
+                type: 'SystemAssigned'
               }
             }
             """);

@@ -431,8 +431,8 @@ namespace Azure.Storage.Queues.Tests
             var message = new ReceivedMessage("msgId", insertionTime, expirationTime, "pop1", timeNextVisible, 5, "hello");
 
             Assert.AreEqual("msgId", message.MessageId);
-            Assert.AreEqual(insertionTime, message.InsertionTime);
-            Assert.AreEqual(expirationTime, message.ExpirationTime);
+            Assert.AreEqual(insertionTime, message.InsertionOn);
+            Assert.AreEqual(expirationTime, message.ExpiresOn);
             Assert.AreEqual("pop1", message.PopReceipt);
             Assert.AreEqual(timeNextVisible, message.TimeNextVisible);
             Assert.AreEqual(5, message.DequeueCount);

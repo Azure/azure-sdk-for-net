@@ -7,8 +7,6 @@ extends:
     ServiceDirectory: kubernetesconfiguration
     LimitForPullRequest: true
     Artifacts:
-    - name: Azure.Provisioning.KubernetesConfiguration
-      safeName: AzureProvisioningKubernetesConfiguration
     - name: Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
       safeName: AzureProvisioningKubernetesConfigurationPrivateLinkScopes
     - name: Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
