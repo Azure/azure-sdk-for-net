@@ -92,7 +92,7 @@ namespace Azure.AI.Language.Text
                 writer.WriteStringValue(DisplayName);
             }
             writer.WritePropertyName("createdDateTime"u8);
-            writer.WriteStringValue(CreatedAt, "O");
+            writer.WriteStringValue(CreatedOn, "O");
             if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationDateTime"u8);
@@ -104,7 +104,7 @@ namespace Azure.AI.Language.Text
                 writer.WriteStringValue(JobId);
             }
             writer.WritePropertyName("lastUpdatedDateTime"u8);
-            writer.WriteStringValue(LastUpdatedAt, "O");
+            writer.WriteStringValue(LastUpdatedOn, "O");
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
             if (Optional.IsCollectionDefined(Errors))
@@ -172,10 +172,10 @@ namespace Azure.AI.Language.Text
                 return null;
             }
             string displayName = default;
-            DateTimeOffset createdAt = default;
+            DateTimeOffset createdOn = default;
             DateTimeOffset? expiresOn = default;
             Guid jobId = default;
-            DateTimeOffset lastUpdatedAt = default;
+            DateTimeOffset lastUpdatedOn = default;
             TextActionState status = default;
             IList<AnalyzeTextError> errors = default;
             string nextLink = default;
@@ -191,7 +191,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("createdDateTime"u8))
                 {
-                    createdAt = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expirationDateTime"u8))
@@ -210,7 +210,7 @@ namespace Azure.AI.Language.Text
                 }
                 if (prop.NameEquals("lastUpdatedDateTime"u8))
                 {
-                    lastUpdatedAt = prop.Value.GetDateTimeOffset("O");
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -258,10 +258,10 @@ namespace Azure.AI.Language.Text
             }
             return new AnalyzeTextJobState(
                 displayName,
-                createdAt,
+                createdOn,
                 expiresOn,
                 jobId,
-                lastUpdatedAt,
+                lastUpdatedOn,
                 status,
                 errors ?? new ChangeTrackingList<AnalyzeTextError>(),
                 nextLink,

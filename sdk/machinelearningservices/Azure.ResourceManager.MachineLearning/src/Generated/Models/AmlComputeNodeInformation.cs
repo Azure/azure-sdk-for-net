@@ -25,17 +25,17 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="AmlComputeNodeInformation"/>. </summary>
         /// <param name="nodeId"> ID of the compute node. </param>
-        /// <param name="privateIpAddress"> Private IP address of the compute node. </param>
-        /// <param name="publicIpAddress"> Public IP address of the compute node. </param>
+        /// <param name="privateIPAddress"> Private IP address of the compute node. </param>
+        /// <param name="publicIPAddress"> Public IP address of the compute node. </param>
         /// <param name="port"> SSH port number of the node. </param>
         /// <param name="nodeState"> State of the compute node. Values are idle, running, preparing, unusable, leaving and preempted. </param>
         /// <param name="runId"> ID of the Experiment running on the node, if any else null. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AmlComputeNodeInformation(string nodeId, IPAddress privateIpAddress, IPAddress publicIpAddress, int? port, MachineLearningNodeState? nodeState, string runId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AmlComputeNodeInformation(string nodeId, IPAddress privateIPAddress, IPAddress publicIPAddress, int? port, MachineLearningNodeState? nodeState, string runId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NodeId = nodeId;
-            PrivateIpAddress = privateIpAddress;
-            PublicIpAddress = publicIpAddress;
+            PrivateIPAddress = privateIPAddress;
+            PublicIPAddress = publicIPAddress;
             Port = port;
             NodeState = nodeState;
             RunId = runId;
@@ -45,14 +45,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> ID of the compute node. </summary>
         [WirePath("nodeId")]
         public string NodeId { get; }
-
-        /// <summary> Private IP address of the compute node. </summary>
-        [WirePath("privateIpAddress")]
-        public IPAddress PrivateIpAddress { get; }
-
-        /// <summary> Public IP address of the compute node. </summary>
-        [WirePath("publicIpAddress")]
-        public IPAddress PublicIpAddress { get; }
 
         /// <summary> SSH port number of the node. </summary>
         [WirePath("port")]

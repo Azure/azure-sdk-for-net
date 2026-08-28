@@ -59,11 +59,11 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [Test]
-        public void ArchivedCollectionFallback_IsEnabledByDefault()
+        public void ArchivedCollectionFallback_IsDisabledByDefault()
         {
             var options = new ConfidentialLedgerClientOptions();
 
-            Assert.IsTrue(options.EnableArchivedCollectionFallback);
+            Assert.IsFalse(options.EnableArchivedCollectionFallback);
         }
 
         [Test]

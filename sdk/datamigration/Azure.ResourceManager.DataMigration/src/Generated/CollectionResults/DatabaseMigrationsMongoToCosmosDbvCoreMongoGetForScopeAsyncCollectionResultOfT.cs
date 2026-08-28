@@ -15,7 +15,7 @@ using Azure.ResourceManager.DataMigration.Models;
 
 namespace Azure.ResourceManager.DataMigration
 {
-    internal partial class DatabaseMigrationsMongoToCosmosDbvCoreMongoGetForScopeAsyncCollectionResultOfT : AsyncPageable<DatabaseMigrationCosmosDbMongoData>
+    internal partial class DatabaseMigrationsMongoToCosmosDbvCoreMongoGetForScopeAsyncCollectionResultOfT : AsyncPageable<DatabaseMigrationCosmosDBMongoData>
     {
         private readonly DatabaseMigrationsMongoToCosmosDbvCoreMongo _client;
         private readonly Guid _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of DatabaseMigrationsMongoToCosmosDbvCoreMongoGetForScopeAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<DatabaseMigrationCosmosDbMongoData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<DatabaseMigrationCosmosDBMongoData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.DataMigration
                 {
                     yield break;
                 }
-                DatabaseMigrationCosmosDbMongoListResult result = DatabaseMigrationCosmosDbMongoListResult.FromResponse(response);
+                DatabaseMigrationCosmosDBMongoListResult result = DatabaseMigrationCosmosDBMongoListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<DatabaseMigrationCosmosDbMongoData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<DatabaseMigrationCosmosDBMongoData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

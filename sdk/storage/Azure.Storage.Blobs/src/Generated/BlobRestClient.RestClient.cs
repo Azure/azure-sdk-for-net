@@ -562,7 +562,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateStartCopyFromUrlRequest(string copySource, int? timeout, IDictionary<string, string> metadata, string tier, string rehydratePriority, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string sourceIfTags, RequestConditions requestConditions, string ifTags, string leaseId, string blobTagsString, bool? sealBlob, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, RequestContext context)
+        internal HttpMessage CreateStartCopyFromUriRequest(string copySource, int? timeout, IDictionary<string, string> metadata, string tier, string rehydratePriority, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, string sourceIfTags, RequestConditions requestConditions, string ifTags, string leaseId, string blobTagsString, bool? sealBlob, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -646,7 +646,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateCopyFromUrlRequest(string copySource, int? timeout, IDictionary<string, string> metadata, string tier, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, RequestConditions requestConditions, string ifTags, string leaseId, BinaryData sourceContentMd5, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, string copySourceAuthorization, string encryptionScope, string copySourceTags, string fileRequestIntent, RequestContext context)
+        internal HttpMessage CreateCopyFromUriRequest(string copySource, int? timeout, IDictionary<string, string> metadata, string tier, DateTimeOffset? sourceIfModifiedSince, DateTimeOffset? sourceIfUnmodifiedSince, string sourceIfMatch, string sourceIfNoneMatch, RequestConditions requestConditions, string ifTags, string leaseId, BinaryData sourceContentMd5, string blobTagsString, DateTimeOffset? immutabilityPolicyExpiry, string immutabilityPolicyMode, bool? legalHold, string copySourceAuthorization, string encryptionScope, string copySourceTags, string fileRequestIntent, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -739,7 +739,7 @@ namespace Azure.Storage.Blobs
             return message;
         }
 
-        internal HttpMessage CreateAbortCopyFromUrlRequest(string copyId, int? timeout, string leaseId, RequestContext context)
+        internal HttpMessage CreateAbortCopyFromUriRequest(string copyId, int? timeout, string leaseId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);

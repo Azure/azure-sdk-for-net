@@ -1861,7 +1861,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     if (async)
                     {
-                        response = await BlockBlobRestClient.StageBlockFromUrlAsync(
+                        response = await BlockBlobRestClient.StageBlockFromUriAsync(
                             blockId: base64BlockId,
                             contentLength: 0,
                             sourceUrl: sourceUri.AbsoluteUri,
@@ -1890,7 +1890,7 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        response = BlockBlobRestClient.StageBlockFromUrl(
+                        response = BlockBlobRestClient.StageBlockFromUri(
                             blockId: base64BlockId,
                             contentLength: 0,
                             sourceUrl: sourceUri.AbsoluteUri,
@@ -3254,7 +3254,7 @@ namespace Azure.Storage.Blobs.Specialized
 
                     if (async)
                     {
-                        response = await BlockBlobRestClient.UploadBlobFromUrlAsync(
+                        response = await BlockBlobRestClient.UploadBlobFromUriAsync(
                             copySource: copySource.AbsoluteUri,
                             blobContentType: options?.HttpHeaders?.ContentType,
                             blobContentEncoding: options?.HttpHeaders?.ContentEncoding,
@@ -3294,7 +3294,7 @@ namespace Azure.Storage.Blobs.Specialized
                     }
                     else
                     {
-                        response = BlockBlobRestClient.UploadBlobFromUrl(
+                        response = BlockBlobRestClient.UploadBlobFromUri(
                             copySource: copySource.AbsoluteUri,
                             blobContentType: options?.HttpHeaders?.ContentType,
                             blobContentEncoding: options?.HttpHeaders?.ContentEncoding,

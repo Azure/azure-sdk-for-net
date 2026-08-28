@@ -390,7 +390,7 @@ namespace Azure.Provisioning.MachineLearning
     public partial class ContainerEndpoint : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ContainerEndpoint() { }
-        public Azure.Provisioning.BicepValue<string> HostIp { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> HostIP { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.ContainerCommunicationProtocol> Protocol { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> Published { get { throw null; } set { } }
@@ -550,7 +550,7 @@ namespace Azure.Provisioning.MachineLearning
     public partial class EncryptionProperty : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public EncryptionProperty() { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> CosmosDbResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> CosmosDBResourceId { get { throw null; } set { } }
         public Azure.Provisioning.MachineLearning.KeyVaultProperties KeyVaultProperties { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> SearchAccountResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningEncryptionStatus> Status { get { throw null; } set { } }
@@ -769,9 +769,9 @@ namespace Azure.Provisioning.MachineLearning
     {
         public ImageMetadata() { }
         public Azure.Provisioning.BicepValue<string> CurrentImageVersion { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> IsLatestOsImageVersion { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsLatestOSImageVersion { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> LatestImageVersion { get { throw null; } }
-        public Azure.Provisioning.MachineLearning.OsPatchingStatus OsPatchingStatus { get { throw null; } }
+        public Azure.Provisioning.MachineLearning.OSPatchingStatus OSPatchingStatus { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ImageModelDistributionSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1432,8 +1432,8 @@ namespace Azure.Provisioning.MachineLearning
     public partial class MachineLearningComputeInstanceConnectivityEndpoints : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public MachineLearningComputeInstanceConnectivityEndpoints() { }
-        public Azure.Provisioning.BicepValue<string> PrivateIpAddress { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> PublicIpAddress { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> PrivateIPAddress { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> PublicIPAddress { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class MachineLearningComputeInstanceContainer : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1596,7 +1596,7 @@ namespace Azure.Provisioning.MachineLearning
     public partial class MachineLearningComputeSystemService : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public MachineLearningComputeSystemService() { }
-        public Azure.Provisioning.BicepValue<string> PublicIpAddress { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> PublicIPAddress { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SystemServiceType { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Version { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -3568,7 +3568,7 @@ namespace Azure.Provisioning.MachineLearning
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.PublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.MachineLearning.ServerlessComputeSettings ServerlessComputeSettings { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> ServiceManagedResourcesCosmosDbCollectionsThroughput { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> ServiceManagedResourcesCosmosDBCollectionsThroughput { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ServiceProvisionedResourceGroup { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.MachineLearning.MachineLearningSharedPrivateLinkResource> SharedPrivateLinkResources { get { throw null; } set { } }
         public Azure.Provisioning.MachineLearning.MachineLearningSku Sku { get { throw null; } set { } }
@@ -3661,7 +3661,7 @@ namespace Azure.Provisioning.MachineLearning
     {
         public ManagedNetworkSettings() { }
         public Azure.Provisioning.BicepValue<bool> EnableNetworkMonitor { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> FirewallPublicIpAddress { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> FirewallPublicIPAddress { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.FirewallSku> FirewallSku { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.IsolationMode> IsolationMode { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.ManagedNetworkKind> ManagedNetworkKind { get { throw null; } set { } }
@@ -3902,12 +3902,12 @@ namespace Azure.Provisioning.MachineLearning
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.MachineLearningServiceDataAccessAuthIdentity> ServiceDataAccessAuthIdentity { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class OsPatchingStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class OSPatchingStatus : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
-        public OsPatchingStatus() { }
+        public OSPatchingStatus() { }
         public Azure.Provisioning.BicepValue<bool> IsRebootPending { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> LatestPatchTime { get { throw null; } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.MachineLearning.MachineLearningError> OsPatchingErrors { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.MachineLearning.MachineLearningError> OSPatchingErrors { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.MachineLearning.PatchStatus> PatchStatus { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ScheduledRebootTime { get { throw null; } }
         protected override void DefineProvisionableProperties() { }

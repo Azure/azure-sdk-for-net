@@ -60,15 +60,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                 BaseType = "RequestData",
                                 BaseData = requestData,
                             };
-                            telemetrySchemaTypeCounter._requestCount++;
+                            telemetrySchemaTypeCounter.IncrementRequest(requestData.Success);
                             break;
                         case TelemetryType.Dependency:
+                            var dependencyData = new RemoteDependencyData(Version, activity, ref activityTagsProcessor);
                             telemetryItem.Data = new MonitorBase
                             {
                                 BaseType = "RemoteDependencyData",
-                                BaseData = new RemoteDependencyData(Version, activity, ref activityTagsProcessor),
+                                BaseData = dependencyData,
                             };
-                            telemetrySchemaTypeCounter._dependencyCount++;
+                            telemetrySchemaTypeCounter.IncrementDependency(dependencyData.Success);
                             break;
                     }
 

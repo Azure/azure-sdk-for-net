@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 };
                 HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, extensionTypeName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ExtensionTypeData> response = Response.FromValue(ExtensionTypeData.FromResponse(result), result);
+                Response<KubernetesConfigurationExtensionTypeData> response = Response.FromValue(KubernetesConfigurationExtensionTypeData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 };
                 HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, extensionTypeName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ExtensionTypeData> response = Response.FromValue(ExtensionTypeData.FromResponse(result), result);
+                Response<KubernetesConfigurationExtensionTypeData> response = Response.FromValue(KubernetesConfigurationExtensionTypeData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ExtensionTypeData, ClusterExtensionTypeResource>(new ExtensionTypeInterfaceGetAllAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<KubernetesConfigurationExtensionTypeData, ClusterExtensionTypeResource>(new ExtensionTypeInterfaceGetAllAsyncCollectionResultOfT(
                 _extensionTypeInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ExtensionTypeData, ClusterExtensionTypeResource>(new ExtensionTypeInterfaceGetAllCollectionResultOfT(
+            return new PageableWrapper<KubernetesConfigurationExtensionTypeData, ClusterExtensionTypeResource>(new ExtensionTypeInterfaceGetAllCollectionResultOfT(
                 _extensionTypeInterfaceRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,
@@ -264,14 +264,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, extensionTypeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ExtensionTypeData> response = default;
+                Response<KubernetesConfigurationExtensionTypeData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ExtensionTypeData.FromResponse(result), result);
+                        response = Response.FromValue(KubernetesConfigurationExtensionTypeData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ExtensionTypeData)null, result);
+                        response = Response.FromValue((KubernetesConfigurationExtensionTypeData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -321,14 +321,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, extensionTypeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ExtensionTypeData> response = default;
+                Response<KubernetesConfigurationExtensionTypeData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ExtensionTypeData.FromResponse(result), result);
+                        response = Response.FromValue(KubernetesConfigurationExtensionTypeData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ExtensionTypeData)null, result);
+                        response = Response.FromValue((KubernetesConfigurationExtensionTypeData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -378,14 +378,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, extensionTypeName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ExtensionTypeData> response = default;
+                Response<KubernetesConfigurationExtensionTypeData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ExtensionTypeData.FromResponse(result), result);
+                        response = Response.FromValue(KubernetesConfigurationExtensionTypeData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ExtensionTypeData)null, result);
+                        response = Response.FromValue((KubernetesConfigurationExtensionTypeData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -439,14 +439,14 @@ namespace Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes
                 HttpMessage message = _extensionTypeInterfaceRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.ResourceType.Namespace, Id.ResourceType.Type, Id.Name, extensionTypeName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ExtensionTypeData> response = default;
+                Response<KubernetesConfigurationExtensionTypeData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ExtensionTypeData.FromResponse(result), result);
+                        response = Response.FromValue(KubernetesConfigurationExtensionTypeData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ExtensionTypeData)null, result);
+                        response = Response.FromValue((KubernetesConfigurationExtensionTypeData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);

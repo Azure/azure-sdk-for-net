@@ -10,19 +10,19 @@ namespace Azure.Provisioning.Batch
     /// <summary> Provisioning state of a network security perimeter configuration that is being created or updated. </summary>
     public enum NetworkSecurityPerimeterConfigurationProvisioningState
     {
-        /// <summary> Succeeded. </summary>
+        /// <summary> The configuration was provisioned successfully. </summary>
         Succeeded = 0,
-        /// <summary> Creating. </summary>
+        /// <summary> The configuration is being created. </summary>
         Creating = 1,
-        /// <summary> Updating. </summary>
+        /// <summary> The configuration is being updated. </summary>
         Updating = 2,
-        /// <summary> Deleting. </summary>
+        /// <summary> The configuration is being deleted. </summary>
         Deleting = 3,
-        /// <summary> Accepted. </summary>
+        /// <summary> The configuration request was accepted and provisioning has not started yet. </summary>
         Accepted = 4,
-        /// <summary> Failed. </summary>
+        /// <summary> The configuration failed to provision. </summary>
         Failed = 5,
-        /// <summary> Canceled. </summary>
+        /// <summary> The configuration provisioning was canceled. </summary>
         Canceled = 6
     }
 }

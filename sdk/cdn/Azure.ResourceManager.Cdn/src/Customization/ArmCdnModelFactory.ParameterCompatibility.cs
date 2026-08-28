@@ -7,11 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Cdn;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Cdn.Models
@@ -20,7 +16,7 @@ namespace Azure.ResourceManager.Cdn.Models
     [CodeGenSuppress("MigrateResult", typeof(string), typeof(string), typeof(ResourceIdentifier))]
     public static partial class ArmCdnModelFactory
     {
-        // TODO: Remove these compatibility factory methods after https://github.com/Azure/azure-sdk-for-net/issues/61815 is fixed.
+        // The generator does not restore the GA uppercase Id parameter on these back-compat overloads.
 
         /// <summary> Initializes a new instance of <see cref="Models.CanMigrateResult"/>. </summary>
         /// <param name="Id">

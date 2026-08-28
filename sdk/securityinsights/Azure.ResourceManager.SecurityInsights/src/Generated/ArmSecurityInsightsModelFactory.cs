@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="state"> The state this IP address is located in. </param>
         /// <param name="stateConfidenceFactor"> A numeric rating of confidence that the value in the 'state' field is correct on a scale of 0-100. </param>
         /// <param name="stateCode"> The abbreviated name for the state this IP address is located in. </param>
-        /// <returns> A new <see cref="Models.EnrichmentIpGeodata"/> instance for mocking. </returns>
-        public static EnrichmentIpGeodata EnrichmentIpGeodata(string asn = default, string carrier = default, string city = default, int? cityConfidenceFactor = default, string continent = default, string country = default, int? countryConfidenceFactor = default, string ipAddr = default, string ipRoutingType = default, string latitude = default, string longitude = default, string organization = default, string organizationType = default, string region = default, string state = default, int? stateConfidenceFactor = default, string stateCode = default)
+        /// <returns> A new <see cref="Models.EnrichmentIPGeodata"/> instance for mocking. </returns>
+        public static EnrichmentIPGeodata EnrichmentIPGeodata(string asn = default, string carrier = default, string city = default, int? cityConfidenceFactor = default, string continent = default, string country = default, int? countryConfidenceFactor = default, string ipAddr = default, string ipRoutingType = default, string latitude = default, string longitude = default, string organization = default, string organizationType = default, string region = default, string state = default, int? stateConfidenceFactor = default, string stateCode = default)
         {
-            return new EnrichmentIpGeodata(
+            return new EnrichmentIPGeodata(
                 asn,
                 carrier,
                 city,
@@ -77,19 +77,19 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <param name="domain"> The domain for this whois record. </param>
         /// <param name="server"> The hostname of this registrar's whois server. </param>
-        /// <param name="created"> The timestamp at which this record was created. </param>
+        /// <param name="createdOn"> The timestamp at which this record was created. </param>
         /// <param name="updatedOn"> The timestamp at which this record was last updated. </param>
-        /// <param name="expireOn"> The timestamp at which this record will expire. </param>
+        /// <param name="expiresOn"> The timestamp at which this record will expire. </param>
         /// <param name="parsedWhois"> The whois record for a given domain. </param>
         /// <returns> A new <see cref="Models.EnrichmentDomainWhois"/> instance for mocking. </returns>
-        public static EnrichmentDomainWhois EnrichmentDomainWhois(string domain = default, string server = default, DateTimeOffset? created = default, DateTimeOffset? updatedOn = default, DateTimeOffset? expireOn = default, EnrichmentDomainWhoisDetails parsedWhois = default)
+        public static EnrichmentDomainWhois EnrichmentDomainWhois(string domain = default, string server = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, DateTimeOffset? expiresOn = default, EnrichmentDomainWhoisDetails parsedWhois = default)
         {
             return new EnrichmentDomainWhois(
                 domain,
                 server,
-                created,
+                createdOn,
                 updatedOn,
-                expireOn,
+                expiresOn,
                 parsedWhois,
                 default);
         }
@@ -775,6 +775,46 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="alertRulesCreatedByTemplateCount"> The number of alert rules that were created by this template. </param>
+        /// <param name="createdOn"> The time that this alert rule template has been added. </param>
+        /// <param name="lastUpdatedOn"> The last time that this alert rule template has been updated. </param>
+        /// <param name="description"> The description of the alert rule template. </param>
+        /// <param name="displayName"> The display name for alert rule template. </param>
+        /// <param name="requiredDataConnectors"> The required data sources for this template. </param>
+        /// <param name="status"> The alert rule template status. </param>
+        /// <param name="displayNamesFilter"> the alerts' displayNames on which the cases will be generated. </param>
+        /// <param name="displayNamesExcludeFilter"> the alerts' displayNames on which the cases will not be generated. </param>
+        /// <param name="productFilter"> The alerts' productName on which the cases will be generated. </param>
+        /// <param name="severitiesFilter"> the alerts' severities on which the cases will be generated. </param>
+        /// <returns> A new <see cref="Models.MicrosoftSecurityIncidentCreationAlertRuleTemplate"/> instance for mocking. </returns>
+        public static MicrosoftSecurityIncidentCreationAlertRuleTemplate MicrosoftSecurityIncidentCreationAlertRuleTemplate(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, int? alertRulesCreatedByTemplateCount = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastUpdatedOn = default, string description = default, string displayName = default, IEnumerable<AlertRuleTemplateDataSource> requiredDataConnectors = default, SecurityInsightsAlertRuleTemplateStatus? status = default, IEnumerable<string> displayNamesFilter = default, IEnumerable<string> displayNamesExcludeFilter = default, MicrosoftSecurityProductName? productFilter = default, IEnumerable<SecurityInsightsAlertSeverity> severitiesFilter = default)
+        {
+            return new MicrosoftSecurityIncidentCreationAlertRuleTemplate(
+                id,
+                name,
+                resourceType,
+                systemData,
+                default,
+                default,
+                alertRulesCreatedByTemplateCount is null && lastUpdatedOn is null && createdOn is null && description is null && displayName is null && requiredDataConnectors is null && status is null && displayNamesFilter is null && displayNamesExcludeFilter is null && productFilter is null && severitiesFilter is null ? default : new MicrosoftSecurityIncidentCreationAlertRuleTemplateProperties(
+                    alertRulesCreatedByTemplateCount,
+                    lastUpdatedOn,
+                    createdOn,
+                    description,
+                    displayName,
+                    (requiredDataConnectors ?? new ChangeTrackingList<AlertRuleTemplateDataSource>()).ToList(),
+                    status,
+                    default,
+                    (displayNamesFilter ?? new ChangeTrackingList<string>()).ToList(),
+                    (displayNamesExcludeFilter ?? new ChangeTrackingList<string>()).ToList(),
+                    productFilter,
+                    (severitiesFilter ?? new ChangeTrackingList<SecurityInsightsAlertSeverity>()).ToList()));
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="alertRulesCreatedByTemplateCount"> The number of alert rules that were created by this template. </param>
         /// <param name="createdDateUTC"> The time that this alert rule template has been added. </param>
         /// <param name="lastUpdatedDateUTC"> The time that this alert rule template was last updated. </param>
         /// <param name="description"> The description of the alert rule template. </param>
@@ -1220,16 +1260,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <param name="teamId"> Team ID. </param>
         /// <param name="primaryChannelUri"> The primary channel URL of the team. </param>
-        /// <param name="teamCreationTimeUtc"> The time the team was created. </param>
+        /// <param name="createdOn"> The time the team was created. </param>
         /// <param name="name"> The name of the team. </param>
         /// <param name="description"> The description of the team. </param>
         /// <returns> A new <see cref="Models.TeamInformation"/> instance for mocking. </returns>
-        public static TeamInformation TeamInformation(string teamId = default, string primaryChannelUri = default, DateTimeOffset? teamCreationTimeUtc = default, string name = default, string description = default)
+        public static TeamInformation TeamInformation(string teamId = default, string primaryChannelUri = default, DateTimeOffset? createdOn = default, string name = default, string description = default)
         {
             return new TeamInformation(
                 teamId,
                 primaryChannelUri,
-                teamCreationTimeUtc,
+                createdOn,
                 name,
                 description,
                 default);
@@ -1735,7 +1775,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 systemData,
                 default,
                 default,
-                additionalData is null && friendlyName is null && address is null && location is null && threatIntelligence is null ? default : new IpEntityProperties(
+                additionalData is null && friendlyName is null && address is null && location is null && threatIntelligence is null ? default : new IPEntityProperties(
                     additionalData ?? new ChangeTrackingDictionary<string, BinaryData>(),
                     friendlyName,
                     default,
@@ -3302,11 +3342,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="collectionId"> The collection id of the TAXII server. </param>
         /// <param name="userName"> The userName for the TAXII server. </param>
         /// <param name="password"> The password for the TAXII server. </param>
-        /// <param name="taxiiLookbackPeriod"> The lookback period for the TAXII server. </param>
+        /// <param name="taxiiLookbackOn"> The lookback period for the TAXII server. </param>
         /// <param name="pollingFrequency"> The polling frequency for the TAXII server. </param>
         /// <param name="dataTypesTaxiiClientState"> Describe whether this data type connection is enabled or not. </param>
         /// <returns> A new <see cref="Models.ThreatIntelligenceTaxiiDataConnector"/> instance for mocking. </returns>
-        public static ThreatIntelligenceTaxiiDataConnector ThreatIntelligenceTaxiiDataConnector(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default, Guid? tenantId = default, string workspaceId = default, string friendlyName = default, string taxiiServer = default, string collectionId = default, string userName = default, string password = default, DateTimeOffset? taxiiLookbackPeriod = default, PollingFrequency? pollingFrequency = default, SecurityInsightsDataTypeConnectionState? dataTypesTaxiiClientState = default)
+        public static ThreatIntelligenceTaxiiDataConnector ThreatIntelligenceTaxiiDataConnector(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default, Guid? tenantId = default, string workspaceId = default, string friendlyName = default, string taxiiServer = default, string collectionId = default, string userName = default, string password = default, DateTimeOffset? taxiiLookbackOn = default, PollingFrequency? pollingFrequency = default, SecurityInsightsDataTypeConnectionState? dataTypesTaxiiClientState = default)
         {
             return new ThreatIntelligenceTaxiiDataConnector(
                 id,
@@ -3316,7 +3356,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 default,
                 eTag,
                 default,
-                tenantId is null && workspaceId is null && friendlyName is null && taxiiServer is null && collectionId is null && userName is null && password is null && taxiiLookbackPeriod is null && pollingFrequency is null && dataTypesTaxiiClientState is null ? default : new TiTaxiiDataConnectorProperties(
+                tenantId is null && workspaceId is null && friendlyName is null && taxiiServer is null && collectionId is null && userName is null && password is null && taxiiLookbackOn is null && pollingFrequency is null && dataTypesTaxiiClientState is null ? default : new TiTaxiiDataConnectorProperties(
                     tenantId.GetValueOrDefault(),
                     default,
                     workspaceId,
@@ -3325,7 +3365,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     collectionId,
                     userName,
                     password,
-                    taxiiLookbackPeriod,
+                    taxiiLookbackOn,
                     pollingFrequency,
                     new TiTaxiiDataConnectorDataTypes(new TiTaxiiDataConnectorDataTypesTaxiiClientInfo(dataTypesTaxiiClientState.GetValueOrDefault(), default), default)));
         }
@@ -4097,7 +4137,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="uri"> URL of pull request. </param>
         /// <param name="state"> State of the pull request. </param>
         /// <returns> A new <see cref="Models.PullRequestInfo"/> instance for mocking. </returns>
-        public static PullRequestInfo PullRequestInfo(string uri = default, RecommendationState? state = default)
+        public static PullRequestInfo PullRequestInfo(string uri = default, PullRequestState? state = default)
         {
             return new PullRequestInfo(uri, state, default);
         }
@@ -4160,7 +4200,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="provisioningState"> Describes provisioning state. </param>
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsWatchlistData"/> instance for mocking. </returns>
-        public static SecurityInsightsWatchlistData SecurityInsightsWatchlistData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? watchlistId = default, string displayName = default, string provider = default, string sourceString = default, WatchlistSourceType? sourceType = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, SecurityInsightsUserInfo createdBy = default, SecurityInsightsUserInfo updatedBy = default, string description = default, string watchlistType = default, string watchlistAlias = default, bool? isDeleted = default, IEnumerable<string> labels = default, TimeSpan? defaultDuration = default, Guid? tenantId = default, int? numberOfLinesToSkip = default, string rawContent = default, string itemsSearchKey = default, string contentType = default, string uploadStatus = default, TriggeredAnalyticsRuleRunProvisioningState? provisioningState = default, ETag? eTag = default)
+        public static SecurityInsightsWatchlistData SecurityInsightsWatchlistData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, Guid? watchlistId = default, string displayName = default, string provider = default, string sourceString = default, WatchlistSourceType? sourceType = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, SecurityInsightsUserInfo createdBy = default, SecurityInsightsUserInfo updatedBy = default, string description = default, string watchlistType = default, string watchlistAlias = default, bool? isDeleted = default, IEnumerable<string> labels = default, TimeSpan? defaultDuration = default, Guid? tenantId = default, int? numberOfLinesToSkip = default, string rawContent = default, string itemsSearchKey = default, string contentType = default, string uploadStatus = default, WatchlistProvisioningState? provisioningState = default, ETag? eTag = default)
         {
             return new SecurityInsightsWatchlistData(
                 id,
@@ -4769,17 +4809,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="state"> The state of the file import. </param>
         /// <param name="totalRecordCount"> The number of records in the file. </param>
         /// <param name="validRecordCount"> The number of records that have passed validation. </param>
-        /// <param name="filesValidUntil"> The time the files associated with this import are deleted from the storage account. </param>
-        /// <param name="importValidUntil"> The time the file import record is soft deleted from the database and history. </param>
+        /// <param name="filesExpirationOn"> The time the files associated with this import are deleted from the storage account. </param>
+        /// <param name="importExpirationOn"> The time the file import record is soft deleted from the database and history. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsFileImportData"/> instance for mocking. </returns>
-        public static SecurityInsightsFileImportData SecurityInsightsFileImportData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IngestionMode? ingestionMode = default, SecurityInsightsFileImportContentType? contentType = default, DateTimeOffset? createdOn = default, SecurityInsightsFileMetadata errorFile = default, IEnumerable<SecurityInsightsFileValidationError> errorsPreview = default, SecurityInsightsFileMetadata importFile = default, int? ingestedRecordCount = default, string source = default, SecurityInsightsFileImportState? state = default, int? totalRecordCount = default, int? validRecordCount = default, DateTimeOffset? filesValidUntil = default, DateTimeOffset? importValidUntil = default)
+        public static SecurityInsightsFileImportData SecurityInsightsFileImportData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IngestionMode? ingestionMode = default, SecurityInsightsFileImportContentType? contentType = default, DateTimeOffset? createdOn = default, SecurityInsightsFileMetadata errorFile = default, IEnumerable<SecurityInsightsFileValidationError> errorsPreview = default, SecurityInsightsFileMetadata importFile = default, int? ingestedRecordCount = default, string source = default, SecurityInsightsFileImportState? state = default, int? totalRecordCount = default, int? validRecordCount = default, DateTimeOffset? filesExpirationOn = default, DateTimeOffset? importExpirationOn = default)
         {
             return new SecurityInsightsFileImportData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                ingestionMode is null && contentType is null && createdOn is null && errorFile is null && errorsPreview is null && importFile is null && ingestedRecordCount is null && source is null && state is null && totalRecordCount is null && validRecordCount is null && filesValidUntil is null && importValidUntil is null ? default : new FileImportProperties(
+                ingestionMode is null && contentType is null && createdOn is null && errorFile is null && errorsPreview is null && importFile is null && ingestedRecordCount is null && source is null && state is null && totalRecordCount is null && validRecordCount is null && filesExpirationOn is null && importExpirationOn is null ? default : new FileImportProperties(
                     ingestionMode.GetValueOrDefault(),
                     contentType.GetValueOrDefault(),
                     createdOn,
@@ -4791,8 +4831,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     state,
                     totalRecordCount,
                     validRecordCount,
-                    filesValidUntil,
-                    importValidUntil,
+                    filesExpirationOn,
+                    importExpirationOn,
                     default),
                 default);
         }
@@ -5079,7 +5119,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="items"> List of resources included in this workspace manager assignment. </param>
         /// <param name="eTag"> Resource Etag. </param>
         /// <returns> A new <see cref="SecurityInsights.WorkspaceManagerAssignmentData"/> instance for mocking. </returns>
-        public static WorkspaceManagerAssignmentData WorkspaceManagerAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string targetResourceName = default, DateTimeOffset? lastJobEndOn = default, TriggeredAnalyticsRuleRunProvisioningState? lastJobProvisioningState = default, IEnumerable<WorkspaceManagerAssignmentItem> items = default, ETag? eTag = default)
+        public static WorkspaceManagerAssignmentData WorkspaceManagerAssignmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string targetResourceName = default, DateTimeOffset? lastJobEndOn = default, JobProvisioningState? lastJobProvisioningState = default, IEnumerable<WorkspaceManagerAssignmentItem> items = default, ETag? eTag = default)
         {
             return new WorkspaceManagerAssignmentData(
                 id,
@@ -5093,7 +5133,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <param name="resourceId"> The resource id of the content item. </param>
         /// <returns> A new <see cref="Models.WorkspaceManagerAssignmentItem"/> instance for mocking. </returns>
-        public static WorkspaceManagerAssignmentItem WorkspaceManagerAssignmentItem(string resourceId = default)
+        public static WorkspaceManagerAssignmentItem WorkspaceManagerAssignmentItem(ResourceIdentifier resourceId = default)
         {
             return new WorkspaceManagerAssignmentItem(resourceId, default);
         }
@@ -5146,7 +5186,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="targetWorkspaceTenantId"> Tenant id of the target Sentinel workspace joining the given Sentinel workspace manager. </param>
         /// <param name="eTag"> Resource Etag. </param>
         /// <returns> A new <see cref="SecurityInsights.WorkspaceManagerMemberData"/> instance for mocking. </returns>
-        public static WorkspaceManagerMemberData WorkspaceManagerMemberData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string targetWorkspaceResourceId = default, string targetWorkspaceTenantId = default, ETag? eTag = default)
+        public static WorkspaceManagerMemberData WorkspaceManagerMemberData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ResourceIdentifier targetWorkspaceResourceId = default, string targetWorkspaceTenantId = default, ETag? eTag = default)
         {
             return new WorkspaceManagerMemberData(
                 id,
@@ -5321,7 +5361,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="operator"> Operator used for list of dependencies in criteria array. </param>
         /// <param name="criteria"> This is the list of dependencies we must fulfill, according to the AND/OR operator. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsMetadataDependencies"/> instance for mocking. </returns>
-        public static SecurityInsightsMetadataDependencies SecurityInsightsMetadataDependencies(string contentId = default, SecurityInsightsKind? kind = default, string version = default, string name = default, ThreatIntelligenceQueryOperator? @operator = default, IEnumerable<SecurityInsightsMetadataDependencies> criteria = default)
+        public static SecurityInsightsMetadataDependencies SecurityInsightsMetadataDependencies(string contentId = default, SecurityInsightsKind? kind = default, string version = default, string name = default, MetadataDependencyOperator? @operator = default, IEnumerable<SecurityInsightsMetadataDependencies> criteria = default)
         {
             criteria ??= new ChangeTrackingList<SecurityInsightsMetadataDependencies>();
 
@@ -6614,7 +6654,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="additionalProperties"> Collection of additional properties for the recommendation. </param>
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsRecommendationData"/> instance for mocking. </returns>
-        public static SecurityInsightsRecommendationData SecurityInsightsRecommendationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string recommendationTypeId = default, RecommendationState? state = default, string title = default, string description = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastEvaluatedOn = default, DateTimeOffset? lastModifiedOn = default, IEnumerable<RecommendedSuggestion> suggestions = default, string resourceId = default, IDictionary<string, string> additionalProperties = default, ETag? eTag = default)
+        public static SecurityInsightsRecommendationData SecurityInsightsRecommendationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string recommendationTypeId = default, RecommendationState? state = default, string title = default, string description = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastEvaluatedOn = default, DateTimeOffset? lastModifiedOn = default, IEnumerable<RecommendedSuggestion> suggestions = default, ResourceIdentifier resourceId = default, IDictionary<string, string> additionalProperties = default, ETag? eTag = default)
         {
             return new SecurityInsightsRecommendationData(
                 id,
@@ -6681,7 +6721,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="errorMessage"> Message to describe error, if an error exists. </param>
         /// <param name="eTag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.WorkspaceManagerAssignmentJobData"/> instance for mocking. </returns>
-        public static WorkspaceManagerAssignmentJobData WorkspaceManagerAssignmentJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? endOn = default, IEnumerable<SecurityInsightsContentJobItem> items = default, TriggeredAnalyticsRuleRunProvisioningState? provisioningState = default, DateTimeOffset? startOn = default, string errorMessage = default, ETag? eTag = default)
+        public static WorkspaceManagerAssignmentJobData WorkspaceManagerAssignmentJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, DateTimeOffset? endOn = default, IEnumerable<SecurityInsightsContentJobItem> items = default, JobProvisioningState? provisioningState = default, DateTimeOffset? startOn = default, string errorMessage = default, ETag? eTag = default)
         {
             return new WorkspaceManagerAssignmentJobData(
                 id,
@@ -6704,7 +6744,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="executionOn"> The time the item publishing was completed. </param>
         /// <param name="errors"> The list of error descriptions if the item publication fails. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsContentJobItem"/> instance for mocking. </returns>
-        public static SecurityInsightsContentJobItem SecurityInsightsContentJobItem(string resourceId = default, SecurityInsightsContentStatus? status = default, DateTimeOffset? executionOn = default, IEnumerable<PublicationFailedError> errors = default)
+        public static SecurityInsightsContentJobItem SecurityInsightsContentJobItem(ResourceIdentifier resourceId = default, SecurityInsightsContentStatus? status = default, DateTimeOffset? executionOn = default, IEnumerable<PublicationFailedError> errors = default)
         {
             errors ??= new ChangeTrackingList<PublicationFailedError>();
 
@@ -6845,7 +6885,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 name,
                 resourceType,
                 systemData,
-                title is null && description is null && severity is null && status is null && classification is null && classificationReason is null && classificationComment is null && owner is null && labels is null && firstActivityOn is null && lastActivityOn is null && lastModifiedOn is null && createdOn is null && incidentNumber is null && additionalInfo is null && relatedAnalyticRuleIds is null && incidentUri is null && description is null ? default : new IncidentProperties(
+                title is null && description is null && severity is null && status is null && classification is null && classificationReason is null && classificationComment is null && owner is null && labels is null && firstActivityOn is null && lastActivityOn is null && lastModifiedOn is null && createdOn is null && incidentNumber is null && additionalInfo is null && relatedAnalyticRuleIds is null && incidentUri is null && createdOn is null && description is null ? default : new IncidentProperties(
                     title,
                     description,
                     severity.GetValueOrDefault(),
@@ -6868,7 +6908,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     new TeamInformation(
                         default,
                         default,
-                        default,
+                        createdOn,
                         default,
                         description,
                         default),

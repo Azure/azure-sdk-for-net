@@ -755,22 +755,22 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="provisioningState"> The provisioning state of the UpdateRun resource. </param>
         /// <param name="updateStrategyId">
         /// The resource id of the FleetUpdateStrategy resource to reference.
-        ///             
-        ///              When creating a new run, there are three ways to define a strategy for the run:
-        ///              1. Define a new strategy in place: Set the "strategy" field.
-        ///              2. Use an existing strategy: Set the "updateStrategyId" field. (since 2023-08-15-preview)
-        ///              3. Use the default strategy to update all the members one by one: Leave both "updateStrategyId" and "strategy" unset. (since 2023-08-15-preview)
-        ///             
-        ///              Setting both "updateStrategyId" and "strategy" is invalid.
-        ///             
-        ///              UpdateRuns created by "updateStrategyId" snapshot the referenced UpdateStrategy at the time of creation and store it in the "strategy" field.
-        ///              Subsequent changes to the referenced FleetUpdateStrategy resource do not propagate.
-        ///              UpdateRunStrategy changes can be made directly on the "strategy" field before launching the UpdateRun.
+        ///                         
+        ///                          When creating a new run, there are three ways to define a strategy for the run:
+        ///                          1. Define a new strategy in place: Set the "strategy" field.
+        ///                          2. Use an existing strategy: Set the "updateStrategyId" field. (since 2023-08-15-preview)
+        ///                          3. Use the default strategy to update all the members one by one: Leave both "updateStrategyId" and "strategy" unset. (since 2023-08-15-preview)
+        ///                         
+        ///                          Setting both "updateStrategyId" and "strategy" is invalid.
+        ///                         
+        ///                          UpdateRuns created by "updateStrategyId" snapshot the referenced UpdateStrategy at the time of creation and store it in the "strategy" field.
+        ///                          Subsequent changes to the referenced FleetUpdateStrategy resource do not propagate.
+        ///                          UpdateRunStrategy changes can be made directly on the "strategy" field before launching the UpdateRun.
         /// </param>
         /// <param name="strategyStages">
         /// The strategy defines the order in which the clusters will be updated.
-        ///              If not set, all members will be updated sequentially. The UpdateRun status will show a single UpdateStage and a single UpdateGroup targeting all members.
-        ///              The strategy of the UpdateRun can be modified until the run is started.
+        ///                          If not set, all members will be updated sequentially. The UpdateRun status will show a single UpdateStage and a single UpdateGroup targeting all members.
+        ///                          The strategy of the UpdateRun can be modified until the run is started.
         /// </param>
         /// <param name="managedClusterUpdate"> The update to be applied to all clusters in the UpdateRun. The managedClusterUpdate can be modified until the run is started. </param>
         /// <param name="status"> The status of the UpdateRun. </param>
@@ -921,19 +921,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="provisioningState"> The provisioning state of the UpdateRun resource. </param>
         /// <param name="updateStrategyId">
         /// The resource id of the FleetUpdateStrategy resource to reference.
-        ///             When creating a new run, there are three ways to define a strategy for the run:
-        ///             1. Define a new strategy in place: Set the "strategy" field.
-        ///             2. Use an existing strategy: Set the "updateStrategyId" field. (since 2023-08-15-preview)
-        ///             3. Use the default strategy to update all the members one by one: Leave both "updateStrategyId" and "strategy" unset. (since 2023-08-15-preview)
-        ///             Setting both "updateStrategyId" and "strategy" is invalid.
-        ///             UpdateRuns created by "updateStrategyId" snapshot the referenced UpdateStrategy at the time of creation and store it in the "strategy" field.
-        ///             Subsequent changes to the referenced FleetUpdateStrategy resource do not propagate.
-        ///             UpdateRunStrategy changes can be made directly on the "strategy" field before launching the UpdateRun.
+        ///                         When creating a new run, there are three ways to define a strategy for the run:
+        ///                         1. Define a new strategy in place: Set the "strategy" field.
+        ///                         2. Use an existing strategy: Set the "updateStrategyId" field. (since 2023-08-15-preview)
+        ///                         3. Use the default strategy to update all the members one by one: Leave both "updateStrategyId" and "strategy" unset. (since 2023-08-15-preview)
+        ///                         Setting both "updateStrategyId" and "strategy" is invalid.
+        ///                         UpdateRuns created by "updateStrategyId" snapshot the referenced UpdateStrategy at the time of creation and store it in the "strategy" field.
+        ///                         Subsequent changes to the referenced FleetUpdateStrategy resource do not propagate.
+        ///                         UpdateRunStrategy changes can be made directly on the "strategy" field before launching the UpdateRun.
         /// </param>
         /// <param name="strategyStages">
         /// The strategy defines the order in which the clusters will be updated.
-        ///             If not set, all members will be updated sequentially. The UpdateRun status will show a single UpdateStage and a single UpdateGroup targeting all members.
-        ///             The strategy of the UpdateRun can be modified until the run is started.
+        ///                         If not set, all members will be updated sequentially. The UpdateRun status will show a single UpdateStage and a single UpdateGroup targeting all members.
+        ///                         The strategy of the UpdateRun can be modified until the run is started.
         /// </param>
         /// <param name="managedClusterUpdate"> The update to be applied to all clusters in the UpdateRun. The managedClusterUpdate can be modified until the run is started. </param>
         /// <param name="status"> The status of the UpdateRun. </param>

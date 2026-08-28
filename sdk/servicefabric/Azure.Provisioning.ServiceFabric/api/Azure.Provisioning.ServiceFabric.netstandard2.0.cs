@@ -424,8 +424,8 @@ namespace Azure.Provisioning.ServiceFabric
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         public Azure.Provisioning.ServiceFabric.ClusterUpgradePolicy UpgradeDescription { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabric.ClusterUpgradeMode> UpgradeMode { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> UpgradePauseEndOn { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> UpgradePauseStartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> UpgradePauseEndsOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> UpgradePauseStartsOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabric.ClusterUpgradeCadence> UpgradeWave { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> VmImage { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ServiceFabric.VmssZonalUpgradeMode> VmssZonalUpgradeMode { get { throw null; } set { } }

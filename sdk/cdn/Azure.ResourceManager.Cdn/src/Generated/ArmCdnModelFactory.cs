@@ -3325,15 +3325,15 @@ namespace Azure.ResourceManager.Cdn.Models
         }
 
         /// <param name="deliveryRegion"> The delivery region of the ip address group. </param>
-        /// <param name="iPv4Addresses"> The list of ip v4 addresses. </param>
-        /// <param name="iPv6Addresses"> The list of ip v6 addresses. </param>
+        /// <param name="ipv4Addresses"> The list of ip v4 addresses. </param>
+        /// <param name="ipv6Addresses"> The list of ip v6 addresses. </param>
         /// <returns> A new <see cref="Models.IPAddressGroup"/> instance for mocking. </returns>
-        public static IPAddressGroup IPAddressGroup(string deliveryRegion = default, IEnumerable<CidrIPAddress> iPv4Addresses = default, IEnumerable<CidrIPAddress> iPv6Addresses = default)
+        public static IPAddressGroup IPAddressGroup(string deliveryRegion = default, IEnumerable<CidrIPAddress> ipv4Addresses = default, IEnumerable<CidrIPAddress> ipv6Addresses = default)
         {
-            iPv4Addresses ??= new ChangeTrackingList<CidrIPAddress>();
-            iPv6Addresses ??= new ChangeTrackingList<CidrIPAddress>();
+            ipv4Addresses ??= new ChangeTrackingList<CidrIPAddress>();
+            ipv6Addresses ??= new ChangeTrackingList<CidrIPAddress>();
 
-            return new IPAddressGroup(deliveryRegion, (iPv4Addresses ?? new ChangeTrackingList<CidrIPAddress>()).ToList(), (iPv6Addresses ?? new ChangeTrackingList<CidrIPAddress>()).ToList(), default);
+            return new IPAddressGroup(deliveryRegion, (ipv4Addresses ?? new ChangeTrackingList<CidrIPAddress>()).ToList(), (ipv6Addresses ?? new ChangeTrackingList<CidrIPAddress>()).ToList(), default);
         }
 
         /// <param name="baseIPAddress"> Ip address itself. </param>

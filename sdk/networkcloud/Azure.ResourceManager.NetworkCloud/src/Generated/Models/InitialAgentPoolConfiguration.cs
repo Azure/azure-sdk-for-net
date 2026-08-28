@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -15,6 +16,26 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
+        /// <summary> Initializes a new instance of <see cref="InitialAgentPoolConfiguration"/>. </summary>
+        /// <param name="count"> The number of virtual machines that use this configuration. </param>
+        /// <param name="mode"> The selection of how this agent pool is utilized, either as a system pool or a user pool. System pools run the features and critical services for the Kubernetes Cluster, while user pools are dedicated to user workloads. Every Kubernetes cluster must contain at least one system node pool with at least one node. </param>
+        /// <param name="name"> The name that will be used for the agent pool resource representing this agent pool. </param>
+        /// <param name="vmSkuName"> The name of the VM SKU that determines the size of resources allocated for node VMs. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="vmSkuName"/> is null. </exception>
+        public InitialAgentPoolConfiguration(long count, NetworkCloudAgentPoolMode mode, string name, string vmSkuName)
+        {
+            Argument.AssertNotNull(vmSkuName, nameof(vmSkuName));
+            Argument.AssertNotNull(name, nameof(name));
+
+            AvailabilityZones = new ChangeTrackingList<string>();
+            Count = count;
+            Labels = new ChangeTrackingList<KubernetesLabel>();
+            Mode = mode;
+            Taints = new ChangeTrackingList<KubernetesLabel>();
+            VmSkuName = vmSkuName;
+            Name = name;
+        }
 
         /// <summary> Initializes a new instance of <see cref="InitialAgentPoolConfiguration"/>. </summary>
         /// <param name="administratorConfiguration"> The administrator credentials to be used for the nodes in this agent pool. </param>

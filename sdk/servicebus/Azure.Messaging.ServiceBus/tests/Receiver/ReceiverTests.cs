@@ -164,9 +164,11 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                         It.IsAny<string>(),
                         It.IsAny<bool>(),
                         It.IsAny<bool>(),
+                        It.IsAny<bool>(),
+                        It.IsAny<Guid?>(),
                         It.IsAny<CancellationToken>()))
-                .Callback<string, ServiceBusRetryPolicy, ServiceBusReceiveMode, uint, string, string, bool, bool, CancellationToken>(
-                    (_, _, _, count, _, _, _, _, _) =>
+                .Callback<string, ServiceBusRetryPolicy, ServiceBusReceiveMode, uint, string, string, bool, bool, bool, Guid?, CancellationToken>(
+                    (_, _, _, count, _, _, _, _, _, _, _) =>
                     {
                         prefetchCount = (int)count;
                     })
@@ -348,6 +350,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     It.IsAny<string>(),
                     It.IsAny<bool>(),
                     It.IsAny<bool>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<Guid?>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(mockTransportReceiver.Object);
 
@@ -662,6 +666,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     It.IsAny<string>(),
                     It.IsAny<bool>(),
                     It.IsAny<bool>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<Guid?>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(mockTransportReceiver.Object);
 
@@ -712,6 +718,8 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
                     It.IsAny<string>(),
                     It.IsAny<bool>(),
                     It.IsAny<bool>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<Guid?>(),
                     It.IsAny<CancellationToken>()))
                 .Returns(mockTransportReceiver.Object);
 

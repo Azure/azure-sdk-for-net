@@ -13,6 +13,7 @@ using Azure.AI.Projects.Evaluation;
 using Azure.Identity;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
+using OpenAI.Conversations;
 using OpenAI.Evals;
 using OpenAI.Responses;
 
@@ -220,7 +221,7 @@ public class Sample_EvaluationRules : EvaluationSampleBase
         Console.WriteLine($"Continuous Evaluation Rule created (id: {continuousEvalRule.Id}, name: {continuousEvalRule.DisplayName})");
         #endregion
         #region Snippet:Sample_CreateConversation_EvaluationRules_Async
-        ProjectConversation conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
+        ConversationResource conversation = await projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversationAsync();
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
         #endregion
         #region Snippet:Sample_AskQuestions_EvaluationRules_Async
@@ -348,7 +349,7 @@ public class Sample_EvaluationRules : EvaluationSampleBase
         Console.WriteLine($"Continuous Evaluation Rule created (id: {continuousEvalRule.Id}, name: {continuousEvalRule.DisplayName})");
         #endregion
         #region Snippet:Sample_CreateConversation_EvaluationRules_Sync
-        ProjectConversation conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
+        ConversationResource conversation = projectClient.ProjectOpenAIClient.GetProjectConversationsClient().CreateProjectConversation();
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgent(new(name: agentVersion.Name, version: agentVersion.Version), conversation.Id);
         #endregion
         #region Snippet:Sample_AskQuestions_EvaluationRules_Sync

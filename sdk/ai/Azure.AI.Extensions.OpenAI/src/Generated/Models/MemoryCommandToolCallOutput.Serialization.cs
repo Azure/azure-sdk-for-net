@@ -6,20 +6,16 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI.Responses;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> The output of a memory command tool call. </summary>
-    public partial class MemoryCommandToolCallOutput : AgentResponseItem, IJsonModel<MemoryCommandToolCallOutput>
+    public partial class MemoryCommandToolCallOutput : ResponseItem, IJsonModel<MemoryCommandToolCallOutput>
     {
-        /// <summary> Initializes a new instance of <see cref="MemoryCommandToolCallOutput"/> for deserialization. </summary>
-        internal MemoryCommandToolCallOutput()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponseItem PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MemoryCommandToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -80,6 +76,21 @@ namespace Azure.AI.Extensions.OpenAI
             writer.WriteStringValue(CallId);
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToSerialString());
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -88,7 +99,7 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override AgentResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponseItem JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<MemoryCommandToolCallOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -107,18 +118,18 @@ namespace Azure.AI.Extensions.OpenAI
             {
                 return null;
             }
-            AgentResponseItemKind @type = default;
+            ResponseItemKind @type = "memory_command_preview_call_output";
             string id = default;
             AgentReference agentReference = default;
             string responseId = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string callId = default;
             ToolCallStatus status = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new AgentResponseItemKind(prop.Value.GetString());
+                    @type = new ResponseItemKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("id"u8))
@@ -160,9 +171,9 @@ namespace Azure.AI.Extensions.OpenAI
                 id,
                 agentReference,
                 responseId,
-                additionalBinaryDataProperties,
                 callId,
-                status);
+                status,
+                additionalBinaryDataProperties);
         }
     }
 }

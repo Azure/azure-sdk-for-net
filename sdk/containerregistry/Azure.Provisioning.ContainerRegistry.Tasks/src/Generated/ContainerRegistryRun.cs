@@ -128,12 +128,12 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
-                return Properties.StartOn;
+                return Properties.StartsOn;
             }
         }
 

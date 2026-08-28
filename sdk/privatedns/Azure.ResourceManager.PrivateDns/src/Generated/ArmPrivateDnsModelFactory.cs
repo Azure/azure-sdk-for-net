@@ -21,18 +21,18 @@ namespace Azure.ResourceManager.PrivateDns.Models
     public static partial class ArmPrivateDnsModelFactory
     {
 
-        /// <param name="iPv4Address"> The IPv4 address of this A record. </param>
+        /// <param name="ipv4Address"> The IPv4 address of this A record. </param>
         /// <returns> A new <see cref="Models.PrivateDnsARecordInfo"/> instance for mocking. </returns>
-        public static PrivateDnsARecordInfo PrivateDnsARecordInfo(IPAddress iPv4Address = default)
+        public static PrivateDnsARecordInfo PrivateDnsARecordInfo(IPAddress ipv4Address = default)
         {
-            return new PrivateDnsARecordInfo(iPv4Address, default);
+            return new PrivateDnsARecordInfo(ipv4Address, default);
         }
 
-        /// <param name="iPv6Address"> The IPv6 address of this AAAA record. </param>
+        /// <param name="ipv6Address"> The IPv6 address of this AAAA record. </param>
         /// <returns> A new <see cref="Models.PrivateDnsAaaaRecordInfo"/> instance for mocking. </returns>
-        public static PrivateDnsAaaaRecordInfo PrivateDnsAaaaRecordInfo(IPAddress iPv6Address = default)
+        public static PrivateDnsAaaaRecordInfo PrivateDnsAaaaRecordInfo(IPAddress ipv6Address = default)
         {
-            return new PrivateDnsAaaaRecordInfo(iPv6Address, default);
+            return new PrivateDnsAaaaRecordInfo(ipv6Address, default);
         }
 
         /// <param name="preference"> The preference value for this MX record. </param>

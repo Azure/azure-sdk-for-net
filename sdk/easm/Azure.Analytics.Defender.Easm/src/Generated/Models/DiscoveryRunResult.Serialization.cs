@@ -73,20 +73,20 @@ namespace Azure.Analytics.Defender.Easm
             {
                 throw new FormatException($"The model {nameof(DiscoveryRunResult)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SubmittedDate))
+            if (Optional.IsDefined(SubmittedOn))
             {
                 writer.WritePropertyName("submittedDate"u8);
-                writer.WriteStringValue(SubmittedDate.Value, "O");
+                writer.WriteStringValue(SubmittedOn.Value, "O");
             }
-            if (Optional.IsDefined(StartedDate))
+            if (Optional.IsDefined(StartedOn))
             {
                 writer.WritePropertyName("startedDate"u8);
-                writer.WriteStringValue(StartedDate.Value, "O");
+                writer.WriteStringValue(StartedOn.Value, "O");
             }
-            if (Optional.IsDefined(CompletedDate))
+            if (Optional.IsDefined(CompletedOn))
             {
                 writer.WritePropertyName("completedDate"u8);
-                writer.WriteStringValue(CompletedDate.Value, "O");
+                writer.WriteStringValue(CompletedOn.Value, "O");
             }
             if (Optional.IsDefined(Tier))
             {
@@ -180,9 +180,9 @@ namespace Azure.Analytics.Defender.Easm
             {
                 return null;
             }
-            DateTimeOffset? submittedDate = default;
-            DateTimeOffset? startedDate = default;
-            DateTimeOffset? completedDate = default;
+            DateTimeOffset? submittedOn = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? completedOn = default;
             string tier = default;
             DiscoRunState? state = default;
             long? totalAssetsFoundCount = default;
@@ -198,7 +198,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    submittedDate = prop.Value.GetDateTimeOffset("O");
+                    submittedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("startedDate"u8))
@@ -207,7 +207,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    startedDate = prop.Value.GetDateTimeOffset("O");
+                    startedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("completedDate"u8))
@@ -216,7 +216,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    completedDate = prop.Value.GetDateTimeOffset("O");
+                    completedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("tier"u8))
@@ -297,9 +297,9 @@ namespace Azure.Analytics.Defender.Easm
                 }
             }
             return new DiscoveryRunResult(
-                submittedDate,
-                startedDate,
-                completedDate,
+                submittedOn,
+                startedOn,
+                completedOn,
                 tier,
                 state,
                 totalAssetsFoundCount,

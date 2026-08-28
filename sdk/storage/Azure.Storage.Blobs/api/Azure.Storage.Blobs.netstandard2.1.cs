@@ -697,7 +697,7 @@ namespace Azure.Storage.Blobs.Models
         public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidPageRange { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidQueryParameterValue { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidRange { get { throw null; } }
-        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidRequestUrl { get { throw null; } }
+        public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidRequestUri { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidResourceName { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidSourceBlobType { get { throw null; } }
         public static Azure.Storage.Blobs.Models.BlobErrorCode InvalidSourceBlobUrl { get { throw null; } }

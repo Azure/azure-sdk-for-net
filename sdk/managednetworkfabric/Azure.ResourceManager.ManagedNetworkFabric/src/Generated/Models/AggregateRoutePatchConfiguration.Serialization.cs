@@ -136,8 +136,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             {
                 return null;
             }
-            IList<AggregateRoute> iPv4Routes = default;
-            IList<AggregateRoute> iPv6Routes = default;
+            IList<AggregateRoute> ipv4Routes = default;
+            IList<AggregateRoute> ipv6Routes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         array.Add(AggregateRoute.DeserializeAggregateRoute(item, options));
                     }
-                    iPv4Routes = array;
+                    ipv4Routes = array;
                     continue;
                 }
                 if (prop.NameEquals("ipv6Routes"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         array.Add(AggregateRoute.DeserializeAggregateRoute(item, options));
                     }
-                    iPv6Routes = array;
+                    ipv6Routes = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AggregateRoutePatchConfiguration(iPv4Routes ?? new ChangeTrackingList<AggregateRoute>(), iPv6Routes ?? new ChangeTrackingList<AggregateRoute>(), additionalBinaryDataProperties);
+            return new AggregateRoutePatchConfiguration(ipv4Routes ?? new ChangeTrackingList<AggregateRoute>(), ipv6Routes ?? new ChangeTrackingList<AggregateRoute>(), additionalBinaryDataProperties);
         }
     }
 }

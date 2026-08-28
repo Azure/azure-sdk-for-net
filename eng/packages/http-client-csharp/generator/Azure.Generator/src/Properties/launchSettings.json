@@ -215,6 +215,11 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
+    "http-client-overload": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/client/overload -g AzureStubGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
     "http-client-structure-client-operation-group": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/client/structure/client-operation-group -g AzureStubGenerator",
       "commandName": "Executable",
@@ -412,6 +417,11 @@
     },
     "http-special-words": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/special-words -g AzureStubGenerator",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    },
+    "http-streaming-jsonl": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.TypeSpec.Generator.dll $(SolutionDir)/TestProjects/Spector/http/streaming/jsonl -g AzureStubGenerator",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },

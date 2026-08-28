@@ -142,10 +142,10 @@ namespace Azure.AI.Discovery
                 writer.WritePropertyName("lastIndexingRun"u8);
                 writer.WriteObjectValue(LastIndexingRun, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedAt))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
-                writer.WriteStringValue(CreatedAt.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
@@ -157,10 +157,10 @@ namespace Azure.AI.Discovery
                 writer.WritePropertyName("createdByType"u8);
                 writer.WriteStringValue(CreatedByType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedAt))
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedAt"u8);
-                writer.WriteStringValue(LastModifiedAt.Value, "O");
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
@@ -238,10 +238,10 @@ namespace Azure.AI.Discovery
             IndexingStatus? status = default;
             string createdByApiVersion = default;
             LastIndexingRun lastIndexingRun = default;
-            DateTimeOffset? createdAt = default;
+            DateTimeOffset? createdOn = default;
             string createdBy = default;
             DiscoveryActorType? createdByType = default;
-            DateTimeOffset? lastModifiedAt = default;
+            DateTimeOffset? lastModifiedOn = default;
             string lastModifiedBy = default;
             DiscoveryActorType? lastModifiedByType = default;
             IList<DiscoveryTag> tags = default;
@@ -331,7 +331,7 @@ namespace Azure.AI.Discovery
                     {
                         continue;
                     }
-                    createdAt = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("createdBy"u8))
@@ -354,7 +354,7 @@ namespace Azure.AI.Discovery
                     {
                         continue;
                     }
-                    lastModifiedAt = prop.Value.GetDateTimeOffset("O");
+                    lastModifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedBy"u8))
@@ -411,10 +411,10 @@ namespace Azure.AI.Discovery
                 status,
                 createdByApiVersion,
                 lastIndexingRun,
-                createdAt,
+                createdOn,
                 createdBy,
                 createdByType,
-                lastModifiedAt,
+                lastModifiedOn,
                 lastModifiedBy,
                 lastModifiedByType,
                 tags ?? new ChangeTrackingList<DiscoveryTag>(),

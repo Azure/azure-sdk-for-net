@@ -2603,11 +2603,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="managedNetworkStatus"> Status for the managed network of a cognitive services account. </param>
         /// <param name="firewallSku"> Firewall Sku used for FQDN Rules. </param>
         /// <param name="managedNetworkKind"> The Kind of the managed network. Users can switch from V1 to V2 for granular access controls, but cannot switch back to V1 once V2 is enabled. </param>
-        /// <param name="firewallPublicIpAddress"> Public IP address assigned to the Azure Firewall. </param>
+        /// <param name="firewallPublicIPAddress"> Public IP address assigned to the Azure Firewall. </param>
         /// <param name="provisioningState"> The provisioning state of the managed network settings. </param>
         /// <param name="changeableIsolationModes"></param>
         /// <returns> A new <see cref="Models.CognitiveServicesManagedNetworkConfigurationExtended"/> instance for mocking. </returns>
-        public static CognitiveServicesManagedNetworkConfigurationExtended CognitiveServicesManagedNetworkConfigurationExtended(CognitiveServicesIsolationMode? isolationMode = default, string networkId = default, IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules = default, CognitiveServicesManagedNetworkStatus? managedNetworkStatus = default, CognitiveServicesFirewallSku? firewallSku = default, CognitiveServicesManagedNetworkKind? managedNetworkKind = default, string firewallPublicIpAddress = default, CognitiveServicesManagedNetworkProvisioningState? provisioningState = default, IEnumerable<CognitiveServicesIsolationMode> changeableIsolationModes = default)
+        public static CognitiveServicesManagedNetworkConfigurationExtended CognitiveServicesManagedNetworkConfigurationExtended(CognitiveServicesIsolationMode? isolationMode = default, string networkId = default, IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules = default, CognitiveServicesManagedNetworkStatus? managedNetworkStatus = default, CognitiveServicesFirewallSku? firewallSku = default, CognitiveServicesManagedNetworkKind? managedNetworkKind = default, string firewallPublicIPAddress = default, CognitiveServicesManagedNetworkProvisioningState? provisioningState = default, IEnumerable<CognitiveServicesIsolationMode> changeableIsolationModes = default)
         {
             outboundRules ??= new ChangeTrackingDictionary<string, CognitiveServicesOutboundRuleBasicProperties>();
             changeableIsolationModes ??= new ChangeTrackingList<CognitiveServicesIsolationMode>();
@@ -2619,7 +2619,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 managedNetworkStatus is null ? default : new CognitiveServicesManagedNetworkProvisionStatus(managedNetworkStatus, default),
                 firewallSku,
                 managedNetworkKind,
-                firewallPublicIpAddress,
+                firewallPublicIPAddress,
                 provisioningState,
                 default,
                 (changeableIsolationModes ?? new ChangeTrackingList<CognitiveServicesIsolationMode>()).ToList());
@@ -2631,10 +2631,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="managedNetworkStatus"> Status for the managed network of a cognitive services account. </param>
         /// <param name="firewallSku"> Firewall Sku used for FQDN Rules. </param>
         /// <param name="managedNetworkKind"> The Kind of the managed network. Users can switch from V1 to V2 for granular access controls, but cannot switch back to V1 once V2 is enabled. </param>
-        /// <param name="firewallPublicIpAddress"> Public IP address assigned to the Azure Firewall. </param>
+        /// <param name="firewallPublicIPAddress"> Public IP address assigned to the Azure Firewall. </param>
         /// <param name="provisioningState"> The provisioning state of the managed network settings. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesManagedNetworkConfiguration"/> instance for mocking. </returns>
-        public static CognitiveServicesManagedNetworkConfiguration CognitiveServicesManagedNetworkConfiguration(CognitiveServicesIsolationMode? isolationMode = default, string networkId = default, IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules = default, CognitiveServicesManagedNetworkStatus? managedNetworkStatus = default, CognitiveServicesFirewallSku? firewallSku = default, CognitiveServicesManagedNetworkKind? managedNetworkKind = default, string firewallPublicIpAddress = default, CognitiveServicesManagedNetworkProvisioningState? provisioningState = default)
+        public static CognitiveServicesManagedNetworkConfiguration CognitiveServicesManagedNetworkConfiguration(CognitiveServicesIsolationMode? isolationMode = default, string networkId = default, IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules = default, CognitiveServicesManagedNetworkStatus? managedNetworkStatus = default, CognitiveServicesFirewallSku? firewallSku = default, CognitiveServicesManagedNetworkKind? managedNetworkKind = default, string firewallPublicIPAddress = default, CognitiveServicesManagedNetworkProvisioningState? provisioningState = default)
         {
             outboundRules ??= new ChangeTrackingDictionary<string, CognitiveServicesOutboundRuleBasicProperties>();
 
@@ -2645,7 +2645,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 managedNetworkStatus is null ? default : new CognitiveServicesManagedNetworkProvisionStatus(managedNetworkStatus, default),
                 firewallSku,
                 managedNetworkKind,
-                firewallPublicIpAddress,
+                firewallPublicIPAddress,
                 provisioningState,
                 default);
         }
@@ -3162,12 +3162,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             return new CognitiveServicesComputeSshSettings(sshPublicKey, isAdminEnabled, default);
         }
 
-        /// <param name="publicIpAddress"> The public IP address of the compute instance. </param>
+        /// <param name="publicIPAddress"> The public IP address of the compute instance. </param>
         /// <param name="sshPort"> The SSH port for the compute instance. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesComputeConnectivityEndpoints"/> instance for mocking. </returns>
-        public static CognitiveServicesComputeConnectivityEndpoints CognitiveServicesComputeConnectivityEndpoints(string publicIpAddress = default, int? sshPort = default)
+        public static CognitiveServicesComputeConnectivityEndpoints CognitiveServicesComputeConnectivityEndpoints(string publicIPAddress = default, int? sshPort = default)
         {
-            return new CognitiveServicesComputeConnectivityEndpoints(publicIpAddress, sshPort, default);
+            return new CognitiveServicesComputeConnectivityEndpoints(publicIPAddress, sshPort, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

@@ -6,30 +6,11 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Microsoft.TypeSpec.Generator.Customizations;
-
 // NOTE: The following customization is intentionally retained for backward compatibility.
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    [CodeGenSuppress("InitialAgentPoolConfiguration", typeof(long), typeof(NetworkCloudAgentPoolMode), typeof(string), typeof(string))]
     public partial class InitialAgentPoolConfiguration
     {
-        /// <summary> Initializes a new instance of <see cref="InitialAgentPoolConfiguration"/>. </summary>
-        // TODO: Remove this compatibility constructor after https://github.com/microsoft/typespec/issues/11588 is fixed.
-        public InitialAgentPoolConfiguration(long count, NetworkCloudAgentPoolMode mode, string name, string vmSkuName)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(vmSkuName, nameof(vmSkuName));
-
-            AvailabilityZones = new ChangeTrackingList<string>();
-            Count = count;
-            Labels = new ChangeTrackingList<KubernetesLabel>();
-            Mode = mode;
-            Taints = new ChangeTrackingList<KubernetesLabel>();
-            Name = name;
-            VmSkuName = vmSkuName;
-        }
-
         /// <summary> The maximum number or percentage of nodes that are surged during upgrade. This can either be set to an integer (e.g. '5') or a percentage (e.g. '50%'). If a percentage is specified, it is the percentage of the total agent pool size at the time of the upgrade. For percentages, fractional nodes are rounded up. If not specified, the default is 1. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string UpgradeMaxSurge

@@ -35,6 +35,11 @@ namespace Azure.AI.Agents.Persistent
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="MessageInputContentBlock"/>. </summary>
+        protected MessageInputContentBlock() : this(default)
+        {
+        }
+
         /// <summary> Specifies which kind of content block this is (text, image_file, image_url, etc.). </summary>
         internal MessageBlockType Type { get; set; }
     }
