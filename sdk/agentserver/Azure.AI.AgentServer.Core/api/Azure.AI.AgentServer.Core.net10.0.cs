@@ -129,9 +129,9 @@ namespace Azure.AI.AgentServer.Core.Storage
         public static Azure.AI.AgentServer.Core.Storage.DeletedStateStore DeletedStateStore(string? id = null, string name = null, bool deleted = false) { throw null; }
         public static Azure.AI.AgentServer.Core.Storage.DeletedStateStoreItem DeletedStateStoreItem(string? id = null, string key = null, bool deleted = false) { throw null; }
         public static Azure.AI.AgentServer.Core.Storage.StateStore StateStore(string id = null, string name = null, bool userIsolation = false, int itemTtlSeconds = 0, string? description = null, System.Collections.Generic.IDictionary<string, string> tags = null, long createdAt = (long)0, long updatedAt = (long)0) { throw null; }
-        public static Azure.AI.AgentServer.Core.Storage.StateStoreItem StateStoreItem(string id = null, string key = null, System.Collections.Generic.IDictionary<string, System.BinaryData> value = null, System.Collections.Generic.IDictionary<string, string> tags = null, string etag = null, long createdAt = (long)0, long updatedAt = (long)0) { throw null; }
-        public static Azure.AI.AgentServer.Core.Storage.StateStoreItemKey StateStoreItemKey(string id = null, string key = null, System.Collections.Generic.IDictionary<string, string> tags = null, string etag = null, long createdAt = (long)0, long updatedAt = (long)0) { throw null; }
-        public static Azure.AI.AgentServer.Core.Storage.StateStoreItemRef StateStoreItemRef(string id = null, string key = null, string etag = null, long createdAt = (long)0, long updatedAt = (long)0) { throw null; }
+        public static Azure.AI.AgentServer.Core.Storage.StateStoreItem StateStoreItem(string id = null, string key = null, System.Collections.Generic.IDictionary<string, System.BinaryData> value = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag etag = default(Azure.ETag), long createdAt = (long)0, long updatedAt = (long)0) { throw null; }
+        public static Azure.AI.AgentServer.Core.Storage.StateStoreItemKey StateStoreItemKey(string id = null, string key = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ETag etag = default(Azure.ETag), long createdAt = (long)0, long updatedAt = (long)0) { throw null; }
+        public static Azure.AI.AgentServer.Core.Storage.StateStoreItemRef StateStoreItemRef(string id = null, string key = null, Azure.ETag etag = default(Azure.ETag), long createdAt = (long)0, long updatedAt = (long)0) { throw null; }
     }
     public partial class DeletedStateStore : System.ClientModel.Primitives.IJsonModel<Azure.AI.AgentServer.Core.Storage.DeletedStateStore>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.AgentServer.Core.Storage.DeletedStateStore>
     {
@@ -177,16 +177,16 @@ namespace Azure.AI.AgentServer.Core.Storage
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItemRef> CreateItemAsync(string key, System.Collections.Generic.IDictionary<string, System.BinaryData> value, System.Collections.Generic.IReadOnlyDictionary<string, string>? tags, string? callId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItemRef> CreateItemAsync(string key, System.Collections.Generic.IDictionary<string, System.BinaryData> value, System.Collections.Generic.IReadOnlyDictionary<string, string>? tags = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.DeletedStateStore> DeleteAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.DeletedStateStoreItem> DeleteItemAsync(string key, string? ifMatch, string? callId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.DeletedStateStoreItem> DeleteItemAsync(string key, string? ifMatch = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.DeletedStateStoreItem> DeleteItemAsync(string key, Azure.ETag ifMatch, string? callId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.DeletedStateStoreItem> DeleteItemAsync(string key, Azure.ETag ifMatch = default(Azure.ETag), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStore?> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItem?> GetItemAsync(string key, string? callId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItem?> GetItemAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.FoundryStateStore> GetOrCreateAsync(string name, Azure.Core.TokenCredential? credential = null, System.Uri? endpoint = null, bool userIsolation = false, int itemTtlSeconds = 2592000, string? description = null, System.Collections.Generic.IReadOnlyDictionary<string, string>? tags = null, string? userId = null, string apiVersion = "v1", System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItemKeyPage> ListKeysAsync(System.Collections.Generic.IReadOnlyDictionary<string, string>? tags, int? limit, string? after, string? before, Azure.AI.AgentServer.Core.Storage.ListRequestOrder order, string? callId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItemKeyPage> ListKeysAsync(System.Collections.Generic.IReadOnlyDictionary<string, string>? tags = null, int? limit = default(int?), string? after = null, string? before = null, Azure.AI.AgentServer.Core.Storage.ListRequestOrder order = Azure.AI.AgentServer.Core.Storage.ListRequestOrder.Desc, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItemRef> SetItemAsync(string key, System.Collections.Generic.IDictionary<string, System.BinaryData> value, System.Collections.Generic.IReadOnlyDictionary<string, string>? tags, string? ifMatch, bool requireExists, string? callId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItemRef> SetItemAsync(string key, System.Collections.Generic.IDictionary<string, System.BinaryData> value, System.Collections.Generic.IReadOnlyDictionary<string, string>? tags = null, string? ifMatch = null, bool requireExists = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItemRef> SetItemAsync(string key, System.Collections.Generic.IDictionary<string, System.BinaryData> value, System.Collections.Generic.IReadOnlyDictionary<string, string>? tags, Azure.ETag ifMatch, bool requireExists, string? callId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStoreItemRef> SetItemAsync(string key, System.Collections.Generic.IDictionary<string, System.BinaryData> value, System.Collections.Generic.IReadOnlyDictionary<string, string>? tags = null, Azure.ETag ifMatch = default(Azure.ETag), bool requireExists = false, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.AI.AgentServer.Core.Storage.StateStore> UpdateAsync(Azure.AI.AgentServer.Core.Storage.StateStoreUpdateOptions update, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class FoundryStorageApiException : Azure.AI.AgentServer.Core.Storage.FoundryStorageException
@@ -212,8 +212,8 @@ namespace Azure.AI.AgentServer.Core.Storage
     }
     public partial class FoundryStoragePreconditionException : Azure.AI.AgentServer.Core.Storage.FoundryStorageException
     {
-        public FoundryStoragePreconditionException(string message, string? currentETag = null, string? errorCode = null) : base (default(int), default(string), default(string), default(System.Exception)) { }
-        public string? CurrentETag { get { throw null; } }
+        public FoundryStoragePreconditionException(string message, Azure.ETag currentETag = default(Azure.ETag), string? errorCode = null) : base (default(int), default(string), default(string), default(System.Exception)) { }
+        public Azure.ETag CurrentETag { get { throw null; } }
     }
     public enum ListRequestOrder
     {
@@ -247,7 +247,7 @@ namespace Azure.AI.AgentServer.Core.Storage
     {
         internal StateStoreItem() { }
         public long CreatedAt { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag Etag { get { throw null; } }
         public string Id { get { throw null; } }
         public string Key { get { throw null; } }
         public string Object { get { throw null; } }
@@ -269,7 +269,7 @@ namespace Azure.AI.AgentServer.Core.Storage
     {
         internal StateStoreItemKey() { }
         public long CreatedAt { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag Etag { get { throw null; } }
         public string Id { get { throw null; } }
         public string Key { get { throw null; } }
         public string Object { get { throw null; } }
@@ -297,7 +297,7 @@ namespace Azure.AI.AgentServer.Core.Storage
     {
         internal StateStoreItemRef() { }
         public long CreatedAt { get { throw null; } }
-        public string Etag { get { throw null; } }
+        public Azure.ETag Etag { get { throw null; } }
         public string Id { get { throw null; } }
         public string Key { get { throw null; } }
         public string Object { get { throw null; } }
