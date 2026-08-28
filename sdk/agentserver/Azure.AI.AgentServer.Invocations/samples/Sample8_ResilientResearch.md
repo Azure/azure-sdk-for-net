@@ -25,7 +25,8 @@ dotnet add package OpenAI
 The model is a real `ResponsesClient`. In production point it at your Foundry/OpenAI endpoint with a credential; tests inject a mock transport so the producer runs unchanged.
 
 ```C# Snippet:ResilientResearch_RegisterServices
-var services = new ServiceCollection();
+var builder = AgentHost.CreateBuilder();
+IServiceCollection services = builder.Services;
 
 // Inject a REAL OpenAI Responses client as the upstream model. In production this
 // points at your Foundry/OpenAI endpoint; tests inject a mock transport so the
@@ -45,11 +46,9 @@ services.AddAgentEventStreams(o => o.UseFileBackedReplay());
 // (keyed by task name), so the handler resolves it with GetResilientTask. The provider-
 // aware overloads were removed (the service-locator shape is being retired ahead of GA),
 // so resolve the handler's singleton dependencies from the built container once and
-// capture them in the plain delegate. The registry is read lazily at invocation time, so
-// registering after the provider is built is fine.
-ServiceProvider provider = services.BuildServiceProvider();
-AgentEventStreamRegistry streams = provider.GetRequiredService<AgentEventStreamRegistry>();
-ResponsesClient model = provider.GetRequiredService<ResponsesClient>();
+// capture them in the plain delegate after the complete service graph is registered.
+AgentEventStreamRegistry streams = null!;
+ResponsesClient model = null!;
 
 // The resilient "research" task is session-scoped and steerable: one durable
 // chain per session (TaskId = research-{sessionId}), and a POST while a turn is
@@ -64,6 +63,10 @@ services.AddResilientMultiTurnTask<ResearchRequest, ResearchResult>(
         ctx,
         ct: ct),
     steerable: true);
+
+var app = builder.Build();
+streams = app.App.Services.GetRequiredService<AgentEventStreamRegistry>();
+model = app.App.Services.GetRequiredService<ResponsesClient>();
 ```
 
 ## The durable producer task
@@ -528,7 +531,7 @@ public class ResilientResearchHandler : InvocationHandler
             : TaskIdForSession(context.SessionId);
 
         TaskRun<ResearchResult>? run = await research
-            .GetActiveRunAsync(taskId, cancellationToken);
+            .GetActiveRunAsync(taskId, invocationId, cancellationToken);
 
         if (run is null)
         {

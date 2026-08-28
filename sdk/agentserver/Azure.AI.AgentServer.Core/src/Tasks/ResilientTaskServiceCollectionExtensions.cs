@@ -71,9 +71,10 @@ public static class ResilientTaskServiceCollectionExtensions
         Action<TaskRegistrationOptions>? configure = null)
     {
         ArgumentNullException.ThrowIfNull(services);
+        ValidateRegistrationArguments(name, handler);
         DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
         TaskDefinition<TInput, TOutput> definition = registrar.AddTask(name, handler, configure);
-        services.AddKeyedSingleton(name, definition);
+        RegisterDefinition(services, name, definition);
         return definition;
     }
 
@@ -101,9 +102,11 @@ public static class ResilientTaskServiceCollectionExtensions
         Action<TaskRegistrationOptions>? configure = null)
     {
         ArgumentNullException.ThrowIfNull(services);
+        ValidateRegistrationArguments(name, handler);
+        ArgumentNullException.ThrowIfNull(inputTypeInfo);
         DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
         TaskDefinition<TInput, TOutput> definition = registrar.AddTask(name, handler, inputTypeInfo, configure);
-        services.AddKeyedSingleton(name, definition);
+        RegisterDefinition(services, name, definition);
         return definition;
     }
 
@@ -133,9 +136,10 @@ public static class ResilientTaskServiceCollectionExtensions
         Action<TaskRegistrationOptions>? configure = null)
     {
         ArgumentNullException.ThrowIfNull(services);
+        ValidateRegistrationArguments(name, handler);
         DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
         TaskDefinition<TInput, TOutput> definition = registrar.AddMultiTurnTask(name, handler, steerable, configure);
-        services.AddKeyedSingleton(name, definition);
+        RegisterDefinition(services, name, definition);
         return definition;
     }
 
@@ -164,10 +168,34 @@ public static class ResilientTaskServiceCollectionExtensions
         Action<TaskRegistrationOptions>? configure = null)
     {
         ArgumentNullException.ThrowIfNull(services);
+        ValidateRegistrationArguments(name, handler);
+        ArgumentNullException.ThrowIfNull(inputTypeInfo);
         DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
         TaskDefinition<TInput, TOutput> definition = registrar.AddMultiTurnTask(name, handler, inputTypeInfo, steerable, configure);
-        services.AddKeyedSingleton(name, definition);
+        RegisterDefinition(services, name, definition);
         return definition;
+    }
+
+    private static void ValidateRegistrationArguments<TInput, TOutput>(
+        string name,
+        Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        ArgumentNullException.ThrowIfNull(handler);
+    }
+
+    private static void RegisterDefinition<TInput, TOutput>(
+        IServiceCollection services,
+        string name,
+        TaskDefinition<TInput, TOutput> definition)
+    {
+        services.AddKeyedSingleton<TaskDefinition<TInput, TOutput>>(
+            name,
+            (serviceProvider, _) =>
+            {
+                _ = serviceProvider.GetRequiredService<TaskEngine>();
+                return definition;
+            });
     }
 
     /// <summary>
@@ -298,7 +326,7 @@ public static class ResilientTaskServiceCollectionExtensions
             // Late-bind the engine so a TaskDefinition (created at registration time, before the
             // container existed) can resolve it at invocation time. The engine is always resolved
             // before any task runs, so populating here guarantees the accessor is ready.
-            sp.GetRequiredService<TaskEngineAccessor>().Engine = engine;
+            sp.GetRequiredService<TaskEngineAccessor>().Bind(engine);
 
             return engine;
         });

@@ -28,7 +28,7 @@ internal sealed class TaskTestHost : IDisposable
         AgentName = agentName;
         SessionId = sessionId;
         Engine = new TaskEngine(store, registry, agentName, sessionId, logger);
-        engineAccessor.Engine = Engine;
+        engineAccessor.Bind(Engine);
     }
 
     public LocalTaskStore Store { get; }
