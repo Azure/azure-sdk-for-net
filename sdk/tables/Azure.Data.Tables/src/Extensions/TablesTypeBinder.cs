@@ -188,25 +188,28 @@ namespace Azure.Data.Tables
         {
             parsedEnum = default;
 
-            if (!Enum.TryParse(enumType, enumValue, out parsedEnum))
+            if (string.IsNullOrWhiteSpace(enumValue))
             {
                 return false;
             }
 
-            if (enumValue?.Contains(',') == true)
+            foreach (var part in enumValue.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
-                foreach (var part in enumValue.Split(','))
+                if (!Enum.IsDefined(enumType, part.Trim()))
                 {
-                    if (!Enum.IsDefined(enumType, part.Trim()))
-                    {
-                        return false;
-                    }
+                    return false;
                 }
-
-                return true;
             }
 
-            return Enum.IsDefined(enumType, enumValue);
+            try
+            {
+                parsedEnum = Enum.Parse(enumType, enumValue);
+                return true;
+            }
+            catch (ArgumentException)
+            {
+                return false;
+            }
         }
     }
 }
