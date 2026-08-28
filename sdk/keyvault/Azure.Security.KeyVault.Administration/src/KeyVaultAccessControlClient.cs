@@ -61,23 +61,8 @@ namespace Azure.Security.KeyVault.Administration
             options ??= new KeyVaultAdministrationClientOptions();
             string apiVersion = options.GetVersionString();
 
-            bool enableProofOfPossession = options.EnableProofOfPossession && ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport);
-            ChallengeBasedAuthenticationPolicy authenticationPolicy = new ChallengeBasedAuthenticationPolicy(
-                credential,
-                options.DisableChallengeResourceVerification,
-                enableProofOfPossession);
-            HttpPipeline pipeline = enableProofOfPossession
-                ? HttpPipelineBuilder.Build(
-                    options,
-                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
-                    perRetryPolicies: [authenticationPolicy],
-                    transportOptions: new HttpPipelineTransportOptions(),
-                    responseClassifier: null)
-                : HttpPipelineBuilder.Build(
-                    options,
-                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
-                    perRetryPolicies: [authenticationPolicy],
-                    responseClassifier: null);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options,
+                    new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
 
             _diagnostics = new ClientDiagnostics(options, true);
             ClientDiagnostics = _diagnostics;

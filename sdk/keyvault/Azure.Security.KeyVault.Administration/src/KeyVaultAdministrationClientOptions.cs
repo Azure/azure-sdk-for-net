@@ -54,10 +54,6 @@ namespace Azure.Security.KeyVault.Administration
             {
                 Version = serviceVersion;
             }
-            if (bool.TryParse(section["EnableProofOfPossession"], out bool enableProofOfPossession))
-            {
-                EnableProofOfPossession = enableProofOfPossession;
-            }
             ConfigureLogging();
         }
 
@@ -106,20 +102,6 @@ namespace Azure.Security.KeyVault.Administration
         /// Gets or sets whether to disable verification that the authentication challenge resource matches the Key Vault or Managed HSM domain.
         /// </summary>
         public bool DisableChallengeResourceVerification { get; set; }
-
-        /// <summary>
-        /// Gets or sets whether to request Proof-of-Possession (PoP) token binding for authenticated requests.
-        /// Opt-in; defaults to <see langword="false"/>.
-        /// </summary>
-        /// <remarks>
-        /// Requesting PoP is best-effort. When the credential does not honor it, a plain bearer token is used.
-        /// When the credential returns a bound token but the configured transport cannot be updated in place to
-        /// apply the binding certificate (such as <c>HttpClientTransport.Shared</c>), the client fails closed and
-        /// throws rather than sending a request the service cannot authenticate. Because PoP tokens are bound per
-        /// request URI and method, the single-slot token cache is invalidated on each new target, so throughput
-        /// drops for workloads that hit many keys.
-        /// </remarks>
-        public bool EnableProofOfPossession { get; set; }
 
         internal string GetVersionString()
         {

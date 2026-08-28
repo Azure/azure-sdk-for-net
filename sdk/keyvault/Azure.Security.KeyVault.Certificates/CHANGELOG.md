@@ -4,14 +4,9 @@
 
 ### Features Added
 
-- Added opt-in support for Proof-of-Possession (PoP) token binding in the Key Vault authentication policy. Set `CertificateClientOptions.EnableProofOfPossession` to `true` to request PoP-bound tokens; it defaults to `false` so existing applications see no change in authentication behavior, transport/connection-pooling behavior, or resource usage.
-- When Proof-of-Possession token binding is enabled but the configured transport cannot apply the binding certificate in place (for example, `HttpClientTransport.Shared`), the client now fails closed with a clear error instead of sending a bound token the service cannot validate.
-
 ### Breaking Changes
 
 ### Bugs Fixed
-
-- Fixed a `NullReferenceException` in the challenge-based authentication policy that could occur when a Continuous Access Evaluation (CAE) claims challenge was received for an authority that had not yet been cached.
 
 ### Other Changes
 

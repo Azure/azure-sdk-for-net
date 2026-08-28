@@ -112,7 +112,6 @@ namespace Azure.Security.KeyVault.Administration
     {
         public KeyVaultAdministrationClientOptions(Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion version = Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion.V2026_01_01_Preview) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
-        public bool EnableProofOfPossession { get { throw null; } set { } }
         public Azure.Security.KeyVault.Administration.KeyVaultAdministrationClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {

@@ -97,26 +97,15 @@ namespace Azure.Security.KeyVault.Certificates
             _vaultUri = vaultUri;
             _diagnostics = new ClientDiagnostics(options);
 
-            // Build the pipeline from the customer's CertificateClientOptions so their policies, retry, transport,
-            // diagnostics and ApplicationId all flow through. A dedicated, updatable transport is used only when
-            // Proof-of-Possession is enabled; otherwise the shared default transport is kept unchanged.
-            bool enableProofOfPossession = options.EnableProofOfPossession && ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport);
-            ChallengeBasedAuthenticationPolicy authenticationPolicy = new ChallengeBasedAuthenticationPolicy(
-                credential,
-                options.DisableChallengeResourceVerification,
-                enableProofOfPossession);
-            HttpPipeline pipeline = enableProofOfPossession
-                ? HttpPipelineBuilder.Build(
-                    options,
-                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
-                    perRetryPolicies: [authenticationPolicy],
-                    transportOptions: new HttpPipelineTransportOptions(),
-                    responseClassifier: null)
-                : HttpPipelineBuilder.Build(
-                    options,
-                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
-                    perRetryPolicies: [authenticationPolicy],
-                    responseClassifier: null);
+            // Build the HttpPipeline directly from the customer's CertificateClientOptions
+            // (which extends ClientOptions). This is the same construction path the
+            // legacy hand-written CertificateClient used, so all of AddPolicy entries
+            // (per-call + per-retry), custom RetryPolicy / RetryOptions, Transport,
+            // Diagnostics.LoggedHeaderNames + LoggedQueryParameters and ApplicationId
+            // flow through automatically. No field-by-field copy is needed - future
+            // additions to ClientOptions are picked up for free.
+            var authPolicy = new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, authPolicy);
 
             _generated = new KeyVaultCertificatesClient(vaultUri, MapApiVersion(options.Version), pipeline, _diagnostics);
 

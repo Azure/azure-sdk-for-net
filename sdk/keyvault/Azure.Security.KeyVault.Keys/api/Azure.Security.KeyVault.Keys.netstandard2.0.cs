@@ -185,7 +185,6 @@ namespace Azure.Security.KeyVault.Keys
     {
         public KeyClientOptions(Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion version = Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion.V2026_01_01_Preview) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
-        public bool EnableProofOfPossession { get { throw null; } set { } }
         public Azure.Security.KeyVault.Keys.KeyClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {
@@ -454,7 +453,6 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
     {
         public CryptographyClientOptions(Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion version = Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion.V2026_01_01_Preview) { }
         public bool DisableChallengeResourceVerification { get { throw null; } set { } }
-        public bool EnableProofOfPossession { get { throw null; } set { } }
         public Azure.Security.KeyVault.Keys.Cryptography.CryptographyClientOptions.ServiceVersion Version { get { throw null; } }
         public enum ServiceVersion
         {

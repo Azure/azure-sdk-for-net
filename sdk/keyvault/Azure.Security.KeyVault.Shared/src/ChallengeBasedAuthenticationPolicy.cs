@@ -1,11 +1,10 @@
-// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using Azure.Core;
 using Azure.Core.Pipeline;
 using System;
 using System.Collections.Concurrent;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
 using System.Threading.Tasks;
@@ -15,22 +14,7 @@ namespace Azure.Security.KeyVault
     internal class ChallengeBasedAuthenticationPolicy : BearerTokenAuthenticationPolicy
     {
         private const string KeyVaultStashedContentKey = "KeyVaultContent";
-        private const string TokenBoundAuthHeaderName = "x-ms-tokenboundauth";
-        private const string PoPTokenTypePrefix = "pop ";
-        private const string MtlsPoPTokenTypePrefix = "mtls_pop ";
-        private const string TokenBindingFailedMessage =
-            "Proof-of-Possession token binding was requested (EnableProofOfPossession = true), but the binding " +
-            "certificate could not be applied to the configured transport, so the request would carry a bound " +
-            "token the service cannot validate. This happens when the transport cannot be updated in place, such " +
-            "as HttpClientTransport.Shared or a transport that does not support updates. Use a transport that " +
-            "supports in-place updates (the default), or set EnableProofOfPossession to false.";
-        private static readonly Type[] s_updateParameterTypes = [typeof(HttpPipelineTransportOptions)];
         private readonly bool _verifyChallengeResource;
-        private readonly bool _enableProofOfPossession;
-
-        // Set when applying the PoP binding certificate to the transport fails; read to suppress the
-        // x-ms-tokenboundauth header on that request. Volatile for cross-thread visibility.
-        private volatile bool _transportUpdateFailed;
 
         /// <summary>
         /// Challenges are cached using the Key Vault or Managed HSM endpoint URI authority as the key.
@@ -38,45 +22,10 @@ namespace Azure.Security.KeyVault
         private static readonly ConcurrentDictionary<string, ChallengeParameters> s_challengeCache = new();
         private ChallengeParameters _challenge;
 
-        public ChallengeBasedAuthenticationPolicy(TokenCredential credential, bool disableChallengeResourceVerification, bool enableProofOfPossession = false) : base(credential, Array.Empty<string>())
+        public ChallengeBasedAuthenticationPolicy(TokenCredential credential, bool disableChallengeResourceVerification) : base(credential, Array.Empty<string>())
         {
             _verifyChallengeResource = !disableChallengeResourceVerification;
-            _enableProofOfPossession = enableProofOfPossession;
         }
-
-        [UnconditionalSuppressMessage(
-            "Trimming",
-            "IL2075",
-            Justification = "This reflection check only determines whether a public virtual method was overridden; it does not invoke dynamically discovered code.")]
-        internal static bool SupportsProofOfPossession(HttpPipelineTransport transport)
-            => transport.GetType().GetMethod(nameof(HttpPipelineTransport.Update), s_updateParameterTypes)?.DeclaringType != typeof(HttpPipelineTransport);
-
-        /// <summary>
-        /// Applies the Proof-of-Possession binding certificate to the transport, recording whether it could be
-        /// applied so a bound request that cannot carry the certificate fails closed instead of authenticating.
-        /// </summary>
-        // Key Vault intentionally consumes this experimental Azure.Core member; suppress AZID0004 on the override
-        // rather than marking this internal method experimental, which would otherwise flow to its callers.
-#pragma warning disable AZID0004
-        protected override void OnTransportOptionsChanged(HttpPipelineTransportOptions options)
-        {
-            try
-            {
-                base.OnTransportOptionsChanged(options);
-                _transportUpdateFailed = false;
-            }
-            catch (InvalidOperationException)
-            {
-                // e.g. HttpClientTransport.Shared cannot be updated in place.
-                _transportUpdateFailed = true;
-            }
-            catch (NotSupportedException)
-            {
-                // A transport that doesn't support updates at all (base HttpPipelineTransport.Update()).
-                _transportUpdateFailed = true;
-            }
-        }
-#pragma warning restore AZID0004
 
         /// <inheritdoc cref="BearerTokenAuthenticationPolicy.AuthorizeRequestAsync(Azure.Core.HttpMessage)" />
         protected override ValueTask AuthorizeRequestAsync(HttpMessage message)
@@ -103,14 +52,7 @@ namespace Azure.Security.KeyVault
             if (_challenge != null)
             {
                 // We fetched the challenge from the cache, but we have not initialized the Scopes in the base yet.
-                var context = new TokenRequestContext(
-                    _challenge.Scopes,
-                    parentRequestId: message.Request.ClientRequestId,
-                    tenantId: _challenge.TenantId,
-                    isCaeEnabled: true,
-                    isProofOfPossessionEnabled: _enableProofOfPossession,
-                    requestUri: message.Request.Uri.ToUri(),
-                    requestMethod: message.Request.Method.ToString());
+                var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId, isCaeEnabled: true);
                 if (async)
                 {
                     await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
@@ -120,7 +62,6 @@ namespace Azure.Security.KeyVault
                     AuthenticateAndAuthorizeRequest(message, context);
                 }
 
-                AddTokenBoundAuthHeaderIfBound(message);
                 return;
             }
 
@@ -191,12 +132,9 @@ namespace Azure.Security.KeyVault
             string claims = getDecodedClaimsParameter(error, message.Response);
             if (claims != null)
             {
-                // Reuse the cached scope for this authority when present; on a cache miss keep the scope
-                // parsed from this response instead of dereferencing a null challenge.
-                if (s_challengeCache.TryGetValue(authority, out _challenge))
-                {
-                    scope = _challenge.Scopes[0];
-                }
+                // Get the scope from the cache
+                s_challengeCache.TryGetValue(authority, out _challenge);
+                scope = _challenge.Scopes[0];
             }
 
             if (scope is null)
@@ -237,20 +175,7 @@ namespace Azure.Security.KeyVault
                 s_challengeCache[authority] = _challenge;
             }
 
-            if (_challenge is null)
-            {
-                return false;
-            }
-
-            var context = new TokenRequestContext(
-                _challenge.Scopes,
-                parentRequestId: message.Request.ClientRequestId,
-                tenantId: _challenge.TenantId,
-                isCaeEnabled: true,
-                claims: claims,
-                isProofOfPossessionEnabled: _enableProofOfPossession,
-                requestUri: message.Request.Uri.ToUri(),
-                requestMethod: message.Request.Method.ToString());
+            var context = new TokenRequestContext(_challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: _challenge.TenantId, isCaeEnabled: true, claims: claims);
             if (async)
             {
                 await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
@@ -260,38 +185,7 @@ namespace Azure.Security.KeyVault
                 AuthenticateAndAuthorizeRequest(message, context);
             }
 
-            AddTokenBoundAuthHeaderIfBound(message);
             return true;
-        }
-
-        // Applies the token-bound auth outcome. The token is Proof-of-Possession bound when the negotiated
-        // Authorization scheme is mtls_pop (managed-identity mTLS PoP) or pop - decided from the scheme actually
-        // returned, not the requested flag. When it is bound but the binding certificate could not be applied to
-        // the transport, fail closed with a clear error rather than sending a request the service cannot
-        // authenticate. When it is bound and applied, advertise it with x-ms-tokenboundauth. Otherwise drop any
-        // stale header so it cannot outlive its bound token.
-        private void AddTokenBoundAuthHeaderIfBound(HttpMessage message)
-        {
-            bool isProofOfPossessionBound =
-                message.Request.Headers.TryGetValue(HttpHeader.Names.Authorization, out string authorizationHeaderValue) &&
-                (authorizationHeaderValue.StartsWith(MtlsPoPTokenTypePrefix, StringComparison.OrdinalIgnoreCase) ||
-                 authorizationHeaderValue.StartsWith(PoPTokenTypePrefix, StringComparison.OrdinalIgnoreCase));
-
-            if (isProofOfPossessionBound && _transportUpdateFailed)
-            {
-                throw new InvalidOperationException(TokenBindingFailedMessage);
-            }
-
-            if (isProofOfPossessionBound)
-            {
-                message.Request.Headers.SetValue(TokenBoundAuthHeaderName, "true");
-            }
-            else
-            {
-                // Not PoP-bound (e.g. a CAE re-auth returned a plain token) - drop any stale
-                // x-ms-tokenboundauth so it cannot outlive its bound token.
-                message.Request.Headers.Remove(TokenBoundAuthHeaderName);
-            }
         }
 
         /// <inheritdoc />

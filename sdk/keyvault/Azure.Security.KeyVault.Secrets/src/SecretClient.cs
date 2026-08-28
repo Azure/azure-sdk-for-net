@@ -37,7 +37,6 @@ namespace Azure.Security.KeyVault.Secrets
         private readonly Uri _vaultUri;
         private readonly KeyVaultSecretsClient _generated;
         private readonly ClientDiagnostics _diagnostics;
-        private readonly HttpPipeline _pipeline;
 
         /// <summary>For mocking.</summary>
         protected SecretClient() { }
@@ -56,27 +55,20 @@ namespace Azure.Security.KeyVault.Secrets
             _vaultUri    = vaultUri;
             _diagnostics = new ClientDiagnostics(options);
 
-            // Build the pipeline from the customer's SecretClientOptions so their policies, retry, transport,
-            // diagnostics and ApplicationId all flow through. A dedicated, updatable transport is used only when
-            // Proof-of-Possession is enabled; otherwise the shared default transport is kept unchanged.
-            bool enableProofOfPossession = options.EnableProofOfPossession && ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport);
-            ChallengeBasedAuthenticationPolicy authenticationPolicy = new ChallengeBasedAuthenticationPolicy(
-                credential,
-                options.DisableChallengeResourceVerification,
-                enableProofOfPossession);
-            HttpPipeline pipeline = enableProofOfPossession
-                ? HttpPipelineBuilder.Build(
-                    options,
-                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
-                    perRetryPolicies: [authenticationPolicy],
-                    transportOptions: new HttpPipelineTransportOptions(),
-                    responseClassifier: null)
-                : HttpPipelineBuilder.Build(
-                    options,
-                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
-                    perRetryPolicies: [authenticationPolicy],
-                    responseClassifier: null);
-            _pipeline = pipeline;
+            // Build the HttpPipeline directly from the customer's SecretClientOptions
+            // (which extends ClientOptions). This is the legacy SecretClient construction
+            // path. Doing it this way picks up *everything* the customer configured —
+            // AddPolicy entries (per-call + per-retry), custom RetryPolicy / RetryOptions,
+            // Transport, Diagnostics.LoggedHeaderNames + LoggedQueryParameters,
+            // ApplicationId — automatically. None of those need explicit copy code, and
+            // future fields added to ClientOptions are picked up for free.
+            //
+            // The challenge-based auth policy is the same one the legacy SecretClient
+            // used so recordings remain byte-identical.
+            var authPolicy = new ChallengeBasedAuthenticationPolicy(
+                credential, options.DisableChallengeResourceVerification);
+
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, authPolicy);
 
             _generated = new KeyVaultSecretsClient(
                 vaultUri,

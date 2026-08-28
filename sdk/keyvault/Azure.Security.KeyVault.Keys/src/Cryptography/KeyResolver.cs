@@ -56,23 +56,8 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
             _apiVersion = options.GetVersionString();
 
-            bool enableProofOfPossession = options.EnableProofOfPossession && ChallengeBasedAuthenticationPolicy.SupportsProofOfPossession(options.Transport);
-            ChallengeBasedAuthenticationPolicy authenticationPolicy = new ChallengeBasedAuthenticationPolicy(
-                credential,
-                options.DisableChallengeResourceVerification,
-                enableProofOfPossession);
-            _pipeline = enableProofOfPossession
-                ? HttpPipelineBuilder.Build(
-                    options,
-                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
-                    perRetryPolicies: [authenticationPolicy],
-                    transportOptions: new HttpPipelineTransportOptions(),
-                    responseClassifier: null)
-                : HttpPipelineBuilder.Build(
-                    options,
-                    perCallPolicies: Array.Empty<HttpPipelinePolicy>(),
-                    perRetryPolicies: [authenticationPolicy],
-                    responseClassifier: null);
+            _pipeline = HttpPipelineBuilder.Build(options,
+                    new ChallengeBasedAuthenticationPolicy(credential, options.DisableChallengeResourceVerification));
 
             _clientDiagnostics = new ClientDiagnostics(options);
         }
