@@ -13,6 +13,9 @@
 
 ### Bugs Fixed
 
+- Corrected P-521 receipt verification to use the standard JOSE curve name and COSE ES512 algorithm identifier.
+- Fixed the retained `WaitUntil.Started` create-entry overloads to return before commitment and poll the entry resource for completion.
+
 ### Other Changes
 
 - Removed the unnecessary dependency on `Azure.Security.KeyVault.Keys`.

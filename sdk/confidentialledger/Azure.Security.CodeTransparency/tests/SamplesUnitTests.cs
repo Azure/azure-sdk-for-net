@@ -50,16 +50,24 @@ namespace Azure.Security.CodeTransparency.Tests
         [Test]
         public async Task Snippet_Readme_CodeTransparencySubmission_Test()
         {
-            // With waitForCommit the create call returns the committed entry; the entry id is
-            // taken from the Location header and the returned operation is already completed.
-            var createResponse = new MockResponse(201);
+            // WaitUntil.Started returns after the entry is accepted, then the operation polls the
+            // entry resource until it is committed.
+            var createResponse = new MockResponse(303);
             createResponse.AddHeader("Location", "https://foo.bar.com/entries/123.23");
+
+            var writer = new CborWriter();
+            writer.WriteStartMap(1);
+            writer.WriteTextString("EntryId");
+            writer.WriteTextString("123.23");
+            writer.WriteEndMap();
+            var committedEntryResponse = new MockResponse(200);
+            committedEntryResponse.SetContent(writer.Encode());
 
             var statementResponse = new MockResponse(200);
             statementResponse.AddHeader("Content-Type", "application/cose");
             statementResponse.SetContent(new byte[] { 0x01, 0x02, 0x03 });
 
-            var mockTransport = new MockTransport(createResponse, statementResponse);
+            var mockTransport = new MockTransport(createResponse, committedEntryResponse, statementResponse);
             var options = new CodeTransparencyClientOptions
             {
                 Transport = mockTransport,

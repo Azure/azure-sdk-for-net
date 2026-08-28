@@ -244,8 +244,16 @@ namespace Azure.Security.CodeTransparency
             scope.Start();
             try
             {
-                NullableResponse<BinaryData> response = CreateEntry(body, waitForCommit: true, cancellationToken);
-                return CreateCompletedEntryOperation(response.GetRawResponse());
+                bool waitForCommit = waitUntil == WaitUntil.Completed;
+                if (waitForCommit)
+                {
+                    NullableResponse<BinaryData> response = CreateEntry(body, true, cancellationToken);
+                    return CreateCompletedEntryOperation(response.GetRawResponse());
+                }
+
+                RequestContext context = CreateStartedRequestContext(cancellationToken);
+                Response responseStarted = CreateEntry(RequestContent.Create(body), false, context);
+                return new CreateEntryOperation(this, GetEntryIdFromLocation(responseStarted));
             }
             catch (Exception e)
             {
@@ -268,8 +276,16 @@ namespace Azure.Security.CodeTransparency
             scope.Start();
             try
             {
-                NullableResponse<BinaryData> response = await CreateEntryAsync(body, waitForCommit: true, cancellationToken).ConfigureAwait(false);
-                return CreateCompletedEntryOperation(response.GetRawResponse());
+                bool waitForCommit = waitUntil == WaitUntil.Completed;
+                if (waitForCommit)
+                {
+                    NullableResponse<BinaryData> response = await CreateEntryAsync(body, true, cancellationToken).ConfigureAwait(false);
+                    return CreateCompletedEntryOperation(response.GetRawResponse());
+                }
+
+                RequestContext context = CreateStartedRequestContext(cancellationToken);
+                Response responseStarted = await CreateEntryAsync(RequestContent.Create(body), false, context).ConfigureAwait(false);
+                return new CreateEntryOperation(this, GetEntryIdFromLocation(responseStarted));
             }
             catch (Exception e)
             {
@@ -293,6 +309,35 @@ namespace Azure.Security.CodeTransparency
 
             BinaryData value = CreateEntryIdCborValue(entryId);
             return new CreateEntryOperation(entryId, rawResponse, value);
+        }
+
+        private static RequestContext CreateStartedRequestContext(CancellationToken cancellationToken)
+        {
+            RequestContext context = new()
+            {
+                CancellationToken = cancellationToken,
+                ErrorOptions = ErrorOptions.NoThrow
+            };
+            context.AddClassifier(303, false);
+            context.AddPolicy(SuppressSeeOtherRedirectPolicy.Instance, HttpPipelinePosition.PerCall);
+            return context;
+        }
+
+        private sealed class SuppressSeeOtherRedirectPolicy : HttpPipelinePolicy
+        {
+            public static SuppressSeeOtherRedirectPolicy Instance { get; } = new();
+
+            public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                message.SetProperty(CodeTransparencyRedirectPolicy.SuppressSeeOtherRedirectProperty, true);
+                ProcessNext(message, pipeline);
+            }
+
+            public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                message.SetProperty(CodeTransparencyRedirectPolicy.SuppressSeeOtherRedirectProperty, true);
+                return ProcessNextAsync(message, pipeline);
+            }
         }
 
         /// <summary>

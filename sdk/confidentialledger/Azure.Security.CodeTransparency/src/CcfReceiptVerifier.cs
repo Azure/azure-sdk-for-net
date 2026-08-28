@@ -58,22 +58,10 @@ namespace Azure.Security.CodeTransparency
             // Get the ECDsa key size from the certificate
             int algValue = alg.GetValueAsInt32();
 
-            switch (jsonWebKey.Crv)
+            (ECCurve Curve, int Algorithm) curveParameters = GetCurveParameters(jsonWebKey.Crv);
+            if (algValue != curveParameters.Algorithm)
             {
-                case "P-256":
-                    if (algValue != -7)
-                        throw new InvalidOperationException($"The ECDsa key uses the wrong algorithm. Expected -7 Found {algValue}");
-                    break;
-                case "P-384":
-                    if (algValue != -35)
-                        throw new InvalidOperationException($"The ECDsa key uses the wrong algorithm. Expected -35 Found {algValue}");
-                    break;
-                case "P-512":
-                    if (algValue != -39)
-                        throw new InvalidOperationException($"The ECDsa key uses the wrong algorithm. Expected -39 Found {algValue}");
-                    break;
-                default:
-                    throw new InvalidOperationException("ECDsa key and Alg mismatch.");
+                throw new InvalidOperationException($"The ECDsa key uses the wrong algorithm. Expected {curveParameters.Algorithm} Found {algValue}");
             }
 
             if (!receipt.ProtectedHeaders.TryGetValue(CoseHeaderLabel.KeyIdentifier, out CoseHeaderValue kid) ||
@@ -163,17 +151,9 @@ namespace Azure.Security.CodeTransparency
                     }
                 }
 
-                ECCurve curve = jsonWebKey.Crv switch
-                {
-                    "P-256" => ECCurve.NamedCurves.nistP256,
-                    "P-384" => ECCurve.NamedCurves.nistP384,
-                    "P-512" => ECCurve.NamedCurves.nistP521,
-                    _ => throw new InvalidOperationException($"Unsupported ECDsa curve '{jsonWebKey.Crv}'.")
-                };
-
                 using ECDsa ecdsaKey = ECDsa.Create(new ECParameters
                 {
-                    Curve = curve,
+                    Curve = curveParameters.Curve,
                     Q = new ECPoint
                     {
                         X = Base64Url.Decode(jsonWebKey.X),
@@ -192,6 +172,17 @@ namespace Azure.Security.CodeTransparency
                     throw new InvalidOperationException($"Claim digest mismatch: {BitConverter.ToString(leaf.DataHash)} != {BitConverter.ToString(claimsDigest)}");
                 }
             }
+        }
+
+        private static (ECCurve Curve, int Algorithm) GetCurveParameters(string curve)
+        {
+            return curve switch
+            {
+                "P-256" => (ECCurve.NamedCurves.nistP256, -7),
+                "P-384" => (ECCurve.NamedCurves.nistP384, -35),
+                "P-521" => (ECCurve.NamedCurves.nistP521, -36),
+                _ => throw new InvalidOperationException($"Unsupported ECDsa curve '{curve}'.")
+            };
         }
     }
 }
