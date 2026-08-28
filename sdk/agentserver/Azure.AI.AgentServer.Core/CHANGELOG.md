@@ -6,6 +6,12 @@
 
 ### Breaking Changes
 
+- State-store optimistic-concurrency values now use the standard `Azure.ETag` type.
+  This includes `StateStoreItem.Etag`, `StateStoreItemRef.Etag`,
+  `StateStoreItemKey.Etag`, `FoundryStoragePreconditionException.CurrentETag`, the
+  corresponding model-factory parameters, and `FoundryStateStore.SetItemAsync` /
+  `DeleteItemAsync` `ifMatch` parameters.
+
 ### Bugs Fixed
 
 ### Other Changes
