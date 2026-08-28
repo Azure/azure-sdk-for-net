@@ -1,0 +1,4 @@
+directory: specification/marketplacecatalog/resource-manager/Microsoft.Marketplace/Reviews
+commit: cd70fff3b0680bd2bb699d1439b633873ba19a3a
+repo: Azure/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
