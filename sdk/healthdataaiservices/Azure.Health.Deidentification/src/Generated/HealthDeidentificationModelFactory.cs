@@ -99,7 +99,7 @@ namespace Azure.Health.Deidentification
         /// <param name="totalCount"> Number of documents total. </param>
         /// <param name="bytesProcessed"> Number of bytes processed. </param>
         /// <returns> A new <see cref="Deidentification.DeidentificationJobSummary"/> instance for mocking. </returns>
-        public static DeidentificationJobSummary DeidentificationJobSummary(int successfulCount = default, int failedCount = default, int canceledCount = default, int totalCount = default, long bytesProcessed = default)
+        public static DeidentificationJobSummary DeidentificationJobSummary(int successfulCount = 0, int failedCount = 0, int canceledCount = 0, int totalCount = 0, long bytesProcessed = 0L)
         {
             return new DeidentificationJobSummary(
                 successfulCount,
@@ -143,7 +143,7 @@ namespace Azure.Health.Deidentification
         /// <param name="taggedEntities"> Grouped PHI entities with single encoding specification for SurrogateOnly operation. </param>
         /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
         /// <returns> A new <see cref="Deidentification.DeidentificationContent"/> instance for mocking. </returns>
-        public static DeidentificationContent DeidentificationContent(string inputText = default, DeidentificationOperationType? operationType = default, TaggedPhiEntities taggedEntities = default, DeidentificationCustomizationOptions customizations = default)
+        public static DeidentificationContent DeidentificationContent(string inputText, DeidentificationOperationType? operationType, TaggedPhiEntities taggedEntities, DeidentificationCustomizationOptions customizations)
         {
             return new DeidentificationContent(inputText, operationType, taggedEntities, customizations, additionalBinaryDataProperties: null);
         }
@@ -231,7 +231,7 @@ namespace Azure.Health.Deidentification
         /// Primary encoding used by Python.
         /// </param>
         /// <returns> A new <see cref="Deidentification.StringIndex"/> instance for mocking. </returns>
-        public static StringIndex StringIndex(int utf8 = default, int utf16 = default, int codePoint = default)
+        public static StringIndex StringIndex(int utf8 = 0, int utf16 = 0, int codePoint = 0)
         {
             return new StringIndex(utf8, utf16, codePoint, additionalBinaryDataProperties: null);
         }
@@ -242,7 +242,7 @@ namespace Azure.Health.Deidentification
         /// <param name="customizations"> Customization parameters to override default service behaviors. </param>
         /// <returns> A new <see cref="Deidentification.DeidentificationContent"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DeidentificationContent DeidentificationContent(string inputText, DeidentificationOperationType? operationType, DeidentificationCustomizationOptions customizations)
+        public static DeidentificationContent DeidentificationContent(string inputText = default, DeidentificationOperationType? operationType = default, DeidentificationCustomizationOptions customizations = default)
         {
             return DeidentificationContent(inputText: inputText, operationType: operationType, taggedEntities: default, customizations: customizations);
         }

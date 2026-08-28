@@ -273,7 +273,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
         /// <param name="queueSelectors"> A collection of queue selectors that will be applied if this allocation is selected. </param>
         /// <returns> A new <see cref="JobRouter.QueueWeightedAllocation"/> instance for mocking. </returns>
-        public static QueueWeightedAllocation QueueWeightedAllocation(double weight = default, IEnumerable<RouterQueueSelector> queueSelectors = default)
+        public static QueueWeightedAllocation QueueWeightedAllocation(double weight = 0, IEnumerable<RouterQueueSelector> queueSelectors = default)
         {
             queueSelectors ??= new ChangeTrackingList<RouterQueueSelector>();
 
@@ -364,7 +364,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="weight"> The percentage of this weight, expressed as a fraction of 1. </param>
         /// <param name="workerSelectors"> A collection of worker selectors that will be applied if this allocation is selected. </param>
         /// <returns> A new <see cref="JobRouter.WorkerWeightedAllocation"/> instance for mocking. </returns>
-        public static WorkerWeightedAllocation WorkerWeightedAllocation(double weight = default, IEnumerable<RouterWorkerSelector> workerSelectors = default)
+        public static WorkerWeightedAllocation WorkerWeightedAllocation(double weight = 0, IEnumerable<RouterWorkerSelector> workerSelectors = default)
         {
             workerSelectors ??= new ChangeTrackingList<RouterWorkerSelector>();
 
@@ -410,7 +410,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Trigger for an exception action on exceeding queue length. </summary>
         /// <param name="threshold"> Threshold of number of jobs ahead in the queue to for this trigger to fire. </param>
         /// <returns> A new <see cref="JobRouter.QueueLengthExceptionTrigger"/> instance for mocking. </returns>
-        public static QueueLengthExceptionTrigger QueueLengthExceptionTrigger(int threshold = default)
+        public static QueueLengthExceptionTrigger QueueLengthExceptionTrigger(int threshold = 0)
         {
             return new QueueLengthExceptionTrigger(default, additionalBinaryDataProperties: null, threshold);
         }
@@ -422,7 +422,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Unique Id of the exception action. </param>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
         /// <returns> A new <see cref="JobRouter.ExceptionAction"/> instance for mocking. </returns>
-        public static ExceptionAction ExceptionAction(string id = default, string kind = default)
+        public static ExceptionAction ExceptionAction(string id = default, string kind = "Unknown")
         {
             return new UnknownExceptionAction(id, new ExceptionActionKind(kind), additionalBinaryDataProperties: null);
         }
@@ -661,7 +661,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="jobId"> Id of an unassigned job. </param>
         /// <param name="unassignmentCount"> The number of times a job is unassigned. At a maximum 3. </param>
         /// <returns> A new <see cref="JobRouter.UnassignJobResult"/> instance for mocking. </returns>
-        public static UnassignJobResult UnassignJobResult(string jobId = default, int unassignmentCount = default)
+        public static UnassignJobResult UnassignJobResult(string jobId = default, int unassignmentCount = 0)
         {
             return new UnassignJobResult(jobId, unassignmentCount, additionalBinaryDataProperties: null);
         }
@@ -743,7 +743,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="capacityCostPerJob"> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </param>
         /// <param name="maxNumberOfJobs"> The maximum number of jobs that can be supported concurrently for this channel. Value must be greater than zero. </param>
         /// <returns> A new <see cref="JobRouter.RouterChannel"/> instance for mocking. </returns>
-        public static RouterChannel RouterChannel(string channelId = default, int capacityCostPerJob = default, int? maxNumberOfJobs = default)
+        public static RouterChannel RouterChannel(string channelId = default, int capacityCostPerJob = 0, int? maxNumberOfJobs = default)
         {
             return new RouterChannel(channelId, capacityCostPerJob, maxNumberOfJobs, additionalBinaryDataProperties: null);
         }
@@ -755,7 +755,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="offeredAt"> Timestamp when the offer was created in UTC. </param>
         /// <param name="expiresAt"> Timestamp when the offer will expire in UTC. </param>
         /// <returns> A new <see cref="JobRouter.RouterJobOffer"/> instance for mocking. </returns>
-        public static RouterJobOffer RouterJobOffer(string offerId = default, string jobId = default, int capacityCost = default, DateTimeOffset? offeredAt = default, DateTimeOffset? expiresAt = default)
+        public static RouterJobOffer RouterJobOffer(string offerId = default, string jobId = default, int capacityCost = 0, DateTimeOffset? offeredAt = default, DateTimeOffset? expiresAt = default)
         {
             return new RouterJobOffer(
                 offerId,
@@ -772,7 +772,7 @@ namespace Azure.Communication.JobRouter
         /// <param name="capacityCost"> The amount of capacity this assignment has consumed on the worker. </param>
         /// <param name="assignedAt"> The assignment time of the job in UTC. </param>
         /// <returns> A new <see cref="JobRouter.RouterWorkerAssignment"/> instance for mocking. </returns>
-        public static RouterWorkerAssignment RouterWorkerAssignment(string assignmentId = default, string jobId = default, int capacityCost = default, DateTimeOffset assignedAt = default)
+        public static RouterWorkerAssignment RouterWorkerAssignment(string assignmentId = default, string jobId = default, int capacityCost = 0, DateTimeOffset assignedAt = default)
         {
             return new RouterWorkerAssignment(assignmentId, jobId, capacityCost, assignedAt, additionalBinaryDataProperties: null);
         }

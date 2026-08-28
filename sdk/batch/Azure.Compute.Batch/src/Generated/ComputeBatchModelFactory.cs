@@ -67,7 +67,7 @@ namespace Azure.Compute.Batch
         /// <param name="vmSize"> The size of virtual machines in the Pool. All VMs in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://learn.microsoft.com/azure/batch/batch-pool-vm-sizes). </param>
         /// <param name="totalCoreHours"> The total core hours used in the Pool during this aggregation interval. </param>
         /// <returns> A new <see cref="Batch.BatchPoolUsageMetrics"/> instance for mocking. </returns>
-        public static BatchPoolUsageMetrics BatchPoolUsageMetrics(string poolId = default, DateTimeOffset startTime = default, DateTimeOffset endTime = default, string vmSize = default, float totalCoreHours = default)
+        public static BatchPoolUsageMetrics BatchPoolUsageMetrics(string poolId = default, DateTimeOffset startTime = default, DateTimeOffset endTime = default, string vmSize = default, float totalCoreHours = 0F)
         {
             return new BatchPoolUsageMetrics(
                 poolId,
@@ -223,7 +223,7 @@ namespace Azure.Compute.Batch
         /// <param name="diskSizeGb"> The initial disk size in gigabytes. </param>
         /// <param name="managedDisk"> The managed disk parameters. </param>
         /// <returns> A new <see cref="Batch.DataDisk"/> instance for mocking. </returns>
-        public static DataDisk DataDisk(int logicalUnitNumber = default, CachingType? caching = default, int diskSizeGb = default, ManagedDisk managedDisk = default)
+        public static DataDisk DataDisk(int logicalUnitNumber = 0, CachingType? caching = default, int diskSizeGb = 0, ManagedDisk managedDisk = default)
         {
             return new DataDisk(logicalUnitNumber, caching, diskSizeGb, managedDisk, additionalBinaryDataProperties: null);
         }
@@ -482,7 +482,7 @@ namespace Azure.Compute.Batch
         /// <param name="frontendPortRangeEnd"> The last port number in the range of external ports that will be used to provide inbound access to the backendPort on individual Compute Nodes. Acceptable values range between 1 and 65534 except ports from 50000 to 55000 which are reserved by the Batch service. All ranges within a Pool must be distinct and cannot overlap. Each range must contain at least 40 ports. If any reserved or overlapping values are provided the request fails with HTTP status code 400. </param>
         /// <param name="networkSecurityGroupRules"> A list of network security group rules that will be applied to the endpoint. The maximum number of rules that can be specified across all the endpoints on a Batch Pool is 25. If no network security group rules are specified, a default rule will be created to allow inbound access to the specified backendPort. If the maximum number of network security group rules is exceeded the request fails with HTTP status code 400. </param>
         /// <returns> A new <see cref="Batch.BatchInboundNatPool"/> instance for mocking. </returns>
-        public static BatchInboundNatPool BatchInboundNatPool(string name = default, InboundEndpointProtocol protocol = default, int backendPort = default, int frontendPortRangeStart = default, int frontendPortRangeEnd = default, IEnumerable<NetworkSecurityGroupRule> networkSecurityGroupRules = default)
+        public static BatchInboundNatPool BatchInboundNatPool(string name = default, InboundEndpointProtocol protocol = default, int backendPort = 0, int frontendPortRangeStart = 0, int frontendPortRangeEnd = 0, IEnumerable<NetworkSecurityGroupRule> networkSecurityGroupRules = default)
         {
             networkSecurityGroupRules ??= new ChangeTrackingList<NetworkSecurityGroupRule>();
 
@@ -502,7 +502,7 @@ namespace Azure.Compute.Batch
         /// <param name="sourceAddressPrefix"> The source address prefix or tag to match for the rule. Valid values are a single IP address (i.e. 10.10.10.10), IP subnet (i.e. 192.168.1.0/24), default tag, or * (for all addresses).  If any other values are provided the request fails with HTTP status code 400. </param>
         /// <param name="sourcePortRanges"> The source port ranges to match for the rule. Valid values are '<i>' (for all ports 0 - 65535), a specific port (i.e. 22), or a port range (i.e. 100-200). The ports must be in the range of 0 to 65535. Each entry in this collection must not overlap any other entry (either a range or an individual port). If any other values are provided the request fails with HTTP status code 400. The default value is '</i>'. </param>
         /// <returns> A new <see cref="Batch.NetworkSecurityGroupRule"/> instance for mocking. </returns>
-        public static NetworkSecurityGroupRule NetworkSecurityGroupRule(int priority = default, NetworkSecurityGroupRuleAccess access = default, string sourceAddressPrefix = default, IEnumerable<string> sourcePortRanges = default)
+        public static NetworkSecurityGroupRule NetworkSecurityGroupRule(int priority = 0, NetworkSecurityGroupRuleAccess access = default, string sourceAddressPrefix = default, IEnumerable<string> sourcePortRanges = default)
         {
             sourcePortRanges ??= new ChangeTrackingList<string>();
 
@@ -877,7 +877,7 @@ namespace Azure.Compute.Batch
         /// <param name="identity"> The identity of the Batch pool, if configured. The list of user identities associated with the Batch pool. The user identity dictionary key references will be ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
         /// <param name="upgradePolicy"> The upgrade policy for the Pool. Describes an upgrade policy - automatic, manual, or rolling. </param>
         /// <returns> A new <see cref="Batch.BatchPool"/> instance for mocking. </returns>
-        public static BatchPool BatchPool(string id = default, string displayName = default, Uri uri = default, ETag eTag = default, DateTimeOffset lastModified = default, DateTimeOffset creationTime = default, BatchPoolState state = default, DateTimeOffset stateTransitionTime = default, AllocationState? allocationState = default, DateTimeOffset? allocationStateTransitionTime = default, string vmSize = default, VirtualMachineConfiguration virtualMachineConfiguration = default, TimeSpan? resizeTimeout = default, IEnumerable<ResizeError> resizeErrors = default, int currentDedicatedNodes = default, int currentLowPriorityNodes = default, int? targetDedicatedNodes = default, int? targetLowPriorityNodes = default, bool? enableAutoScale = default, string autoScaleFormula = default, TimeSpan? autoScaleEvaluationInterval = default, AutoScaleRun autoScaleRun = default, bool? enableInterNodeCommunication = default, NetworkConfiguration networkConfiguration = default, BatchStartTask startTask = default, IEnumerable<BatchApplicationPackageReference> applicationPackageReferences = default, int? taskSlotsPerNode = default, BatchTaskSchedulingPolicy taskSchedulingPolicy = default, IEnumerable<UserAccount> userAccounts = default, IEnumerable<BatchMetadataItem> metadata = default, BatchPoolStatistics poolStatistics = default, IEnumerable<MountConfiguration> mountConfiguration = default, BatchPoolIdentity identity = default, UpgradePolicy upgradePolicy = default)
+        public static BatchPool BatchPool(string id = default, string displayName = default, Uri uri = default, ETag eTag = default, DateTimeOffset lastModified = default, DateTimeOffset creationTime = default, BatchPoolState state = default, DateTimeOffset stateTransitionTime = default, AllocationState? allocationState = default, DateTimeOffset? allocationStateTransitionTime = default, string vmSize = default, VirtualMachineConfiguration virtualMachineConfiguration = default, TimeSpan? resizeTimeout = default, IEnumerable<ResizeError> resizeErrors = default, int currentDedicatedNodes = 0, int currentLowPriorityNodes = 0, int? targetDedicatedNodes = default, int? targetLowPriorityNodes = default, bool? enableAutoScale = default, string autoScaleFormula = default, TimeSpan? autoScaleEvaluationInterval = default, AutoScaleRun autoScaleRun = default, bool? enableInterNodeCommunication = default, NetworkConfiguration networkConfiguration = default, BatchStartTask startTask = default, IEnumerable<BatchApplicationPackageReference> applicationPackageReferences = default, int? taskSlotsPerNode = default, BatchTaskSchedulingPolicy taskSchedulingPolicy = default, IEnumerable<UserAccount> userAccounts = default, IEnumerable<BatchMetadataItem> metadata = default, BatchPoolStatistics poolStatistics = default, IEnumerable<MountConfiguration> mountConfiguration = default, BatchPoolIdentity identity = default, UpgradePolicy upgradePolicy = default)
         {
             resizeErrors ??= new ChangeTrackingList<ResizeError>();
             applicationPackageReferences ??= new ChangeTrackingList<BatchApplicationPackageReference>();
@@ -1009,7 +1009,7 @@ namespace Azure.Compute.Batch
         /// <param name="networkReadGiB"> The total amount of data in GiB of network reads across all Compute Nodes in the Pool. </param>
         /// <param name="networkWriteGiB"> The total amount of data in GiB of network writes across all Compute Nodes in the Pool. </param>
         /// <returns> A new <see cref="Batch.BatchPoolResourceStatistics"/> instance for mocking. </returns>
-        public static BatchPoolResourceStatistics BatchPoolResourceStatistics(DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, float avgCpuPercentage = default, float avgMemoryGiB = default, float peakMemoryGiB = default, float avgDiskGiB = default, float peakDiskGiB = default, long diskReadIops = default, long diskWriteIops = default, float diskReadGiB = default, float diskWriteGiB = default, float networkReadGiB = default, float networkWriteGiB = default)
+        public static BatchPoolResourceStatistics BatchPoolResourceStatistics(DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, float avgCpuPercentage = 0F, float avgMemoryGiB = 0F, float peakMemoryGiB = 0F, float avgDiskGiB = 0F, float peakDiskGiB = 0F, long diskReadIops = 0L, long diskWriteIops = 0L, float diskReadGiB = 0F, float diskWriteGiB = 0F, float networkReadGiB = 0F, float networkWriteGiB = 0F)
         {
             return new BatchPoolResourceStatistics(
                 startTime,
@@ -1195,7 +1195,7 @@ namespace Azure.Compute.Batch
         /// <param name="total"> The total number of Compute Nodes. </param>
         /// <param name="upgradingOS"> The number of Compute Nodes in the upgradingOS state. </param>
         /// <returns> A new <see cref="Batch.BatchNodeCounts"/> instance for mocking. </returns>
-        public static BatchNodeCounts BatchNodeCounts(int creating = default, int idle = default, int offline = default, int preempted = default, int rebooting = default, int reimaging = default, int running = default, int starting = default, int startTaskFailed = default, int leavingPool = default, int unknown = default, int unusable = default, int waitingForStartTask = default, int deallocated = default, int deallocating = default, int total = default, int upgradingOS = default)
+        public static BatchNodeCounts BatchNodeCounts(int creating = 0, int idle = 0, int offline = 0, int preempted = 0, int rebooting = 0, int reimaging = 0, int running = 0, int starting = 0, int startTaskFailed = 0, int leavingPool = 0, int unknown = 0, int unusable = 0, int waitingForStartTask = 0, int deallocated = 0, int deallocating = 0, int total = 0, int upgradingOS = 0)
         {
             return new BatchNodeCounts(
                 creating,
@@ -1655,7 +1655,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskRetriesCount"> The total number of retries on all the Tasks in the Job during the given time range. </param>
         /// <param name="waitTime"> The total wait time of all Tasks in the Job. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.) This value is only reported in the Account lifetime statistics; it is not included in the Job statistics. The time duration is specified in ISO 8601 format. </param>
         /// <returns> A new <see cref="Batch.BatchJobStatistics"/> instance for mocking. </returns>
-        public static BatchJobStatistics BatchJobStatistics(Uri uri = default, DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, TimeSpan userCpuTime = default, TimeSpan kernelCpuTime = default, TimeSpan wallClockTime = default, long readIops = default, long writeIops = default, float readIoGiB = default, float writeIoGiB = default, long succeededTasksCount = default, long failedTasksCount = default, long taskRetriesCount = default, TimeSpan waitTime = default)
+        public static BatchJobStatistics BatchJobStatistics(Uri uri = default, DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, TimeSpan userCpuTime = default, TimeSpan kernelCpuTime = default, TimeSpan wallClockTime = default, long readIops = 0L, long writeIops = 0L, float readIoGiB = 0F, float writeIoGiB = 0F, long succeededTasksCount = 0L, long failedTasksCount = 0L, long taskRetriesCount = 0L, TimeSpan waitTime = default)
         {
             return new BatchJobStatistics(
                 uri,
@@ -1794,7 +1794,7 @@ namespace Azure.Compute.Batch
         /// <param name="lastRetryTime"> The most recent time at which a retry of the Job Preparation Task started running. This property is set only if the Task was retried (i.e. retryCount is nonzero). If present, this is typically the same as startTime, but may be different if the Task has been restarted for reasons other than retry; for example, if the Compute Node was rebooted during a retry, then the startTime is updated but the lastRetryTime is not. </param>
         /// <param name="result"> The result of the Task execution. If the value is 'failed', then the details of the failure can be found in the failureInfo property. </param>
         /// <returns> A new <see cref="Batch.BatchJobPreparationTaskExecutionInfo"/> instance for mocking. </returns>
-        public static BatchJobPreparationTaskExecutionInfo BatchJobPreparationTaskExecutionInfo(DateTimeOffset startTime = default, DateTimeOffset? endTime = default, BatchJobPreparationTaskState state = default, string taskRootDirectory = default, Uri taskRootDirectoryUri = default, int? exitCode = default, BatchTaskContainerExecutionInfo containerInfo = default, BatchTaskFailureInfo failureInfo = default, int retryCount = default, DateTimeOffset? lastRetryTime = default, BatchTaskExecutionResult? result = default)
+        public static BatchJobPreparationTaskExecutionInfo BatchJobPreparationTaskExecutionInfo(DateTimeOffset startTime = default, DateTimeOffset? endTime = default, BatchJobPreparationTaskState state = default, string taskRootDirectory = default, Uri taskRootDirectoryUri = default, int? exitCode = default, BatchTaskContainerExecutionInfo containerInfo = default, BatchTaskFailureInfo failureInfo = default, int retryCount = 0, DateTimeOffset? lastRetryTime = default, BatchTaskExecutionResult? result = default)
         {
             return new BatchJobPreparationTaskExecutionInfo(
                 startTime,
@@ -1879,7 +1879,7 @@ namespace Azure.Compute.Batch
         /// <param name="succeeded"> The number of Tasks which succeeded. A Task succeeds if its result (found in the executionInfo property) is 'success'. </param>
         /// <param name="failed"> The number of Tasks which failed. A Task fails if its result (found in the executionInfo property) is 'failure'. </param>
         /// <returns> A new <see cref="Batch.BatchTaskCounts"/> instance for mocking. </returns>
-        public static BatchTaskCounts BatchTaskCounts(int active = default, int running = default, int completed = default, int succeeded = default, int failed = default)
+        public static BatchTaskCounts BatchTaskCounts(int active = 0, int running = 0, int completed = 0, int succeeded = 0, int failed = 0)
         {
             return new BatchTaskCounts(
                 active,
@@ -1897,7 +1897,7 @@ namespace Azure.Compute.Batch
         /// <param name="succeeded"> The number of TaskSlots for succeeded Tasks. </param>
         /// <param name="failed"> The number of TaskSlots for failed Tasks. </param>
         /// <returns> A new <see cref="Batch.BatchTaskSlotCounts"/> instance for mocking. </returns>
-        public static BatchTaskSlotCounts BatchTaskSlotCounts(int active = default, int running = default, int completed = default, int succeeded = default, int failed = default)
+        public static BatchTaskSlotCounts BatchTaskSlotCounts(int active = 0, int running = 0, int completed = 0, int succeeded = 0, int failed = 0)
         {
             return new BatchTaskSlotCounts(
                 active,
@@ -2044,7 +2044,7 @@ namespace Azure.Compute.Batch
         /// <param name="taskRetriesCount"> The total number of retries during the given time range on all Tasks in all Jobs created under the schedule. </param>
         /// <param name="waitTime"> The total wait time of all Tasks in all Jobs created under the schedule. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.). This value is only reported in the Account lifetime statistics; it is not included in the Job statistics. The time duration is specified in ISO 8601 format. </param>
         /// <returns> A new <see cref="Batch.BatchJobScheduleStatistics"/> instance for mocking. </returns>
-        public static BatchJobScheduleStatistics BatchJobScheduleStatistics(Uri uri = default, DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, TimeSpan userCpuTime = default, TimeSpan kernelCpuTime = default, TimeSpan duration = default, long readIops = default, long writeIops = default, float readIoGiB = default, float writeIoGiB = default, long succeededTasksCount = default, long failedTasksCount = default, long taskRetriesCount = default, TimeSpan waitTime = default)
+        public static BatchJobScheduleStatistics BatchJobScheduleStatistics(Uri uri = default, DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, TimeSpan userCpuTime = default, TimeSpan kernelCpuTime = default, TimeSpan duration = default, long readIops = 0L, long writeIops = 0L, float readIoGiB = 0F, float writeIoGiB = 0F, long succeededTasksCount = 0L, long failedTasksCount = 0L, long taskRetriesCount = 0L, TimeSpan waitTime = default)
         {
             return new BatchJobScheduleStatistics(
                 uri,
@@ -2167,7 +2167,7 @@ namespace Azure.Compute.Batch
         /// <param name="code"> A process exit code. </param>
         /// <param name="exitOptions"> How the Batch service should respond if the Task exits with this exit code. </param>
         /// <returns> A new <see cref="Batch.ExitCodeMapping"/> instance for mocking. </returns>
-        public static ExitCodeMapping ExitCodeMapping(int code = default, ExitOptions exitOptions = default)
+        public static ExitCodeMapping ExitCodeMapping(int code = 0, ExitOptions exitOptions = default)
         {
             return new ExitCodeMapping(code, exitOptions, additionalBinaryDataProperties: null);
         }
@@ -2189,7 +2189,7 @@ namespace Azure.Compute.Batch
         /// <param name="end"> The last exit code in the range. </param>
         /// <param name="exitOptions"> How the Batch service should respond if the Task exits with an exit code in the range start to end (inclusive). </param>
         /// <returns> A new <see cref="Batch.ExitCodeRangeMapping"/> instance for mocking. </returns>
-        public static ExitCodeRangeMapping ExitCodeRangeMapping(int start = default, int end = default, ExitOptions exitOptions = default)
+        public static ExitCodeRangeMapping ExitCodeRangeMapping(int start = 0, int end = 0, ExitOptions exitOptions = default)
         {
             return new ExitCodeRangeMapping(start, end, exitOptions, additionalBinaryDataProperties: null);
         }
@@ -2245,7 +2245,7 @@ namespace Azure.Compute.Batch
         /// <param name="start"> The first Task ID in the range. </param>
         /// <param name="end"> The last Task ID in the range. </param>
         /// <returns> A new <see cref="Batch.BatchTaskIdRange"/> instance for mocking. </returns>
-        public static BatchTaskIdRange BatchTaskIdRange(int start = default, int end = default)
+        public static BatchTaskIdRange BatchTaskIdRange(int start = 0, int end = 0)
         {
             return new BatchTaskIdRange(start, end, additionalBinaryDataProperties: null);
         }
@@ -2337,7 +2337,7 @@ namespace Azure.Compute.Batch
         /// <param name="lastRequeueTime"> The most recent time at which the Task has been requeued by the Batch service as the result of a user request. This property is set only if the requeueCount is nonzero. </param>
         /// <param name="result"> The result of the Task execution. If the value is 'failed', then the details of the failure can be found in the failureInfo property. </param>
         /// <returns> A new <see cref="Batch.BatchTaskExecutionInfo"/> instance for mocking. </returns>
-        public static BatchTaskExecutionInfo BatchTaskExecutionInfo(DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, int? exitCode = default, BatchTaskContainerExecutionInfo containerInfo = default, BatchTaskFailureInfo failureInfo = default, int retryCount = default, DateTimeOffset? lastRetryTime = default, int requeueCount = default, DateTimeOffset? lastRequeueTime = default, BatchTaskExecutionResult? result = default)
+        public static BatchTaskExecutionInfo BatchTaskExecutionInfo(DateTimeOffset? startTime = default, DateTimeOffset? endTime = default, int? exitCode = default, BatchTaskContainerExecutionInfo containerInfo = default, BatchTaskFailureInfo failureInfo = default, int retryCount = 0, DateTimeOffset? lastRetryTime = default, int requeueCount = 0, DateTimeOffset? lastRequeueTime = default, BatchTaskExecutionResult? result = default)
         {
             return new BatchTaskExecutionInfo(
                 startTime,
@@ -2386,7 +2386,7 @@ namespace Azure.Compute.Batch
         /// <param name="writeIoGiB"> The total gibibytes written to disk by the Task. </param>
         /// <param name="waitTime"> The total wait time of the Task. The wait time for a Task is defined as the elapsed time between the creation of the Task and the start of Task execution. (If the Task is retried due to failures, the wait time is the time to the most recent Task execution.). The time duration is specified in ISO 8601 format. </param>
         /// <returns> A new <see cref="Batch.BatchTaskStatistics"/> instance for mocking. </returns>
-        public static BatchTaskStatistics BatchTaskStatistics(Uri uri = default, DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, TimeSpan userCpuTime = default, TimeSpan kernelCpuTime = default, TimeSpan wallClockTime = default, long readIops = default, long writeIops = default, float readIoGiB = default, float writeIoGiB = default, TimeSpan waitTime = default)
+        public static BatchTaskStatistics BatchTaskStatistics(Uri uri = default, DateTimeOffset startTime = default, DateTimeOffset lastUpdateTime = default, TimeSpan userCpuTime = default, TimeSpan kernelCpuTime = default, TimeSpan wallClockTime = default, long readIops = 0L, long writeIops = 0L, float readIoGiB = 0F, float writeIoGiB = 0F, TimeSpan waitTime = default)
         {
             return new BatchTaskStatistics(
                 uri,
@@ -2493,7 +2493,7 @@ namespace Azure.Compute.Batch
         /// <param name="contentType"> The content type of the file. </param>
         /// <param name="fileMode"> The file mode attribute in octal format. The file mode is returned only for files on Linux Compute Nodes. </param>
         /// <returns> A new <see cref="Batch.FileProperties"/> instance for mocking. </returns>
-        public static FileProperties FileProperties(DateTimeOffset? creationTime = default, DateTimeOffset lastModified = default, long contentLength = default, string contentType = default, string fileMode = default)
+        public static FileProperties FileProperties(DateTimeOffset? creationTime = default, DateTimeOffset lastModified = default, long contentLength = 0L, string contentType = default, string fileMode = default)
         {
             return new FileProperties(
                 creationTime,
@@ -2557,7 +2557,7 @@ namespace Azure.Compute.Batch
         /// <param name="nodeAgentInfo"> Information about the Compute Node agent version and the time the Compute Node upgraded to a new version. </param>
         /// <param name="virtualMachineInfo"> Info about the current state of the virtual machine. </param>
         /// <returns> A new <see cref="Batch.BatchNode"/> instance for mocking. </returns>
-        public static BatchNode BatchNode(string id = default, Uri uri = default, BatchNodeState state = default, SchedulingState? schedulingState = default, DateTimeOffset stateTransitionTime = default, DateTimeOffset lastBootTime = default, DateTimeOffset allocationTime = default, IPAddress ipAddress = default, IPAddress ipv6Address = default, string affinityId = default, string vmSize = default, int totalTasksRun = default, int? runningTasksCount = default, int? runningTaskSlotsCount = default, int? totalTasksSucceeded = default, IEnumerable<BatchTaskInfo> recentTasks = default, BatchStartTask startTask = default, BatchStartTaskInfo startTaskInfo = default, IEnumerable<BatchNodeError> errors = default, bool? isDedicated = default, BatchNodeEndpointConfiguration endpointConfiguration = default, BatchNodeAgentInfo nodeAgentInfo = default, VirtualMachineInfo virtualMachineInfo = default)
+        public static BatchNode BatchNode(string id = default, Uri uri = default, BatchNodeState state = default, SchedulingState? schedulingState = default, DateTimeOffset stateTransitionTime = default, DateTimeOffset lastBootTime = default, DateTimeOffset allocationTime = default, IPAddress ipAddress = default, IPAddress ipv6Address = default, string affinityId = default, string vmSize = default, int totalTasksRun = 0, int? runningTasksCount = default, int? runningTaskSlotsCount = default, int? totalTasksSucceeded = default, IEnumerable<BatchTaskInfo> recentTasks = default, BatchStartTask startTask = default, BatchStartTaskInfo startTaskInfo = default, IEnumerable<BatchNodeError> errors = default, bool? isDedicated = default, BatchNodeEndpointConfiguration endpointConfiguration = default, BatchNodeAgentInfo nodeAgentInfo = default, VirtualMachineInfo virtualMachineInfo = default)
         {
             recentTasks ??= new ChangeTrackingList<BatchTaskInfo>();
             errors ??= new ChangeTrackingList<BatchNodeError>();
@@ -2620,7 +2620,7 @@ namespace Azure.Compute.Batch
         /// <param name="lastRetryTime"> The most recent time at which a retry of the Task started running. This element is present only if the Task was retried (i.e. retryCount is nonzero). If present, this is typically the same as startTime, but may be different if the Task has been restarted for reasons other than retry; for example, if the Compute Node was rebooted during a retry, then the startTime is updated but the lastRetryTime is not. </param>
         /// <param name="result"> The result of the Task execution. If the value is 'failed', then the details of the failure can be found in the failureInfo property. </param>
         /// <returns> A new <see cref="Batch.BatchStartTaskInfo"/> instance for mocking. </returns>
-        public static BatchStartTaskInfo BatchStartTaskInfo(BatchStartTaskState state = default, DateTimeOffset startTime = default, DateTimeOffset? endTime = default, int? exitCode = default, BatchTaskContainerExecutionInfo containerInfo = default, BatchTaskFailureInfo failureInfo = default, int retryCount = default, DateTimeOffset? lastRetryTime = default, BatchTaskExecutionResult? result = default)
+        public static BatchStartTaskInfo BatchStartTaskInfo(BatchStartTaskState state = default, DateTimeOffset startTime = default, DateTimeOffset? endTime = default, int? exitCode = default, BatchTaskContainerExecutionInfo containerInfo = default, BatchTaskFailureInfo failureInfo = default, int retryCount = 0, DateTimeOffset? lastRetryTime = default, BatchTaskExecutionResult? result = default)
         {
             return new BatchStartTaskInfo(
                 state,
@@ -2665,7 +2665,7 @@ namespace Azure.Compute.Batch
         /// <param name="frontendPort"> The public port number of the endpoint. </param>
         /// <param name="backendPort"> The backend port number of the endpoint. </param>
         /// <returns> A new <see cref="Batch.InboundEndpoint"/> instance for mocking. </returns>
-        public static InboundEndpoint InboundEndpoint(string name = default, InboundEndpointProtocol protocol = default, IPAddress publicIpAddress = default, string publicFqdn = default, int frontendPort = default, int backendPort = default)
+        public static InboundEndpoint InboundEndpoint(string name = default, InboundEndpointProtocol protocol = default, IPAddress publicIpAddress = default, string publicFqdn = default, int frontendPort = 0, int backendPort = 0)
         {
             return new InboundEndpoint(
                 name,
@@ -2736,7 +2736,7 @@ namespace Azure.Compute.Batch
         /// <param name="remoteLoginIpAddress"> The IP address used for remote login to the Compute Node. </param>
         /// <param name="remoteLoginPort"> The port used for remote login to the Compute Node. </param>
         /// <returns> A new <see cref="Batch.BatchNodeRemoteLoginSettings"/> instance for mocking. </returns>
-        public static BatchNodeRemoteLoginSettings BatchNodeRemoteLoginSettings(IPAddress ipv6RemoteLoginIpAddress = default, int? ipv6RemoteLoginPort = default, IPAddress remoteLoginIpAddress = default, int remoteLoginPort = default)
+        public static BatchNodeRemoteLoginSettings BatchNodeRemoteLoginSettings(IPAddress ipv6RemoteLoginIpAddress = default, int? ipv6RemoteLoginPort = default, IPAddress remoteLoginIpAddress = default, int remoteLoginPort = 0)
         {
             return new BatchNodeRemoteLoginSettings(ipv6RemoteLoginIpAddress, ipv6RemoteLoginPort, remoteLoginIpAddress, remoteLoginPort, additionalBinaryDataProperties: null);
         }
@@ -2756,7 +2756,7 @@ namespace Azure.Compute.Batch
         /// <param name="virtualDirectoryName"> The virtual directory within Azure Blob Storage container to which the Batch Service log file(s) will be uploaded. The virtual directory name is part of the blob name for each log file uploaded, and it is built based poolId, nodeId and a unique identifier. </param>
         /// <param name="numberOfFilesUploaded"> The number of log files which will be uploaded. </param>
         /// <returns> A new <see cref="Batch.UploadBatchServiceLogsResult"/> instance for mocking. </returns>
-        public static UploadBatchServiceLogsResult UploadBatchServiceLogsResult(string virtualDirectoryName = default, int numberOfFilesUploaded = default)
+        public static UploadBatchServiceLogsResult UploadBatchServiceLogsResult(string virtualDirectoryName = default, int numberOfFilesUploaded = 0)
         {
             return new UploadBatchServiceLogsResult(virtualDirectoryName, numberOfFilesUploaded, additionalBinaryDataProperties: null);
         }

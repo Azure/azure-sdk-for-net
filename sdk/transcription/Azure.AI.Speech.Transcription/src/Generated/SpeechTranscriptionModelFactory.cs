@@ -77,7 +77,7 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="combinedPhrases"> The full transcript for each channel. </param>
         /// <param name="phrases"> The transcription results segmented into phrases. </param>
         /// <returns> A new <see cref="Transcription.TranscriptionResult"/> instance for mocking. </returns>
-        public static TranscriptionResult TranscriptionResult(int durationMilliseconds = default, IEnumerable<ChannelCombinedPhrases> combinedPhrases = default, IEnumerable<TranscribedPhrase> phrases = default)
+        public static TranscriptionResult TranscriptionResult(int durationMilliseconds = 0, IEnumerable<ChannelCombinedPhrases> combinedPhrases = default, IEnumerable<TranscribedPhrase> phrases = default)
         {
             combinedPhrases ??= new ChangeTrackingList<ChannelCombinedPhrases>();
             phrases ??= new ChangeTrackingList<TranscribedPhrase>();
@@ -104,7 +104,7 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="locale"> The locale of the phrase. </param>
         /// <param name="confidence"> The confidence value for the phrase. </param>
         /// <returns> A new <see cref="Transcription.TranscribedPhrase"/> instance for mocking. </returns>
-        public static TranscribedPhrase TranscribedPhrase(int? channel = default, int? speaker = default, int offsetMilliseconds = default, int durationMilliseconds = default, string text = default, IEnumerable<TranscribedWord> words = default, string locale = default, float confidence = default)
+        public static TranscribedPhrase TranscribedPhrase(int? channel = default, int? speaker = default, int offsetMilliseconds = 0, int durationMilliseconds = 0, string text = default, IEnumerable<TranscribedWord> words = default, string locale = default, float confidence = 0F)
         {
             words ??= new ChangeTrackingList<TranscribedWord>();
 
@@ -125,7 +125,7 @@ namespace Azure.AI.Speech.Transcription
         /// <param name="offsetMilliseconds"> The start offset of the word in milliseconds. </param>
         /// <param name="durationMilliseconds"> The duration of the word in milliseconds. </param>
         /// <returns> A new <see cref="Transcription.TranscribedWord"/> instance for mocking. </returns>
-        public static TranscribedWord TranscribedWord(string text = default, int offsetMilliseconds = default, int durationMilliseconds = default)
+        public static TranscribedWord TranscribedWord(string text = default, int offsetMilliseconds = 0, int durationMilliseconds = 0)
         {
             return new TranscribedWord(text, offsetMilliseconds, durationMilliseconds, additionalBinaryDataProperties: null);
         }

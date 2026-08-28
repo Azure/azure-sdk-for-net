@@ -52,7 +52,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="text"> The text of the caption. </param>
         /// <returns> A new <see cref="ImageAnalysis.CaptionResult"/> instance for mocking. </returns>
-        public static CaptionResult CaptionResult(float confidence = default, string text = default)
+        public static CaptionResult CaptionResult(float confidence = 0F, string text = default)
         {
             return new CaptionResult(confidence, text, additionalBinaryDataProperties: null);
         }
@@ -78,7 +78,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="text"> The text of the caption. </param>
         /// <param name="boundingBox"> The image region of which this caption applies. </param>
         /// <returns> A new <see cref="ImageAnalysis.DenseCaption"/> instance for mocking. </returns>
-        public static DenseCaption DenseCaption(float confidence = default, string text = default, ImageBoundingBox boundingBox = default)
+        public static DenseCaption DenseCaption(float confidence = 0F, string text = default, ImageBoundingBox boundingBox = default)
         {
             return new DenseCaption(confidence, text, boundingBox, additionalBinaryDataProperties: null);
         }
@@ -89,7 +89,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="width"> Width of the area, in pixels. </param>
         /// <param name="height"> Height of the area, in pixels. </param>
         /// <returns> A new <see cref="ImageAnalysis.ImageBoundingBox"/> instance for mocking. </returns>
-        public static ImageBoundingBox ImageBoundingBox(int x = default, int y = default, int width = default, int height = default)
+        public static ImageBoundingBox ImageBoundingBox(int x = 0, int y = 0, int width = 0, int height = 0)
         {
             return new ImageBoundingBox(x, y, width, height, additionalBinaryDataProperties: null);
         }
@@ -98,7 +98,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="height"> The height of the image in pixels. </param>
         /// <param name="width"> The width of the image in pixels. </param>
         /// <returns> A new <see cref="ImageAnalysis.ImageMetadata"/> instance for mocking. </returns>
-        public static ImageMetadata ImageMetadata(int height = default, int width = default)
+        public static ImageMetadata ImageMetadata(int height = 0, int width = 0)
         {
             return new ImageMetadata(height, width, additionalBinaryDataProperties: null);
         }
@@ -134,7 +134,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="name"> Name of the entity. </param>
         /// <returns> A new <see cref="ImageAnalysis.DetectedTag"/> instance for mocking. </returns>
-        public static DetectedTag DetectedTag(float confidence = default, string name = default)
+        public static DetectedTag DetectedTag(float confidence = 0F, string name = default)
         {
             return new DetectedTag(confidence, name, additionalBinaryDataProperties: null);
         }
@@ -156,7 +156,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// Higher values indicating higher confidence.
         /// </param>
         /// <returns> A new <see cref="ImageAnalysis.DetectedPerson"/> instance for mocking. </returns>
-        public static DetectedPerson DetectedPerson(ImageBoundingBox boundingBox = default, float confidence = default)
+        public static DetectedPerson DetectedPerson(ImageBoundingBox boundingBox = default, float confidence = 0F)
         {
             return new DetectedPerson(boundingBox, confidence, additionalBinaryDataProperties: null);
         }
@@ -198,7 +198,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="x"> The horizontal x-coordinate of this point, in pixels. Zero values corresponds to the left-most pixels in the image. </param>
         /// <param name="y"> The vertical y-coordinate of this point, in pixels. Zero values corresponds to the top-most pixels in the image. </param>
         /// <returns> A new <see cref="ImageAnalysis.ImagePoint"/> instance for mocking. </returns>
-        public static ImagePoint ImagePoint(int x = default, int y = default)
+        public static ImagePoint ImagePoint(int x = 0, int y = 0)
         {
             return new ImagePoint(x, y, additionalBinaryDataProperties: null);
         }
@@ -211,7 +211,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// <param name="boundingPolygon"> A bounding polygon around the word. At the moment only quadrilaterals are supported (represented by 4 image points). </param>
         /// <param name="confidence"> The level of confidence that the word was detected. Confidence scores span the range of 0.0 to 1.0 (inclusive), with higher values indicating a higher confidence of detection. </param>
         /// <returns> A new <see cref="ImageAnalysis.DetectedTextWord"/> instance for mocking. </returns>
-        public static DetectedTextWord DetectedTextWord(string text = default, IEnumerable<ImagePoint> boundingPolygon = default, float confidence = default)
+        public static DetectedTextWord DetectedTextWord(string text = default, IEnumerable<ImagePoint> boundingPolygon = default, float confidence = 0F)
         {
             boundingPolygon ??= new ChangeTrackingList<ImagePoint>();
 
@@ -243,7 +243,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         /// </param>
         /// <param name="boundingBox"> The bounding box of the region. </param>
         /// <returns> A new <see cref="ImageAnalysis.CropRegion"/> instance for mocking. </returns>
-        public static CropRegion CropRegion(float aspectRatio = default, ImageBoundingBox boundingBox = default)
+        public static CropRegion CropRegion(float aspectRatio = 0F, ImageBoundingBox boundingBox = default)
         {
             return new CropRegion(aspectRatio, boundingBox, additionalBinaryDataProperties: null);
         }
