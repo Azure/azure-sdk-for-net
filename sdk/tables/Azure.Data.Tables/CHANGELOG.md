@@ -8,7 +8,7 @@
 
 ### Bugs Fixed
 
-- Fixed an issue where comma-separated enum names are no longer deserialized for non-`[Flags]` enums while preserving round trip deserialization of valid combined values for `[Flags]` enums in strongly typed table entities. ([#62508](https://github.com/Azure/azure-sdk-for-net/issues/62508))
+- Fixed an issue where comma-separated enum names were incorrectly deserialized for non-`[Flags]` enums while preserving round trip deserialization of valid combined values for `[Flags]` enums in strongly typed table entities. ([#62508](https://github.com/Azure/azure-sdk-for-net/issues/62508))
 
 ### Other Changes
 
