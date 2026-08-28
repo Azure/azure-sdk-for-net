@@ -64,11 +64,11 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> The snapshot creation date of the backup. </summary>
-        public DateTimeOffset? SnapshotCreationOn
+        public DateTimeOffset? SnapshotCreatedOn
         {
             get
             {
-                return Properties is null ? default : Properties.SnapshotCreationOn;
+                return Properties is null ? default : Properties.SnapshotCreatedOn;
             }
         }
 

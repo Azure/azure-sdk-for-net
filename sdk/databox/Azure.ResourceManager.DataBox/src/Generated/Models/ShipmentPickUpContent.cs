@@ -26,8 +26,8 @@ namespace Azure.ResourceManager.DataBox.Models
         {
             Argument.AssertNotNull(shipmentLocation, nameof(shipmentLocation));
 
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startOn;
+            EndsOn = endOn;
             ShipmentLocation = shipmentLocation;
         }
 
@@ -38,17 +38,17 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         internal ShipmentPickUpContent(DateTimeOffset startOn, DateTimeOffset endOn, string shipmentLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startOn;
+            EndsOn = endOn;
             ShipmentLocation = shipmentLocation;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Minimum date after which the pick up should commence, this must be in local time of pick up area. </summary>
-        public DateTimeOffset StartOn { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary> Maximum date before which the pick up should commence, this must be in local time of pick up area. </summary>
-        public DateTimeOffset EndOn { get; }
+        public DateTimeOffset EndsOn { get; }
 
         /// <summary> Shipment Location in the pickup place. Eg.front desk. </summary>
         public string ShipmentLocation { get; }

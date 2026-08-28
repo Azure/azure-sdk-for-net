@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> Initializes a new instance of <see cref="PacketCaptureQueryStatusResult"/>. </summary>
         /// <param name="name"> The name of the packet capture resource. </param>
         /// <param name="id"> The ID of the packet capture resource. </param>
-        /// <param name="captureStartOn"> The start time of the packet capture session. </param>
+        /// <param name="captureStartsOn"> The start time of the packet capture session. </param>
         /// <param name="packetCaptureStatus"> The status of the packet capture session. </param>
         /// <param name="stopReason"> The reason the current packet capture session was stopped. </param>
         /// <param name="packetCaptureError"> List of errors of packet capture session. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PacketCaptureQueryStatusResult(string name, string id, DateTimeOffset? captureStartOn, PcStatus? packetCaptureStatus, string stopReason, IReadOnlyList<PcError> packetCaptureError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PacketCaptureQueryStatusResult(string name, string id, DateTimeOffset? captureStartsOn, PcStatus? packetCaptureStatus, string stopReason, IReadOnlyList<PcError> packetCaptureError, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Id = id;
-            CaptureStartOn = captureStartOn;
+            CaptureStartsOn = captureStartsOn;
             PacketCaptureStatus = packetCaptureStatus;
             StopReason = stopReason;
             PacketCaptureError = packetCaptureError;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The start time of the packet capture session. </summary>
         [WirePath("captureStartTime")]
-        public DateTimeOffset? CaptureStartOn { get; }
+        public DateTimeOffset? CaptureStartsOn { get; }
 
         /// <summary> The status of the packet capture session. </summary>
         [WirePath("packetCaptureStatus")]

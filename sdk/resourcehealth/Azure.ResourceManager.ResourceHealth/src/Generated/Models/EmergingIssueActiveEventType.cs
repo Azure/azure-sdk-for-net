@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="title"> The active event title. </param>
         /// <param name="description"> The details of active event. </param>
         /// <param name="trackingId"> The tracking id of this active event. </param>
-        /// <param name="startOn"> The impact start time on this active event. </param>
+        /// <param name="startsOn"> The impact start time on this active event. </param>
         /// <param name="cloud"> The cloud type of this active event. </param>
         /// <param name="severity"> The severity level of this active event. </param>
         /// <param name="stage"> The stage of this active event. </param>
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         /// <param name="lastModifiedOn"> The last time modified on this banner. </param>
         /// <param name="impacts"> The list of emerging issues impacts. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EmergingIssueActiveEventType(string title, string description, string trackingId, DateTimeOffset? startOn, string cloud, ResourceHealthEventSeverityLevel? severity, ResourceHealthEventStageValue? stage, bool? isPublished, DateTimeOffset? lastModifiedOn, IReadOnlyList<EmergingIssueImpact> impacts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EmergingIssueActiveEventType(string title, string description, string trackingId, DateTimeOffset? startsOn, string cloud, ResourceHealthEventSeverityLevel? severity, ResourceHealthEventStageValue? stage, bool? isPublished, DateTimeOffset? lastModifiedOn, IReadOnlyList<EmergingIssueImpact> impacts, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Title = title;
             Description = description;
             TrackingId = trackingId;
-            StartOn = startOn;
+            StartsOn = startsOn;
             Cloud = cloud;
             Severity = severity;
             Stage = stage;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
         public string TrackingId { get; }
 
         /// <summary> The impact start time on this active event. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The cloud type of this active event. </summary>
         public string Cloud { get; }

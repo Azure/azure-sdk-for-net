@@ -103,20 +103,20 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         }
 
         /// <summary> Must be start of month. Timestamp must be in the ISO date format YYYY-MM-DDT00:00:00Z. </summary>
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
         /// <summary> Must be end of month. Timestamp must be in the ISO date format YYYY-MM-DDT23:59:59Z. </summary>
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
         }
 

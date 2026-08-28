@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("rotationToLatestKeyVersionEnabled"u8);
                 writer.WriteBooleanValue(RotationToLatestKeyVersionEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastKeyRotationTimestamp))
+            if (options.Format != "W" && Optional.IsDefined(LastKeyRotationOn))
             {
                 writer.WritePropertyName("lastKeyRotationTimestamp"u8);
-                writer.WriteStringValue(LastKeyRotationTimestamp.Value, "O");
+                writer.WriteStringValue(LastKeyRotationOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(AutoKeyRotationError))
             {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Compute.Models
             IReadOnlyList<KeyForDiskEncryptionSet> previousKeys = default;
             string provisioningState = default;
             bool? rotationToLatestKeyVersionEnabled = default;
-            DateTimeOffset? lastKeyRotationTimestamp = default;
+            DateTimeOffset? lastKeyRotationOn = default;
             ComputeApiError autoKeyRotationError = default;
             string federatedClientId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    lastKeyRotationTimestamp = prop.Value.GetDateTimeOffset("O");
+                    lastKeyRotationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("autoKeyRotationError"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Compute.Models
                 previousKeys ?? new ChangeTrackingList<KeyForDiskEncryptionSet>(),
                 provisioningState,
                 rotationToLatestKeyVersionEnabled,
-                lastKeyRotationTimestamp,
+                lastKeyRotationOn,
                 autoKeyRotationError,
                 federatedClientId,
                 additionalBinaryDataProperties);

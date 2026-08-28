@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -44,5 +45,22 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> A list of data disk images. </summary>
         public IList<GalleryDataDiskImage> DataDiskImages { get; }
+
+        /// <summary> The id of the gallery artifact version source. </summary>
+        public ResourceIdentifier SourceId
+        {
+            get
+            {
+                return Source is null ? default : Source.Id;
+            }
+            set
+            {
+                if (Source is null)
+                {
+                    Source = new GalleryArtifactVersionSource();
+                }
+                Source.Id = value;
+            }
+        }
     }
 }

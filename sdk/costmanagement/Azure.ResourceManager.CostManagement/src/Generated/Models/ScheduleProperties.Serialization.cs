@@ -112,9 +112,9 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteNumberValue(DayOfMonth.Value);
             }
             writer.WritePropertyName("startDate"u8);
-            writer.WriteStringValue(StartOn, "O");
+            writer.WriteStringValue(StartsOn, "O");
             writer.WritePropertyName("endDate"u8);
-            writer.WriteStringValue(EndOn, "O");
+            writer.WriteStringValue(EndsOn, "O");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -162,8 +162,6 @@ namespace Azure.ResourceManager.CostManagement.Models
             IList<ScheduledActionDaysOfWeek> daysOfWeek = default;
             IList<ScheduledActionWeeksOfMonth> weeksOfMonth = default;
             int? dayOfMonth = default;
-            DateTimeOffset startOn = default;
-            DateTimeOffset endOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -239,8 +237,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                 daysOfWeek ?? new ChangeTrackingList<ScheduledActionDaysOfWeek>(),
                 weeksOfMonth ?? new ChangeTrackingList<ScheduledActionWeeksOfMonth>(),
                 dayOfMonth,
-                startOn,
-                endOn,
+                default,
+                default,
                 additionalBinaryDataProperties);
         }
     }

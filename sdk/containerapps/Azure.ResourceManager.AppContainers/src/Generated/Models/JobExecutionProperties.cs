@@ -24,18 +24,18 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of <see cref="JobExecutionProperties"/>. </summary>
         /// <param name="status"> Current running State of the job. </param>
-        /// <param name="startOn"> Job execution start time. </param>
-        /// <param name="endOn"> Job execution end time. </param>
+        /// <param name="startsOn"> Job execution start time. </param>
+        /// <param name="endsOn"> Job execution end time. </param>
         /// <param name="template"> Job's execution container. </param>
         /// <param name="detailedStatus"> Detailed status of the job execution. </param>
         /// <param name="reason"> Reason for the current condition of job execution. </param>
         /// <param name="message"> Human readable message indicating details about the current condition of the job execution. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobExecutionProperties(JobExecutionRunningState? status, DateTimeOffset? startOn, DateTimeOffset? endOn, ContainerAppJobExecutionTemplate template, ExecutionStatus detailedStatus, string reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobExecutionProperties(JobExecutionRunningState? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, ContainerAppJobExecutionTemplate template, ExecutionStatus detailedStatus, string reason, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Template = template;
             DetailedStatus = detailedStatus;
             Reason = reason;
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Job execution start time. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> Job execution end time. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Job's execution container. </summary>
         [WirePath("template")]

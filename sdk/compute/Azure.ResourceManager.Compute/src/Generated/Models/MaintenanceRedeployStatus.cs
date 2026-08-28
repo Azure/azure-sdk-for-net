@@ -23,20 +23,20 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceRedeployStatus"/>. </summary>
         /// <param name="isCustomerInitiatedMaintenanceAllowed"> True, if customer is allowed to perform Maintenance. </param>
-        /// <param name="preMaintenanceWindowStartOn"> Start Time for the Pre Maintenance Window. </param>
-        /// <param name="preMaintenanceWindowEndOn"> End Time for the Pre Maintenance Window. </param>
-        /// <param name="maintenanceWindowStartOn"> Start Time for the Maintenance Window. </param>
-        /// <param name="maintenanceWindowEndOn"> End Time for the Maintenance Window. </param>
+        /// <param name="preMaintenanceWindowStartsOn"> Start Time for the Pre Maintenance Window. </param>
+        /// <param name="preMaintenanceWindowEndsOn"> End Time for the Pre Maintenance Window. </param>
+        /// <param name="maintenanceWindowStartsOn"> Start Time for the Maintenance Window. </param>
+        /// <param name="maintenanceWindowEndsOn"> End Time for the Maintenance Window. </param>
         /// <param name="lastOperationResultCode"> The Last Maintenance Operation Result Code. </param>
         /// <param name="lastOperationMessage"> Message returned for the last Maintenance Operation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceRedeployStatus(bool? isCustomerInitiatedMaintenanceAllowed, DateTimeOffset? preMaintenanceWindowStartOn, DateTimeOffset? preMaintenanceWindowEndOn, DateTimeOffset? maintenanceWindowStartOn, DateTimeOffset? maintenanceWindowEndOn, MaintenanceOperationResultCodeType? lastOperationResultCode, string lastOperationMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceRedeployStatus(bool? isCustomerInitiatedMaintenanceAllowed, DateTimeOffset? preMaintenanceWindowStartsOn, DateTimeOffset? preMaintenanceWindowEndsOn, DateTimeOffset? maintenanceWindowStartsOn, DateTimeOffset? maintenanceWindowEndsOn, MaintenanceOperationResultCodeType? lastOperationResultCode, string lastOperationMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsCustomerInitiatedMaintenanceAllowed = isCustomerInitiatedMaintenanceAllowed;
-            PreMaintenanceWindowStartOn = preMaintenanceWindowStartOn;
-            PreMaintenanceWindowEndOn = preMaintenanceWindowEndOn;
-            MaintenanceWindowStartOn = maintenanceWindowStartOn;
-            MaintenanceWindowEndOn = maintenanceWindowEndOn;
+            PreMaintenanceWindowStartsOn = preMaintenanceWindowStartsOn;
+            PreMaintenanceWindowEndsOn = preMaintenanceWindowEndsOn;
+            MaintenanceWindowStartsOn = maintenanceWindowStartsOn;
+            MaintenanceWindowEndsOn = maintenanceWindowEndsOn;
             LastOperationResultCode = lastOperationResultCode;
             LastOperationMessage = lastOperationMessage;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.Compute.Models
         public bool? IsCustomerInitiatedMaintenanceAllowed { get; }
 
         /// <summary> Start Time for the Pre Maintenance Window. </summary>
-        public DateTimeOffset? PreMaintenanceWindowStartOn { get; }
+        public DateTimeOffset? PreMaintenanceWindowStartsOn { get; }
 
         /// <summary> End Time for the Pre Maintenance Window. </summary>
-        public DateTimeOffset? PreMaintenanceWindowEndOn { get; }
+        public DateTimeOffset? PreMaintenanceWindowEndsOn { get; }
 
         /// <summary> Start Time for the Maintenance Window. </summary>
-        public DateTimeOffset? MaintenanceWindowStartOn { get; }
+        public DateTimeOffset? MaintenanceWindowStartsOn { get; }
 
         /// <summary> End Time for the Maintenance Window. </summary>
-        public DateTimeOffset? MaintenanceWindowEndOn { get; }
+        public DateTimeOffset? MaintenanceWindowEndsOn { get; }
 
         /// <summary> The Last Maintenance Operation Result Code. </summary>
         public MaintenanceOperationResultCodeType? LastOperationResultCode { get; }

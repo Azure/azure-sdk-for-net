@@ -137,10 +137,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Compute.Models
             int? installedPatchCount = default;
             int? failedPatchCount = default;
             IReadOnlyList<PatchInstallationDetail> patches = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             ComputeApiError error = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("error"u8))
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Compute.Models
                 installedPatchCount,
                 failedPatchCount,
                 patches ?? new ChangeTrackingList<PatchInstallationDetail>(),
-                startOn,
+                startsOn,
                 error,
                 additionalBinaryDataProperties);
         }

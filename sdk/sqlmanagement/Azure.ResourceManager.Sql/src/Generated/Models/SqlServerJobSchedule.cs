@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SqlServerJobSchedule"/>. </summary>
-        /// <param name="startOn"> Schedule start time. </param>
-        /// <param name="endOn"> Schedule end time. </param>
+        /// <param name="startsOn"> Schedule start time. </param>
+        /// <param name="endsOn"> Schedule end time. </param>
         /// <param name="scheduleType"> Schedule interval type. </param>
         /// <param name="isEnabled"> Whether or not the schedule is enabled. </param>
         /// <param name="interval"> Value of the schedule's recurring interval, if the ScheduleType is recurring. ISO8601 duration format. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SqlServerJobSchedule(DateTimeOffset? startOn, DateTimeOffset? endOn, SqlServerJobScheduleType? scheduleType, bool? isEnabled, TimeSpan? interval, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlServerJobSchedule(DateTimeOffset? startsOn, DateTimeOffset? endsOn, SqlServerJobScheduleType? scheduleType, bool? isEnabled, TimeSpan? interval, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             ScheduleType = scheduleType;
             IsEnabled = isEnabled;
             Interval = interval;
@@ -41,11 +41,11 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> Schedule start time. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary> Schedule end time. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; set; }
+        public DateTimeOffset? EndsOn { get; set; }
 
         /// <summary> Schedule interval type. </summary>
         [WirePath("type")]

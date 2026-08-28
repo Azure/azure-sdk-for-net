@@ -113,21 +113,21 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> The time that the job execution started. </summary>
         [WirePath("properties.startTime")]
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
         /// <summary> The time that the job execution completed. </summary>
         [WirePath("properties.endTime")]
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
         }
 
@@ -151,11 +151,11 @@ namespace Azure.ResourceManager.Sql
 
         /// <summary> Start time of the current attempt. </summary>
         [WirePath("properties.currentAttemptStartTime")]
-        public DateTimeOffset? CurrentAttemptStartOn
+        public DateTimeOffset? CurrentAttemptStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.CurrentAttemptStartOn;
+                return Properties is null ? default : Properties.CurrentAttemptStartsOn;
             }
         }
 

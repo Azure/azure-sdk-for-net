@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of <see cref="AutomationAccountStatistics"/>. </summary>
         /// <param name="counterProperty"> Gets the property value of the statistic. </param>
         /// <param name="counterValue"> Gets the value of the statistic. </param>
-        /// <param name="startOn"> Gets the startTime of the statistic. </param>
-        /// <param name="endOn"> Gets the endTime of the statistic. </param>
+        /// <param name="startsOn"> Gets the startTime of the statistic. </param>
+        /// <param name="endsOn"> Gets the endTime of the statistic. </param>
         /// <param name="id"> Gets the id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutomationAccountStatistics(string counterProperty, long? counterValue, DateTimeOffset? startOn, DateTimeOffset? endOn, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AutomationAccountStatistics(string counterProperty, long? counterValue, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string id, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             CounterProperty = counterProperty;
             CounterValue = counterValue;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Id = id;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -45,10 +45,10 @@ namespace Azure.ResourceManager.Automation.Models
         public long? CounterValue { get; }
 
         /// <summary> Gets the startTime of the statistic. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> Gets the endTime of the statistic. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Gets the id. </summary>
         public string Id { get; }

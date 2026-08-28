@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WritePropertyName("credit"u8);
                 writer.WriteObjectValue(Credit, options);
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endAt"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Breakdown))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 return null;
             }
             BillingBenefitsCommitment credit = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? endsOn = default;
             IList<CreditBreakdownItem> breakdown = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("breakdown"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CreditPatchProperties(credit, endOn, breakdown ?? new ChangeTrackingList<CreditBreakdownItem>(), additionalBinaryDataProperties);
+            return new CreditPatchProperties(credit, endsOn, breakdown ?? new ChangeTrackingList<CreditBreakdownItem>(), additionalBinaryDataProperties);
         }
     }
 }

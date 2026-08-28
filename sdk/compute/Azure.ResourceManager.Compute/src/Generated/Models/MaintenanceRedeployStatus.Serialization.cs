@@ -79,25 +79,25 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("isCustomerInitiatedMaintenanceAllowed"u8);
                 writer.WriteBooleanValue(IsCustomerInitiatedMaintenanceAllowed.Value);
             }
-            if (Optional.IsDefined(PreMaintenanceWindowStartOn))
+            if (Optional.IsDefined(PreMaintenanceWindowStartsOn))
             {
                 writer.WritePropertyName("preMaintenanceWindowStartTime"u8);
-                writer.WriteStringValue(PreMaintenanceWindowStartOn.Value, "O");
+                writer.WriteStringValue(PreMaintenanceWindowStartsOn.Value, "O");
             }
-            if (Optional.IsDefined(PreMaintenanceWindowEndOn))
+            if (Optional.IsDefined(PreMaintenanceWindowEndsOn))
             {
                 writer.WritePropertyName("preMaintenanceWindowEndTime"u8);
-                writer.WriteStringValue(PreMaintenanceWindowEndOn.Value, "O");
+                writer.WriteStringValue(PreMaintenanceWindowEndsOn.Value, "O");
             }
-            if (Optional.IsDefined(MaintenanceWindowStartOn))
+            if (Optional.IsDefined(MaintenanceWindowStartsOn))
             {
                 writer.WritePropertyName("maintenanceWindowStartTime"u8);
-                writer.WriteStringValue(MaintenanceWindowStartOn.Value, "O");
+                writer.WriteStringValue(MaintenanceWindowStartsOn.Value, "O");
             }
-            if (Optional.IsDefined(MaintenanceWindowEndOn))
+            if (Optional.IsDefined(MaintenanceWindowEndsOn))
             {
                 writer.WritePropertyName("maintenanceWindowEndTime"u8);
-                writer.WriteStringValue(MaintenanceWindowEndOn.Value, "O");
+                writer.WriteStringValue(MaintenanceWindowEndsOn.Value, "O");
             }
             if (Optional.IsDefined(LastOperationResultCode))
             {
@@ -152,10 +152,10 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             bool? isCustomerInitiatedMaintenanceAllowed = default;
-            DateTimeOffset? preMaintenanceWindowStartOn = default;
-            DateTimeOffset? preMaintenanceWindowEndOn = default;
-            DateTimeOffset? maintenanceWindowStartOn = default;
-            DateTimeOffset? maintenanceWindowEndOn = default;
+            DateTimeOffset? preMaintenanceWindowStartsOn = default;
+            DateTimeOffset? preMaintenanceWindowEndsOn = default;
+            DateTimeOffset? maintenanceWindowStartsOn = default;
+            DateTimeOffset? maintenanceWindowEndsOn = default;
             MaintenanceOperationResultCodeType? lastOperationResultCode = default;
             string lastOperationMessage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    preMaintenanceWindowStartOn = prop.Value.GetDateTimeOffset("O");
+                    preMaintenanceWindowStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("preMaintenanceWindowEndTime"u8))
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    preMaintenanceWindowEndOn = prop.Value.GetDateTimeOffset("O");
+                    preMaintenanceWindowEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("maintenanceWindowStartTime"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    maintenanceWindowStartOn = prop.Value.GetDateTimeOffset("O");
+                    maintenanceWindowStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("maintenanceWindowEndTime"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    maintenanceWindowEndOn = prop.Value.GetDateTimeOffset("O");
+                    maintenanceWindowEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastOperationResultCode"u8))
@@ -227,10 +227,10 @@ namespace Azure.ResourceManager.Compute.Models
             }
             return new MaintenanceRedeployStatus(
                 isCustomerInitiatedMaintenanceAllowed,
-                preMaintenanceWindowStartOn,
-                preMaintenanceWindowEndOn,
-                maintenanceWindowStartOn,
-                maintenanceWindowEndOn,
+                preMaintenanceWindowStartsOn,
+                preMaintenanceWindowEndsOn,
+                maintenanceWindowStartsOn,
+                maintenanceWindowEndsOn,
                 lastOperationResultCode,
                 lastOperationMessage,
                 additionalBinaryDataProperties);

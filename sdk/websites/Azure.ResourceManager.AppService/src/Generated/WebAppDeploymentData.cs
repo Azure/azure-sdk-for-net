@@ -139,11 +139,11 @@ namespace Azure.ResourceManager.AppService
 
         /// <summary> Start time. </summary>
         [WirePath("properties.start_time")]
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -151,17 +151,17 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new DeploymentProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
         /// <summary> End time. </summary>
         [WirePath("properties.end_time")]
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new DeploymentProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 

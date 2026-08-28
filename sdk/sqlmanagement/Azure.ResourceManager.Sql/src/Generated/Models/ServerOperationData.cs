@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.Sql.Models
 
         /// <summary> The operation start time. </summary>
         [WirePath("properties.startTime")]
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 

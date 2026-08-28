@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
     public static partial class ArmBillingTrustModelFactory
     {
 
+        /// <summary> A billing trust assessment. An assessment runs a set of rules to evaluate trust attributes of a billing account. The assessment is a singleton per parent resource and is always named 'default'. Re-issuing PUT with the same `assessmentType` is idempotent; changing `assessmentType` after the assessment exists is not supported. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -36,6 +37,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                 default);
         }
 
+        /// <summary> The properties of an Assessment resource. </summary>
         /// <param name="assessmentType"> The name of the assessment template whose rules will be evaluated (e.g. 'Edu'). Immutable after creation. </param>
         /// <param name="evaluationState"> The aggregated evaluation state of all active rules within this assessment. </param>
         /// <param name="nextEvaluation"> The next scheduled re-evaluation of this assessment. Only present when one or more rules in this assessment have a configured recurrence. </param>
@@ -57,6 +59,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                 default);
         }
 
+        /// <summary>
+        /// Base type for write-only initial values supplied when creating an assessment. Polymorphic by `kind`; per-kind initial values forward into the corresponding rule.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.EduInitialValue"/>.
+        /// </summary>
         /// <param name="kind"> The kind of rule to initialize. </param>
         /// <returns> A new <see cref="Models.BillingTrustInitialRuleValueBase"/> instance for mocking. </returns>
         public static BillingTrustInitialRuleValueBase BillingTrustInitialRuleValueBase(string kind = default)
@@ -64,6 +70,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             return new UnknownBillingTrustInitialRuleValueBase(default, default);
         }
 
+        /// <summary> Initial values for an education qualification rule. Per-domain entries (`domainNames` + `tenantId`) are used to populate the rule when the assessment is created. </summary>
         /// <param name="domains"> Per-domain entries to use when populating the education qualification rule. Only `domainNames` and `tenantId` are read from this payload; `state` and `error` on each entry are populated by the service. </param>
         /// <returns> A new <see cref="Models.EduInitialValue"/> instance for mocking. </returns>
         public static EduInitialValue EduInitialValue(IEnumerable<BillingTrustDomainEntry> domains = default)
@@ -73,6 +80,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             return new EduInitialValue(default, default, (domains ?? new ChangeTrackingList<BillingTrustDomainEntry>()).ToList());
         }
 
+        /// <summary> A domain entry within an education qualification rule. `domainNames` and `tenantId` are supplied on creation; `state` and `error` are returned by the service. </summary>
         /// <param name="domainNames"> Domain names associated with a tenant. </param>
         /// <param name="tenantId"> The Microsoft Entra tenant ID owning these domains. Defaults to the calling user's tenant when omitted. </param>
         /// <param name="state"> The verification state of this domain entry. Server-managed. </param>
@@ -85,6 +93,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             return new BillingTrustDomainEntry((domainNames ?? new ChangeTrackingList<string>()).ToList(), tenantId, state, error, default);
         }
 
+        /// <summary> Response containing an upload token for supplemental document uploads. </summary>
         /// <param name="token"> The time-bound, principal-bound upload token. </param>
         /// <returns> A new <see cref="Models.GenerateUploadTokenResult"/> instance for mocking. </returns>
         public static GenerateUploadTokenResult GenerateUploadTokenResult(string token = default)
@@ -92,6 +101,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             return new GenerateUploadTokenResult(token, default);
         }
 
+        /// <summary> A rule within an assessment. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -109,6 +119,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                 default);
         }
 
+        /// <summary>
+        /// Base properties of a Rule resource. Polymorphic by `kind` — kind-specific writable fields live on derived models.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.EduQualificationRuleProperties"/> and <see cref="Models.BusinessVerificationRuleProperties"/>.
+        /// </summary>
         /// <param name="kind"> The kind of rule. Acts as a discriminator for kind-specific properties. </param>
         /// <param name="evaluationState"> The evaluation state of the rule. Server-managed. </param>
         /// <param name="error"> Error information when evaluationState is `failed` or `actionRequired`. Server-managed. </param>
@@ -119,6 +133,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             return new UnknownBillingTrustRuleProperties(default, evaluationState, error, provisioningState, default);
         }
 
+        /// <summary> Properties of an eduQualification rule. Verifies education-domain ownership for a billing account. </summary>
         /// <param name="evaluationState"> The evaluation state of the rule. Server-managed. </param>
         /// <param name="error"> Error information when evaluationState is `failed` or `actionRequired`. Server-managed. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
@@ -140,6 +155,12 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                 (supplementalDocuments ?? new ChangeTrackingList<Uri>()).ToList());
         }
 
+        /// <summary>
+        /// Properties of a business verification rule. Verifies the billing account's
+        /// business identity.
+        /// Sold-to fields (`soldTo`, `registrationNumber`, `taxIds`) reflect the billing
+        /// account's information on file and cannot be supplied by end users.
+        /// </summary>
         /// <param name="evaluationState"> The evaluation state of the rule. Server-managed. </param>
         /// <param name="error"> Error information when evaluationState is `failed` or `actionRequired`. Server-managed. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
@@ -167,6 +188,20 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                 (supplementalDocuments ?? new ChangeTrackingList<Uri>()).ToList());
         }
 
+        /// <summary>
+        /// Sold-to identity used for business verification.
+        /// <b>Data classification — Personally Identifiable Information (PII):</b> This
+        /// model carries customer/contact PII (names, email, phone, postal address).
+        /// Producers (service code paths populating SoldTo) and consumers (anything
+        /// emitting it to logs / telemetry) MUST treat individual field values as
+        /// PII and avoid clear-text logging. BillingTrust's existing runtime
+        /// discipline keeps SoldTo out of Geneva logs (see
+        /// `Services/Rpaas/RpaasRuleProjector.cs` — raw bodies and parsed error
+        /// messages are filtered before emission). Downstream consumers of the
+        /// public OpenAPI surface should follow the same convention. Tracked for
+        /// follow-up alignment with ARM ARG002 (control-plane PII guidance) — see
+        /// PR description.
+        /// </summary>
         /// <param name="addressLine1"> First address line. PII — postal address. </param>
         /// <param name="addressLine2"> Second address line. PII — postal address. </param>
         /// <param name="addressLine3"> Third address line. PII — postal address. </param>
@@ -202,6 +237,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                 default);
         }
 
+        /// <summary> Registration number context for business verification. </summary>
         /// <param name="type"> Allowed registration-number types based on the billing-account country (e.g. `VAT`, `GST`, `EIN`). </param>
         /// <param name="value"> Registration number value (e.g. the VAT / GST / EIN identifier string). </param>
         /// <param name="registrationRequirement"> Whether a registration number is required for the sold-to country. </param>
@@ -213,6 +249,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             return new BillingTrustRegistrationNumber((@type ?? new ChangeTrackingList<string>()).ToList(), value, registrationRequirement, default);
         }
 
+        /// <summary> Tax id entry associated with the sold-to identity. </summary>
         /// <param name="value"> Tax id value (e.g. the VAT / GST / EIN identifier string). </param>
         /// <param name="country"> ISO 3166-1 alpha-2 country code the tax id is registered in. </param>
         /// <param name="scope"> Scope of the tax id (e.g. `Federal`, `State`). </param>
@@ -230,6 +267,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
                 default);
         }
 
+        /// <summary> External-registry identifier (e.g. DUNS) used to disambiguate ambiguous verification matches. </summary>
         /// <param name="type"> Identifier type. Currently `DUNS` is supported. </param>
         /// <param name="value"> Identifier value (e.g. the DUNS number string). </param>
         /// <returns> A new <see cref="Models.BillingTrustExternalId"/> instance for mocking. </returns>
@@ -238,6 +276,10 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             return new BillingTrustExternalId(@type, value, default);
         }
 
+        /// <summary>
+        /// Patch body for updating a rule. Polymorphic by `kind` — kind-specific patchable fields live on per-kind subtypes. PATCH cannot change a rule's kind; the discriminator carries the rule's existing kind for routing only.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.EduQualificationRulePatchProperties"/> and <see cref="Models.BusinessVerificationRulePatchProperties"/>.
+        /// </summary>
         /// <param name="kind"> The kind of rule. Acts as a discriminator for per-kind patchable fields. Must match the existing rule's kind; PATCH cannot mutate kind. </param>
         /// <returns> A new <see cref="Models.BillingTrustRulePatch"/> instance for mocking. </returns>
         public static BillingTrustRulePatch BillingTrustRulePatch(string kind = default)
@@ -245,6 +287,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             return new UnknownRulePatchProperties(default, default);
         }
 
+        /// <summary> Patch body for an eduQualification rule. Only `supplementalDocuments` is settable, and only when evaluationState == actionRequired. </summary>
         /// <param name="supplementalDocuments"> References to supplemental documents (eduQualification rules only; only settable when evaluationState == actionRequired). </param>
         /// <returns> A new <see cref="Models.EduQualificationRulePatchProperties"/> instance for mocking. </returns>
         public static EduQualificationRulePatchProperties EduQualificationRulePatchProperties(IEnumerable<Uri> supplementalDocuments = default)
@@ -254,6 +297,7 @@ namespace Azure.ResourceManager.Billing.Trust.Models
             return new EduQualificationRulePatchProperties(default, default, (supplementalDocuments ?? new ChangeTrackingList<Uri>()).ToList());
         }
 
+        /// <summary> Patch body for a businessVerification rule. Settable while evaluationState is `pending` or `actionRequired`. `externalId` lets the customer disambiguate an ambiguous verification match (e.g. via DUNS); `supplementalDocuments` carries references to documents uploaded via the assessment-scoped upload-token action. </summary>
         /// <param name="externalId"> Optional external-registry identifier (e.g. DUNS) used to disambiguate ambiguous verification matches. </param>
         /// <param name="supplementalDocuments"> References to supplemental documents (businessVerification rules only; only settable while evaluationState is `pending` or `actionRequired`). </param>
         /// <returns> A new <see cref="Models.BusinessVerificationRulePatchProperties"/> instance for mocking. </returns>

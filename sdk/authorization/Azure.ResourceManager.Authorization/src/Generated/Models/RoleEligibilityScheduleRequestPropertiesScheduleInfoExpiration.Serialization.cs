@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ExpirationType.Value.ToString());
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endDateTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(Duration))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 return null;
             }
             RoleManagementScheduleExpirationType? expirationType = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? endsOn = default;
             TimeSpan? duration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("duration"u8))
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endOn, duration, additionalBinaryDataProperties);
+            return new RoleEligibilityScheduleRequestPropertiesScheduleInfoExpiration(expirationType, endsOn, duration, additionalBinaryDataProperties);
         }
     }
 }

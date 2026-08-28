@@ -42,8 +42,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="meterSubCategory"> Name of the meter subclassification category. </param>
         /// <param name="meterRegion"> Name of the Azure region where the meter for the service is available. </param>
         /// <param name="tierMinimumUnits"> Defines the lower bound of the tier range for which prices are defined. For example, if the range is 0 to 100, tierMinimumUnits would be 0. </param>
-        /// <param name="effectiveStartOn"> Effective start date of the Price Sheet billing period. </param>
-        /// <param name="effectiveEndOn"> Effective end date of the Price Sheet billing period. </param>
+        /// <param name="effectiveStartsOn"> Effective start date of the Price Sheet billing period. </param>
+        /// <param name="effectiveEndsOn"> Effective end date of the Price Sheet billing period. </param>
         /// <param name="unitPrice">
         /// The per-unit price at the time of billing for a given product or service, inclusive of any negotiated discounts on top of the market price.
         /// For PriceType ReservedInstance, unit price reflects the total cost of the 1 or 3-year commitment including discounts.
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="term"> Term length for Azure Savings Plan or Reservation term – one year or three years (P1Y or P3Y). </param>
         /// <param name="priceType"> Price type for a product. For example, an Azure resource with a pay-as-you-go rate with priceType as Consumption. Other price types include ReservedInstance and Savings Plan. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal McaPriceSheetProperties(string billingAccountID, string billingAccountName, string billingProfileId, string billingProfileName, string productOrderName, float? serviceFamily, string product, string productId, string skuId, string unitOfMeasure, string meterId, string meterName, string meterType, string meterCategory, string meterSubCategory, string meterRegion, string tierMinimumUnits, DateTimeOffset? effectiveStartOn, DateTimeOffset? effectiveEndOn, string unitPrice, string basePrice, string marketPrice, string currency, string billingCurrency, string term, string priceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal McaPriceSheetProperties(string billingAccountID, string billingAccountName, string billingProfileId, string billingProfileName, string productOrderName, float? serviceFamily, string product, string productId, string skuId, string unitOfMeasure, string meterId, string meterName, string meterType, string meterCategory, string meterSubCategory, string meterRegion, string tierMinimumUnits, DateTimeOffset? effectiveStartsOn, DateTimeOffset? effectiveEndsOn, string unitPrice, string basePrice, string marketPrice, string currency, string billingCurrency, string term, string priceType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BillingAccountID = billingAccountID;
             BillingAccountName = billingAccountName;
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             MeterSubCategory = meterSubCategory;
             MeterRegion = meterRegion;
             TierMinimumUnits = tierMinimumUnits;
-            EffectiveStartOn = effectiveStartOn;
-            EffectiveEndOn = effectiveEndOn;
+            EffectiveStartsOn = effectiveStartsOn;
+            EffectiveEndsOn = effectiveEndsOn;
             UnitPrice = unitPrice;
             BasePrice = basePrice;
             MarketPrice = marketPrice;
@@ -151,10 +151,10 @@ namespace Azure.ResourceManager.CostManagement.Models
         public string TierMinimumUnits { get; }
 
         /// <summary> Effective start date of the Price Sheet billing period. </summary>
-        public DateTimeOffset? EffectiveStartOn { get; }
+        public DateTimeOffset? EffectiveStartsOn { get; }
 
         /// <summary> Effective end date of the Price Sheet billing period. </summary>
-        public DateTimeOffset? EffectiveEndOn { get; }
+        public DateTimeOffset? EffectiveEndsOn { get; }
 
         /// <summary>
         /// The per-unit price at the time of billing for a given product or service, inclusive of any negotiated discounts on top of the market price.

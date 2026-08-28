@@ -27,8 +27,8 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <summary> Initializes a new instance of <see cref="AsrTask"/>. </summary>
         /// <param name="taskId"> The Id. </param>
         /// <param name="name"> The unique Task name. </param>
-        /// <param name="startOn"> The start time. </param>
-        /// <param name="endOn"> The end time. </param>
+        /// <param name="startsOn"> The start time. </param>
+        /// <param name="endsOn"> The end time. </param>
         /// <param name="allowedActions"> The state/actions applicable on this task. </param>
         /// <param name="friendlyName"> The name. </param>
         /// <param name="state"> The State. It is one of these values - NotStarted, InProgress, Succeeded, Failed, Cancelled, Suspended or Other. </param>
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="groupTaskCustomDetails"> The custom task details based on the task type, if the task type is GroupTaskDetails or one of the types derived from it. </param>
         /// <param name="errors"> The task error details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AsrTask(string taskId, string name, DateTimeOffset? startOn, DateTimeOffset? endOn, IReadOnlyList<string> allowedActions, string friendlyName, string state, string stateDescription, string taskType, SiteRecoveryTaskTypeDetails customDetails, SiteRecoveryGroupTaskDetails groupTaskCustomDetails, IReadOnlyList<SiteRecoveryJobErrorDetails> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AsrTask(string taskId, string name, DateTimeOffset? startsOn, DateTimeOffset? endsOn, IReadOnlyList<string> allowedActions, string friendlyName, string state, string stateDescription, string taskType, SiteRecoveryTaskTypeDetails customDetails, SiteRecoveryGroupTaskDetails groupTaskCustomDetails, IReadOnlyList<SiteRecoveryJobErrorDetails> errors, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TaskId = taskId;
             Name = name;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             AllowedActions = allowedActions;
             FriendlyName = friendlyName;
             State = state;
@@ -62,10 +62,10 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string Name { get; }
 
         /// <summary> The start time. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> The end time. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> The state/actions applicable on this task. </summary>
         public IReadOnlyList<string> AllowedActions { get; }

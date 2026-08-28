@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.Automation.Models
         /// <param name="error"> Gets or sets the error of the resource. </param>
         /// <param name="status"> Gets or sets the status of the resource. </param>
         /// <param name="durationInSeconds"> Gets or sets the duration in seconds for the resource. </param>
-        /// <param name="startOn"> Gets or sets the start date of the resource. </param>
+        /// <param name="startsOn"> Gets or sets the start date of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DscReportResource(string resourceId, string sourceInfo, IReadOnlyList<DscReportResourceNavigation> dependsOn, string moduleName, string moduleVersion, string resourceName, string error, string status, double? durationInSeconds, DateTimeOffset? startOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DscReportResource(string resourceId, string sourceInfo, IReadOnlyList<DscReportResourceNavigation> dependsOn, string moduleName, string moduleVersion, string resourceName, string error, string status, double? durationInSeconds, DateTimeOffset? startsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             SourceInfo = sourceInfo;
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Automation.Models
             Error = error;
             Status = status;
             DurationInSeconds = durationInSeconds;
-            StartOn = startOn;
+            StartsOn = startsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -78,6 +78,6 @@ namespace Azure.ResourceManager.Automation.Models
         public double? DurationInSeconds { get; }
 
         /// <summary> Gets or sets the start date of the resource. </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
     }
 }

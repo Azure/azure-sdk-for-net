@@ -89,6 +89,7 @@ namespace Azure.ResourceManager.Databricks.Models
                 default);
         }
 
+        /// <summary> Custom Parameters used for Workspace Creation. Not allowed in Serverless ComputeMode workspace. </summary>
         /// <param name="amlWorkspaceId"> The ID of a Azure Machine Learning workspace to link with Databricks workspace. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="customVirtualNetworkId"> The ID of a Virtual Network where this Databricks Cluster should be created. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="customPublicSubnetName"> The name of a Public Subnet within the Virtual Network. Not allowed in Serverless ComputeMode workspace. </param>
@@ -128,6 +129,7 @@ namespace Azure.ResourceManager.Databricks.Models
                 default);
         }
 
+        /// <summary> The Value. </summary>
         /// <param name="type"> The type of variable that this is. </param>
         /// <param name="value"> The value which should be used for this field. </param>
         /// <returns> A new <see cref="Models.WorkspaceCustomStringParameterValue"/> instance for mocking. </returns>
@@ -136,6 +138,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new WorkspaceCustomStringParameterValue(@type, value, default);
         }
 
+        /// <summary> The value which should be used for this field. </summary>
         /// <param name="type"> The type of variable that this is. </param>
         /// <param name="isEnabled"> The value which should be used for this field. </param>
         /// <returns> A new <see cref="Models.WorkspaceNoPublicIPBooleanParameterValue"/> instance for mocking. </returns>
@@ -144,6 +147,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new WorkspaceNoPublicIPBooleanParameterValue(@type, isEnabled, default);
         }
 
+        /// <summary> The value which should be used for this field. </summary>
         /// <param name="type"> The type of variable that this is. </param>
         /// <param name="isEnabled"> The value which should be used for this field. </param>
         /// <returns> A new <see cref="Models.WorkspaceCustomBooleanParameterValue"/> instance for mocking. </returns>
@@ -152,6 +156,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new WorkspaceCustomBooleanParameterValue(@type, isEnabled, default);
         }
 
+        /// <summary> The object that contains details of encryption used on the workspace. </summary>
         /// <param name="type"> The type of variable that this is. </param>
         /// <param name="value"> The value which should be used for this field. </param>
         /// <returns> A new <see cref="Models.WorkspaceEncryptionParameterValue"/> instance for mocking. </returns>
@@ -160,6 +165,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new WorkspaceEncryptionParameterValue(@type, value, default);
         }
 
+        /// <summary> The object that contains details of encryption used on the workspace. </summary>
         /// <param name="keySource"> The encryption keySource (provider). Possible values (case-insensitive):  Default, Microsoft.Keyvault. </param>
         /// <param name="keyName"> The name of KeyVault key. </param>
         /// <param name="keyVersion"> The version of KeyVault key. </param>
@@ -170,6 +176,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksEncryption(keySource, keyName, keyVersion, keyVaultUri, default);
         }
 
+        /// <summary> The value which should be used for this field. </summary>
         /// <param name="type"> The type of variable that this is. </param>
         /// <param name="value"> The value which should be used for this field. </param>
         /// <returns> A new <see cref="Models.WorkspaceCustomObjectParameterValue"/> instance for mocking. </returns>
@@ -178,6 +185,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new WorkspaceCustomObjectParameterValue(@type, value, default);
         }
 
+        /// <summary> The workspace provider authorization. </summary>
         /// <param name="principalId"> The provider's principal identifier. This is the identity that the provider will use to call ARM to manage the workspace resources. </param>
         /// <param name="roleDefinitionId"> The provider's role definition identifier. This role will define all the permissions that the provider must have on the workspace's container resource group. This role definition cannot have permission to delete the resource group. </param>
         /// <returns> A new <see cref="Models.DatabricksWorkspaceProviderAuthorization"/> instance for mocking. </returns>
@@ -186,6 +194,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksWorkspaceProviderAuthorization(principalId, roleDefinitionId, default);
         }
 
+        /// <summary> Provides details of the entity that created/updated the workspace. </summary>
         /// <param name="oid"> The Object ID that created the workspace. </param>
         /// <param name="puid"> The Personal Object ID corresponding to the object ID above. </param>
         /// <param name="applicationId"> The application ID of the application that initiated the creation of the workspace. For example, Azure Portal. </param>
@@ -195,6 +204,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksCreatedBy(oid, puid, applicationId, default);
         }
 
+        /// <summary> The Managed Identity details for storage account. </summary>
         /// <param name="principalId"> The objectId of the Managed Identity that is linked to the Managed Storage account. </param>
         /// <param name="tenantId"> The tenant Id where the Managed Identity is created. </param>
         /// <param name="type"> The type of Identity created. It can be either SystemAssigned or UserAssigned. </param>
@@ -204,6 +214,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksManagedIdentityConfiguration(principalId, tenantId, @type, default);
         }
 
+        /// <summary> Encryption entities for databricks workspace resource. </summary>
         /// <param name="managedServices"> Encryption properties for the databricks managed services. Supported in both Serverless and Hybrid ComputeMode. </param>
         /// <param name="managedDisk"> Encryption properties for the databricks managed disks. Not allowed in Serverless ComputeMode workspace. </param>
         /// <returns> A new <see cref="Models.DatabricksEncryptionEntities"/> instance for mocking. </returns>
@@ -212,6 +223,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksEncryptionEntities(managedServices, managedDisk, default);
         }
 
+        /// <summary> The object that contains details of encryption used on the workspace. </summary>
         /// <param name="keySource"> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.Keyvault. </param>
         /// <param name="keyVaultProperties"> Key Vault input properties for encryption. </param>
         /// <returns> A new <see cref="Models.DatabricksEncryptionV2"/> instance for mocking. </returns>
@@ -220,6 +232,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksEncryptionV2(keySource, keyVaultProperties, default);
         }
 
+        /// <summary> Key Vault input properties for encryption. </summary>
         /// <param name="keyVaultUri"> The Uri of KeyVault. </param>
         /// <param name="keyName"> The name of KeyVault key. </param>
         /// <param name="keyVersion"> The version of KeyVault key. </param>
@@ -229,6 +242,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksEncryptionV2KeyVaultProperties(keyVaultUri, keyName, keyVersion, default);
         }
 
+        /// <summary> The object that contains details of encryption used on the workspace. </summary>
         /// <param name="keySource"> The encryption keySource (provider). Possible values (case-insensitive):  Microsoft.Keyvault. Not allowed in Serverless ComputeMode workspace. </param>
         /// <param name="keyVaultProperties"> Key Vault input properties for encryption. </param>
         /// <param name="isRotationToLatestKeyVersionEnabled"> Indicate whether the latest key version should be automatically used for Managed Disk Encryption. </param>
@@ -238,6 +252,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksManagedDiskEncryption(keySource, keyVaultProperties, isRotationToLatestKeyVersionEnabled, default);
         }
 
+        /// <summary> Key Vault input properties for encryption. </summary>
         /// <param name="keyVaultUri"> The URI of KeyVault. </param>
         /// <param name="keyName"> The name of KeyVault key. </param>
         /// <param name="keyVersion"> The version of KeyVault key. </param>
@@ -256,6 +271,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksEnhancedSecurityCompliance(automaticClusterUpdateValue is null ? default : new AutomaticClusterUpdateDefinition(automaticClusterUpdateValue, default), complianceSecurityProfile, enhancedSecurityMonitoringValue is null ? default : new EnhancedSecurityMonitoringDefinition(enhancedSecurityMonitoringValue, default), default);
         }
 
+        /// <summary> Status of Compliance Security Profile feature. </summary>
         /// <param name="complianceStandards"> Compliance standards associated with the workspace. </param>
         /// <param name="value"></param>
         /// <returns> A new <see cref="Models.DatabricksComplianceSecurityProfile"/> instance for mocking. </returns>
@@ -266,6 +282,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksComplianceSecurityProfile((complianceStandards ?? new ChangeTrackingList<string>()).ToList(), value, default);
         }
 
+        /// <summary> The private endpoint connection of a workspace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -295,6 +312,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksPrivateEndpointConnectionProperties(privateEndpointId is null ? default : new PrivateEndpoint(privateEndpointId, default), (groupIds ?? new ChangeTrackingList<string>()).ToList(), privateLinkServiceConnectionState, provisioningState, default);
         }
 
+        /// <summary> The current state of a private endpoint connection. </summary>
         /// <param name="status"> The status of a private endpoint connection. </param>
         /// <param name="description"> The description for the current state of a private endpoint connection. </param>
         /// <param name="actionsRequired"> Actions required for a private endpoint connection. </param>
@@ -304,6 +322,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
+        /// <summary> These properties lets user specify default catalog properties during workspace creation. Not allowed in Serverless ComputeMode workspace. </summary>
         /// <param name="initialType"> Defines the initial type of the default catalog. Possible values (case-insensitive):  HiveMetastore, UnityCatalog. </param>
         /// <param name="initialName"> Specifies the initial Name of default catalog. If not specified, the name of the workspace will be used. </param>
         /// <returns> A new <see cref="Models.DatabricksDefaultCatalogProperties"/> instance for mocking. </returns>
@@ -312,6 +331,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksDefaultCatalogProperties(initialType, initialName, default);
         }
 
+        /// <summary> Access Connector Resource that is going to be associated with Databricks Workspace. Not allowed in Serverless ComputeMode workspace. </summary>
         /// <param name="id"> The resource ID of Azure Databricks Access Connector Resource. </param>
         /// <param name="identityType"> The identity type of the Access Connector Resource. </param>
         /// <param name="userAssignedIdentityId"> The resource ID of the User Assigned Identity associated with the Access Connector Resource. This is required for type 'UserAssigned' and not valid for type 'SystemAssigned'. </param>
@@ -321,6 +341,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksWorkspaceAccessConnectorInfo(id, identityType, userAssignedIdentityId, default);
         }
 
+        /// <summary> SKU for the resource. </summary>
         /// <param name="name"> The SKU name. </param>
         /// <param name="tier"> The SKU tier. </param>
         /// <returns> A new <see cref="Models.DatabricksSku"/> instance for mocking. </returns>
@@ -329,6 +350,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksSku(name, tier, default);
         }
 
+        /// <summary> An update to a workspace. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.DatabricksWorkspacePatch"/> instance for mocking. </returns>
         public static DatabricksWorkspacePatch DatabricksWorkspacePatch(IDictionary<string, string> tags = default)
@@ -338,6 +360,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Information about Azure Databricks Access Connector. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -363,6 +386,7 @@ namespace Azure.ResourceManager.Databricks.Models
                 default);
         }
 
+        /// <summary> The DatabricksAccessConnectorProperties. </summary>
         /// <param name="provisioningState"> Provisioning status of the Access Connector. </param>
         /// <param name="referredBy"> List of workspaces referring this Access Connector. </param>
         /// <returns> A new <see cref="Models.DatabricksAccessConnectorProperties"/> instance for mocking. </returns>
@@ -373,6 +397,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksAccessConnectorProperties(provisioningState, (referredBy ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> An update to an Azure Databricks Access Connector. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> Managed service identity (system assigned and/or user assigned identities). </param>
         /// <returns> A new <see cref="Models.DatabricksAccessConnectorPatch"/> instance for mocking. </returns>
@@ -383,6 +408,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksAccessConnectorPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
 
+        /// <summary> Egress endpoints which Workspace connects to for common purposes. </summary>
         /// <param name="category"> The category of endpoints accessed by the Workspace, e.g. azure-storage, azure-mysql, etc. </param>
         /// <param name="endpoints"> The endpoints that Workspace connect to. </param>
         /// <returns> A new <see cref="Models.DatabricksOutboundEnvironmentEndpoint"/> instance for mocking. </returns>
@@ -393,6 +419,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksOutboundEnvironmentEndpoint(category, (endpoints ?? new ChangeTrackingList<DatabricksEndpointDependency>()).ToList(), default);
         }
 
+        /// <summary> A domain name or IP address the Workspace is reaching at. </summary>
         /// <param name="domainName"> The domain name of the dependency. </param>
         /// <param name="endpointDetails"> The Ports used when connecting to domainName. </param>
         /// <returns> A new <see cref="Models.DatabricksEndpointDependency"/> instance for mocking. </returns>
@@ -403,6 +430,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksEndpointDependency(domainName, (endpointDetails ?? new ChangeTrackingList<DatabricksEndpointDetail>()).ToList(), default);
         }
 
+        /// <summary> Connect information from the Workspace to a single endpoint. </summary>
         /// <param name="ipAddress"> An IP Address that Domain Name currently resolves to. </param>
         /// <param name="port"> The port an endpoint is connected to. </param>
         /// <param name="latency"> The time in milliseconds it takes for the connection to be created from the Workspace to this IpAddress at this Port. </param>
@@ -413,6 +441,7 @@ namespace Azure.ResourceManager.Databricks.Models
             return new DatabricksEndpointDetail(ipAddress, port, latency, isAccessible, default);
         }
 
+        /// <summary> The group information for creating a private endpoint on a workspace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -430,6 +459,7 @@ namespace Azure.ResourceManager.Databricks.Models
                 default);
         }
 
+        /// <summary> The properties for a group information object. </summary>
         /// <param name="groupId"> The group id. </param>
         /// <param name="requiredMembers"> The required members for a specific group id. </param>
         /// <param name="requiredZoneNames"> The required DNS zones for a specific group id. </param>

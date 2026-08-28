@@ -63,20 +63,20 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         }
 
         /// <summary> The start time of the validation report. </summary>
-        public DateTimeOffset? ReportStartOn
+        public DateTimeOffset? ReportStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.ReportStartOn;
+                return Properties is null ? default : Properties.ReportStartsOn;
             }
         }
 
         /// <summary> The end time of the validation report. </summary>
-        public DateTimeOffset? ReportEndOn
+        public DateTimeOffset? ReportEndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.ReportEndOn;
+                return Properties is null ? default : Properties.ReportEndsOn;
             }
         }
 

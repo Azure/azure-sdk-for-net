@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 throw new FormatException($"The model {nameof(SessionHostManagementProvisioningOperationProgress)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ExecutionStartOn))
+            if (Optional.IsDefined(ExecutionStartsOn))
             {
                 writer.WritePropertyName("executionStartTime"u8);
-                writer.WriteStringValue(ExecutionStartOn.Value, "O");
+                writer.WriteStringValue(ExecutionStartsOn.Value, "O");
             }
             if (Optional.IsDefined(SessionHostsInProgress))
             {
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            DateTimeOffset? executionStartOn = default;
+            DateTimeOffset? executionStartsOn = default;
             int? sessionHostsInProgress = default;
             int? sessionHostsCompleted = default;
             int? finalSessionHostsCount = default;
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     {
                         continue;
                     }
-                    executionStartOn = prop.Value.GetDateTimeOffset("O");
+                    executionStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("sessionHostsInProgress"u8))
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             return new SessionHostManagementProvisioningOperationProgress(
-                executionStartOn,
+                executionStartsOn,
                 sessionHostsInProgress,
                 sessionHostsCompleted,
                 finalSessionHostsCount,

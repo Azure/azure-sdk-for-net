@@ -117,8 +117,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             BackupRestoreOperationStatus? status = default;
             string statusDetails = default;
             ResponseError error = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             string jobId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             Uri azureStorageBlobContainerUri = default;
@@ -154,17 +154,17 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endOn = null;
+                        endsOn = null;
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("jobId"u8))
@@ -195,8 +195,8 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 status,
                 statusDetails,
                 error,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 jobId,
                 additionalBinaryDataProperties,
                 azureStorageBlobContainerUri,

@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.Network.Models
             ProviderLocation = providerLocation;
             Providers = new ChangeTrackingList<string>();
             AzureLocations = new ChangeTrackingList<AzureLocation>();
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startOn;
+            EndsOn = endOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureReachabilityReportContent"/>. </summary>
@@ -46,8 +46,8 @@ namespace Azure.ResourceManager.Network.Models
             ProviderLocation = providerLocation;
             Providers = providers;
             AzureLocations = azureLocations;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startOn;
+            EndsOn = endOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -65,10 +65,10 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The start time for the Azure reachability report. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset StartOn { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary> The end time for the Azure reachability report. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset EndOn { get; }
+        public DateTimeOffset EndsOn { get; }
     }
 }

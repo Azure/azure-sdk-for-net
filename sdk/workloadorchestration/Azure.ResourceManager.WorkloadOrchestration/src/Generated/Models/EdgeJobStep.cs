@@ -31,19 +31,19 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         /// <summary> Initializes a new instance of <see cref="EdgeJobStep"/>. </summary>
         /// <param name="name"> Name of the step. </param>
         /// <param name="status"> Status of the step. </param>
-        /// <param name="startOn"> Start time of the step (ISO8601). </param>
-        /// <param name="endOn"> End time of the step (ISO8601). </param>
+        /// <param name="startsOn"> Start time of the step (ISO8601). </param>
+        /// <param name="endsOn"> End time of the step (ISO8601). </param>
         /// <param name="message"> Message for the step. </param>
         /// <param name="statistics"> Statistics for the step. </param>
         /// <param name="steps"> Nested substeps for this step. </param>
         /// <param name="errorDetails"> Error Details if any failure is there. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EdgeJobStep(string name, EdgeJobStatus status, DateTimeOffset? startOn, DateTimeOffset? endOn, string message, EdgeJobStepStatistics statistics, IReadOnlyList<EdgeJobStep> steps, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EdgeJobStep(string name, EdgeJobStatus status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string message, EdgeJobStepStatistics statistics, IReadOnlyList<EdgeJobStep> steps, ResponseError errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Message = message;
             Statistics = statistics;
             Steps = steps;
@@ -58,10 +58,10 @@ namespace Azure.ResourceManager.WorkloadOrchestration.Models
         public EdgeJobStatus Status { get; }
 
         /// <summary> Start time of the step (ISO8601). </summary>
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> End time of the step (ISO8601). </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Message for the step. </summary>
         public string Message { get; }

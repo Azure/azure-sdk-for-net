@@ -109,10 +109,10 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("effectiveDate"u8);
                 writer.WriteStringValue(EffectiveOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Participants))
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Billing.Models
             BillingAgreementCategory? category = default;
             string displayName = default;
             DateTimeOffset? effectiveOn = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             IReadOnlyList<BillingAgreementParticipant> participants = default;
             string status = default;
             string leadBillingAccountName = default;
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("participants"u8))
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.Billing.Models
                 category,
                 displayName,
                 effectiveOn,
-                expireOn,
+                expiresOn,
                 participants ?? new ChangeTrackingList<BillingAgreementParticipant>(),
                 status,
                 leadBillingAccountName,
