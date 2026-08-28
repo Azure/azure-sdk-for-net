@@ -32,6 +32,4 @@ public partial class LongTermRetentionPolicy
         get => throw new NotSupportedException("TODO: Needs to be implemented using extensibility API.");
         set => throw new NotSupportedException("TODO: Needs to be implemented using extensibility API.");
     }
-    private partial BicepValue<string> GetNameDefaultValue() =>
-        "default";
 }
