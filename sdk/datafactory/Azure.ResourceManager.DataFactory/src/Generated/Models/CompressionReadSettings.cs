@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             _additionalBinaryDataProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CompressionReadSettings"/>. </summary>
+        protected CompressionReadSettings() : this(default)
+        {
+        }
+
         /// <summary> The Compression setting type. </summary>
         internal string CompressionReadSettingsType { get; set; }
 

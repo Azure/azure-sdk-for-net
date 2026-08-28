@@ -35,6 +35,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="DependencyReference"/>. </summary>
+        protected DependencyReference() : this(default)
+        {
+        }
+
         /// <summary> The type of dependency reference. </summary>
         internal string DependencyReferenceType { get; set; }
     }

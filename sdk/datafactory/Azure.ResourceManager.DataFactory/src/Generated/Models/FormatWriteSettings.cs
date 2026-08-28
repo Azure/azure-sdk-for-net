@@ -37,6 +37,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             _additionalBinaryDataProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="FormatWriteSettings"/>. </summary>
+        protected FormatWriteSettings() : this(default)
+        {
+        }
+
         /// <summary> The write setting type. </summary>
         internal string FormatWriteSettingsType { get; set; }
 

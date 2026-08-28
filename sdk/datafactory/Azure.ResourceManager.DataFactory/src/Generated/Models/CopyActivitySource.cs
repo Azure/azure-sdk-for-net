@@ -46,6 +46,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             _additionalBinaryDataProperties = additionalProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CopyActivitySource"/>. </summary>
+        protected CopyActivitySource() : this(default)
+        {
+        }
+
         /// <summary> Copy source type. </summary>
         internal string CopySourceType { get; set; }
 
