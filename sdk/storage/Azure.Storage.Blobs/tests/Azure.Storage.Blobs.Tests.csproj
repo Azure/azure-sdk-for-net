@@ -12,13 +12,13 @@
   <PropertyGroup>
     <!-- Exclude generated and shared source files from code coverage -->
     <CodeCoverageExcludeByFile>
-      **/Generated/Internal/CodeGenMemberAttribute.cs,
-      **/Generated/Internal/CodeGenSerializationAttribute.cs,
-      **/Generated/Internal/CodeGenSuppressAttribute.cs,
-      **/Generated/Internal/CodeGenTypeAttribute.cs,
-      **/Generated/Internal/ChangeTrackingDictionary.cs,
-      **/Generated/Internal/ChangeTrackingList.cs,
-      **/Generated/Internal/ErrorResult.cs,
+      **/CodeGenMemberAttribute.cs,
+      **/CodeGenSerializationAttribute.cs,
+      **/CodeGenSuppressAttribute.cs,
+      **/CodeGenTypeAttribute.cs,
+      **/ChangeTrackingDictionary.cs,
+      **/ChangeTrackingList.cs,
+      **/ErrorResult.cs,
       **/Generated/Models/Internal/ListBlobsIncludeItemExtensions.cs,
       **/Generated/Internal/Utf8JsonRequestContent.cs,
       **/Generated/Models/BlobDeleteType.Serialization.cs,

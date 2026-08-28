@@ -25,23 +25,6 @@
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
-  <PropertyGroup>
-    <CodeCoverageExcludeByFile>
-      **/Generated/Internal/CodeGenMemberAttribute.cs,
-      **/Generated/Internal/CodeGenSerializationAttribute.cs,
-      **/Generated/Internal/CodeGenSuppressAttribute.cs,
-      **/Generated/Internal/CodeGenTypeAttribute.cs,
-      **/Generated/Internal/ChangeTrackingDictionary.cs,
-      **/Generated/Internal/ChangeTrackingList.cs,
-      **/Generated/Internal/ErrorResult.cs,
-      **/Generated/Models/Internal/ListBlobsIncludeItemExtensions.cs,
-      **/Generated/Internal/Utf8JsonRequestContent.cs,
-      **/Generated/Models/BlobDeleteType.Serialization.cs,
-      **/Generated/Models/BlobExpiryOptions.cs,
-      **/Generated/Models/FilterBlobsIncludeItem.Serialization.cs,
-      **/Generated/Models/ListContainersIncludeType.Serialization.cs,
-    </CodeCoverageExcludeByFile>
-  </PropertyGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
     <Compile Include="$(AzureStorageSharedSources)AesGcm\**\*.cs" LinkBase="Shared" />
