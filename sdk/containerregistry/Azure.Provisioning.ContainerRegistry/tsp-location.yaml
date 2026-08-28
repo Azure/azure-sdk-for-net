@@ -1,4 +1,4 @@
 directory: specification/containerregistry/resource-manager/Microsoft.ContainerRegistry/Registry
-commit: 05b1a9272fdd178f5308837329bb97bb1335edcd
+commit: 062aba10cd867b21118b9ecd8cdc950dc6ffc100
 repo: ArcturusZhang/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"
