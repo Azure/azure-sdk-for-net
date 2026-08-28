@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.StorageSync.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2022-09-01. </description>
+        /// <description> 2025-12-01. </description>
         /// </item>
         /// </list>
         /// </summary>

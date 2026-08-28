@@ -28,7 +28,7 @@ namespace Azure.Provisioning.ResourceHealth
         private BicepValue<string> _reason;
         private ResourceHealthEventArticle _article;
         private BicepList<ResourceHealthEventLink> _links;
-        private BicepValue<DateTimeOffset> _impactStartOn;
+        private BicepValue<DateTimeOffset> _impactStartsOn;
         private BicepValue<DateTimeOffset> _impactMitigationOn;
         private BicepList<ResourceHealthEventImpact> _impact;
         private ResourceHealthEventRecommendedActions _recommendedActions;
@@ -195,13 +195,13 @@ namespace Azure.Provisioning.ResourceHealth
             }
         }
 
-        /// <summary> Gets the ImpactStartOn. </summary>
-        public BicepValue<DateTimeOffset> ImpactStartOn
+        /// <summary> Gets the ImpactStartsOn. </summary>
+        public BicepValue<DateTimeOffset> ImpactStartsOn
         {
             get
             {
                 Initialize();
-                return _impactStartOn;
+                return _impactStartsOn;
             }
         }
 
@@ -432,7 +432,7 @@ namespace Azure.Provisioning.ResourceHealth
             _reason = DefineProperty<string>(nameof(Reason), new string[] { "reason" });
             _article = DefineModelProperty<ResourceHealthEventArticle>(nameof(Article), new string[] { "article" });
             _links = DefineListProperty<ResourceHealthEventLink>(nameof(Links), new string[] { "links" });
-            _impactStartOn = DefineProperty<DateTimeOffset>(nameof(ImpactStartOn), new string[] { "impactStartTime" }, format: "O");
+            _impactStartsOn = DefineProperty<DateTimeOffset>(nameof(ImpactStartsOn), new string[] { "impactStartTime" }, format: "O");
             _impactMitigationOn = DefineProperty<DateTimeOffset>(nameof(ImpactMitigationOn), new string[] { "impactMitigationTime" }, format: "O");
             _impact = DefineListProperty<ResourceHealthEventImpact>(nameof(Impact), new string[] { "impact" });
             _recommendedActions = DefineModelProperty<ResourceHealthEventRecommendedActions>(nameof(RecommendedActions), new string[] { "recommendedActions" });

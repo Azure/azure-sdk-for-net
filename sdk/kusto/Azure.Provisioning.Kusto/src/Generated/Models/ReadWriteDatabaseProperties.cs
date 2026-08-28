@@ -121,12 +121,12 @@ namespace Azure.Provisioning.Kusto
             }
         }
 
-        /// <summary> Gets the SuspensionStartOn. </summary>
-        public BicepValue<DateTimeOffset> SuspensionStartOn
+        /// <summary> Gets the SuspensionStartsOn. </summary>
+        public BicepValue<DateTimeOffset> SuspensionStartsOn
         {
             get
             {
-                return SuspensionDetails.SuspensionStartOn;
+                return SuspensionDetails.SuspensionStartsOn;
             }
         }
 
