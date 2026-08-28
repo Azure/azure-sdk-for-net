@@ -14,7 +14,7 @@ using Azure.Core.TestFramework;
 using Azure.Provisioning.Primitives;
 using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources.Deployments.Models;
 using NUnit.Framework;
 
 namespace Azure.Provisioning.Tests;
