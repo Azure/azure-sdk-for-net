@@ -9,7 +9,7 @@
 - Added management of chat rooms, room members, users, and roles.
 - Added reading of message history from a conversation, and updating and deleting messages.
 - Added `GetClientAccessUri` to generate a client access URI for connecting to the service.
-- Added built-in user permissions (`UserPermissions`), room permissions (`RoomPermissions`), and roles (`ChatRoles`).
+- Added generated extensible chat permissions (`ChatPermission`) and built-in roles (`BuiltInChatRoles`).
 
 ### Breaking Changes
 

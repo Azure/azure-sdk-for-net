@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1655,6 +1656,90 @@ namespace Azure.Messaging.WebPubSub.Chat
             Argument.AssertNotNullOrEmpty(userId, nameof(userId));
 
             return await DeleteUserAsync(userId, matchConditions, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Generate a token for connecting a client to Azure Web PubSub.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="userId"> User identifier for the client connection. </param>
+        /// <param name="role"> Roles granted to the client connection. </param>
+        /// <param name="minutesToExpire"> Lifetime of the generated token, in minutes. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual Response GenerateClientToken(string userId, IEnumerable<string> role, int? minutesToExpire, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("WebPubSubChatServiceClient.GenerateClientToken");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGenerateClientTokenRequest(userId, role, minutesToExpire, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Generate a token for connecting a client to Azure Web PubSub.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="userId"> User identifier for the client connection. </param>
+        /// <param name="role"> Roles granted to the client connection. </param>
+        /// <param name="minutesToExpire"> Lifetime of the generated token, in minutes. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        internal virtual async Task<Response> GenerateClientTokenAsync(string userId, IEnumerable<string> role, int? minutesToExpire, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("WebPubSubChatServiceClient.GenerateClientToken");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGenerateClientTokenRequest(userId, role, minutesToExpire, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Generate a token for connecting a client to Azure Web PubSub. </summary>
+        /// <param name="userId"> User identifier for the client connection. </param>
+        /// <param name="role"> Roles granted to the client connection. </param>
+        /// <param name="minutesToExpire"> Lifetime of the generated token, in minutes. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual Response<GenerateClientTokenResponse> GenerateClientToken(string userId = default, IEnumerable<string> role = default, int? minutesToExpire = default, CancellationToken cancellationToken = default)
+        {
+            Response result = GenerateClientToken(userId, role, minutesToExpire, cancellationToken.ToRequestContext());
+            return Response.FromValue((GenerateClientTokenResponse)result, result);
+        }
+
+        /// <summary> Generate a token for connecting a client to Azure Web PubSub. </summary>
+        /// <param name="userId"> User identifier for the client connection. </param>
+        /// <param name="role"> Roles granted to the client connection. </param>
+        /// <param name="minutesToExpire"> Lifetime of the generated token, in minutes. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        internal virtual async Task<Response<GenerateClientTokenResponse>> GenerateClientTokenAsync(string userId = default, IEnumerable<string> role = default, int? minutesToExpire = default, CancellationToken cancellationToken = default)
+        {
+            Response result = await GenerateClientTokenAsync(userId, role, minutesToExpire, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((GenerateClientTokenResponse)result, result);
         }
     }
 }

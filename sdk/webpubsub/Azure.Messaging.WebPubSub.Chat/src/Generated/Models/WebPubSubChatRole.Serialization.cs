@@ -108,14 +108,9 @@ namespace Azure.Messaging.WebPubSub.Chat
             }
             writer.WritePropertyName("permissions"u8);
             writer.WriteStartArray();
-            foreach (string item in Permissions)
+            foreach (ChatPermission item in Permissions)
             {
-                if (item == null)
-                {
-                    writer.WriteNullValue();
-                    continue;
-                }
-                writer.WriteStringValue(item);
+                writer.WriteStringValue(item.ToString());
             }
             writer.WriteEndArray();
             if (options.Format != "W")
@@ -166,7 +161,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                 return null;
             }
             string name = default;
-            IList<string> permissions = default;
+            IList<ChatPermission> permissions = default;
             ETag etag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -178,17 +173,10 @@ namespace Azure.Messaging.WebPubSub.Chat
                 }
                 if (prop.NameEquals("permissions"u8))
                 {
-                    List<string> array = new List<string>();
+                    List<ChatPermission> array = new List<ChatPermission>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
+                        array.Add(new ChatPermission(item.GetString()));
                     }
                     permissions = array;
                     continue;

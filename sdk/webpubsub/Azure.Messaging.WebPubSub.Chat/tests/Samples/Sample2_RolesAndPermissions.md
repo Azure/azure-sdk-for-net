@@ -5,7 +5,7 @@ This sample shows how to use the built-in roles and permissions shipped with the
 ## Inspect a built-in role
 
 ```C# Snippet:WebPubSubChatInspectBuiltInRole
-WebPubSubChatRole memberRole = client.GetRole(ChatRoles.RoomMember).Value;
+WebPubSubChatRole memberRole = client.GetRole(BuiltInChatRoles.RoomMember).Value;
 
 Console.WriteLine($"{memberRole.Name}: {string.Join(", ", memberRole.Permissions)}");
 ```
@@ -17,9 +17,9 @@ A role name must start with the `user.` or `room.` prefix, and must not mix user
 ```C# Snippet:WebPubSubChatCreateCustomRole
 var role = new WebPubSubChatRole(new[]
 {
-    RoomPermissions.PublishMessage,
-    RoomPermissions.History,
-    RoomPermissions.InviteUser,
+    ChatPermission.RoomPublishMessage,
+    ChatPermission.RoomHistory,
+    ChatPermission.RoomInvite,
 });
 
 WebPubSubChatRole created = client.CreateOrReplaceRole("room.contributor", role).Value;

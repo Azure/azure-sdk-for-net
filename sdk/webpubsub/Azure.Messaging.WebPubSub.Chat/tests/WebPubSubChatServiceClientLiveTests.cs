@@ -37,13 +37,13 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             {
                 // Create
                 WebPubSubChatRole created = await _client.CreateOrReplaceRoleAsync(roleName,
-                    new WebPubSubChatRole(new[] { UserPermissions.CreateRoom }));
+                    new WebPubSubChatRole(new[] { ChatPermission.UserCreateRoom }));
                 Assert.That(created.Name, Is.EqualTo(roleName));
 
                 // Get
                 WebPubSubChatRole fetched = await _client.GetRoleAsync(roleName);
                 Assert.That(fetched.Name, Is.EqualTo(roleName));
-                Assert.That(fetched.Permissions, Contains.Item(UserPermissions.CreateRoom));
+                Assert.That(fetched.Permissions, Contains.Item(ChatPermission.UserCreateRoom));
             }
             finally
             {
@@ -58,9 +58,9 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             const string roomRoleName = "room.e2e_list_test";
 
             await _client.CreateOrReplaceRoleAsync(userRoleName,
-                new WebPubSubChatRole(new[] { UserPermissions.CreateRoom }));
+                new WebPubSubChatRole(new[] { ChatPermission.UserCreateRoom }));
             await _client.CreateOrReplaceRoleAsync(roomRoleName,
-                new WebPubSubChatRole(new[] { RoomPermissions.PublishMessage }));
+                new WebPubSubChatRole(new[] { ChatPermission.RoomPublishMessage }));
 
             try
             {
@@ -87,8 +87,8 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             const string role1 = "user.e2e_page1";
             const string role2 = "user.e2e_page2";
 
-            await _client.CreateOrReplaceRoleAsync(role1, new WebPubSubChatRole(new[] { UserPermissions.CreateRoom }));
-            await _client.CreateOrReplaceRoleAsync(role2, new WebPubSubChatRole(new[] { UserPermissions.CreateRoom }));
+            await _client.CreateOrReplaceRoleAsync(role1, new WebPubSubChatRole(new[] { ChatPermission.UserCreateRoom }));
+            await _client.CreateOrReplaceRoleAsync(role2, new WebPubSubChatRole(new[] { ChatPermission.UserCreateRoom }));
 
             try
             {
@@ -204,9 +204,9 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             try
             {
                 await _client.CreateOrReplaceRoleAsync(userRoleName,
-                    new WebPubSubChatRole(new[] { UserPermissions.CreateRoom }));
+                    new WebPubSubChatRole(new[] { ChatPermission.UserCreateRoom }));
                 await _client.CreateOrReplaceRoleAsync(roomRoleName,
-                    new WebPubSubChatRole(new[] { RoomPermissions.PublishMessage }));
+                    new WebPubSubChatRole(new[] { ChatPermission.RoomPublishMessage }));
                 await _client.CreateOrReplaceUserAsync(userId,
                     new WebPubSubHumanChatUser("TestMemberUser", userRoleName));
                 await _client.CreateOrReplaceRoomAsync(roomId, new WebPubSubChatRoom("Member Test Room"));
@@ -253,7 +253,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             const string roleName = "user.e2e_user_role";
 
             await _client.CreateOrReplaceRoleAsync(roleName,
-                new WebPubSubChatRole(new[] { UserPermissions.CreateRoom }));
+                new WebPubSubChatRole(new[] { ChatPermission.UserCreateRoom }));
 
             try
             {
@@ -287,14 +287,14 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
             const string roleName = "user.e2e_access_role";
 
             await _client.CreateOrReplaceRoleAsync(roleName,
-                new WebPubSubChatRole(new[] { UserPermissions.CreateRoom }));
+                new WebPubSubChatRole(new[] { ChatPermission.UserCreateRoom }));
             await _client.CreateOrReplaceUserAsync(userId,
                 new WebPubSubHumanChatUser("AccessUser", roleName));
 
             try
             {
                 Uri uri = await _client.GetClientAccessUriAsync(
-                    new GetClientAccessTokenOptions { UserId = userId });
+                    new ClientAccessUriOptions { UserId = userId });
 
                 Assert.That(uri, Is.Not.Null);
                 Assert.That(uri.ToString(), Does.Contain("access_token="));

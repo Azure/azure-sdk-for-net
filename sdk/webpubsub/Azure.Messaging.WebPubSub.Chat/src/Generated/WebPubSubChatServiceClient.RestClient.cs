@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 
@@ -524,6 +525,38 @@ namespace Azure.Messaging.WebPubSub.Chat
             {
                 request.Headers.Add(matchConditions);
             }
+            return message;
+        }
+
+        internal HttpMessage CreateGenerateClientTokenRequest(string userId, IEnumerable<string> role, int? minutesToExpire, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/api/hubs/", false);
+            uri.AppendPath(_hub, true);
+            uri.AppendPath("/:generateToken", false);
+            if (userId != null)
+            {
+                uri.AppendQuery("userId", userId, true);
+            }
+            if (role != null && !(role is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
+            {
+                foreach (var @param in role)
+                {
+                    uri.AppendQuery("role", @param, true);
+                }
+            }
+            if (minutesToExpire != null)
+            {
+                uri.AppendQuery("minutesToExpire", TypeFormatters.ConvertToString(minutesToExpire), true);
+            }
+            uri.AppendQuery("api-version", "2024-12-01", true);
+            uri.AppendQuery("clientType", "default", true);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
     }

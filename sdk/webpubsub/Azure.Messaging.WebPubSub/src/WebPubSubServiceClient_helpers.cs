@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,9 +19,6 @@ namespace Azure.Messaging.WebPubSub
     public partial class WebPubSubServiceClient
     {
         private const string ClientTokenResponseTokenPropertyName = "token";
-
-        internal static byte[] s_role = Encoding.UTF8.GetBytes("role");
-        internal static byte[] s_group = Encoding.UTF8.GetBytes("webpubsub.group");
 
         /// <summary>
         /// Creates a URI with authentication token for the clients.
@@ -296,36 +291,19 @@ namespace Azure.Messaging.WebPubSub
 
         private string GenerateTokenFromAzureKeyCredential(DateTimeOffset expiresAt, WebPubSubClientProtocol clientProtocol, string userId = default, IEnumerable<string> roles = default, IEnumerable<string> groups = default)
         {
-            var keyBytes = Encoding.UTF8.GetBytes(_credential.Key);
-
-            var jwt = new JwtBuilder(keyBytes);
-            var now = DateTimeOffset.UtcNow;
-
             string endpoint = Endpoint.AbsoluteUri;
             if (!endpoint.EndsWith("/", StringComparison.Ordinal))
             {
                 endpoint += "/";
             }
-            var audience = $"{endpoint}{GetRelativeClientEndpoint(clientProtocol)}";
 
-            if (userId != default)
-            {
-                jwt.AddClaim(JwtBuilder.Sub, userId);
-            }
-            if (roles != default && roles.Any())
-            {
-                jwt.AddClaim(s_role, roles);
-            }
-            if (groups != default && groups.Any())
-            {
-                jwt.AddClaim(s_group, groups);
-            }
-            jwt.AddClaim(JwtBuilder.Nbf, now);
-            jwt.AddClaim(JwtBuilder.Exp, expiresAt);
-            jwt.AddClaim(JwtBuilder.Iat, now);
-            jwt.AddClaim(JwtBuilder.Aud, audience);
-
-            return jwt.BuildString();
+            return WebPubSubClientAccessTokenGenerator.Generate(
+                _credential,
+                $"{endpoint}{GetRelativeClientEndpoint(clientProtocol)}",
+                expiresAt,
+                userId,
+                roles,
+                groups);
         }
 
         private string GetRelativeClientEndpoint(WebPubSubClientProtocol clientProtocol) => clientProtocol switch

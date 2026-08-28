@@ -1,2 +1,0 @@
-# Azure.Messaging.WebPubSub.Chat approved analyzer suppressions.
-# See eng/analyzerallowlist/README.md for the file format and review policy.

@@ -27,7 +27,7 @@ Create (or replace) a chat user. A `HumanChatUser` represents an end user and is
 ```C# Snippet:WebPubSubChatCreateUser
 WebPubSubChatUser user = client.CreateOrReplaceUser(
     "user1",
-    new WebPubSubHumanChatUser("Alice", ChatRoles.UserNormal)).Value;
+    new WebPubSubHumanChatUser("Alice", BuiltInChatRoles.UserNormal)).Value;
 ```
 
 ## Create a room
@@ -48,7 +48,7 @@ Adding a user to a room creates a room member with a role in that room:
 WebPubSubChatRoomMember member = client.CreateOrReplaceRoomMember(
     "room1",
     "user1",
-    new WebPubSubChatRoomMember(ChatRoles.RoomMember)).Value;
+    new WebPubSubChatRoomMember(BuiltInChatRoles.RoomMember)).Value;
 ```
 
 ## List room members

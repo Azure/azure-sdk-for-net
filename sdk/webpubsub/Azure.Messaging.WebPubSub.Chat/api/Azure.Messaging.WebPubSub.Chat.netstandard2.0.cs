@@ -6,29 +6,38 @@ namespace Azure.Messaging.WebPubSub.Chat
         public static Azure.Messaging.WebPubSub.Chat.AzureMessagingWebPubSubChatContext Default { get { throw null; } }
         protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
     }
-    public static partial class ChatRoles
+    public static partial class BuiltInChatRoles
     {
         public const string RoomMember = "room.member";
         public const string RoomOperator = "room.operator";
         public const string UserNormal = "user.normal";
     }
-    public partial class GetClientAccessTokenOptions
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct ChatPermission : System.IEquatable<Azure.Messaging.WebPubSub.Chat.ChatPermission>
     {
-        public GetClientAccessTokenOptions() { }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public ChatPermission(string value) { throw null; }
+        public static Azure.Messaging.WebPubSub.Chat.ChatPermission RoomHistory { get { throw null; } }
+        public static Azure.Messaging.WebPubSub.Chat.ChatPermission RoomInvite { get { throw null; } }
+        public static Azure.Messaging.WebPubSub.Chat.ChatPermission RoomPublishMessage { get { throw null; } }
+        public static Azure.Messaging.WebPubSub.Chat.ChatPermission RoomRemoveUser { get { throw null; } }
+        public static Azure.Messaging.WebPubSub.Chat.ChatPermission UserCreateRoom { get { throw null; } }
+        public static Azure.Messaging.WebPubSub.Chat.ChatPermission UserFetchAllRooms { get { throw null; } }
+        public bool Equals(Azure.Messaging.WebPubSub.Chat.ChatPermission other) { throw null; }
+        public override bool Equals(object obj) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.Messaging.WebPubSub.Chat.ChatPermission left, Azure.Messaging.WebPubSub.Chat.ChatPermission right) { throw null; }
+        public static implicit operator Azure.Messaging.WebPubSub.Chat.ChatPermission (string value) { throw null; }
+        public static implicit operator Azure.Messaging.WebPubSub.Chat.ChatPermission? (string value) { throw null; }
+        public static bool operator !=(Azure.Messaging.WebPubSub.Chat.ChatPermission left, Azure.Messaging.WebPubSub.Chat.ChatPermission right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class ClientAccessTokenOptions
+    {
+        public ClientAccessTokenOptions() { }
         public System.TimeSpan ExpiresAfter { get { throw null; } set { } }
         public string UserId { get { throw null; } set { } }
-    }
-    public static partial class RoomPermissions
-    {
-        public const string History = "room.history";
-        public const string InviteUser = "room.invite";
-        public const string PublishMessage = "room.publish_message";
-        public const string RemoveUser = "room.remove_user";
-    }
-    public static partial class UserPermissions
-    {
-        public const string CreateRoom = "user.create_room";
-        public const string FetchAllRooms = "user.fetch_all_rooms";
     }
     public partial class WebPubSubChatConversation : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.WebPubSubChatConversation>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.WebPubSubChatConversation>
     {
@@ -86,7 +95,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         public static Azure.Messaging.WebPubSub.Chat.WebPubSubChatConversation WebPubSubChatConversation(string id = null, string parentRoom = null, Azure.ETag etag = default(Azure.ETag)) { throw null; }
         public static Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessage WebPubSubChatMessage(string id = null, string createdBy = null, Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent content = null, System.DateTimeOffset createdAt = default(System.DateTimeOffset), Azure.ETag etag = default(Azure.ETag)) { throw null; }
         public static Azure.Messaging.WebPubSub.Chat.WebPubSubChatMessageContent WebPubSubChatMessageContent(string text = null, System.BinaryData binary = null) { throw null; }
-        public static Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole WebPubSubChatRole(string name = null, System.Collections.Generic.IEnumerable<string> permissions = null, Azure.ETag etag = default(Azure.ETag)) { throw null; }
+        public static Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole WebPubSubChatRole(string name = null, System.Collections.Generic.IEnumerable<Azure.Messaging.WebPubSub.Chat.ChatPermission> permissions = null, Azure.ETag etag = default(Azure.ETag)) { throw null; }
         public static Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom WebPubSubChatRoom(string id = null, string title = null, string defaultConversation = null, Azure.ETag etag = default(Azure.ETag)) { throw null; }
         public static Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoomMember WebPubSubChatRoomMember(string userId = null, string roleName = null, Azure.ETag etag = default(Azure.ETag)) { throw null; }
         public static Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser WebPubSubChatUser(string kind = null, string id = null, string nickname = null, Azure.ETag etag = default(Azure.ETag)) { throw null; }
@@ -94,14 +103,14 @@ namespace Azure.Messaging.WebPubSub.Chat
     }
     public partial class WebPubSubChatRole : System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole>, System.ClientModel.Primitives.IPersistableModel<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole>
     {
-        public WebPubSubChatRole(System.Collections.Generic.IEnumerable<string> permissions) { }
+        public WebPubSubChatRole(System.Collections.Generic.IEnumerable<Azure.Messaging.WebPubSub.Chat.ChatPermission> permissions) { }
         public Azure.ETag Etag { get { throw null; } }
         public string Name { get { throw null; } }
-        public System.Collections.Generic.IList<string> Permissions { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.Messaging.WebPubSub.Chat.ChatPermission> Permissions { get { throw null; } }
         protected virtual Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public static explicit operator Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole (Azure.Response response) { throw null; }
-        public static implicit operator Azure.Core.RequestContent (Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole chatRole) { throw null; }
+        public static implicit operator Azure.Core.RequestContent (Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole webPubSubChatRole) { throw null; }
         protected virtual Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRole>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -120,7 +129,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         protected virtual Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public static explicit operator Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom (Azure.Response response) { throw null; }
-        public static implicit operator Azure.Core.RequestContent (Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom chatRoom) { throw null; }
+        public static implicit operator Azure.Core.RequestContent (Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom webPubSubChatRoom) { throw null; }
         protected virtual Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoom>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -138,7 +147,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         protected virtual Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoomMember JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public static explicit operator Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoomMember (Azure.Response response) { throw null; }
-        public static implicit operator Azure.Core.RequestContent (Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoomMember chatRoomMember) { throw null; }
+        public static implicit operator Azure.Core.RequestContent (Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoomMember webPubSubChatRoomMember) { throw null; }
         protected virtual Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoomMember PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoomMember System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.WebPubSubChatRoomMember>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -213,9 +222,9 @@ namespace Azure.Messaging.WebPubSub.Chat
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteUserAsync(string userId, Azure.MatchConditions matchConditions, Azure.RequestContext context) { throw null; }
         [System.Diagnostics.DebuggerStepThroughAttribute]
         public virtual System.Threading.Tasks.Task<Azure.Response> DeleteUserAsync(string userId, Azure.MatchConditions matchConditions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Uri GetClientAccessUri(Azure.Messaging.WebPubSub.Chat.GetClientAccessTokenOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Uri GetClientAccessUri(Azure.Messaging.WebPubSub.Chat.ClientAccessTokenOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.Diagnostics.DebuggerStepThroughAttribute]
-        public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(Azure.Messaging.WebPubSub.Chat.GetClientAccessTokenOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<System.Uri> GetClientAccessUriAsync(Azure.Messaging.WebPubSub.Chat.ClientAccessTokenOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetConversation(string conversationId, Azure.RequestContext context) { throw null; }
         public virtual Azure.Response<Azure.Messaging.WebPubSub.Chat.WebPubSubChatConversation> GetConversation(string conversationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         [System.Diagnostics.DebuggerStepThroughAttribute]
@@ -290,7 +299,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         protected virtual Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         public static explicit operator Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser (Azure.Response response) { throw null; }
-        public static implicit operator Azure.Core.RequestContent (Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser chatUser) { throw null; }
+        public static implicit operator Azure.Core.RequestContent (Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser webPubSubChatUser) { throw null; }
         protected virtual Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual System.BinaryData PersistableModelWriteCore(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser System.ClientModel.Primitives.IJsonModel<Azure.Messaging.WebPubSub.Chat.WebPubSubChatUser>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

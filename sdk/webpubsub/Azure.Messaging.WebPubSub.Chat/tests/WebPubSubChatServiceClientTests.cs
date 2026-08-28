@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -50,7 +51,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
         {
             var client = new WebPubSubChatServiceClient(FakeConnectionString, "hub");
 
-            Uri uri = client.GetClientAccessUri(new GetClientAccessTokenOptions
+            Uri uri = client.GetClientAccessUri(new ClientAccessUriOptions
             {
                 UserId = "user1",
                 ExpiresAfter = TimeSpan.FromMinutes(5),
@@ -76,7 +77,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
         {
             var client = new WebPubSubChatServiceClient(FakeConnectionString, "hub");
 
-            Uri uri = await client.GetClientAccessUriAsync(new GetClientAccessTokenOptions { UserId = "user1" });
+            Uri uri = await client.GetClientAccessUriAsync(new ClientAccessUriOptions { UserId = "user1" });
 
             Assert.That(uri.ToString(), Does.StartWith("ws://localhost:8080/client/hubs/hub?access_token="));
         }
@@ -174,10 +175,66 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests
                 new StaticTokenCredential(),
                 options);
 
+            Uri accessUri = client.GetClientAccessUri(new ClientAccessUriOptions
+            {
+                UserId = "user1",
+                ExpiresAfter = TimeSpan.FromSeconds(121),
+            });
+
+            Uri requestUri = transport.SingleRequest.Uri.ToUri();
+            Assert.That(requestUri.AbsolutePath, Is.EqualTo("/api/hubs/hub/:generateToken"));
+            Assert.That(
+                requestUri.Query,
+                Is.EqualTo("?userId=user1&role=webpubsub.getGroupState&role=webpubsub.setGroupState&minutesToExpire=2&api-version=2024-12-01&clientType=default"));
+            Assert.That(accessUri.Query, Does.Contain("access_token=test-client-token"));
+        }
+
+        [Test]
+        public void TokenCredentialGetClientAccessUri_UsesConfiguredPolicy()
+        {
+            var response = new MockResponse(200);
+            response.SetContent("{\"token\":\"test-client-token\"}");
+            var transport = new MockTransport(response);
+            var options = new WebPubSubChatServiceClientOptions { Transport = transport };
+            options.AddPolicy(new TestHeaderPolicy(), HttpPipelinePosition.PerCall);
+            var client = new WebPubSubChatServiceClient(
+                new Uri("https://contoso.webpubsub.azure.com"),
+                "hub",
+                new StaticTokenCredential(),
+                options);
+
+            client.GetClientAccessUri();
+
+            Assert.That(transport.SingleRequest.Headers.TryGetValue("x-test-policy", out string value), Is.True);
+            Assert.That(value, Is.EqualTo("applied"));
+        }
+
+        [Test]
+        public void TokenCredentialGetClientAccessUri_UsesConfiguredRetryOptions()
+        {
+            var success = new MockResponse(200);
+            success.SetContent("{\"token\":\"test-client-token\"}");
+            var transport = new MockTransport(new MockResponse(500), success);
+            var options = new WebPubSubChatServiceClientOptions { Transport = transport };
+            options.Retry.MaxRetries = 1;
+            var client = new WebPubSubChatServiceClient(
+                new Uri("https://contoso.webpubsub.azure.com"),
+                "hub",
+                new StaticTokenCredential(),
+                options);
+
             Uri accessUri = client.GetClientAccessUri();
 
-            Assert.That(transport.SingleRequest.Uri.ToUri().AbsolutePath, Does.Contain("/api/hubs/hub/:generateToken"));
+            Assert.That(transport.Requests, Has.Count.EqualTo(2));
             Assert.That(accessUri.Query, Does.Contain("access_token=test-client-token"));
+        }
+
+        private sealed class TestHeaderPolicy : HttpPipelineSynchronousPolicy
+        {
+            public override void OnSendingRequest(HttpMessage message)
+            {
+                message.Request.Headers.Add("x-test-policy", "applied");
+            }
         }
 
         private sealed class StaticTokenCredential : TokenCredential

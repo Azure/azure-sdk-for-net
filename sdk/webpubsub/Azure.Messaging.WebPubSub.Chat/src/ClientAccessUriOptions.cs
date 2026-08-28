@@ -7,10 +7,15 @@ namespace Azure.Messaging.WebPubSub.Chat
 {
     /// <summary>
     /// Options for generating a client access URI via
-    /// <see cref="WebPubSubChatServiceClient.GetClientAccessUri(GetClientAccessTokenOptions, System.Threading.CancellationToken)"/>.
+    /// <see cref="WebPubSubChatServiceClient.GetClientAccessUri(ClientAccessUriOptions, System.Threading.CancellationToken)"/>.
     /// </summary>
-    public class GetClientAccessTokenOptions
+    public class ClientAccessUriOptions
     {
+        /// <summary>
+        /// Gets the default client access URI options.
+        /// </summary>
+        public static readonly ClientAccessUriOptions Default = new();
+
         /// <summary>
         /// Optional user ID to embed in the token. When set, the token is bound to this user.
         /// </summary>

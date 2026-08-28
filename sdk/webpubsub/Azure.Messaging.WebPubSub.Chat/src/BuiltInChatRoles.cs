@@ -4,7 +4,7 @@
 namespace Azure.Messaging.WebPubSub.Chat
 {
     /// <summary> Built-in roles supported by Web PubSub Chat. </summary>
-    public static class ChatRoles
+    public static class BuiltInChatRoles
     {
         /// <summary> The default user role with room creation and room listing permissions. </summary>
         public const string UserNormal = "user.normal";

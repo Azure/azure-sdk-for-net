@@ -25,7 +25,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <summary> Initializes a new instance of <see cref="WebPubSubChatRole"/>. </summary>
         /// <param name="permissions"> Permissions associated with the role. Do not mix user permissions and room permissions in one role. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="permissions"/> is null. </exception>
-        public WebPubSubChatRole(IEnumerable<string> permissions)
+        public WebPubSubChatRole(IEnumerable<ChatPermission> permissions)
         {
             Argument.AssertNotNull(permissions, nameof(permissions));
 
@@ -37,7 +37,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <param name="permissions"> Permissions associated with the role. Do not mix user permissions and room permissions in one role. </param>
         /// <param name="etag"> The entity tag for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebPubSubChatRole(string name, IList<string> permissions, ETag etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebPubSubChatRole(string name, IList<ChatPermission> permissions, ETag etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Permissions = permissions;
@@ -49,7 +49,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         public string Name { get; }
 
         /// <summary> Permissions associated with the role. Do not mix user permissions and room permissions in one role. </summary>
-        public IList<string> Permissions { get; }
+        public IList<ChatPermission> Permissions { get; }
 
         /// <summary> The entity tag for this resource. </summary>
         public ETag Etag { get; }

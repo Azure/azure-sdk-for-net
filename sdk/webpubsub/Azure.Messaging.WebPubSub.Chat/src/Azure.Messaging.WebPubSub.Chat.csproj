@@ -29,12 +29,12 @@
     <Compile Include="..\..\Azure.Messaging.WebPubSub\src\Shared\WebPubSubAuthenticationPolicy.cs" LinkBase="Shared/WebPubSub" />
     <Compile Include="..\..\Azure.Messaging.WebPubSub\src\Shared\ReverseProxyPolicy.cs" LinkBase="Shared/WebPubSub" />
     <Compile Include="..\..\Azure.Messaging.WebPubSub\src\Shared\JwtBuilder.cs" LinkBase="Shared/WebPubSub" />
+    <Compile Include="..\..\Azure.Messaging.WebPubSub\src\Shared\WebPubSubClientAccessTokenGenerator.cs" LinkBase="Shared/WebPubSub" />
     <Compile Include="..\..\Azure.Messaging.WebPubSub\src\Shared\NS2Bridge.cs" LinkBase="Shared/WebPubSub" />
     <Compile Include="..\..\Azure.Messaging.WebPubSub\src\Shared\ConnectionStringParser.cs" LinkBase="Shared/WebPubSub" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <ProjectReference Include="../../Azure.Messaging.WebPubSub/src/Azure.Messaging.WebPubSub.csproj" />
   </ItemGroup>
 </Project>

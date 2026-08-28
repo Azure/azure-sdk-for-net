@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Microsoft.TypeSpec.Generator.Customizations;
@@ -15,14 +13,6 @@ namespace Azure.Messaging.WebPubSub.Chat
     [CodeGenSuppress("WebPubSubChatServiceClient", typeof(HttpPipelinePolicy), typeof(Uri), typeof(string), typeof(WebPubSubChatServiceClientOptions))]
     public partial class WebPubSubChatServiceClient
     {
-        private static readonly string[] ChatClientRoles = new[]
-        {
-            "webpubsub.getGroupState",
-            "webpubsub.setGroupState"
-        };
-
-        private readonly WebPubSubServiceClient _webPubSubServiceClient;
-
         /// <summary>
         /// The hub name this client is connected to.
         /// </summary>
@@ -71,7 +61,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         public WebPubSubChatServiceClient(Uri endpoint, string hub, TokenCredential credential, WebPubSubChatServiceClientOptions options)
             : this(new BearerTokenAuthenticationPolicy(credential, AuthorizationScopes), endpoint, hub, options)
         {
-            _webPubSubServiceClient = CreateWebPubSubServiceClient(endpoint, hub, credential, options);
+            _tokenCredential = credential;
         }
 
         /// <summary>
@@ -116,96 +106,12 @@ namespace Azure.Messaging.WebPubSub.Chat
         public WebPubSubChatServiceClient(Uri endpoint, string hub, AzureKeyCredential credential, WebPubSubChatServiceClientOptions options)
             : this(new WebPubSubAuthenticationPolicy(credential ?? throw new ArgumentNullException(nameof(credential))), endpoint, hub, options ?? new WebPubSubChatServiceClientOptions())
         {
-            _webPubSubServiceClient = CreateWebPubSubServiceClient(endpoint, hub, credential, options);
+            _keyCredential = credential;
         }
 
         private WebPubSubChatServiceClient((Uri Endpoint, AzureKeyCredential Credential) parsed, string hub, WebPubSubChatServiceClientOptions options)
             : this(parsed.Endpoint, hub, parsed.Credential, options)
         {
-        }
-
-        /// <summary>
-        /// Generates a client access URI that a client can use to connect to the Web PubSub Chat service.
-        /// The URI includes a JWT access token as a query parameter.
-        /// </summary>
-        /// <param name="options">Options controlling the generated token. Pass <c>null</c> to use defaults.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Uri"/> that a client can use to connect, with the access token included.</returns>
-#pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual Uri GetClientAccessUri(
-            GetClientAccessTokenOptions options = null,
-            CancellationToken cancellationToken = default)
-        {
-            var client = _webPubSubServiceClient
-                ?? throw new InvalidOperationException("GetClientAccessUri requires the client to be constructed with credentials.");
-
-            options ??= new GetClientAccessTokenOptions();
-
-            return client.GetClientAccessUri(
-                expiresAfter: options.ExpiresAfter == default ? TimeSpan.FromHours(1) : options.ExpiresAfter,
-                userId: options.UserId,
-                roles: ChatClientRoles,
-                cancellationToken: cancellationToken);
-        }
-#pragma warning restore AZC0015
-
-        /// <summary>
-        /// Generates a client access URI that a client can use to connect to the Web PubSub Chat service.
-        /// The URI includes a JWT access token as a query parameter.
-        /// </summary>
-        /// <param name="options">Options controlling the generated token. Pass <c>null</c> to use defaults.</param>
-        /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
-        /// <returns>A <see cref="Uri"/> that a client can use to connect, with the access token included.</returns>
-#pragma warning disable AZC0015 // Unexpected client method return type.
-        public virtual async Task<Uri> GetClientAccessUriAsync(
-            GetClientAccessTokenOptions options = null,
-            CancellationToken cancellationToken = default)
-        {
-            var client = _webPubSubServiceClient
-                ?? throw new InvalidOperationException("GetClientAccessUri requires the client to be constructed with credentials.");
-
-            options ??= new GetClientAccessTokenOptions();
-
-            return await client.GetClientAccessUriAsync(
-                expiresAfter: options.ExpiresAfter == default ? TimeSpan.FromHours(1) : options.ExpiresAfter,
-                userId: options.UserId,
-                roles: ChatClientRoles,
-                cancellationToken: cancellationToken).ConfigureAwait(false);
-        }
-#pragma warning restore AZC0015
-
-        private static WebPubSubServiceClient CreateWebPubSubServiceClient(Uri endpoint, string hub, AzureKeyCredential credential, WebPubSubChatServiceClientOptions chatOptions)
-            => new WebPubSubServiceClient(endpoint, hub, credential, CreateServiceOptions(chatOptions));
-
-        private static WebPubSubServiceClient CreateWebPubSubServiceClient(Uri endpoint, string hub, TokenCredential credential, WebPubSubChatServiceClientOptions chatOptions)
-            => new WebPubSubServiceClient(endpoint, hub, credential, CreateServiceOptions(chatOptions));
-
-        /// <summary>
-        /// Builds the <see cref="WebPubSubServiceClientOptions"/> for the underlying client.
-        /// </summary>
-        /// <remarks>
-        /// <see cref="WebPubSubChatServiceClientOptions.ReverseProxyEndpoint"/> and the transport are propagated.
-        /// Propagating the remaining base <see cref="Azure.Core.ClientOptions"/> members (retry,
-        /// diagnostics, custom policies) needs more design and is deferred to a future version.
-        /// </remarks>
-        private static WebPubSubServiceClientOptions CreateServiceOptions(WebPubSubChatServiceClientOptions chatOptions)
-        {
-            var serviceOptions = new WebPubSubServiceClientOptions();
-            if (chatOptions != null)
-            {
-                serviceOptions.ReverseProxyEndpoint = chatOptions.ReverseProxyEndpoint;
-                serviceOptions.Transport = chatOptions.Transport;
-
-                // TODO: Propagate the remaining base ClientOptions members (RetryPolicy, Retry,
-                // Diagnostics, and custom AddPolicy policies) from chatOptions to serviceOptions so the
-                // underlying WebPubSubServiceClient behaves identically to this client. This matters because
-                // GetClientAccessUri when using a TokenCredential calls the service over the inner client's
-                // pipeline.
-                // Deferred: needs design (custom policies aren't readable from ClientOptions, and the inner
-                // client's service/api-version must not be overwritten). See earlier discussion.
-            }
-
-            return serviceOptions;
         }
     }
 }

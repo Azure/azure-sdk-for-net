@@ -44,7 +44,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
             var client = new WebPubSubChatServiceClient(ConnectionString, "chat");
 
             #region Snippet:WebPubSubChatGenerateClientAccessUri
-            Uri clientAccessUri = client.GetClientAccessUri(new GetClientAccessTokenOptions
+            Uri clientAccessUri = client.GetClientAccessUri(new ClientAccessUriOptions
             {
                 UserId = "user1",
                 ExpiresAfter = TimeSpan.FromHours(1),
@@ -61,10 +61,10 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
             WebPubSubChatRoom room = client.CreateOrReplaceRoom("room1", new WebPubSubChatRoom("General")).Value;
 
             // Create (or replace) a user with a built-in role.
-            client.CreateOrReplaceUser("user1", new WebPubSubHumanChatUser("Alice", ChatRoles.UserNormal));
+            client.CreateOrReplaceUser("user1", new WebPubSubHumanChatUser("Alice", BuiltInChatRoles.UserNormal));
 
             // Add the user to the room as a room member.
-            client.CreateOrReplaceRoomMember("room1", "user1", new WebPubSubChatRoomMember(ChatRoles.RoomMember));
+            client.CreateOrReplaceRoomMember("room1", "user1", new WebPubSubChatRoomMember(BuiltInChatRoles.RoomMember));
             #endregion
         }
 
@@ -75,9 +75,9 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
             #region Snippet:WebPubSubChatDefineCustomRole
             var role = new WebPubSubChatRole(new[]
             {
-                RoomPermissions.PublishMessage,
-                RoomPermissions.History,
-                RoomPermissions.InviteUser,
+                ChatPermission.RoomPublishMessage,
+                ChatPermission.RoomHistory,
+                ChatPermission.RoomInvite,
             });
 
             client.CreateOrReplaceRole("room.contributor", role);
@@ -89,7 +89,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
             var client = new WebPubSubChatServiceClient(ConnectionString, "chat");
 
             #region Snippet:WebPubSubChatInspectBuiltInRole
-            WebPubSubChatRole memberRole = client.GetRole(ChatRoles.RoomMember).Value;
+            WebPubSubChatRole memberRole = client.GetRole(BuiltInChatRoles.RoomMember).Value;
 
             Console.WriteLine($"{memberRole.Name}: {string.Join(", ", memberRole.Permissions)}");
             #endregion
@@ -132,7 +132,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
             #region Snippet:WebPubSubChatCreateUser
             WebPubSubChatUser user = client.CreateOrReplaceUser(
                 "user1",
-                new WebPubSubHumanChatUser("Alice", ChatRoles.UserNormal)).Value;
+                new WebPubSubHumanChatUser("Alice", BuiltInChatRoles.UserNormal)).Value;
             #endregion
         }
 
@@ -155,7 +155,7 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
             WebPubSubChatRoomMember member = client.CreateOrReplaceRoomMember(
                 "room1",
                 "user1",
-                new WebPubSubChatRoomMember(ChatRoles.RoomMember)).Value;
+                new WebPubSubChatRoomMember(BuiltInChatRoles.RoomMember)).Value;
             #endregion
         }
 
@@ -202,9 +202,9 @@ namespace Azure.Messaging.WebPubSub.Chat.Tests.Samples
             #region Snippet:WebPubSubChatCreateCustomRole
             var role = new WebPubSubChatRole(new[]
             {
-                RoomPermissions.PublishMessage,
-                RoomPermissions.History,
-                RoomPermissions.InviteUser,
+                ChatPermission.RoomPublishMessage,
+                ChatPermission.RoomHistory,
+                ChatPermission.RoomInvite,
             });
 
             WebPubSubChatRole created = client.CreateOrReplaceRole("room.contributor", role).Value;

@@ -61,9 +61,9 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <param name="permissions"> Permissions associated with the role. Do not mix user permissions and room permissions in one role. </param>
         /// <param name="etag"> The entity tag for this resource. </param>
         /// <returns> A new <see cref="Chat.WebPubSubChatRole"/> instance for mocking. </returns>
-        public static WebPubSubChatRole WebPubSubChatRole(string name = default, IEnumerable<string> permissions = default, ETag etag = default)
+        public static WebPubSubChatRole WebPubSubChatRole(string name = default, IEnumerable<ChatPermission> permissions = default, ETag etag = default)
         {
-            permissions ??= new ChangeTrackingList<string>();
+            permissions ??= new ChangeTrackingList<ChatPermission>();
 
             return new WebPubSubChatRole(name, permissions.ToList(), etag, additionalBinaryDataProperties: null);
         }

@@ -1,4 +1,4 @@
-# Azure.Messaging.WebPubSub.Chat client library for .NET
+# Azure Web PubSub Chat client library for .NET
 
 Azure.Messaging.WebPubSub.Chat is a client library for developing .NET applications with rich experience.
 
@@ -15,6 +15,14 @@ dotnet add package Azure.Messaging.WebPubSub.Chat --prerelease
 ### Prerequisites
 
 - You must have a [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
+
+### Authenticate the client
+
+Create a `WebPubSubChatServiceClient` using the connection string for your Web PubSub resource and the target hub name.
+
+```C# Snippet:WebPubSubChatAuthenticateWithConnectionString
+var client = new WebPubSubChatServiceClient("<connection-string>", "chat");
+```
 
 ## Key concepts
 
@@ -37,10 +45,10 @@ Uri clientAccessUri = client.GetClientAccessUri(new GetClientAccessTokenOptions
 WebPubSubChatRoom room = client.CreateOrReplaceRoom("room1", new WebPubSubChatRoom("General")).Value;
 
 // Create (or replace) a user with a built-in role.
-client.CreateOrReplaceUser("user1", new WebPubSubHumanChatUser("Alice", ChatRoles.UserNormal));
+client.CreateOrReplaceUser("user1", new WebPubSubHumanChatUser("Alice", BuiltInChatRoles.UserNormal));
 
 // Add the user to the room as a room member.
-client.CreateOrReplaceRoomMember("room1", "user1", new WebPubSubChatRoomMember(ChatRoles.RoomMember));
+client.CreateOrReplaceRoomMember("room1", "user1", new WebPubSubChatRoomMember(BuiltInChatRoles.RoomMember));
 ```
 
 ### Define a custom role from built-in permissions
@@ -48,9 +56,9 @@ client.CreateOrReplaceRoomMember("room1", "user1", new WebPubSubChatRoomMember(C
 ```C# Snippet:WebPubSubChatDefineCustomRole
 var role = new WebPubSubChatRole(new[]
 {
-    RoomPermissions.PublishMessage,
-    RoomPermissions.History,
-    RoomPermissions.InviteUser,
+    ChatPermission.RoomPublishMessage,
+    ChatPermission.RoomHistory,
+    ChatPermission.RoomInvite,
 });
 
 client.CreateOrReplaceRole("room.contributor", role);
@@ -59,7 +67,7 @@ client.CreateOrReplaceRole("room.contributor", role);
 ### Inspect a built-in role
 
 ```C# Snippet:WebPubSubChatInspectBuiltInRole
-WebPubSubChatRole memberRole = client.GetRole(ChatRoles.RoomMember).Value;
+WebPubSubChatRole memberRole = client.GetRole(BuiltInChatRoles.RoomMember).Value;
 
 Console.WriteLine($"{memberRole.Name}: {string.Join(", ", memberRole.Permissions)}");
 ```
