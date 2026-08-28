@@ -2,7 +2,7 @@
   "main": "dist/src/index.js",
   "dependencies": {
     "client-plugin": "file:../../../../eng/packages/plugins/client",
-    "@typespec/http-client-csharp": "1.0.0-alpha.20260825.9"
+    "@typespec/http-client-csharp": "1.0.0-alpha.20260827.17"
   },
   "devDependencies": {
     "@azure-tools/typespec-client-generator-core": "0.71.2",
