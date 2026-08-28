@@ -1,8 +1,11 @@
 # Release History
 
-## 1.2.0-beta.4 (Unreleased)
+## 1.2.0 (Unreleased)
 
 ### Features Added
+
+- Upgraded API version to `2026-03-01`.
+- Added support for private frontends on Application Gateway for Containers, including the `PrivateEndpointConnectionResource` and `PrivateLinkResource` resources and the `TrafficControllerPublicNetworkAccess` property on frontends.
 
 ### Breaking Changes
 
