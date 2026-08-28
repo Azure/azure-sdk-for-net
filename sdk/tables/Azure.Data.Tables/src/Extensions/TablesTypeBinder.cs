@@ -197,7 +197,7 @@ namespace Azure.Data.Tables
                 return false;
             }
 
-            string[] enumParts = enumValue.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] enumParts = enumValue.Split(',');
             if (enumParts.Length == 0)
             {
                 return false;
