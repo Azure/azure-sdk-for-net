@@ -157,6 +157,7 @@ internal sealed class TaskTestHost : IDisposable
     public void Dispose()
     {
         Engine.Dispose();
+        (Streams as IDisposable)?.Dispose();
         try
         {
             Directory.Delete(_tempDir, recursive: true);

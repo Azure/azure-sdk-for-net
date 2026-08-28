@@ -325,31 +325,28 @@ Three independent paths lead to destroyed:
 
 - the id was **never registered** (no `GetOrCreateAsync` ever ran for it);
 - it was **explicitly `registry.DeleteAsync(id)`**'d; or
-- **close-clock TTL elapsed** — for a **replay backing configured with a `ttl`**, a
+- **close-clock TTL elapsed** — for a **replay backing**, a
   CLOSED stream becomes eligible for auto-destroy once `close-time + ttl` passes,
-  regardless of whether anyone is still subscribed or events remain buffered. Cleanup is
-  **opportunistic**, not timer-driven: expiry is observed and applied on the next stream
-  operation or registry lookup (emit, subscribe, or `GetAsync`), so `GetAsync(id)` after
-  the window treats the stream as not found. Use `registry.DeleteAsync(id)` when you need
-  deterministic, immediate cleanup.
+  regardless of whether anyone is still subscribed or events remain buffered. The bundled
+  registry sweeps expired streams in the background (at least once per minute, or once per
+  TTL interval when shorter) and also observes expiry during stream operations and lookups.
+  Use `registry.DeleteAsync(id)` when you need deterministic, immediate cleanup.
 
 A few practical implications:
 
-- The **in-memory live** backing never auto-destroys — it has no TTL machinery. Call
-  `registry.DeleteAsync(id)` explicitly if you need to release the id.
-- Replay backings with a `ttl` clean up closed streams automatically — expiry is applied
-  opportunistically on the next stream operation or registry lookup after the close-clock
-  window, not by a background timer.
-- `GetLastEventIdAsync` remains safe to call during the close window, so a recovering
-  producer can read the last event id before cleanup.
+- The **in-memory live** backing retains no replay history and is removed from the registry
+  immediately when it closes.
+- Replay backings default to a 10-minute TTL and clean up closed streams automatically in
+  the background. An explicit TTL changes that retention window.
+- `GetLastEventIdAsync` remains safe during the close window. After the TTL expires and the
+  stream is destroyed, it throws `AgentEventStreamNotFoundException`.
 
 > **TTL is a close-clock, not just per-event.** The `ttl` you pass to
 > `UseInMemoryReplay`/`UseFileBackedReplay` both evicts individual events after their
 > emit time *and* arms the auto-destroy that fires `ttl` after the stream is closed.
-> The **in-memory live** backing has no TTL machinery and never auto-destroys — you
-> must call `registry.DeleteAsync(id)` to release the id. `GetLastEventIdAsync` remains
-> safe to call during the close window, so a recovering producer can always read the
-> last event id it saw before close.
+> Both replay backings default to a 10-minute TTL. The **in-memory live** backing has no
+> replay window and is removed immediately on close. `GetLastEventIdAsync` remains safe
+> only while the replay stream is retained; after destruction the stream is not found.
 
 ---
 

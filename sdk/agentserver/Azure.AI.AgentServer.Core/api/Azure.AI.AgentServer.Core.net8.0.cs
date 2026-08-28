@@ -408,6 +408,12 @@ namespace Azure.AI.AgentServer.Core.Tasks
         public Azure.AI.AgentServer.Core.Tasks.ResilientTaskErrorCode ErrorCode { get { throw null; } }
         public Azure.AI.AgentServer.Core.Tasks.TaskFailureDetail? Failure { get { throw null; } set { } }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public static partial class ResilientTaskHostExtensions
+    {
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddResilientTasks(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName) { throw null; }
+        public static Microsoft.Extensions.Hosting.IHostApplicationBuilder AddResilientTasks(this Microsoft.Extensions.Hosting.IHostApplicationBuilder host, string sectionName, System.Action<Azure.AI.AgentServer.Core.Tasks.ResilientTaskSettings> configureSettings) { throw null; }
+    }
     public static partial class ResilientTaskServiceCollectionExtensions
     {
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This overload serializes the task input using reflection-based JSON serialization, which may require runtime code generation. Use the overload that accepts a JsonTypeInfo<TInput> instead.")]
@@ -417,6 +423,7 @@ namespace Azure.AI.AgentServer.Core.Tasks
         public static Azure.AI.AgentServer.Core.Tasks.TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput, THandler>(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, string name, bool steerable = false, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null) where THandler : class, Azure.AI.AgentServer.Core.Tasks.IResilientTaskHandler<TInput, TOutput> { throw null; }
         public static Azure.AI.AgentServer.Core.Tasks.TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput, THandler>(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, string name, System.Text.Json.Serialization.Metadata.JsonTypeInfo<TInput> inputTypeInfo, bool steerable = false, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null) where THandler : class, Azure.AI.AgentServer.Core.Tasks.IResilientTaskHandler<TInput, TOutput> { throw null; }
         public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddResilientTasks(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, Azure.Core.TokenCredential? credential = null) { throw null; }
+        public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddResilientTasks(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, Azure.Core.TokenCredential credential, System.Uri endpoint) { throw null; }
         [System.Diagnostics.CodeAnalysis.RequiresDynamicCodeAttribute("This overload serializes the task input using reflection-based JSON serialization, which may require runtime code generation. Use the overload that accepts a JsonTypeInfo<TInput> instead.")]
         public static Azure.AI.AgentServer.Core.Tasks.TaskDefinition<TInput, TOutput> AddResilientTask<TInput, TOutput>(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null) { throw null; }
         public static Azure.AI.AgentServer.Core.Tasks.TaskDefinition<TInput, TOutput> AddResilientTask<TInput, TOutput>(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, string name, System.Func<Azure.AI.AgentServer.Core.Tasks.TaskContext<TInput>, System.Threading.CancellationToken, System.Threading.Tasks.Task<TOutput>> handler, System.Text.Json.Serialization.Metadata.JsonTypeInfo<TInput> inputTypeInfo, System.Action<Azure.AI.AgentServer.Core.Tasks.TaskRegistrationOptions>? configure = null) { throw null; }
@@ -427,6 +434,13 @@ namespace Azure.AI.AgentServer.Core.Tasks
     public static partial class ResilientTaskServiceProviderExtensions
     {
         public static Azure.AI.AgentServer.Core.Tasks.TaskDefinition<TInput, TOutput> GetResilientTask<TInput, TOutput>(this System.IServiceProvider provider, string name) { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
+    public partial class ResilientTaskSettings : System.ClientModel.Primitives.ClientSettings
+    {
+        public ResilientTaskSettings() { }
+        public System.Uri? Endpoint { get { throw null; } set { } }
+        protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
     }
     public sealed partial class RunOptions
     {
