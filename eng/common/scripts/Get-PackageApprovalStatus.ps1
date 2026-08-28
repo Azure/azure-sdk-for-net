@@ -31,6 +31,11 @@ $ErrorActionPreference = "Stop"
 
 . (Join-Path $PSScriptRoot common.ps1)
 
+if ([string]::IsNullOrWhiteSpace($LanguageShort) -or $LanguageShort -eq "Unknown") {
+    throw "SDK language settings were not loaded."
+}
+Write-Host "SDK language: $LanguageShort"
+
 function Write-BackendStatus([string] $Name, [object] $Status) {
     if ($null -eq $Status) {
         return
@@ -145,7 +150,7 @@ if ($packageInfoPaths.Count -eq 0) {
     throw "At least one package-info file is required."
 }
 
-Confirm-AzSdkCliMinimumVersion $AzSdkExePath ([version] "0.6.37")
+Confirm-AzSdkCliMinimumVersion $AzSdkExePath ([version] "0.6.38")
 $failures = @()
 foreach ($packageInfoFile in $packageInfoPaths) {
     try {
