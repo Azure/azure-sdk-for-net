@@ -14,10 +14,16 @@
 
 ### Features Added
 
-- Added the typed Voice Live Bridge Protocol 1.0 relay. `VoiceHandler` dispatches
+- Added application-owned target-turn tracing for Voice handlers.
+  `VoiceSession.StartTurn` creates a mockable `VoiceTurnTrace` parented to the
+  physical Voice connection; applications activate it around model/tool work and
+  complete it once with an immutable, content-free `VoiceTurnResult`. The relay
+  does not infer target outcomes from sent messages or connection termination.
+- Added the experimental typed Voice Live Bridge Protocol 1.0 relay. `VoiceHandler` dispatches
   immutable inbound events, `VoiceSession.SendAsync` serializes explicit outbound
   messages, and `AddVoice<THandler>()` / `VoiceServer.Run<THandler>()` reuse the
   existing `/invocations_ws` transport without owning application lifecycle state.
+  Consumers acknowledge this preview surface with the `AAAS001` diagnostic.
 - AsyncAPI discovery endpoints — `InvocationHandler` now exposes two new
   virtual methods, `GetAsyncApiJsonAsync` and `GetAsyncApiYamlAsync`, served
   at `GET /invocations/docs/asyncapi.json` and `GET /invocations/docs/asyncapi.yaml`
