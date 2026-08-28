@@ -442,6 +442,29 @@ namespace Azure.Data.Tables.Tests
         }
 
         [Test]
+        public void NonFlagsEnumCommaSeparatedValuesAreNotDeserialized()
+        {
+            var entity = new EnumEntity
+            {
+                PartitionKey = "partitionKey",
+                RowKey = "01",
+                Timestamp = DateTime.Now,
+                MyFoo = Foo.One,
+                MyNullableFoo2 = null,
+                ETag = ETag.All
+            };
+
+            var dictEntity = entity.ToOdataAnnotatedDictionary();
+            dictEntity["MyFoo"] = "One, Two";
+            dictEntity["MyNullableFoo2"] = "One, Two";
+
+            var deserializedEntity = dictEntity.ToTableEntity<EnumEntity>();
+
+            Assert.That(deserializedEntity.MyFoo, Is.EqualTo(default(Foo)), "Comma-separated values for non-flags enums should not be deserialized.");
+            Assert.That(deserializedEntity.MyNullableFoo2, Is.Null, "Comma-separated values for non-flags nullable enums should not be deserialized.");
+        }
+
+        [Test]
         public void RoundTripContinuationTokenWithPartitionKeyAndRowKey()
         {
             var response = new MockResponse(200);

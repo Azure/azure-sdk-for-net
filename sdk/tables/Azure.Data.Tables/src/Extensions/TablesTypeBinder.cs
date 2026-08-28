@@ -162,7 +162,9 @@ namespace Azure.Data.Tables
             else if (typeof(T).IsEnum)
             {
                 if (!TryParseEnum(memberInfo.Type, propertyValue as string, out var parsedEnum))
+                {
                     return false;
+                }
 
                 value = (T)parsedEnum;
             }
@@ -172,7 +174,9 @@ namespace Azure.Data.Tables
                      arguments[0].IsEnum)
             {
                 if (!TryParseEnum(arguments[0], propertyValue as string, out var parsedEnum))
+                {
                     return false;
+                }
 
                 value = (T)parsedEnum;
             }
@@ -193,9 +197,21 @@ namespace Azure.Data.Tables
                 return false;
             }
 
-            foreach (var part in enumValue.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            string[] enumParts = enumValue.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            if (enumParts.Length == 0)
             {
-                if (!Enum.IsDefined(enumType, part.Trim()))
+                return false;
+            }
+
+            if (enumParts.Length > 1 && !enumType.IsDefined(typeof(FlagsAttribute), false))
+            {
+                return false;
+            }
+
+            foreach (string part in enumParts)
+            {
+                string trimmedPart = part.Trim();
+                if (trimmedPart.Length == 0 || !Enum.IsDefined(enumType, trimmedPart))
                 {
                     return false;
                 }
@@ -203,7 +219,7 @@ namespace Azure.Data.Tables
 
             try
             {
-                parsedEnum = Enum.Parse(enumType, enumValue);
+                parsedEnum = Enum.Parse(enumType, enumValue, false);
                 return true;
             }
             catch (ArgumentException)
