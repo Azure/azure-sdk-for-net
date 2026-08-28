@@ -145,7 +145,7 @@ if ($packageInfoPaths.Count -eq 0) {
     throw "At least one package-info file is required."
 }
 
-Confirm-AzSdkCliMinimumVersion $AzSdkExePath ([version] "0.6.38")
+Confirm-AzSdkCliMinimumVersion $AzSdkExePath ([version] "0.6.37")
 $failures = @()
 foreach ($packageInfoFile in $packageInfoPaths) {
     try {

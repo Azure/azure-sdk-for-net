@@ -28,7 +28,7 @@ Describe "Mark-PackageReleased.ps1" {
     BeforeEach {
         $global:LanguageShort = "python"
         $global:AzSdkExitCode = 0
-        $global:AzSdkVersion = "0.6.38"
+        $global:AzSdkVersion = "0.6.37"
         $global:AzSdkOutput = '{"operation_status":"Succeeded","api_review_hub":{"packageVersionId":"version123","isReleased":true},"api_view":{"revisionId":"revision456","isReleased":true}}'
         $global:CapturedAzSdkArguments = @()
         $global:CapturedAzSdkInvocations = @()
@@ -98,7 +98,7 @@ Describe "Mark-PackageReleased.ps1" {
             $caughtError = $_
         }
 
-        $caughtError.Exception.Message | Should Match "version 0.6.38 or later is required"
+        $caughtError.Exception.Message | Should Match "version 0.6.37 or later is required"
         $global:CapturedAzSdkInvocations.Count | Should Be 0
     }
 
