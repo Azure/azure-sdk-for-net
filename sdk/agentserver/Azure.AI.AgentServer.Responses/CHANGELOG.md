@@ -31,6 +31,15 @@
 
 - Registered the Responses event-stream backing as a protocol default so an explicit
   application selection takes precedence regardless of registration order.
+- Hosted settings now reject malformed endpoint, count, and boolean values instead of silently
+  falling back to defaults, and reject unsupported authentication-provider types with the actual
+  configured type in the error.
+- Hosted response storage and resilient-task storage now receive the same resolved project endpoint
+  as well as the same credential.
+- Explicit client-cancel and shutdown signals are replayed when a task context attaches after the
+  signal, closing the multi-turn dispatch race.
+- Resilient streaming publishes and subscribes through Core's task-owned stream path; observer
+  errors propagate to the task owner while normal completion leaves transport closure to Core.
 
 ## 1.0.0-beta.8 (2026-08-12)
 

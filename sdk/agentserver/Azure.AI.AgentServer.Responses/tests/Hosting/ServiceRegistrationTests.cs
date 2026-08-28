@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.Json;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Core.Streaming;
+using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
@@ -105,7 +106,9 @@ public class ServiceRegistrationTests
         services.AddResponsesServer();
 
         var handlers = services
-            .Where(descriptor => descriptor.ServiceType == typeof(ResponsesResilientTaskHandler))
+            .Where(descriptor =>
+                descriptor.ServiceType ==
+                    typeof(IResilientTaskHandler<ResponseTaskInput, ResponseTaskOutput>))
             .ToArray();
 
         Assert.That(handlers, Has.Length.EqualTo(2));

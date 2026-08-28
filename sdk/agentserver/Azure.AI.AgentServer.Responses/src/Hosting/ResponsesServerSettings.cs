@@ -4,6 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using Microsoft.Extensions.Configuration;
 
 namespace Azure.AI.AgentServer.Responses;
@@ -70,8 +71,14 @@ public class ResponsesServerSettings : ClientSettings
     /// <param name="section">The configuration section.</param>
     protected override void BindCore(IConfigurationSection section)
     {
-        if (Uri.TryCreate(section["Endpoint"], UriKind.Absolute, out Uri? endpoint))
+        string? endpointValue = section["Endpoint"];
+        if (!string.IsNullOrWhiteSpace(endpointValue))
         {
+            if (!Uri.TryCreate(endpointValue, UriKind.Absolute, out Uri? endpoint))
+            {
+                throw InvalidConfiguration(section, "Endpoint", endpointValue, "an absolute URI");
+            }
+
             Endpoint = endpoint;
         }
 
@@ -81,21 +88,64 @@ public class ResponsesServerSettings : ClientSettings
             DefaultModel = defaultModel;
         }
 
-        if (int.TryParse(section["DefaultFetchHistoryCount"], out int fetchCount) && fetchCount > 0)
+        string? fetchCountValue = section["DefaultFetchHistoryCount"];
+        if (!string.IsNullOrWhiteSpace(fetchCountValue))
         {
+            if (!int.TryParse(
+                fetchCountValue,
+                NumberStyles.Integer,
+                CultureInfo.InvariantCulture,
+                out int fetchCount)
+                || fetchCount <= 0)
+            {
+                throw InvalidConfiguration(
+                    section,
+                    "DefaultFetchHistoryCount",
+                    fetchCountValue,
+                    "a positive integer");
+            }
+
             DefaultFetchHistoryCount = fetchCount;
         }
 
-        if (bool.TryParse(section["ResilientBackground"], out bool resilient))
+        string? resilientValue = section["ResilientBackground"];
+        if (!string.IsNullOrWhiteSpace(resilientValue))
         {
+            if (!bool.TryParse(resilientValue, out bool resilient))
+            {
+                throw InvalidConfiguration(
+                    section,
+                    "ResilientBackground",
+                    resilientValue,
+                    "true or false");
+            }
+
             ResilientBackground = resilient;
         }
 
-        if (bool.TryParse(section["SteerableConversations"], out bool steerable))
+        string? steerableValue = section["SteerableConversations"];
+        if (!string.IsNullOrWhiteSpace(steerableValue))
         {
+            if (!bool.TryParse(steerableValue, out bool steerable))
+            {
+                throw InvalidConfiguration(
+                    section,
+                    "SteerableConversations",
+                    steerableValue,
+                    "true or false");
+            }
+
             SteerableConversations = steerable;
         }
     }
+
+    private static InvalidOperationException InvalidConfiguration(
+        IConfigurationSection section,
+        string key,
+        string value,
+        string expected)
+        => new(
+            $"Configuration value '{section.Path}:{key}' must be {expected}; received '{value}'.");
 
     /// <summary>
     /// Copies the option-shaped values into a <see cref="ResponsesServerOptions"/> so the rest of

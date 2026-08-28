@@ -42,18 +42,21 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 internal sealed class EventStreamObserver : IAsyncObserver<ResponseStreamEvent>
 {
     private readonly Func<SseItem<string>, CancellationToken, ValueTask> _emit;
-    private readonly Func<ValueTask> _close;
+    private readonly Func<ValueTask> _complete;
+    private readonly Func<Exception, ValueTask> _error;
     private long _nextSequenceNumber;
     private bool _hasCreated;
 
     private EventStreamObserver(
         Func<SseItem<string>, CancellationToken, ValueTask> emit,
-        Func<ValueTask> close,
+        Func<ValueTask> complete,
+        Func<Exception, ValueTask> error,
         long nextSequenceNumber,
         bool hasCreated)
     {
         _emit = emit;
-        _close = close;
+        _complete = complete;
+        _error = error;
         _nextSequenceNumber = nextSequenceNumber;
         _hasCreated = hasCreated;
     }
@@ -69,17 +72,13 @@ internal sealed class EventStreamObserver : IAsyncObserver<ResponseStreamEvent>
         AgentEventStream stream, CancellationToken cancellationToken = default)
     {
         var lastEventId = await stream.GetLastEventIdAsync(cancellationToken).ConfigureAwait(false);
-        return long.TryParse(lastEventId, NumberStyles.Integer, CultureInfo.InvariantCulture, out var watermark)
-            ? new EventStreamObserver(
-                (item, ct) => stream.EmitAsync(item, cancellationToken: ct),
-                () => stream.CloseAsync(),
-                watermark + 1,
-                hasCreated: true)
-            : new EventStreamObserver(
-                (item, ct) => stream.EmitAsync(item, cancellationToken: ct),
-                () => stream.CloseAsync(),
-                nextSequenceNumber: 0,
-                hasCreated: false);
+        GetSequenceSeed(lastEventId, out long nextSequenceNumber, out bool hasCreated);
+        return new EventStreamObserver(
+            (item, ct) => stream.EmitAsync(item, cancellationToken: ct),
+            () => stream.CloseAsync(),
+            _ => stream.CloseAsync(),
+            nextSequenceNumber,
+            hasCreated);
     }
 
     /// <summary>
@@ -91,17 +90,26 @@ internal sealed class EventStreamObserver : IAsyncObserver<ResponseStreamEvent>
         CancellationToken cancellationToken = default)
     {
         var lastEventId = await stream.GetLastEventIdAsync(cancellationToken).ConfigureAwait(false);
-        return long.TryParse(lastEventId, NumberStyles.Integer, CultureInfo.InvariantCulture, out var watermark)
-            ? new EventStreamObserver(
-                stream.EmitAsync,
-                () => ValueTask.CompletedTask,
-                watermark + 1,
-                hasCreated: true)
-            : new EventStreamObserver(
-                stream.EmitAsync,
-                () => ValueTask.CompletedTask,
-                nextSequenceNumber: 0,
-                hasCreated: false);
+        GetSequenceSeed(lastEventId, out long nextSequenceNumber, out bool hasCreated);
+        return new EventStreamObserver(
+            stream.EmitAsync,
+            () => ValueTask.CompletedTask,
+            error => new ValueTask(Task.FromException(error)),
+            nextSequenceNumber,
+            hasCreated);
+    }
+
+    private static void GetSequenceSeed(
+        string? lastEventId,
+        out long nextSequenceNumber,
+        out bool hasCreated)
+    {
+        hasCreated = long.TryParse(
+            lastEventId,
+            NumberStyles.Integer,
+            CultureInfo.InvariantCulture,
+            out long watermark);
+        nextSequenceNumber = hasCreated ? watermark + 1 : 0;
     }
 
     public ValueTask OnNextAsync(ResponseStreamEvent value)
@@ -128,8 +136,8 @@ internal sealed class EventStreamObserver : IAsyncObserver<ResponseStreamEvent>
     }
 
     public ValueTask OnErrorAsync(Exception error)
-        => _close();
+        => _error(error);
 
     public ValueTask OnCompletedAsync()
-        => _close();
+        => _complete();
 }

@@ -35,16 +35,23 @@ public sealed class TaskStreamAdoptionTests
         var sse = await response.Content.ReadAsStringAsync();
         Assert.That(sse, Does.Contain("event: response.created"));
         Assert.That(sse, Does.Contain("event: response.completed"));
-        Assert.That(registry.GetOrCreateCallCount, Is.EqualTo(1),
+        Assert.That(registry.TaskGetOrCreateCallCount, Is.EqualTo(1),
             "TaskContext.Stream and TaskRun.Stream must share Core's lazy task stream; " +
-            "a separate registry publisher would materialize the stream twice.");
+            "producer and consumer must materialize one task-owned stream.");
+        Assert.That(registry.GetOrCreateCallCount, Is.Zero,
+            "Resilient POST streaming must not fall back to the unowned registry path.");
     }
 
-    private sealed class CountingEventStreamRegistry : AgentEventStreamRegistry, IDisposable
+    private sealed class CountingEventStreamRegistry :
+        AgentEventStreamRegistry,
+        ITaskEventStreamRegistry,
+        IDisposable
     {
         private readonly ServiceProvider _provider;
         private readonly AgentEventStreamRegistry _inner;
+        private readonly ITaskEventStreamRegistry _taskInner;
         private int _getOrCreateCallCount;
+        private int _taskGetOrCreateCallCount;
 
         public CountingEventStreamRegistry()
         {
@@ -52,9 +59,12 @@ public sealed class TaskStreamAdoptionTests
             services.AddAgentEventStreams(options => options.UseInMemoryReplay());
             _provider = services.BuildServiceProvider();
             _inner = _provider.GetRequiredService<AgentEventStreamRegistry>();
+            _taskInner = (ITaskEventStreamRegistry)_inner;
         }
 
         public int GetOrCreateCallCount => Volatile.Read(ref _getOrCreateCallCount);
+
+        public int TaskGetOrCreateCallCount => Volatile.Read(ref _taskGetOrCreateCallCount);
 
         public override ValueTask<AgentEventStream> GetAsync(
             string id,
@@ -73,6 +83,21 @@ public sealed class TaskStreamAdoptionTests
             string id,
             CancellationToken cancellationToken = default)
             => _inner.DeleteAsync(id, cancellationToken);
+
+        public ValueTask<AgentEventStream?> GetTaskStreamAsync(
+            string taskId,
+            string inputId,
+            CancellationToken cancellationToken = default)
+            => _taskInner.GetTaskStreamAsync(taskId, inputId, cancellationToken);
+
+        public ValueTask<AgentEventStream> GetOrCreateTaskStreamAsync(
+            string taskId,
+            string inputId,
+            CancellationToken cancellationToken = default)
+        {
+            Interlocked.Increment(ref _taskGetOrCreateCallCount);
+            return _taskInner.GetOrCreateTaskStreamAsync(taskId, inputId, cancellationToken);
+        }
 
         public void Dispose() => _provider.Dispose();
     }

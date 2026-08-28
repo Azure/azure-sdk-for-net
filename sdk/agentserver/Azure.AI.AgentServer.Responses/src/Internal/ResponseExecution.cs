@@ -253,13 +253,18 @@ internal sealed class ResponseExecution : IDisposable
     private bool _steeringRequested;
     private bool _clientDisconnected;
     private bool _persistenceFailed;
+    private ResponseContext? _context;
 
     /// <summary>
     /// Gets or sets the response context associated with this execution.
     /// Used by <see cref="ResponseExecutionTracker.StopAsync"/> to propagate
     /// <see cref="ResponseContext.IsShutdownRequested"/> to the handler.
     /// </summary>
-    public ResponseContext? Context { get; set; }
+    public ResponseContext? Context
+    {
+        get => Volatile.Read(ref _context);
+        set => Volatile.Write(ref _context, value);
+    }
 
     /// <summary>
     /// Signal that completes when the handler yields <c>response.created</c> (with the

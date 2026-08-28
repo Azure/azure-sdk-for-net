@@ -49,12 +49,17 @@ public sealed class TestWebApplicationFactory : IDisposable
                         // production; the test harness (which uses the legacy IHostBuilder, not an
                         // IHostApplicationBuilder) drives the same shared core directly with a fake
                         // credential and a development storage endpoint.
+                        var projectEndpoint =
+                            new Uri("https://example.com/api/projects/proj");
                         var storageBaseUri = ResponsesServerServiceCollectionExtensions.ResolveStorageBaseUri(
-                            new Uri("https://example.com/api/projects/proj"),
+                            projectEndpoint,
                             isDevelopment: false);
                         services.AddResponsesServerCore(
                             configureOptions,
-                            new ResponsesHostedStorage(new FakeTokenCredential(), storageBaseUri));
+                            new ResponsesHostedStorage(
+                                new FakeTokenCredential(),
+                                projectEndpoint,
+                                storageBaseUri));
                     }
                     else
                     {

@@ -202,7 +202,7 @@ public class ResponseContext
     /// Handlers can use this (or the awaitable <see cref="Shutdown"/> token) to distinguish
     /// graceful shutdown from an explicit client cancel or a client disconnect.
     /// </summary>
-    public virtual bool IsShutdownRequested => _shutdownSignal.IsCancellationRequested;
+    public virtual bool IsShutdownRequested => Shutdown.IsCancellationRequested;
 
     /// <summary>
     /// Gets whether the client has explicitly cancelled this response. This is a get-only
@@ -211,7 +211,7 @@ public class ResponseContext
     /// <see cref="IsShutdownRequested"/> (server shutting down) and client disconnect;
     /// handlers can use this to stop work in response to an explicit cancel request.
     /// </summary>
-    public virtual bool IsClientCancelled => _clientCancellationSignal.IsCancellationRequested;
+    public virtual bool IsClientCancelled => ClientCancellation.IsCancellationRequested;
 
     /// <summary>
     /// Defers the current handler invocation for recovery instead of failing. Used during a

@@ -63,28 +63,43 @@ public static class ResponsesServerHostExtensions
         if (FoundryEnvironment.IsHosted)
         {
             // The single identity bound from the section, used for BOTH response and task storage.
-            TokenCredential credential = ResolveCredential(settings)
+            TokenCredential credential = ResolveCredential(settings, sectionName);
+            Uri projectEndpoint = settings.Endpoint
                 ?? throw new InvalidOperationException(
-                    $"A credential is required for hosted Foundry storage but none was bound from the " +
-                    $"'{sectionName}' configuration section. Provide a 'Credential' section or set " +
-                    $"CredentialProvider via the configureSettings callback.");
+                    $"A Foundry project endpoint is required for hosted storage. Configure " +
+                    $"'{sectionName}:Endpoint'.");
 
             Uri storageBaseUri = ResponsesServerServiceCollectionExtensions.ResolveStorageBaseUri(
-                settings.Endpoint,
+                projectEndpoint,
                 host.Environment.IsDevelopment());
 
-            hostedStorage = new ResponsesHostedStorage(credential, storageBaseUri);
+            hostedStorage = new ResponsesHostedStorage(
+                credential,
+                projectEndpoint,
+                storageBaseUri);
         }
 
         host.Services.AddResponsesServerCore(settings.ApplyTo, hostedStorage);
         return host;
     }
 
-    private static TokenCredential? ResolveCredential(ResponsesServerSettings settings)
+    private static TokenCredential ResolveCredential(
+        ResponsesServerSettings settings,
+        string sectionName)
     {
         // GetAzureClientSettings resolves CredentialProvider to a TokenCredential (via the built-in
         // AzureCredentialResolver) for token-credential sections; a code-configured CredentialProvider
         // set through configureSettings wins.
-        return settings.CredentialProvider as TokenCredential;
+        return settings.CredentialProvider switch
+        {
+            TokenCredential credential => credential,
+            null => throw new InvalidOperationException(
+                $"A credential is required for hosted Foundry storage but none was bound from the " +
+                $"'{sectionName}' configuration section. Provide a 'Credential' section or set " +
+                $"CredentialProvider via the configureSettings callback."),
+            _ => throw new InvalidOperationException(
+                $"Hosted Foundry storage requires a {nameof(TokenCredential)}; the configured " +
+                $"CredentialProvider is '{settings.CredentialProvider.GetType().FullName}'."),
+        };
     }
 }

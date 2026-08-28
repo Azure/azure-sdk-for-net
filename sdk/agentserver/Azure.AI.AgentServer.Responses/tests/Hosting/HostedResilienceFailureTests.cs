@@ -103,9 +103,13 @@ public class HostedResilienceFailureTests
         var storageBaseUri = ResponsesServerServiceCollectionExtensions.ResolveStorageBaseUri(
             new Uri("https://example.com/project"),
             isDevelopment: false);
+        var projectEndpoint = new Uri("https://example.com/project");
         services.AddResponsesServerCore(
             o => o.ResilientBackground = true,
-            new ResponsesHostedStorage(new FakeTokenCredential(), storageBaseUri));
+            new ResponsesHostedStorage(
+                new FakeTokenCredential(),
+                projectEndpoint,
+                storageBaseUri));
 
         return services.BuildServiceProvider();
     }

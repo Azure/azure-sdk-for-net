@@ -1,11 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.ClientModel;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Core.Tasks.Engine;
 using Azure.AI.AgentServer.Responses.Internal;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
+using Azure.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,6 +27,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Hosting;
 /// </summary>
 [Experimental("SCME0002")]
 [TestFixture]
+[NonParallelizable]
 public class ResponsesServerHostExtensionsTests
 {
     private static IHostApplicationBuilder NewBuilder(Dictionary<string, string?> config)
@@ -114,16 +119,87 @@ public class ResponsesServerHostExtensionsTests
         });
     }
 
+    [TestCase("Endpoint", "not an endpoint")]
+    [TestCase("DefaultFetchHistoryCount", "zero")]
+    [TestCase("DefaultFetchHistoryCount", "0")]
+    [TestCase("ResilientBackground", "sometimes")]
+    [TestCase("SteerableConversations", "sometimes")]
+    public void Settings_BindCore_RejectsMalformedValues(string key, string value)
+    {
+        var config = new ConfigurationBuilder()
+            .AddInMemoryCollection(new Dictionary<string, string?>
+            {
+                [$"Sec:{key}"] = value,
+            })
+            .Build();
+        var settings = new ResponsesServerSettings();
+
+        InvalidOperationException exception = Assert.Throws<InvalidOperationException>(
+            () => settings.Bind(config.GetSection("Sec")))!;
+
+        Assert.That(exception.Message, Does.Contain($"Sec:{key}"));
+        Assert.That(exception.Message, Does.Contain(value));
+    }
+
+    [Test]
+    public void HostedRegistration_PassesConfiguredEndpointToCoreTaskStorage()
+    {
+        try
+        {
+            SetHostedEnvironment();
+            var endpoint = new Uri("https://configured.example.com/api/projects/project");
+            var builder = NewBuilder(new Dictionary<string, string?>
+            {
+                ["ResponsesServer:Endpoint"] = endpoint.AbsoluteUri,
+            });
+
+            builder.AddResponsesServer(
+                "ResponsesServer",
+                settings => settings.CredentialProvider = new FakeTokenCredential());
+
+            using ServiceProvider provider = builder.Services.BuildServiceProvider();
+            Assert.That(
+                provider.GetRequiredService<TaskHostEnvironment>().Endpoint,
+                Is.EqualTo(endpoint));
+        }
+        finally
+        {
+            ClearHostedEnvironment();
+        }
+    }
+
+    [Test]
+    public void HostedRegistration_RejectsNonAzureAuthenticationProviderClearly()
+    {
+        try
+        {
+            SetHostedEnvironment();
+            var builder = NewBuilder(new Dictionary<string, string?>
+            {
+                ["ResponsesServer:Endpoint"] =
+                    "https://configured.example.com/api/projects/project",
+            });
+
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(
+                () => builder.AddResponsesServer(
+                    "ResponsesServer",
+                    settings => settings.CredentialProvider = new NonAzureTokenProvider()))!;
+
+            Assert.That(exception.Message, Does.Contain(nameof(TokenCredential)));
+            Assert.That(exception.Message, Does.Contain(typeof(NonAzureTokenProvider).FullName));
+        }
+        finally
+        {
+            ClearHostedEnvironment();
+        }
+    }
+
     [Test]
     public void IServiceCollectionOverload_Throws_InHostedEnvironment()
     {
         try
         {
-            Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "Production");
-            Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT", "https://example.com/project");
-            Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "agent");
-            Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", "1.0.0");
-            FoundryEnvironment.Reload();
+            SetHostedEnvironment();
             Assert.That(FoundryEnvironment.IsHosted, Is.True);
 
             var services = new ServiceCollection();
@@ -132,11 +208,42 @@ public class ResponsesServerHostExtensionsTests
         }
         finally
         {
-            Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", null);
-            Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT", null);
-            Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", null);
-            Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", null);
-            FoundryEnvironment.Reload();
+            ClearHostedEnvironment();
         }
+    }
+
+    private static void SetHostedEnvironment()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", "Production");
+        Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT", "https://environment.example.com/project");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", "agent");
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", "1.0.0");
+        FoundryEnvironment.Reload();
+    }
+
+    private static void ClearHostedEnvironment()
+    {
+        Environment.SetEnvironmentVariable("FOUNDRY_HOSTING_ENVIRONMENT", null);
+        Environment.SetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT", null);
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_NAME", null);
+        Environment.SetEnvironmentVariable("FOUNDRY_AGENT_VERSION", null);
+        FoundryEnvironment.Reload();
+    }
+
+    private sealed class NonAzureTokenProvider : AuthenticationTokenProvider
+    {
+        public override GetTokenOptions? CreateTokenOptions(
+            IReadOnlyDictionary<string, object> properties)
+            => new(properties);
+
+        public override AuthenticationToken GetToken(
+            GetTokenOptions properties,
+            CancellationToken cancellationToken)
+            => throw new NotSupportedException();
+
+        public override ValueTask<AuthenticationToken> GetTokenAsync(
+            GetTokenOptions properties,
+            CancellationToken cancellationToken)
+            => throw new NotSupportedException();
     }
 }

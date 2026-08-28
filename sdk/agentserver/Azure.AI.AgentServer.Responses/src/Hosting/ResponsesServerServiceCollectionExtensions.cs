@@ -201,7 +201,9 @@ public static class ResponsesServerServiceCollectionExtensions
             // Flat AddResilientTask/AddResilientMultiTurnTask calls self-initialize the core
             // services on first use, but always with no credential — so when hosted storage
             // needs one, it must be set explicitly before either flat call below.
-            services.AddResilientTasks(hostedStorage.Credential);
+            services.AddResilientTasks(
+                hostedStorage.Credential,
+                hostedStorage.ProjectEndpoint);
         }
 
         services.AddResilientTask<
@@ -264,13 +266,19 @@ public static class ResponsesServerServiceCollectionExtensions
 /// </summary>
 internal sealed class ResponsesHostedStorage
 {
-    public ResponsesHostedStorage(TokenCredential credential, Uri storageBaseUri)
+    public ResponsesHostedStorage(
+        TokenCredential credential,
+        Uri projectEndpoint,
+        Uri storageBaseUri)
     {
         Credential = credential;
+        ProjectEndpoint = projectEndpoint;
         StorageBaseUri = storageBaseUri;
     }
 
     public TokenCredential Credential { get; }
+
+    public Uri ProjectEndpoint { get; }
 
     public Uri StorageBaseUri { get; }
 }

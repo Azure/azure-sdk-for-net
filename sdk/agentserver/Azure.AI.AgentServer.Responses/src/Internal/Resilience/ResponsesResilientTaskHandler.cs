@@ -164,7 +164,7 @@ internal sealed class ResponsesResilientTaskHandler
             // Reuse its Context when present (one-shot); otherwise build the steering-aware context
             // now (multi-turn dispatch leaves Context unset so Core's ctx drives steering state).
             ResponseContext reuseContext = existing.Context ?? BuildContext();
-            existing.Context = reuseContext;
+            AttachContext(existing, reuseContext);
 
             existing.TaskStreamWriter = ctx.Stream;
             await RunWithExecutionAsync(
@@ -187,7 +187,7 @@ internal sealed class ResponsesResilientTaskHandler
         }
 
         ResponseContextImpl context = BuildContext();
-        execution.Context = context;
+        AttachContext(execution, context);
 
         try
         {
@@ -204,6 +204,22 @@ internal sealed class ResponsesResilientTaskHandler
         }
 
         return ResponseTaskOutput.Completed(responseId, execution.Response?.Status);
+    }
+
+    private static void AttachContext(
+        ResponseExecution execution,
+        ResponseContext context)
+    {
+        execution.Context = context;
+        if (execution.CancelRequested)
+        {
+            context.SignalClientCancellation();
+        }
+
+        if (execution.ShutdownRequested)
+        {
+            context.SignalShutdown();
+        }
     }
 
     private async Task RunWithExecutionAsync(
