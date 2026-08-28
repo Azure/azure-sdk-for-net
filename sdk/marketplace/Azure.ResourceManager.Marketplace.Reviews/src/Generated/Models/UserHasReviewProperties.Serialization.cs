@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Marketplace.Reviews.Models
             writer.WritePropertyName("hasReview"u8);
             writer.WriteBooleanValue(HasReview);
             writer.WritePropertyName("updatedAt"u8);
-            writer.WriteStringValue(UpdatedAt);
+            writer.WriteStringValue(UpdatedOn, "O");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Marketplace.Reviews.Models
                 return null;
             }
             bool hasReview = default;
-            string updatedAt = default;
+            DateTimeOffset updatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Marketplace.Reviews.Models
                 }
                 if (prop.NameEquals("updatedAt"u8))
                 {
-                    updatedAt = prop.Value.GetString();
+                    updatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Marketplace.Reviews.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new UserHasReviewProperties(hasReview, updatedAt, additionalBinaryDataProperties);
+            return new UserHasReviewProperties(hasReview, updatedOn, additionalBinaryDataProperties);
         }
     }
 }

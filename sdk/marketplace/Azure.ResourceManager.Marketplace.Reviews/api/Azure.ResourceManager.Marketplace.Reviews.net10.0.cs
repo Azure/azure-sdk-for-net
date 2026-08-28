@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.Marketplace.Reviews.Models
     public static partial class ArmMarketplaceReviewsModelFactory
     {
         public static Azure.ResourceManager.Marketplace.Reviews.Models.UserHasReview UserHasReview(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Marketplace.Reviews.Models.UserHasReviewProperties properties = null) { throw null; }
-        public static Azure.ResourceManager.Marketplace.Reviews.Models.UserHasReviewProperties UserHasReviewProperties(bool hasReview = false, string updatedAt = null) { throw null; }
+        public static Azure.ResourceManager.Marketplace.Reviews.Models.UserHasReviewProperties UserHasReviewProperties(bool hasReview = false, System.DateTimeOffset updatedOn = default(System.DateTimeOffset)) { throw null; }
     }
     public partial class UserHasReview : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Marketplace.Reviews.Models.UserHasReview>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Marketplace.Reviews.Models.UserHasReview>
     {
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Marketplace.Reviews.Models
     {
         internal UserHasReviewProperties() { }
         public bool HasReview { get { throw null; } }
-        public string UpdatedAt { get { throw null; } }
+        public System.DateTimeOffset UpdatedOn { get { throw null; } }
         protected virtual Azure.ResourceManager.Marketplace.Reviews.Models.UserHasReviewProperties JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.Marketplace.Reviews.Models.UserHasReviewProperties PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

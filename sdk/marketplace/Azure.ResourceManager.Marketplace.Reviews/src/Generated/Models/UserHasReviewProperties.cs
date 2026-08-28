@@ -18,21 +18,21 @@ namespace Azure.ResourceManager.Marketplace.Reviews.Models
 
         /// <summary> Initializes a new instance of <see cref="UserHasReviewProperties"/>. </summary>
         /// <param name="hasReview"> Indicates whether user has already submitted a review. </param>
-        /// <param name="updatedAt"> The date and time when the review was last updated. </param>
-        internal UserHasReviewProperties(bool hasReview, string updatedAt)
+        /// <param name="updatedOn"> The date and time when the review was last updated. </param>
+        internal UserHasReviewProperties(bool hasReview, DateTimeOffset updatedOn)
         {
             HasReview = hasReview;
-            UpdatedAt = updatedAt;
+            UpdatedOn = updatedOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="UserHasReviewProperties"/>. </summary>
         /// <param name="hasReview"> Indicates whether user has already submitted a review. </param>
-        /// <param name="updatedAt"> The date and time when the review was last updated. </param>
+        /// <param name="updatedOn"> The date and time when the review was last updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UserHasReviewProperties(bool hasReview, string updatedAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UserHasReviewProperties(bool hasReview, DateTimeOffset updatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             HasReview = hasReview;
-            UpdatedAt = updatedAt;
+            UpdatedOn = updatedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -40,6 +40,6 @@ namespace Azure.ResourceManager.Marketplace.Reviews.Models
         public bool HasReview { get; }
 
         /// <summary> The date and time when the review was last updated. </summary>
-        public string UpdatedAt { get; }
+        public DateTimeOffset UpdatedOn { get; }
     }
 }

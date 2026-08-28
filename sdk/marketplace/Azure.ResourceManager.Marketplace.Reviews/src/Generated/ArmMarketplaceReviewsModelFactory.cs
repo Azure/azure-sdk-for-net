@@ -34,11 +34,11 @@ namespace Azure.ResourceManager.Marketplace.Reviews.Models
         }
 
         /// <param name="hasReview"> Indicates whether user has already submitted a review. </param>
-        /// <param name="updatedAt"> The date and time when the review was last updated. </param>
+        /// <param name="updatedOn"> The date and time when the review was last updated. </param>
         /// <returns> A new <see cref="Models.UserHasReviewProperties"/> instance for mocking. </returns>
-        public static UserHasReviewProperties UserHasReviewProperties(bool hasReview = default, string updatedAt = default)
+        public static UserHasReviewProperties UserHasReviewProperties(bool hasReview = default, DateTimeOffset updatedOn = default)
         {
-            return new UserHasReviewProperties(hasReview, updatedAt, default);
+            return new UserHasReviewProperties(hasReview, updatedOn, default);
         }
     }
 }
