@@ -68,6 +68,8 @@ internal abstract record RepositoryProjectGraphRecord
         fields.Count > index ? fields[index] : string.Empty;
 
     internal sealed record Node(
+        // Shared configuration and repository identity. The artifact builder retains these fields
+        // after NuGet resolution has completed.
         string ProjectPath,
         string TargetFramework,
         string PackageId,
@@ -75,6 +77,8 @@ internal abstract record RepositoryProjectGraphRecord
         string IsClientLibrary,
         string IsGeneratorLibrary,
         string IsShippingLibrary,
+        // Restore-only policy used to construct NuGet PackageSpec metadata. These fields do not
+        // become part of the canonical reachability graph.
         string CentralPackageTransitivePinningEnabled,
         string AssetTargetFallback,
         string PackageTargetFallback,
@@ -131,13 +135,18 @@ internal abstract record RepositoryProjectGraphRecord
     }
 
     internal sealed record ProjectReference(
+        // Shared source configuration and referenced-project identity.
         string ProjectPath,
         string TargetFramework,
         string ReferencedProjectPath,
+        // Restore-only metadata controls whether the synthetic PackageSpec includes this P2P edge
+        // and how its assets flow through the package closure.
         string ReferenceOutputAssembly,
         string PrivateAssets,
         string IncludeAssets,
         string ExcludeAssets,
+        // The artifact builder uses the concrete destination TFM for exact traversal. NuGet keeps
+        // project references path-based and intentionally does not consume this appended field.
         string ReferencedTargetFramework) : RepositoryProjectGraphRecord
     {
         internal override string Kind => ProjectReferenceKind;
@@ -173,9 +182,12 @@ internal abstract record RepositoryProjectGraphRecord
     }
 
     internal sealed record PackageReference(
+        // Direct package identity for one evaluated project configuration.
         string ProjectPath,
         string TargetFramework,
         string PackageId,
+        // Restore-only metadata supplies NuGet's asset flow and evaluated version constraint. The
+        // artifact builder retains only repository-owned package reachability after resolution.
         string PrivateAssets,
         string IncludeAssets,
         string ExcludeAssets,
@@ -212,6 +224,8 @@ internal abstract record RepositoryProjectGraphRecord
     }
 
     internal sealed record CheckoutRoot(
+        // Sparse checkout coarsens each evaluated project or input to an SDK service pattern. The
+        // project/TFM identity keeps that path attached to the configuration that requires it.
         string ProjectPath,
         string TargetFramework,
         string Path) : RepositoryProjectGraphRecord
@@ -227,6 +241,8 @@ internal abstract record RepositoryProjectGraphRecord
     }
 
     internal sealed record TransitivePackageReference(
+        // NuGet has already flattened the external package path; only the reached repository
+        // package identity is needed for canonical graph traversal.
         string ProjectPath,
         string TargetFramework,
         string PackageId) : RepositoryProjectGraphRecord

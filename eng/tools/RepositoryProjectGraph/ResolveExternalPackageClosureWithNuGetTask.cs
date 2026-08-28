@@ -487,6 +487,9 @@ public sealed class ResolveExternalPackageClosureWithNuGetTask : Microsoft.Build
         };
     }
 
+    // Preserve evaluated NuGet warning policy even though it does not add graph edges. A restore
+    // warning promoted to an error must fail graph generation rather than accept a closure that the
+    // corresponding repository restore would reject.
     private static WarningProperties CreateWarningProperties(ProjectDefinition project) => new(
         ParseWarningCodes(project.Frameworks.Values.Select(framework => framework.WarningsAsErrors)),
         ParseWarningCodes(project.Frameworks.Values.Select(framework => framework.NoWarn)),
