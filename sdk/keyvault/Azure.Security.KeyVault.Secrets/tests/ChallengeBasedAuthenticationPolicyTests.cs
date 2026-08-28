@@ -217,32 +217,19 @@ namespace Azure.Security.KeyVault.Secrets.Tests
         // CertificateRequest was introduced in .NET Framework 4.7.2 and .NET Core 2.0, so the two tests below
         // that construct a binding certificate are excluded from the net462 TFM.
         [Test]
-        public async Task DoesNotThrowWhenTransportCannotApplyBindingCertificate()
+        public void ThrowsWhenTransportCannotApplyBindingCertificate()
         {
-            // Regression coverage: SupportsProofOfPossession is a best-effort, type-based check that cannot
-            // always predict whether HttpPipelineTransport.Update will actually succeed on the specific transport
-            // instance in use (e.g. HttpClientTransport.Shared overrides Update but throws
-            // InvalidOperationException because the shared instance can never be updated in place).
-            // ThrowingUpdateTransport simulates that exact failure mode. The request must still succeed, and the
-            // token-bound header must not be sent for a certificate that was never actually applied.
-            bool sawAuthorizedVaultRequest = false;
-            MockTransportBuilder builder = new MockTransportBuilder();
-            builder.Request += (_, args) =>
-            {
-                if (args.Request.Uri.Host == VaultHost &&
-                    args.Request.Headers.TryGetValue("Authorization", out string _))
-                {
-                    sawAuthorizedVaultRequest = true;
-                    Assert.IsFalse(args.Request.Headers.TryGetValue(TokenBoundAuthHeader, out string _),
-                        "The token-bound header must not be sent when the transport failed to apply the binding certificate.");
-                }
-            };
-
-            MockTransport transport = builder.Build();
+            // SupportsProofOfPossession is a best-effort, type-based check that cannot always predict whether
+            // HttpPipelineTransport.Update will actually succeed on the specific transport instance in use (e.g.
+            // HttpClientTransport.Shared overrides Update but throws InvalidOperationException because the shared
+            // instance can never be updated in place). ThrowingUpdateTransport simulates that exact failure mode.
+            // The token is Proof-of-Possession bound but the certificate was never applied, so the SDK must fail
+            // closed with a clear error instead of sending a request the service cannot authenticate.
+            MockTransport transport = new MockTransportBuilder().Build();
             using X509Certificate2 bindingCertificate = CreateSelfSignedCertificate();
             string expectedToken = Convert.ToBase64String(Encoding.UTF8.GetBytes(TenantId));
             CallbackTokenCredential credential = new((context, _) =>
-                new AccessToken(expectedToken, DateTimeOffset.UtcNow.AddMinutes(5), refreshOn: null, tokenType: "PoP", bindingCertificate: bindingCertificate));
+                new AccessToken(expectedToken, DateTimeOffset.UtcNow.AddMinutes(5), refreshOn: null, tokenType: "mtls_pop", bindingCertificate: bindingCertificate));
 
             SecretClient client = new SecretClient(
                 VaultUri,
@@ -253,37 +240,23 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                     EnableProofOfPossession = true,
                 });
 
-            KeyVaultSecret secret = await client.GetSecretAsync("test-secret").ConfigureAwait(false);
-
-            Assert.AreEqual("secret-value", secret.Value);
-            Assert.IsTrue(sawAuthorizedVaultRequest);
+            InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(
+                async () => await client.GetSecretAsync("test-secret").ConfigureAwait(false));
+            StringAssert.Contains("EnableProofOfPossession", ex.Message);
         }
 
         [Test]
-        public async Task DoesNotThrowWhenTransportDoesNotOverrideUpdateAndCredentialReturnsBindingCertificate()
+        public void ThrowsWhenTransportDoesNotOverrideUpdateAndCredentialReturnsBindingCertificate()
         {
-            // Defense in depth: even if a credential returns a binding certificate on a transport that does not
-            // override Update() at all (the HttpPipelineTransport base implementation throws
-            // NotSupportedException), the request must not crash, and the token-bound header must not be sent for
-            // a certificate that was never actually applied.
-            bool sawAuthorizedVaultRequest = false;
-            MockTransportBuilder builder = new MockTransportBuilder();
-            builder.Request += (_, args) =>
-            {
-                if (args.Request.Uri.Host == VaultHost &&
-                    args.Request.Headers.TryGetValue("Authorization", out string _))
-                {
-                    sawAuthorizedVaultRequest = true;
-                    Assert.IsFalse(args.Request.Headers.TryGetValue(TokenBoundAuthHeader, out string _),
-                        "The token-bound header must not be sent when the transport failed to apply the binding certificate.");
-                }
-            };
-
-            MockTransport transport = builder.Build();
+            // Defense in depth: if a credential returns a binding certificate on a transport that does not
+            // override Update() at all (the HttpPipelineTransport base implementation throws NotSupportedException),
+            // the SDK must still fail closed with a clear error rather than sending a bound token the service
+            // cannot validate.
+            MockTransport transport = new MockTransportBuilder().Build();
             using X509Certificate2 bindingCertificate = CreateSelfSignedCertificate();
             string expectedToken = Convert.ToBase64String(Encoding.UTF8.GetBytes(TenantId));
             CallbackTokenCredential credential = new((context, _) =>
-                new AccessToken(expectedToken, DateTimeOffset.UtcNow.AddMinutes(5), refreshOn: null, tokenType: "PoP", bindingCertificate: bindingCertificate));
+                new AccessToken(expectedToken, DateTimeOffset.UtcNow.AddMinutes(5), refreshOn: null, tokenType: "mtls_pop", bindingCertificate: bindingCertificate));
 
             SecretClient client = new SecretClient(
                 VaultUri,
@@ -294,10 +267,8 @@ namespace Azure.Security.KeyVault.Secrets.Tests
                     EnableProofOfPossession = true,
                 });
 
-            KeyVaultSecret secret = await client.GetSecretAsync("test-secret").ConfigureAwait(false);
-
-            Assert.AreEqual("secret-value", secret.Value);
-            Assert.IsTrue(sawAuthorizedVaultRequest);
+            Assert.ThrowsAsync<InvalidOperationException>(
+                async () => await client.GetSecretAsync("test-secret").ConfigureAwait(false));
         }
 
         private static X509Certificate2 CreateSelfSignedCertificate()

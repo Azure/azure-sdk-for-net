@@ -18,6 +18,12 @@ namespace Azure.Security.KeyVault
         private const string TokenBoundAuthHeaderName = "x-ms-tokenboundauth";
         private const string PoPTokenTypePrefix = "pop ";
         private const string MtlsPoPTokenTypePrefix = "mtls_pop ";
+        private const string TokenBindingFailedMessage =
+            "Proof-of-Possession token binding was requested (EnableProofOfPossession = true), but the binding " +
+            "certificate could not be applied to the configured transport, so the request would carry a bound " +
+            "token the service cannot validate. This happens when the transport cannot be updated in place, such " +
+            "as HttpClientTransport.Shared or a transport that does not support updates. Use a transport that " +
+            "supports in-place updates (the default), or set EnableProofOfPossession to false.";
         private static readonly Type[] s_updateParameterTypes = [typeof(HttpPipelineTransportOptions)];
         private readonly bool _verifyChallengeResource;
         private readonly bool _enableProofOfPossession;
@@ -256,15 +262,25 @@ namespace Azure.Security.KeyVault
             return true;
         }
 
-        // Sends x-ms-tokenboundauth only when the acquired token is actually PoP-bound - decided from the
-        // negotiated Authorization scheme (mtls_pop for managed-identity mTLS PoP, or pop), not the requested
-        // flag, and skipped when the certificate could not be applied to the transport.
+        // Applies the token-bound auth outcome. The token is Proof-of-Possession bound when the negotiated
+        // Authorization scheme is mtls_pop (managed-identity mTLS PoP) or pop - decided from the scheme actually
+        // returned, not the requested flag. When it is bound but the binding certificate could not be applied to
+        // the transport, fail closed with a clear error rather than sending a request the service cannot
+        // authenticate. When it is bound and applied, advertise it with x-ms-tokenboundauth. Otherwise drop any
+        // stale header so it cannot outlive its bound token.
         private void AddTokenBoundAuthHeaderIfBound(HttpMessage message)
         {
-            if (!_transportUpdateFailed &&
+            bool isProofOfPossessionBound =
                 message.Request.Headers.TryGetValue(HttpHeader.Names.Authorization, out string authorizationHeaderValue) &&
                 (authorizationHeaderValue.StartsWith(MtlsPoPTokenTypePrefix, StringComparison.OrdinalIgnoreCase) ||
-                 authorizationHeaderValue.StartsWith(PoPTokenTypePrefix, StringComparison.OrdinalIgnoreCase)))
+                 authorizationHeaderValue.StartsWith(PoPTokenTypePrefix, StringComparison.OrdinalIgnoreCase));
+
+            if (isProofOfPossessionBound && _transportUpdateFailed)
+            {
+                throw new InvalidOperationException(TokenBindingFailedMessage);
+            }
+
+            if (isProofOfPossessionBound)
             {
                 message.Request.Headers.SetValue(TokenBoundAuthHeaderName, "true");
             }

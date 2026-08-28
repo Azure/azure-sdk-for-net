@@ -104,11 +104,13 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// Opt-in; defaults to <see langword="false"/>.
         /// </summary>
         /// <remarks>
-        /// Requesting PoP is best-effort: it is silently ignored - falling back to a plain token with no
-        /// <c>x-ms-tokenboundauth</c> header - when the transport cannot apply the binding certificate or the
-        /// credential does not honor it. Because PoP tokens are bound per request URI and method, the single-slot
-        /// token cache is invalidated on each new target, so throughput drops for workloads that hit many keys.
-        /// The underlying Azure.Core and Azure.Identity support is experimental (<c>AZID0004</c>).
+        /// Requesting PoP is best-effort. When the credential does not honor it, a plain bearer token is used.
+        /// When the credential returns a bound token but the configured transport cannot be updated in place to
+        /// apply the binding certificate (such as <c>HttpClientTransport.Shared</c>), the client fails closed and
+        /// throws rather than sending a request the service cannot authenticate. Because PoP tokens are bound per
+        /// request URI and method, the single-slot token cache is invalidated on each new target, so throughput
+        /// drops for workloads that hit many keys. The underlying Azure.Core and Azure.Identity support is
+        /// experimental (<c>AZID0004</c>).
         /// </remarks>
         public bool EnableProofOfPossession { get; set; }
 

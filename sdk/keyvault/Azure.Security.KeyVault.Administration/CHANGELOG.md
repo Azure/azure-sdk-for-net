@@ -5,7 +5,7 @@
 ### Features Added
 
 - Added opt-in support for Proof-of-Possession (PoP) token binding in the Key Vault authentication policy. Set `KeyVaultAdministrationClientOptions.EnableProofOfPossession` to `true` to request PoP-bound tokens; it defaults to `false` so existing applications see no change in authentication behavior, transport/connection-pooling behavior, or resource usage.
-- When Proof-of-Possession token binding is enabled, requests fall back safely to a plain bearer token (without the `x-ms-tokenboundauth` header) instead of throwing if the configured transport can't apply the binding certificate update (for example, `HttpClientTransport.Shared`, which can't be updated in place).
+- When Proof-of-Possession token binding is enabled but the configured transport cannot apply the binding certificate in place (for example, `HttpClientTransport.Shared`), the client now fails closed with a clear error instead of sending a bound token the service cannot validate.
 
 ### Breaking Changes
 
