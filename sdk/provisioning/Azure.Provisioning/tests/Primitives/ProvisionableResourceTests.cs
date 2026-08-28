@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Tests.Primitives
         [Test]
         public async Task ValidateNormalProperties()
         {
-            await using var test = new Trycep(orderProperties: true);
+            await using var test = new Trycep();
 
             test.Define(
                 ctx =>
@@ -126,7 +126,7 @@ namespace Azure.Provisioning.Tests.Primitives
         [Test]
         public async Task ValidateListProperties_Unset()
         {
-            await using var test = new Trycep(orderProperties: true);
+            await using var test = new Trycep();
 
             test.Define(
                 ctx =>
@@ -164,7 +164,7 @@ namespace Azure.Provisioning.Tests.Primitives
         [Test]
         public async Task ValidateListProperties_ForceEmpty()
         {
-            await using var test = new Trycep(orderProperties: true);
+            await using var test = new Trycep();
 
             test.Define(
                 ctx =>
@@ -210,7 +210,7 @@ namespace Azure.Provisioning.Tests.Primitives
         [Test]
         public async Task ValidateListProperties_ForceEmptyThenAdd()
         {
-            await using var test = new Trycep(orderProperties: true);
+            await using var test = new Trycep();
 
             test.Define(
                 ctx =>
@@ -260,7 +260,7 @@ namespace Azure.Provisioning.Tests.Primitives
         [Test]
         public async Task ValidateResourceReference()
         {
-            await using var test = new Trycep(orderProperties: true);
+            await using var test = new Trycep();
 
             test.Define(
                 ctx =>
@@ -374,7 +374,7 @@ namespace Azure.Provisioning.Tests.Primitives
         [Test]
         public async Task ValidateConstructFromBicepExpression_LowLevelApi()
         {
-            await using var test = new Trycep(orderProperties: true);
+            await using var test = new Trycep();
             test.Define(
                 ctx =>
                 {

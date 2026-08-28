@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Tests;
 
 public class Trycep : IAsyncDisposable
 {
-    public Trycep()
+    public Trycep() : this(orderProperties: true)
     {
     }
 

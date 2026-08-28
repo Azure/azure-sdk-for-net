@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Tests.Primitives
         [Test]
         public async Task SetProvisioningProperty_WithDictionaryItem_ShouldNotThrow()
         {
-            await using var test = new Trycep(orderProperties: true);
+            await using var test = new Trycep();
 
             test.Define(
                 ctx =>
@@ -83,7 +83,7 @@ namespace Azure.Provisioning.Tests.Primitives
         [Test]
         public async Task SetProvisioningProperty_WithDictionaryItem_MultipleKeys_ShouldNotThrow()
         {
-            await using var test = new Trycep(orderProperties: true);
+            await using var test = new Trycep();
 
             test.Define(
                 ctx =>

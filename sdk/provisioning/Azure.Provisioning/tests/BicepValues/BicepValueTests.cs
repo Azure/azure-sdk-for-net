@@ -173,7 +173,7 @@ public class BicepValueTests
     [Test]
     public async Task ValidateTimeSpanPropertyWithFormat()
     {
-        await using Trycep test = new(orderProperties: true);
+        await using Trycep test = new();
         test.Define(
             ctx =>
             {
@@ -208,7 +208,7 @@ public class BicepValueTests
     [Test]
     public async Task ValidateDateTimeListProperty()
     {
-        await using Trycep test = new(orderProperties: true);
+        await using Trycep test = new();
         test.Define(
             ctx =>
             {
@@ -242,7 +242,7 @@ public class BicepValueTests
     [Test]
     public async Task ValidateRfc7231DateTimeListProperty()
     {
-        await using Trycep test = new(orderProperties: true);
+        await using Trycep test = new();
         test.Define(
             ctx =>
             {
@@ -274,7 +274,7 @@ public class BicepValueTests
     [Test]
     public async Task ValidateRfc7231DateTimeDictionaryProperty()
     {
-        await using Trycep test = new(orderProperties: true);
+        await using Trycep test = new();
         test.Define(
             ctx =>
             {
@@ -303,7 +303,7 @@ public class BicepValueTests
     [Test]
     public async Task ValidateRfc7231DateTimeNestedListProperty()
     {
-        await using Trycep test = new(orderProperties: true);
+        await using Trycep test = new();
         test.Define(
             ctx =>
             {
@@ -339,7 +339,7 @@ public class BicepValueTests
     [Test]
     public async Task ValidateRfc7231DateTimeNestedDictionaryProperty()
     {
-        await using Trycep test = new(orderProperties: true);
+        await using Trycep test = new();
         test.Define(
             ctx =>
             {
@@ -376,7 +376,7 @@ public class BicepValueTests
     [Test]
     public async Task ValidateDurationListProperty()
     {
-        await using Trycep test = new(orderProperties: true);
+        await using Trycep test = new();
         test.Define(
             ctx =>
             {
@@ -408,7 +408,7 @@ public class BicepValueTests
     [Test]
     public async Task ValidateScalarFormatTokens()
     {
-        await using Trycep test = new(orderProperties: true);
+        await using Trycep test = new();
         test.Define(
             ctx =>
             {
@@ -467,7 +467,7 @@ public class BicepValueTests
     [Test]
     public async Task ValidateUnsupportedFormatsAreIgnoredWhenTypeHasNoFormatContract()
     {
-        await using Trycep test = new(orderProperties: true);
+        await using Trycep test = new();
         test.Define(
             ctx =>
             {
@@ -496,7 +496,7 @@ public class BicepValueTests
     [Test]
     public async Task ValidateUnknownFormatTokenFallsBackForFormattedTypes()
     {
-        await using Trycep test = new(orderProperties: true);
+        await using Trycep test = new();
         test.Define(
             ctx =>
             {

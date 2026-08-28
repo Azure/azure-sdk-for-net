@@ -11,7 +11,7 @@ public class BicepMetadataTests
     [Test]
     public void BicepMetadataDescriptionTest()
     {
-        new Trycep(orderProperties: true)
+        new Trycep()
             .Define(ctx =>
             {
                 Infrastructure infra = new();
@@ -46,7 +46,7 @@ public class BicepMetadataTests
     [Test]
     public void BicepMetadataBatchSizeTest()
     {
-        new Trycep(orderProperties: true)
+        new Trycep()
             .Define(ctx =>
             {
                 Infrastructure infra = new();
@@ -81,7 +81,7 @@ public class BicepMetadataTests
     [Test]
     public void BicepMetadataOnlyIfNotExistsTest()
     {
-        new Trycep(orderProperties: true)
+        new Trycep()
             .Define(ctx =>
             {
                 Infrastructure infra = new();
@@ -116,7 +116,7 @@ public class BicepMetadataTests
     [Test]
     public void BicepMetadataConditionTest()
     {
-        new Trycep(orderProperties: true)
+        new Trycep()
             .Define(ctx =>
             {
                 Infrastructure infra = new();
@@ -155,7 +155,7 @@ public class BicepMetadataTests
     [Test]
     public void BicepMetadataAllCombinedTest()
     {
-        new Trycep(orderProperties: true)
+        new Trycep()
             .Define(ctx =>
             {
                 Infrastructure infra = new();

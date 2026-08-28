@@ -13,7 +13,7 @@ public class PropertyOrderingInfrastructureResolverTests
     [Test]
     public async Task OrdersPropertiesRecursively()
     {
-        await using Trycep test = new(orderProperties: true);
+        await using Trycep test = new();
 
         test.Define(
             new TestResource("example")

@@ -20,7 +20,7 @@ internal class SampleTests
 {
     internal static Trycep CreateSimpleDeployTest()
     {
-        return new Trycep(orderProperties: true)
+        return new Trycep()
             .Define(
                 ctx =>
                 {
@@ -82,7 +82,7 @@ internal class SampleTests
 
     internal static Trycep CreateSimpleContainerAppTest()
     {
-        return new Trycep(orderProperties: true)
+        return new Trycep()
             .Define(
                 ctx =>
                 {
@@ -308,7 +308,7 @@ internal class SampleTests
 
     internal static Trycep CreateSimpleResourceGroupTest()
     {
-        return new Trycep(orderProperties: true)
+        return new Trycep()
             .Define(
                 ctx =>
                 {
