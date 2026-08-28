@@ -565,6 +565,8 @@ namespace Azure.Provisioning.Storage
     {
         public FileShare(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Storage.FileShareAccessTier> AccessTier { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> AccessTierChangedOn { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsoleted and will be removed in a future version. Please use AccessTierChangedOn instead.")]
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> AccessTierChangeOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> AccessTierStatus { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> DeletedOn { get { throw null; } }
@@ -1869,7 +1871,9 @@ namespace Azure.Provisioning.Storage
         public StorageServiceAccessPolicy() { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Permission { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsoleted and will be removed in a future version. Please use StartsOn instead.")]
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class StorageSignedIdentifier : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1973,7 +1977,9 @@ namespace Azure.Provisioning.Storage
         public StorageTableAccessPolicy() { }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Permission { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsoleted and will be removed in a future version. Please use StartsOn instead.")]
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class StorageTableSignedIdentifier : Azure.Provisioning.Primitives.ProvisionableConstruct

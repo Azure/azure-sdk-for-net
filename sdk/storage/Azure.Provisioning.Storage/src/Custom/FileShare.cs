@@ -2,23 +2,17 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using Azure.Provisioning;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.Storage;
 
 public partial class FileShare
 {
     /// <summary> Gets the last modification time for the share access tier. </summary>
-    [CodeGenMember("AccessTierChangedOn")]
-    public BicepValue<DateTimeOffset> AccessTierChangeOn
-    {
-        get
-        {
-            FileShareProperties ??= new FileShareProperties();
-            return FileShareProperties.AccessTierChangedOn;
-        }
-    }
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is obsoleted and will be removed in a future version. Please use AccessTierChangedOn instead.")]
+    public BicepValue<DateTimeOffset> AccessTierChangeOn => AccessTierChangedOn;
 
     public static partial class ResourceVersions
     {
