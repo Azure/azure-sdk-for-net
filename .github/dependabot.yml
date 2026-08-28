@@ -120,3 +120,12 @@ updates:
         patterns:
           - "*vitest*"
     versioning-strategy: increase-if-necessary
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    groups:
+      github-actions:
+        patterns: ["*"]
+    schedule:
+      interval: "weekly"
+    cooldown:
+      default-days: 7
