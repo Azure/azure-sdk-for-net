@@ -11,7 +11,7 @@ WebPubSubChatRoom room = client.GetRoom("room1").Value;
 
 foreach (WebPubSubChatMessage message in client.GetMessages(room.DefaultConversation))
 {
-    Console.WriteLine($"[{message.CreatedAt}] {message.CreatedBy}: {message.Content.Text}");
+    Console.WriteLine($"[{message.CreatedOn}] {message.CreatedBy}: {message.Content.Text}");
 }
 ```
 

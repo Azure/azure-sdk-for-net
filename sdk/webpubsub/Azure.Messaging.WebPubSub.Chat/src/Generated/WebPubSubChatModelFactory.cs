@@ -29,16 +29,16 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <param name="id"> Message identifier. </param>
         /// <param name="createdBy"> User who created the message. </param>
         /// <param name="content"> Message content. </param>
-        /// <param name="createdAt"> Timestamp when the message was created. </param>
+        /// <param name="createdOn"> Timestamp when the message was created. </param>
         /// <param name="etag"> The entity tag for this resource. </param>
         /// <returns> A new <see cref="Chat.WebPubSubChatMessage"/> instance for mocking. </returns>
-        public static WebPubSubChatMessage WebPubSubChatMessage(string id = default, string createdBy = default, WebPubSubChatMessageContent content = default, DateTimeOffset createdAt = default, ETag etag = default)
+        public static WebPubSubChatMessage WebPubSubChatMessage(string id = default, string createdBy = default, WebPubSubChatMessageContent content = default, DateTimeOffset createdOn = default, ETag etag = default)
         {
             return new WebPubSubChatMessage(
                 id,
                 createdBy,
                 content,
-                createdAt,
+                createdOn,
                 etag,
                 additionalBinaryDataProperties: null);
         }

@@ -56,7 +56,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureMessagingWebPubSubChatContext.Default));
+                    items.Add(ModelReaderWriter.Write(item, ModelReaderWriterOptions.Json, AzureMessagingWebPubSubChatContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

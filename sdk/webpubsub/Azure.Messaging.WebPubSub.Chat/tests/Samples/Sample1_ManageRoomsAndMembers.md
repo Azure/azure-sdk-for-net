@@ -13,7 +13,7 @@ var client = new WebPubSubChatServiceClient("<connection-string>", "chat");
 Before a client can connect over WebSocket, generate a client access URI for the user:
 
 ```C# Snippet:WebPubSubChatGenerateClientAccessUri
-Uri clientAccessUri = client.GetClientAccessUri(new GetClientAccessTokenOptions
+Uri clientAccessUri = client.GetClientAccessUri(new ClientAccessUriOptions
 {
     UserId = "user1",
     ExpiresAfter = TimeSpan.FromHours(1),

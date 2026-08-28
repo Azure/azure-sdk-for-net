@@ -98,7 +98,7 @@ namespace Azure.Messaging.WebPubSub.Chat
             if (options.Format != "W")
             {
                 writer.WritePropertyName("createdAt"u8);
-                writer.WriteStringValue(CreatedAt, "O");
+                writer.WriteStringValue(CreatedOn, "O");
             }
             if (options.Format != "W")
             {
@@ -150,7 +150,7 @@ namespace Azure.Messaging.WebPubSub.Chat
             string id = default;
             string createdBy = default;
             WebPubSubChatMessageContent content = default;
-            DateTimeOffset createdAt = default;
+            DateTimeOffset createdOn = default;
             ETag etag = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -172,7 +172,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                 }
                 if (prop.NameEquals("createdAt"u8))
                 {
-                    createdAt = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))
@@ -189,7 +189,7 @@ namespace Azure.Messaging.WebPubSub.Chat
                 id,
                 createdBy,
                 content,
-                createdAt,
+                createdOn,
                 etag,
                 additionalBinaryDataProperties);
         }

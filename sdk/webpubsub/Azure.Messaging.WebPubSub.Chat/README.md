@@ -31,7 +31,7 @@ var client = new WebPubSubChatServiceClient("<connection-string>", "chat");
 ### Generate a client access URI
 
 ```C# Snippet:WebPubSubChatGenerateClientAccessUri
-Uri clientAccessUri = client.GetClientAccessUri(new GetClientAccessTokenOptions
+Uri clientAccessUri = client.GetClientAccessUri(new ClientAccessUriOptions
 {
     UserId = "user1",
     ExpiresAfter = TimeSpan.FromHours(1),

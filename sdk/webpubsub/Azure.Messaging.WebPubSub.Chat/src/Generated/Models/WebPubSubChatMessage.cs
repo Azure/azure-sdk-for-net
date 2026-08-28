@@ -34,15 +34,15 @@ namespace Azure.Messaging.WebPubSub.Chat
         /// <param name="id"> Message identifier. </param>
         /// <param name="createdBy"> User who created the message. </param>
         /// <param name="content"> Message content. </param>
-        /// <param name="createdAt"> Timestamp when the message was created. </param>
+        /// <param name="createdOn"> Timestamp when the message was created. </param>
         /// <param name="etag"> The entity tag for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebPubSubChatMessage(string id, string createdBy, WebPubSubChatMessageContent content, DateTimeOffset createdAt, ETag etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebPubSubChatMessage(string id, string createdBy, WebPubSubChatMessageContent content, DateTimeOffset createdOn, ETag etag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Id = id;
             CreatedBy = createdBy;
             Content = content;
-            CreatedAt = createdAt;
+            CreatedOn = createdOn;
             Etag = etag;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -57,7 +57,7 @@ namespace Azure.Messaging.WebPubSub.Chat
         public WebPubSubChatMessageContent Content { get; set; }
 
         /// <summary> Timestamp when the message was created. </summary>
-        public DateTimeOffset CreatedAt { get; }
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary> The entity tag for this resource. </summary>
         public ETag Etag { get; }

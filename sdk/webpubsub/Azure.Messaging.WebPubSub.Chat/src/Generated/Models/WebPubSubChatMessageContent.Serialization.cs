@@ -81,7 +81,7 @@ namespace Azure.Messaging.WebPubSub.Chat
             if (Optional.IsDefined(Binary))
             {
                 writer.WritePropertyName("binary"u8);
-                writer.WriteBase64StringValue(Binary.ToArray(), "D");
+                writer.WriteBase64StringValue(Binary, "D");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
