@@ -1,12 +1,22 @@
 <?xml version="1.0"?>
 <RunSettings>
+  <NUnit>
+    <ConsoleOut>0</ConsoleOut>
+  </NUnit>
+  <RunConfiguration>
+    <TargetPlatform>x64</TargetPlatform>
+  </RunConfiguration>
+  <TestRunParameters>
+    <Parameter name="TestMode" value="Playback" />
+    <Parameter name="EnableFiddler" value="false" />
+  </TestRunParameters>
   <DataCollectionRunSettings>
     <DataCollectors>
       <DataCollector friendlyName="XPlat Code Coverage" enabled="true">
         <Configuration>
           <Format>cobertura</Format>
-          <ExcludeByAttribute>ExcludeFromCodeCoverageAttribute,GeneratedCodeAttribute,Obsolete</ExcludeByAttribute>
-          <ExcludeByFile></ExcludeByFile>
+          <ExcludeByAttribute>ExcludeFromCodeCoverageAttribute,GeneratedCodeAttribute,Obsolete</ExcludeByAttribute
+          <ExcludeByFile>$(CodeCoverageExcludeByFile)</ExcludeByFile>
           <IncludeTestAssembly>false</IncludeTestAssembly>
           <SingleHit>false</SingleHit>
           <SkipAutoProps>true</SkipAutoProps>
