@@ -75,5 +75,5 @@ public sealed class TaskDefinition<TInput, TOutput>
     /// <param name="cancellationToken">A cancellation token.</param>
     /// <returns>A task that completes when the chain has been removed.</returns>
     public Task DeleteAsync(string taskId, CancellationToken cancellationToken = default)
-        => _engine.Require().DeleteAsync(taskId, cancellationToken);
+        => _engine.Require().DeleteAsync(Name, taskId, cancellationToken);
 }

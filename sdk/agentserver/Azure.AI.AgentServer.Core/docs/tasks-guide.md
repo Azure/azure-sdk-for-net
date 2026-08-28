@@ -133,15 +133,24 @@ conversation) and stays alive between turns until you end it.
 ### One-shot
 
 ```csharp
+var builder = AgentHost.CreateBuilder();
+
 TaskDefinition<string, string> echo = builder.Services
     .AddResilientTask<string, string>("echo", async (ctx, ct) =>
     {
         return $"you said: {ctx.Input}";
     });
 
+var app = builder.Build();
+await app.StartAsync();
+
 string result = await echo.RunAsync("hello");
 // result == "you said: hello"
 ```
+
+The registration-time handle is bound to the task engine when the application host starts.
+When resolving a handle later through `GetResilientTask`, resolution initializes the engine
+even when the caller is using a built service provider outside an `IHost`.
 
 There are two ways to get a task's `TaskDefinition<TInput, TOutput>` handle:
 

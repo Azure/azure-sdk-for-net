@@ -256,7 +256,7 @@ internal sealed partial class TaskEngine : IDisposable
             CreateRunState<TOutput>(taskId, inputId, isQueued: false);
         var activeRun = new ActiveRun<TOutput>(
             runState,
-            exception => _logger.HandlerFailure(taskId, 0, exception.GetType().Name));
+            exception => _logger.StreamCloseFailure(taskId, inputId, exception.GetType().Name));
         runState.RecoveryCount = (int)(record.Lease?.Generation ?? 0);
         if (entryMode == EntryMode.Fresh)
         {
@@ -428,7 +428,7 @@ internal sealed partial class TaskEngine : IDisposable
         runState.RecoveryCount = (int)(record.Lease?.Generation ?? 0);
         var activeRun = new ActiveRun<TOutput>(
             runState,
-            exception => _logger.HandlerFailure(taskId, 0, exception.GetType().Name))
+            exception => _logger.StreamCloseFailure(taskId, inputId, exception.GetType().Name))
         {
             Steerable = registration.Steerable,
         };
@@ -1350,8 +1350,34 @@ internal sealed partial class TaskEngine : IDisposable
     }
 
     /// <summary>Ends a multi-turn chain: cancels any in-flight turn, resolves queued callers as cancelled, and removes the record.</summary>
-    public async Task DeleteAsync(string taskId, CancellationToken cancellationToken = default)
+    public Task DeleteAsync(string taskId, CancellationToken cancellationToken = default)
+        => DeleteCoreAsync(expectedTaskName: null, taskId, cancellationToken);
+
+    /// <summary>Ends a multi-turn chain after validating its registered task name.</summary>
+    public Task DeleteAsync(
+        string expectedTaskName,
+        string taskId,
+        CancellationToken cancellationToken = default)
+        => DeleteCoreAsync(expectedTaskName, taskId, cancellationToken);
+
+    private async Task DeleteCoreAsync(
+        string? expectedTaskName,
+        string taskId,
+        CancellationToken cancellationToken)
     {
+        TaskRecord? record = await _store.GetAsync(taskId, cancellationToken).ConfigureAwait(false);
+        if (expectedTaskName is not null)
+        {
+            if (record is not null
+                && !string.Equals(record.Source?.Name, expectedTaskName, StringComparison.Ordinal))
+            {
+                throw new ResilientTaskException(
+                    ResilientTaskErrorCode.Conflict,
+                    $"Task '{taskId}' belongs to registered task '{record.Source?.Name ?? string.Empty}', " +
+                    $"not '{expectedTaskName}'.");
+            }
+        }
+
         // Cancel an in-flight turn and resolve its caller as cancelled.
         _activeRuns.TryRemove(taskId, out IActiveRun? run);
         if (run is not null)
@@ -1381,8 +1407,17 @@ internal sealed partial class TaskEngine : IDisposable
             }
             catch (Exception closeException)
             {
-                _logger.HandlerFailure(taskId, 0, closeException.GetType().Name);
+                _logger.StreamCloseFailure(
+                    taskId,
+                    run.InputId,
+                    closeException.GetType().Name);
             }
+        }
+        else if (record?.Payload[TaskWireKeys.PayloadLastInputId] is JsonValue inputIdNode
+            && inputIdNode.TryGetValue(out string? inputId)
+            && !string.IsNullOrEmpty(inputId))
+        {
+            await ClosePersistedStreamAsync(taskId, inputId).ConfigureAwait(false);
         }
     }
 
@@ -1447,7 +1482,48 @@ internal sealed partial class TaskEngine : IDisposable
         }
         catch (Exception closeException)
         {
-            _logger.HandlerFailure(runState.TaskId, 0, closeException.GetType().Name);
+            _logger.StreamCloseFailure(
+                runState.TaskId,
+                runState.InputId,
+                closeException.GetType().Name);
+        }
+    }
+
+    private async Task ClosePersistedStreamAsync(string taskId, string inputId)
+    {
+        try
+        {
+            AgentEventStream? stream;
+            if (_streams is ITaskEventStreamRegistry taskRegistry)
+            {
+                stream = await taskRegistry
+                    .GetTaskStreamAsync(taskId, inputId, CancellationToken.None)
+                    .ConfigureAwait(false);
+            }
+            else
+            {
+                try
+                {
+                    stream = await _streams
+                        .GetAsync(inputId, CancellationToken.None)
+                        .ConfigureAwait(false);
+                }
+                catch (AgentEventStreamNotFoundException)
+                {
+                    stream = null;
+                }
+            }
+
+            if (stream is null)
+            {
+                return;
+            }
+
+            await stream.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+        }
+        catch (Exception closeException)
+        {
+            _logger.StreamCloseFailure(taskId, inputId, closeException.GetType().Name);
         }
     }
 
@@ -1831,7 +1907,7 @@ internal sealed partial class TaskEngine : IDisposable
         runState.RecoveryCount = (int)(record.Lease?.Generation ?? 0);
         var activeRun = new ActiveRun<TOutput>(
             runState,
-            exception => _logger.HandlerFailure(taskId, 0, exception.GetType().Name))
+            exception => _logger.StreamCloseFailure(taskId, inputId, exception.GetType().Name))
         {
             Steerable = registration.Steerable,
         };

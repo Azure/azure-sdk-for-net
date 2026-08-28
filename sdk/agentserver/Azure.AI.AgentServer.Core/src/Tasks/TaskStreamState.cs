@@ -10,32 +10,21 @@ namespace Azure.AI.AgentServer.Core.Tasks;
 
 internal sealed class TaskStreamState
 {
-    private readonly Lazy<Task<AgentEventStream>> _stream;
-    private int _closed;
+    private readonly object _gate = new();
+    private readonly AgentEventStreamRegistry _registry;
+    private readonly string _taskId;
+    private readonly string _inputId;
+    private Task<AgentEventStream>? _streamTask;
+    private bool _closed;
 
     public TaskStreamState(
         AgentEventStreamRegistry registry,
         string taskId,
         string inputId)
     {
-        _stream = new Lazy<Task<AgentEventStream>>(
-            async () =>
-            {
-                AgentEventStream stream = registry is ITaskEventStreamRegistry taskRegistry
-                    ? await taskRegistry
-                        .GetOrCreateTaskStreamAsync(taskId, inputId, CancellationToken.None)
-                        .ConfigureAwait(false)
-                    : await registry
-                        .GetOrCreateAsync(inputId, CancellationToken.None)
-                        .ConfigureAwait(false);
-                if (Volatile.Read(ref _closed) != 0)
-                {
-                    await stream.CloseAsync(CancellationToken.None).ConfigureAwait(false);
-                }
-
-                return stream;
-            },
-            LazyThreadSafetyMode.ExecutionAndPublication);
+        _registry = registry;
+        _taskId = taskId;
+        _inputId = inputId;
         Reader = new TaskStream(this);
         Writer = new TaskStreamWriter(this);
     }
@@ -48,18 +37,51 @@ internal sealed class TaskStreamState
         CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
-        return await _stream.Value.WaitAsync(cancellationToken).ConfigureAwait(false);
+        Task<AgentEventStream> streamTask;
+        lock (_gate)
+        {
+            streamTask = _streamTask ??= CreateStreamAsync();
+        }
+
+        AgentEventStream stream = await streamTask.WaitAsync(cancellationToken).ConfigureAwait(false);
+        bool close;
+        lock (_gate)
+        {
+            close = _closed;
+        }
+
+        if (close)
+        {
+            await stream.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+        }
+
+        return stream;
     }
 
     public async ValueTask CloseAsync()
     {
-        Interlocked.Exchange(ref _closed, 1);
-        if (!_stream.IsValueCreated)
+        Task<AgentEventStream>? streamTask;
+        lock (_gate)
+        {
+            _closed = true;
+            streamTask = _streamTask;
+        }
+
+        if (streamTask is null)
         {
             return;
         }
 
-        AgentEventStream stream = await _stream.Value.ConfigureAwait(false);
+        AgentEventStream stream = await streamTask.ConfigureAwait(false);
         await stream.CloseAsync(CancellationToken.None).ConfigureAwait(false);
     }
+
+    private async Task<AgentEventStream> CreateStreamAsync()
+        => _registry is ITaskEventStreamRegistry taskRegistry
+            ? await taskRegistry
+                .GetOrCreateTaskStreamAsync(_taskId, _inputId, CancellationToken.None)
+                .ConfigureAwait(false)
+            : await _registry
+                .GetOrCreateAsync(_inputId, CancellationToken.None)
+                .ConfigureAwait(false);
 }

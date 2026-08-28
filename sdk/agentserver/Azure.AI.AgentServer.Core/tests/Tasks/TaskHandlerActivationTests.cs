@@ -35,6 +35,24 @@ public sealed class TaskHandlerActivationTests
     }
 
     [Test]
+    public async Task PreRegisteredHandlerInterfaceReplacesDefaultConcreteHandler()
+    {
+        await using var host = new ActivationTestHost();
+        host.Services.AddKeyedScoped<
+            IResilientTaskHandler<string, string>,
+            ReplacementHandler>("replaceable");
+        TaskDefinition<string, string> definition =
+            host.Services.AddResilientTask<string, string, InjectedHandler>("replaceable");
+        await host.BuildAsync();
+
+        string result = await definition.RunAsync(
+            "input",
+            new RunOptions { TaskId = "replaceable-1" });
+
+        Assert.That(result, Is.EqualTo("replacement:input"));
+    }
+
+    [Test]
     public async Task RetryCreatesAndDisposesFreshScopePerAttempt()
     {
         await using var host = new ActivationTestHost();
@@ -190,6 +208,14 @@ public sealed class TaskHandlerActivationTests
 
         public TaskCompletionSource Recovered { get; } =
             new(TaskCreationOptions.RunContinuationsAsynchronously);
+    }
+
+    private sealed class ReplacementHandler : IResilientTaskHandler<string, string>
+    {
+        public Task<string> RunAsync(
+            TaskContext<string> context,
+            CancellationToken cancellationToken)
+            => Task.FromResult("replacement:" + context.Input);
     }
 
     private sealed class AttemptDependency : IAsyncDisposable

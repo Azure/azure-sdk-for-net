@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization.Metadata;
 using System.Threading;
@@ -20,12 +21,10 @@ using Microsoft.Extensions.Logging.Abstractions;
 namespace Azure.AI.AgentServer.Core.Tasks;
 
 /// <summary>
-/// Registration entry points for the resilient-tasks feature. There is no global
-/// configuration object: backend selection (local/hosted), lease durations, and
-/// retry/timeout defaults are not developer-configurable (Python parity). The
-/// optional <see cref="TokenCredential"/> on <see cref="AddResilientTasks(IServiceCollection, TokenCredential?)"/>
-/// is the only knob; it is required when running against hosted task storage and
-/// ignored by the local file-backed store.
+/// Registration entry points for the resilient-tasks feature. Hosted storage can be configured
+/// with an explicit credential and endpoint, or through configuration-bound
+/// <see cref="ResilientTaskSettings"/> on an <see cref="Microsoft.Extensions.Hosting.IHostApplicationBuilder"/>.
+/// Lease durations and retry/timeout defaults are configured per task rather than globally.
 /// </summary>
 public static class ResilientTaskServiceCollectionExtensions
 {
@@ -45,6 +44,34 @@ public static class ResilientTaskServiceCollectionExtensions
     {
         ArgumentNullException.ThrowIfNull(services);
         EnsureCoreServices(services, credential);
+        return services;
+    }
+
+    /// <summary>
+    /// Sets up resilient-task services with an explicit hosted-storage credential and project
+    /// endpoint. Use the host-builder overload when binding these values from configuration.
+    /// </summary>
+    /// <param name="services">The service collection.</param>
+    /// <param name="credential">The credential for hosted task storage.</param>
+    /// <param name="endpoint">The Azure AI Foundry project endpoint.</param>
+    /// <returns>The service collection.</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public static IServiceCollection AddResilientTasks(
+        this IServiceCollection services,
+        TokenCredential credential,
+        Uri endpoint)
+    {
+        ArgumentNullException.ThrowIfNull(services);
+        ArgumentNullException.ThrowIfNull(credential);
+        ArgumentNullException.ThrowIfNull(endpoint);
+        if (!endpoint.IsAbsoluteUri)
+        {
+            throw new ArgumentException(
+                "The task-storage endpoint must be an absolute URI.",
+                nameof(endpoint));
+        }
+
+        EnsureCoreServices(services, credential, endpoint);
         return services;
     }
 
@@ -72,9 +99,10 @@ public static class ResilientTaskServiceCollectionExtensions
         Action<TaskRegistrationOptions>? configure = null)
     {
         ArgumentNullException.ThrowIfNull(services);
+        ValidateRegistrationArguments(name, handler);
         DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
         TaskDefinition<TInput, TOutput> definition = registrar.AddTask(name, handler, configure);
-        services.AddKeyedSingleton(name, definition);
+        RegisterDefinition(services, name, definition);
         return definition;
     }
 
@@ -91,22 +119,26 @@ public static class ResilientTaskServiceCollectionExtensions
     /// <returns>A typed task definition for running the registered task.</returns>
     [RequiresUnreferencedCode(DefaultResilientTaskBuilder.ReflectionTrimWarning)]
     [RequiresDynamicCode(DefaultResilientTaskBuilder.ReflectionAotWarning)]
-    public static TaskDefinition<TInput, TOutput> AddResilientTask<TInput, TOutput, THandler>(
+    public static TaskDefinition<TInput, TOutput> AddResilientTask<
+        TInput,
+        TOutput,
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] THandler>(
         this IServiceCollection services,
         string name,
         Action<TaskRegistrationOptions>? configure = null)
         where THandler : class, IResilientTaskHandler<TInput, TOutput>
     {
         ArgumentNullException.ThrowIfNull(services);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
         TaskDefinition<TInput, TOutput> definition = registrar.AddTask<TInput, TOutput>(
             name,
             (serviceProvider, context, cancellationToken) =>
-                serviceProvider.GetRequiredKeyedService<THandler>(name)
+                serviceProvider.GetRequiredKeyedService<IResilientTaskHandler<TInput, TOutput>>(name)
                     .RunAsync(context, cancellationToken),
             configure);
-        services.AddKeyedScoped<THandler>(name);
-        services.AddKeyedSingleton(name, definition);
+        services.TryAddKeyedScoped<IResilientTaskHandler<TInput, TOutput>, THandler>(name);
+        RegisterDefinition(services, name, definition);
         return definition;
     }
 
@@ -134,9 +166,11 @@ public static class ResilientTaskServiceCollectionExtensions
         Action<TaskRegistrationOptions>? configure = null)
     {
         ArgumentNullException.ThrowIfNull(services);
+        ValidateRegistrationArguments(name, handler);
+        ArgumentNullException.ThrowIfNull(inputTypeInfo);
         DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
         TaskDefinition<TInput, TOutput> definition = registrar.AddTask(name, handler, inputTypeInfo, configure);
-        services.AddKeyedSingleton(name, definition);
+        RegisterDefinition(services, name, definition);
         return definition;
     }
 
@@ -151,7 +185,10 @@ public static class ResilientTaskServiceCollectionExtensions
     /// <param name="inputTypeInfo">The source-generated serialization metadata for the input.</param>
     /// <param name="configure">An optional callback to configure per-task options.</param>
     /// <returns>A typed task definition for running the registered task.</returns>
-    public static TaskDefinition<TInput, TOutput> AddResilientTask<TInput, TOutput, THandler>(
+    public static TaskDefinition<TInput, TOutput> AddResilientTask<
+        TInput,
+        TOutput,
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] THandler>(
         this IServiceCollection services,
         string name,
 #pragma warning disable AZC0014 // JsonTypeInfo<T> is the sanctioned Native-AOT escape hatch (see Azure.Search.Documents).
@@ -161,16 +198,18 @@ public static class ResilientTaskServiceCollectionExtensions
         where THandler : class, IResilientTaskHandler<TInput, TOutput>
     {
         ArgumentNullException.ThrowIfNull(services);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        ArgumentNullException.ThrowIfNull(inputTypeInfo);
         DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
         TaskDefinition<TInput, TOutput> definition = registrar.AddTask<TInput, TOutput>(
             name,
             (serviceProvider, context, cancellationToken) =>
-                serviceProvider.GetRequiredKeyedService<THandler>(name)
+                serviceProvider.GetRequiredKeyedService<IResilientTaskHandler<TInput, TOutput>>(name)
                     .RunAsync(context, cancellationToken),
             inputTypeInfo,
             configure);
-        services.AddKeyedScoped<THandler>(name);
-        services.AddKeyedSingleton(name, definition);
+        services.TryAddKeyedScoped<IResilientTaskHandler<TInput, TOutput>, THandler>(name);
+        RegisterDefinition(services, name, definition);
         return definition;
     }
 
@@ -200,9 +239,10 @@ public static class ResilientTaskServiceCollectionExtensions
         Action<TaskRegistrationOptions>? configure = null)
     {
         ArgumentNullException.ThrowIfNull(services);
+        ValidateRegistrationArguments(name, handler);
         DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
         TaskDefinition<TInput, TOutput> definition = registrar.AddMultiTurnTask(name, handler, steerable, configure);
-        services.AddKeyedSingleton(name, definition);
+        RegisterDefinition(services, name, definition);
         return definition;
     }
 
@@ -220,7 +260,10 @@ public static class ResilientTaskServiceCollectionExtensions
     /// <returns>A typed task definition for running the registered task.</returns>
     [RequiresUnreferencedCode(DefaultResilientTaskBuilder.ReflectionTrimWarning)]
     [RequiresDynamicCode(DefaultResilientTaskBuilder.ReflectionAotWarning)]
-    public static TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput, THandler>(
+    public static TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<
+        TInput,
+        TOutput,
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] THandler>(
         this IServiceCollection services,
         string name,
         bool steerable = false,
@@ -228,16 +271,17 @@ public static class ResilientTaskServiceCollectionExtensions
         where THandler : class, IResilientTaskHandler<TInput, TOutput>
     {
         ArgumentNullException.ThrowIfNull(services);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
         DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
         TaskDefinition<TInput, TOutput> definition = registrar.AddMultiTurnTask<TInput, TOutput>(
             name,
             (serviceProvider, context, cancellationToken) =>
-                serviceProvider.GetRequiredKeyedService<THandler>(name)
+                serviceProvider.GetRequiredKeyedService<IResilientTaskHandler<TInput, TOutput>>(name)
                     .RunAsync(context, cancellationToken),
             steerable,
             configure);
-        services.AddKeyedScoped<THandler>(name);
-        services.AddKeyedSingleton(name, definition);
+        services.TryAddKeyedScoped<IResilientTaskHandler<TInput, TOutput>, THandler>(name);
+        RegisterDefinition(services, name, definition);
         return definition;
     }
 
@@ -266,10 +310,34 @@ public static class ResilientTaskServiceCollectionExtensions
         Action<TaskRegistrationOptions>? configure = null)
     {
         ArgumentNullException.ThrowIfNull(services);
+        ValidateRegistrationArguments(name, handler);
+        ArgumentNullException.ThrowIfNull(inputTypeInfo);
         DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
         TaskDefinition<TInput, TOutput> definition = registrar.AddMultiTurnTask(name, handler, inputTypeInfo, steerable, configure);
-        services.AddKeyedSingleton(name, definition);
+        RegisterDefinition(services, name, definition);
         return definition;
+    }
+
+    private static void ValidateRegistrationArguments<TInput, TOutput>(
+        string name,
+        Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        ArgumentNullException.ThrowIfNull(handler);
+    }
+
+    private static void RegisterDefinition<TInput, TOutput>(
+        IServiceCollection services,
+        string name,
+        TaskDefinition<TInput, TOutput> definition)
+    {
+        services.AddKeyedSingleton<TaskDefinition<TInput, TOutput>>(
+            name,
+            (serviceProvider, _) =>
+            {
+                _ = serviceProvider.GetRequiredService<TaskEngine>();
+                return definition;
+            });
     }
 
     /// <summary>
@@ -284,7 +352,10 @@ public static class ResilientTaskServiceCollectionExtensions
     /// <param name="steerable">Whether the task accepts steering input.</param>
     /// <param name="configure">An optional callback to configure per-task options.</param>
     /// <returns>A typed task definition for running the registered task.</returns>
-    public static TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput, THandler>(
+    public static TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<
+        TInput,
+        TOutput,
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] THandler>(
         this IServiceCollection services,
         string name,
 #pragma warning disable AZC0014 // JsonTypeInfo<T> is the sanctioned Native-AOT escape hatch (see Azure.Search.Documents).
@@ -295,17 +366,19 @@ public static class ResilientTaskServiceCollectionExtensions
         where THandler : class, IResilientTaskHandler<TInput, TOutput>
     {
         ArgumentNullException.ThrowIfNull(services);
+        ArgumentException.ThrowIfNullOrWhiteSpace(name);
+        ArgumentNullException.ThrowIfNull(inputTypeInfo);
         DefaultResilientTaskBuilder registrar = EnsureCoreServices(services, credential: null);
         TaskDefinition<TInput, TOutput> definition = registrar.AddMultiTurnTask<TInput, TOutput>(
             name,
             (serviceProvider, context, cancellationToken) =>
-                serviceProvider.GetRequiredKeyedService<THandler>(name)
+                serviceProvider.GetRequiredKeyedService<IResilientTaskHandler<TInput, TOutput>>(name)
                     .RunAsync(context, cancellationToken),
             inputTypeInfo,
             steerable,
             configure);
-        services.AddKeyedScoped<THandler>(name);
-        services.AddKeyedSingleton(name, definition);
+        services.TryAddKeyedScoped<IResilientTaskHandler<TInput, TOutput>, THandler>(name);
+        RegisterDefinition(services, name, definition);
         return definition;
     }
 
@@ -313,10 +386,13 @@ public static class ResilientTaskServiceCollectionExtensions
     /// Idempotently sets up the resilient-tasks services (registry, environment, store, engine,
     /// recovery scanner, durability hosted service) and returns the registrar over the canonical
     /// registry/accessor the container holds — the same instances every registration call, whether
-    /// via <see cref="AddResilientTasks"/> or a flat <c>AddResilientTask</c>/<c>AddResilientMultiTurnTask</c>
+    /// via <c>AddResilientTasks</c> or a flat <c>AddResilientTask</c>/<c>AddResilientMultiTurnTask</c>
     /// call, must target.
     /// </summary>
-    private static DefaultResilientTaskBuilder EnsureCoreServices(IServiceCollection services, TokenCredential? credential)
+    private static DefaultResilientTaskBuilder EnsureCoreServices(
+        IServiceCollection services,
+        TokenCredential? credential,
+        Uri? endpoint = null)
     {
         // Resilient-tasks services are set up once per process. Everything below uses
         // TryAddSingleton (first-wins), but AddHostedService is NOT idempotent — a second call
@@ -327,7 +403,7 @@ public static class ResilientTaskServiceCollectionExtensions
         // it silently.
         if (IsAlreadyRegistered(services))
         {
-            if (credential is not null)
+            if (credential is not null || endpoint is not null)
             {
                 throw new InvalidOperationException(
                     "Resilient-tasks services have already been set up (directly via AddResilientTasks, " +
@@ -359,7 +435,7 @@ public static class ResilientTaskServiceCollectionExtensions
         var engineAccessor = new TaskEngineAccessor();
         services.TryAddSingleton(engineAccessor);
 
-        var environment = new TaskHostEnvironment(credential);
+        var environment = new TaskHostEnvironment(credential, endpoint);
         services.TryAddSingleton(environment);
         services.AddAgentEventStreams();
 
@@ -378,14 +454,16 @@ public static class ResilientTaskServiceCollectionExtensions
                         "hosted environment.");
                 }
 
-                var endpoint = FoundryEnvironment.ProjectEndpoint;
-                if (string.IsNullOrWhiteSpace(endpoint))
+                Uri? configuredEndpoint = env.Endpoint;
+                string? environmentEndpoint = FoundryEnvironment.ProjectEndpoint;
+                if (configuredEndpoint is null && string.IsNullOrWhiteSpace(environmentEndpoint))
                 {
                     throw new InvalidOperationException(
                         "FoundryEnvironment.ProjectEndpoint (FOUNDRY_PROJECT_ENDPOINT) is required for hosted task storage.");
                 }
 
-                if (!Uri.TryCreate(endpoint, UriKind.Absolute, out var baseUri))
+                if (configuredEndpoint is null
+                    && !Uri.TryCreate(environmentEndpoint, UriKind.Absolute, out configuredEndpoint))
                 {
                     throw new InvalidOperationException(
                         "FoundryEnvironment.ProjectEndpoint contains an invalid absolute URI.");
@@ -394,7 +472,8 @@ public static class ResilientTaskServiceCollectionExtensions
                 // Base URL is `{FOUNDRY_PROJECT_ENDPOINT}/tasks` — the project endpoint already
                 // targets the storage surface, so no extra `/storage` segment is added (matches the
                 // Foundry task-storage client that runs against the live backend).
-                var storageBaseUri = new Uri(baseUri.GetLeftPart(UriPartial.Path).TrimEnd('/') + "/");
+                var storageBaseUri = new Uri(
+                    configuredEndpoint.GetLeftPart(UriPartial.Path).TrimEnd('/') + "/");
 
                 var options = new HostedTaskStoreClientOptions();
 
@@ -445,7 +524,7 @@ public static class ResilientTaskServiceCollectionExtensions
             // Late-bind the engine so a TaskDefinition (created at registration time, before the
             // container existed) can resolve it at invocation time. The engine is always resolved
             // before any task runs, so populating here guarantees the accessor is ready.
-            sp.GetRequiredService<TaskEngineAccessor>().Engine = engine;
+            sp.GetRequiredService<TaskEngineAccessor>().Bind(engine);
 
             return engine;
         });

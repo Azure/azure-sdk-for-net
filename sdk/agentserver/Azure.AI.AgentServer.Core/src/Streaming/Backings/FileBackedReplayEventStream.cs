@@ -87,6 +87,9 @@ internal sealed class FileBackedReplayEventStream :
     private FileStream OpenAppendHandle()
         => new FileStream(_filePath, FileMode.Append, FileAccess.Write, FileShare.Read);
 
+    internal static bool Exists(string id, string storageDirectory)
+        => File.Exists(Path.Combine(storageDirectory, ToSafeFileStem(id) + ".jsonl"));
+
     public string? TaskId => _taskId;
 
     public void ValidateOrClaimTask(string taskId)

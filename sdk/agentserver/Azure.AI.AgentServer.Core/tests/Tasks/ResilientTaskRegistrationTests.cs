@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Tasks;
@@ -115,6 +116,31 @@ public sealed class ResilientTaskRegistrationTests
     }
 
     [Test]
+    public async Task KeyedDefinitionResolutionInitializesTheTaskEngine()
+    {
+        string root = Path.Combine(Path.GetTempPath(), "agentserver-keyed-definition-" + System.Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        try
+        {
+            var services = new ServiceCollection();
+            services.AddSingleton<ITaskStore>(new LocalTaskStore(root));
+            TaskDefinition<string, string> registered = services.AddResilientTask<string, string>(
+                "keyed-runnable", (ctx, ct) => Task.FromResult(ctx.Input));
+
+            await using var provider = services.BuildServiceProvider();
+            TaskDefinition<string, string> resolved =
+                provider.GetRequiredKeyedService<TaskDefinition<string, string>>("keyed-runnable");
+
+            Assert.That(resolved, Is.SameAs(registered));
+            Assert.That(await resolved.RunAsync("ready"), Is.EqualTo("ready"));
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Test]
     public void AddResilientMultiTurnTaskRegistersTheDefinitionAsAKeyedSingleton()
     {
         var services = new ServiceCollection();
@@ -129,16 +155,40 @@ public sealed class ResilientTaskRegistrationTests
     }
 
     [Test]
-    public void GetResilientTaskResolvesTheRegisteredDefinition()
+    public async Task GetResilientTaskResolvesRunnableDefinition()
     {
-        var services = new ServiceCollection();
-        TaskDefinition<string, int> registered = services.AddResilientTask<string, int>(
-            "len", (ctx, ct) => Task.FromResult(ctx.Input.Length));
+        string root = Path.Combine(Path.GetTempPath(), "agentserver-resolved-definition-" + System.Guid.NewGuid().ToString("N"));
+        Directory.CreateDirectory(root);
+        try
+        {
+            var services = new ServiceCollection();
+            services.AddSingleton<ITaskStore>(new LocalTaskStore(root));
+            TaskDefinition<string, int> registered = services.AddResilientTask<string, int>(
+                "len", (ctx, ct) => Task.FromResult(ctx.Input.Length));
 
-        using var provider = services.BuildServiceProvider();
-        TaskDefinition<string, int> resolved = provider.GetResilientTask<string, int>("len");
+            await using var provider = services.BuildServiceProvider();
+            TaskDefinition<string, int> resolved = provider.GetResilientTask<string, int>("len");
 
-        Assert.That(resolved, Is.SameAs(registered));
+            Assert.That(resolved, Is.SameAs(registered));
+            Assert.That(await resolved.RunAsync("hello"), Is.EqualTo(5));
+        }
+        finally
+        {
+            Directory.Delete(root, recursive: true);
+        }
+    }
+
+    [Test]
+    public void TaskEngineAccessorRejectsASecondEngine()
+    {
+        using var first = TaskTestHost.Create();
+        using var second = TaskTestHost.Create();
+        var accessor = new TaskEngineAccessor();
+
+        accessor.Bind(first.Engine);
+
+        Assert.Throws<System.InvalidOperationException>(() => accessor.Bind(second.Engine));
+        Assert.That(accessor.Require(), Is.SameAs(first.Engine));
     }
 
     [Test]
@@ -171,6 +221,19 @@ public sealed class ResilientTaskRegistrationTests
         using var host = TaskTestHost.Create();
         Assert.Throws<System.ArgumentException>(() =>
             host.Builder.AddTask<string, string>(name, (ctx, ct) => Task.FromResult(ctx.Input)));
+    }
+
+    [Test]
+    public void InvalidFlatRegistrationDoesNotMutateServices()
+    {
+        var services = new ServiceCollection();
+
+        Assert.Throws<System.ArgumentException>(() =>
+            services.AddResilientTask<string, string>(
+                string.Empty,
+                (ctx, ct) => Task.FromResult(ctx.Input)));
+
+        Assert.That(services, Is.Empty);
     }
 
     [Test]

@@ -140,12 +140,11 @@ public class ResilientStartFailureProtocolTests
     {
         // The spy wraps a real LocalTaskStore, so all non-Create operations delegate transparently
         // and the fail-loud composition validation is satisfied. The injected InvalidOperationException
-        // stands in for a task-store write failure — the same exception TYPE and MESSAGE the original
-        // FakeTaskInvoker threw so the platform-error-detail header assertion (which sanitizes and
-        // truncates ex.ToString()) still finds nameof(InvalidOperationException) and "StartAsync".
+        // stands in for a task-store write failure. The platform-error-detail assertion verifies the
+        // exception type without relying on hand-written exception text.
         var spyStore = new SpyTaskStore(new LocalTaskStore(tasksDir))
         {
-            ThrowOnCreate = new InvalidOperationException("Simulated task-store write failure during StartAsync."),
+            ThrowOnCreate = new InvalidOperationException("Simulated task-store write failure."),
         };
         spy = spyStore;
 
@@ -182,7 +181,6 @@ public class ResilientStartFailureProtocolTests
             $"Expected {PlatformHeaders.ErrorDetail} header to be present.");
         var value = response.Headers.GetValues(PlatformHeaders.ErrorDetail).First();
         Assert.That(value, Does.Contain(nameof(InvalidOperationException)));
-        Assert.That(value, Does.Contain("StartAsync"));
     }
 
     private static string NewIsolatedRoot(out string tasksDir, out string responsesDir)

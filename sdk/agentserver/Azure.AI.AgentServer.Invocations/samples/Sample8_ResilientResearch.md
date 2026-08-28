@@ -336,9 +336,9 @@ public static async Task<ResearchResult> RunResearchAsync(
         string message = ctx.TimeoutExceeded ? "Task timed out." : "Task cancelled.";
 
         // Explicit cancellation and timeout are terminal for this turn. Emit the
-        // protocol event and close with a non-cancelable token because the handler's
-        // token is already signaled. Shutdown/lease-loss cancellations intentionally
-        // bypass this branch so Core can defer the turn for recovery.
+        // protocol event with a non-cancelable token because the handler's token is
+        // already signaled. Shutdown/lease-loss cancellations intentionally bypass
+        // this branch so Core can defer the turn for recovery.
         seq++;
         var failEvt = new ResearchEvent(seq, "run_failed", message);
         await stream.EmitAsync(

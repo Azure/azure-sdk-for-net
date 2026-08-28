@@ -8,6 +8,11 @@ namespace Azure.AI.AgentServer.Core.Streaming;
 
 internal interface ITaskEventStreamRegistry
 {
+    ValueTask<AgentEventStream?> GetTaskStreamAsync(
+        string taskId,
+        string inputId,
+        CancellationToken cancellationToken = default);
+
     ValueTask<AgentEventStream> GetOrCreateTaskStreamAsync(
         string taskId,
         string inputId,

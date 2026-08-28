@@ -39,7 +39,7 @@ internal sealed class TaskTestHost : IDisposable
         AgentName = agentName;
         SessionId = sessionId;
         Engine = new TaskEngine(store, registry, agentName, sessionId, Streams, logger);
-        engineAccessor.Engine = Engine;
+        engineAccessor.Bind(Engine);
     }
 
     public LocalTaskStore Store { get; }
@@ -157,6 +157,7 @@ internal sealed class TaskTestHost : IDisposable
     public void Dispose()
     {
         Engine.Dispose();
+        (Streams as IDisposable)?.Dispose();
         try
         {
             Directory.Delete(_tempDir, recursive: true);

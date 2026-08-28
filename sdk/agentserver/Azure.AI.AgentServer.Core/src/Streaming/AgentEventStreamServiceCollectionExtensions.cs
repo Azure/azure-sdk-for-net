@@ -3,12 +3,16 @@
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Azure.AI.AgentServer.Core.Streaming;
 
@@ -67,7 +71,7 @@ public static class AgentEventStreamServiceCollectionExtensions
         if (configure is not null)
         {
             state.Add(CreateRequest(
-                "application configuration",
+                GetApplicationConfigurationSource(),
                 AgentEventStreamRegistrationPriority.Application,
                 configure));
         }
@@ -120,6 +124,33 @@ public static class AgentEventStreamServiceCollectionExtensions
             source,
             priority,
             () => options.Configuration);
+    }
+
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    private static string GetApplicationConfigurationSource()
+    {
+        foreach (StackFrame frame in new StackTrace(true).GetFrames())
+        {
+            if (frame.GetMethod()?.DeclaringType == typeof(AgentEventStreamServiceCollectionExtensions))
+            {
+                continue;
+            }
+
+            string? file = frame.GetFileName();
+            int line = frame.GetFileLineNumber();
+            if (!string.IsNullOrEmpty(file) && line > 0)
+            {
+                return $"application configuration at {Path.GetFileName(file)}:{line}";
+            }
+
+            string? caller = frame.GetMethod()?.DeclaringType?.FullName;
+            if (caller is not null)
+            {
+                return $"application configuration from {caller}";
+            }
+        }
+
+        return "application configuration";
     }
 
     private static AgentEventStreamConfiguration? ReadConfiguration(
@@ -233,5 +264,9 @@ public static class AgentEventStreamServiceCollectionExtensions
         IServiceCollection services,
         AgentEventStreamRegistrationState state)
         => services.TryAddSingleton<AgentEventStreamRegistry>(
-            _ => new InMemoryEventStreamRegistry(state.ResolveOptions()));
+            serviceProvider => new InMemoryEventStreamRegistry(
+                state.ResolveOptions(),
+                serviceProvider
+                    .GetService<ILoggerFactory>()
+                    ?.CreateLogger("Azure.AI.AgentServer.Streaming")));
 }

@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Streaming.Backings;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace Azure.AI.AgentServer.Core.Streaming;
 
@@ -17,14 +19,55 @@ namespace Azure.AI.AgentServer.Core.Streaming;
 /// </summary>
 internal sealed class InMemoryEventStreamRegistry :
     AgentEventStreamRegistry,
-    ITaskEventStreamRegistry
+    ITaskEventStreamRegistry,
+    IDisposable
 {
     private readonly object _gate = new();
     private readonly Dictionary<string, AgentEventStream> _streams = new(StringComparer.Ordinal);
     private readonly Dictionary<string, string> _taskOwners = new(StringComparer.Ordinal);
     private readonly AgentEventStreamOptions _options;
+    private readonly ILogger _logger;
+    private readonly Timer? _sweepTimer;
+    private bool _disposed;
 
-    public InMemoryEventStreamRegistry(AgentEventStreamOptions options) => _options = options;
+    public InMemoryEventStreamRegistry(AgentEventStreamOptions options, ILogger? logger = null)
+    {
+        _options = options;
+        _logger = logger ?? NullLogger.Instance;
+        if (options.Configuration.Ttl is { } ttl && ttl > TimeSpan.Zero)
+        {
+            TimeSpan interval = ttl < TimeSpan.FromMinutes(1)
+                ? ttl
+                : TimeSpan.FromMinutes(1);
+            _sweepTimer = new Timer(
+                static state => ((InMemoryEventStreamRegistry)state!).SweepExpired(),
+                this,
+                interval,
+                interval);
+        }
+    }
+
+    internal int StreamCount
+    {
+        get
+        {
+            lock (_gate)
+            {
+                return _streams.Count;
+            }
+        }
+    }
+
+    internal int TaskOwnerCount
+    {
+        get
+        {
+            lock (_gate)
+            {
+                return _taskOwners.Count;
+            }
+        }
+    }
 
     public override ValueTask<AgentEventStream> GetAsync(string id, CancellationToken cancellationToken = default)
     {
@@ -124,6 +167,57 @@ internal sealed class InMemoryEventStreamRegistry :
         }
     }
 
+    public ValueTask<AgentEventStream?> GetTaskStreamAsync(
+        string taskId,
+        string inputId,
+        CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrEmpty(taskId))
+        {
+            throw new ArgumentException("Task id must be non-empty.", nameof(taskId));
+        }
+
+        if (string.IsNullOrEmpty(inputId))
+        {
+            throw new ArgumentException("Input id must be non-empty.", nameof(inputId));
+        }
+
+        lock (_gate)
+        {
+            if (_taskOwners.TryGetValue(inputId, out string? owner)
+                && !string.Equals(owner, taskId, StringComparison.Ordinal))
+            {
+                throw TaskOwnershipConflict(inputId, owner, taskId);
+            }
+
+            if (_streams.TryGetValue(inputId, out AgentEventStream? existing))
+            {
+                if (existing is ITaskOwnedEventStream taskOwned)
+                {
+                    taskOwned.ValidateOrClaimTask(taskId);
+                }
+
+                _taskOwners[inputId] = taskId;
+                return new ValueTask<AgentEventStream?>(existing);
+            }
+
+            AgentEventStream created = null!;
+            AgentEventStream? persisted = _options.CreateExistingTaskStream(
+                inputId,
+                () => SelfDestruct(inputId, created),
+                taskId);
+            if (persisted is null)
+            {
+                return new ValueTask<AgentEventStream?>((AgentEventStream?)null);
+            }
+
+            created = persisted;
+            _streams[inputId] = created;
+            _taskOwners[inputId] = taskId;
+            return new ValueTask<AgentEventStream?>(created);
+        }
+    }
+
     public override ValueTask DeleteAsync(string id, CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrEmpty(id))
@@ -164,6 +258,57 @@ internal sealed class InMemoryEventStreamRegistry :
                 _streams.Remove(id);
                 _taskOwners.Remove(id);
             }
+        }
+    }
+
+    private void SweepExpired()
+    {
+        IDestroyableStream[] streams;
+        lock (_gate)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            streams = _streams.Values.OfType<IDestroyableStream>().ToArray();
+        }
+
+        foreach (IDestroyableStream stream in streams)
+        {
+            try
+            {
+                stream.TryAutoDestroyIfElapsed();
+            }
+            catch (Exception exception)
+            {
+                _logger.LogWarning(
+                    exception,
+                    "Failed to sweep an expired agent event stream; the next sweep will retry.");
+            }
+        }
+    }
+
+    public void Dispose()
+    {
+        IDisposable[] streams;
+        lock (_gate)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            _disposed = true;
+            _sweepTimer?.Dispose();
+            streams = _streams.Values.OfType<IDisposable>().ToArray();
+            _streams.Clear();
+            _taskOwners.Clear();
+        }
+
+        foreach (IDisposable stream in streams)
+        {
+            stream.Dispose();
         }
     }
 

@@ -44,6 +44,7 @@ public sealed class AgentEventStreamRegistrationTests
             provider.GetRequiredService<AgentEventStreamRegistry>())!;
 
         Assert.That(exception.Message, Does.Contain("application"));
+        Assert.That(exception.Message, Does.Contain(nameof(AgentEventStreamRegistrationTests) + ".cs"));
         Assert.That(exception.Message, Does.Contain("InMemoryReplay"));
         Assert.That(exception.Message, Does.Contain("FileBackedReplay"));
     }
@@ -200,7 +201,7 @@ public sealed class AgentEventStreamRegistrationTests
     }
 
     [Test]
-    public void InvalidHostConfigurationBackingFailsAtRegistration()
+    public void InvalidHostConfigurationBackingFailsWhenRegistryIsResolved()
     {
         HostApplicationBuilder builder = Host.CreateApplicationBuilder();
         builder.Configuration["ResilientTasks:Streams:Backing"] = "DatabaseReplay";

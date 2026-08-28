@@ -15,8 +15,8 @@ namespace Azure.AI.AgentServer.Core.Streaming;
 /// </summary>
 public sealed class AgentEventStreamOptions
 {
-    /// <summary>The default per-event retention for the file-backed replay backing (10 minutes).</summary>
-    private static readonly TimeSpan DefaultFileBackedTtl = TimeSpan.FromMinutes(10);
+    /// <summary>The default per-event retention for replay backings (10 minutes).</summary>
+    private static readonly TimeSpan DefaultReplayTtl = TimeSpan.FromMinutes(10);
 
     private AgentEventStreamConfiguration _configuration =
         AgentEventStreamConfiguration.InMemoryLive;
@@ -37,13 +37,14 @@ public sealed class AgentEventStreamOptions
         => _configuration = AgentEventStreamConfiguration.InMemoryLive;
 
     /// <summary>
-    /// Selects the in-memory replay backing: retained history with optional
+    /// Selects the in-memory replay backing: retained history with bounded
     /// per-event TTL, supporting late subscribers and reconnect via
     /// <see cref="SseItem{T}.EventId"/>.
     /// </summary>
-    /// <param name="ttl">Per-event retention; events become evictable after this duration.</param>
+    /// <param name="ttl">Per-event retention; defaults to 10 minutes.</param>
     public void UseInMemoryReplay(TimeSpan? ttl = null)
-        => _configuration = AgentEventStreamConfiguration.InMemoryReplay(ttl);
+        => _configuration = AgentEventStreamConfiguration.InMemoryReplay(
+            ValidateTtl(ttl ?? DefaultReplayTtl));
 
     /// <summary>
     /// Selects the file-backed replay backing: events persist to
@@ -65,7 +66,7 @@ public sealed class AgentEventStreamOptions
     {
         _configuration = AgentEventStreamConfiguration.FileBackedReplay(
             ResolveStreamDirectory(storageDirectory),
-            ttl ?? DefaultFileBackedTtl);
+            ValidateTtl(ttl ?? DefaultReplayTtl));
     }
 
     // Defaults an unspecified stream directory to the shared agent-server state root so streams
@@ -74,6 +75,16 @@ public sealed class AgentEventStreamOptions
         => string.IsNullOrEmpty(storageDirectory)
             ? AgentServerStatePaths.StreamsRoot()
             : storageDirectory;
+
+    private static TimeSpan ValidateTtl(TimeSpan ttl)
+    {
+        if (ttl < TimeSpan.Zero)
+        {
+            throw new ArgumentOutOfRangeException(nameof(ttl), "Replay retention must be non-negative.");
+        }
+
+        return ttl;
+    }
 
     /// <summary>Builds a backing instance for the given id, wiring its self-destroy callback.</summary>
     internal AgentEventStreamConfiguration Configuration => _configuration;
@@ -84,6 +95,12 @@ public sealed class AgentEventStreamOptions
         Action onDestroy,
         string? taskId = null)
         => _configuration.CreateStream(id, onDestroy, taskId);
+
+    internal AgentEventStream? CreateExistingTaskStream(
+        string id,
+        Action onDestroy,
+        string taskId)
+        => _configuration.CreateExistingTaskStream(id, onDestroy, taskId);
 }
 
 internal enum AgentEventStreamBackingKind
@@ -117,7 +134,7 @@ internal sealed class AgentEventStreamConfiguration : IEquatable<AgentEventStrea
 
     public string? StorageDirectory { get; }
 
-    public static AgentEventStreamConfiguration InMemoryReplay(TimeSpan? ttl)
+    public static AgentEventStreamConfiguration InMemoryReplay(TimeSpan ttl)
         => new(AgentEventStreamBackingKind.InMemoryReplay, ttl, storageDirectory: null);
 
     public static AgentEventStreamConfiguration FileBackedReplay(
@@ -134,7 +151,7 @@ internal sealed class AgentEventStreamConfiguration : IEquatable<AgentEventStrea
         string? taskId)
         => Backing switch
         {
-            AgentEventStreamBackingKind.InMemoryLive => new BroadcastEventStream(id),
+            AgentEventStreamBackingKind.InMemoryLive => new BroadcastEventStream(id, onDestroy),
             AgentEventStreamBackingKind.InMemoryReplay => new ReplayEventStream(id, Ttl, onDestroy),
             AgentEventStreamBackingKind.FileBackedReplay => new FileBackedReplayEventStream(
                 id,
@@ -145,6 +162,25 @@ internal sealed class AgentEventStreamConfiguration : IEquatable<AgentEventStrea
             _ => throw new InvalidOperationException(
                 $"Unsupported AgentEventStream backing '{Backing}'."),
         };
+
+    public AgentEventStream? CreateExistingTaskStream(
+        string id,
+        Action onDestroy,
+        string taskId)
+    {
+        if (Backing != AgentEventStreamBackingKind.FileBackedReplay
+            || !FileBackedReplayEventStream.Exists(id, StorageDirectory!))
+        {
+            return null;
+        }
+
+        return new FileBackedReplayEventStream(
+            id,
+            StorageDirectory!,
+            Ttl!.Value,
+            onDestroy,
+            taskId);
+    }
 
     public bool Equals(AgentEventStreamConfiguration? other)
         => other is not null

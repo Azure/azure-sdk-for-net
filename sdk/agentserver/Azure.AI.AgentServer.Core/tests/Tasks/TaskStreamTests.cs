@@ -20,6 +20,31 @@ namespace Azure.AI.AgentServer.Core.Tests.Tasks;
 public sealed class TaskStreamTests
 {
     [Test]
+    public async Task CompletedLiveTaskStreamIsImmediatelyReclaimed()
+    {
+        using TaskTestHost host = TaskTestHost.Create(
+            configureStreams: options => options.UseInMemoryLive());
+        host.Builder.AddTask<string, string>(
+            "live-stream",
+            async (context, cancellationToken) =>
+            {
+                await context.Stream.EmitAsync(
+                    new SseItem<string>("event", "status"),
+                    cancellationToken);
+                return "done";
+            });
+
+        TaskRun<string> run = await host.Invoker.StartAsync<string, string>(
+            "live-stream",
+            "input",
+            new RunOptions { TaskId = "live-stream-1" });
+        Assert.That(await run.Completion, Is.EqualTo("done"));
+
+        Assert.ThrowsAsync<AgentEventStreamNotFoundException>(
+            async () => await host.Streams.GetAsync(run.InputId));
+    }
+
+    [Test]
     public async Task RunAndContextShareInputStreamAndSuccessClosesIt()
     {
         using TaskTestHost host = TaskTestHost.Create(
@@ -306,6 +331,109 @@ public sealed class TaskStreamTests
         }
 
         Assert.That(events.Select(item => item.Data), Is.EqualTo(new[] { "retained" }));
+    }
+
+    [Test]
+    public async Task DeleteAfterRecoveryDeferralClosesPersistedTurnStream()
+    {
+        string streamDir =
+            Path.Combine(Path.GetTempPath(), "agentserver-delete-recovery-stream-" + Guid.NewGuid().ToString("N"));
+        var registry1 = new TaskRegistry();
+        try
+        {
+            using (TaskTestHost host1 = TaskTestHost.Create(
+                sharedRegistry: registry1,
+                configureStreams: options => options.UseFileBackedReplay(streamDir)))
+            {
+                TaskDefinition<string, string> original =
+                    host1.Builder.AddMultiTurnTask<string, string>(
+                        "delete-recovery",
+                        async (context, cancellationToken) =>
+                        {
+                            await context.Stream.EmitAsync(
+                                new SseItem<string>("before", "status") { EventId = "1" },
+                                cancellationToken);
+                            await context.ExitForRecoveryAsync(cancellationToken);
+                            return "deferred";
+                        });
+
+                host1.SignalShutdown();
+                TaskRun<string> run = await original.StartAsync(
+                    "input",
+                    new RunOptions
+                    {
+                        TaskId = "delete-recovery-task",
+                        InputId = "delete-recovery-input",
+                    });
+                await host1.WaitUntilInactiveAsync(run.TaskId, TimeSpan.FromSeconds(5));
+                (await host1.Streams.GetAsync(run.InputId) as IDisposable)?.Dispose();
+
+                var registry2 = new TaskRegistry();
+                using (TaskTestHost host2 = host1.Restart(registry2))
+                {
+                    TaskDefinition<string, string> recovered =
+                        host2.Builder.AddMultiTurnTask<string, string>(
+                            "delete-recovery",
+                            (context, cancellationToken) => Task.FromResult(context.Input));
+
+                    await recovered.DeleteAsync(run.TaskId);
+
+                    (await host2.Streams.GetAsync(run.InputId) as IDisposable)?.Dispose();
+                    string contents = await File.ReadAllTextAsync(
+                        Path.Combine(streamDir, run.InputId + ".jsonl"));
+                    Assert.That(contents, Does.Contain("\"__terminal__\":true"));
+                }
+            }
+        }
+        finally
+        {
+            try
+            {
+                Directory.Delete(streamDir, recursive: true);
+            }
+            catch (DirectoryNotFoundException)
+            {
+            }
+        }
+    }
+
+    [Test]
+    public async Task DeletingTaskWithoutMaterializedStreamDoesNotCreateBacking()
+    {
+        string streamDir =
+            Path.Combine(Path.GetTempPath(), "agentserver-delete-unused-stream-" + Guid.NewGuid().ToString("N"));
+        try
+        {
+            using TaskTestHost host = TaskTestHost.Create(
+                configureStreams: options => options.UseFileBackedReplay(streamDir));
+            TaskDefinition<string, string> definition =
+                host.Builder.AddMultiTurnTask<string, string>(
+                    "delete-unused",
+                    (context, cancellationToken) => Task.FromResult(context.Input));
+
+            TaskRun<string> run = await definition.StartAsync(
+                "input",
+                new RunOptions
+                {
+                    TaskId = "delete-unused-task",
+                    InputId = "delete-unused-input",
+                });
+            Assert.That(await run.Completion, Is.EqualTo("input"));
+
+            await definition.DeleteAsync(run.TaskId);
+
+            Assert.That(Directory.Exists(streamDir), Is.False);
+        }
+        finally
+        {
+            try
+            {
+                Directory.Delete(streamDir, recursive: true);
+            }
+            catch (DirectoryNotFoundException)
+            {
+            }
+        }
     }
 
     [Test]
