@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ApplicationInsights
         public static Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole WorkbookContributor { get { throw null; } }
         public static Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole WorkbookReader { get { throw null; } }
         public bool Equals(Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole other) { throw null; }
-        public override bool Equals(object? obj) { throw null; }
+        public override bool Equals(object obj) { throw null; }
         public static string GetBuiltInRoleName(Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole value) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole left, Azure.Provisioning.ApplicationInsights.ApplicationInsightsBuiltInRole right) { throw null; }

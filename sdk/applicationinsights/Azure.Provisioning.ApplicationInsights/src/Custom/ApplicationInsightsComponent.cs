@@ -3,13 +3,9 @@
 
 #nullable disable
 
-using System;
 using System.ComponentModel;
-using Azure.Provisioning.Authorization;
-using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
-using Azure.Provisioning.Roles;
 
 namespace Azure.Provisioning.ApplicationInsights
 {
@@ -32,28 +28,6 @@ namespace Azure.Provisioning.ApplicationInsights
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override ResourceNameRequirements GetResourceNameRequirements() =>
             new(1, 260, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore | ResourceNameCharacters.Period | ResourceNameCharacters.Parentheses);
-
-        /// <summary> Creates a role assignment for a user-assigned identity that grants access to this resource. </summary>
-        public RoleAssignment CreateRoleAssignment(ApplicationInsightsBuiltInRole role, UserAssignedIdentity identity) =>
-            new($"{BicepIdentifier}_{identity.BicepIdentifier}_{ApplicationInsightsBuiltInRole.GetBuiltInRoleName(role)}")
-            {
-                Name = BicepFunction.CreateGuid(Id, identity.PrincipalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-                Scope = new IdentifierExpression(BicepIdentifier),
-                PrincipalType = RoleManagementPrincipalType.ServicePrincipal,
-                RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
-                PrincipalId = identity.PrincipalId
-            };
-
-        /// <summary> Creates a role assignment for a principal that grants access to this resource. </summary>
-        public RoleAssignment CreateRoleAssignment(ApplicationInsightsBuiltInRole role, BicepValue<RoleManagementPrincipalType> principalType, BicepValue<Guid> principalId, string bicepIdentifierSuffix = null) =>
-            new($"{BicepIdentifier}_{ApplicationInsightsBuiltInRole.GetBuiltInRoleName(role)}{(bicepIdentifierSuffix is null ? "" : "_")}{bicepIdentifierSuffix}")
-            {
-                Name = BicepFunction.CreateGuid(Id, principalId, BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString())),
-                Scope = new IdentifierExpression(BicepIdentifier),
-                PrincipalType = principalType,
-                RoleDefinitionId = BicepFunction.GetSubscriptionResourceId("Microsoft.Authorization/roleDefinitions", role.ToString()),
-                PrincipalId = principalId
-            };
 
         /// <summary> Supported API versions retained for compatibility. </summary>
         public static partial class ResourceVersions
