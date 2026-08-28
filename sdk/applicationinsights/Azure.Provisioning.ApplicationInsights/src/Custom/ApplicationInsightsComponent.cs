@@ -3,8 +3,6 @@
 
 #nullable disable
 
-using System.ComponentModel;
-using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.ApplicationInsights
@@ -23,11 +21,6 @@ namespace Azure.Provisioning.ApplicationInsights
         {
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
         }
-
-        /// <inheritdoc/>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ResourceNameRequirements GetResourceNameRequirements() =>
-            new(1, 260, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore | ResourceNameCharacters.Period | ResourceNameCharacters.Parentheses);
 
         /// <summary> Supported API versions retained for compatibility. </summary>
         public static partial class ResourceVersions

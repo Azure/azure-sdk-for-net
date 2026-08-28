@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using Azure;
 using Azure.Core;
 using Azure.Provisioning;
@@ -541,6 +542,11 @@ namespace Azure.Provisioning.ApplicationInsights
 
         /// <summary> Define additional provisionable properties for ApplicationInsightsComponent that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
+
+        /// <summary> Get the requirements for naming this resource. </summary>
+        /// <returns> Naming requirements. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 260, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore | ResourceNameCharacters.Period | ResourceNameCharacters.Parentheses);
 
         /// <summary> Creates a role assignment for a user-assigned identity that grants access to this ApplicationInsightsComponent. </summary>
         /// <param name="role"> The role to grant. </param>
