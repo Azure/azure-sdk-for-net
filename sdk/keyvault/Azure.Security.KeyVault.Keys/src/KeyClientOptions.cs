@@ -109,8 +109,7 @@ namespace Azure.Security.KeyVault.Keys
         /// apply the binding certificate (such as <c>HttpClientTransport.Shared</c>), the client fails closed and
         /// throws rather than sending a request the service cannot authenticate. Because PoP tokens are bound per
         /// request URI and method, the single-slot token cache is invalidated on each new target, so throughput
-        /// drops for workloads that hit many keys. The underlying Azure.Core and Azure.Identity support is
-        /// experimental (<c>AZID0004</c>).
+        /// drops for workloads that hit many keys.
         /// </remarks>
         public bool EnableProofOfPossession { get; set; }
 

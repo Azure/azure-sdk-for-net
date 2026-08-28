@@ -52,11 +52,12 @@ namespace Azure.Security.KeyVault
             => transport.GetType().GetMethod(nameof(HttpPipelineTransport.Update), s_updateParameterTypes)?.DeclaringType != typeof(HttpPipelineTransport);
 
         /// <summary>
-        /// Applies the Proof-of-Possession binding certificate to the transport. Catches transports that cannot
-        /// be updated in place (e.g. HttpClientTransport.Shared) so the request falls back to a plain token
-        /// instead of throwing, and records the failure so the token-bound header is suppressed.
+        /// Applies the Proof-of-Possession binding certificate to the transport, recording whether it could be
+        /// applied so a bound request that cannot carry the certificate fails closed instead of authenticating.
         /// </summary>
-        [Experimental("AZID0004")]
+        // Key Vault intentionally consumes this experimental Azure.Core member; suppress AZID0004 on the override
+        // rather than marking this internal method experimental, which would otherwise flow to its callers.
+#pragma warning disable AZID0004
         protected override void OnTransportOptionsChanged(HttpPipelineTransportOptions options)
         {
             try
@@ -75,6 +76,7 @@ namespace Azure.Security.KeyVault
                 _transportUpdateFailed = true;
             }
         }
+#pragma warning restore AZID0004
 
         /// <inheritdoc cref="BearerTokenAuthenticationPolicy.AuthorizeRequestAsync(Azure.Core.HttpMessage)" />
         protected override ValueTask AuthorizeRequestAsync(HttpMessage message)
