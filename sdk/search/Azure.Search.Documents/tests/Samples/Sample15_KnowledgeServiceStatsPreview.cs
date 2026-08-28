@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.Search.Documents.Tests.Samples
 {
-    [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_05_01_Preview)]
+    [ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_08_01_Preview)]
     public partial class KnowledgeServiceStatsPreview : SearchTestBase
     {
         public KnowledgeServiceStatsPreview(bool async, SearchClientOptions.ServiceVersion serviceVersion)
@@ -42,6 +42,7 @@ namespace Azure.Search.Documents.Tests.Samples
             // Get service statistics including knowledge retrieval counters
             SearchServiceStatistics stats = await indexClient.GetServiceStatisticsAsync();
             SearchServiceCounters counters = stats.Counters;
+            SearchServiceLimits limits = stats.Limits;
 
             // Display the new knowledge retrieval counters
             Console.WriteLine("=== Knowledge Retrieval Service Statistics ===");
@@ -52,6 +53,17 @@ namespace Azure.Search.Documents.Tests.Samples
             Console.WriteLine($"\nIndexes: {counters.IndexCounter.Usage} / {counters.IndexCounter.Quota}");
             Console.WriteLine($"Documents: {counters.DocumentCounter.Usage}");
             Console.WriteLine($"Storage size (bytes): {counters.StorageSizeCounter.Usage}");
+
+            // This nullable value is a per-index vector memory limit. It is not
+            // current vector usage or a per-partition storage quota.
+            if (limits.MaxVectorIndexSizePerIndexInBytes is long maxVectorBytes)
+            {
+                Console.WriteLine($"Maximum vector index size per index (bytes): {maxVectorBytes}");
+            }
+            else
+            {
+                Console.WriteLine("The service did not report a per-index vector size limit.");
+            }
             #endregion Snippet:Azure_Search_Tests_Samples_Sample15_ServiceStats_KnowledgeCounts
 
             Assert.IsNotNull(counters.KnowledgeBaseCounter);
