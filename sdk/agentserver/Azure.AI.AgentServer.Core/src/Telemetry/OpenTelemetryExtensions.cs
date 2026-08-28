@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Globalization;
 using Azure.Core;
 using Azure.Identity;
 using Microsoft.Agents.A365.Observability.Runtime.Tracing.Exporters;
@@ -55,8 +56,8 @@ internal static class OpenTelemetryExtensions
         }
 
         // The Microsoft OpenTelemetry distro auto-detects Azure Monitor and OTLP
-        // exporters from environment variables. It registers ASP.NET Core, HttpClient,
-        // SQL, Azure SDK, and AI instrumentation automatically.
+        // exporters from environment variables. Agent Server keeps incoming request,
+        // SQL, and AI instrumentation while suppressing noisy outbound dependency spans.
         var otelBuilder = services.AddOpenTelemetry();
 
         // Ensure W3C Trace Context and Baggage propagators are active on all TFMs.
@@ -72,10 +73,13 @@ internal static class OpenTelemetryExtensions
         otelBuilder.UseMicrosoftOpenTelemetry(options =>
         {
             var exporters = ExportTarget.None;
+            options.Instrumentation.EnableAzureSdkInstrumentation = false;
+            options.Instrumentation.EnableHttpClientInstrumentation = false;
 
             if (!string.IsNullOrEmpty(FoundryEnvironment.AppInsightsConnectionString))
             {
                 exporters |= ExportTarget.AzureMonitor;
+                ConfigureAzureMonitorSampling(options.AzureMonitor);
 
                 // When Entra-based auth is requested, export to Azure Monitor using a
                 // system-assigned managed identity (no client id) rather than relying
@@ -148,6 +152,39 @@ internal static class OpenTelemetryExtensions
         });
 
         return services;
+    }
+
+    internal static void ConfigureAzureMonitorSampling(AzureMonitorOptions options)
+    {
+        var sampler = Environment.GetEnvironmentVariable("OTEL_TRACES_SAMPLER");
+        if (string.IsNullOrWhiteSpace(sampler))
+        {
+            options.SamplingRatio = 1.0F;
+            options.TracesPerSecond = null;
+            return;
+        }
+
+        var samplerArgument = Environment.GetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG");
+        if (string.Equals(sampler, "microsoft.rate_limited", StringComparison.OrdinalIgnoreCase) &&
+            double.TryParse(samplerArgument, NumberStyles.Float, CultureInfo.InvariantCulture, out var tracesPerSecond) &&
+            tracesPerSecond >= 0)
+        {
+            options.TracesPerSecond = tracesPerSecond;
+            return;
+        }
+        else if (string.Equals(sampler, "microsoft.fixed_percentage", StringComparison.OrdinalIgnoreCase) &&
+            float.TryParse(samplerArgument, NumberStyles.Float, CultureInfo.InvariantCulture, out var samplingRatio) &&
+            samplingRatio is >= 0.0F and <= 1.0F)
+        {
+            options.SamplingRatio = samplingRatio;
+            options.TracesPerSecond = null;
+            return;
+        }
+
+        System.Diagnostics.Trace.TraceWarning(
+            "Ignoring unsupported or invalid OTEL_TRACES_SAMPLER configuration and using 100% trace sampling.");
+        options.SamplingRatio = 1.0F;
+        options.TracesPerSecond = null;
     }
 
     /// <summary>
