@@ -1,10 +1,25 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using Azure.Provisioning;
+using Microsoft.TypeSpec.Generator.Customizations;
+
 namespace Azure.Provisioning.Storage;
 
 public partial class FileShare
 {
+    /// <summary> Gets the last modification time for the share access tier. </summary>
+    [CodeGenMember("AccessTierChangedOn")]
+    public BicepValue<DateTimeOffset> AccessTierChangeOn
+    {
+        get
+        {
+            FileShareProperties ??= new FileShareProperties();
+            return FileShareProperties.AccessTierChangedOn;
+        }
+    }
+
     public static partial class ResourceVersions
     {
         /// <summary>2024-01-01.</summary>

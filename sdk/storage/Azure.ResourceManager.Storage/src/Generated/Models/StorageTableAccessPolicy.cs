@@ -28,13 +28,13 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageTableAccessPolicy"/>. </summary>
-        /// <param name="startsOn"> Start time of the access policy. </param>
+        /// <param name="startOn"> Start time of the access policy. </param>
         /// <param name="expireOn"> Expiry time of the access policy. </param>
         /// <param name="permission"> Required. List of abbreviated permissions. Supported permission values include 'r','a','u','d'. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageTableAccessPolicy(DateTimeOffset? startsOn, DateTimeOffset? expireOn, string permission, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageTableAccessPolicy(DateTimeOffset? startOn, DateTimeOffset? expireOn, string permission, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartsOn = startsOn;
+            StartOn = startOn;
             ExpireOn = expireOn;
             Permission = permission;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Storage.Models
 
         /// <summary> Start time of the access policy. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartsOn { get; set; }
+        public DateTimeOffset? StartOn { get; set; }
 
         /// <summary> Expiry time of the access policy. </summary>
         [WirePath("expiryTime")]

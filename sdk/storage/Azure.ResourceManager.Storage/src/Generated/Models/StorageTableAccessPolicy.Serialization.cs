@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 throw new FormatException($"The model {nameof(StorageTableAccessPolicy)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StartsOn))
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartsOn.Value, "O");
+                writer.WriteStringValue(StartOn.Value, "O");
             }
             if (Optional.IsDefined(ExpireOn))
             {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 return null;
             }
-            DateTimeOffset? startsOn = default;
+            DateTimeOffset? startOn = default;
             DateTimeOffset? expireOn = default;
             string permission = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    startsOn = prop.Value.GetDateTimeOffset("O");
+                    startOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expiryTime"u8))
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Storage.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StorageTableAccessPolicy(startsOn, expireOn, permission, additionalBinaryDataProperties);
+            return new StorageTableAccessPolicy(startOn, expireOn, permission, additionalBinaryDataProperties);
         }
     }
 }

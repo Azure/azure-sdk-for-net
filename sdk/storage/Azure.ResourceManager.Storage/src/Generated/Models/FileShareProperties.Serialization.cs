@@ -170,10 +170,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("accessTier"u8);
                 writer.WriteStringValue(AccessTier.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(AccessTierChangedOn))
+            if (options.Format != "W" && Optional.IsDefined(AccessTierChangeOn))
             {
                 writer.WritePropertyName("accessTierChangeTime"u8);
-                writer.WriteStringValue(AccessTierChangedOn.Value, "O");
+                writer.WriteStringValue(AccessTierChangeOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(AccessTierStatus))
             {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Storage.Models
             DateTimeOffset? deletedOn = default;
             int? remainingRetentionDays = default;
             FileShareAccessTier? accessTier = default;
-            DateTimeOffset? accessTierChangedOn = default;
+            DateTimeOffset? accessTierChangeOn = default;
             string accessTierStatus = default;
             long? shareUsageBytes = default;
             StorageLeaseStatus? leaseStatus = default;
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    accessTierChangedOn = prop.Value.GetDateTimeOffset("O");
+                    accessTierChangeOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("accessTierStatus"u8))
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.Storage.Models
                 deletedOn,
                 remainingRetentionDays,
                 accessTier,
-                accessTierChangedOn,
+                accessTierChangeOn,
                 accessTierStatus,
                 shareUsageBytes,
                 leaseStatus,

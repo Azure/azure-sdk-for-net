@@ -272,11 +272,11 @@ namespace Azure.ResourceManager.Storage
 
         /// <summary> Indicates the last modification time for share access tier. </summary>
         [WirePath("properties.accessTierChangeTime")]
-        public DateTimeOffset? AccessTierChangedOn
+        public DateTimeOffset? AccessTierChangeOn
         {
             get
             {
-                return FileShareProperties is null ? default : FileShareProperties.AccessTierChangedOn;
+                return FileShareProperties is null ? default : FileShareProperties.AccessTierChangeOn;
             }
         }
 

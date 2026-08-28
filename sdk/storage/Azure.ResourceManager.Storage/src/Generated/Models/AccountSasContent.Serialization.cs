@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WritePropertyName("signedProtocol"u8);
                 writer.WriteStringValue(Protocols.Value.ToSerialString());
             }
-            if (Optional.IsDefined(SharedAccessStartsOn))
+            if (Optional.IsDefined(SharedAccessStartOn))
             {
                 writer.WritePropertyName("signedStart"u8);
-                writer.WriteStringValue(SharedAccessStartsOn.Value, "O");
+                writer.WriteStringValue(SharedAccessStartOn.Value, "O");
             }
             writer.WritePropertyName("signedExpiry"u8);
             writer.WriteStringValue(SharedAccessExpireOn, "O");
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Storage.Models
             StorageAccountSasPermission permissions = default;
             string ipAddressOrRange = default;
             StorageAccountHttpProtocol? protocols = default;
-            DateTimeOffset? sharedAccessStartsOn = default;
+            DateTimeOffset? sharedAccessStartOn = default;
             DateTimeOffset sharedAccessExpireOn = default;
             string keyToSign = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Storage.Models
                     {
                         continue;
                     }
-                    sharedAccessStartsOn = prop.Value.GetDateTimeOffset("O");
+                    sharedAccessStartOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("signedExpiry"u8))
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Storage.Models
                 permissions,
                 ipAddressOrRange,
                 protocols,
-                sharedAccessStartsOn,
+                sharedAccessStartOn,
                 sharedAccessExpireOn,
                 keyToSign,
                 additionalBinaryDataProperties);
