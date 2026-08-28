@@ -84,6 +84,29 @@ public sealed class TaskDefinitionTests
     }
 
     [Test]
+    public async Task DeleteAsyncRejectsTaskOwnedByDifferentDefinition()
+    {
+        using var host = TaskTestHost.Create();
+        TaskDefinition<string, string> owner = host.Builder.AddMultiTurnTask<string, string>(
+            "owner", (ctx, ct) => Task.FromResult(ctx.Input));
+        TaskDefinition<string, string> other = host.Builder.AddMultiTurnTask<string, string>(
+            "other", (ctx, ct) => Task.FromResult(ctx.Input));
+
+        TaskRun<string> turn = await owner.StartAsync(
+            "hi",
+            new RunOptions { TaskId = "owned-chain" });
+        await turn.Completion;
+
+        ResilientTaskException exception = Assert.ThrowsAsync<ResilientTaskException>(
+            async () => await other.DeleteAsync("owned-chain"))!;
+
+        Assert.That(exception.ErrorCode, Is.EqualTo(ResilientTaskErrorCode.Conflict));
+        Assert.That(await host.Store.GetAsync("owned-chain"), Is.Not.Null);
+
+        await owner.DeleteAsync("owned-chain");
+    }
+
+    [Test]
     public async Task MultiTurnChainConvergesOnTheSameTaskIdAcrossTurns()
     {
         using var host = TaskTestHost.Create();

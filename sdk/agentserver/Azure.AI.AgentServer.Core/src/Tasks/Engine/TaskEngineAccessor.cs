@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 
 namespace Azure.AI.AgentServer.Core.Tasks.Engine;
 
@@ -9,18 +10,30 @@ namespace Azure.AI.AgentServer.Core.Tasks.Engine;
 /// A late-bound holder for the process <see cref="TaskEngine"/>. The resilient-task builder — and
 /// the <see cref="TaskDefinition{TInput, TOutput}"/> instances it returns — are created during
 /// <c>AddResilientTasks</c>, before the DI container (and therefore the engine) exists. This holder
-/// is populated when the <see cref="TaskEngine"/> singleton is constructed (always before any task
-/// runs, because invocation flows through the engine), letting a task definition resolve the engine
-/// at invocation time without forcing callers to build the container first.
+/// is populated when the <see cref="TaskEngine"/> singleton is first resolved, either during host
+/// startup or when a keyed task definition is resolved from the service provider.
 /// </summary>
 internal sealed class TaskEngineAccessor
 {
-    /// <summary>The process task engine, set once the container is built.</summary>
-    public TaskEngine? Engine { get; set; }
+    private TaskEngine? _engine;
+
+    /// <summary>Binds the process task engine exactly once.</summary>
+    public void Bind(TaskEngine engine)
+    {
+        ArgumentNullException.ThrowIfNull(engine);
+        TaskEngine? existing = Interlocked.CompareExchange(ref _engine, engine, null);
+        if (existing is not null && !ReferenceEquals(existing, engine))
+        {
+            throw new InvalidOperationException(
+                "The resilient-task services were resolved from more than one service provider. " +
+                "Build and use a single application service provider.");
+        }
+    }
 
     /// <summary>Returns the engine, or throws if it has not been populated yet.</summary>
     public TaskEngine Require()
-        => Engine ?? throw new InvalidOperationException(
+        => Volatile.Read(ref _engine) ?? throw new InvalidOperationException(
             "The task engine is not available yet. A task definition can only be run once the " +
-            "application container that hosts the resilient-task services has been built.");
+            "application host has started, or after the definition has been resolved from its " +
+            "service provider.");
 }

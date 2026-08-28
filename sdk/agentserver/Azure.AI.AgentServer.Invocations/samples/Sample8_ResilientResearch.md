@@ -53,6 +53,7 @@ services.AddResilientMultiTurnTask<
     ResearchTask>(
     "research",
     steerable: true);
+
 ```
 
 ## The durable producer task

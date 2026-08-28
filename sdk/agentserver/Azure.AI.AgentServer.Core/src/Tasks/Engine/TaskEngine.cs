@@ -1350,8 +1350,34 @@ internal sealed partial class TaskEngine : IDisposable
     }
 
     /// <summary>Ends a multi-turn chain: cancels any in-flight turn, resolves queued callers as cancelled, and removes the record.</summary>
-    public async Task DeleteAsync(string taskId, CancellationToken cancellationToken = default)
+    public Task DeleteAsync(string taskId, CancellationToken cancellationToken = default)
+        => DeleteCoreAsync(expectedTaskName: null, taskId, cancellationToken);
+
+    /// <summary>Ends a multi-turn chain after validating its registered task name.</summary>
+    public Task DeleteAsync(
+        string expectedTaskName,
+        string taskId,
+        CancellationToken cancellationToken = default)
+        => DeleteCoreAsync(expectedTaskName, taskId, cancellationToken);
+
+    private async Task DeleteCoreAsync(
+        string? expectedTaskName,
+        string taskId,
+        CancellationToken cancellationToken)
     {
+        if (expectedTaskName is not null)
+        {
+            TaskRecord? record = await _store.GetAsync(taskId, cancellationToken).ConfigureAwait(false);
+            if (record is not null
+                && !string.Equals(record.Source?.Name, expectedTaskName, StringComparison.Ordinal))
+            {
+                throw new ResilientTaskException(
+                    ResilientTaskErrorCode.Conflict,
+                    $"Task '{taskId}' belongs to registered task '{record.Source?.Name ?? string.Empty}', " +
+                    $"not '{expectedTaskName}'.");
+            }
+        }
+
         // Cancel an in-flight turn and resolve its caller as cancelled.
         _activeRuns.TryRemove(taskId, out IActiveRun? run);
         if (run is not null)
