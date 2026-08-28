@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.4 (Unreleased)
+## 1.6.0-beta.4 (2026-08-31)
 
 ### Features Added
 
@@ -11,10 +11,6 @@
 - Compared to `1.6.0-beta.3`, moved `CognitiveServicesComputeData.Location` to `CognitiveServicesComputeProperties.Location`. The `CognitiveServicesClusterComputeProperties` and `ContainerInstanceComputeProperties` constructors now require an `AzureLocation`.
 - Compared to `1.6.0-beta.3`, removed the `vmPriority` parameter from the `CognitiveServicesComputePool` constructor and made the `VmPriority` property optional.
 - Compared to `1.6.0-beta.3`, replaced `CognitiveServicesVmPriority.LowPriority` with `CognitiveServicesVmPriority.Spot` to match the service contract.
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.6.0-beta.3 (2026-07-07)
 
