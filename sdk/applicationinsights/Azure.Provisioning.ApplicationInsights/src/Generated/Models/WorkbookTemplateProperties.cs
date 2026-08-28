@@ -18,7 +18,7 @@ namespace Azure.Provisioning.ApplicationInsights
         private BicepValue<string> _author;
         private BicepValue<BinaryData> _templateData;
         private BicepList<WorkbookTemplateGallery> _galleries;
-        private BicepDictionary<BicepList<WorkbookTemplateLocalizedGallery>> _localizedGalleries;
+        private BicepDictionary<BicepList<WorkbookTemplateLocalizedGallery>> _localized;
 
         /// <summary> Creates a new WorkbookTemplateProperties. </summary>
         public WorkbookTemplateProperties()
@@ -85,18 +85,18 @@ namespace Azure.Provisioning.ApplicationInsights
             }
         }
 
-        /// <summary> Gets or sets the LocalizedGalleries. </summary>
-        public BicepDictionary<BicepList<WorkbookTemplateLocalizedGallery>> LocalizedGalleries
+        /// <summary> Gets or sets the Localized. </summary>
+        public BicepDictionary<BicepList<WorkbookTemplateLocalizedGallery>> Localized
         {
             get
             {
                 Initialize();
-                return _localizedGalleries;
+                return _localized;
             }
             set
             {
                 Initialize();
-                _localizedGalleries.Assign(value);
+                _localized.Assign(value);
             }
         }
 
@@ -108,7 +108,7 @@ namespace Azure.Provisioning.ApplicationInsights
             _author = DefineProperty<string>(nameof(Author), new string[] { "author" });
             _templateData = DefineProperty<BinaryData>(nameof(TemplateData), new string[] { "templateData" }, isRequired: true);
             _galleries = DefineListProperty<WorkbookTemplateGallery>(nameof(Galleries), new string[] { "galleries" }, isRequired: true);
-            _localizedGalleries = DefineDictionaryProperty<BicepList<WorkbookTemplateLocalizedGallery>>(nameof(LocalizedGalleries), new string[] { "localized" });
+            _localized = DefineDictionaryProperty<BicepList<WorkbookTemplateLocalizedGallery>>(nameof(Localized), new string[] { "localized" });
             DefineAdditionalProperties();
         }
 

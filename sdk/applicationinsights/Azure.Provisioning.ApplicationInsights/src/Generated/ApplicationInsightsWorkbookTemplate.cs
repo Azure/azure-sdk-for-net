@@ -178,23 +178,6 @@ namespace Azure.Provisioning.ApplicationInsights
             }
         }
 
-        /// <summary> Gets or sets the LocalizedGalleries. </summary>
-        public BicepDictionary<BicepList<WorkbookTemplateLocalizedGallery>> LocalizedGalleries
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LocalizedGalleries;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new WorkbookTemplateProperties();
-                }
-                Properties.LocalizedGalleries = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ApplicationInsightsWorkbookTemplate. </summary>
         protected override void DefineProvisionableProperties()
         {

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Threading.Tasks;
+using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Tests;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
@@ -89,6 +90,32 @@ public class BasicApplicationInsightsTests
             });
     }
 
+    internal static Trycep CreateWorkbookTemplateTest()
+    {
+        return new Trycep().Define(
+            ctx =>
+            {
+                Infrastructure infra = new();
+
+                ApplicationInsightsWorkbookTemplate workbookTemplate =
+                    new(nameof(workbookTemplate))
+                    {
+                        TemplateData = new ObjectExpression(),
+                        Galleries = new BicepList<WorkbookTemplateGallery>(),
+                        LocalizedGalleries = new BicepDictionary<BicepList<WorkbookTemplateLocalizedGallery>>
+                        {
+                            ["en-US"] = new BicepList<WorkbookTemplateLocalizedGallery>
+                            {
+                                new WorkbookTemplateLocalizedGallery()
+                            }
+                        }
+                    };
+                infra.Add(workbookTemplate);
+
+                return infra;
+            });
+    }
+
     [Test]
     [Description("https://github.com/Azure/azure-quickstart-templates/blob/master/quickstarts/microsoft.web/function-app-create-dynamic/main.bicep")]
     public async Task CreateComponent()
@@ -171,6 +198,34 @@ public class BasicApplicationInsightsTests
                     "    category: 'workbook'",
                     "  }",
                     "  parent: workbook",
+                    "}"
+                }));
+    }
+
+    [Test]
+    public async Task CreateWorkbookTemplate()
+    {
+        await using Trycep test = CreateWorkbookTemplateTest();
+        test.Compare(
+            string.Join(
+                "\n",
+                new[]
+                {
+                    "@description('The location for the resource(s) to be deployed.')",
+                    "param location string = resourceGroup().location",
+                    "",
+                    "resource workbookTemplate 'Microsoft.Insights/workbooktemplates@2020-11-20' = {",
+                    "  name: take('workbooktemplate${uniqueString(resourceGroup().id)}', 24)",
+                    "  location: location",
+                    "  properties: {",
+                    "    templateData: { }",
+                    "    galleries: []",
+                    "    localized: {",
+                    "      'en-US': [",
+                    "        { }",
+                    "      ]",
+                    "    }",
+                    "  }",
                     "}"
                 }));
     }
