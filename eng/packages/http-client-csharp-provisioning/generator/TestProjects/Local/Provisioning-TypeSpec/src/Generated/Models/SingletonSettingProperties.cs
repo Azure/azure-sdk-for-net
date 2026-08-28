@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary> Properties of a singleton setting. </summary>
-    internal partial class SingletonSettingProperties : ProvisionableConstruct
+    public partial class SingletonSettingProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _enabled;
 

@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary> Properties of a legacy singleton. </summary>
-    internal partial class LegacySingletonProperties : ProvisionableConstruct
+    public partial class LegacySingletonProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _enabled;
 

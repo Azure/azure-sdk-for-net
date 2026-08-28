@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary> The properties of an extension assignment. </summary>
-    internal partial class ExtensionAssignmentProperties : ProvisionableConstruct
+    public partial class ExtensionAssignmentProperties : ProvisionableConstruct
     {
         private BicepValue<string> _displayName;
 

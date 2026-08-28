@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary> Properties of a resource profile revision. </summary>
-    internal partial class ResourceProfileRevisionProperties : ProvisionableConstruct
+    public partial class ResourceProfileRevisionProperties : ProvisionableConstruct
     {
         private BicepValue<string> _description;
 

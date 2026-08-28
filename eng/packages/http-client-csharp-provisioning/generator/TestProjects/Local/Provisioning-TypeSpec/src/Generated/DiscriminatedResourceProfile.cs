@@ -68,7 +68,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        internal DiscriminatedResourceProfileProperties Properties
+        public DiscriminatedResourceProfileProperties Properties
         {
             get
             {
@@ -94,23 +94,6 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             {
                 Initialize();
                 _parent.Value = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Description. </summary>
-        public BicepValue<string> DiscriminatedResourceDescription
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Description;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new DiscriminatedResourceProfileProperties();
-                }
-                Properties.Description = value;
             }
         }
 

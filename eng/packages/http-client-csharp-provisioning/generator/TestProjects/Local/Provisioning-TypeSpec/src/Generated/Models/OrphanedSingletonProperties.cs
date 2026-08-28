@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary> Properties of a singleton whose parent resource type is not generated. </summary>
-    internal partial class OrphanedSingletonProperties : ProvisionableConstruct
+    public partial class OrphanedSingletonProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _enabled;
 

@@ -37,7 +37,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         }
 
         /// <summary> Gets or sets the Sku. </summary>
-        internal ProfileSku Sku
+        public ProfileSku Sku
         {
             get
             {
@@ -48,23 +48,6 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             {
                 Initialize();
                 AssignOrReplace(ref _sku, value);
-            }
-        }
-
-        /// <summary> Gets or sets the Name. </summary>
-        public BicepValue<string> SkuName
-        {
-            get
-            {
-                return Sku is null ? default : Sku.Name;
-            }
-            set
-            {
-                if (Sku is null)
-                {
-                    Sku = new ProfileSku();
-                }
-                Sku.Name = value;
             }
         }
 

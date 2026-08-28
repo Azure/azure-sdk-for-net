@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary> Properties of a discriminated profile resource. </summary>
-    internal partial class DiscriminatedResourceProfileProperties : ProvisionableConstruct
+    public partial class DiscriminatedResourceProfileProperties : ProvisionableConstruct
     {
         private BicepValue<string> _description;
 
