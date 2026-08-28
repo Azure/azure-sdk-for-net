@@ -17,7 +17,8 @@ incomplete, or unsupported data causes a full checkout.
 
 For detailed design alternatives and limitations, see [`trade-off.md`](trade-off.md).
 For hosted sparse-checkout findings and validation, see
-[`SPARSE_CHECKOUT.md`](SPARSE_CHECKOUT.md).
+[`SPARSE_CHECKOUT.md`](SPARSE_CHECKOUT.md). For the complete production-validation
+procedure, see [`VALIDATION.md`](VALIDATION.md).
 
 ## Terminology
 
