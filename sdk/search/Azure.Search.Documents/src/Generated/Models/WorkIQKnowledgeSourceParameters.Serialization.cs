@@ -11,54 +11,59 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Search.Documents;
 
-namespace Azure.Search.Documents.KnowledgeBases.Models
+namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> Attribution information for a WorkIQ reference. </summary>
-    public partial class WorkIQAttribution : IJsonModel<WorkIQAttribution>
+    /// <summary> Parameters for a WorkIQ knowledge source. </summary>
+    public partial class WorkIQKnowledgeSourceParameters : IJsonModel<WorkIQKnowledgeSourceParameters>
     {
+        /// <summary> Initializes a new instance of <see cref="WorkIQKnowledgeSourceParameters"/> for deserialization. </summary>
+        internal WorkIQKnowledgeSourceParameters()
+        {
+        }
+
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WorkIQAttribution PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual WorkIQKnowledgeSourceParameters PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkIQAttribution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkIQKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeWorkIQAttribution(document.RootElement, options);
+                        return DeserializeWorkIQKnowledgeSourceParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkIQAttribution)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkIQKnowledgeSourceParameters)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkIQAttribution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkIQKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureSearchDocumentsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(WorkIQAttribution)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkIQKnowledgeSourceParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<WorkIQAttribution>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<WorkIQKnowledgeSourceParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkIQAttribution IPersistableModel<WorkIQAttribution>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        WorkIQKnowledgeSourceParameters IPersistableModel<WorkIQKnowledgeSourceParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<WorkIQAttribution>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<WorkIQKnowledgeSourceParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<WorkIQAttribution>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<WorkIQKnowledgeSourceParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,16 +74,13 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkIQAttribution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkIQKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkIQAttribution)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkIQKnowledgeSourceParameters)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(SeeMoreWebUrl))
-            {
-                writer.WritePropertyName("seeMoreWebUrl"u8);
-                writer.WriteStringValue(SeeMoreWebUrl.AbsoluteUri);
-            }
+            writer.WritePropertyName("entraAppAuthentication"u8);
+            writer.WriteObjectValue(EntraAppAuthentication, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -98,40 +100,36 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        WorkIQAttribution IJsonModel<WorkIQAttribution>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        WorkIQKnowledgeSourceParameters IJsonModel<WorkIQKnowledgeSourceParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual WorkIQAttribution JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual WorkIQKnowledgeSourceParameters JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<WorkIQAttribution>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WorkIQKnowledgeSourceParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkIQAttribution)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkIQKnowledgeSourceParameters)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeWorkIQAttribution(document.RootElement, options);
+            return DeserializeWorkIQKnowledgeSourceParameters(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static WorkIQAttribution DeserializeWorkIQAttribution(JsonElement element, ModelReaderWriterOptions options)
+        internal static WorkIQKnowledgeSourceParameters DeserializeWorkIQKnowledgeSourceParameters(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Uri seeMoreWebUrl = default;
+            EntraAppAuthentication entraAppAuthentication = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("seeMoreWebUrl"u8))
+                if (prop.NameEquals("entraAppAuthentication"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    seeMoreWebUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
+                    entraAppAuthentication = EntraAppAuthentication.DeserializeEntraAppAuthentication(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +137,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WorkIQAttribution(seeMoreWebUrl, additionalBinaryDataProperties);
+            return new WorkIQKnowledgeSourceParameters(entraAppAuthentication, additionalBinaryDataProperties);
         }
     }
 }
