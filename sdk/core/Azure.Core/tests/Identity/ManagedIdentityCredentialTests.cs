@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Diagnostics;
@@ -94,6 +95,13 @@ namespace Azure.Core.Tests.Identity
             clientOptions.MsalManagedIdentityClientOverride = mockMsal;
             var credential = new ManagedIdentityCredential(new ManagedIdentityClient(clientOptions));
             return instrument ? InstrumentClient(credential) : credential;
+        }
+
+        private async Task<AccessToken> GetTokenAsync(TokenCredential credential, TokenRequestContext context, CancellationToken cancellationToken = default)
+        {
+            return IsAsync
+                ? await credential.GetTokenAsync(context, cancellationToken)
+                : credential.GetToken(context, cancellationToken);
         }
 
         #endregion
@@ -360,6 +368,159 @@ namespace Azure.Core.Tests.Identity
             Assert.AreEqual(ExpectedToken, token.Token);
             Assert.AreEqual(1, capabilityCallCount);
             Assert.IsTrue(mockMsal.LastIsTokenBindingAvailable);
+        }
+
+        [NonParallelizable]
+        [Test]
+        public void ChainedProofOfPossessionCapabilitiesTimeoutThrowsCredentialUnavailable()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            var credential = BuildManagedIdentityCredential(
+                new TokenCredentialOptions { Transport = new MockTransport(), IsChainedCredential = true },
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock => mock.GetManagedIdentityCapabilitiesAsyncFactory = async (_, cancellationToken) =>
+                {
+                    await Task.Delay(Timeout.Infinite, cancellationToken);
+                    return default;
+                },
+                instrument: false,
+                initialImdsConnectionTimeout: TimeSpan.FromMilliseconds(10));
+
+            var ex = Assert.ThrowsAsync<CredentialUnavailableException>(
+                async () => await GetTokenAsync(
+                    credential,
+                    new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true)));
+
+            Assert.IsInstanceOf<OperationCanceledException>(ex.InnerException);
+        }
+
+        [NonParallelizable]
+        [Test]
+        public async Task ChainedProofOfPossessionCapabilitiesTimeoutContinuesChain()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            int fallbackCallCount = 0;
+            var managedIdentity = BuildManagedIdentityCredential(
+                new TokenCredentialOptions { Transport = new MockTransport(), IsChainedCredential = true },
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock => mock.GetManagedIdentityCapabilitiesAsyncFactory = async (_, cancellationToken) =>
+                {
+                    await Task.Delay(Timeout.Infinite, cancellationToken);
+                    return default;
+                },
+                instrument: false,
+                initialImdsConnectionTimeout: TimeSpan.FromMilliseconds(10));
+            var fallback = new MockCredential
+            {
+                GetTokenCallback = (_, _) => fallbackCallCount++
+            };
+            var credential = new ChainedTokenCredential(managedIdentity, fallback);
+
+            AccessToken token = await GetTokenAsync(
+                credential,
+                new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true));
+
+            Assert.That(token.Token, Does.StartWith("TEST TOKEN"));
+            Assert.AreEqual(1, fallbackCallCount);
+        }
+
+        [NonParallelizable]
+        [Test]
+        public void ChainedProofOfPossessionCallerCancellationIsPreserved()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+            using var callerCts = new CancellationTokenSource();
+
+            var credential = BuildManagedIdentityCredential(
+                new TokenCredentialOptions { Transport = new MockTransport(), IsChainedCredential = true },
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock => mock.GetManagedIdentityCapabilitiesAsyncFactory = async (_, cancellationToken) =>
+                {
+                    callerCts.Cancel();
+                    await Task.Delay(Timeout.Infinite, cancellationToken);
+                    return default;
+                },
+                instrument: false,
+                initialImdsConnectionTimeout: TimeSpan.FromMinutes(1));
+
+            Assert.CatchAsync<OperationCanceledException>(
+                async () => await GetTokenAsync(
+                    credential,
+                    new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true),
+                    callerCts.Token));
+        }
+
+        [NonParallelizable]
+        [Test]
+        public async Task StandaloneProofOfPossessionDoesNotApplyInitialImdsTimeout()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            bool capabilityTokenCanBeCanceled = true;
+            var credential = BuildManagedIdentityCredential(
+                new TokenCredentialOptions { Transport = new MockTransport(), IsChainedCredential = false },
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock =>
+                {
+                    mock.GetManagedIdentityCapabilitiesAsyncFactory = (_, cancellationToken) =>
+                    {
+                        capabilityTokenCanBeCanceled = cancellationToken.CanBeCanceled;
+                        return new ValueTask<Microsoft.Identity.Client.ManagedIdentity.ManagedIdentityCapabilities>(
+                            MockMsalManagedIdentityClient.CreateCapabilities(
+                                Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.None,
+                                Microsoft.Identity.Client.AppConfig.MtlsBindingStrength.Software));
+                    };
+                    mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) => AuthenticationResultFactory.Create(accessToken: ExpectedToken);
+                },
+                instrument: false,
+                initialImdsConnectionTimeout: TimeSpan.FromMilliseconds(10));
+
+            AccessToken token = await GetTokenAsync(
+                credential,
+                new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true));
+
+            Assert.AreEqual(ExpectedToken, token.Token);
+            Assert.IsFalse(capabilityTokenCanBeCanceled);
+        }
+
+        [NonParallelizable]
+        [Test]
+        public void ChainedProofOfPossessionCanRetryCapabilitiesAfterTimeout()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            int capabilityCallCount = 0;
+            var credential = BuildManagedIdentityCredential(
+                new TokenCredentialOptions { Transport = new MockTransport(), IsChainedCredential = true },
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock =>
+                {
+                    mock.GetManagedIdentityCapabilitiesAsyncFactory = async (_, cancellationToken) =>
+                    {
+                        capabilityCallCount++;
+                        if (capabilityCallCount == 1)
+                        {
+                            await Task.Delay(Timeout.Infinite, cancellationToken);
+                        }
+
+                        return MockMsalManagedIdentityClient.CreateCapabilities(
+                            Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.None,
+                            Microsoft.Identity.Client.AppConfig.MtlsBindingStrength.Software);
+                    };
+                    mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) => AuthenticationResultFactory.Create(accessToken: ExpectedToken);
+                },
+                instrument: false,
+                initialImdsConnectionTimeout: TimeSpan.FromMilliseconds(10));
+            var context = new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true);
+
+            Assert.ThrowsAsync<CredentialUnavailableException>(
+                async () => await GetTokenAsync(credential, context));
+            AccessToken token = GetTokenAsync(credential, context).GetAwaiter().GetResult();
+
+            Assert.AreEqual(ExpectedToken, token.Token);
+            Assert.AreEqual(2, capabilityCallCount);
         }
 
         [NonParallelizable]
