@@ -354,12 +354,7 @@ namespace Azure.Data.AppConfiguration
         public Azure.Data.AppConfiguration.AppConfigurationAudience? Audience { get { throw null; } set { } }
         public enum ServiceVersion
         {
-            V1_0 = 0,
-            V2023_10_01 = 1,
-            V2023_11_01 = 2,
-            V2024_09_01 = 3,
-            V2026_04_01 = 4,
-            V2026_05_01_Preview = 5,
+            V2026_05_01_Preview = 1,
         }
     }
     public partial class FeatureFlagConditions : System.ClientModel.Primitives.IJsonModel<Azure.Data.AppConfiguration.FeatureFlagConditions>, System.ClientModel.Primitives.IPersistableModel<Azure.Data.AppConfiguration.FeatureFlagConditions>
