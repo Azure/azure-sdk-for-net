@@ -21,6 +21,7 @@ namespace Azure.AI.Projects
             FoundryFeaturesOptInKeys.DataGenerationJobsV1Preview => "DataGenerationJobs=V1Preview",
             FoundryFeaturesOptInKeys.ModelsV1Preview => "Models=V1Preview",
             FoundryFeaturesOptInKeys.AgentsOptimizationV2Preview => "AgentsOptimization=V2Preview",
+            FoundryFeaturesOptInKeys.ModelRouterControlsV1Preview => "ModelRouterControls=V1Preview",
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FoundryFeaturesOptInKeys value.")
         };
 
@@ -66,6 +67,10 @@ namespace Azure.AI.Projects
             if (StringComparer.OrdinalIgnoreCase.Equals(value, "AgentsOptimization=V2Preview"))
             {
                 return FoundryFeaturesOptInKeys.AgentsOptimizationV2Preview;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "ModelRouterControls=V1Preview"))
+            {
+                return FoundryFeaturesOptInKeys.ModelRouterControlsV1Preview;
             }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown FoundryFeaturesOptInKeys value.");
         }

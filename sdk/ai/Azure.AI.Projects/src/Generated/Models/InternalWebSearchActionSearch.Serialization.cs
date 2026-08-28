@@ -12,11 +12,6 @@ namespace OpenAI
 {
     internal partial class InternalWebSearchActionSearch : IJsonModel<InternalWebSearchActionSearch>
     {
-        /// <summary> Initializes a new instance of <see cref="InternalWebSearchActionSearch"/> for deserialization. </summary>
-        internal InternalWebSearchActionSearch()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InternalWebSearchActionSearch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -77,8 +72,11 @@ namespace OpenAI
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            writer.WritePropertyName("query"u8);
-            writer.WriteStringValue(Query);
+            if (Optional.IsDefined(Query))
+            {
+                writer.WritePropertyName("query"u8);
+                writer.WriteStringValue(Query);
+            }
             if (Optional.IsCollectionDefined(Queries))
             {
                 writer.WritePropertyName("queries"u8);

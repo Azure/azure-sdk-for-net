@@ -20,6 +20,7 @@ namespace Azure.AI.Projects.Agents
         private const string DataGenerationJobsV1PreviewValue = "DataGenerationJobs=V1Preview";
         private const string ModelsV1PreviewValue = "Models=V1Preview";
         private const string AgentsOptimizationV2PreviewValue = "AgentsOptimization=V2Preview";
+        private const string ModelRouterControlsV1PreviewValue = "ModelRouterControls=V1Preview";
 
         /// <summary> Initializes a new instance of <see cref="FoundryFeaturesOptInKeys"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -57,6 +58,9 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets the AgentsOptimizationV2Preview. </summary>
         public static FoundryFeaturesOptInKeys AgentsOptimizationV2Preview { get; } = new FoundryFeaturesOptInKeys(AgentsOptimizationV2PreviewValue);
+
+        /// <summary> Gets the ModelRouterControlsV1Preview. </summary>
+        public static FoundryFeaturesOptInKeys ModelRouterControlsV1Preview { get; } = new FoundryFeaturesOptInKeys(ModelRouterControlsV1PreviewValue);
 
         /// <summary> Determines if two <see cref="FoundryFeaturesOptInKeys"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

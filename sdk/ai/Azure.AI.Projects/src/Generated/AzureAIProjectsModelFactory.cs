@@ -1778,10 +1778,18 @@ namespace Azure.AI.Projects
 
         /// <summary> Input text. </summary>
         /// <param name="text"> The text input to the model. </param>
+        /// <param name="promptCacheBreakpoint"></param>
         /// <returns> A new <see cref="Projects.InputTextContentParam"/> instance for mocking. </returns>
-        public static InputTextContentParam InputTextContentParam(string text = default)
+        public static InputTextContentParam InputTextContentParam(string text = default, PromptCacheBreakpointParam promptCacheBreakpoint = default)
         {
-            return new InputTextContentParam("input_text", text, additionalBinaryDataProperties: null);
+            return new InputTextContentParam("input_text", text, promptCacheBreakpoint, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Prompt cache breakpoint. </summary>
+        /// <returns> A new <see cref="Projects.PromptCacheBreakpointParam"/> instance for mocking. </returns>
+        public static PromptCacheBreakpointParam PromptCacheBreakpointParam()
+        {
+            return new PromptCacheBreakpointParam("explicit", additionalBinaryDataProperties: null);
         }
 
         /// <summary> Input file. </summary>
@@ -1789,8 +1797,10 @@ namespace Azure.AI.Projects
         /// <param name="filename"></param>
         /// <param name="fileData"></param>
         /// <param name="fileUri"></param>
+        /// <param name="detail"> The detail level of the file to be sent to the model. Use `auto` to let the system select the detail level; for GPT-5.6 and later models, `auto` uses high-quality rendering, which may increase input token usage. Use `low` for lower-cost rendering, or `high` to render the file at higher quality. Defaults to `auto`. </param>
+        /// <param name="promptCacheBreakpoint"></param>
         /// <returns> A new <see cref="Projects.InputFileContentParam"/> instance for mocking. </returns>
-        public static InputFileContentParam InputFileContentParam(string fileId = default, string filename = default, string fileData = default, Uri fileUri = default)
+        public static InputFileContentParam InputFileContentParam(string fileId = default, string filename = default, string fileData = default, Uri fileUri = default, FileInputDetail? detail = default, PromptCacheBreakpointParam promptCacheBreakpoint = default)
         {
             return new InputFileContentParam(
                 "input_file",
@@ -1798,6 +1808,8 @@ namespace Azure.AI.Projects
                 filename,
                 fileData,
                 fileUri,
+                detail,
+                promptCacheBreakpoint,
                 additionalBinaryDataProperties: null);
         }
 
@@ -1922,10 +1934,11 @@ namespace Azure.AI.Projects
 
         /// <summary> The ResponseUsageInputTokensDetails. </summary>
         /// <param name="cachedTokens"></param>
+        /// <param name="cacheWriteTokens"></param>
         /// <returns> A new <see cref="Projects.ResponseUsageInputTokensDetails"/> instance for mocking. </returns>
-        public static ResponseUsageInputTokensDetails ResponseUsageInputTokensDetails(long cachedTokens = default)
+        public static ResponseUsageInputTokensDetails ResponseUsageInputTokensDetails(long cachedTokens = default, long cacheWriteTokens = default)
         {
-            return new ResponseUsageInputTokensDetails(cachedTokens, additionalBinaryDataProperties: null);
+            return new ResponseUsageInputTokensDetails(cachedTokens, cacheWriteTokens, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The ResponseUsageOutputTokensDetails. </summary>
@@ -2361,7 +2374,7 @@ namespace Azure.AI.Projects
                 redactPrivateContent);
         }
 
-        /// <summary> The options for a simulation seed data generation job. Use with multiturn evaluation scenarios and with prompt, file, or agent sources. Generated dataset rows include fields such as `id`, `category`, `test_case_description`, and `desired_num_turns`. </summary>
+        /// <summary> The options for a task generation data generation job. Use with multiturn evaluation scenarios and with prompt, file, or agent sources. Generated dataset rows include fields such as `id`, `category`, `test_case_description`, and `desired_num_turns`. </summary>
         /// <param name="maxSamples"> Maximum number of samples to generate. </param>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
@@ -2533,6 +2546,36 @@ namespace Azure.AI.Projects
         public static MemoryStoreDefaultOptions MemoryStoreDefaultOptions(bool isUserProfileEnabled, string userProfileDetails, bool isChatSummaryEnabled)
         {
             return MemoryStoreDefaultOptions(isUserProfileEnabled: isUserProfileEnabled, userProfileDetails: userProfileDetails, isChatSummaryEnabled: isChatSummaryEnabled, isProceduralMemoryEnabled: default, defaultTtlSeconds: default);
+        }
+
+        /// <summary> Input text. </summary>
+        /// <param name="text"> The text input to the model. </param>
+        /// <returns> A new <see cref="Projects.InputTextContentParam"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static InputTextContentParam InputTextContentParam(string text)
+        {
+            return InputTextContentParam(text: text, promptCacheBreakpoint: default);
+        }
+
+        /// <summary> Input file. </summary>
+        /// <param name="fileId"></param>
+        /// <param name="filename"></param>
+        /// <param name="fileData"></param>
+        /// <param name="fileUri"></param>
+        /// <returns> A new <see cref="Projects.InputFileContentParam"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static InputFileContentParam InputFileContentParam(string fileId, string filename, string fileData, Uri fileUri)
+        {
+            return InputFileContentParam(fileId: fileId, filename: filename, fileData: fileData, fileUri: fileUri, detail: default, promptCacheBreakpoint: default);
+        }
+
+        /// <summary> The ResponseUsageInputTokensDetails. </summary>
+        /// <param name="cachedTokens"></param>
+        /// <returns> A new <see cref="Projects.ResponseUsageInputTokensDetails"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ResponseUsageInputTokensDetails ResponseUsageInputTokensDetails(long cachedTokens)
+        {
+            return ResponseUsageInputTokensDetails(cachedTokens: cachedTokens, cacheWriteTokens: default);
         }
 
         /// <summary> Represents a request for a pending upload. </summary>

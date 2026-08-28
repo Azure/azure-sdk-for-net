@@ -46,6 +46,7 @@ public partial class ProjectsAgentRecord
 [CodeGenType("Location")] internal partial class InternalLocation { }
 [CodeGenType("LogProb")] internal partial class InternalLogProb { }
 [CodeGenType("MCPListToolsTool")] internal partial class InternalMCPListToolsTool { }
+[CodeGenType("RealtimeMCPListTools")] internal partial class InternalRealtimeMCPListTools { }
 [CodeGenType("MCPTool")] internal partial class InternalMCPTool { }
 [CodeGenType("MCPToolAllowedTools1")] internal partial class InternalMCPToolAllowedTools1 { }
 [CodeGenType("MCPToolRequireApproval1")] internal partial class InternalMCPToolRequireApproval1 { }

@@ -26,6 +26,8 @@ namespace Azure.AI.Projects
         /// <summary> ModelsV1Preview. </summary>
         ModelsV1Preview,
         /// <summary> AgentsOptimizationV2Preview. </summary>
-        AgentsOptimizationV2Preview
+        AgentsOptimizationV2Preview,
+        /// <summary> ModelRouterControlsV1Preview. </summary>
+        ModelRouterControlsV1Preview
     }
 }
