@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.KnowledgeBases.Models
 {
@@ -19,8 +20,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseMessage"/>. </summary>
         /// <param name="content"> The content of the message. </param>
-        internal KnowledgeBaseMessage(IEnumerable<KnowledgeBaseMessageContent> content)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public KnowledgeBaseMessage(IEnumerable<KnowledgeBaseMessageContent> content)
         {
+            Argument.AssertNotNull(content, nameof(content));
+
             Content = content.ToList();
         }
 
@@ -36,7 +40,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         }
 
         /// <summary> The role of the tool response. </summary>
-        public string Role { get; }
+        public string Role { get; set; }
 
         /// <summary> The content of the message. </summary>
         public IList<KnowledgeBaseMessageContent> Content { get; }

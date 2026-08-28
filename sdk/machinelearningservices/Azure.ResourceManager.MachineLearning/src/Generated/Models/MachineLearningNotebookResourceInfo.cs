@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> The MachineLearningNotebookResourceInfo. </summary>
     public partial class MachineLearningNotebookResourceInfo
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningNotebookResourceInfo"/>. </summary>
         internal MachineLearningNotebookResourceInfo()
@@ -52,25 +24,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningNotebookResourceInfo"/>. </summary>
         /// <param name="fqdn"></param>
-        /// <param name="resourceId"> the data plane resourceId that used to initialize notebook component. </param>
+        /// <param name="isPrivateLinkEnabled"></param>
         /// <param name="notebookPreparationError"> The error that occurs when preparing notebook. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningNotebookResourceInfo(string fqdn, string resourceId, MachineLearningNotebookPreparationError notebookPreparationError, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="resourceId"> the data plane resourceId that used to initialize notebook component. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningNotebookResourceInfo(string fqdn, bool? isPrivateLinkEnabled, MachineLearningNotebookPreparationError notebookPreparationError, string resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Fqdn = fqdn;
-            ResourceId = resourceId;
+            IsPrivateLinkEnabled = isPrivateLinkEnabled;
             NotebookPreparationError = notebookPreparationError;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            ResourceId = resourceId;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the fqdn. </summary>
+        /// <summary> Gets the Fqdn. </summary>
         [WirePath("fqdn")]
         public string Fqdn { get; }
-        /// <summary> the data plane resourceId that used to initialize notebook component. </summary>
-        [WirePath("resourceId")]
-        public string ResourceId { get; }
+
+        /// <summary> Gets the IsPrivateLinkEnabled. </summary>
+        [WirePath("isPrivateLinkEnabled")]
+        public bool? IsPrivateLinkEnabled { get; }
+
         /// <summary> The error that occurs when preparing notebook. </summary>
         [WirePath("notebookPreparationError")]
         public MachineLearningNotebookPreparationError NotebookPreparationError { get; }
+
+        /// <summary> the data plane resourceId that used to initialize notebook component. </summary>
+        [WirePath("resourceId")]
+        public string ResourceId { get; }
     }
 }

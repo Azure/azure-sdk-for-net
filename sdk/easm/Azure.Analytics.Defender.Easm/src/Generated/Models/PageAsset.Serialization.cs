@@ -89,11 +89,11 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("service"u8);
                 writer.WriteStringValue(Service);
             }
-            if (Optional.IsCollectionDefined(IpAddresses))
+            if (Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
-                foreach (ObservedString item in IpAddresses)
+                foreach (ObservedString item in IPAddresses)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -439,11 +439,11 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FinalIpAddresses))
+            if (Optional.IsCollectionDefined(FinalIPAddresses))
             {
                 writer.WritePropertyName("finalIpAddresses"u8);
                 writer.WriteStartArray();
-                foreach (ObservedString item in FinalIpAddresses)
+                foreach (ObservedString item in FinalIPAddresses)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -459,11 +459,11 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(IpBlocks))
+            if (Optional.IsCollectionDefined(IPBlocks))
             {
                 writer.WritePropertyName("ipBlocks"u8);
                 writer.WriteStartArray();
-                foreach (IpBlock item in IpBlocks)
+                foreach (IPBlock item in IPBlocks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -479,11 +479,11 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(FinalIpBlocks))
+            if (Optional.IsCollectionDefined(FinalIPBlocks))
             {
                 writer.WritePropertyName("finalIpBlocks"u8);
                 writer.WriteStartArray();
-                foreach (IpBlock item in FinalIpBlocks)
+                foreach (IPBlock item in FinalIPBlocks)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -589,21 +589,21 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Ipv4))
+            if (Optional.IsCollectionDefined(IPv4))
             {
                 writer.WritePropertyName("ipv4"u8);
                 writer.WriteStartArray();
-                foreach (ObservedBoolean item in Ipv4)
+                foreach (ObservedBoolean item in IPv4)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(Ipv6))
+            if (Optional.IsCollectionDefined(IPv6))
             {
                 writer.WritePropertyName("ipv6"u8);
                 writer.WriteStartArray();
-                foreach (ObservedBoolean item in Ipv6)
+                foreach (ObservedBoolean item in IPv6)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -678,11 +678,11 @@ namespace Azure.Analytics.Defender.Easm
             IList<ObservedBoolean> parkedPage = default;
             IList<ResourceUri> resourceUrls = default;
             IList<GuidPair> guids = default;
-            IList<ObservedString> finalIpAddresses = default;
+            IList<ObservedString> finalIPAddresses = default;
             IList<ObservedLong> asns = default;
-            IList<IpBlock> ipBlocks = default;
+            IList<IPBlock> ipBlocks = default;
             IList<ObservedLong> finalAsns = default;
-            IList<IpBlock> finalIpBlocks = default;
+            IList<IPBlock> finalIPBlocks = default;
             IList<ObservedString> responseBodies = default;
             DomainAsset domainAsset = default;
             ObservedBoolean rootUrl = default;
@@ -1228,7 +1228,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         array.Add(ObservedString.DeserializeObservedString(item, options));
                     }
-                    finalIpAddresses = array;
+                    finalIPAddresses = array;
                     continue;
                 }
                 if (prop.NameEquals("asns"u8))
@@ -1251,10 +1251,10 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<IpBlock> array = new List<IpBlock>();
+                    List<IPBlock> array = new List<IPBlock>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IpBlock.DeserializeIpBlock(item, options));
+                        array.Add(IPBlock.DeserializeIPBlock(item, options));
                     }
                     ipBlocks = array;
                     continue;
@@ -1279,12 +1279,12 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    List<IpBlock> array = new List<IpBlock>();
+                    List<IPBlock> array = new List<IPBlock>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(IpBlock.DeserializeIpBlock(item, options));
+                        array.Add(IPBlock.DeserializeIPBlock(item, options));
                     }
-                    finalIpBlocks = array;
+                    finalIPBlocks = array;
                     continue;
                 }
                 if (prop.NameEquals("responseBodies"u8))
@@ -1503,11 +1503,11 @@ namespace Azure.Analytics.Defender.Easm
                 parkedPage ?? new ChangeTrackingList<ObservedBoolean>(),
                 resourceUrls ?? new ChangeTrackingList<ResourceUri>(),
                 guids ?? new ChangeTrackingList<GuidPair>(),
-                finalIpAddresses ?? new ChangeTrackingList<ObservedString>(),
+                finalIPAddresses ?? new ChangeTrackingList<ObservedString>(),
                 asns ?? new ChangeTrackingList<ObservedLong>(),
-                ipBlocks ?? new ChangeTrackingList<IpBlock>(),
+                ipBlocks ?? new ChangeTrackingList<IPBlock>(),
                 finalAsns ?? new ChangeTrackingList<ObservedLong>(),
-                finalIpBlocks ?? new ChangeTrackingList<IpBlock>(),
+                finalIPBlocks ?? new ChangeTrackingList<IPBlock>(),
                 responseBodies ?? new ChangeTrackingList<ObservedString>(),
                 domainAsset,
                 rootUrl,

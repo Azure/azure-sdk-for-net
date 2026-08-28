@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.Billing.Models
     public readonly partial struct BillingProvisioningTenantState : IEquatable<BillingProvisioningTenantState>
     {
         private readonly string _value;
+        /// <summary> Other. </summary>
+        private const string OtherValue = "Other";
+        /// <summary> NotRequested. </summary>
+        private const string NotRequestedValue = "NotRequested";
+        /// <summary> Active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> Pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> BillingRequestExpired. </summary>
+        private const string BillingRequestExpiredValue = "BillingRequestExpired";
+        /// <summary> BillingRequestDeclined. </summary>
+        private const string BillingRequestDeclinedValue = "BillingRequestDeclined";
+        /// <summary> Revoked. </summary>
+        private const string RevokedValue = "Revoked";
 
         /// <summary> Initializes a new instance of <see cref="BillingProvisioningTenantState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public BillingProvisioningTenantState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string OtherValue = "Other";
-        private const string NotRequestedValue = "NotRequested";
-        private const string ActiveValue = "Active";
-        private const string PendingValue = "Pending";
-        private const string BillingRequestExpiredValue = "BillingRequestExpired";
-        private const string BillingRequestDeclinedValue = "BillingRequestDeclined";
-        private const string RevokedValue = "Revoked";
+            _value = value;
+        }
 
         /// <summary> Other. </summary>
         public static BillingProvisioningTenantState Other { get; } = new BillingProvisioningTenantState(OtherValue);
+
         /// <summary> NotRequested. </summary>
         public static BillingProvisioningTenantState NotRequested { get; } = new BillingProvisioningTenantState(NotRequestedValue);
+
         /// <summary> Active. </summary>
         public static BillingProvisioningTenantState Active { get; } = new BillingProvisioningTenantState(ActiveValue);
+
         /// <summary> Pending. </summary>
         public static BillingProvisioningTenantState Pending { get; } = new BillingProvisioningTenantState(PendingValue);
+
         /// <summary> BillingRequestExpired. </summary>
         public static BillingProvisioningTenantState BillingRequestExpired { get; } = new BillingProvisioningTenantState(BillingRequestExpiredValue);
+
         /// <summary> BillingRequestDeclined. </summary>
         public static BillingProvisioningTenantState BillingRequestDeclined { get; } = new BillingProvisioningTenantState(BillingRequestDeclinedValue);
+
         /// <summary> Revoked. </summary>
         public static BillingProvisioningTenantState Revoked { get; } = new BillingProvisioningTenantState(RevokedValue);
+
         /// <summary> Determines if two <see cref="BillingProvisioningTenantState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(BillingProvisioningTenantState left, BillingProvisioningTenantState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="BillingProvisioningTenantState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(BillingProvisioningTenantState left, BillingProvisioningTenantState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="BillingProvisioningTenantState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="BillingProvisioningTenantState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator BillingProvisioningTenantState(string value) => new BillingProvisioningTenantState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="BillingProvisioningTenantState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator BillingProvisioningTenantState?(string value) => value == null ? null : new BillingProvisioningTenantState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is BillingProvisioningTenantState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(BillingProvisioningTenantState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

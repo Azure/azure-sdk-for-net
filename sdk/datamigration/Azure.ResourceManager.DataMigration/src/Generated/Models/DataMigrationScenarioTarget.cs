@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationScenarioTarget : IEquatable<DataMigrationScenarioTarget>
     {
         private readonly string _value;
+        /// <summary> SQLServer. </summary>
+        private const string SqlServerValue = "SQLServer";
+        /// <summary> SQLDB. </summary>
+        private const string SqlDBValue = "SQLDB";
+        /// <summary> SQLDW. </summary>
+        private const string SqlDWValue = "SQLDW";
+        /// <summary> SQLMI. </summary>
+        private const string SqlMIValue = "SQLMI";
+        /// <summary> AzureDBForMySql. </summary>
+        private const string AzureDBForMySqlValue = "AzureDBForMySql";
+        /// <summary> AzureDBForPostgresSQL. </summary>
+        private const string AzureDBForPostgresSqlValue = "AzureDBForPostgresSQL";
+        /// <summary> MongoDB. </summary>
+        private const string MongoDBValue = "MongoDB";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationScenarioTarget"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationScenarioTarget(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SqlServerValue = "SQLServer";
-        private const string SqlDBValue = "SQLDB";
-        private const string SqlDWValue = "SQLDW";
-        private const string SqlMIValue = "SQLMI";
-        private const string AzureDBForMySqlValue = "AzureDBForMySql";
-        private const string AzureDBForPostgresSqlValue = "AzureDBForPostgresSQL";
-        private const string MongoDBValue = "MongoDB";
+            _value = value;
+        }
 
         /// <summary> SQLServer. </summary>
         public static DataMigrationScenarioTarget SqlServer { get; } = new DataMigrationScenarioTarget(SqlServerValue);
+
         /// <summary> SQLDB. </summary>
         public static DataMigrationScenarioTarget SqlDB { get; } = new DataMigrationScenarioTarget(SqlDBValue);
+
         /// <summary> SQLDW. </summary>
         public static DataMigrationScenarioTarget SqlDW { get; } = new DataMigrationScenarioTarget(SqlDWValue);
+
         /// <summary> SQLMI. </summary>
         public static DataMigrationScenarioTarget SqlMI { get; } = new DataMigrationScenarioTarget(SqlMIValue);
+
         /// <summary> AzureDBForMySql. </summary>
         public static DataMigrationScenarioTarget AzureDBForMySql { get; } = new DataMigrationScenarioTarget(AzureDBForMySqlValue);
+
         /// <summary> AzureDBForPostgresSQL. </summary>
         public static DataMigrationScenarioTarget AzureDBForPostgresSql { get; } = new DataMigrationScenarioTarget(AzureDBForPostgresSqlValue);
+
         /// <summary> MongoDB. </summary>
         public static DataMigrationScenarioTarget MongoDB { get; } = new DataMigrationScenarioTarget(MongoDBValue);
+
         /// <summary> Determines if two <see cref="DataMigrationScenarioTarget"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationScenarioTarget left, DataMigrationScenarioTarget right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationScenarioTarget"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationScenarioTarget left, DataMigrationScenarioTarget right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationScenarioTarget"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationScenarioTarget"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationScenarioTarget(string value) => new DataMigrationScenarioTarget(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationScenarioTarget"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationScenarioTarget?(string value) => value == null ? null : new DataMigrationScenarioTarget(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationScenarioTarget other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationScenarioTarget other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

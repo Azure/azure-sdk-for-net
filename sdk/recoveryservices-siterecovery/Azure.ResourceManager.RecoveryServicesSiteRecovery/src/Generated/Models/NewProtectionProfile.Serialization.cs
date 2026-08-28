@@ -9,14 +9,60 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class NewProtectionProfile : IUtf8JsonSerializable, IJsonModel<NewProtectionProfile>
+    /// <summary> New Protection profile input. </summary>
+    public partial class NewProtectionProfile : ProtectionProfileCustomDetails, IJsonModel<NewProtectionProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NewProtectionProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="NewProtectionProfile"/> for deserialization. </summary>
+        internal NewProtectionProfile()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ProtectionProfileCustomDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NewProtectionProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeNewProtectionProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(NewProtectionProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<NewProtectionProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(NewProtectionProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<NewProtectionProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NewProtectionProfile IPersistableModel<NewProtectionProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => (NewProtectionProfile)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<NewProtectionProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<NewProtectionProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +74,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NewProtectionProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NewProtectionProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NewProtectionProfile)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("policyName"u8);
             writer.WriteStringValue(PolicyName);
@@ -56,123 +101,95 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             writer.WriteStringValue(MultiVmSyncStatus.ToString());
         }
 
-        NewProtectionProfile IJsonModel<NewProtectionProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        NewProtectionProfile IJsonModel<NewProtectionProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (NewProtectionProfile)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ProtectionProfileCustomDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NewProtectionProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<NewProtectionProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(NewProtectionProfile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeNewProtectionProfile(document.RootElement, options);
         }
 
-        internal static NewProtectionProfile DeserializeNewProtectionProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static NewProtectionProfile DeserializeNewProtectionProfile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string resourceType = "New";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string policyName = default;
             int? recoveryPointHistory = default;
             int? crashConsistentFrequencyInMinutes = default;
             int? appConsistentFrequencyInMinutes = default;
             SetMultiVmSyncStatus multiVmSyncStatus = default;
-            string resourceType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("policyName"u8))
+                if (prop.NameEquals("resourceType"u8))
                 {
-                    policyName = property.Value.GetString();
+                    resourceType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryPointHistory"u8))
+                if (prop.NameEquals("policyName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    policyName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("recoveryPointHistory"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryPointHistory = property.Value.GetInt32();
+                    recoveryPointHistory = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("crashConsistentFrequencyInMinutes"u8))
+                if (prop.NameEquals("crashConsistentFrequencyInMinutes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    crashConsistentFrequencyInMinutes = property.Value.GetInt32();
+                    crashConsistentFrequencyInMinutes = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("appConsistentFrequencyInMinutes"u8))
+                if (prop.NameEquals("appConsistentFrequencyInMinutes"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    appConsistentFrequencyInMinutes = property.Value.GetInt32();
+                    appConsistentFrequencyInMinutes = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("multiVmSyncStatus"u8))
+                if (prop.NameEquals("multiVmSyncStatus"u8))
                 {
-                    multiVmSyncStatus = new SetMultiVmSyncStatus(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("resourceType"u8))
-                {
-                    resourceType = property.Value.GetString();
+                    multiVmSyncStatus = new SetMultiVmSyncStatus(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new NewProtectionProfile(
                 resourceType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 policyName,
                 recoveryPointHistory,
                 crashConsistentFrequencyInMinutes,
                 appConsistentFrequencyInMinutes,
                 multiVmSyncStatus);
         }
-
-        BinaryData IPersistableModel<NewProtectionProfile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NewProtectionProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(NewProtectionProfile)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        NewProtectionProfile IPersistableModel<NewProtectionProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<NewProtectionProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeNewProtectionProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(NewProtectionProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<NewProtectionProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

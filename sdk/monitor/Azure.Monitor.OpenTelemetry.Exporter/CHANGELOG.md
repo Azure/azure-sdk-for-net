@@ -3,12 +3,59 @@
 ## 1.9.0-beta.1 (Unreleased)
 
 ### Features Added
+- Add support for project id attributes propagation
+  ([#62052](https://github.com/Azure/azure-sdk-for-net/pull/62052))
+
+- Shutting down a provider (including `Dispose()`) now writes pending telemetry to offline storage and uploads it in the background instead of blocking on ingestion. Short-lived applications such as CLI tools previously lost this telemetry, because they exit before a transmission completes; process exit now costs a file write rather than an ingestion round trip, and delivery is completed by a background drain in this or a subsequent run. `ForceFlush` is unchanged by default and can be opted in with the `Azure.Monitor.OpenTelemetry.Exporter.PersistOnForceFlush` AppContext switch, which applies to traces and logs only: a metric reader cannot distinguish a caller's flush from its periodic collection, so metric `ForceFlush` always transmits. The previous behavior can be restored with the `Azure.Monitor.OpenTelemetry.Exporter.DisablePersistOnShutdown` AppContext switch.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
+- Telemetry left in offline storage by a process that exited during a transmission is no longer stranded permanently. A leased blob is renamed so that it matches neither the storage provider's blob enumeration nor its retention sweep, and the provider only reclaims those leases on a two minute maintenance timer that a short-lived process never reaches. Expired leases are now reclaimed when storage is drained.
+
+- Offline storage is now drained shortly after startup rather than only after the process has been running for two minutes, so telemetry persisted by a previous run is uploaded even when no single run is long-lived.
+
+- Stored telemetry is now coalesced into a single request per batch and drained oldest-first, instead of one request per blob newest-first. Previously a backlog could grow faster than it drained, and the oldest telemetry expired before it was ever sent.
+
+- Telemetry is no longer dropped when the offline storage directory reaches its size cap. The oldest stored telemetry is evicted to make room.
+
+- Log fields are now culture-invariant. ([#61996](https://github.com/Azure/azure-sdk-for-net/pull/61996))
+- Added the `telemetrySuccess` dimension to `Item_Dropped_Count` for request and dependency telemetry.
+
 ### Other Changes
+
+## 1.8.3 (2026-07-24)
+
+### Bugs Fixed
+
+- Hardened ingestion and Live Metrics redirect handling to reject untrusted destinations before replaying telemetry or caching the redirect. Redirect targets must now use HTTPS and match an approved Azure Monitor trust boundary, preventing credentials and telemetry from being forwarded to attacker-controlled endpoints.
+  ([#61244](https://github.com/Azure/azure-sdk-for-net/pull/61244))
+
+### Other Changes
+
+- Customer SDK stats are now on by default; opt out with `APPLICATIONINSIGHTS_SDKSTATS_DISABLED=true`. `dropCode`/`retryCode` dimension values now use the spec's SCREAMING_SNAKE_CASE (e.g. `CLIENT_EXCEPTION`).
+
+## 1.8.2 (2026-06-30)
+
+### Features Added
+
+- Added support for the Microsoft OpenTelemetry distro's SDK statistics: a new internal meter subscription and an AppContext switch (`Azure.Monitor.OpenTelemetry.Exporter.RouteSdkStatsToDistroEndpoint`) that lets the distro redirect SDK statistics to its own ingestion path. The ingestion destination and an on/off signal are resolved at startup by fetching a remote configuration; on success the configured destination is used, an explicit remote disable signal turns SDK statistics off, and any other outcome falls back to the existing region-derived ingestion endpoint so SDK statistics keep flowing. The AppContext switch has no effect on Statsbeat for callers that do not opt in.
+  ([#59811](https://github.com/Azure/azure-sdk-for-net/pull/59811))
+
+- Subscribed the Statsbeat `MeterProvider` to the Microsoft OpenTelemetry distro's Network SDKStats meter (`MicrosoftOpenTelemetryNetworkSdkStatsMeter`) so distro-emitted Network statistics flow through the existing Statsbeat cadence when the distro runs with a non-Azure-Monitor exporter.
+  ([#60209](https://github.com/Azure/azure-sdk-for-net/pull/60209))
+
+- Subscribed the Statsbeat `MeterProvider` to the Microsoft OpenTelemetry distro's Feature SDKStats meter (`MicrosoftOpenTelemetryFeatureSdkStatsMeter`) so distro-emitted Feature statistics reach the Statsbeat ingestion path. The distro uses an independent, spec-aligned bit map to avoid collisions with the classic Application Insights SDK's `FeatureStatsbeatMeter`.
+  ([#59529](https://github.com/Azure/azure-sdk-for-net/pull/59529))
+
+- Added Network SDKStats reporting, emitting the short-interval Network statistics defined in the Application Insights SDKStats spec on a 15-minute cadence: `Request_Success_Count`, `Request_Failure_Count`, `Request_Duration`, `Retry_Count`, `Throttle_Count`, and `Exception_Count`, each with the spec-defined dimensions (including `host`, `statusCode`, and `exceptionType`).
+  ([#59909](https://github.com/Azure/azure-sdk-for-net/pull/59909), [#60018](https://github.com/Azure/azure-sdk-for-net/pull/60018))
+
+### Other Changes
+
+- Updated customer SDK stats dimension key names to use camelCase (`computeType`, `telemetryType`, `dropCode`, `dropReason`, `retryCode`, `retryReason`).
+  ([#59902](https://github.com/Azure/azure-sdk-for-net/pull/59902))
 
 ## 1.8.1 (2026-05-20)
 

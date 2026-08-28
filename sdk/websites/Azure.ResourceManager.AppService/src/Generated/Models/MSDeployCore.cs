@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// MSDeploy ARM PUT core information
-    /// Serialized Name: MSDeployCore
-    /// </summary>
+    /// <summary> MSDeploy ARM PUT core information. </summary>
     public partial class MSDeployCore
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MSDeployCore"/>. </summary>
         public MSDeployCore()
@@ -55,40 +24,23 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MSDeployCore"/>. </summary>
-        /// <param name="packageUri">
-        /// Package URI
-        /// Serialized Name: MSDeployCore.packageUri
-        /// </param>
-        /// <param name="connectionString">
-        /// SQL Connection String
-        /// Serialized Name: MSDeployCore.connectionString
-        /// </param>
-        /// <param name="dbType">
-        /// Database Type
-        /// Serialized Name: MSDeployCore.dbType
-        /// </param>
-        /// <param name="setParametersXmlFileUri">
-        /// URI of MSDeploy Parameters file. Must not be set if SetParameters is used.
-        /// Serialized Name: MSDeployCore.setParametersXmlFileUri
-        /// </param>
-        /// <param name="setParameters">
-        /// MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used.
-        /// Serialized Name: MSDeployCore.setParameters
-        /// </param>
+        /// <param name="packageUri"> Package URI. </param>
+        /// <param name="connectionString"> SQL Connection String. </param>
+        /// <param name="dbType"> Database Type. </param>
+        /// <param name="setParametersXmlFileUri"> URI of MSDeploy Parameters file. Must not be set if SetParameters is used. </param>
+        /// <param name="setParameters"> MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used. </param>
         /// <param name="skipAppData">
         /// Controls whether the MSDeploy operation skips the App_Data directory.
         /// If set to &lt;code&gt;true&lt;/code&gt;, the existing App_Data directory on the destination
         /// will not be deleted, and any App_Data directory in the source will be ignored.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
-        /// Serialized Name: MSDeployCore.skipAppData
         /// </param>
-        /// <param name="appOffline">
+        /// <param name="isAppOffline">
         /// Sets the AppOffline rule while the MSDeploy operation executes.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
-        /// Serialized Name: MSDeployCore.appOffline
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MSDeployCore(Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? appOffline, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MSDeployCore(Uri packageUri, string connectionString, string dbType, Uri setParametersXmlFileUri, IDictionary<string, string> setParameters, bool? skipAppData, bool? isAppOffline, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PackageUri = packageUri;
             ConnectionString = connectionString;
@@ -96,55 +48,44 @@ namespace Azure.ResourceManager.AppService.Models
             SetParametersXmlFileUri = setParametersXmlFileUri;
             SetParameters = setParameters;
             SkipAppData = skipAppData;
-            AppOffline = appOffline;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            IsAppOffline = isAppOffline;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Package URI
-        /// Serialized Name: MSDeployCore.packageUri
-        /// </summary>
+        /// <summary> Package URI. </summary>
         [WirePath("packageUri")]
         public Uri PackageUri { get; set; }
-        /// <summary>
-        /// SQL Connection String
-        /// Serialized Name: MSDeployCore.connectionString
-        /// </summary>
+
+        /// <summary> SQL Connection String. </summary>
         [WirePath("connectionString")]
         public string ConnectionString { get; set; }
-        /// <summary>
-        /// Database Type
-        /// Serialized Name: MSDeployCore.dbType
-        /// </summary>
+
+        /// <summary> Database Type. </summary>
         [WirePath("dbType")]
         public string DBType { get; set; }
-        /// <summary>
-        /// URI of MSDeploy Parameters file. Must not be set if SetParameters is used.
-        /// Serialized Name: MSDeployCore.setParametersXmlFileUri
-        /// </summary>
+
+        /// <summary> URI of MSDeploy Parameters file. Must not be set if SetParameters is used. </summary>
         [WirePath("setParametersXmlFileUri")]
         public Uri SetParametersXmlFileUri { get; set; }
-        /// <summary>
-        /// MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used.
-        /// Serialized Name: MSDeployCore.setParameters
-        /// </summary>
+
+        /// <summary> MSDeploy Parameters. Must not be set if SetParametersXmlFileUri is used. </summary>
         [WirePath("setParameters")]
-        public IDictionary<string, string> SetParameters { get; }
+        public IDictionary<string, string> SetParameters { get; } = new ChangeTrackingDictionary<string, string>();
+
         /// <summary>
         /// Controls whether the MSDeploy operation skips the App_Data directory.
         /// If set to &lt;code&gt;true&lt;/code&gt;, the existing App_Data directory on the destination
         /// will not be deleted, and any App_Data directory in the source will be ignored.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
-        /// Serialized Name: MSDeployCore.skipAppData
         /// </summary>
         [WirePath("skipAppData")]
         public bool? SkipAppData { get; set; }
+
         /// <summary>
         /// Sets the AppOffline rule while the MSDeploy operation executes.
         /// Setting is &lt;code&gt;false&lt;/code&gt; by default.
-        /// Serialized Name: MSDeployCore.appOffline
         /// </summary>
         [WirePath("appOffline")]
-        public bool? AppOffline { get; set; }
+        public bool? IsAppOffline { get; set; }
     }
 }

@@ -32,11 +32,5 @@ namespace Azure.ResourceManager.NetApp.Models
             SmbServerFqdn = smbServerFqdn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The mount target's IPv4 address, used to mount the volume. </summary>
-        public IPAddress IpAddress { get; }
-
-        /// <summary> The SMB server's Fully Qualified Domain Name, FQDN. </summary>
-        public string SmbServerFqdn { get; }
     }
 }

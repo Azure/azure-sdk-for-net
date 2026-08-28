@@ -13,6 +13,23 @@ namespace System.ClientModel
         public System.Collections.Generic.IAsyncEnumerator<T> GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected abstract System.Collections.Generic.IAsyncEnumerable<T> GetValuesFromPageAsync(System.ClientModel.ClientResult page);
     }
+    public static partial class AsyncStreamingClientResult
+    {
+        public static System.ClientModel.AsyncStreamingClientResult<System.BinaryData> CreateJsonLines(System.ClientModel.Primitives.PipelineResponse response, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.AsyncStreamingClientResult<T> CreateJsonLines<T>(System.ClientModel.Primitives.PipelineResponse response, System.Func<System.BinaryData, T> itemParser, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.AsyncStreamingClientResult<System.Net.ServerSentEvents.SseItem<System.BinaryData>> CreateSse(System.ClientModel.Primitives.PipelineResponse response, System.Func<System.Net.ServerSentEvents.SseItem<System.BinaryData>, bool>? isTerminal = null, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.AsyncStreamingClientResult<System.Net.ServerSentEvents.SseItem<T>> CreateSse<T>(System.ClientModel.Primitives.PipelineResponse response, System.Net.ServerSentEvents.SseItemParser<T> itemParser, System.Func<System.Net.ServerSentEvents.SseItem<System.BinaryData>, bool>? isTerminal = null, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.ClientModel.AsyncStreamingClientResult<T> Create<T>(System.ClientModel.Primitives.PipelineResponse response, System.Func<System.IO.Stream, System.Threading.CancellationToken, System.Collections.Generic.IAsyncEnumerable<T>> producer, System.Threading.CancellationToken operationCancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public sealed partial class AsyncStreamingClientResult<T> : System.Collections.Generic.IAsyncEnumerable<T>, System.IAsyncDisposable
+    {
+        internal AsyncStreamingClientResult() { }
+        public System.ClientModel.Primitives.PipelineResponseHeaders Headers { get { throw null; } }
+        public string ReasonPhrase { get { throw null; } }
+        public int Status { get { throw null; } }
+        public System.Threading.Tasks.ValueTask DisposeAsync() { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<T> System.Collections.Generic.IAsyncEnumerable<T>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+    }
     public abstract partial class AuthenticationTokenProvider
     {
         protected AuthenticationTokenProvider() { }
@@ -101,18 +118,25 @@ namespace System.ClientModel
     public sealed partial class MultiPartFormContent : System.ClientModel.BinaryContent
     {
         public MultiPartFormContent() { }
-        public MultiPartFormContent(string boundary) { }
-        public void Add(string fieldName, System.BinaryData content) { }
-        public void Add(string fieldName, byte[] content, string? mediaType = "application/octet-stream") { }
-        public void Add(string fieldName, System.ClientModel.FileBinaryContent fileContent) { }
-        public void Add(string fieldName, decimal content, string? mediaType = "application/json") { }
-        public void Add(string fieldName, double content, string? mediaType = "application/json") { }
-        public void Add(string fieldName, int content, string? mediaType = "application/json") { }
-        public void Add(string fieldName, long content, string? mediaType = "application/json") { }
-        public void Add(string fieldName, float content, string? mediaType = "application/json") { }
-        public void Add(string fieldName, string content, string? mediaType = "application/json") { }
-        public void Add<T>(string fieldName, System.ClientModel.Primitives.IPersistableModel<T> model) { }
-        public void Add<T>(string fieldName, System.ClientModel.Primitives.IPersistableModel<T> model, System.ClientModel.Primitives.ModelReaderWriterContext? context = null, System.ClientModel.Primitives.ModelReaderWriterOptions? options = null, string? mediaType = "application/json") { }
+        public void Add(string name, System.BinaryData content) { }
+        public void Add(string name, bool content, string? mediaType = "text/plain") { }
+        public void Add(string name, byte content, string? mediaType = "text/plain") { }
+        public void Add(string name, byte[] content, string? mediaType = "application/octet-stream") { }
+        public void Add(string name, char content, string? mediaType = "text/plain") { }
+        public void Add(string name, System.ClientModel.FileBinaryContent fileContent) { }
+        public void Add(string name, decimal content, string? mediaType = "text/plain") { }
+        public void Add(string name, double content, string? mediaType = "text/plain") { }
+        public void Add(string name, short content, string? mediaType = "text/plain") { }
+        public void Add(string name, int content, string? mediaType = "text/plain") { }
+        public void Add(string name, long content, string? mediaType = "text/plain") { }
+        public void Add(string name, sbyte content, string? mediaType = "text/plain") { }
+        public void Add(string name, float content, string? mediaType = "text/plain") { }
+        public void Add(string name, string content, string? mediaType = "text/plain") { }
+        public void Add(string name, ushort content, string? mediaType = "text/plain") { }
+        public void Add(string name, uint content, string? mediaType = "text/plain") { }
+        public void Add(string name, ulong content, string? mediaType = "text/plain") { }
+        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model) { }
+        public void Add<T>(string name, System.ClientModel.Primitives.IPersistableModel<T> model, System.ClientModel.Primitives.ModelReaderWriterContext context, System.ClientModel.Primitives.ModelReaderWriterOptions options, string mediaType) { }
         public override void Dispose() { }
         public override bool TryComputeLength(out long length) { throw null; }
         public override void WriteTo(System.IO.Stream stream, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
@@ -294,6 +318,8 @@ namespace System.ClientModel.Primitives
     {
         protected CredentialResolver() { }
         public abstract bool TryResolve(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, out System.ClientModel.AuthenticationTokenProvider? provider);
+        public bool TryResolve(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, System.Func<Microsoft.Extensions.Configuration.IConfigurationSection, System.ClientModel.AuthenticationTokenProvider?> resolveChild, out System.ClientModel.AuthenticationTokenProvider? provider) { throw null; }
+        protected virtual bool TryResolveCore(Microsoft.Extensions.Configuration.IConfigurationSection credentialSection, System.Func<Microsoft.Extensions.Configuration.IConfigurationSection, System.ClientModel.AuthenticationTokenProvider?> resolveChild, out System.ClientModel.AuthenticationTokenProvider? provider) { throw null; }
     }
     public sealed partial class CredentialSettings
     {

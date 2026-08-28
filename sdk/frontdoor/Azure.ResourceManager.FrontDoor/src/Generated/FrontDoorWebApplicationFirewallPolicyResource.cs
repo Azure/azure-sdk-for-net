@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.FrontDoor
         {
             TryGetApiVersion(ResourceType, out string frontDoorWebApplicationFirewallPolicyApiVersion);
             _policiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.FrontDoor", ResourceType.Namespace, Diagnostics);
-            _policiesRestClient = new Policies(_policiesClientDiagnostics, Pipeline, Endpoint, frontDoorWebApplicationFirewallPolicyApiVersion ?? "2025-11-01");
+            _policiesRestClient = new Policies(_policiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorWebApplicationFirewallPolicyApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.FrontDoor
                 HttpMessage message = _policiesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, FrontDoorWebApplicationFirewallPolicyPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource> operation = new FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource>(
-                    new FrontDoorWebApplicationFirewallPolicyOperationSource(Client),
+                    new FrontDoorWebApplicationFirewallPolicyResourceOperationSource(Client),
                     _policiesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.FrontDoor
                 HttpMessage message = _policiesRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, FrontDoorWebApplicationFirewallPolicyPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource> operation = new FrontDoorArmOperation<FrontDoorWebApplicationFirewallPolicyResource>(
-                    new FrontDoorWebApplicationFirewallPolicyOperationSource(Client),
+                    new FrontDoorWebApplicationFirewallPolicyResourceOperationSource(Client),
                     _policiesClientDiagnostics,
                     Pipeline,
                     message.Request,

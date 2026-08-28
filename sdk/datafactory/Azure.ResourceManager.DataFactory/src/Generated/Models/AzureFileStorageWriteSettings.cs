@@ -15,9 +15,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureFileStorageWriteSettings : StoreWriteSettings
     {
         /// <summary> Initializes a new instance of <see cref="AzureFileStorageWriteSettings"/>. </summary>
-        public AzureFileStorageWriteSettings()
+        public AzureFileStorageWriteSettings() : base("AzureFileStorageWriteSettings")
         {
-            StoreWriteSettingsType = "AzureFileStorageWriteSettings";
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureFileStorageWriteSettings"/>. </summary>
@@ -26,10 +25,9 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
         /// <param name="copyBehavior"> The type of copy behavior for copy sink. </param>
         /// <param name="metadata"> Specify the custom metadata to be added to sink data. Type: array of objects (or Expression with resultType array of objects). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         internal AzureFileStorageWriteSettings(string storeWriteSettingsType, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, DataFactoryElement<string> copyBehavior, IList<DataFactoryMetadataItemInfo> metadata, IDictionary<string, BinaryData> additionalProperties) : base(storeWriteSettingsType, maxConcurrentConnections, disableMetricsCollection, copyBehavior, metadata, additionalProperties)
         {
-            StoreWriteSettingsType = storeWriteSettingsType ?? "AzureFileStorageWriteSettings";
         }
     }
 }

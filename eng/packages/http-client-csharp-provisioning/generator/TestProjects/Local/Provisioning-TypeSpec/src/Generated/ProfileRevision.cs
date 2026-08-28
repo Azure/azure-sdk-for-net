@@ -94,6 +94,40 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             }
         }
 
+        /// <summary> Gets or sets the Description. </summary>
+        public BicepValue<string> Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProfileProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Name. </summary>
+        public BicepValue<string> SkuName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SkuName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ProfileProperties();
+                }
+                Properties.SkuName = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ProfileRevision. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -102,7 +136,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ProfileProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<Profile>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<Profile>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

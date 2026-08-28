@@ -272,6 +272,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
                     }
                 }
             }
+#pragma warning disable AAIP001
             else if (agentDefinition is WorkflowAgentDefinition workflowAgentDefinition)
             {
                 // Handle workflow agent
@@ -306,6 +307,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
                     new ActivityEvent(EventNameAgentWorkflow, tags: workflowTags)
                 );
             }
+#pragma warning restore AAIP001
             // Check for ImageBasedHostedAgentDefinition BEFORE checking for HostedAgentDefinition
             // since ImageBasedHostedAgentDefinition inherits from HostedAgentDefinition
             else if (agentDefinition is HostedAgentDefinition imageBasedHostedAgentDefinition)
@@ -313,7 +315,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
                 // Handle image-based hosted agent - add all hosted-specific attributes including image
                 scope.SetTagMaybe(GenAiAgentHostedCpu, imageBasedHostedAgentDefinition.Cpu);
                 scope.SetTagMaybe(GenAiAgentHostedMemory, imageBasedHostedAgentDefinition.Memory);
-                scope.SetTagMaybe(GenAiAgentHostedImage, imageBasedHostedAgentDefinition.Image);
+                scope.SetTagMaybe(GenAiAgentHostedImage, imageBasedHostedAgentDefinition.ContainerConfiguration.Image);
 
                 // Extract protocol and version from ContainerProtocolVersions if available
                 if (imageBasedHostedAgentDefinition.Versions != null &&
@@ -332,7 +334,7 @@ namespace Azure.AI.Projects.Agents.Telemetry
                 // Handle non-image-based hosted agent (fallback for base HostedAgentDefinition)
                 scope.SetTagMaybe(GenAiAgentHostedCpu, hostedAgentDefinition.Cpu);
                 scope.SetTagMaybe(GenAiAgentHostedMemory, hostedAgentDefinition.Memory);
-                scope.SetTagMaybe(GenAiAgentHostedImage, hostedAgentDefinition.Image);
+                scope.SetTagMaybe(GenAiAgentHostedImage, hostedAgentDefinition.ContainerConfiguration.Image);
 
                 // Extract protocol and version from ContainerProtocolVersions if available
                 if (hostedAgentDefinition.Versions != null &&
@@ -367,11 +369,12 @@ namespace Azure.AI.Projects.Agents.Telemetry
             }
 
             // Check for workflow agent
+#pragma warning disable AAIP001
             if (agentDefinition is WorkflowAgentDefinition)
             {
                 return AgentTypeWorkflow;
             }
-
+#pragma warning restore AAIP001
             // Check for prompt agent
             if (agentDefinition is DeclarativeAgentDefinition)
             {

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string containerAppConnectedEnvironmentStorageApiVersion);
             _connectedEnvironmentsStoragesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _connectedEnvironmentsStoragesRestClient = new ConnectedEnvironmentsStorages(_connectedEnvironmentsStoragesClientDiagnostics, Pipeline, Endpoint, containerAppConnectedEnvironmentStorageApiVersion ?? "2025-10-02-preview");
+            _connectedEnvironmentsStoragesRestClient = new ConnectedEnvironmentsStorages(_connectedEnvironmentsStoragesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppConnectedEnvironmentStorageApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _connectedEnvironmentsStoragesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppConnectedEnvironmentStorageData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppConnectedEnvironmentStorageResource> operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentStorageResource>(
-                    new ContainerAppConnectedEnvironmentStorageOperationSource(Client),
+                    new ContainerAppConnectedEnvironmentStorageResourceOperationSource(Client),
                     _connectedEnvironmentsStoragesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _connectedEnvironmentsStoragesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, ContainerAppConnectedEnvironmentStorageData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppConnectedEnvironmentStorageResource> operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentStorageResource>(
-                    new ContainerAppConnectedEnvironmentStorageOperationSource(Client),
+                    new ContainerAppConnectedEnvironmentStorageResourceOperationSource(Client),
                     _connectedEnvironmentsStoragesClientDiagnostics,
                     Pipeline,
                     message.Request,

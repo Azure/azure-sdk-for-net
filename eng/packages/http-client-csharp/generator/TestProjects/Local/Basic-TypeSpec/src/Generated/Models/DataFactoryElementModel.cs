@@ -22,8 +22,14 @@ namespace BasicTypeSpec
         /// <param name="intProperty"> Int property with DFE pattern. </param>
         /// <param name="boolProperty"> Bool property with DFE pattern. </param>
         /// <param name="stringArrayProperty"> String array property with DFE pattern. </param>
-        internal DataFactoryElementModel(DataFactoryElement<string> stringProperty, DataFactoryElement<int> intProperty, DataFactoryElement<bool> boolProperty, DataFactoryElement<IList<string>> stringArrayProperty)
+        /// <exception cref="ArgumentNullException"> <paramref name="stringProperty"/>, <paramref name="intProperty"/>, <paramref name="boolProperty"/> or <paramref name="stringArrayProperty"/> is null. </exception>
+        public DataFactoryElementModel(DataFactoryElement<string> stringProperty, DataFactoryElement<int> intProperty, DataFactoryElement<bool> boolProperty, DataFactoryElement<IList<string>> stringArrayProperty)
         {
+            Argument.AssertNotNull(stringProperty, nameof(stringProperty));
+            Argument.AssertNotNull(intProperty, nameof(intProperty));
+            Argument.AssertNotNull(boolProperty, nameof(boolProperty));
+            Argument.AssertNotNull(stringArrayProperty, nameof(stringArrayProperty));
+
             StringProperty = stringProperty;
             IntProperty = intProperty;
             BoolProperty = boolProperty;
@@ -46,15 +52,15 @@ namespace BasicTypeSpec
         }
 
         /// <summary> String property with DFE pattern. </summary>
-        public DataFactoryElement<string> StringProperty { get; }
+        public DataFactoryElement<string> StringProperty { get; set; }
 
         /// <summary> Int property with DFE pattern. </summary>
-        public DataFactoryElement<int> IntProperty { get; }
+        public DataFactoryElement<int> IntProperty { get; set; }
 
         /// <summary> Bool property with DFE pattern. </summary>
-        public DataFactoryElement<bool> BoolProperty { get; }
+        public DataFactoryElement<bool> BoolProperty { get; set; }
 
         /// <summary> String array property with DFE pattern. </summary>
-        public DataFactoryElement<IList<string>> StringArrayProperty { get; }
+        public DataFactoryElement<IList<string>> StringArrayProperty { get; set; }
     }
 }

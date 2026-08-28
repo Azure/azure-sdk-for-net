@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.SignalR
                     yield break;
                 }
                 SignalRPrivateLinkResourceListResult result = SignalRPrivateLinkResourceListResult.FromResponse(response);
-                yield return Page<SignalRPrivateLinkResource>.FromValues((IReadOnlyList<SignalRPrivateLinkResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SignalRPrivateLinkResource>.FromValues((IReadOnlyList<SignalRPrivateLinkResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

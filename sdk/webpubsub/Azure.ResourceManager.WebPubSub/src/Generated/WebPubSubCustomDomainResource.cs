@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.WebPubSub
         {
             TryGetApiVersion(ResourceType, out string webPubSubCustomDomainApiVersion);
             _customDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WebPubSub", ResourceType.Namespace, Diagnostics);
-            _customDomainsRestClient = new CustomDomains(_customDomainsClientDiagnostics, Pipeline, Endpoint, webPubSubCustomDomainApiVersion ?? "2025-08-01-preview");
+            _customDomainsRestClient = new CustomDomains(_customDomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webPubSubCustomDomainApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.WebPubSub
                 HttpMessage message = _customDomainsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WebPubSubCustomDomainData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WebPubSubArmOperation<WebPubSubCustomDomainResource> operation = new WebPubSubArmOperation<WebPubSubCustomDomainResource>(
-                    new WebPubSubCustomDomainOperationSource(Client),
+                    new WebPubSubCustomDomainResourceOperationSource(Client),
                     _customDomainsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.WebPubSub
                 HttpMessage message = _customDomainsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, WebPubSubCustomDomainData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WebPubSubArmOperation<WebPubSubCustomDomainResource> operation = new WebPubSubArmOperation<WebPubSubCustomDomainResource>(
-                    new WebPubSubCustomDomainOperationSource(Client),
+                    new WebPubSubCustomDomainResourceOperationSource(Client),
                     _customDomainsClientDiagnostics,
                     Pipeline,
                     message.Request,

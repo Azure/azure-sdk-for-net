@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ServiceType : IEquatable<ServiceType>
     {
         private readonly string _value;
+        /// <summary> Inbound. </summary>
+        private const string InboundValue = "Inbound";
+        /// <summary> Outbound. </summary>
+        private const string OutboundValue = "Outbound";
+        /// <summary> InboundOutbound. </summary>
+        private const string InboundOutboundValue = "InboundOutbound";
 
         /// <summary> Initializes a new instance of <see cref="ServiceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ServiceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InboundValue = "Inbound";
-        private const string OutboundValue = "Outbound";
-        private const string InboundOutboundValue = "InboundOutbound";
+            _value = value;
+        }
 
         /// <summary> Inbound. </summary>
         public static ServiceType Inbound { get; } = new ServiceType(InboundValue);
+
         /// <summary> Outbound. </summary>
         public static ServiceType Outbound { get; } = new ServiceType(OutboundValue);
+
         /// <summary> InboundOutbound. </summary>
         public static ServiceType InboundOutbound { get; } = new ServiceType(InboundOutboundValue);
+
         /// <summary> Determines if two <see cref="ServiceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ServiceType left, ServiceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ServiceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ServiceType left, ServiceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ServiceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ServiceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ServiceType(string value) => new ServiceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ServiceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ServiceType?(string value) => value == null ? null : new ServiceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ServiceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ServiceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ExtendedLocations
         {
             TryGetApiVersion(CustomLocationResource.ResourceType, out string customLocationApiVersion);
             _customLocationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ExtendedLocations", CustomLocationResource.ResourceType.Namespace, Diagnostics);
-            _customLocationsRestClient = new CustomLocations(_customLocationsClientDiagnostics, Pipeline, Endpoint, customLocationApiVersion ?? "2021-08-31-preview");
+            _customLocationsRestClient = new CustomLocations(_customLocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, customLocationApiVersion ?? "2021-08-31-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 HttpMessage message = _customLocationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, CustomLocationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ExtendedLocationsArmOperation<CustomLocationResource> operation = new ExtendedLocationsArmOperation<CustomLocationResource>(
-                    new CustomLocationOperationSource(Client),
+                    new CustomLocationResourceOperationSource(Client),
                     _customLocationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ExtendedLocations
                 HttpMessage message = _customLocationsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, resourceName, CustomLocationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ExtendedLocationsArmOperation<CustomLocationResource> operation = new ExtendedLocationsArmOperation<CustomLocationResource>(
-                    new CustomLocationOperationSource(Client),
+                    new CustomLocationResourceOperationSource(Client),
                     _customLocationsClientDiagnostics,
                     Pipeline,
                     message.Request,

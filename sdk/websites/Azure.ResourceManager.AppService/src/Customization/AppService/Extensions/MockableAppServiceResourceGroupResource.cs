@@ -7,6 +7,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService.Mocking
 {
@@ -23,12 +24,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             async Task<Page<ResourceHealthMetadataData>> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllResourceHealthMetadataData");
+                using var scope = ResourceHealthMetadataNonResourceOperationGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllResourceHealthMetadataData");
                 scope.Start();
                 try
                 {
-                    var response = await ResourceHealthMetadataRestClient.ListByResourceGroupAsync(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
+                    RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                    using var message = ResourceHealthMetadataNonResourceOperationGroupRestClient.CreateGetAllResourceHealthMetadataDataRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), context);
+                    var response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    ResourceHealthMetadataListResult result = ResourceHealthMetadataListResult.FromResponse(response);
+                    return Page.FromValues(result.Value, result.NextLink?.AbsoluteUri, response);
                 }
                 catch (Exception e)
                 {
@@ -38,12 +42,15 @@ namespace Azure.ResourceManager.AppService.Mocking
             }
             async Task<Page<ResourceHealthMetadataData>> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllResourceHealthMetadataData");
+                using var scope = ResourceHealthMetadataNonResourceOperationGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllResourceHealthMetadataData");
                 scope.Start();
                 try
                 {
-                    var response = await ResourceHealthMetadataRestClient.ListByResourceGroupNextPageAsync(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
+                    RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                    using var message = ResourceHealthMetadataNonResourceOperationGroupRestClient.CreateNextGetAllResourceHealthMetadataDataRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), context);
+                    var response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    ResourceHealthMetadataListResult result = ResourceHealthMetadataListResult.FromResponse(response);
+                    return Page.FromValues(result.Value, result.NextLink?.AbsoluteUri, response);
                 }
                 catch (Exception e)
                 {
@@ -65,12 +72,15 @@ namespace Azure.ResourceManager.AppService.Mocking
         {
             Page<ResourceHealthMetadataData> FirstPageFunc(int? pageSizeHint)
             {
-                using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllResourceHealthMetadataData");
+                using var scope = ResourceHealthMetadataNonResourceOperationGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllResourceHealthMetadataData");
                 scope.Start();
                 try
                 {
-                    var response = ResourceHealthMetadataRestClient.ListByResourceGroup(Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
+                    RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                    using var message = ResourceHealthMetadataNonResourceOperationGroupRestClient.CreateGetAllResourceHealthMetadataDataRequest(Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), context);
+                    var response = Pipeline.ProcessMessage(message, context);
+                    ResourceHealthMetadataListResult result = ResourceHealthMetadataListResult.FromResponse(response);
+                    return Page.FromValues(result.Value, result.NextLink?.AbsoluteUri, response);
                 }
                 catch (Exception e)
                 {
@@ -80,12 +90,15 @@ namespace Azure.ResourceManager.AppService.Mocking
             }
             Page<ResourceHealthMetadataData> NextPageFunc(string nextLink, int? pageSizeHint)
             {
-                using var scope = ResourceHealthMetadataClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllResourceHealthMetadataData");
+                using var scope = ResourceHealthMetadataNonResourceOperationGroupClientDiagnostics.CreateScope("ResourceGroupResourceExtensionClient.GetAllResourceHealthMetadataData");
                 scope.Start();
                 try
                 {
-                    var response = ResourceHealthMetadataRestClient.ListByResourceGroupNextPage(nextLink, Id.SubscriptionId, Id.ResourceGroupName, cancellationToken: cancellationToken);
-                    return Page.FromValues(response.Value.Value, response.Value.NextLink?.AbsoluteUri, response.GetRawResponse());
+                    RequestContext context = new RequestContext { CancellationToken = cancellationToken };
+                    using var message = ResourceHealthMetadataNonResourceOperationGroupRestClient.CreateNextGetAllResourceHealthMetadataDataRequest(new Uri(nextLink, UriKind.RelativeOrAbsolute), Id.ResourceGroupName, Guid.Parse(Id.SubscriptionId), context);
+                    var response = Pipeline.ProcessMessage(message, context);
+                    ResourceHealthMetadataListResult result = ResourceHealthMetadataListResult.FromResponse(response);
+                    return Page.FromValues(result.Value, result.NextLink?.AbsoluteUri, response);
                 }
                 catch (Exception e)
                 {

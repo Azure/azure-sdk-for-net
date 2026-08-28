@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(ResourceType, out string billingBenefitsSavingsPlanApiVersion);
             _savingsPlanClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ResourceType.Namespace, Diagnostics);
-            _savingsPlanRestClient = new SavingsPlan(_savingsPlanClientDiagnostics, Pipeline, Endpoint, billingBenefitsSavingsPlanApiVersion ?? "2025-12-01-preview");
+            _savingsPlanRestClient = new SavingsPlan(_savingsPlanClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingBenefitsSavingsPlanApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _savingsPlanRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BillingBenefitsSavingsPlanPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<BillingBenefitsSavingsPlanResource> operation = new BillingBenefitsArmOperation<BillingBenefitsSavingsPlanResource>(
-                    new BillingBenefitsSavingsPlanOperationSource(Client),
+                    new BillingBenefitsSavingsPlanResourceOperationSource(Client),
                     _savingsPlanClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _savingsPlanRestClient.CreateUpdateRequest(Id.Parent.Name, Id.Name, BillingBenefitsSavingsPlanPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<BillingBenefitsSavingsPlanResource> operation = new BillingBenefitsArmOperation<BillingBenefitsSavingsPlanResource>(
-                    new BillingBenefitsSavingsPlanOperationSource(Client),
+                    new BillingBenefitsSavingsPlanResourceOperationSource(Client),
                     _savingsPlanClientDiagnostics,
                     Pipeline,
                     message.Request,

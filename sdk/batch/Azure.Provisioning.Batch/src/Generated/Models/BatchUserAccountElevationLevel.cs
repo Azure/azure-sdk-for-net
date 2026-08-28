@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Batch
     public enum BatchUserAccountElevationLevel
     {
         /// <summary> The user is a standard user without elevated access. </summary>
-        NonAdmin,
+        NonAdmin = 0,
         /// <summary> The user is a user with elevated access and operates with full Administrator permissions. </summary>
-        Admin
+        Admin = 1
     }
 }

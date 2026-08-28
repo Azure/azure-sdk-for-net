@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(JavaComponentResource.ResourceType, out string javaComponentApiVersion);
             _javaComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", JavaComponentResource.ResourceType.Namespace, Diagnostics);
-            _javaComponentsRestClient = new JavaComponents(_javaComponentsClientDiagnostics, Pipeline, Endpoint, javaComponentApiVersion ?? "2025-10-02-preview");
+            _javaComponentsRestClient = new JavaComponents(_javaComponentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, javaComponentApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _javaComponentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, JavaComponentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<JavaComponentResource> operation = new AppContainersArmOperation<JavaComponentResource>(
-                    new JavaComponentOperationSource(Client),
+                    new JavaComponentResourceOperationSource(Client),
                     _javaComponentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _javaComponentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, name, JavaComponentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<JavaComponentResource> operation = new AppContainersArmOperation<JavaComponentResource>(
-                    new JavaComponentOperationSource(Client),
+                    new JavaComponentResourceOperationSource(Client),
                     _javaComponentsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// Name to be used when sending out emails. Default is "Azure Managed Grafana Notification"
         /// https://pkg.go.dev/net/mail#Address
         /// </param>
-        /// <param name="startTLSPolicy">
+        /// <param name="startTlsPolicy">
         /// The StartTLSPolicy setting of the SMTP configuration
         /// https://pkg.go.dev/github.com/go-mail/mail#StartTLSPolicy
         /// </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// https://pkg.go.dev/crypto/tls#Config
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GrafanaSmtpSettings(bool? isEnabled, string host, string user, string password, string fromAddress, string fromName, GrafanaStartTlsPolicy? startTLSPolicy, bool? skipVerify, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GrafanaSmtpSettings(bool? isEnabled, string host, string user, string password, string fromAddress, string fromName, GrafanaStartTlsPolicy? startTlsPolicy, bool? skipVerify, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             Host = host;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Grafana.Models
             Password = password;
             FromAddress = fromAddress;
             FromName = fromName;
-            StartTLSPolicy = startTLSPolicy;
+            StartTlsPolicy = startTlsPolicy;
             SkipVerify = skipVerify;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Grafana.Models
         /// The StartTLSPolicy setting of the SMTP configuration
         /// https://pkg.go.dev/github.com/go-mail/mail#StartTLSPolicy
         /// </summary>
-        public GrafanaStartTlsPolicy? StartTLSPolicy { get; set; }
+        public GrafanaStartTlsPolicy? StartTlsPolicy { get; set; }
 
         /// <summary>
         /// Verify SSL for SMTP server. Default is false

@@ -68,8 +68,8 @@ namespace Azure.ResourceManager.DevTestLabs
                     yield break;
                 }
                 LabVirtualMachineList result = LabVirtualMachineList.FromResponse(response);
-                yield return Page<DevTestLabVmData>.FromValues((IReadOnlyList<DevTestLabVmData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DevTestLabVmData>.FromValues((IReadOnlyList<DevTestLabVmData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

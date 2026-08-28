@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(DataBoxEdgeStorageContainerResource.ResourceType, out string dataBoxEdgeStorageContainerApiVersion);
             _containersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeStorageContainerResource.ResourceType.Namespace, Diagnostics);
-            _containersRestClient = new Containers(_containersClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeStorageContainerApiVersion ?? "2023-12-01");
+            _containersRestClient = new Containers(_containersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeStorageContainerApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _containersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, DataBoxEdgeStorageContainerData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation<DataBoxEdgeStorageContainerResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageContainerResource>(
-                    new DataBoxEdgeStorageContainerOperationSource(Client),
+                    new DataBoxEdgeStorageContainerResourceOperationSource(Client),
                     _containersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _containersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, containerName, DataBoxEdgeStorageContainerData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation<DataBoxEdgeStorageContainerResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageContainerResource>(
-                    new DataBoxEdgeStorageContainerOperationSource(Client),
+                    new DataBoxEdgeStorageContainerResourceOperationSource(Client),
                     _containersClientDiagnostics,
                     Pipeline,
                     message.Request,

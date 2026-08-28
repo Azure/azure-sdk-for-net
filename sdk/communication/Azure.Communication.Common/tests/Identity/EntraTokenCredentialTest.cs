@@ -30,12 +30,14 @@ namespace Azure.Communication.Identity
         private const string communicationClientsScope = communicationClientsPrefix + "VoIP";
         private const string teamsExtensionEndpoint = "/access/teamsExtension/:exchangeAccessToken";
         private const string teamsExtensionScope = "https://auth.msft.communication.azure.com/TeamsExtension.ManageCalls";
+        private const string teamsExtensionSovereignScope = "https://auth.msft.communication.azure.us/TeamsExtension.ManageCalls";
         private string _resourceEndpoint = "https://myResource.communication.azure.com";
 
         private static readonly object[] validScopes =
         {
             new object[] { new string[] { communicationClientsScope }},
-            new object[] { new string[] { teamsExtensionScope } }
+            new object[] { new string[] { teamsExtensionScope } },
+            new object[] { new string[] { teamsExtensionSovereignScope } }
         };
         private static readonly object[] invalidScopes =
         {
@@ -154,7 +156,7 @@ namespace Azure.Communication.Identity
             // Assert
             Assert.That(token.Token, Is.EqualTo(SampleToken));
             Assert.That(expiryTime, Is.EqualTo(token.ExpiresOn));
-            if (scopes.Contains(teamsExtensionScope))
+            if (scopes.Contains(teamsExtensionScope) || scopes.Contains(teamsExtensionSovereignScope))
             {
                 Assert.That(mockTransport.SingleRequest.Uri.Path, Is.EqualTo(teamsExtensionEndpoint));
             }

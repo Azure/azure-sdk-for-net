@@ -125,6 +125,10 @@ namespace Azure.Provisioning.ContainerInstance
             _runAsGroup = DefineProperty<int>(nameof(RunAsGroup), new string[] { "runAsGroup" });
             _runAsUser = DefineProperty<int>(nameof(RunAsUser), new string[] { "runAsUser" });
             _seccompProfile = DefineProperty<string>(nameof(SeccompProfile), new string[] { "seccompProfile" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerSecurityContextDefinition that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

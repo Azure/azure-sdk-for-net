@@ -12,15 +12,45 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Analytics.PlanetaryComputer
 {
-    // Workaround for generator bugs:
-    // 1. ToObjectFromJson<T>() causes AOT warnings (IL2026, IL3050)
-    // 2. RegisterMosaicsSearch methods don't null-coalesce query/filter parameters causing NullReferenceException
+    // Workaround for generator bug: ToObjectFromJson<T>() causes AOT warnings (IL2026, IL3050)
     [CodeGenSuppress("GetTileMatrices", typeof(CancellationToken))]
     [CodeGenSuppress("GetTileMatricesAsync", typeof(CancellationToken))]
-    [CodeGenSuppress("GetAvailableAssets", typeof(string), typeof(string), typeof(CancellationToken))]
-    [CodeGenSuppress("GetAvailableAssetsAsync", typeof(string), typeof(string), typeof(CancellationToken))]
+    // Workaround for generator bug: an @@override-supplied body on an operation whose underlying
+    // parameters are a spread body forwards the body's first property instead of the body itself.
+    [CodeGenSuppress("RegisterMosaicsSearch", typeof(RegisterMosaic), typeof(CancellationToken))]
+    [CodeGenSuppress("RegisterMosaicsSearchAsync", typeof(RegisterMosaic), typeof(CancellationToken))]
     public partial class DataClient
     {
+        #region Generator Workaround - spread body forwarded as its first property
+
+        /// <summary> Register a Search query. </summary>
+        /// <param name="body"> The request body for the registerMosaicsSearch request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<TilerMosaicSearchRegistrationResult> RegisterMosaicsSearch(RegisterMosaic body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            Response result = RegisterMosaicsSearch(RequestContent.Create(body, ModelSerializationExtensions.WireOptions), cancellationToken.ToRequestContext());
+            return Response.FromValue((TilerMosaicSearchRegistrationResult)result, result);
+        }
+
+        /// <summary> Register a Search query. </summary>
+        /// <param name="body"> The request body for the registerMosaicsSearch request. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<TilerMosaicSearchRegistrationResult>> RegisterMosaicsSearchAsync(RegisterMosaic body, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(body, nameof(body));
+
+            Response result = await RegisterMosaicsSearchAsync(RequestContent.Create(body, ModelSerializationExtensions.WireOptions), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((TilerMosaicSearchRegistrationResult)result, result);
+        }
+
+        #endregion
+
         #region AOT Workaround - ToObjectFromJson<T>() causes IL2026/IL3050 warnings
 
         /// <summary> Return Matrix List. </summary>
@@ -38,38 +68,6 @@ namespace Azure.Analytics.PlanetaryComputer
         public virtual async Task<Response<IReadOnlyList<string>>> GetTileMatricesAsync(CancellationToken cancellationToken = default)
         {
             Response result = await GetTileMatricesAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue(DeserializeStringList(result.Content), result);
-        }
-
-        /// <summary> Return a list of supported assets. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<string>> GetAvailableAssets(string collectionId, string itemId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-            Response result = GetAvailableAssets(collectionId, itemId, cancellationToken.ToRequestContext());
-            return Response.FromValue(DeserializeStringList(result.Content), result);
-        }
-
-        /// <summary> Return a list of supported assets. </summary>
-        /// <param name="collectionId"> STAC Collection Identifier. </param>
-        /// <param name="itemId"> STAC Item Identifier. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="collectionId"/> or <paramref name="itemId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<string>>> GetAvailableAssetsAsync(string collectionId, string itemId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(collectionId, nameof(collectionId));
-            Argument.AssertNotNullOrEmpty(itemId, nameof(itemId));
-
-            Response result = await GetAvailableAssetsAsync(collectionId, itemId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue(DeserializeStringList(result.Content), result);
         }
 

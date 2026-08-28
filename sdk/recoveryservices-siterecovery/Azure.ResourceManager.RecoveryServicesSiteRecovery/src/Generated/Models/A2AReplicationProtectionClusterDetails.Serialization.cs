@@ -10,13 +10,55 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    public partial class A2AReplicationProtectionClusterDetails : IUtf8JsonSerializable, IJsonModel<A2AReplicationProtectionClusterDetails>
+    /// <summary> A2A provider specific settings. </summary>
+    public partial class A2AReplicationProtectionClusterDetails : ReplicationClusterProviderSpecificSettings, IJsonModel<A2AReplicationProtectionClusterDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<A2AReplicationProtectionClusterDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ReplicationClusterProviderSpecificSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<A2AReplicationProtectionClusterDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeA2AReplicationProtectionClusterDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(A2AReplicationProtectionClusterDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<A2AReplicationProtectionClusterDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(A2AReplicationProtectionClusterDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<A2AReplicationProtectionClusterDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        A2AReplicationProtectionClusterDetails IPersistableModel<A2AReplicationProtectionClusterDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => (A2AReplicationProtectionClusterDetails)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<A2AReplicationProtectionClusterDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<A2AReplicationProtectionClusterDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +70,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<A2AReplicationProtectionClusterDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<A2AReplicationProtectionClusterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(A2AReplicationProtectionClusterDetails)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(MultiVmGroupId))
             {
@@ -137,26 +178,33 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        A2AReplicationProtectionClusterDetails IJsonModel<A2AReplicationProtectionClusterDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        A2AReplicationProtectionClusterDetails IJsonModel<A2AReplicationProtectionClusterDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (A2AReplicationProtectionClusterDetails)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ReplicationClusterProviderSpecificSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<A2AReplicationProtectionClusterDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<A2AReplicationProtectionClusterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(A2AReplicationProtectionClusterDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeA2AReplicationProtectionClusterDetails(document.RootElement, options);
         }
 
-        internal static A2AReplicationProtectionClusterDetails DeserializeA2AReplicationProtectionClusterDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static A2AReplicationProtectionClusterDetails DeserializeA2AReplicationProtectionClusterDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string instanceType = "A2A";
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             Guid? multiVmGroupId = default;
             string multiVmGroupName = default;
             MultiVmGroupCreateOption? multiVmGroupCreateOption = default;
@@ -165,7 +213,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ResourceIdentifier failoverRecoveryPointId = default;
             Guid? clusterManagementId = default;
             long? rpoInSeconds = default;
-            DateTimeOffset? lastRpoCalculatedTime = default;
+            DateTimeOffset? lastRpoCalculatedOn = default;
             string initialPrimaryZone = default;
             AzureLocation? initialPrimaryFabricLocation = default;
             string initialRecoveryZone = default;
@@ -177,181 +225,177 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             SiteRecoveryExtendedLocation primaryExtendedLocation = default;
             SiteRecoveryExtendedLocation recoveryExtendedLocation = default;
             string lifecycleId = default;
-            string instanceType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("multiVmGroupId"u8))
+                if (prop.NameEquals("instanceType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    instanceType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("multiVmGroupId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    multiVmGroupId = property.Value.GetGuid();
+                    multiVmGroupId = new Guid(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("multiVmGroupName"u8))
+                if (prop.NameEquals("multiVmGroupName"u8))
                 {
-                    multiVmGroupName = property.Value.GetString();
+                    multiVmGroupName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("multiVmGroupCreateOption"u8))
+                if (prop.NameEquals("multiVmGroupCreateOption"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    multiVmGroupCreateOption = new MultiVmGroupCreateOption(property.Value.GetString());
+                    multiVmGroupCreateOption = new MultiVmGroupCreateOption(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("primaryFabricLocation"u8))
+                if (prop.NameEquals("primaryFabricLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    primaryFabricLocation = new AzureLocation(property.Value.GetString());
+                    primaryFabricLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("recoveryFabricLocation"u8))
+                if (prop.NameEquals("recoveryFabricLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryFabricLocation = new AzureLocation(property.Value.GetString());
+                    recoveryFabricLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("failoverRecoveryPointId"u8))
+                if (prop.NameEquals("failoverRecoveryPointId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    failoverRecoveryPointId = new ResourceIdentifier(property.Value.GetString());
+                    failoverRecoveryPointId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("clusterManagementId"u8))
+                if (prop.NameEquals("clusterManagementId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    clusterManagementId = property.Value.GetGuid();
+                    clusterManagementId = new Guid(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("rpoInSeconds"u8))
+                if (prop.NameEquals("rpoInSeconds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rpoInSeconds = property.Value.GetInt64();
+                    rpoInSeconds = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("lastRpoCalculatedTime"u8))
+                if (prop.NameEquals("lastRpoCalculatedTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastRpoCalculatedTime = property.Value.GetDateTimeOffset("O");
+                    lastRpoCalculatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("initialPrimaryZone"u8))
+                if (prop.NameEquals("initialPrimaryZone"u8))
                 {
-                    initialPrimaryZone = property.Value.GetString();
+                    initialPrimaryZone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("initialPrimaryFabricLocation"u8))
+                if (prop.NameEquals("initialPrimaryFabricLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    initialPrimaryFabricLocation = new AzureLocation(property.Value.GetString());
+                    initialPrimaryFabricLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("initialRecoveryZone"u8))
+                if (prop.NameEquals("initialRecoveryZone"u8))
                 {
-                    initialRecoveryZone = property.Value.GetString();
+                    initialRecoveryZone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("initialRecoveryFabricLocation"u8))
+                if (prop.NameEquals("initialRecoveryFabricLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    initialRecoveryFabricLocation = new AzureLocation(property.Value.GetString());
+                    initialRecoveryFabricLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("initialPrimaryExtendedLocation"u8))
+                if (prop.NameEquals("initialPrimaryExtendedLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    initialPrimaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
+                    initialPrimaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("initialRecoveryExtendedLocation"u8))
+                if (prop.NameEquals("initialRecoveryExtendedLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    initialRecoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
+                    initialRecoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("primaryAvailabilityZone"u8))
+                if (prop.NameEquals("primaryAvailabilityZone"u8))
                 {
-                    primaryAvailabilityZone = property.Value.GetString();
+                    primaryAvailabilityZone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("recoveryAvailabilityZone"u8))
+                if (prop.NameEquals("recoveryAvailabilityZone"u8))
                 {
-                    recoveryAvailabilityZone = property.Value.GetString();
+                    recoveryAvailabilityZone = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("primaryExtendedLocation"u8))
+                if (prop.NameEquals("primaryExtendedLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    primaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
+                    primaryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("recoveryExtendedLocation"u8))
+                if (prop.NameEquals("recoveryExtendedLocation"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    recoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(property.Value, options);
+                    recoveryExtendedLocation = SiteRecoveryExtendedLocation.DeserializeSiteRecoveryExtendedLocation(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("lifecycleId"u8))
+                if (prop.NameEquals("lifecycleId"u8))
                 {
-                    lifecycleId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("instanceType"u8))
-                {
-                    instanceType = property.Value.GetString();
+                    lifecycleId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new A2AReplicationProtectionClusterDetails(
                 instanceType,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 multiVmGroupId,
                 multiVmGroupName,
                 multiVmGroupCreateOption,
@@ -360,7 +404,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 failoverRecoveryPointId,
                 clusterManagementId,
                 rpoInSeconds,
-                lastRpoCalculatedTime,
+                lastRpoCalculatedOn,
                 initialPrimaryZone,
                 initialPrimaryFabricLocation,
                 initialRecoveryZone,
@@ -373,36 +417,5 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 recoveryExtendedLocation,
                 lifecycleId);
         }
-
-        BinaryData IPersistableModel<A2AReplicationProtectionClusterDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<A2AReplicationProtectionClusterDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(A2AReplicationProtectionClusterDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        A2AReplicationProtectionClusterDetails IPersistableModel<A2AReplicationProtectionClusterDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<A2AReplicationProtectionClusterDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeA2AReplicationProtectionClusterDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(A2AReplicationProtectionClusterDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<A2AReplicationProtectionClusterDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

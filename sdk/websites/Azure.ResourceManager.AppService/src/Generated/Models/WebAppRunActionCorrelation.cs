@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The workflow run action correlation properties.
-    /// Serialized Name: RunActionCorrelation
-    /// </summary>
+    /// <summary> The workflow run action correlation properties. </summary>
     public partial class WebAppRunActionCorrelation : WebAppRunCorrelation
     {
         /// <summary> Initializes a new instance of <see cref="WebAppRunActionCorrelation"/>. </summary>
@@ -22,28 +20,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="WebAppRunActionCorrelation"/>. </summary>
-        /// <param name="clientTrackingId">
-        /// The client tracking identifier.
-        /// Serialized Name: RunCorrelation.clientTrackingId
-        /// </param>
-        /// <param name="clientKeywords">
-        /// The client keywords.
-        /// Serialized Name: RunCorrelation.clientKeywords
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="actionTrackingId">
-        /// The action tracking identifier.
-        /// Serialized Name: RunActionCorrelation.actionTrackingId
-        /// </param>
-        internal WebAppRunActionCorrelation(string clientTrackingId, IList<string> clientKeywords, IDictionary<string, BinaryData> serializedAdditionalRawData, string actionTrackingId) : base(clientTrackingId, clientKeywords, serializedAdditionalRawData)
+        /// <param name="clientTrackingId"> The client tracking identifier. </param>
+        /// <param name="clientKeywords"> The client keywords. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="actionTrackingId"> The action tracking identifier. </param>
+        internal WebAppRunActionCorrelation(string clientTrackingId, IList<string> clientKeywords, IDictionary<string, BinaryData> additionalBinaryDataProperties, string actionTrackingId) : base(clientTrackingId, clientKeywords, additionalBinaryDataProperties)
         {
             ActionTrackingId = actionTrackingId;
         }
 
-        /// <summary>
-        /// The action tracking identifier.
-        /// Serialized Name: RunActionCorrelation.actionTrackingId
-        /// </summary>
+        /// <summary> The action tracking identifier. </summary>
         [WirePath("actionTrackingId")]
         public string ActionTrackingId { get; set; }
     }

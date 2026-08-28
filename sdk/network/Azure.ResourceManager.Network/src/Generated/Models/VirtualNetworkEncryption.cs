@@ -7,70 +7,38 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
     /// <summary> Indicates if encryption is enabled on virtual network and if VM without encryption is allowed in encrypted VNet. </summary>
     public partial class VirtualNetworkEncryption
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkEncryption"/>. </summary>
-        /// <param name="isEnabled"> Indicates if encryption is enabled on the virtual network. </param>
-        public VirtualNetworkEncryption(bool isEnabled)
+        /// <param name="enabled"> Indicates if encryption is enabled on the virtual network. </param>
+        public VirtualNetworkEncryption(bool enabled)
         {
-            IsEnabled = isEnabled;
+            Enabled = enabled;
         }
 
         /// <summary> Initializes a new instance of <see cref="VirtualNetworkEncryption"/>. </summary>
-        /// <param name="isEnabled"> Indicates if encryption is enabled on the virtual network. </param>
+        /// <param name="enabled"> Indicates if encryption is enabled on the virtual network. </param>
         /// <param name="enforcement"> If the encrypted VNet allows VM that does not support encryption. This field is for future support, AllowUnencrypted is the only supported value at general availability. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualNetworkEncryption(bool isEnabled, VirtualNetworkEncryptionEnforcement? enforcement, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualNetworkEncryption(bool enabled, VirtualNetworkEncryptionEnforcement? enforcement, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsEnabled = isEnabled;
+            Enabled = enabled;
             Enforcement = enforcement;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VirtualNetworkEncryption"/> for deserialization. </summary>
-        internal VirtualNetworkEncryption()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Indicates if encryption is enabled on the virtual network. </summary>
         [WirePath("enabled")]
-        public bool IsEnabled { get; set; }
+        public bool Enabled { get; set; }
+
         /// <summary> If the encrypted VNet allows VM that does not support encryption. This field is for future support, AllowUnencrypted is the only supported value at general availability. </summary>
         [WirePath("enforcement")]
         public VirtualNetworkEncryptionEnforcement? Enforcement { get; set; }

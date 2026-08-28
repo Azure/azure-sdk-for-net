@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.IotHub.Models
     public readonly partial struct IotHubNetworkRuleSetDefaultAction : IEquatable<IotHubNetworkRuleSetDefaultAction>
     {
         private readonly string _value;
+        /// <summary> Deny. </summary>
+        private const string DenyValue = "Deny";
+        /// <summary> Allow. </summary>
+        private const string AllowValue = "Allow";
 
         /// <summary> Initializes a new instance of <see cref="IotHubNetworkRuleSetDefaultAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IotHubNetworkRuleSetDefaultAction(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DenyValue = "Deny";
-        private const string AllowValue = "Allow";
+            _value = value;
+        }
 
         /// <summary> Deny. </summary>
         public static IotHubNetworkRuleSetDefaultAction Deny { get; } = new IotHubNetworkRuleSetDefaultAction(DenyValue);
+
         /// <summary> Allow. </summary>
         public static IotHubNetworkRuleSetDefaultAction Allow { get; } = new IotHubNetworkRuleSetDefaultAction(AllowValue);
+
         /// <summary> Determines if two <see cref="IotHubNetworkRuleSetDefaultAction"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IotHubNetworkRuleSetDefaultAction left, IotHubNetworkRuleSetDefaultAction right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IotHubNetworkRuleSetDefaultAction"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IotHubNetworkRuleSetDefaultAction left, IotHubNetworkRuleSetDefaultAction right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IotHubNetworkRuleSetDefaultAction"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IotHubNetworkRuleSetDefaultAction"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IotHubNetworkRuleSetDefaultAction(string value) => new IotHubNetworkRuleSetDefaultAction(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IotHubNetworkRuleSetDefaultAction"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IotHubNetworkRuleSetDefaultAction?(string value) => value == null ? null : new IotHubNetworkRuleSetDefaultAction(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IotHubNetworkRuleSetDefaultAction other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IotHubNetworkRuleSetDefaultAction other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

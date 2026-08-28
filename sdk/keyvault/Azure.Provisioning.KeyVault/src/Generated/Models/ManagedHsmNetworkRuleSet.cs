@@ -108,6 +108,10 @@ namespace Azure.Provisioning.KeyVault
             _ipRules = DefineListProperty<ManagedHsmIPRule>(nameof(IPRules), new string[] { "ipRules" });
             _serviceTags = DefineListProperty<ManagedHsmServiceTagRule>(nameof(ServiceTags), new string[] { "serviceTags" });
             _virtualNetworkRules = DefineListProperty<ManagedHsmVirtualNetworkRule>(nameof(VirtualNetworkRules), new string[] { "virtualNetworkRules" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedHsmNetworkRuleSet that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

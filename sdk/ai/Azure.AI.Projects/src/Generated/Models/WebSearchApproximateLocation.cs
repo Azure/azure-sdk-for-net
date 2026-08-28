@@ -36,7 +36,7 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The type of location approximation. Always `approximate`. </summary>
-        internal string Type { get; } = "approximate";
+        public string Type { get; } = "approximate";
 
         /// <summary> Gets or sets the Country. </summary>
         public string Country { get; set; }

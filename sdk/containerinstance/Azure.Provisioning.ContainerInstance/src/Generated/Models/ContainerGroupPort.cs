@@ -57,6 +57,10 @@ namespace Azure.Provisioning.ContainerInstance
             base.DefineProvisionableProperties();
             _protocol = DefineProperty<ContainerGroupNetworkProtocol>(nameof(Protocol), new string[] { "protocol" });
             _port = DefineProperty<int>(nameof(Port), new string[] { "port" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerGroupPort that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Storage
         {
             TryGetApiVersion(ObjectReplicationPolicyResource.ResourceType, out string objectReplicationPolicyApiVersion);
             _objectReplicationPoliciesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ObjectReplicationPolicyResource.ResourceType.Namespace, Diagnostics);
-            _objectReplicationPoliciesRestClient = new ObjectReplicationPolicies(_objectReplicationPoliciesClientDiagnostics, Pipeline, Endpoint, objectReplicationPolicyApiVersion ?? "2025-08-01");
+            _objectReplicationPoliciesRestClient = new ObjectReplicationPolicies(_objectReplicationPoliciesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, objectReplicationPolicyApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 

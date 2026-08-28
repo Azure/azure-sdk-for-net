@@ -16,19 +16,18 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="AgentEndpointConfiguration"/>. </summary>
         public AgentEndpointConfiguration()
         {
-            Protocols = new ChangeTrackingList<AgentEndpointProtocol>();
             AuthorizationSchemes = new ChangeTrackingList<AgentEndpointAuthorizationScheme>();
         }
 
         /// <summary> Initializes a new instance of <see cref="AgentEndpointConfiguration"/>. </summary>
         /// <param name="versionSelector"> The version selector of the agent endpoint determines how traffic is routed to different versions of the agent. </param>
-        /// <param name="protocols"> The protocols that the agent supports. </param>
+        /// <param name="protocolConfiguration"> Per-protocol configuration for the agent endpoint. </param>
         /// <param name="authorizationSchemes"> The authorization schemes supported by the agent endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentEndpointConfiguration(VersionSelector versionSelector, IList<AgentEndpointProtocol> protocols, IList<AgentEndpointAuthorizationScheme> authorizationSchemes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentEndpointConfiguration(VersionSelector versionSelector, ProtocolConfiguration protocolConfiguration, IList<AgentEndpointAuthorizationScheme> authorizationSchemes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VersionSelector = versionSelector;
-            Protocols = protocols;
+            ProtocolConfiguration = protocolConfiguration;
             AuthorizationSchemes = authorizationSchemes;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -36,8 +35,8 @@ namespace Azure.AI.Projects.Agents
         /// <summary> The version selector of the agent endpoint determines how traffic is routed to different versions of the agent. </summary>
         public VersionSelector VersionSelector { get; set; }
 
-        /// <summary> The protocols that the agent supports. </summary>
-        public IList<AgentEndpointProtocol> Protocols { get; }
+        /// <summary> Per-protocol configuration for the agent endpoint. </summary>
+        public ProtocolConfiguration ProtocolConfiguration { get; set; }
 
         /// <summary> The authorization schemes supported by the agent endpoint. </summary>
         public IList<AgentEndpointAuthorizationScheme> AuthorizationSchemes { get; }

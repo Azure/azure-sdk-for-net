@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevTestLabs
         {
             TryGetApiVersion(ResourceType, out string devTestLabFormulaApiVersion);
             _formulasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DevTestLabs", ResourceType.Namespace, Diagnostics);
-            _formulasRestClient = new Formulas(_formulasClientDiagnostics, Pipeline, Endpoint, devTestLabFormulaApiVersion ?? "2018-09-15");
+            _formulasRestClient = new Formulas(_formulasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, devTestLabFormulaApiVersion ?? "2018-09-15");
             ValidateResourceId(id);
         }
 

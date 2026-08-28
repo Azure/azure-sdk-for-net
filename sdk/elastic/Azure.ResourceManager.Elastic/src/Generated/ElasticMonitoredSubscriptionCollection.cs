@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Elastic
         {
             TryGetApiVersion(ElasticMonitoredSubscriptionResource.ResourceType, out string elasticMonitoredSubscriptionApiVersion);
             _monitoredSubscriptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Elastic", ElasticMonitoredSubscriptionResource.ResourceType.Namespace, Diagnostics);
-            _monitoredSubscriptionsRestClient = new MonitoredSubscriptions(_monitoredSubscriptionsClientDiagnostics, Pipeline, Endpoint, elasticMonitoredSubscriptionApiVersion ?? "2025-06-01");
+            _monitoredSubscriptionsRestClient = new MonitoredSubscriptions(_monitoredSubscriptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, elasticMonitoredSubscriptionApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Elastic
                 HttpMessage message = _monitoredSubscriptionsRestClient.CreateCreateorUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, ElasticMonitoredSubscriptionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ElasticArmOperation<ElasticMonitoredSubscriptionResource> operation = new ElasticArmOperation<ElasticMonitoredSubscriptionResource>(
-                    new ElasticMonitoredSubscriptionOperationSource(Client),
+                    new ElasticMonitoredSubscriptionResourceOperationSource(Client),
                     _monitoredSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Elastic
                 HttpMessage message = _monitoredSubscriptionsRestClient.CreateCreateorUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, configurationName, ElasticMonitoredSubscriptionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ElasticArmOperation<ElasticMonitoredSubscriptionResource> operation = new ElasticArmOperation<ElasticMonitoredSubscriptionResource>(
-                    new ElasticMonitoredSubscriptionOperationSource(Client),
+                    new ElasticMonitoredSubscriptionResourceOperationSource(Client),
                     _monitoredSubscriptionsClientDiagnostics,
                     Pipeline,
                     message.Request,

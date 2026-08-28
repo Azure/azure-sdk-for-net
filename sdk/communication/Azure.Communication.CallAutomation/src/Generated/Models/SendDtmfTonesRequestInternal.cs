@@ -16,7 +16,7 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary> Initializes a new instance of <see cref="SendDtmfTonesRequestInternal"/>. </summary>
         /// <param name="tones"> List of tones to be sent to target participant. </param>
-        /// <param name="targetParticipant"> Target participant of send Dtmf tones. </param>
+        /// <param name="targetParticipant"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tones"/> or <paramref name="targetParticipant"/> is null. </exception>
         public SendDtmfTonesRequestInternal(IEnumerable<DtmfTone> tones, CommunicationIdentifierModel targetParticipant)
         {
@@ -29,7 +29,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of <see cref="SendDtmfTonesRequestInternal"/>. </summary>
         /// <param name="tones"> List of tones to be sent to target participant. </param>
-        /// <param name="targetParticipant"> Target participant of send Dtmf tones. </param>
+        /// <param name="targetParticipant"> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </param>
         /// <param name="operationContext"> The value to identify context of the operation. </param>
         /// <param name="operationCallbackUri">
         /// Set a callback URI that overrides the default callback URI set by CreateCall/AnswerCall for this operation.
@@ -45,7 +45,7 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> List of tones to be sent to target participant. </summary>
         public IList<DtmfTone> Tones { get; }
-        /// <summary> Target participant of send Dtmf tones. </summary>
+        /// <summary> Identifies a participant in Azure Communication services. A participant is, for example, a phone number or an Azure communication user. This model is polymorphic: Apart from kind and rawId, at most one further property may be set which must match the kind enum value. </summary>
         public CommunicationIdentifierModel TargetParticipant { get; }
         /// <summary> The value to identify context of the operation. </summary>
         public string OperationContext { get; set; }

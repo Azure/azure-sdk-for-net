@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DurableTask.Mocking
 
         private ClientDiagnostics SchedulersClientDiagnostics => _schedulersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DurableTask.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Schedulers SchedulersRestClient => _schedulersRestClient ??= new Schedulers(SchedulersClientDiagnostics, Pipeline, Endpoint, "2026-02-01");
+        private Schedulers SchedulersRestClient => _schedulersRestClient ??= new Schedulers(SchedulersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-02-01");
 
         /// <summary>
         /// List Schedulers by subscription

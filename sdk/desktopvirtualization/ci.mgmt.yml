@@ -9,3 +9,5 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.DesktopVirtualization
       safeName: AzureResourceManagerDesktopVirtualization
+    - name: Azure.Provisioning.DesktopVirtualization
+      safeName: AzureProvisioningDesktopVirtualization

@@ -7,82 +7,58 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Base definition for endpoint deployment. </summary>
     public partial class MachineLearningEndpointDeploymentProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointDeploymentProperties"/>. </summary>
         public MachineLearningEndpointDeploymentProperties()
         {
-            Properties = new ChangeTrackingDictionary<string, string>();
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
+            Properties = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointDeploymentProperties"/>. </summary>
-        /// <param name="description"> Description of the endpoint deployment. </param>
-        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
         /// <param name="codeConfiguration"> Code configuration for the endpoint deployment. </param>
+        /// <param name="description"> Description of the endpoint deployment. </param>
         /// <param name="environmentId"> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </param>
         /// <param name="environmentVariables"> Environment variables configuration for the deployment. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningEndpointDeploymentProperties(string description, IDictionary<string, string> properties, MachineLearningCodeConfiguration codeConfiguration, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Property dictionary. Properties can be added, but not removed or altered. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningEndpointDeploymentProperties(MachineLearningCodeConfiguration codeConfiguration, string description, string environmentId, IDictionary<string, string> environmentVariables, IDictionary<string, string> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Description = description;
-            Properties = properties;
             CodeConfiguration = codeConfiguration;
+            Description = description;
             EnvironmentId = environmentId;
             EnvironmentVariables = environmentVariables;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Code configuration for the endpoint deployment. </summary>
+        [WirePath("codeConfiguration")]
+        public MachineLearningCodeConfiguration CodeConfiguration { get; set; }
 
         /// <summary> Description of the endpoint deployment. </summary>
         [WirePath("description")]
         public string Description { get; set; }
-        /// <summary> Property dictionary. Properties can be added, but not removed or altered. </summary>
-        [WirePath("properties")]
-        public IDictionary<string, string> Properties { get; set; }
-        /// <summary> Code configuration for the endpoint deployment. </summary>
-        [WirePath("codeConfiguration")]
-        public MachineLearningCodeConfiguration CodeConfiguration { get; set; }
+
         /// <summary> ARM resource ID or AssetId of the environment specification for the endpoint deployment. </summary>
         [WirePath("environmentId")]
         public string EnvironmentId { get; set; }
+
         /// <summary> Environment variables configuration for the deployment. </summary>
         [WirePath("environmentVariables")]
         public IDictionary<string, string> EnvironmentVariables { get; set; }
+
+        /// <summary> Property dictionary. Properties can be added, but not removed or altered. </summary>
+        [WirePath("properties")]
+        public IDictionary<string, string> Properties { get; set; }
     }
 }

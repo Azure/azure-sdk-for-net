@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
-    public partial class ValidateMigrationInputSqlServerSqlMITaskProperties : IUtf8JsonSerializable, IJsonModel<ValidateMigrationInputSqlServerSqlMITaskProperties>
+    /// <summary> Properties for task that validates migration input for SQL to Azure SQL Database Managed Instance. </summary>
+    public partial class ValidateMigrationInputSqlServerSqlMITaskProperties : DataMigrationProjectTaskProperties, IJsonModel<ValidateMigrationInputSqlServerSqlMITaskProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ValidateMigrationInputSqlServerSqlMITaskProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataMigrationProjectTaskProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeValidateMigrationInputSqlServerSqlMITaskProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ValidateMigrationInputSqlServerSqlMITaskProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ValidateMigrationInputSqlServerSqlMITaskProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ValidateMigrationInputSqlServerSqlMITaskProperties IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (ValidateMigrationInputSqlServerSqlMITaskProperties)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ValidateMigrationInputSqlServerSqlMITaskProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ValidateMigrationInputSqlServerSqlMITaskProperties)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Input))
             {
@@ -44,7 +84,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 writer.WritePropertyName("output"u8);
                 writer.WriteStartArray();
-                foreach (var item in Output)
+                foreach (ValidateMigrationInputSqlServerSqlMITaskOutput item in Output)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -52,162 +92,141 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
         }
 
-        ValidateMigrationInputSqlServerSqlMITaskProperties IJsonModel<ValidateMigrationInputSqlServerSqlMITaskProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ValidateMigrationInputSqlServerSqlMITaskProperties IJsonModel<ValidateMigrationInputSqlServerSqlMITaskProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ValidateMigrationInputSqlServerSqlMITaskProperties)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override DataMigrationProjectTaskProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ValidateMigrationInputSqlServerSqlMITaskProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeValidateMigrationInputSqlServerSqlMITaskProperties(document.RootElement, options);
         }
 
-        internal static ValidateMigrationInputSqlServerSqlMITaskProperties DeserializeValidateMigrationInputSqlServerSqlMITaskProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ValidateMigrationInputSqlServerSqlMITaskProperties DeserializeValidateMigrationInputSqlServerSqlMITaskProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ValidateMigrationInputSqlServerSqlMITaskInput input = default;
-            IReadOnlyList<ValidateMigrationInputSqlServerSqlMITaskOutput> output = default;
             DataMigrationTaskType taskType = default;
             IReadOnlyList<DataMigrationODataError> errors = default;
             DataMigrationTaskState? state = default;
             IReadOnlyList<DataMigrationCommandProperties> commands = default;
             IDictionary<string, string> clientData = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ValidateMigrationInputSqlServerSqlMITaskInput input = default;
+            IReadOnlyList<ValidateMigrationInputSqlServerSqlMITaskOutput> output = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("input"u8))
+                if (prop.NameEquals("taskType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    input = ValidateMigrationInputSqlServerSqlMITaskInput.DeserializeValidateMigrationInputSqlServerSqlMITaskInput(property.Value, options);
+                    taskType = new DataMigrationTaskType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("output"u8))
+                if (prop.NameEquals("errors"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<ValidateMigrationInputSqlServerSqlMITaskOutput> array = new List<ValidateMigrationInputSqlServerSqlMITaskOutput>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(ValidateMigrationInputSqlServerSqlMITaskOutput.DeserializeValidateMigrationInputSqlServerSqlMITaskOutput(item, options));
-                    }
-                    output = array;
-                    continue;
-                }
-                if (property.NameEquals("taskType"u8))
-                {
-                    taskType = new DataMigrationTaskType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("errors"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataMigrationODataError> array = new List<DataMigrationODataError>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataMigrationODataError.DeserializeDataMigrationODataError(item, options));
                     }
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    state = new DataMigrationTaskState(property.Value.GetString());
+                    state = new DataMigrationTaskState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("commands"u8))
+                if (prop.NameEquals("commands"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<DataMigrationCommandProperties> array = new List<DataMigrationCommandProperties>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
                         array.Add(DataMigrationCommandProperties.DeserializeDataMigrationCommandProperties(item, options));
                     }
                     commands = array;
                     continue;
                 }
-                if (property.NameEquals("clientData"u8))
+                if (prop.NameEquals("clientData"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     clientData = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("input"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    input = ValidateMigrationInputSqlServerSqlMITaskInput.DeserializeValidateMigrationInputSqlServerSqlMITaskInput(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("output"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ValidateMigrationInputSqlServerSqlMITaskOutput> array = new List<ValidateMigrationInputSqlServerSqlMITaskOutput>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ValidateMigrationInputSqlServerSqlMITaskOutput.DeserializeValidateMigrationInputSqlServerSqlMITaskOutput(item, options));
+                    }
+                    output = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ValidateMigrationInputSqlServerSqlMITaskProperties(
                 taskType,
                 errors ?? new ChangeTrackingList<DataMigrationODataError>(),
                 state,
                 commands ?? new ChangeTrackingList<DataMigrationCommandProperties>(),
                 clientData ?? new ChangeTrackingDictionary<string, string>(),
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 input,
                 output ?? new ChangeTrackingList<ValidateMigrationInputSqlServerSqlMITaskOutput>());
         }
-
-        BinaryData IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataMigrationContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ValidateMigrationInputSqlServerSqlMITaskProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ValidateMigrationInputSqlServerSqlMITaskProperties IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeValidateMigrationInputSqlServerSqlMITaskProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ValidateMigrationInputSqlServerSqlMITaskProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

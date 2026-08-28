@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.Automation.Models
     /// <summary> Software update configuration machine run model. </summary>
     public partial class SoftwareUpdateConfigurationMachineRun
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationMachineRun"/>. </summary>
         internal SoftwareUpdateConfigurationMachineRun()
@@ -54,93 +25,167 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of <see cref="SoftwareUpdateConfigurationMachineRun"/>. </summary>
         /// <param name="name"> Name of the software update configuration machine run. </param>
         /// <param name="id"> Resource Id of the software update configuration machine run. </param>
-        /// <param name="targetComputerId"> name of the updated computer. </param>
-        /// <param name="targetComputerType"> type of the updated computer. </param>
-        /// <param name="softwareUpdateConfiguration"> software update configuration triggered this run. </param>
-        /// <param name="status"> Status of the software update configuration machine run. </param>
-        /// <param name="osType"> Operating system target of the software update configuration triggered this run. </param>
-        /// <param name="correlationId"> correlation id of the software update configuration machine run. </param>
-        /// <param name="sourceComputerId"> source computer id of the software update configuration machine run. </param>
-        /// <param name="startOn"> Start time of the software update configuration machine run. </param>
-        /// <param name="endOn"> End time of the software update configuration machine run. </param>
-        /// <param name="configuredDuration"> configured duration for the software update configuration run. </param>
-        /// <param name="job"> Job associated with the software update configuration machine run. </param>
-        /// <param name="createdOn"> Creation time of the resource, which only appears in the response. </param>
-        /// <param name="createdBy"> createdBy property, which only appears in the response. </param>
-        /// <param name="lastModifiedOn"> Last time resource was modified, which only appears in the response. </param>
-        /// <param name="lastModifiedBy"> lastModifiedBy property, which only appears in the response. </param>
-        /// <param name="error"> Details of provisioning error. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SoftwareUpdateConfigurationMachineRun(string name, ResourceIdentifier id, ResourceIdentifier targetComputerId, string targetComputerType, SoftwareUpdateConfigurationNavigation softwareUpdateConfiguration, string status, string osType, Guid? correlationId, Guid? sourceComputerId, DateTimeOffset? startOn, DateTimeOffset? endOn, TimeSpan? configuredDuration, JobNavigation job, DateTimeOffset? createdOn, string createdBy, DateTimeOffset? lastModifiedOn, string lastModifiedBy, AutomationResponseError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Software update configuration machine run properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SoftwareUpdateConfigurationMachineRun(string name, ResourceIdentifier id, UpdateConfigurationMachineRunProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Id = id;
-            TargetComputerId = targetComputerId;
-            TargetComputerType = targetComputerType;
-            SoftwareUpdateConfiguration = softwareUpdateConfiguration;
-            Status = status;
-            OSType = osType;
-            CorrelationId = correlationId;
-            SourceComputerId = sourceComputerId;
-            StartOn = startOn;
-            EndOn = endOn;
-            ConfiguredDuration = configuredDuration;
-            Job = job;
-            CreatedOn = createdOn;
-            CreatedBy = createdBy;
-            LastModifiedOn = lastModifiedOn;
-            LastModifiedBy = lastModifiedBy;
-            Error = error;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Name of the software update configuration machine run. </summary>
         public string Name { get; }
+
         /// <summary> Resource Id of the software update configuration machine run. </summary>
         public ResourceIdentifier Id { get; }
+
+        /// <summary> Software update configuration machine run properties. </summary>
+        internal UpdateConfigurationMachineRunProperties Properties { get; }
+
         /// <summary> name of the updated computer. </summary>
-        public ResourceIdentifier TargetComputerId { get; }
-        /// <summary> type of the updated computer. </summary>
-        public string TargetComputerType { get; }
-        /// <summary> software update configuration triggered this run. </summary>
-        internal SoftwareUpdateConfigurationNavigation SoftwareUpdateConfiguration { get; }
-        /// <summary> Name of the software update configuration triggered the software update configuration run. </summary>
-        public string SoftwareUpdateName
+        public ResourceIdentifier TargetComputerId
         {
-            get => SoftwareUpdateConfiguration?.Name;
+            get
+            {
+                return Properties is null ? default : Properties.TargetComputerId;
+            }
+        }
+
+        /// <summary> type of the updated computer. </summary>
+        public string TargetComputerType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetComputerType;
+            }
         }
 
         /// <summary> Status of the software update configuration machine run. </summary>
-        public string Status { get; }
-        /// <summary> Operating system target of the software update configuration triggered this run. </summary>
-        public string OSType { get; }
-        /// <summary> correlation id of the software update configuration machine run. </summary>
-        public Guid? CorrelationId { get; }
-        /// <summary> source computer id of the software update configuration machine run. </summary>
-        public Guid? SourceComputerId { get; }
-        /// <summary> Start time of the software update configuration machine run. </summary>
-        public DateTimeOffset? StartOn { get; }
-        /// <summary> End time of the software update configuration machine run. </summary>
-        public DateTimeOffset? EndOn { get; }
-        /// <summary> configured duration for the software update configuration run. </summary>
-        public TimeSpan? ConfiguredDuration { get; }
-        /// <summary> Job associated with the software update configuration machine run. </summary>
-        internal JobNavigation Job { get; }
-        /// <summary> Id of the job associated with the software update configuration run. </summary>
-        public Guid? JobId
+        public string Status
         {
-            get => Job?.Id;
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
+        /// <summary> Operating system target of the software update configuration triggered this run. </summary>
+        public string OSType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OSType;
+            }
+        }
+
+        /// <summary> correlation id of the software update configuration machine run. </summary>
+        public Guid? CorrelationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CorrelationId;
+            }
+        }
+
+        /// <summary> source computer id of the software update configuration machine run. </summary>
+        public Guid? SourceComputerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceComputerId;
+            }
+        }
+
+        /// <summary> Start time of the software update configuration machine run. </summary>
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+        }
+
+        /// <summary> End time of the software update configuration machine run. </summary>
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOn;
+            }
+        }
+
+        /// <summary> configured duration for the software update configuration run. </summary>
+        public TimeSpan? ConfiguredDuration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfiguredDuration;
+            }
         }
 
         /// <summary> Creation time of the resource, which only appears in the response. </summary>
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> createdBy property, which only appears in the response. </summary>
-        public string CreatedBy { get; }
+        public string CreatedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedBy;
+            }
+        }
+
         /// <summary> Last time resource was modified, which only appears in the response. </summary>
-        public DateTimeOffset? LastModifiedOn { get; }
+        public DateTimeOffset? LastModifiedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedOn;
+            }
+        }
+
         /// <summary> lastModifiedBy property, which only appears in the response. </summary>
-        public string LastModifiedBy { get; }
+        public string LastModifiedBy
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LastModifiedBy;
+            }
+        }
+
         /// <summary> Details of provisioning error. </summary>
-        public AutomationResponseError Error { get; }
+        public AutomationResponseError Error
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Error;
+            }
+        }
+
+        /// <summary> Name of the software update configuration triggered the software update configuration run. </summary>
+        public string SoftwareUpdateName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SoftwareUpdateName;
+            }
+        }
+
+        /// <summary> Id of the job associated with the software update configuration run. </summary>
+        public Guid? JobId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.JobId;
+            }
+        }
     }
 }

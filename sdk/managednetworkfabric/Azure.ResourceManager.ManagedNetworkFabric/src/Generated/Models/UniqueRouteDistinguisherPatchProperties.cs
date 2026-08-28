@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Unique Route Distinguisher configuration properties. </summary>
     public partial class UniqueRouteDistinguisherPatchProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="UniqueRouteDistinguisherPatchProperties"/>. </summary>
         public UniqueRouteDistinguisherPatchProperties()
@@ -53,16 +24,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <summary> Initializes a new instance of <see cref="UniqueRouteDistinguisherPatchProperties"/>. </summary>
         /// <param name="uniqueRdConfigurationState"> Unique Route Distinguisher configuration state. Default is Enabled. </param>
         /// <param name="nniDerivedUniqueRdConfigurationState"> NNI derived unique Route Distinguisher state. Default is Disabled. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UniqueRouteDistinguisherPatchProperties(UniqueRouteDistinguisherConfigurationState? uniqueRdConfigurationState, NniDerivedUniqueRouteDistinguisherConfigurationState? nniDerivedUniqueRdConfigurationState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal UniqueRouteDistinguisherPatchProperties(UniqueRouteDistinguisherConfigurationState? uniqueRdConfigurationState, NniDerivedUniqueRouteDistinguisherConfigurationState? nniDerivedUniqueRdConfigurationState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UniqueRdConfigurationState = uniqueRdConfigurationState;
             NniDerivedUniqueRdConfigurationState = nniDerivedUniqueRdConfigurationState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Unique Route Distinguisher configuration state. Default is Enabled. </summary>
         public UniqueRouteDistinguisherConfigurationState? UniqueRdConfigurationState { get; set; }
+
         /// <summary> NNI derived unique Route Distinguisher state. Default is Disabled. </summary>
         public NniDerivedUniqueRouteDistinguisherConfigurationState? NniDerivedUniqueRdConfigurationState { get; set; }
     }

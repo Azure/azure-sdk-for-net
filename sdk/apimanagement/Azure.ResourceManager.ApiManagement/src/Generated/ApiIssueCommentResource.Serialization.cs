@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.ApiManagement
 {
+    /// <summary></summary>
     public partial class ApiIssueCommentResource : IJsonModel<ApiIssueCommentData>
     {
-        private static ApiIssueCommentData s_dataDeserializationInstance;
-        private static ApiIssueCommentData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ApiIssueCommentData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ApiIssueCommentData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ApiIssueCommentData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApiIssueCommentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ApiIssueCommentData>)Data).Write(writer, options);
 
-        ApiIssueCommentData IJsonModel<ApiIssueCommentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ApiIssueCommentData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApiIssueCommentData IJsonModel<ApiIssueCommentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ApiIssueCommentData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ApiIssueCommentData>(Data, options, AzureResourceManagerApiManagementContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ApiIssueCommentData IPersistableModel<ApiIssueCommentData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ApiIssueCommentData>(data, options, AzureResourceManagerApiManagementContext.Default);
 
-        string IPersistableModel<ApiIssueCommentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ApiIssueCommentData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApiIssueCommentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

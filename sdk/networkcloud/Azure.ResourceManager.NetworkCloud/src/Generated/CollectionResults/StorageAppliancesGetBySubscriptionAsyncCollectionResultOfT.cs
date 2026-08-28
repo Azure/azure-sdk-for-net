@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.NetworkCloud
                     yield break;
                 }
                 StorageApplianceList result = StorageApplianceList.FromResponse(response);
-                yield return Page<NetworkCloudStorageApplianceData>.FromValues((IReadOnlyList<NetworkCloudStorageApplianceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkCloudStorageApplianceData>.FromValues((IReadOnlyList<NetworkCloudStorageApplianceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

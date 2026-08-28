@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.NetApp.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ElasticSnapshotPolicyHourlySchedule"/>. </summary>
-        public ElasticSnapshotPolicyHourlySchedule()
-        {
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ElasticSnapshotPolicyHourlySchedule"/>. </summary>
         /// <param name="snapshotsToKeep"> Hourly snapshot count to keep. </param>
         /// <param name="minute"> Indicates which minute snapshot should be taken. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
@@ -31,11 +26,5 @@ namespace Azure.ResourceManager.NetApp.Models
             Minute = minute;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> Hourly snapshot count to keep. </summary>
-        public int? SnapshotsToKeep { get; set; }
-
-        /// <summary> Indicates which minute snapshot should be taken. </summary>
-        public int? Minute { get; set; }
     }
 }

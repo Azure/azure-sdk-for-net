@@ -9,15 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class WarehouseSink : IUtf8JsonSerializable, IJsonModel<WarehouseSink>
+    /// <summary> A copy activity Microsoft Fabric Warehouse sink. </summary>
+    public partial class WarehouseSink : CopySink, IJsonModel<WarehouseSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<WarehouseSink>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CopySink PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WarehouseSink>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeWarehouseSink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(WarehouseSink)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<WarehouseSink>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(WarehouseSink)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<WarehouseSink>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WarehouseSink IPersistableModel<WarehouseSink>.Create(BinaryData data, ModelReaderWriterOptions options) => (WarehouseSink)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<WarehouseSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<WarehouseSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,22 +70,21 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WarehouseSink>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WarehouseSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WarehouseSink)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(PreCopyScript))
             {
                 writer.WritePropertyName("preCopyScript"u8);
-                JsonSerializer.Serialize(writer, PreCopyScript);
+                writer.WriteObjectValue<DataFactoryElement<string>>(PreCopyScript, options);
             }
             if (Optional.IsDefined(AllowCopyCommand))
             {
                 writer.WritePropertyName("allowCopyCommand"u8);
-                JsonSerializer.Serialize(writer, AllowCopyCommand);
+                writer.WriteObjectValue<DataFactoryElement<bool>>(AllowCopyCommand, options);
             }
             if (Optional.IsDefined(CopyCommandSettings))
             {
@@ -54,172 +94,123 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(TableOption))
             {
                 writer.WritePropertyName("tableOption"u8);
-                JsonSerializer.Serialize(writer, TableOption);
+                writer.WriteObjectValue<DataFactoryElement<string>>(TableOption, options);
             }
             if (Optional.IsDefined(WriteBehavior))
             {
                 writer.WritePropertyName("writeBehavior"u8);
-                JsonSerializer.Serialize(writer, WriteBehavior);
-            }
-            foreach (var item in AdditionalProperties)
-            {
-                writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
-                {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
-#endif
+                writer.WriteObjectValue<DataFactoryElement<string>>(WriteBehavior, options);
             }
         }
 
-        WarehouseSink IJsonModel<WarehouseSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        WarehouseSink IJsonModel<WarehouseSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (WarehouseSink)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override CopySink JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<WarehouseSink>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<WarehouseSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(WarehouseSink)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeWarehouseSink(document.RootElement, options);
         }
 
-        internal static WarehouseSink DeserializeWarehouseSink(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static WarehouseSink DeserializeWarehouseSink(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DataFactoryElement<string> preCopyScript = default;
-            DataFactoryElement<bool> allowCopyCommand = default;
-            DWCopyCommandSettings copyCommandSettings = default;
-            DataFactoryElement<string> tableOption = default;
-            DataFactoryElement<string> writeBehavior = default;
-            string type = default;
+            string copySinkType = "WarehouseSink";
             DataFactoryElement<int> writeBatchSize = default;
             DataFactoryElement<string> writeBatchTimeout = default;
             DataFactoryElement<int> sinkRetryCount = default;
             DataFactoryElement<string> sinkRetryWait = default;
             DataFactoryElement<int> maxConcurrentConnections = default;
             DataFactoryElement<bool> disableMetricsCollection = default;
-            IDictionary<string, BinaryData> additionalProperties = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DataFactoryElement<string> preCopyScript = default;
+            DataFactoryElement<bool> allowCopyCommand = default;
+            DWCopyCommandSettings copyCommandSettings = default;
+            DataFactoryElement<string> tableOption = default;
+            DataFactoryElement<string> writeBehavior = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("preCopyScript"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    copySinkType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("writeBatchSize"u8))
+                {
+                    ReadWriteBatchSize(prop, ref writeBatchSize);
+                    continue;
+                }
+                if (prop.NameEquals("writeBatchTimeout"u8))
+                {
+                    ReadWriteBatchTimeout(prop, ref writeBatchTimeout);
+                    continue;
+                }
+                if (prop.NameEquals("sinkRetryCount"u8))
+                {
+                    ReadSinkRetryCount(prop, ref sinkRetryCount);
+                    continue;
+                }
+                if (prop.NameEquals("sinkRetryWait"u8))
+                {
+                    ReadSinkRetryWait(prop, ref sinkRetryWait);
+                    continue;
+                }
+                if (prop.NameEquals("maxConcurrentConnections"u8))
+                {
+                    ReadMaxConcurrentConnections(prop, ref maxConcurrentConnections);
+                    continue;
+                }
+                if (prop.NameEquals("disableMetricsCollection"u8))
+                {
+                    ReadDisableMetricsCollection(prop, ref disableMetricsCollection);
+                    continue;
+                }
+                if (prop.NameEquals("preCopyScript"u8))
+                {
+                    ReadPreCopyScript(prop, ref preCopyScript);
+                    continue;
+                }
+                if (prop.NameEquals("allowCopyCommand"u8))
+                {
+                    ReadAllowCopyCommand(prop, ref allowCopyCommand);
+                    continue;
+                }
+                if (prop.NameEquals("copyCommandSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    preCopyScript = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
+                    copyCommandSettings = DWCopyCommandSettings.DeserializeDWCopyCommandSettings(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("allowCopyCommand"u8))
+                if (prop.NameEquals("tableOption"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    allowCopyCommand = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
+                    ReadTableOption(prop, ref tableOption);
                     continue;
                 }
-                if (property.NameEquals("copyCommandSettings"u8))
+                if (prop.NameEquals("writeBehavior"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    copyCommandSettings = DWCopyCommandSettings.DeserializeDWCopyCommandSettings(property.Value, options);
+                    ReadWriteBehavior(prop, ref writeBehavior);
                     continue;
                 }
-                if (property.NameEquals("tableOption"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    tableOption = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("writeBehavior"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    writeBehavior = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    type = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("writeBatchSize"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    writeBatchSize = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("writeBatchTimeout"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    writeBatchTimeout = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("sinkRetryCount"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sinkRetryCount = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("sinkRetryWait"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sinkRetryWait = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("maxConcurrentConnections"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    maxConcurrentConnections = JsonSerializer.Deserialize<DataFactoryElement<int>>(property.Value.GetRawText());
-                    continue;
-                }
-                if (property.NameEquals("disableMetricsCollection"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    disableMetricsCollection = JsonSerializer.Deserialize<DataFactoryElement<bool>>(property.Value.GetRawText());
-                    continue;
-                }
-                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
             }
-            additionalProperties = additionalPropertiesDictionary;
             return new WarehouseSink(
-                type,
+                copySinkType,
                 writeBatchSize,
                 writeBatchTimeout,
                 sinkRetryCount,
@@ -233,36 +224,5 @@ namespace Azure.ResourceManager.DataFactory.Models
                 tableOption,
                 writeBehavior);
         }
-
-        BinaryData IPersistableModel<WarehouseSink>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WarehouseSink>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerDataFactoryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(WarehouseSink)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        WarehouseSink IPersistableModel<WarehouseSink>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<WarehouseSink>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeWarehouseSink(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(WarehouseSink)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<WarehouseSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

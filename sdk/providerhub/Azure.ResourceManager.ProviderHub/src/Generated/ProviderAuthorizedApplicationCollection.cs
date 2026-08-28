@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             TryGetApiVersion(ProviderAuthorizedApplicationResource.ResourceType, out string providerAuthorizedApplicationApiVersion);
             _authorizedApplicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", ProviderAuthorizedApplicationResource.ResourceType.Namespace, Diagnostics);
-            _authorizedApplicationsRestClient = new AuthorizedApplications(_authorizedApplicationsClientDiagnostics, Pipeline, Endpoint, providerAuthorizedApplicationApiVersion ?? "2024-09-01");
+            _authorizedApplicationsRestClient = new AuthorizedApplications(_authorizedApplicationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, providerAuthorizedApplicationApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ProviderHub
                 HttpMessage message = _authorizedApplicationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, applicationId, ProviderAuthorizedApplicationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProviderHubArmOperation<ProviderAuthorizedApplicationResource> operation = new ProviderHubArmOperation<ProviderAuthorizedApplicationResource>(
-                    new ProviderAuthorizedApplicationOperationSource(Client),
+                    new ProviderAuthorizedApplicationResourceOperationSource(Client),
                     _authorizedApplicationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ProviderHub
                 HttpMessage message = _authorizedApplicationsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, applicationId, ProviderAuthorizedApplicationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProviderHubArmOperation<ProviderAuthorizedApplicationResource> operation = new ProviderHubArmOperation<ProviderAuthorizedApplicationResource>(
-                    new ProviderAuthorizedApplicationOperationSource(Client),
+                    new ProviderAuthorizedApplicationResourceOperationSource(Client),
                     _authorizedApplicationsClientDiagnostics,
                     Pipeline,
                     message.Request,

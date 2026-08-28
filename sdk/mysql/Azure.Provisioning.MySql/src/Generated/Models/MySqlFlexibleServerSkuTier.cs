@@ -11,10 +11,10 @@ namespace Azure.Provisioning.MySql
     public enum MySqlFlexibleServerSkuTier
     {
         /// <summary> Burstable. </summary>
-        Burstable,
+        Burstable = 0,
         /// <summary> GeneralPurpose. </summary>
-        GeneralPurpose,
+        GeneralPurpose = 1,
         /// <summary> MemoryOptimized. </summary>
-        MemoryOptimized
+        MemoryOptimized = 2
     }
 }

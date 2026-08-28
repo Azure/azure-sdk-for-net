@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         {
             TryGetApiVersion(AppServiceCertificateOrderResource.ResourceType, out string appServiceCertificateOrderApiVersion);
             _appServiceCertificateOrdersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CertificateRegistration", AppServiceCertificateOrderResource.ResourceType.Namespace, Diagnostics);
-            _appServiceCertificateOrdersRestClient = new AppServiceCertificateOrders(_appServiceCertificateOrdersClientDiagnostics, Pipeline, Endpoint, appServiceCertificateOrderApiVersion ?? "2024-11-01");
+            _appServiceCertificateOrdersRestClient = new AppServiceCertificateOrders(_appServiceCertificateOrdersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appServiceCertificateOrderApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 HttpMessage message = _appServiceCertificateOrdersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, AppServiceCertificateOrderData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CertificateRegistrationArmOperation<AppServiceCertificateOrderResource> operation = new CertificateRegistrationArmOperation<AppServiceCertificateOrderResource>(
-                    new AppServiceCertificateOrderOperationSource(Client),
+                    new AppServiceCertificateOrderResourceOperationSource(Client),
                     _appServiceCertificateOrdersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CertificateRegistration
                 HttpMessage message = _appServiceCertificateOrdersRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, certificateOrderName, AppServiceCertificateOrderData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CertificateRegistrationArmOperation<AppServiceCertificateOrderResource> operation = new CertificateRegistrationArmOperation<AppServiceCertificateOrderResource>(
-                    new AppServiceCertificateOrderOperationSource(Client),
+                    new AppServiceCertificateOrderResourceOperationSource(Client),
                     _appServiceCertificateOrdersClientDiagnostics,
                     Pipeline,
                     message.Request,

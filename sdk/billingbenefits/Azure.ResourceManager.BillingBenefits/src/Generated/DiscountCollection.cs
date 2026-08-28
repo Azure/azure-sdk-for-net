@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(DiscountResource.ResourceType, out string discountApiVersion);
             _discountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", DiscountResource.ResourceType.Namespace, Diagnostics);
-            _discountsRestClient = new Discounts(_discountsClientDiagnostics, Pipeline, Endpoint, discountApiVersion ?? "2025-12-01-preview");
+            _discountsRestClient = new Discounts(_discountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discountApiVersion ?? "2025-12-01-preview");
             _discountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", DiscountResource.ResourceType.Namespace, Diagnostics);
-            _discountRestClient = new Discount(_discountClientDiagnostics, Pipeline, Endpoint, discountApiVersion ?? "2025-12-01-preview");
+            _discountRestClient = new Discount(_discountClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, discountApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _discountsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, discountName, DiscountData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<DiscountResource> operation = new BillingBenefitsArmOperation<DiscountResource>(
-                    new DiscountOperationSource(Client),
+                    new DiscountResourceOperationSource(Client),
                     _discountsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _discountsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, discountName, DiscountData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<DiscountResource> operation = new BillingBenefitsArmOperation<DiscountResource>(
-                    new DiscountOperationSource(Client),
+                    new DiscountResourceOperationSource(Client),
                     _discountsClientDiagnostics,
                     Pipeline,
                     message.Request,

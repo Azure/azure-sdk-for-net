@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SelfHelp
         {
             TryGetApiVersion(ResourceType, out string selfHelpSolutionApiVersion);
             _solutionResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SelfHelp", ResourceType.Namespace, Diagnostics);
-            _solutionResourcesRestClient = new SolutionResources(_solutionResourcesClientDiagnostics, Pipeline, Endpoint, selfHelpSolutionApiVersion ?? "2024-03-01-preview");
+            _solutionResourcesRestClient = new SolutionResources(_solutionResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, selfHelpSolutionApiVersion ?? "2024-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SelfHelp
                 HttpMessage message = _solutionResourcesRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, SelfHelpSolutionPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SelfHelpArmOperation<SelfHelpSolutionResource> operation = new SelfHelpArmOperation<SelfHelpSolutionResource>(
-                    new SelfHelpSolutionOperationSource(Client),
+                    new SelfHelpSolutionResourceOperationSource(Client),
                     _solutionResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.SelfHelp
                 HttpMessage message = _solutionResourcesRestClient.CreateUpdateRequest(Id.Parent.ToString(), Id.Name, SelfHelpSolutionPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SelfHelpArmOperation<SelfHelpSolutionResource> operation = new SelfHelpArmOperation<SelfHelpSolutionResource>(
-                    new SelfHelpSolutionOperationSource(Client),
+                    new SelfHelpSolutionResourceOperationSource(Client),
                     _solutionResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

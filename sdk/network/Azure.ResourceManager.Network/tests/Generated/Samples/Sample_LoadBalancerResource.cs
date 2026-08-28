@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network.Samples
             LoadBalancerResource loadBalancer = client.GetLoadBalancerResource(loadBalancerResourceId);
 
             // invoke the operation
-            await loadBalancer.DeleteAsync(WaitUntil.Completed);
+            await loadBalancer.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 Pools = { "pool1", "pool2" },
             };
-            MigrateLoadBalancerToIPBasedResult result = await loadBalancer.MigrateToIPBasedAsync(content: content);
+            MigrateLoadBalancerToIPBasedResult result = await loadBalancer.MigrateToIPBasedAsync(content, System.Threading.CancellationToken.None);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Network.Samples
             LoadBalancerResource loadBalancer = client.GetLoadBalancerResource(loadBalancerResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (NetworkInterfaceResource item in loadBalancer.GetLoadBalancerNetworkInterfacesAsync())
+            await foreach (NetworkInterfaceResource item in loadBalancer.GetLoadBalancerNetworkInterfacesAsync(System.Threading.CancellationToken.None))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Network.Samples
             LoadBalancerResource loadBalancer = client.GetLoadBalancerResource(loadBalancerResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (NetworkInterfaceResource item in loadBalancer.GetLoadBalancerNetworkInterfacesAsync())
+            await foreach (NetworkInterfaceResource item in loadBalancer.GetLoadBalancerNetworkInterfacesAsync(System.Threading.CancellationToken.None))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance

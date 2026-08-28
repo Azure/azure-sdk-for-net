@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkFabricRuleCondition : IEquatable<NetworkFabricRuleCondition>
     {
         private readonly string _value;
+        /// <summary> And Rule-Condition. </summary>
+        private const string AndValue = "And";
+        /// <summary> Or Rule-Condition. </summary>
+        private const string OrValue = "Or";
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricRuleCondition"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkFabricRuleCondition(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AndValue = "And";
-        private const string OrValue = "Or";
+            _value = value;
+        }
 
         /// <summary> And Rule-Condition. </summary>
         public static NetworkFabricRuleCondition And { get; } = new NetworkFabricRuleCondition(AndValue);
+
         /// <summary> Or Rule-Condition. </summary>
         public static NetworkFabricRuleCondition Or { get; } = new NetworkFabricRuleCondition(OrValue);
+
         /// <summary> Determines if two <see cref="NetworkFabricRuleCondition"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkFabricRuleCondition left, NetworkFabricRuleCondition right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkFabricRuleCondition"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkFabricRuleCondition left, NetworkFabricRuleCondition right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricRuleCondition"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkFabricRuleCondition"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkFabricRuleCondition(string value) => new NetworkFabricRuleCondition(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkFabricRuleCondition"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkFabricRuleCondition?(string value) => value == null ? null : new NetworkFabricRuleCondition(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkFabricRuleCondition other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkFabricRuleCondition other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

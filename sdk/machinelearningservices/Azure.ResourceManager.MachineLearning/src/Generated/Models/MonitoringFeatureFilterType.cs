@@ -7,48 +7,70 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The MonitoringFeatureFilterType. </summary>
+    /// <summary></summary>
     internal readonly partial struct MonitoringFeatureFilterType : IEquatable<MonitoringFeatureFilterType>
     {
         private readonly string _value;
+        /// <summary> Includes all features. </summary>
+        private const string AllFeaturesValue = "AllFeatures";
+        /// <summary> Only includes the top contributing features, measured by feature attribution. </summary>
+        private const string TopNByAttributionValue = "TopNByAttribution";
+        /// <summary> Includes a user-defined subset of features. </summary>
+        private const string FeatureSubsetValue = "FeatureSubset";
 
         /// <summary> Initializes a new instance of <see cref="MonitoringFeatureFilterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MonitoringFeatureFilterType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AllFeaturesValue = "AllFeatures";
-        private const string TopNByAttributionValue = "TopNByAttribution";
-        private const string FeatureSubsetValue = "FeatureSubset";
+            _value = value;
+        }
 
         /// <summary> Includes all features. </summary>
         public static MonitoringFeatureFilterType AllFeatures { get; } = new MonitoringFeatureFilterType(AllFeaturesValue);
+
         /// <summary> Only includes the top contributing features, measured by feature attribution. </summary>
         public static MonitoringFeatureFilterType TopNByAttribution { get; } = new MonitoringFeatureFilterType(TopNByAttributionValue);
+
         /// <summary> Includes a user-defined subset of features. </summary>
         public static MonitoringFeatureFilterType FeatureSubset { get; } = new MonitoringFeatureFilterType(FeatureSubsetValue);
+
         /// <summary> Determines if two <see cref="MonitoringFeatureFilterType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MonitoringFeatureFilterType left, MonitoringFeatureFilterType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MonitoringFeatureFilterType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MonitoringFeatureFilterType left, MonitoringFeatureFilterType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MonitoringFeatureFilterType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MonitoringFeatureFilterType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MonitoringFeatureFilterType(string value) => new MonitoringFeatureFilterType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MonitoringFeatureFilterType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MonitoringFeatureFilterType?(string value) => value == null ? null : new MonitoringFeatureFilterType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MonitoringFeatureFilterType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MonitoringFeatureFilterType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

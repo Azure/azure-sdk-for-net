@@ -35,6 +35,7 @@
     <Compile Include="ManualInteractiveBrowserCredentialBrokerTests.cs" Condition="$([MSBuild]::IsOsPlatform('Windows'))" />
     <Compile Include="ManualSharedTokenCacheCredentialBrokerTests.cs" Condition="$([MSBuild]::IsOsPlatform('Windows'))" />
     <Compile Include="ManualInteractiveBrowserCredentialBrokerTestsLinux.cs" Condition="$([MSBuild]::IsOsPlatform('Linux'))" />
+    <Compile Include="samples\DocSnippets\*.cs" />
   </ItemGroup>
 
 </Project>

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             TryGetApiVersion(IotOperationsDataflowResource.ResourceType, out string iotOperationsDataflowApiVersion);
             _dataflowClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", IotOperationsDataflowResource.ResourceType.Namespace, Diagnostics);
-            _dataflowRestClient = new Dataflow(_dataflowClientDiagnostics, Pipeline, Endpoint, iotOperationsDataflowApiVersion ?? "2025-10-01");
+            _dataflowRestClient = new Dataflow(_dataflowClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotOperationsDataflowApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _dataflowRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataflowName, IotOperationsDataflowData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsDataflowResource> operation = new IotOperationsArmOperation<IotOperationsDataflowResource>(
-                    new IotOperationsDataflowOperationSource(Client),
+                    new IotOperationsDataflowResourceOperationSource(Client),
                     _dataflowClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _dataflowRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, dataflowName, IotOperationsDataflowData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsDataflowResource> operation = new IotOperationsArmOperation<IotOperationsDataflowResource>(
-                    new IotOperationsDataflowOperationSource(Client),
+                    new IotOperationsDataflowResourceOperationSource(Client),
                     _dataflowClientDiagnostics,
                     Pipeline,
                     message.Request,

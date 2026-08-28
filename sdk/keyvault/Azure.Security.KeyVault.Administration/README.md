@@ -120,6 +120,15 @@ The same instance of a token credential can be used with multiple clients if the
 KeyVaultSettingsClient client = new KeyVaultSettingsClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
 ```
 
+#### Create KeyVaultEkmClient
+
+Instantiate a `DefaultAzureCredential` to pass to the `KeyVaultEkmClient`.
+The same instance of a token credential can be used with multiple clients if they will be authenticating with the same identity.
+
+```C# Snippet:HelloCreateKeyVaultEkmClient
+KeyVaultEkmClient client = new KeyVaultEkmClient(new Uri(managedHsmUrl), new DefaultAzureCredential());
+```
+
 ## Key concepts
 
 ### KeyVaultRoleDefinition
@@ -148,6 +157,14 @@ A `BackupOperation` represents a long running operation for a full key backup.
 ### RestoreOperation
 
 A `RestoreOperation` represents a long running operation for both a full key and selective key restore.
+
+### KeyVaultEkmClient
+
+A `KeyVaultEkmClient` provides both synchronous and asynchronous operations for managing the External Key Manager (EKM) connection on a Managed HSM.
+
+### KeyVaultEkmConnection
+
+A `KeyVaultEkmConnection` describes the EKM proxy connection used by a Managed HSM, including the proxy host, server CA certificates, and an optional path prefix.
 
 ### Thread safety
 
@@ -181,6 +198,11 @@ The following section provides several code snippets using the `client` created 
 * Backup and restore
   * [Performing a full key backup](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_BackupHelloWorldSync.md#performing-a-full-key-backup)
   * [Performing a full key restore](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_BackupHelloWorldSync.md#performing-a-full-key-restore)
+* EKM connection
+  * [Creating an EKM connection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample5_EkmHelloWorldSync.md#creating-an-ekm-connection)
+  * [Getting an EKM connection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample5_EkmHelloWorldSync.md#getting-an-ekm-connection)
+  * [Checking an EKM connection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample5_EkmHelloWorldSync.md#checking-an-ekm-connection)
+  * [Deleting an EKM connection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample5_EkmHelloWorldSync.md#deleting-an-ekm-connection)
 
 ### Async examples
 
@@ -193,6 +215,13 @@ The following section provides several code snippets using the `client` created 
 * Backup and restore
   * [Performing a full key backup](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_BackupHelloWorldAsync.md#performing-a-full-key-backup)
   * [Performing a full key restore](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample1_BackupHelloWorldAsync.md#performing-a-full-key-restore)
+* EKM connection
+  * [Creating an EKM connection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample5_EkmHelloWorldAsync.md#creating-an-ekm-connection)
+  * [Getting an EKM connection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample5_EkmHelloWorldAsync.md#getting-an-ekm-connection)
+  * [Checking an EKM connection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample5_EkmHelloWorldAsync.md#checking-an-ekm-connection)
+  * [Updating an EKM connection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample5_EkmHelloWorldAsync.md#updating-an-ekm-connection)
+  * [Retrieving the EKM client certificate](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample5_EkmHelloWorldAsync.md#retrieving-the-ekm-client-certificate)
+  * [Deleting an EKM connection](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/keyvault/Azure.Security.KeyVault.Administration/samples/Sample5_EkmHelloWorldAsync.md#deleting-an-ekm-connection)
 
 ## Troubleshooting
 

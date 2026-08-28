@@ -10,13 +10,70 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
-    public partial class DistributedAvailabilityGroupSetRole : IUtf8JsonSerializable, IJsonModel<DistributedAvailabilityGroupSetRole>
+    /// <summary> Distributed availability group failover request. </summary>
+    public partial class DistributedAvailabilityGroupSetRole : IJsonModel<DistributedAvailabilityGroupSetRole>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DistributedAvailabilityGroupSetRole>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="DistributedAvailabilityGroupSetRole"/> for deserialization. </summary>
+        internal DistributedAvailabilityGroupSetRole()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DistributedAvailabilityGroupSetRole PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DistributedAvailabilityGroupSetRole>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeDistributedAvailabilityGroupSetRole(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DistributedAvailabilityGroupSetRole)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<DistributedAvailabilityGroupSetRole>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(DistributedAvailabilityGroupSetRole)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<DistributedAvailabilityGroupSetRole>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DistributedAvailabilityGroupSetRole IPersistableModel<DistributedAvailabilityGroupSetRole>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<DistributedAvailabilityGroupSetRole>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="distributedAvailabilityGroupSetRole"> The <see cref="DistributedAvailabilityGroupSetRole"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DistributedAvailabilityGroupSetRole distributedAvailabilityGroupSetRole)
+        {
+            if (distributedAvailabilityGroupSetRole == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(distributedAvailabilityGroupSetRole, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<DistributedAvailabilityGroupSetRole>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,25 +85,24 @@ namespace Azure.ResourceManager.Sql.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DistributedAvailabilityGroupSetRole>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DistributedAvailabilityGroupSetRole>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DistributedAvailabilityGroupSetRole)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("instanceRole"u8);
             writer.WriteStringValue(InstanceRole.ToString());
             writer.WritePropertyName("roleChangeType"u8);
             writer.WriteStringValue(RoleChangeType.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -55,80 +111,52 @@ namespace Azure.ResourceManager.Sql.Models
             }
         }
 
-        DistributedAvailabilityGroupSetRole IJsonModel<DistributedAvailabilityGroupSetRole>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        DistributedAvailabilityGroupSetRole IJsonModel<DistributedAvailabilityGroupSetRole>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual DistributedAvailabilityGroupSetRole JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DistributedAvailabilityGroupSetRole>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DistributedAvailabilityGroupSetRole>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(DistributedAvailabilityGroupSetRole)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeDistributedAvailabilityGroupSetRole(document.RootElement, options);
         }
 
-        internal static DistributedAvailabilityGroupSetRole DeserializeDistributedAvailabilityGroupSetRole(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static DistributedAvailabilityGroupSetRole DeserializeDistributedAvailabilityGroupSetRole(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             DistributedAvailabilityGroupManagedInstanceRole instanceRole = default;
             DistributedAvailabilityGroupRoleChangeType roleChangeType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("instanceRole"u8))
+                if (prop.NameEquals("instanceRole"u8))
                 {
-                    instanceRole = new DistributedAvailabilityGroupManagedInstanceRole(property.Value.GetString());
+                    instanceRole = new DistributedAvailabilityGroupManagedInstanceRole(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("roleChangeType"u8))
+                if (prop.NameEquals("roleChangeType"u8))
                 {
-                    roleChangeType = new DistributedAvailabilityGroupRoleChangeType(property.Value.GetString());
+                    roleChangeType = new DistributedAvailabilityGroupRoleChangeType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new DistributedAvailabilityGroupSetRole(instanceRole, roleChangeType, serializedAdditionalRawData);
+            return new DistributedAvailabilityGroupSetRole(instanceRole, roleChangeType, additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<DistributedAvailabilityGroupSetRole>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DistributedAvailabilityGroupSetRole>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSqlContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(DistributedAvailabilityGroupSetRole)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        DistributedAvailabilityGroupSetRole IPersistableModel<DistributedAvailabilityGroupSetRole>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<DistributedAvailabilityGroupSetRole>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeDistributedAvailabilityGroupSetRole(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(DistributedAvailabilityGroupSetRole)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<DistributedAvailabilityGroupSetRole>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

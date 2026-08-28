@@ -21,8 +21,9 @@ namespace Azure.ResourceManager.Monitor.Models
         /// <summary> Initializes a new instance of <see cref="DataCollectionRuleMetadata"/>. </summary>
         /// <param name="provisionedBy"> Azure offering managing this resource on-behalf-of customer. </param>
         /// <param name="provisionedByResourceId"> Resource Id of azure offering managing this resource on-behalf-of customer. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataCollectionRuleMetadata(string provisionedBy, string provisionedByResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(provisionedBy, provisionedByResourceId, serializedAdditionalRawData)
+        /// <param name="provisionedByImmutableId"> Immutable Id of azure offering managing this resource on-behalf-of customer. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal DataCollectionRuleMetadata(string provisionedBy, string provisionedByResourceId, string provisionedByImmutableId, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(provisionedBy, provisionedByResourceId, provisionedByImmutableId, additionalBinaryDataProperties)
         {
         }
     }

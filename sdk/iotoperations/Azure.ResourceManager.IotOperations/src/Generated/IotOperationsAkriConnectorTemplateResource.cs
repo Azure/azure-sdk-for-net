@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             TryGetApiVersion(ResourceType, out string iotOperationsAkriConnectorTemplateApiVersion);
             _akriConnectorTemplateClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", ResourceType.Namespace, Diagnostics);
-            _akriConnectorTemplateRestClient = new AkriConnectorTemplate(_akriConnectorTemplateClientDiagnostics, Pipeline, Endpoint, iotOperationsAkriConnectorTemplateApiVersion ?? "2025-10-01");
+            _akriConnectorTemplateRestClient = new AkriConnectorTemplate(_akriConnectorTemplateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotOperationsAkriConnectorTemplateApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _akriConnectorTemplateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IotOperationsAkriConnectorTemplateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsAkriConnectorTemplateResource> operation = new IotOperationsArmOperation<IotOperationsAkriConnectorTemplateResource>(
-                    new IotOperationsAkriConnectorTemplateOperationSource(Client),
+                    new IotOperationsAkriConnectorTemplateResourceOperationSource(Client),
                     _akriConnectorTemplateClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _akriConnectorTemplateRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, IotOperationsAkriConnectorTemplateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsAkriConnectorTemplateResource> operation = new IotOperationsArmOperation<IotOperationsAkriConnectorTemplateResource>(
-                    new IotOperationsAkriConnectorTemplateOperationSource(Client),
+                    new IotOperationsAkriConnectorTemplateResourceOperationSource(Client),
                     _akriConnectorTemplateClientDiagnostics,
                     Pipeline,
                     message.Request,

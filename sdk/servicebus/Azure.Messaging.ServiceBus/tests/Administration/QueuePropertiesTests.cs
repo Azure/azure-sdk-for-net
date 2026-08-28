@@ -252,5 +252,109 @@ namespace Azure.Messaging.ServiceBus.Tests.Management
                 actualChildNode = actualChildNode.NextNode;
             }
         }
+
+        [Test]
+        public async Task ParsesQueueWithMaskedAuthorizationRuleKeys()
+        {
+            // The service masks SAS key values (returning empty strings) when the caller
+            // lacks the listkeys/action permission. Parsing such a response must not throw.
+            // See https://github.com/Azure/azure-sdk-for-net/issues/60469.
+            string queueDescriptionXml = $@"<entry xmlns=""{AdministrationClientConstants.AtomNamespace}"">" +
+                $@"<title xmlns=""{AdministrationClientConstants.AtomNamespace}"">maskedqueue</title>" +
+                $@"<content xmlns=""{AdministrationClientConstants.AtomNamespace}"">" +
+                $@"<QueueDescription xmlns=""{AdministrationClientConstants.ServiceBusNamespace}"" xmlns:i=""{AdministrationClientConstants.XmlSchemaInstanceNamespace}"">" +
+                $"<MaxSizeInMegabytes>1024</MaxSizeInMegabytes>" +
+                $"<AuthorizationRules>" +
+                $@"<AuthorizationRule i:type=""SharedAccessAuthorizationRule"">" +
+                $"<ClaimType>SharedAccessKey</ClaimType>" +
+                $"<ClaimValue>None</ClaimValue>" +
+                $"<Rights><AccessRights>Listen</AccessRights></Rights>" +
+                $"<KeyName>Decisions</KeyName>" +
+                $"<PrimaryKey></PrimaryKey>" +
+                $"<SecondaryKey></SecondaryKey>" +
+                $"</AuthorizationRule>" +
+                $"</AuthorizationRules>" +
+                $"<Status>Active</Status>" +
+                $"</QueueDescription>" +
+                $"</content>" +
+                $"</entry>";
+            MockResponse response = new MockResponse(200);
+            response.SetContent(queueDescriptionXml);
+
+            QueueProperties queueDesc = await QueuePropertiesExtensions.ParseResponseAsync(response, new ClientDiagnostics(new ServiceBusAdministrationClientOptions()));
+
+            Assert.AreEqual("maskedqueue", queueDesc.Name);
+            Assert.AreEqual(1, queueDesc.AuthorizationRules.Count);
+            var rule = (SharedAccessAuthorizationRule)queueDesc.AuthorizationRules[0];
+            Assert.AreEqual("Decisions", rule.KeyName);
+            Assert.AreEqual(string.Empty, rule.PrimaryKey);
+            Assert.AreEqual(string.Empty, rule.SecondaryKey);
+            CollectionAssert.AreEqual(new[] { AccessRights.Listen }, rule.Rights);
+        }
+
+        [Test]
+        public async Task ParsesQueueWithNoAuthorizationRulesSection()
+        {
+            // When the caller lacks listkeys/action, the service redaction removes the
+            // entire AuthorizationRules section (the intended contract). Parsing a response
+            // with no section must succeed and yield an empty rule collection.
+            // See https://github.com/Azure/azure-sdk-for-net/issues/60469.
+            string queueDescriptionXml = $@"<entry xmlns=""{AdministrationClientConstants.AtomNamespace}"">" +
+                $@"<title xmlns=""{AdministrationClientConstants.AtomNamespace}"">noauthrules</title>" +
+                $@"<content xmlns=""{AdministrationClientConstants.AtomNamespace}"">" +
+                $@"<QueueDescription xmlns=""{AdministrationClientConstants.ServiceBusNamespace}"">" +
+                $"<MaxSizeInMegabytes>1024</MaxSizeInMegabytes>" +
+                $"<Status>Active</Status>" +
+                $"</QueueDescription>" +
+                $"</content>" +
+                $"</entry>";
+            MockResponse response = new MockResponse(200);
+            response.SetContent(queueDescriptionXml);
+
+            QueueProperties queueDesc = await QueuePropertiesExtensions.ParseResponseAsync(response, new ClientDiagnostics(new ServiceBusAdministrationClientOptions()));
+
+            Assert.AreEqual("noauthrules", queueDesc.Name);
+            Assert.IsNotNull(queueDesc.AuthorizationRules);
+            Assert.AreEqual(0, queueDesc.AuthorizationRules.Count);
+        }
+
+        [Test]
+        public async Task CreateQueueOptionsFromPropertiesWithMaskedKeysDoesNotThrow()
+        {
+            // A queue fetched with masked SAS keys must survive the common
+            // get-modify-update round-trip: new CreateQueueOptions(properties) clones
+            // the authorization rules, which must not re-validate the masked keys.
+            // See https://github.com/Azure/azure-sdk-for-net/issues/60469.
+            string queueDescriptionXml = $@"<entry xmlns=""{AdministrationClientConstants.AtomNamespace}"">" +
+                $@"<title xmlns=""{AdministrationClientConstants.AtomNamespace}"">maskedqueue</title>" +
+                $@"<content xmlns=""{AdministrationClientConstants.AtomNamespace}"">" +
+                $@"<QueueDescription xmlns=""{AdministrationClientConstants.ServiceBusNamespace}"" xmlns:i=""{AdministrationClientConstants.XmlSchemaInstanceNamespace}"">" +
+                $"<MaxSizeInMegabytes>1024</MaxSizeInMegabytes>" +
+                $"<AuthorizationRules>" +
+                $@"<AuthorizationRule i:type=""SharedAccessAuthorizationRule"">" +
+                $"<ClaimType>SharedAccessKey</ClaimType>" +
+                $"<ClaimValue>None</ClaimValue>" +
+                $"<Rights><AccessRights>Listen</AccessRights></Rights>" +
+                $"<KeyName>Decisions</KeyName>" +
+                $"<PrimaryKey></PrimaryKey>" +
+                $"<SecondaryKey></SecondaryKey>" +
+                $"</AuthorizationRule>" +
+                $"</AuthorizationRules>" +
+                $"<Status>Active</Status>" +
+                $"</QueueDescription>" +
+                $"</content>" +
+                $"</entry>";
+            MockResponse response = new MockResponse(200);
+            response.SetContent(queueDescriptionXml);
+            QueueProperties queueDesc = await QueuePropertiesExtensions.ParseResponseAsync(response, new ClientDiagnostics(new ServiceBusAdministrationClientOptions()));
+
+            CreateQueueOptions options = null;
+            Assert.DoesNotThrow(() => options = new CreateQueueOptions(queueDesc));
+            Assert.AreEqual(1, options.AuthorizationRules.Count);
+            var rule = (SharedAccessAuthorizationRule)options.AuthorizationRules[0];
+            Assert.AreEqual("Decisions", rule.KeyName);
+            Assert.AreEqual(string.Empty, rule.PrimaryKey);
+            Assert.AreEqual(string.Empty, rule.SecondaryKey);
+        }
     }
 }

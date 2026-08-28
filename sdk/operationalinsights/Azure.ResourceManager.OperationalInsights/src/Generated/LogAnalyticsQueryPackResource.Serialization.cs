@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.OperationalInsights
 {
+    /// <summary></summary>
     public partial class LogAnalyticsQueryPackResource : IJsonModel<LogAnalyticsQueryPackData>
     {
-        private static LogAnalyticsQueryPackData s_dataDeserializationInstance;
-        private static LogAnalyticsQueryPackData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<LogAnalyticsQueryPackData> s_dataDeserializationInstance;
 
+        private static IJsonModel<LogAnalyticsQueryPackData> DataDeserializationInstance => s_dataDeserializationInstance ??= new LogAnalyticsQueryPackData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<LogAnalyticsQueryPackData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<LogAnalyticsQueryPackData>)Data).Write(writer, options);
 
-        LogAnalyticsQueryPackData IJsonModel<LogAnalyticsQueryPackData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<LogAnalyticsQueryPackData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        LogAnalyticsQueryPackData IJsonModel<LogAnalyticsQueryPackData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<LogAnalyticsQueryPackData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<LogAnalyticsQueryPackData>(Data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         LogAnalyticsQueryPackData IPersistableModel<LogAnalyticsQueryPackData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<LogAnalyticsQueryPackData>(data, options, AzureResourceManagerOperationalInsightsContext.Default);
 
-        string IPersistableModel<LogAnalyticsQueryPackData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<LogAnalyticsQueryPackData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<LogAnalyticsQueryPackData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

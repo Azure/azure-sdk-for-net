@@ -20,23 +20,29 @@ namespace Azure.ResourceManager.HybridNetwork.Models
 
         /// <summary> Initializes a new instance of <see cref="AzureOperatorNexusImageDeployMappingRuleProfile"/>. </summary>
         /// <param name="applicationEnablement"> The application enablement. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="imageMappingRuleProfile"> The vhd mapping rule profile. </param>
-        internal AzureOperatorNexusImageDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement, IDictionary<string, BinaryData> serializedAdditionalRawData, ImageMappingRuleProfile imageMappingRuleProfile) : base(applicationEnablement, serializedAdditionalRawData)
+        internal AzureOperatorNexusImageDeployMappingRuleProfile(ApplicationEnablement? applicationEnablement, IDictionary<string, BinaryData> additionalBinaryDataProperties, ImageMappingRuleProfile imageMappingRuleProfile) : base(applicationEnablement, additionalBinaryDataProperties)
         {
             ImageMappingRuleProfile = imageMappingRuleProfile;
         }
 
         /// <summary> The vhd mapping rule profile. </summary>
         internal ImageMappingRuleProfile ImageMappingRuleProfile { get; set; }
+
         /// <summary> List of values. </summary>
         public string ImageMappingRuleUserConfiguration
         {
-            get => ImageMappingRuleProfile is null ? default : ImageMappingRuleProfile.UserConfiguration;
+            get
+            {
+                return ImageMappingRuleProfile is null ? default : ImageMappingRuleProfile.UserConfiguration;
+            }
             set
             {
                 if (ImageMappingRuleProfile is null)
+                {
                     ImageMappingRuleProfile = new ImageMappingRuleProfile();
+                }
                 ImageMappingRuleProfile.UserConfiguration = value;
             }
         }

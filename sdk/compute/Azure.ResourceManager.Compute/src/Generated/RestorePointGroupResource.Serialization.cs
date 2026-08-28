@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Compute
 {
+    /// <summary></summary>
     public partial class RestorePointGroupResource : IJsonModel<RestorePointGroupData>
     {
-        private static RestorePointGroupData s_dataDeserializationInstance;
-        private static RestorePointGroupData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RestorePointGroupData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RestorePointGroupData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RestorePointGroupData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RestorePointGroupData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RestorePointGroupData>)Data).Write(writer, options);
 
-        RestorePointGroupData IJsonModel<RestorePointGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RestorePointGroupData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RestorePointGroupData IJsonModel<RestorePointGroupData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RestorePointGroupData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RestorePointGroupData>(Data, options, AzureResourceManagerComputeContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RestorePointGroupData IPersistableModel<RestorePointGroupData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RestorePointGroupData>(data, options, AzureResourceManagerComputeContext.Default);
 
-        string IPersistableModel<RestorePointGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RestorePointGroupData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RestorePointGroupData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

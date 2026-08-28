@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.Redis.Mocking
 
         private ClientDiagnostics RedisResourcesClientDiagnostics => _redisResourcesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Redis.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RedisResources RedisResourcesRestClient => _redisResourcesRestClient ??= new RedisResources(RedisResourcesClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
+        private RedisResources RedisResourcesRestClient => _redisResourcesRestClient ??= new RedisResources(RedisResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
 
         private ClientDiagnostics RedisOperationGroupClientDiagnostics => _redisOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Redis.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private RedisOperationGroup RedisOperationGroupRestClient => _redisOperationGroupRestClient ??= new RedisOperationGroup(RedisOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
+        private RedisOperationGroup RedisOperationGroupRestClient => _redisOperationGroupRestClient ??= new RedisOperationGroup(RedisOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
 
         private ClientDiagnostics AsyncOperationStatusOperationGroupClientDiagnostics => _asyncOperationStatusOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Redis.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AsyncOperationStatusOperationGroup AsyncOperationStatusOperationGroupRestClient => _asyncOperationStatusOperationGroupRestClient ??= new AsyncOperationStatusOperationGroup(AsyncOperationStatusOperationGroupClientDiagnostics, Pipeline, Endpoint, "2025-08-01-preview");
+        private AsyncOperationStatusOperationGroup AsyncOperationStatusOperationGroupRestClient => _asyncOperationStatusOperationGroupRestClient ??= new AsyncOperationStatusOperationGroup(AsyncOperationStatusOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-08-01-preview");
 
         /// <summary>
         /// Gets all Redis caches in the specified subscription.

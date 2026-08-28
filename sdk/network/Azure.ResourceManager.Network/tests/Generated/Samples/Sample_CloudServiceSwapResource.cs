@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network.Samples
             {
                 CloudServiceSwapSlotType = SwapSlotType.Production,
             };
-            await cloudServiceSwap.UpdateAsync(WaitUntil.Completed, data);
+            await cloudServiceSwap.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }

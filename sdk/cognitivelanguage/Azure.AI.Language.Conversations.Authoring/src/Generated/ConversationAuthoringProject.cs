@@ -89,7 +89,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateAssignProjectResourcesRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringProject.AssignProjectResourcesAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringProject.AssignProjectResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -173,7 +173,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateUnassignProjectResourcesRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringProject.UnassignProjectResourcesAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringProject.UnassignProjectResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -457,7 +457,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateSwapDeploymentsRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringProject.SwapDeploymentsAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringProject.SwapDeployments", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -797,7 +797,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringProject.DeleteProjectAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringProject.DeleteProject", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -973,7 +973,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
                 using HttpMessage message = CreateExportRequest(projectName, stringIndexType, exportedProjectFormat, assetKind, trainedModelLabel, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringProject.ExportAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringProject.Export", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1063,7 +1063,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateImportRequest(projectName, content, exportedProjectFormat, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringProject.ImportAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringProject.Import", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1453,7 +1453,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateCopyProjectRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringProject.CopyProjectAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringProject.CopyProject", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1637,7 +1637,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateTrainRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringProject.TrainAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringProject.Train", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1673,7 +1673,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(details, nameof(details));
 
-            return ProtocolOperationHelpers.Convert(await TrainAsync(waitUntil, projectName, details, cancellationToken.ToRequestContext()).ConfigureAwait(false), response => ConversationAuthoringTrainingJobResult.FromLroResponse(response), ClientDiagnostics, "ConversationAuthoringProject.TrainAsync");
+            return ProtocolOperationHelpers.Convert(await TrainAsync(waitUntil, projectName, details, cancellationToken.ToRequestContext()).ConfigureAwait(false), response => ConversationAuthoringTrainingJobResult.FromLroResponse(response), ClientDiagnostics, "ConversationAuthoringProject.Train");
         }
 
         /// <summary>
@@ -1821,7 +1821,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
                 using HttpMessage message = CreateCancelTrainingJobRequest(projectName, jobId, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringProject.CancelTrainingJobAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringProject.CancelTrainingJob", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1857,7 +1857,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            return ProtocolOperationHelpers.Convert(await CancelTrainingJobAsync(waitUntil, projectName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false), response => ConversationAuthoringTrainingJobResult.FromLroResponse(response), ClientDiagnostics, "ConversationAuthoringProject.CancelTrainingJobAsync");
+            return ProtocolOperationHelpers.Convert(await CancelTrainingJobAsync(waitUntil, projectName, jobId, cancellationToken.ToRequestContext()).ConfigureAwait(false), response => ConversationAuthoringTrainingJobResult.FromLroResponse(response), ClientDiagnostics, "ConversationAuthoringProject.CancelTrainingJob");
         }
     }
 }

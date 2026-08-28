@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Nginx
                     yield break;
                 }
                 NginxConfigurationListResponse result = NginxConfigurationListResponse.FromResponse(response);
-                yield return Page<NginxConfigurationData>.FromValues((IReadOnlyList<NginxConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NginxConfigurationData>.FromValues((IReadOnlyList<NginxConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -189,7 +189,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
 
                 using HttpMessage message = CreateDeleteExportedModelRequest(projectName, exportedModelName, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringExportedModel.DeleteExportedModelAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringExportedModel.DeleteExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -277,7 +277,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 Argument.AssertNotNull(content, nameof(content));
 
                 using HttpMessage message = CreateCreateOrUpdateExportedModelRequest(projectName, exportedModelName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringExportedModel.CreateOrUpdateExportedModelAsync", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(Pipeline, message, ClientDiagnostics, "ConversationAuthoringExportedModel.CreateOrUpdateExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {

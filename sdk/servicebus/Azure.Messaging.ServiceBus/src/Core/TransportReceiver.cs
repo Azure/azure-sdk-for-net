@@ -23,14 +23,27 @@ namespace Azure.Messaging.ServiceBus.Core
         public abstract bool IsSessionLinkClosed { get; }
 
         /// <summary>
-        ///
+        /// The Session Id associated with the receiver.
         /// </summary>
         public abstract string SessionId { get; protected set; }
 
         /// <summary>
-        /// The Session Id associated with the receiver.
+        /// The <see cref="DateTimeOffset" /> until which the session is locked by this receiver.
         /// </summary>
         public abstract DateTimeOffset SessionLockedUntil { get; protected set; }
+
+        /// <summary>
+        /// The session lock token assigned by the service for a non-exclusive session, or <c>null</c> for an
+        /// exclusive session. This token can be presented by another receiver to cooperatively take over the session.
+        /// </summary>
+        public abstract Guid? SessionLockToken { get; protected set; }
+
+        /// <summary>
+        /// Indicates whether the session was established with an exclusive lock. This is <c>true</c> for an exclusive
+        /// session, which is the default, and <c>false</c> for a session established with non-exclusive locking. This
+        /// is only meaningful for a session receiver; a receiver that is not bound to a session reports <c>true</c>.
+        /// </summary>
+        public abstract bool IsSessionExclusive { get; }
 
         /// <summary>
         /// The prefetch count associated with the receiver.
@@ -235,6 +248,27 @@ namespace Azure.Messaging.ServiceBus.Core
         /// <returns>A task to be resolved on when the operation has completed.</returns>
         public abstract Task SetStateAsync(
             BinaryData sessionState,
+            CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Lists the IDs of sessions for the requested page. The set returned depends on
+        /// <paramref name="lastUpdatedTime"/>: pass <see cref="DateTimeOffset.MaxValue"/> to list all
+        /// sessions that have active messages or session state, or a real timestamp to list only
+        /// sessions whose session state was set or updated after that time.
+        /// </summary>
+        ///
+        /// <param name="lastUpdatedTime">Filter timestamp. Pass <see cref="DateTimeOffset.MaxValue"/>
+        /// to retrieve all sessions that have active messages or session state. Pass a real timestamp
+        /// to retrieve only sessions whose session state was set or updated after that time.</param>
+        /// <param name="skip">Pagination offset.</param>
+        /// <param name="top">Page size.</param>
+        /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
+        ///
+        /// <returns>A list of session ID strings for this page.</returns>
+        public abstract Task<IReadOnlyList<string>> GetMessageSessionsAsync(
+            DateTimeOffset lastUpdatedTime,
+            int skip,
+            int top,
             CancellationToken cancellationToken);
     }
 }

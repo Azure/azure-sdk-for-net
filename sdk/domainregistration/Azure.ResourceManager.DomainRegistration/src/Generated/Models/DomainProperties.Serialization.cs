@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.DomainRegistration;
 
 namespace Azure.ResourceManager.DomainRegistration.Models
@@ -243,7 +244,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
             DomainPurchaseConsent consent = default;
             IReadOnlyList<DomainNotRenewableReason> domainNotRenewableReasons = default;
             AppServiceDnsType? dnsType = default;
-            string dnsZoneId = default;
+            ResourceIdentifier dnsZoneId = default;
             AppServiceDnsType? targetDnsType = default;
             string authCode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -406,7 +407,11 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 }
                 if (prop.NameEquals("dnsZoneId"u8))
                 {
-                    dnsZoneId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dnsZoneId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("targetDnsType"u8))

@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.ContainerInstance
                     yield break;
                 }
                 ContainerGroupProfileListResult result = ContainerGroupProfileListResult.FromResponse(response);
-                yield return Page<ContainerGroupProfileData>.FromValues((IReadOnlyList<ContainerGroupProfileData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ContainerGroupProfileData>.FromValues((IReadOnlyList<ContainerGroupProfileData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

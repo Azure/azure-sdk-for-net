@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
 
             Assert.NotNull(customDomainValidationResponse);
             Assert.IsNotNull(customDomainValidationResponse.Value);
-            namespacePatch.TopicsConfiguration.CustomDomains.Add(new CustomDomainConfiguration()
+            namespacePatch.TopicsConfiguration.TopicsCustomDomains.Add(new CustomDomainConfiguration()
             {
                 FullyQualifiedDomainName = "www.contoso.com",
                 Identity = new CustomDomainIdentity()
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.EventGrid.Tests
             Assert.AreEqual(getUpdatedNamespaceResponse.Data.TopicsConfiguration.CustomDomains.FirstOrDefault().FullyQualifiedDomainName, "www.contoso.com");
 
             // Delete 1st custom domain
-            namespacePatch.TopicsConfiguration.CustomDomains.RemoveAt(0);
+            namespacePatch.TopicsConfiguration.TopicsCustomDomains.RemoveAt(0);
             var updateNamespaceResponse2 = (await getUpdatedNamespaceResponse.UpdateAsync(WaitUntil.Completed, namespacePatch)).Value;
             Assert.NotNull(updateNamespaceResponse2);
             Assert.AreEqual(NamespaceProvisioningState.Succeeded, updateNamespaceResponse2.Data.ProvisioningState);

@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Represents instance details for an app service plan.
-    /// Serialized Name: ServerFarmInstanceDetails
-    /// </summary>
+    /// <summary> Represents instance details for an app service plan. </summary>
     public partial class ServerFarmInstanceDetails
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ServerFarmInstanceDetails"/>. </summary>
         internal ServerFarmInstanceDetails()
@@ -55,43 +24,27 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ServerFarmInstanceDetails"/>. </summary>
-        /// <param name="serverFarmName">
-        /// The server farm name.
-        /// Serialized Name: ServerFarmInstanceDetails.serverFarmName
-        /// </param>
-        /// <param name="instances">
-        /// The list of server farm instances.
-        /// Serialized Name: ServerFarmInstanceDetails.instances
-        /// </param>
-        /// <param name="instanceCount">
-        /// The total number of instances.
-        /// Serialized Name: ServerFarmInstanceDetails.instanceCount
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServerFarmInstanceDetails(string serverFarmName, IReadOnlyList<ServerFarmInstance> instances, int? instanceCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="serverFarmName"> The server farm name. </param>
+        /// <param name="instances"> The list of server farm instances. </param>
+        /// <param name="instanceCount"> The total number of instances. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ServerFarmInstanceDetails(string serverFarmName, IReadOnlyList<ServerFarmInstance> instances, int? instanceCount, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServerFarmName = serverFarmName;
             Instances = instances;
             InstanceCount = instanceCount;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The server farm name.
-        /// Serialized Name: ServerFarmInstanceDetails.serverFarmName
-        /// </summary>
+        /// <summary> The server farm name. </summary>
         [WirePath("serverFarmName")]
         public string ServerFarmName { get; }
-        /// <summary>
-        /// The list of server farm instances.
-        /// Serialized Name: ServerFarmInstanceDetails.instances
-        /// </summary>
+
+        /// <summary> The list of server farm instances. </summary>
         [WirePath("instances")]
         public IReadOnlyList<ServerFarmInstance> Instances { get; }
-        /// <summary>
-        /// The total number of instances.
-        /// Serialized Name: ServerFarmInstanceDetails.instanceCount
-        /// </summary>
+
+        /// <summary> The total number of instances. </summary>
         [WirePath("instanceCount")]
         public int? InstanceCount { get; }
     }

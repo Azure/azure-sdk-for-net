@@ -7,24 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// The status of the custom domain
-    /// Serialized Name: CustomDomainStatus
-    /// </summary>
+    /// <summary> The status of the custom domain. </summary>
     public readonly partial struct CustomDomainStatus : IEquatable<CustomDomainStatus>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="CustomDomainStatus"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public CustomDomainStatus(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string RetrievingValidationTokenValue = "RetrievingValidationToken";
         private const string ValidatingValue = "Validating";
         private const string AddingValue = "Adding";
@@ -33,58 +23,67 @@ namespace Azure.ResourceManager.AppService.Models
         private const string DeletingValue = "Deleting";
         private const string UnhealthyValue = "Unhealthy";
 
-        /// <summary>
-        /// RetrievingValidationToken
-        /// Serialized Name: CustomDomainStatus.RetrievingValidationToken
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="CustomDomainStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public CustomDomainStatus(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the RetrievingValidationToken. </summary>
         public static CustomDomainStatus RetrievingValidationToken { get; } = new CustomDomainStatus(RetrievingValidationTokenValue);
-        /// <summary>
-        /// Validating
-        /// Serialized Name: CustomDomainStatus.Validating
-        /// </summary>
+
+        /// <summary> Gets the Validating. </summary>
         public static CustomDomainStatus Validating { get; } = new CustomDomainStatus(ValidatingValue);
-        /// <summary>
-        /// Adding
-        /// Serialized Name: CustomDomainStatus.Adding
-        /// </summary>
+
+        /// <summary> Gets the Adding. </summary>
         public static CustomDomainStatus Adding { get; } = new CustomDomainStatus(AddingValue);
-        /// <summary>
-        /// Ready
-        /// Serialized Name: CustomDomainStatus.Ready
-        /// </summary>
+
+        /// <summary> Gets the Ready. </summary>
         public static CustomDomainStatus Ready { get; } = new CustomDomainStatus(ReadyValue);
-        /// <summary>
-        /// Failed
-        /// Serialized Name: CustomDomainStatus.Failed
-        /// </summary>
+
+        /// <summary> Gets the Failed. </summary>
         public static CustomDomainStatus Failed { get; } = new CustomDomainStatus(FailedValue);
-        /// <summary>
-        /// Deleting
-        /// Serialized Name: CustomDomainStatus.Deleting
-        /// </summary>
+
+        /// <summary> Gets the Deleting. </summary>
         public static CustomDomainStatus Deleting { get; } = new CustomDomainStatus(DeletingValue);
-        /// <summary>
-        /// Unhealthy
-        /// Serialized Name: CustomDomainStatus.Unhealthy
-        /// </summary>
+
+        /// <summary> Gets the Unhealthy. </summary>
         public static CustomDomainStatus Unhealthy { get; } = new CustomDomainStatus(UnhealthyValue);
+
         /// <summary> Determines if two <see cref="CustomDomainStatus"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(CustomDomainStatus left, CustomDomainStatus right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="CustomDomainStatus"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(CustomDomainStatus left, CustomDomainStatus right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="CustomDomainStatus"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="CustomDomainStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator CustomDomainStatus(string value) => new CustomDomainStatus(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="CustomDomainStatus"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator CustomDomainStatus?(string value) => value == null ? null : new CustomDomainStatus(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is CustomDomainStatus other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(CustomDomainStatus other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

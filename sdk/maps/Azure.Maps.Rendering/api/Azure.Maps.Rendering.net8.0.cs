@@ -94,6 +94,7 @@ namespace Azure.Maps.Rendering
     public static partial class MapsRenderingModelFactory
     {
         public static Azure.Maps.Rendering.CopyrightCaption CopyrightCaption(string formatVersion = null, string copyright = null) { throw null; }
+        public static Azure.Maps.Rendering.MapTileSet MapTileSet(string tileJsonVersion = null, string name = null, string description = null, string version = null, string attribution = null, string template = null, string legend = null, string scheme = null, System.Collections.Generic.IEnumerable<string> tiles = null, System.Collections.Generic.IEnumerable<string> grids = null, System.Collections.Generic.IEnumerable<string> data = null, int? minZoom = default(int?), int? maxZoom = default(int?), System.Collections.Generic.IEnumerable<float> bounds = null, System.Collections.Generic.IEnumerable<float> center = null) { throw null; }
         public static Azure.Maps.Rendering.RegionalCopyright RegionalCopyright(System.Collections.Generic.IEnumerable<string> copyrights = null, Azure.Maps.Rendering.RegionalCopyrightCountry country = null) { throw null; }
         public static Azure.Maps.Rendering.RegionalCopyrightCountry RegionalCopyrightCountry(string iso3 = null, string label = null) { throw null; }
         public static Azure.Maps.Rendering.RenderCopyright RenderCopyright(string formatVersion = null, System.Collections.Generic.IEnumerable<string> generalCopyrights = null, System.Collections.Generic.IEnumerable<Azure.Maps.Rendering.RegionalCopyright> regionalCopyrights = null) { throw null; }

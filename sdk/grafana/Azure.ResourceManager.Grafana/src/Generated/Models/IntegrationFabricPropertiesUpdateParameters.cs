@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.Grafana.Models
         }
 
         /// <summary> The new integration scenarios covered by this integration fabric. </summary>
-        public IList<string> Scenarios { get; }
+        public IList<string> Scenarios { get; } = new ChangeTrackingList<string>();
     }
 }

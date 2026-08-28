@@ -14,37 +14,8 @@ namespace Azure.ResourceManager.IotHub.Models
     /// <summary> The properties of the KeyVault key. </summary>
     public partial class IotHubKeyVaultKeyProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="IotHubKeyVaultKeyProperties"/>. </summary>
         public IotHubKeyVaultKeyProperties()
@@ -54,26 +25,33 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <summary> Initializes a new instance of <see cref="IotHubKeyVaultKeyProperties"/>. </summary>
         /// <param name="keyIdentifier"> The identifier of the key. </param>
         /// <param name="identity"> Managed identity properties of KeyVault Key. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotHubKeyVaultKeyProperties(string keyIdentifier, ManagedIdentity identity, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubKeyVaultKeyProperties(string keyIdentifier, ManagedIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             KeyIdentifier = keyIdentifier;
             Identity = identity;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The identifier of the key. </summary>
         public string KeyIdentifier { get; set; }
+
         /// <summary> Managed identity properties of KeyVault Key. </summary>
         internal ManagedIdentity Identity { get; set; }
+
         /// <summary> The user assigned identity. </summary>
         public ResourceIdentifier UserAssignedIdentity
         {
-            get => Identity is null ? default : Identity.UserAssignedIdentity;
+            get
+            {
+                return Identity is null ? default : Identity.UserAssignedIdentity;
+            }
             set
             {
                 if (Identity is null)
+                {
                     Identity = new ManagedIdentity();
+                }
                 Identity.UserAssignedIdentity = value;
             }
         }

@@ -1,0 +1,223 @@
+{
+  "name": "Azure.ClientGenerator.Core.ApiVersion.ClientApiVersions",
+  "apiVersions": [
+    "2024-01-01"
+  ],
+  "enums": [
+    {
+      "$id": "1",
+      "kind": "enum",
+      "name": "ClientApiVersions",
+      "crossLanguageDefinitionId": "Azure.ClientGenerator.Core.ApiVersion.ClientApiVersions.ClientApiVersions",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "3",
+          "kind": "enumvalue",
+          "name": "v2022_10_01",
+          "value": "2022-10-01",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "4",
+          "kind": "enumvalue",
+          "name": "v2024_01_01",
+          "value": "2024-01-01",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "Service api version 2024-01-01.",
+          "decorators": [],
+          "isExactName": false
+        }
+      ],
+      "namespace": "Azure.ClientGenerator.Core.ApiVersion.ClientApiVersions",
+      "isFixed": true,
+      "isFlags": false,
+      "usage": "ApiVersionEnum",
+      "decorators": [],
+      "isExactName": false
+    }
+  ],
+  "constants": [],
+  "models": [],
+  "clients": [
+    {
+      "$id": "5",
+      "kind": "client",
+      "name": "ClientApiVersionsClient",
+      "isExactName": false,
+      "namespace": "Azure.ClientGenerator.Core.ApiVersion.ClientApiVersions",
+      "methods": [
+        {
+          "$id": "6",
+          "kind": "basic",
+          "name": "sendApiVersion",
+          "isExactName": false,
+          "accessibility": "public",
+          "apiVersions": [
+            "2024-01-01"
+          ],
+          "doc": "Test api version parameter from clientApiVersions.",
+          "operation": {
+            "$id": "7",
+            "name": "sendApiVersion",
+            "isExactName": false,
+            "resourceName": "ClientApiVersions",
+            "doc": "Test api version parameter from clientApiVersions.",
+            "accessibility": "public",
+            "parameters": [
+              {
+                "$id": "8",
+                "kind": "query",
+                "name": "apiVersion",
+                "serializedName": "api-version",
+                "type": {
+                  "$id": "9",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "isApiVersion": true,
+                "explode": false,
+                "defaultValue": {
+                  "type": {
+                    "$id": "10",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string"
+                  },
+                  "value": "2024-01-01"
+                },
+                "optional": false,
+                "scope": "Client",
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ClientGenerator.Core.ApiVersion.ClientApiVersions.sendApiVersion.apiVersion",
+                "readOnly": false,
+                "methodParameterSegments": [
+                  {
+                    "$id": "11",
+                    "kind": "method",
+                    "name": "apiVersion",
+                    "serializedName": "apiVersion",
+                    "type": {
+                      "$id": "12",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "location": "",
+                    "isApiVersion": true,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "13",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2024-01-01"
+                    },
+                    "optional": true,
+                    "scope": "Method",
+                    "crossLanguageDefinitionId": "Azure.ClientGenerator.Core.ApiVersion.ClientApiVersions.sendApiVersion.apiVersion",
+                    "readOnly": false,
+                    "access": "public",
+                    "decorators": [],
+                    "isExactName": false
+                  }
+                ],
+                "isExactName": false
+              }
+            ],
+            "responses": [
+              {
+                "statusCodes": [
+                  200
+                ],
+                "headers": [],
+                "isErrorResponse": false,
+                "serializationOptions": {}
+              }
+            ],
+            "httpMethod": "POST",
+            "uri": "{endpoint}",
+            "path": "/azure/client-generator-core/api-version/client-api-versions",
+            "bufferResponse": true,
+            "generateProtocolMethod": true,
+            "generateConvenienceMethod": true,
+            "crossLanguageDefinitionId": "Azure.ClientGenerator.Core.ApiVersion.ClientApiVersions.sendApiVersion",
+            "decorators": [],
+            "namespace": "Azure.ClientGenerator.Core.ApiVersion.ClientApiVersions"
+          },
+          "parameters": [],
+          "response": {},
+          "isOverride": false,
+          "generateConvenient": true,
+          "generateProtocol": true,
+          "crossLanguageDefinitionId": "Azure.ClientGenerator.Core.ApiVersion.ClientApiVersions.sendApiVersion"
+        }
+      ],
+      "parameters": [
+        {
+          "$id": "14",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "15",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "16",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "http://localhost:3000"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Azure.ClientGenerator.Core.ApiVersion.ClientApiVersions.endpoint",
+          "isExactName": false
+        },
+        {
+          "$ref": "11"
+        }
+      ],
+      "initializedBy": 1,
+      "decorators": [],
+      "crossLanguageDefinitionId": "Azure.ClientGenerator.Core.ApiVersion.ClientApiVersions",
+      "apiVersions": [
+        "2024-01-01"
+      ],
+      "isMultiServiceClient": false
+    }
+  ]
+}

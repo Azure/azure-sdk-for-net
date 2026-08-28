@@ -13,127 +13,198 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    /// <summary>
-    /// A class representing the NetworkBootstrapDevice data model.
-    /// The Network Bootstrap Device resource definition.
-    /// </summary>
+    /// <summary> The Network Bootstrap Device resource definition. </summary>
     public partial class NetworkBootstrapDeviceData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkBootstrapDeviceData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         public NetworkBootstrapDeviceData(AzureLocation location) : base(location)
         {
+
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkBootstrapDeviceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The NetworkBootstrapDevice properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="hostName"> The host name of the device. </param>
-        /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
-        /// <param name="version"> Current version of the device as defined in SKU. </param>
-        /// <param name="networkDeviceSku"> Network Bootstrap Device SKU name. </param>
-        /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
-        /// <param name="secondaryManagementIPv4Address"> Secondary Management IPv4 Address. </param>
-        /// <param name="dhcpV4ServerIPAddress"> Dhcp server IPv4 Address. </param>
-        /// <param name="primaryManagementIPv6Address"> Primary Management IPv6 Address. </param>
-        /// <param name="secondaryManagementIPv6Address"> Secondary Management IPv6 Address. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="primaryManagementIPv4Address"> Primary Management IPv4 Address. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkBootstrapDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string annotation, string hostName, string serialNumber, string version, string networkDeviceSku, ResourceIdentifier networkFabricId, string secondaryManagementIPv4Address, string dhcpV4ServerIPAddress, string primaryManagementIPv6Address, string secondaryManagementIPv6Address, NetworkFabricProvisioningState? provisioningState, string primaryManagementIPv4Address, NetworkFabricAdministrativeState? administrativeState, NetworkFabricConfigurationState? configurationState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkBootstrapDeviceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, NetworkBootstrapDeviceProperties properties, ManagedServiceIdentity identity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
+            Properties = properties;
             Identity = identity;
-            Annotation = annotation;
-            HostName = hostName;
-            SerialNumber = serialNumber;
-            Version = version;
-            NetworkDeviceSku = networkDeviceSku;
-            NetworkFabricId = networkFabricId;
-            SecondaryManagementIPv4Address = secondaryManagementIPv4Address;
-            DhcpV4ServerIPAddress = dhcpV4ServerIPAddress;
-            PrimaryManagementIPv6Address = primaryManagementIPv6Address;
-            SecondaryManagementIPv6Address = secondaryManagementIPv6Address;
-            ProvisioningState = provisioningState;
-            PrimaryManagementIPv4Address = primaryManagementIPv4Address;
-            AdministrativeState = administrativeState;
-            ConfigurationState = configurationState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="NetworkBootstrapDeviceData"/> for deserialization. </summary>
-        internal NetworkBootstrapDeviceData()
-        {
-        }
+        /// <summary> The NetworkBootstrapDevice properties. </summary>
+        internal NetworkBootstrapDeviceProperties Properties { get; set; }
 
         /// <summary> The managed service identities assigned to this resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
+
         /// <summary> Switch configuration description. </summary>
-        public string Annotation { get; set; }
+        public string Annotation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Annotation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkBootstrapDeviceProperties();
+                }
+                Properties.Annotation = value;
+            }
+        }
+
         /// <summary> The host name of the device. </summary>
-        public string HostName { get; set; }
+        public string HostName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HostName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkBootstrapDeviceProperties();
+                }
+                Properties.HostName = value;
+            }
+        }
+
         /// <summary> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </summary>
-        public string SerialNumber { get; set; }
+        public string SerialNumber
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SerialNumber;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkBootstrapDeviceProperties();
+                }
+                Properties.SerialNumber = value;
+            }
+        }
+
         /// <summary> Current version of the device as defined in SKU. </summary>
-        public string Version { get; }
+        public string Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+        }
+
         /// <summary> Network Bootstrap Device SKU name. </summary>
-        public string NetworkDeviceSku { get; set; }
+        public string NetworkDeviceSku
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkDeviceSku;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkBootstrapDeviceProperties();
+                }
+                Properties.NetworkDeviceSku = value;
+            }
+        }
+
         /// <summary> Associated Network Fabric Resource ID. </summary>
-        public ResourceIdentifier NetworkFabricId { get; }
+        public ResourceIdentifier NetworkFabricId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkFabricId;
+            }
+        }
+
         /// <summary> Secondary Management IPv4 Address. </summary>
-        public string SecondaryManagementIPv4Address { get; }
+        public string SecondaryManagementIPv4Address
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecondaryManagementIPv4Address;
+            }
+        }
+
         /// <summary> Dhcp server IPv4 Address. </summary>
-        public string DhcpV4ServerIPAddress { get; }
+        public string DhcpV4ServerIPAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DhcpV4ServerIPAddress;
+            }
+        }
+
         /// <summary> Primary Management IPv6 Address. </summary>
-        public string PrimaryManagementIPv6Address { get; }
+        public string PrimaryManagementIPv6Address
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrimaryManagementIPv6Address;
+            }
+        }
+
         /// <summary> Secondary Management IPv6 Address. </summary>
-        public string SecondaryManagementIPv6Address { get; }
+        public string SecondaryManagementIPv6Address
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecondaryManagementIPv6Address;
+            }
+        }
+
         /// <summary> Provisioning state of the resource. </summary>
-        public NetworkFabricProvisioningState? ProvisioningState { get; }
+        public NetworkFabricProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Primary Management IPv4 Address. </summary>
-        public string PrimaryManagementIPv4Address { get; }
+        public string PrimaryManagementIPv4Address
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrimaryManagementIPv4Address;
+            }
+        }
+
         /// <summary> Administrative state of the resource. </summary>
-        public NetworkFabricAdministrativeState? AdministrativeState { get; }
+        public NetworkFabricAdministrativeState? AdministrativeState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AdministrativeState;
+            }
+        }
+
         /// <summary> Configuration state of the resource. </summary>
-        public NetworkFabricConfigurationState? ConfigurationState { get; }
+        public NetworkFabricConfigurationState? ConfigurationState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfigurationState;
+            }
+        }
     }
 }

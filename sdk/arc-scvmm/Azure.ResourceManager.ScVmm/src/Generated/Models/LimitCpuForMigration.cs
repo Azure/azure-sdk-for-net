@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ScVmm;
 
 namespace Azure.ResourceManager.ScVmm.Models
 {
-    /// <summary> Gets or sets a value indicating whether to enable processor compatibility mode for live migration of VMs. </summary>
+    /// <summary> Limit CPU for migration. </summary>
     public readonly partial struct LimitCpuForMigration : IEquatable<LimitCpuForMigration>
     {
         private readonly string _value;
+        /// <summary> Enable limit CPU for migration. </summary>
+        private const string TrueValue = "true";
+        /// <summary> Disable limit CPU for migration. </summary>
+        private const string FalseValue = "false";
 
         /// <summary> Initializes a new instance of <see cref="LimitCpuForMigration"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LimitCpuForMigration(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string FalseValue = "false";
-        private const string TrueValue = "true";
-
-        /// <summary> false. </summary>
-        public static LimitCpuForMigration False { get; } = new LimitCpuForMigration(FalseValue);
-        /// <summary> true. </summary>
+        /// <summary> Enable limit CPU for migration. </summary>
         public static LimitCpuForMigration True { get; } = new LimitCpuForMigration(TrueValue);
+
+        /// <summary> Disable limit CPU for migration. </summary>
+        public static LimitCpuForMigration False { get; } = new LimitCpuForMigration(FalseValue);
+
         /// <summary> Determines if two <see cref="LimitCpuForMigration"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LimitCpuForMigration left, LimitCpuForMigration right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LimitCpuForMigration"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LimitCpuForMigration left, LimitCpuForMigration right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LimitCpuForMigration"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LimitCpuForMigration"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LimitCpuForMigration(string value) => new LimitCpuForMigration(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LimitCpuForMigration"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LimitCpuForMigration?(string value) => value == null ? null : new LimitCpuForMigration(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LimitCpuForMigration other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LimitCpuForMigration other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

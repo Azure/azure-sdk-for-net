@@ -8,47 +8,16 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Options for app content migration.
-    /// Serialized Name: StorageMigrationOptions
-    /// </summary>
+    /// <summary> Options for app content migration. </summary>
     public partial class StorageMigrationContent : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StorageMigrationContent"/>. </summary>
         public StorageMigrationContent()
@@ -56,70 +25,98 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="StorageMigrationContent"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="azurefilesConnectionString">
-        /// AzureFiles connection string.
-        /// Serialized Name: StorageMigrationOptions.properties.azurefilesConnectionString
-        /// </param>
-        /// <param name="azurefilesShare">
-        /// AzureFiles share.
-        /// Serialized Name: StorageMigrationOptions.properties.azurefilesShare
-        /// </param>
-        /// <param name="switchSiteAfterMigration">
-        /// &lt;code&gt;true&lt;/code&gt;if the app should be switched over; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: StorageMigrationOptions.properties.switchSiteAfterMigration
-        /// </param>
-        /// <param name="blockWriteAccessToSite">
-        /// &lt;code&gt;true&lt;/code&gt; if the app should be read only during copy operation; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: StorageMigrationOptions.properties.blockWriteAccessToSite
-        /// </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageMigrationContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string azurefilesConnectionString, string azurefilesShare, bool? switchSiteAfterMigration, bool? blockWriteAccessToSite, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> StorageMigrationOptions resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StorageMigrationContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StorageMigrationContentProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            AzurefilesConnectionString = azurefilesConnectionString;
-            AzurefilesShare = azurefilesShare;
-            SwitchSiteAfterMigration = switchSiteAfterMigration;
-            BlockWriteAccessToSite = blockWriteAccessToSite;
+            Properties = properties;
             Kind = kind;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// AzureFiles connection string.
-        /// Serialized Name: StorageMigrationOptions.properties.azurefilesConnectionString
-        /// </summary>
-        [WirePath("properties.azurefilesConnectionString")]
-        public string AzurefilesConnectionString { get; set; }
-        /// <summary>
-        /// AzureFiles share.
-        /// Serialized Name: StorageMigrationOptions.properties.azurefilesShare
-        /// </summary>
-        [WirePath("properties.azurefilesShare")]
-        public string AzurefilesShare { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt;if the app should be switched over; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: StorageMigrationOptions.properties.switchSiteAfterMigration
-        /// </summary>
-        [WirePath("properties.switchSiteAfterMigration")]
-        public bool? SwitchSiteAfterMigration { get; set; }
-        /// <summary>
-        /// &lt;code&gt;true&lt;/code&gt; if the app should be read only during copy operation; otherwise, &lt;code&gt;false&lt;/code&gt;.
-        /// Serialized Name: StorageMigrationOptions.properties.blockWriteAccessToSite
-        /// </summary>
-        [WirePath("properties.blockWriteAccessToSite")]
-        public bool? BlockWriteAccessToSite { get; set; }
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: ProxyOnlyResource.kind
-        /// </summary>
+        /// <summary> StorageMigrationOptions resource specific properties. </summary>
+        [WirePath("properties")]
+        internal StorageMigrationContentProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
+        /// <summary> AzureFiles connection string. </summary>
+        [WirePath("properties.azurefilesConnectionString")]
+        public string AzurefilesConnectionString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzurefilesConnectionString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageMigrationContentProperties();
+                }
+                Properties.AzurefilesConnectionString = value;
+            }
+        }
+
+        /// <summary> AzureFiles share. </summary>
+        [WirePath("properties.azurefilesShare")]
+        public string AzurefilesShare
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzurefilesShare;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageMigrationContentProperties();
+                }
+                Properties.AzurefilesShare = value;
+            }
+        }
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt;if the app should be switched over; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.switchSiteAfterMigration")]
+        public bool? SwitchSiteAfterMigration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SwitchSiteAfterMigration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageMigrationContentProperties();
+                }
+                Properties.SwitchSiteAfterMigration = value;
+            }
+        }
+
+        /// <summary> &lt;code&gt;true&lt;/code&gt; if the app should be read only during copy operation; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("properties.blockWriteAccessToSite")]
+        public bool? BlockWriteAccessToSite
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BlockWriteAccessToSite;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StorageMigrationContentProperties();
+                }
+                Properties.BlockWriteAccessToSite = value;
+            }
+        }
     }
 }

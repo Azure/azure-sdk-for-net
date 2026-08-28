@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ServiceGroups.Models;
 
@@ -17,7 +16,6 @@ namespace Azure.ResourceManager.ServiceGroups
     /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
     /// </summary>
     [ModelReaderWriterBuildable(typeof(ParentServiceGroupProperties))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ServiceGroupCollectionResponse))]
     [ModelReaderWriterBuildable(typeof(ServiceGroupData))]
     [ModelReaderWriterBuildable(typeof(ServiceGroupProperties))]

@@ -14,9 +14,9 @@ namespace Azure.Provisioning.Batch
     {
         /// <summary> Trusted launch protects against advanced and persistent attack techniques. </summary>
         [DataMember(Name = "trustedLaunch")]
-        TrustedLaunch,
+        TrustedLaunch = 0,
         /// <summary> Azure confidential computing offers confidential VMs are for tenants with high security and confidentiality requirements. These VMs provide a strong, hardware-enforced boundary to help meet your security needs. You can use confidential VMs for migrations without making changes to your code, with the platform protecting your VM's state from being read or modified. </summary>
         [DataMember(Name = "confidentialVM")]
-        ConfidentialVm
+        ConfidentialVm = 1
     }
 }

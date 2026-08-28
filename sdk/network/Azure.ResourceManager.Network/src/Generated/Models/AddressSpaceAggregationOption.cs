@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct AddressSpaceAggregationOption : IEquatable<AddressSpaceAggregationOption>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Manual. </summary>
+        private const string ManualValue = "Manual";
 
         /// <summary> Initializes a new instance of <see cref="AddressSpaceAggregationOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AddressSpaceAggregationOption(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string ManualValue = "Manual";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static AddressSpaceAggregationOption None { get; } = new AddressSpaceAggregationOption(NoneValue);
+
         /// <summary> Manual. </summary>
         public static AddressSpaceAggregationOption Manual { get; } = new AddressSpaceAggregationOption(ManualValue);
+
         /// <summary> Determines if two <see cref="AddressSpaceAggregationOption"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AddressSpaceAggregationOption left, AddressSpaceAggregationOption right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AddressSpaceAggregationOption"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AddressSpaceAggregationOption left, AddressSpaceAggregationOption right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AddressSpaceAggregationOption"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AddressSpaceAggregationOption"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AddressSpaceAggregationOption(string value) => new AddressSpaceAggregationOption(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AddressSpaceAggregationOption"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AddressSpaceAggregationOption?(string value) => value == null ? null : new AddressSpaceAggregationOption(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AddressSpaceAggregationOption other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AddressSpaceAggregationOption other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

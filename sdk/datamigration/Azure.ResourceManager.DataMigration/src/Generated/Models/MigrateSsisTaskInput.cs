@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -30,16 +31,11 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskInput"/>. </summary>
         /// <param name="sourceConnectionInfo"> Information for connecting to source. </param>
         /// <param name="targetConnectionInfo"> Information for connecting to target. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="ssisMigrationInfo"> SSIS package migration information. </param>
-        internal MigrateSsisTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IDictionary<string, BinaryData> serializedAdditionalRawData, SsisMigrationInfo ssisMigrationInfo) : base(sourceConnectionInfo, targetConnectionInfo, serializedAdditionalRawData)
+        internal MigrateSsisTaskInput(DataMigrationSqlConnectionInfo sourceConnectionInfo, DataMigrationSqlConnectionInfo targetConnectionInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties, SsisMigrationInfo ssisMigrationInfo) : base(sourceConnectionInfo, targetConnectionInfo, additionalBinaryDataProperties)
         {
             SsisMigrationInfo = ssisMigrationInfo;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MigrateSsisTaskInput"/> for deserialization. </summary>
-        internal MigrateSsisTaskInput()
-        {
         }
 
         /// <summary> SSIS package migration information. </summary>

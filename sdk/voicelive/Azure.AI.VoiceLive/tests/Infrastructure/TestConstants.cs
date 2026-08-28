@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+
 namespace Azure.AI.VoiceLive.Tests.Infrastructure
 {
     /// <summary>
@@ -89,7 +91,7 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
         public const string StatusCancelled = "cancelled";
 
         // ===== MCP Server Configuration =====
-        public const string MicrosoftLearnMcpServerUrl = "https://learn.microsoft.com/api/mcp";
+        public static readonly Uri MicrosoftLearnMcpServerUrl = new("https://learn.microsoft.com/api/mcp");
         public const string MicrosoftLearnMcpServerLabel = "microsoft-learn";
 
         // ===== Agent Session Configuration =====

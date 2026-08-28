@@ -159,6 +159,10 @@ namespace Azure.Provisioning.ContainerInstance
             _failureThreshold = DefineProperty<int>(nameof(FailureThreshold), new string[] { "failureThreshold" });
             _successThreshold = DefineProperty<int>(nameof(SuccessThreshold), new string[] { "successThreshold" });
             _timeoutInSeconds = DefineProperty<int>(nameof(TimeoutInSeconds), new string[] { "timeoutSeconds" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerProbe that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

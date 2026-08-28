@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.EventHubs
                     yield break;
                 }
                 EventHubsPrivateEndpointConnectionListResult result = EventHubsPrivateEndpointConnectionListResult.FromResponse(response);
-                yield return Page<EventHubsPrivateEndpointConnectionData>.FromValues((IReadOnlyList<EventHubsPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EventHubsPrivateEndpointConnectionData>.FromValues((IReadOnlyList<EventHubsPrivateEndpointConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class RecoverableManagedDatabaseResource : IJsonModel<RecoverableManagedDatabaseData>
     {
-        private static RecoverableManagedDatabaseData s_dataDeserializationInstance;
-        private static RecoverableManagedDatabaseData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<RecoverableManagedDatabaseData> s_dataDeserializationInstance;
 
+        private static IJsonModel<RecoverableManagedDatabaseData> DataDeserializationInstance => s_dataDeserializationInstance ??= new RecoverableManagedDatabaseData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<RecoverableManagedDatabaseData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<RecoverableManagedDatabaseData>)Data).Write(writer, options);
 
-        RecoverableManagedDatabaseData IJsonModel<RecoverableManagedDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<RecoverableManagedDatabaseData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        RecoverableManagedDatabaseData IJsonModel<RecoverableManagedDatabaseData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<RecoverableManagedDatabaseData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<RecoverableManagedDatabaseData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         RecoverableManagedDatabaseData IPersistableModel<RecoverableManagedDatabaseData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<RecoverableManagedDatabaseData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<RecoverableManagedDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<RecoverableManagedDatabaseData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<RecoverableManagedDatabaseData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

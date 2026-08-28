@@ -8,16 +8,57 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class BillingInvoicePayment : IUtf8JsonSerializable, IJsonModel<BillingInvoicePayment>
+    /// <summary> An invoice payment. </summary>
+    public partial class BillingInvoicePayment : IJsonModel<BillingInvoicePayment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingInvoicePayment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BillingInvoicePayment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BillingInvoicePayment>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBillingInvoicePayment(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BillingInvoicePayment)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BillingInvoicePayment>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BillingInvoicePayment)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BillingInvoicePayment>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BillingInvoicePayment IPersistableModel<BillingInvoicePayment>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BillingInvoicePayment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BillingInvoicePayment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,13 +70,12 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingInvoicePayment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingInvoicePayment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BillingInvoicePayment)} does not support writing '{format}' format.");
             }
-
-            if (options.Format != "W" && Optional.IsDefined(Amount))
+            if (Optional.IsDefined(Amount))
             {
                 writer.WritePropertyName("amount"u8);
                 writer.WriteObjectValue(Amount, options);
@@ -65,15 +105,15 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("paymentType"u8);
                 writer.WriteStringValue(PaymentType);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -82,251 +122,99 @@ namespace Azure.ResourceManager.Billing.Models
             }
         }
 
-        BillingInvoicePayment IJsonModel<BillingInvoicePayment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BillingInvoicePayment IJsonModel<BillingInvoicePayment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BillingInvoicePayment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingInvoicePayment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingInvoicePayment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BillingInvoicePayment)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBillingInvoicePayment(document.RootElement, options);
         }
 
-        internal static BillingInvoicePayment DeserializeBillingInvoicePayment(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BillingInvoicePayment DeserializeBillingInvoicePayment(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             BillingAmount amount = default;
-            DateTimeOffset? date = default;
+            DateTimeOffset? madeOn = default;
             ResourceIdentifier paymentMethodId = default;
             PaymentMethodFamily? paymentMethodFamily = default;
             string paymentMethodType = default;
             string paymentType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("amount"u8))
+                if (prop.NameEquals("amount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    amount = BillingAmount.DeserializeBillingAmount(property.Value, options);
+                    amount = BillingAmount.DeserializeBillingAmount(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("date"u8))
+                if (prop.NameEquals("date"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    date = property.Value.GetDateTimeOffset("O");
+                    madeOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("paymentMethodId"u8))
+                if (prop.NameEquals("paymentMethodId"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    paymentMethodId = new ResourceIdentifier(property.Value.GetString());
+                    paymentMethodId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("paymentMethodFamily"u8))
+                if (prop.NameEquals("paymentMethodFamily"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    paymentMethodFamily = new PaymentMethodFamily(property.Value.GetString());
+                    paymentMethodFamily = new PaymentMethodFamily(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("paymentMethodType"u8))
+                if (prop.NameEquals("paymentMethodType"u8))
                 {
-                    paymentMethodType = property.Value.GetString();
+                    paymentMethodType = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("paymentType"u8))
+                if (prop.NameEquals("paymentType"u8))
                 {
-                    paymentType = property.Value.GetString();
+                    paymentType = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new BillingInvoicePayment(
                 amount,
-                date,
+                madeOn,
                 paymentMethodId,
                 paymentMethodFamily,
                 paymentMethodType,
                 paymentType,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Amount), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  amount: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Amount))
-                {
-                    builder.Append("  amount: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Amount, options, 2, false, "  amount: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MadeOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  date: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MadeOn))
-                {
-                    builder.Append("  date: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(MadeOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PaymentMethodId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  paymentMethodId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PaymentMethodId))
-                {
-                    builder.Append("  paymentMethodId: ");
-                    builder.AppendLine($"'{PaymentMethodId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PaymentMethodFamily), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  paymentMethodFamily: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PaymentMethodFamily))
-                {
-                    builder.Append("  paymentMethodFamily: ");
-                    builder.AppendLine($"'{PaymentMethodFamily.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PaymentMethodType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  paymentMethodType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PaymentMethodType))
-                {
-                    builder.Append("  paymentMethodType: ");
-                    if (PaymentMethodType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PaymentMethodType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PaymentMethodType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PaymentType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  paymentType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PaymentType))
-                {
-                    builder.Append("  paymentType: ");
-                    if (PaymentType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PaymentType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PaymentType}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<BillingInvoicePayment>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingInvoicePayment>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(BillingInvoicePayment)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        BillingInvoicePayment IPersistableModel<BillingInvoicePayment>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingInvoicePayment>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBillingInvoicePayment(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BillingInvoicePayment)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<BillingInvoicePayment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

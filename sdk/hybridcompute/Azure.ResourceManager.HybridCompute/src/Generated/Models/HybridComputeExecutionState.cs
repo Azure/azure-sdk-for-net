@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct HybridComputeExecutionState : IEquatable<HybridComputeExecutionState>
     {
         private readonly string _value;
+        /// <summary> Unknown. </summary>
+        private const string UnknownValue = "Unknown";
+        /// <summary> Pending. </summary>
+        private const string PendingValue = "Pending";
+        /// <summary> Running. </summary>
+        private const string RunningValue = "Running";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> TimedOut. </summary>
+        private const string TimedOutValue = "TimedOut";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeExecutionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HybridComputeExecutionState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string UnknownValue = "Unknown";
-        private const string PendingValue = "Pending";
-        private const string RunningValue = "Running";
-        private const string FailedValue = "Failed";
-        private const string SucceededValue = "Succeeded";
-        private const string TimedOutValue = "TimedOut";
-        private const string CanceledValue = "Canceled";
+            _value = value;
+        }
 
         /// <summary> Unknown. </summary>
         public static HybridComputeExecutionState Unknown { get; } = new HybridComputeExecutionState(UnknownValue);
+
         /// <summary> Pending. </summary>
         public static HybridComputeExecutionState Pending { get; } = new HybridComputeExecutionState(PendingValue);
+
         /// <summary> Running. </summary>
         public static HybridComputeExecutionState Running { get; } = new HybridComputeExecutionState(RunningValue);
+
         /// <summary> Failed. </summary>
         public static HybridComputeExecutionState Failed { get; } = new HybridComputeExecutionState(FailedValue);
+
         /// <summary> Succeeded. </summary>
         public static HybridComputeExecutionState Succeeded { get; } = new HybridComputeExecutionState(SucceededValue);
+
         /// <summary> TimedOut. </summary>
         public static HybridComputeExecutionState TimedOut { get; } = new HybridComputeExecutionState(TimedOutValue);
+
         /// <summary> Canceled. </summary>
         public static HybridComputeExecutionState Canceled { get; } = new HybridComputeExecutionState(CanceledValue);
+
         /// <summary> Determines if two <see cref="HybridComputeExecutionState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridComputeExecutionState left, HybridComputeExecutionState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HybridComputeExecutionState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridComputeExecutionState left, HybridComputeExecutionState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridComputeExecutionState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HybridComputeExecutionState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HybridComputeExecutionState(string value) => new HybridComputeExecutionState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HybridComputeExecutionState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HybridComputeExecutionState?(string value) => value == null ? null : new HybridComputeExecutionState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridComputeExecutionState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HybridComputeExecutionState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

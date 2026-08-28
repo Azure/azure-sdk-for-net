@@ -7,26 +7,22 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary>
-    /// Single Host fabric provider specific VM settings.
-    /// Please note <see cref="HyperVVmDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="VmmVmDetails"/>.
-    /// </summary>
+    /// <summary> Single Host fabric provider specific VM settings. </summary>
     public partial class HyperVVmDetails : SiteRecoveryReplicationProviderSettings
     {
         /// <summary> Initializes a new instance of <see cref="HyperVVmDetails"/>. </summary>
-        internal HyperVVmDetails()
+        internal HyperVVmDetails() : base("HyperVVirtualMachine")
         {
             DiskDetails = new ChangeTrackingList<SiteRecoveryDiskDetails>();
-            InstanceType = "HyperVVirtualMachine";
         }
 
         /// <summary> Initializes a new instance of <see cref="HyperVVmDetails"/>. </summary>
         /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="sourceItemId"> The source id of the object. </param>
         /// <param name="generation"> The id of the object in fabric. </param>
         /// <param name="osDetails"> The Last replication time. </param>
@@ -35,7 +31,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="hasFibreChannelAdapter"> A value indicating whether the VM has a fibre channel adapter attached. String value of SrsDataContract.PresenceStatus enum. </param>
         /// <param name="hasSharedVhd"> A value indicating whether the VM has a shared VHD attached. String value of SrsDataContract.PresenceStatus enum. </param>
         /// <param name="hyperVHostId"> The Id of the hyper-v host in fabric. </param>
-        internal HyperVVmDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string sourceItemId, string generation, SiteRecoveryOSDetails osDetails, IReadOnlyList<SiteRecoveryDiskDetails> diskDetails, HyperVVmDiskPresenceStatus? hasPhysicalDisk, HyperVVmDiskPresenceStatus? hasFibreChannelAdapter, HyperVVmDiskPresenceStatus? hasSharedVhd, string hyperVHostId) : base(instanceType, serializedAdditionalRawData)
+        internal HyperVVmDetails(string instanceType, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sourceItemId, string generation, SiteRecoveryOSDetails osDetails, IReadOnlyList<SiteRecoveryDiskDetails> diskDetails, HyperVVmDiskPresenceStatus? hasPhysicalDisk, HyperVVmDiskPresenceStatus? hasFibreChannelAdapter, HyperVVmDiskPresenceStatus? hasSharedVhd, string hyperVHostId) : base(instanceType, additionalBinaryDataProperties)
         {
             SourceItemId = sourceItemId;
             Generation = generation;
@@ -45,23 +41,36 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             HasFibreChannelAdapter = hasFibreChannelAdapter;
             HasSharedVhd = hasSharedVhd;
             HyperVHostId = hyperVHostId;
-            InstanceType = instanceType ?? "HyperVVirtualMachine";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="HyperVVmDetails"/>. </summary>
+        /// <param name="instanceType"> Gets the class type. Overridden in derived classes. </param>
+        private protected HyperVVmDetails(string instanceType) : base(instanceType)
+        {
+            DiskDetails = new ChangeTrackingList<SiteRecoveryDiskDetails>();
         }
 
         /// <summary> The source id of the object. </summary>
         public string SourceItemId { get; }
+
         /// <summary> The id of the object in fabric. </summary>
         public string Generation { get; }
+
         /// <summary> The Last replication time. </summary>
         public SiteRecoveryOSDetails OSDetails { get; }
+
         /// <summary> The Last successful failover time. </summary>
         public IReadOnlyList<SiteRecoveryDiskDetails> DiskDetails { get; }
+
         /// <summary> A value indicating whether the VM has a physical disk attached. String value of SrsDataContract.PresenceStatus enum. </summary>
         public HyperVVmDiskPresenceStatus? HasPhysicalDisk { get; }
+
         /// <summary> A value indicating whether the VM has a fibre channel adapter attached. String value of SrsDataContract.PresenceStatus enum. </summary>
         public HyperVVmDiskPresenceStatus? HasFibreChannelAdapter { get; }
+
         /// <summary> A value indicating whether the VM has a shared VHD attached. String value of SrsDataContract.PresenceStatus enum. </summary>
         public HyperVVmDiskPresenceStatus? HasSharedVhd { get; }
+
         /// <summary> The Id of the hyper-v host in fabric. </summary>
         public string HyperVHostId { get; }
     }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string dotNetComponentApiVersion);
             _dotNetComponentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _dotNetComponentsRestClient = new DotNetComponents(_dotNetComponentsClientDiagnostics, Pipeline, Endpoint, dotNetComponentApiVersion ?? "2025-10-02-preview");
+            _dotNetComponentsRestClient = new DotNetComponents(_dotNetComponentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dotNetComponentApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _dotNetComponentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DotNetComponentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<DotNetComponentResource> operation = new AppContainersArmOperation<DotNetComponentResource>(
-                    new DotNetComponentOperationSource(Client),
+                    new DotNetComponentResourceOperationSource(Client),
                     _dotNetComponentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _dotNetComponentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DotNetComponentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<DotNetComponentResource> operation = new AppContainersArmOperation<DotNetComponentResource>(
-                    new DotNetComponentOperationSource(Client),
+                    new DotNetComponentResourceOperationSource(Client),
                     _dotNetComponentsClientDiagnostics,
                     Pipeline,
                     message.Request,

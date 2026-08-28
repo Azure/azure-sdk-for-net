@@ -74,7 +74,6 @@ StaticRoutes = {},
 },
 },
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/p2sVpnGateways/p2sVpnGateway1/p2sConnectionConfigurations/P2SConnectionConfig1"),
-Name = "P2SConnectionConfig1",
 }},
                 VpnGatewayScaleUnit = 1,
                 VpnServerConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/vpnServerConfigurations/vpnServerConfiguration1"),
@@ -86,7 +85,7 @@ Name = "P2SConnectionConfig1",
 ["key1"] = "value1"
 },
             };
-            ArmOperation<P2SVpnGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, gatewayName, data);
+            ArmOperation<P2SVpnGatewayResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, gatewayName, data, cancellationToken: System.Threading.CancellationToken.None);
             P2SVpnGatewayResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

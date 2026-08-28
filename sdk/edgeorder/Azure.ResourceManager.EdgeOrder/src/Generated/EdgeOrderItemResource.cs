@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.EdgeOrder
         {
             TryGetApiVersion(ResourceType, out string edgeOrderItemApiVersion);
             _orderItemResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeOrder", ResourceType.Namespace, Diagnostics);
-            _orderItemResourcesRestClient = new OrderItemResources(_orderItemResourcesClientDiagnostics, Pipeline, Endpoint, edgeOrderItemApiVersion ?? "2024-02-01");
+            _orderItemResourcesRestClient = new OrderItemResources(_orderItemResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeOrderItemApiVersion ?? "2024-02-01");
             ValidateResourceId(id);
         }
 
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 HttpMessage message = _orderItemResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeOrderItemPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EdgeOrderArmOperation<EdgeOrderItemResource> operation = new EdgeOrderArmOperation<EdgeOrderItemResource>(
-                    new EdgeOrderItemOperationSource(Client),
+                    new EdgeOrderItemResourceOperationSource(Client),
                     _orderItemResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.EdgeOrder
                 HttpMessage message = _orderItemResourcesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, EdgeOrderItemPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EdgeOrderArmOperation<EdgeOrderItemResource> operation = new EdgeOrderArmOperation<EdgeOrderItemResource>(
-                    new EdgeOrderItemOperationSource(Client),
+                    new EdgeOrderItemResourceOperationSource(Client),
                     _orderItemResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

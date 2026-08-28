@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ApiManagement.Models
     public readonly partial struct OAuth2GrantType : IEquatable<OAuth2GrantType>
     {
         private readonly string _value;
+        /// <summary> Authorization Code grant. </summary>
+        private const string AuthorizationCodeValue = "AuthorizationCode";
+        /// <summary> Client Credential grant. </summary>
+        private const string ClientCredentialsValue = "ClientCredentials";
 
         /// <summary> Initializes a new instance of <see cref="OAuth2GrantType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OAuth2GrantType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AuthorizationCodeValue = "AuthorizationCode";
-        private const string ClientCredentialsValue = "ClientCredentials";
+            _value = value;
+        }
 
         /// <summary> Authorization Code grant. </summary>
         public static OAuth2GrantType AuthorizationCode { get; } = new OAuth2GrantType(AuthorizationCodeValue);
+
         /// <summary> Client Credential grant. </summary>
         public static OAuth2GrantType ClientCredentials { get; } = new OAuth2GrantType(ClientCredentialsValue);
+
         /// <summary> Determines if two <see cref="OAuth2GrantType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OAuth2GrantType left, OAuth2GrantType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OAuth2GrantType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OAuth2GrantType left, OAuth2GrantType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OAuth2GrantType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OAuth2GrantType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OAuth2GrantType(string value) => new OAuth2GrantType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OAuth2GrantType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OAuth2GrantType?(string value) => value == null ? null : new OAuth2GrantType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OAuth2GrantType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OAuth2GrantType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

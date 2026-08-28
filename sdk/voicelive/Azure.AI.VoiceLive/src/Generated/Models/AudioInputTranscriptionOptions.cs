@@ -20,7 +20,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="model">
         /// The transcription model to use. Supported values:
         /// 'whisper-1', 'gpt-4o-transcribe', 'gpt-4o-mini-transcribe',
-        /// 'azure-speech'.
+        /// 'mai-transcribe-1', 'azure-speech'.
         /// </param>
         public AudioInputTranscriptionOptions(AudioInputTranscriptionOptionsModel model)
         {
@@ -33,7 +33,7 @@ namespace Azure.AI.VoiceLive
         /// <param name="model">
         /// The transcription model to use. Supported values:
         /// 'whisper-1', 'gpt-4o-transcribe', 'gpt-4o-mini-transcribe',
-        /// 'azure-speech'.
+        /// 'mai-transcribe-1', 'azure-speech'.
         /// </param>
         /// <param name="language"> Optional language code in BCP-47 (e.g., 'en-US'), or ISO-639-1 (e.g., 'en'), or multi languages with auto detection, (e.g., 'en,zh'). </param>
         /// <param name="customSpeech"> Optional configuration for custom speech models. </param>
@@ -51,7 +51,7 @@ namespace Azure.AI.VoiceLive
         /// <summary>
         /// The transcription model to use. Supported values:
         /// 'whisper-1', 'gpt-4o-transcribe', 'gpt-4o-mini-transcribe',
-        /// 'azure-speech'.
+        /// 'mai-transcribe-1', 'azure-speech'.
         /// </summary>
         public AudioInputTranscriptionOptionsModel Model { get; set; }
 

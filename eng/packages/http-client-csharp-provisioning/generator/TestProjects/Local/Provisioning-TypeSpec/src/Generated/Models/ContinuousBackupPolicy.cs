@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             base.DefineProvisionableProperties();
             DefineProperty<string>("kind", new string[] { "kind" }, defaultValue: "Continuous");
             _tier = DefineProperty<string>(nameof(Tier), new string[] { "tier" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContinuousBackupPolicy that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

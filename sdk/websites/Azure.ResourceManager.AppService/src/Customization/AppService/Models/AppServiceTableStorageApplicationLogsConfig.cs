@@ -15,6 +15,8 @@ namespace Azure.ResourceManager.AppService.Models
         [Obsolete("This property has been replaced by ResourceUriString", false)]
         public System.Uri SasUri { get; set; }
 
+        /// <summary> Initializes a new instance of <see cref="AppServiceTableStorageApplicationLogsConfig"/>. </summary>
+        /// <param name="SasUri"> SAS URL to an Azure table with add/query/delete permissions. </param>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property has been replaced by ResourceUriString", false)]
         public AppServiceTableStorageApplicationLogsConfig(Uri SasUri)

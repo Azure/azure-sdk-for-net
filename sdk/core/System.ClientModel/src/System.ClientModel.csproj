@@ -2,9 +2,9 @@
 
   <PropertyGroup>
     <Description>Contains building blocks for clients that call cloud services.</Description>
-    <Version>1.14.0-beta.1</Version>
+    <Version>1.16.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.13.0</ApiCompatVersion>
+    <ApiCompatVersion>1.15.0</ApiCompatVersion>
     <Nullable>enable</Nullable>
     <TargetFrameworks>$(RequiredTargetFrameworks);net9.0</TargetFrameworks>
     <PackageIcon>DotNetPackageIcon.png</PackageIcon>
@@ -19,6 +19,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
     <PackageReference Include="System.Memory.Data" />
+    <PackageReference Include="System.Net.ServerSentEvents" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 

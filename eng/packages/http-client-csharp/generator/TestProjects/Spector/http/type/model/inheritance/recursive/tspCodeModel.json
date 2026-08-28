@@ -17,7 +17,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     },
     {
       "$id": "3",
@@ -33,7 +34,8 @@
         "decorators": []
       },
       "value": "application/json",
-      "decorators": []
+      "decorators": [],
+      "isExactName": false
     }
   ],
   "models": [
@@ -51,6 +53,7 @@
           "name": "Extension"
         }
       },
+      "isExactName": false,
       "baseModel": {
         "$id": "6",
         "kind": "model",
@@ -65,6 +68,7 @@
             "name": "Element"
           }
         },
+        "isExactName": false,
         "properties": [
           {
             "$id": "7",
@@ -92,7 +96,8 @@
                 "name": "extension"
               }
             },
-            "isHttpMetadata": false
+            "isHttpMetadata": false,
+            "isExactName": false
           }
         ]
       },
@@ -120,7 +125,8 @@
               "name": "level"
             }
           },
-          "isHttpMetadata": false
+          "isHttpMetadata": false,
+          "isExactName": false
         }
       ]
     },
@@ -133,6 +139,7 @@
       "$id": "11",
       "kind": "client",
       "name": "RecursiveClient",
+      "isExactName": false,
       "namespace": "Type.Model.Inheritance.Recursive",
       "doc": "Illustrates inheritance recursion",
       "methods": [
@@ -140,11 +147,13 @@
           "$id": "12",
           "kind": "basic",
           "name": "put",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "13",
             "name": "put",
+            "isExactName": false,
             "resourceName": "Recursive",
             "accessibility": "public",
             "parameters": [
@@ -181,9 +190,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.put.contentType",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               },
               {
                 "$id": "16",
@@ -219,9 +230,16 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.put.input",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false,
+                "serializationOptions": {
+                  "json": {
+                    "name": "input"
+                  }
+                }
               }
             ],
             "responses": [
@@ -230,7 +248,8 @@
                   204
                 ],
                 "headers": [],
-                "isErrorResponse": false
+                "isErrorResponse": false,
+                "serializationOptions": {}
               }
             ],
             "httpMethod": "PUT",
@@ -264,11 +283,13 @@
           "$id": "18",
           "kind": "basic",
           "name": "get",
+          "isExactName": false,
           "accessibility": "public",
           "apiVersions": [],
           "operation": {
             "$id": "19",
             "name": "get",
+            "isExactName": false,
             "resourceName": "Recursive",
             "accessibility": "public",
             "parameters": [
@@ -303,9 +324,11 @@
                     "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.get.accept",
                     "readOnly": false,
                     "access": "public",
-                    "decorators": []
+                    "decorators": [],
+                    "isExactName": false
                   }
-                ]
+                ],
+                "isExactName": false
               }
             ],
             "responses": [
@@ -320,7 +343,12 @@
                 "isErrorResponse": false,
                 "contentTypes": [
                   "application/json"
-                ]
+                ],
+                "serializationOptions": {
+                  "json": {
+                    "name": ""
+                  }
+                }
               }
             ],
             "httpMethod": "GET",
@@ -378,7 +406,8 @@
           "serverUrlTemplate": "{endpoint}",
           "skipUrlEncoding": false,
           "readOnly": false,
-          "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.endpoint"
+          "crossLanguageDefinitionId": "Type.Model.Inheritance.Recursive.endpoint",
+          "isExactName": false
         }
       ],
       "initializedBy": 1,

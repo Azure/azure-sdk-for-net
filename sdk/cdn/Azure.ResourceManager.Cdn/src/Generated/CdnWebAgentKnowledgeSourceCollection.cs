@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(CdnWebAgentKnowledgeSourceResource.ResourceType, out string cdnWebAgentKnowledgeSourceApiVersion);
             _knowledgeSourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnWebAgentKnowledgeSourceResource.ResourceType.Namespace, Diagnostics);
-            _knowledgeSourcesRestClient = new KnowledgeSources(_knowledgeSourcesClientDiagnostics, Pipeline, Endpoint, cdnWebAgentKnowledgeSourceApiVersion ?? "2025-09-01-preview");
+            _knowledgeSourcesRestClient = new KnowledgeSources(_knowledgeSourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cdnWebAgentKnowledgeSourceApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _knowledgeSourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, knowledgeSourceName, CdnWebAgentKnowledgeSourceData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<CdnWebAgentKnowledgeSourceResource> operation = new CdnArmOperation<CdnWebAgentKnowledgeSourceResource>(
-                    new CdnWebAgentKnowledgeSourceOperationSource(Client),
+                    new CdnWebAgentKnowledgeSourceResourceOperationSource(Client),
                     _knowledgeSourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _knowledgeSourcesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, knowledgeSourceName, CdnWebAgentKnowledgeSourceData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<CdnWebAgentKnowledgeSourceResource> operation = new CdnArmOperation<CdnWebAgentKnowledgeSourceResource>(
-                    new CdnWebAgentKnowledgeSourceOperationSource(Client),
+                    new CdnWebAgentKnowledgeSourceResourceOperationSource(Client),
                     _knowledgeSourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

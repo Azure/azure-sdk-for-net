@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ProviderHub
         {
             TryGetApiVersion(CustomRolloutResource.ResourceType, out string customRolloutApiVersion);
             _customRolloutsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ProviderHub", CustomRolloutResource.ResourceType.Namespace, Diagnostics);
-            _customRolloutsRestClient = new CustomRollouts(_customRolloutsClientDiagnostics, Pipeline, Endpoint, customRolloutApiVersion ?? "2024-09-01");
+            _customRolloutsRestClient = new CustomRollouts(_customRolloutsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, customRolloutApiVersion ?? "2024-09-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ProviderHub
                 HttpMessage message = _customRolloutsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, CustomRolloutData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ProviderHubArmOperation<CustomRolloutResource> operation = new ProviderHubArmOperation<CustomRolloutResource>(
-                    new CustomRolloutOperationSource(Client),
+                    new CustomRolloutResourceOperationSource(Client),
                     _customRolloutsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ProviderHub
                 HttpMessage message = _customRolloutsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.Name, rolloutName, CustomRolloutData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ProviderHubArmOperation<CustomRolloutResource> operation = new ProviderHubArmOperation<CustomRolloutResource>(
-                    new CustomRolloutOperationSource(Client),
+                    new CustomRolloutResourceOperationSource(Client),
                     _customRolloutsClientDiagnostics,
                     Pipeline,
                     message.Request,

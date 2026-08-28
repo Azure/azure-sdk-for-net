@@ -14,6 +14,7 @@ namespace Azure.AI.Projects.Agents
         private const string PromptValue = "prompt";
         private const string HostedValue = "hosted";
         private const string WorkflowValue = "workflow";
+        private const string ExternalValue = "external";
 
         /// <summary> Initializes a new instance of <see cref="ProjectsAgentKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,6 +34,9 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Gets the Workflow. </summary>
         public static ProjectsAgentKind Workflow { get; } = new ProjectsAgentKind(WorkflowValue);
+
+        /// <summary> Gets the External. </summary>
+        public static ProjectsAgentKind External { get; } = new ProjectsAgentKind(ExternalValue);
 
         /// <summary> Determines if two <see cref="ProjectsAgentKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

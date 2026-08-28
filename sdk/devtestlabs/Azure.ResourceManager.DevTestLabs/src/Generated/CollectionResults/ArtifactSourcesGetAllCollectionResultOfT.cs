@@ -67,8 +67,8 @@ namespace Azure.ResourceManager.DevTestLabs
                     yield break;
                 }
                 ArtifactSourceList result = ArtifactSourceList.FromResponse(response);
-                yield return Page<DevTestLabArtifactSourceData>.FromValues((IReadOnlyList<DevTestLabArtifactSourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DevTestLabArtifactSourceData>.FromValues((IReadOnlyList<DevTestLabArtifactSourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

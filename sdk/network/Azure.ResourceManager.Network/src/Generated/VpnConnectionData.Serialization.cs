@@ -8,19 +8,75 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network
 {
-    public partial class VpnConnectionData : IUtf8JsonSerializable, IJsonModel<VpnConnectionData>
+    /// <summary> VpnConnection Resource. </summary>
+    public partial class VpnConnectionData : NetworkResourceData, IJsonModel<VpnConnectionData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VpnConnectionData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkSubResource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VpnConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVpnConnectionData(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VpnConnectionData)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VpnConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VpnConnectionData)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VpnConnectionData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VpnConnectionData IPersistableModel<VpnConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options) => (VpnConnectionData)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VpnConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="vpnConnectionData"> The <see cref="VpnConnectionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(VpnConnectionData vpnConnectionData)
+        {
+            if (vpnConnectionData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(vpnConnectionData, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="VpnConnectionData"/> from. </param>
+        internal static VpnConnectionData FromResponse(Response response)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
+            return DeserializeVpnConnectionData(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VpnConnectionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -32,868 +88,106 @@ namespace Azure.ResourceManager.Network
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VpnConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VpnConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VpnConnectionData)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(RemoteVpnSite))
-            {
-                writer.WritePropertyName("remoteVpnSite"u8);
-                ((IJsonModel<WritableSubResource>)RemoteVpnSite).Write(writer, options);
-            }
-            if (Optional.IsDefined(RoutingWeight))
-            {
-                writer.WritePropertyName("routingWeight"u8);
-                writer.WriteNumberValue(RoutingWeight.Value);
-            }
-            if (Optional.IsDefined(DpdTimeoutSeconds))
-            {
-                writer.WritePropertyName("dpdTimeoutSeconds"u8);
-                writer.WriteNumberValue(DpdTimeoutSeconds.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ConnectionStatus))
-            {
-                writer.WritePropertyName("connectionStatus"u8);
-                writer.WriteStringValue(ConnectionStatus.Value.ToString());
-            }
-            if (Optional.IsDefined(VpnConnectionProtocolType))
-            {
-                writer.WritePropertyName("vpnConnectionProtocolType"u8);
-                writer.WriteStringValue(VpnConnectionProtocolType.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(IngressBytesTransferred))
-            {
-                writer.WritePropertyName("ingressBytesTransferred"u8);
-                writer.WriteNumberValue(IngressBytesTransferred.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(EgressBytesTransferred))
-            {
-                writer.WritePropertyName("egressBytesTransferred"u8);
-                writer.WriteNumberValue(EgressBytesTransferred.Value);
-            }
-            if (Optional.IsDefined(ConnectionBandwidth))
-            {
-                writer.WritePropertyName("connectionBandwidth"u8);
-                writer.WriteNumberValue(ConnectionBandwidth.Value);
-            }
-            if (Optional.IsDefined(SharedKey))
-            {
-                writer.WritePropertyName("sharedKey"u8);
-                writer.WriteStringValue(SharedKey);
-            }
-            if (Optional.IsDefined(EnableBgp))
-            {
-                writer.WritePropertyName("enableBgp"u8);
-                writer.WriteBooleanValue(EnableBgp.Value);
-            }
-            if (Optional.IsDefined(UsePolicyBasedTrafficSelectors))
-            {
-                writer.WritePropertyName("usePolicyBasedTrafficSelectors"u8);
-                writer.WriteBooleanValue(UsePolicyBasedTrafficSelectors.Value);
-            }
-            if (Optional.IsCollectionDefined(IPsecPolicies))
-            {
-                writer.WritePropertyName("ipsecPolicies"u8);
-                writer.WriteStartArray();
-                foreach (var item in IPsecPolicies)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsCollectionDefined(TrafficSelectorPolicies))
-            {
-                writer.WritePropertyName("trafficSelectorPolicies"u8);
-                writer.WriteStartArray();
-                foreach (var item in TrafficSelectorPolicies)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(EnableRateLimiting))
-            {
-                writer.WritePropertyName("enableRateLimiting"u8);
-                writer.WriteBooleanValue(EnableRateLimiting.Value);
-            }
-            if (Optional.IsDefined(EnableInternetSecurity))
-            {
-                writer.WritePropertyName("enableInternetSecurity"u8);
-                writer.WriteBooleanValue(EnableInternetSecurity.Value);
-            }
-            if (Optional.IsDefined(UseLocalAzureIPAddress))
-            {
-                writer.WritePropertyName("useLocalAzureIpAddress"u8);
-                writer.WriteBooleanValue(UseLocalAzureIPAddress.Value);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            if (Optional.IsCollectionDefined(VpnLinkConnections))
-            {
-                writer.WritePropertyName("vpnLinkConnections"u8);
-                writer.WriteStartArray();
-                foreach (var item in VpnLinkConnections)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
-            if (Optional.IsDefined(RoutingConfiguration))
-            {
-                writer.WritePropertyName("routingConfiguration"u8);
-                writer.WriteObjectValue(RoutingConfiguration, options);
-            }
-            writer.WriteEndObject();
         }
 
-        VpnConnectionData IJsonModel<VpnConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VpnConnectionData IJsonModel<VpnConnectionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (VpnConnectionData)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override NetworkSubResource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VpnConnectionData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VpnConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VpnConnectionData)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVpnConnectionData(document.RootElement, options);
         }
 
-        internal static VpnConnectionData DeserializeVpnConnectionData(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VpnConnectionData DeserializeVpnConnectionData(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ETag? etag = default;
             ResourceIdentifier id = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
-            ResourceType? type = default;
-            WritableSubResource remoteVpnSite = default;
-            int? routingWeight = default;
-            int? dpdTimeoutSeconds = default;
-            VpnConnectionStatus? connectionStatus = default;
-            VirtualNetworkGatewayConnectionProtocol? vpnConnectionProtocolType = default;
-            long? ingressBytesTransferred = default;
-            long? egressBytesTransferred = default;
-            int? connectionBandwidth = default;
-            string sharedKey = default;
-            bool? enableBgp = default;
-            bool? usePolicyBasedTrafficSelectors = default;
-            IList<IPsecPolicy> ipsecPolicies = default;
-            IList<TrafficSelectorPolicy> trafficSelectorPolicies = default;
-            bool? enableRateLimiting = default;
-            bool? enableInternetSecurity = default;
-            bool? useLocalAzureIPAddress = default;
-            NetworkProvisioningState? provisioningState = default;
-            IList<VpnSiteLinkConnectionData> vpnLinkConnections = default;
-            RoutingConfiguration routingConfiguration = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string @type = default;
+            VpnConnectionProperties properties = default;
+            ETag? eTag = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("etag"u8))
+                if (prop.NameEquals("id"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    etag = new ETag(property.Value.GetString());
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("id"u8))
+                if (prop.NameEquals("name"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    name = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("type"u8))
+                {
+                    @type = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("properties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    id = new ResourceIdentifier(property.Value.GetString());
+                    properties = VpnConnectionProperties.DeserializeVpnConnectionProperties(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("name"u8))
+                if (prop.NameEquals("etag"u8))
                 {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    type = new ResourceType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("remoteVpnSite"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            remoteVpnSite = ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(property0.Value.GetRawText())), options, AzureResourceManagerNetworkContext.Default);
-                            continue;
-                        }
-                        if (property0.NameEquals("routingWeight"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            routingWeight = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("dpdTimeoutSeconds"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dpdTimeoutSeconds = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("connectionStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            connectionStatus = new VpnConnectionStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("vpnConnectionProtocolType"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            vpnConnectionProtocolType = new VirtualNetworkGatewayConnectionProtocol(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("ingressBytesTransferred"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            ingressBytesTransferred = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("egressBytesTransferred"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            egressBytesTransferred = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("connectionBandwidth"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            connectionBandwidth = property0.Value.GetInt32();
-                            continue;
-                        }
-                        if (property0.NameEquals("sharedKey"u8))
-                        {
-                            sharedKey = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("enableBgp"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableBgp = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("usePolicyBasedTrafficSelectors"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            usePolicyBasedTrafficSelectors = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("ipsecPolicies"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<IPsecPolicy> array = new List<IPsecPolicy>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(IPsecPolicy.DeserializeIPsecPolicy(item, options));
-                            }
-                            ipsecPolicies = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("trafficSelectorPolicies"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<TrafficSelectorPolicy> array = new List<TrafficSelectorPolicy>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(TrafficSelectorPolicy.DeserializeTrafficSelectorPolicy(item, options));
-                            }
-                            trafficSelectorPolicies = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("enableRateLimiting"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableRateLimiting = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("enableInternetSecurity"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            enableInternetSecurity = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("useLocalAzureIpAddress"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            useLocalAzureIPAddress = property0.Value.GetBoolean();
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new NetworkProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("vpnLinkConnections"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<VpnSiteLinkConnectionData> array = new List<VpnSiteLinkConnectionData>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(VpnSiteLinkConnectionData.DeserializeVpnSiteLinkConnectionData(item, options));
-                            }
-                            vpnLinkConnections = array;
-                            continue;
-                        }
-                        if (property0.NameEquals("routingConfiguration"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            routingConfiguration = RoutingConfiguration.DeserializeRoutingConfiguration(property0.Value, options);
-                            continue;
-                        }
-                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new VpnConnectionData(
                 id,
+                additionalBinaryDataProperties,
                 name,
-                type,
-                serializedAdditionalRawData,
-                etag,
-                remoteVpnSite,
-                routingWeight,
-                dpdTimeoutSeconds,
-                connectionStatus,
-                vpnConnectionProtocolType,
-                ingressBytesTransferred,
-                egressBytesTransferred,
-                connectionBandwidth,
-                sharedKey,
-                enableBgp,
-                usePolicyBasedTrafficSelectors,
-                ipsecPolicies ?? new ChangeTrackingList<IPsecPolicy>(),
-                trafficSelectorPolicies ?? new ChangeTrackingList<TrafficSelectorPolicy>(),
-                enableRateLimiting,
-                enableInternetSecurity,
-                useLocalAzureIPAddress,
-                provisioningState,
-                vpnLinkConnections ?? new ChangeTrackingList<VpnSiteLinkConnectionData>(),
-                routingConfiguration);
+                @type,
+                properties,
+                eTag);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  name: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Name))
-                {
-                    builder.Append("  name: ");
-                    if (Name.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Name}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Name}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  etag: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ETag))
-                {
-                    builder.Append("  etag: ");
-                    builder.AppendLine($"'{ETag.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  id: ");
-                    builder.AppendLine($"'{Id.ToString()}'");
-                }
-            }
-
-            builder.Append("  properties:");
-            builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("RemoteVpnSiteId", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    remoteVpnSite: ");
-                builder.AppendLine("{");
-                builder.AppendLine("      remoteVpnSite: {");
-                builder.Append("        id: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("      }");
-                builder.AppendLine("    }");
-            }
-            else
-            {
-                if (Optional.IsDefined(RemoteVpnSite))
-                {
-                    builder.Append("    remoteVpnSite: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, RemoteVpnSite, options, 4, false, "    remoteVpnSite: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoutingWeight), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    routingWeight: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RoutingWeight))
-                {
-                    builder.Append("    routingWeight: ");
-                    builder.AppendLine($"{RoutingWeight.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DpdTimeoutSeconds), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    dpdTimeoutSeconds: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DpdTimeoutSeconds))
-                {
-                    builder.Append("    dpdTimeoutSeconds: ");
-                    builder.AppendLine($"{DpdTimeoutSeconds.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionStatus), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    connectionStatus: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConnectionStatus))
-                {
-                    builder.Append("    connectionStatus: ");
-                    builder.AppendLine($"'{ConnectionStatus.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VpnConnectionProtocolType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    vpnConnectionProtocolType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(VpnConnectionProtocolType))
-                {
-                    builder.Append("    vpnConnectionProtocolType: ");
-                    builder.AppendLine($"'{VpnConnectionProtocolType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IngressBytesTransferred), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    ingressBytesTransferred: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(IngressBytesTransferred))
-                {
-                    builder.Append("    ingressBytesTransferred: ");
-                    builder.AppendLine($"'{IngressBytesTransferred.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EgressBytesTransferred), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    egressBytesTransferred: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EgressBytesTransferred))
-                {
-                    builder.Append("    egressBytesTransferred: ");
-                    builder.AppendLine($"'{EgressBytesTransferred.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionBandwidth), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    connectionBandwidth: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ConnectionBandwidth))
-                {
-                    builder.Append("    connectionBandwidth: ");
-                    builder.AppendLine($"{ConnectionBandwidth.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SharedKey), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    sharedKey: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(SharedKey))
-                {
-                    builder.Append("    sharedKey: ");
-                    if (SharedKey.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{SharedKey}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{SharedKey}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableBgp), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    enableBgp: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableBgp))
-                {
-                    builder.Append("    enableBgp: ");
-                    var boolValue = EnableBgp.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UsePolicyBasedTrafficSelectors), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    usePolicyBasedTrafficSelectors: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UsePolicyBasedTrafficSelectors))
-                {
-                    builder.Append("    usePolicyBasedTrafficSelectors: ");
-                    var boolValue = UsePolicyBasedTrafficSelectors.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IPsecPolicies), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    ipsecPolicies: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(IPsecPolicies))
-                {
-                    if (IPsecPolicies.Any())
-                    {
-                        builder.Append("    ipsecPolicies: ");
-                        builder.AppendLine("[");
-                        foreach (var item in IPsecPolicies)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    ipsecPolicies: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrafficSelectorPolicies), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    trafficSelectorPolicies: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(TrafficSelectorPolicies))
-                {
-                    if (TrafficSelectorPolicies.Any())
-                    {
-                        builder.Append("    trafficSelectorPolicies: ");
-                        builder.AppendLine("[");
-                        foreach (var item in TrafficSelectorPolicies)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    trafficSelectorPolicies: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableRateLimiting), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    enableRateLimiting: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableRateLimiting))
-                {
-                    builder.Append("    enableRateLimiting: ");
-                    var boolValue = EnableRateLimiting.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnableInternetSecurity), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    enableInternetSecurity: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EnableInternetSecurity))
-                {
-                    builder.Append("    enableInternetSecurity: ");
-                    var boolValue = EnableInternetSecurity.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UseLocalAzureIPAddress), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    useLocalAzureIpAddress: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UseLocalAzureIPAddress))
-                {
-                    builder.Append("    useLocalAzureIpAddress: ");
-                    var boolValue = UseLocalAzureIPAddress.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    provisioningState: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ProvisioningState))
-                {
-                    builder.Append("    provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VpnLinkConnections), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    vpnLinkConnections: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsCollectionDefined(VpnLinkConnections))
-                {
-                    if (VpnLinkConnections.Any())
-                    {
-                        builder.Append("    vpnLinkConnections: ");
-                        builder.AppendLine("[");
-                        foreach (var item in VpnLinkConnections)
-                        {
-                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    vpnLinkConnections: ");
-                        }
-                        builder.AppendLine("    ]");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoutingConfiguration), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("    routingConfiguration: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RoutingConfiguration))
-                {
-                    builder.Append("    routingConfiguration: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, RoutingConfiguration, options, 4, false, "    routingConfiguration: ");
-                }
-            }
-
-            builder.AppendLine("  }");
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<VpnConnectionData>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VpnConnectionData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(VpnConnectionData)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        VpnConnectionData IPersistableModel<VpnConnectionData>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VpnConnectionData>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVpnConnectionData(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VpnConnectionData)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<VpnConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -8,131 +8,121 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the StaticSiteBasicAuthProperty data model.
-    /// Static site basic auth properties ARM resource.
-    /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource
-    /// </summary>
+    /// <summary> Static site basic auth properties ARM resource. </summary>
     public partial class StaticSiteBasicAuthPropertyData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteBasicAuthPropertyData"/>. </summary>
         public StaticSiteBasicAuthPropertyData()
         {
-            Environments = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="StaticSiteBasicAuthPropertyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind">
-        /// Kind of resource.
-        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.kind
-        /// </param>
-        /// <param name="password">
-        /// The password for basic auth.
-        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.password
-        /// </param>
-        /// <param name="secretUri">
-        /// Url to the secret in Key Vault.
-        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.secretUrl
-        /// </param>
-        /// <param name="applicableEnvironmentsMode">
-        /// State indicating if basic auth is enabled and for what environments it is active.
-        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.applicableEnvironmentsMode
-        /// </param>
-        /// <param name="environments">
-        /// The list of enabled environments for Basic Auth if ApplicableEnvironmentsMode is set to SpecifiedEnvironments.
-        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.environments
-        /// </param>
-        /// <param name="secretState">
-        /// State indicating if basic auth has a secret and what type it is.
-        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.secretState
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StaticSiteBasicAuthPropertyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, string password, Uri secretUri, string applicableEnvironmentsMode, IList<string> environments, string secretState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> StaticSiteBasicAuthPropertiesARMResource resource specific properties. </param>
+        /// <param name="kind"> Kind of resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal StaticSiteBasicAuthPropertyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, StaticSiteBasicAuthPropertyProperties properties, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
+            Properties = properties;
             Kind = kind;
-            Password = password;
-            SecretUri = secretUri;
-            ApplicableEnvironmentsMode = applicableEnvironmentsMode;
-            Environments = environments;
-            SecretState = secretState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Kind of resource.
-        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.kind
-        /// </summary>
+        /// <summary> StaticSiteBasicAuthPropertiesARMResource resource specific properties. </summary>
+        [WirePath("properties")]
+        internal StaticSiteBasicAuthPropertyProperties Properties { get; set; }
+
+        /// <summary> Kind of resource. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
-        /// <summary>
-        /// The password for basic auth.
-        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.password
-        /// </summary>
+
+        /// <summary> The password for basic auth. </summary>
         [WirePath("properties.password")]
-        public string Password { get; set; }
-        /// <summary>
-        /// Url to the secret in Key Vault.
-        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.secretUrl
-        /// </summary>
+        public string Password
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Password;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StaticSiteBasicAuthPropertyProperties();
+                }
+                Properties.Password = value;
+            }
+        }
+
+        /// <summary> Url to the secret in Key Vault. </summary>
         [WirePath("properties.secretUrl")]
-        public Uri SecretUri { get; set; }
-        /// <summary>
-        /// State indicating if basic auth is enabled and for what environments it is active.
-        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.applicableEnvironmentsMode
-        /// </summary>
+        public Uri SecretUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecretUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StaticSiteBasicAuthPropertyProperties();
+                }
+                Properties.SecretUri = value;
+            }
+        }
+
+        /// <summary> State indicating if basic auth is enabled and for what environments it is active. </summary>
         [WirePath("properties.applicableEnvironmentsMode")]
-        public string ApplicableEnvironmentsMode { get; set; }
-        /// <summary>
-        /// The list of enabled environments for Basic Auth if ApplicableEnvironmentsMode is set to SpecifiedEnvironments.
-        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.environments
-        /// </summary>
+        public string ApplicableEnvironmentsMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApplicableEnvironmentsMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new StaticSiteBasicAuthPropertyProperties();
+                }
+                Properties.ApplicableEnvironmentsMode = value;
+            }
+        }
+
+        /// <summary> The list of enabled environments for Basic Auth if ApplicableEnvironmentsMode is set to SpecifiedEnvironments. </summary>
         [WirePath("properties.environments")]
-        public IList<string> Environments { get; }
-        /// <summary>
-        /// State indicating if basic auth has a secret and what type it is.
-        /// Serialized Name: StaticSiteBasicAuthPropertiesARMResource.properties.secretState
-        /// </summary>
+        public IList<string> Environments
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new StaticSiteBasicAuthPropertyProperties();
+                }
+                return Properties.Environments;
+            }
+        }
+
+        /// <summary> State indicating if basic auth has a secret and what type it is. </summary>
         [WirePath("properties.secretState")]
-        public string SecretState { get; }
+        public string SecretState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SecretState;
+            }
+        }
     }
 }

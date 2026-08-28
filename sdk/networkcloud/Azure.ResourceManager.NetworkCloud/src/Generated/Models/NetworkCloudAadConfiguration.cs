@@ -38,6 +38,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The list of Azure Active Directory group object IDs that will have an administrative role on the Kubernetes cluster. </summary>
-        public IList<string> AdminGroupObjectIds { get; }
+        public IList<string> AdminGroupObjectIds { get; } = new ChangeTrackingList<string>();
     }
 }

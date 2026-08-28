@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.ServiceFabric
                     yield break;
                 }
                 VMSizesResult result = VMSizesResult.FromResponse(response);
-                yield return Page<ServiceFabricVmSizeResourceData>.FromValues((IReadOnlyList<ServiceFabricVmSizeResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ServiceFabricVmSizeResourceData>.FromValues((IReadOnlyList<ServiceFabricVmSizeResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

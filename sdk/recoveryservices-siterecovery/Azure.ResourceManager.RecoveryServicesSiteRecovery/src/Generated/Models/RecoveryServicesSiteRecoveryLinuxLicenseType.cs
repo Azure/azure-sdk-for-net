@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public readonly partial struct RecoveryServicesSiteRecoveryLinuxLicenseType : IEquatable<RecoveryServicesSiteRecoveryLinuxLicenseType>
     {
         private readonly string _value;
+        /// <summary> NotSpecified. </summary>
+        private const string NotSpecifiedValue = "NotSpecified";
+        /// <summary> NoLicenseType. </summary>
+        private const string NoLicenseTypeValue = "NoLicenseType";
+        /// <summary> LinuxServer. </summary>
+        private const string LinuxServerValue = "LinuxServer";
 
         /// <summary> Initializes a new instance of <see cref="RecoveryServicesSiteRecoveryLinuxLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public RecoveryServicesSiteRecoveryLinuxLicenseType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NotSpecifiedValue = "NotSpecified";
-        private const string NoLicenseTypeValue = "NoLicenseType";
-        private const string LinuxServerValue = "LinuxServer";
+            _value = value;
+        }
 
         /// <summary> NotSpecified. </summary>
         public static RecoveryServicesSiteRecoveryLinuxLicenseType NotSpecified { get; } = new RecoveryServicesSiteRecoveryLinuxLicenseType(NotSpecifiedValue);
+
         /// <summary> NoLicenseType. </summary>
         public static RecoveryServicesSiteRecoveryLinuxLicenseType NoLicenseType { get; } = new RecoveryServicesSiteRecoveryLinuxLicenseType(NoLicenseTypeValue);
+
         /// <summary> LinuxServer. </summary>
         public static RecoveryServicesSiteRecoveryLinuxLicenseType LinuxServer { get; } = new RecoveryServicesSiteRecoveryLinuxLicenseType(LinuxServerValue);
+
         /// <summary> Determines if two <see cref="RecoveryServicesSiteRecoveryLinuxLicenseType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(RecoveryServicesSiteRecoveryLinuxLicenseType left, RecoveryServicesSiteRecoveryLinuxLicenseType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="RecoveryServicesSiteRecoveryLinuxLicenseType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(RecoveryServicesSiteRecoveryLinuxLicenseType left, RecoveryServicesSiteRecoveryLinuxLicenseType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="RecoveryServicesSiteRecoveryLinuxLicenseType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="RecoveryServicesSiteRecoveryLinuxLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator RecoveryServicesSiteRecoveryLinuxLicenseType(string value) => new RecoveryServicesSiteRecoveryLinuxLicenseType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="RecoveryServicesSiteRecoveryLinuxLicenseType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator RecoveryServicesSiteRecoveryLinuxLicenseType?(string value) => value == null ? null : new RecoveryServicesSiteRecoveryLinuxLicenseType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is RecoveryServicesSiteRecoveryLinuxLicenseType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(RecoveryServicesSiteRecoveryLinuxLicenseType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

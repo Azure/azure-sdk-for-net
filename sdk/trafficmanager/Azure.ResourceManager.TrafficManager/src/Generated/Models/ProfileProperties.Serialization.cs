@@ -124,6 +124,11 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 writer.WritePropertyName("maxReturn"u8);
                 writer.WriteNumberValue(MaxReturn.Value);
             }
+            if (Optional.IsDefined(RecordType))
+            {
+                writer.WritePropertyName("recordType"u8);
+                writer.WriteStringValue(RecordType.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -174,6 +179,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
             TrafficViewEnrollmentStatus? trafficViewEnrollmentStatus = default;
             IList<AllowedEndpointRecordType> allowedEndpointRecordTypes = default;
             long? maxReturn = default;
+            TrafficManagerRecordType? recordType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -259,6 +265,15 @@ namespace Azure.ResourceManager.TrafficManager.Models
                     maxReturn = prop.Value.GetInt64();
                     continue;
                 }
+                if (prop.NameEquals("recordType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recordType = new TrafficManagerRecordType(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -273,6 +288,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
                 trafficViewEnrollmentStatus,
                 allowedEndpointRecordTypes ?? new ChangeTrackingList<AllowedEndpointRecordType>(),
                 maxReturn,
+                recordType,
                 additionalBinaryDataProperties);
         }
     }

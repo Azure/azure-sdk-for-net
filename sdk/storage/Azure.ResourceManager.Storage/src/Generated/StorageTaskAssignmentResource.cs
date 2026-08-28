@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Storage
         {
             TryGetApiVersion(ResourceType, out string storageTaskAssignmentApiVersion);
             _storageTaskAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _storageTaskAssignmentsRestClient = new StorageTaskAssignments(_storageTaskAssignmentsClientDiagnostics, Pipeline, Endpoint, storageTaskAssignmentApiVersion ?? "2025-08-01");
+            _storageTaskAssignmentsRestClient = new StorageTaskAssignments(_storageTaskAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, storageTaskAssignmentApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Storage
                 HttpMessage message = _storageTaskAssignmentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageTaskAssignmentPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageArmOperation<StorageTaskAssignmentResource> operation = new StorageArmOperation<StorageTaskAssignmentResource>(
-                    new StorageTaskAssignmentOperationSource(Client),
+                    new StorageTaskAssignmentResourceOperationSource(Client),
                     _storageTaskAssignmentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Storage
                 HttpMessage message = _storageTaskAssignmentsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, StorageTaskAssignmentPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageArmOperation<StorageTaskAssignmentResource> operation = new StorageArmOperation<StorageTaskAssignmentResource>(
-                    new StorageTaskAssignmentOperationSource(Client),
+                    new StorageTaskAssignmentResourceOperationSource(Client),
                     _storageTaskAssignmentsClientDiagnostics,
                     Pipeline,
                     message.Request,

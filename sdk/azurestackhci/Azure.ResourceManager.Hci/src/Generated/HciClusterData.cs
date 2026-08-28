@@ -30,18 +30,18 @@ namespace Azure.ResourceManager.Hci
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> Cluster properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="kind"> This property identifies the purpose of the Cluster deployment. For example, a valid value is AzureLocal. </param>
-        internal HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, ManagedServiceIdentity identity, string kind) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal HciClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ClusterProperties properties, ManagedServiceIdentity identity, string kind, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             Identity = identity;
             Kind = kind;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Cluster properties. </summary>
@@ -93,16 +93,6 @@ namespace Azure.ResourceManager.Hci
             get
             {
                 return Properties is null ? default : Properties.CloudId;
-            }
-        }
-
-        /// <summary> The ring to which this cluster belongs to. </summary>
-        [WirePath("properties.ring")]
-        public string Ring
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Ring;
             }
         }
 
@@ -389,26 +379,6 @@ namespace Azure.ResourceManager.Hci
             get
             {
                 return Properties is null ? default : Properties.ClusterPattern;
-            }
-        }
-
-        /// <summary> Represents the Confidential Virtual Machine (CVM) support intent and current status for the cluster resource. </summary>
-        [WirePath("properties.confidentialVmProperties")]
-        public ConfidentialVmProperties ConfidentialVmProperties
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ConfidentialVmProperties;
-            }
-        }
-
-        /// <summary> Software Defined Networking Properties of the cluster. </summary>
-        [WirePath("properties.sdnProperties")]
-        public ClusterSdnProperties SdnProperties
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SdnProperties;
             }
         }
 

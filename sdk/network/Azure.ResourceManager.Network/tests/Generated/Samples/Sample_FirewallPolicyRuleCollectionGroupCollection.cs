@@ -56,13 +56,11 @@ DestinationPorts = {"8080"},
 TranslatedPort = "8080",
 SourceIPGroups = {},
 TranslatedFqdn = "internalhttp.server.net",
-Name = "nat-rule1",
 }},
-Name = "Example-Nat-Rule-Collection",
 Priority = 100,
 }},
             };
-            ArmOperation<FirewallPolicyRuleCollectionGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionGroupName, data);
+            ArmOperation<FirewallPolicyRuleCollectionGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionGroupName, data, cancellationToken: System.Threading.CancellationToken.None);
             FirewallPolicyRuleCollectionGroupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -109,13 +107,11 @@ IPProtocols = {FirewallPolicyRuleNetworkProtocol.Tcp},
 SourceAddresses = {"10.1.25.0/24"},
 DestinationAddresses = {"*"},
 DestinationPorts = {"*"},
-Name = "network-rule1",
 }},
-Name = "Example-Filter-Rule-Collection",
 Priority = 100,
 }},
             };
-            ArmOperation<FirewallPolicyRuleCollectionGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionGroupName, data);
+            ArmOperation<FirewallPolicyRuleCollectionGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionGroupName, data, cancellationToken: System.Threading.CancellationToken.None);
             FirewallPolicyRuleCollectionGroupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -162,12 +158,10 @@ IPProtocols = {FirewallPolicyRuleNetworkProtocol.Tcp},
 DestinationPorts = {"*"},
 SourceIPGroups = {"/subscriptions/subid/providers/Microsoft.Network/resourceGroup/rg1/ipGroups/ipGroups1"},
 DestinationIPGroups = {"/subscriptions/subid/providers/Microsoft.Network/resourceGroup/rg1/ipGroups/ipGroups2"},
-Name = "network-1",
 }},
-Name = "Example-Filter-Rule-Collection",
 }},
             };
-            ArmOperation<FirewallPolicyRuleCollectionGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionGroupName, data);
+            ArmOperation<FirewallPolicyRuleCollectionGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionGroupName, data, cancellationToken: System.Threading.CancellationToken.None);
             FirewallPolicyRuleCollectionGroupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -217,13 +211,11 @@ ProtocolType = FirewallPolicyRuleApplicationProtocolType.Https,
 Port = 443,
 }},
 WebCategories = {"Hacking"},
-Name = "rule1",
 Description = "Deny inbound rule",
 }},
-Name = "Example-Filter-Rule-Collection",
 }},
             };
-            ArmOperation<FirewallPolicyRuleCollectionGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionGroupName, data);
+            ArmOperation<FirewallPolicyRuleCollectionGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionGroupName, data, cancellationToken: System.Threading.CancellationToken.None);
             FirewallPolicyRuleCollectionGroupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -278,13 +270,11 @@ HttpHeadersToInsert = {new FirewallPolicyHttpHeaderToInsert
 HeaderName = "Restrict-Access-To-Tenants",
 HeaderValue = "contoso.com,fabrikam.onmicrosoft.com",
 }},
-Name = "rule1",
 Description = "Insert trusted tenants header",
 }},
-Name = "Example-Filter-Rule-Collection",
 }},
             };
-            ArmOperation<FirewallPolicyRuleCollectionGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionGroupName, data);
+            ArmOperation<FirewallPolicyRuleCollectionGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionGroupName, data, cancellationToken: System.Threading.CancellationToken.None);
             FirewallPolicyRuleCollectionGroupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

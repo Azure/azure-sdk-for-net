@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ManagedNetworkFabric.Models;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
 {
-    internal class NniUpdateBfdAdministrativeStateResultOperationSource : IOperationSource<NniUpdateBfdAdministrativeStateResult>
+    /// <summary></summary>
+    internal partial class NniUpdateBfdAdministrativeStateResultOperationSource : IOperationSource<NniUpdateBfdAdministrativeStateResult>
     {
-        NniUpdateBfdAdministrativeStateResult IOperationSource<NniUpdateBfdAdministrativeStateResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal NniUpdateBfdAdministrativeStateResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return NniUpdateBfdAdministrativeStateResult.DeserializeNniUpdateBfdAdministrativeStateResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        NniUpdateBfdAdministrativeStateResult IOperationSource<NniUpdateBfdAdministrativeStateResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return NniUpdateBfdAdministrativeStateResult.DeserializeNniUpdateBfdAdministrativeStateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<NniUpdateBfdAdministrativeStateResult> IOperationSource<NniUpdateBfdAdministrativeStateResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return NniUpdateBfdAdministrativeStateResult.DeserializeNniUpdateBfdAdministrativeStateResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return NniUpdateBfdAdministrativeStateResult.DeserializeNniUpdateBfdAdministrativeStateResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

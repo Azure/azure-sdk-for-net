@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class VolumeDefinition : IUtf8JsonSerializable, IJsonModel<VolumeDefinition>
+    /// <summary> The VolumeDefinition. </summary>
+    public partial class VolumeDefinition : IJsonModel<VolumeDefinition>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VolumeDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VolumeDefinition PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VolumeDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeVolumeDefinition(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(VolumeDefinition)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<VolumeDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(VolumeDefinition)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<VolumeDefinition>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VolumeDefinition IPersistableModel<VolumeDefinition>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<VolumeDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<VolumeDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VolumeDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VolumeDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VolumeDefinition)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(DefinitionType))
             {
                 writer.WritePropertyName("type"u8);
@@ -42,15 +81,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             if (Optional.IsDefined(ReadOnly))
             {
-                if (ReadOnly != null)
-                {
-                    writer.WritePropertyName("readOnly"u8);
-                    writer.WriteBooleanValue(ReadOnly.Value);
-                }
-                else
-                {
-                    writer.WriteNull("readOnly");
-                }
+                writer.WritePropertyName("readOnly"u8);
+                writer.WriteBooleanValue(ReadOnly.Value);
             }
             if (Optional.IsDefined(Source))
             {
@@ -82,15 +114,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("tmpfs"u8);
                 writer.WriteObjectValue(Tmpfs, options);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -99,27 +131,32 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        VolumeDefinition IJsonModel<VolumeDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        VolumeDefinition IJsonModel<VolumeDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual VolumeDefinition JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VolumeDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<VolumeDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VolumeDefinition)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeVolumeDefinition(document.RootElement, options);
         }
 
-        internal static VolumeDefinition DeserializeVolumeDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static VolumeDefinition DeserializeVolumeDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            VolumeDefinitionType? type = default;
+            VolumeDefinitionType? definitionType = default;
             bool? readOnly = default;
             string source = default;
             string target = default;
@@ -127,79 +164,85 @@ namespace Azure.ResourceManager.MachineLearning.Models
             MountBindOptions bind = default;
             VolumeOptions volume = default;
             TmpfsOptions tmpfs = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("type"u8))
+                if (prop.NameEquals("type"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    type = new VolumeDefinitionType(property.Value.GetString());
+                    definitionType = new VolumeDefinitionType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("readOnly"u8))
+                if (prop.NameEquals("readOnly"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         readOnly = null;
                         continue;
                     }
-                    readOnly = property.Value.GetBoolean();
+                    readOnly = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("source"u8))
+                if (prop.NameEquals("source"u8))
                 {
-                    source = property.Value.GetString();
+                    source = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("target"u8))
+                if (prop.NameEquals("target"u8))
                 {
-                    target = property.Value.GetString();
+                    target = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("consistency"u8))
+                if (prop.NameEquals("consistency"u8))
                 {
-                    consistency = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("bind"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        consistency = null;
                         continue;
                     }
-                    bind = MountBindOptions.DeserializeMountBindOptions(property.Value, options);
+                    consistency = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("volume"u8))
+                if (prop.NameEquals("bind"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        bind = null;
                         continue;
                     }
-                    volume = VolumeOptions.DeserializeVolumeOptions(property.Value, options);
+                    bind = MountBindOptions.DeserializeMountBindOptions(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("tmpfs"u8))
+                if (prop.NameEquals("volume"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
+                        volume = null;
                         continue;
                     }
-                    tmpfs = TmpfsOptions.DeserializeTmpfsOptions(property.Value, options);
+                    volume = VolumeOptions.DeserializeVolumeOptions(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("tmpfs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        tmpfs = null;
+                        continue;
+                    }
+                    tmpfs = TmpfsOptions.DeserializeTmpfsOptions(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new VolumeDefinition(
-                type,
+                definitionType,
                 readOnly,
                 source,
                 target,
@@ -207,206 +250,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 bind,
                 volume,
                 tmpfs,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefinitionType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  type: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(DefinitionType))
-                {
-                    builder.Append("  type: ");
-                    builder.AppendLine($"'{DefinitionType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReadOnly), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  readOnly: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ReadOnly))
-                {
-                    builder.Append("  readOnly: ");
-                    var boolValue = ReadOnly.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Source), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  source: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Source))
-                {
-                    builder.Append("  source: ");
-                    if (Source.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Source}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Source}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Target), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  target: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Target))
-                {
-                    builder.Append("  target: ");
-                    if (Target.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Target}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Target}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Consistency), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  consistency: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Consistency))
-                {
-                    builder.Append("  consistency: ");
-                    if (Consistency.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Consistency}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Consistency}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Bind), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  bind: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Bind))
-                {
-                    builder.Append("  bind: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Bind, options, 2, false, "  bind: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("Nocopy", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  volume: ");
-                builder.AppendLine("{");
-                builder.Append("    nocopy: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Volume))
-                {
-                    builder.Append("  volume: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Volume, options, 2, false, "  volume: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("TmpfsSize", out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  tmpfs: ");
-                builder.AppendLine("{");
-                builder.Append("    size: ");
-                builder.AppendLine(propertyOverride);
-                builder.AppendLine("  }");
-            }
-            else
-            {
-                if (Optional.IsDefined(Tmpfs))
-                {
-                    builder.Append("  tmpfs: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, Tmpfs, options, 2, false, "  tmpfs: ");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<VolumeDefinition>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VolumeDefinition>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerMachineLearningContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(VolumeDefinition)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        VolumeDefinition IPersistableModel<VolumeDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<VolumeDefinition>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeVolumeDefinition(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(VolumeDefinition)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<VolumeDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

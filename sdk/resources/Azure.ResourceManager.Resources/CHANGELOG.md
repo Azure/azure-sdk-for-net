@@ -1,14 +1,27 @@
 # Release History
 
-## 1.12.0-beta.1 (Unreleased)
+## 1.12.0 (2026-08-27)
 
 ### Features Added
 
-### Breaking Changes
+The Deployments, DeploymentStacks, and Bicep APIs, along with their associated models, have been moved to separate SDKs. Existing APIs in this package are now obsolete and will generate deprecation warnings. Please update your code to use the corresponding APIs in the following packages:
 
-### Bugs Fixed
+- Azure.ResourceManager.Resources.Deployments
+- Azure.ResourceManager.Resources.DeploymentStacks
+- Azure.ResourceManager.Resources.Bicep
+
+These SDKs provide the same functionality and should be used as direct replacements.
 
 ### Other Changes
+
+- Upgraded dependent Azure.Core to 1.62.0.
+
+## 1.12.0-beta.1 (2026-06-30)
+
+### Other Changes
+
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
 
 ## 1.11.2 (2025-10-16)
 

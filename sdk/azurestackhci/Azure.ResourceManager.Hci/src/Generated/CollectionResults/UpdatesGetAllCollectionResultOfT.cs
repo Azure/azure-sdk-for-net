@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Hci
                     yield break;
                 }
                 UpdateList result = UpdateList.FromResponse(response);
-                yield return Page<HciClusterUpdateData>.FromValues((IReadOnlyList<HciClusterUpdateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<HciClusterUpdateData>.FromValues((IReadOnlyList<HciClusterUpdateData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

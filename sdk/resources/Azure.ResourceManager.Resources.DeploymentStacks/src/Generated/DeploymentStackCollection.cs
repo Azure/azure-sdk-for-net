@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
         {
             TryGetApiVersion(DeploymentStackResource.ResourceType, out string deploymentStackApiVersion);
             _deploymentStacksAtScopeClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.DeploymentStacks", DeploymentStackResource.ResourceType.Namespace, Diagnostics);
-            _deploymentStacksAtScopeRestClient = new DeploymentStacksAtScope(_deploymentStacksAtScopeClientDiagnostics, Pipeline, Endpoint, deploymentStackApiVersion ?? "2025-07-01");
+            _deploymentStacksAtScopeRestClient = new DeploymentStacksAtScope(_deploymentStacksAtScopeClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deploymentStackApiVersion ?? "2025-07-01");
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 HttpMessage message = _deploymentStacksAtScopeRestClient.CreateCreateOrUpdateRequest(Id.ToString(), deploymentStackName, DeploymentStackData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DeploymentStacksArmOperation<DeploymentStackResource> operation = new DeploymentStacksArmOperation<DeploymentStackResource>(
-                    new DeploymentStackOperationSource(Client),
+                    new DeploymentStackResourceOperationSource(Client),
                     _deploymentStacksAtScopeClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Resources.DeploymentStacks
                 HttpMessage message = _deploymentStacksAtScopeRestClient.CreateCreateOrUpdateRequest(Id.ToString(), deploymentStackName, DeploymentStackData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DeploymentStacksArmOperation<DeploymentStackResource> operation = new DeploymentStacksArmOperation<DeploymentStackResource>(
-                    new DeploymentStackOperationSource(Client),
+                    new DeploymentStackResourceOperationSource(Client),
                     _deploymentStacksAtScopeClientDiagnostics,
                     Pipeline,
                     message.Request,

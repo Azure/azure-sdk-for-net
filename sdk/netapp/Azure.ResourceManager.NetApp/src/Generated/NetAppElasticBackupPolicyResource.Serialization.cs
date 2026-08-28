@@ -5,35 +5,16 @@
 
 #nullable disable
 
-using System;
 using System.ClientModel.Primitives;
-using System.Text.Json;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.NetApp
 {
     /// <summary></summary>
-    public partial class NetAppElasticBackupPolicyResource : IJsonModel<NetAppElasticBackupPolicyData>
+    public partial class NetAppElasticBackupPolicyResource : ArmResource, IJsonModel<NetAppElasticBackupPolicyData>
     {
         private static IJsonModel<NetAppElasticBackupPolicyData> s_dataDeserializationInstance;
 
         private static IJsonModel<NetAppElasticBackupPolicyData> DataDeserializationInstance => s_dataDeserializationInstance ??= new NetAppElasticBackupPolicyData();
-
-        /// <param name="writer"> The writer to serialize the model to. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NetAppElasticBackupPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<NetAppElasticBackupPolicyData>)Data).Write(writer, options);
-
-        /// <param name="reader"> The reader for deserializing the model. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetAppElasticBackupPolicyData IJsonModel<NetAppElasticBackupPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NetAppElasticBackupPolicyData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<NetAppElasticBackupPolicyData>(Data, options, AzureResourceManagerNetAppContext.Default);
-
-        /// <param name="data"> The binary data to be processed. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        NetAppElasticBackupPolicyData IPersistableModel<NetAppElasticBackupPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<NetAppElasticBackupPolicyData>(data, options, AzureResourceManagerNetAppContext.Default);
-
-        /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NetAppElasticBackupPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct LastAttemptStatusEnum : IEquatable<LastAttemptStatusEnum>
     {
         private readonly string _value;
+        /// <summary> Success. </summary>
+        private const string SuccessValue = "Success";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="LastAttemptStatusEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LastAttemptStatusEnum(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SuccessValue = "Success";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Success. </summary>
         public static LastAttemptStatusEnum Success { get; } = new LastAttemptStatusEnum(SuccessValue);
+
         /// <summary> Failed. </summary>
         public static LastAttemptStatusEnum Failed { get; } = new LastAttemptStatusEnum(FailedValue);
+
         /// <summary> Determines if two <see cref="LastAttemptStatusEnum"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LastAttemptStatusEnum left, LastAttemptStatusEnum right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LastAttemptStatusEnum"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LastAttemptStatusEnum left, LastAttemptStatusEnum right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LastAttemptStatusEnum"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LastAttemptStatusEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LastAttemptStatusEnum(string value) => new LastAttemptStatusEnum(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LastAttemptStatusEnum"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LastAttemptStatusEnum?(string value) => value == null ? null : new LastAttemptStatusEnum(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LastAttemptStatusEnum other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LastAttemptStatusEnum other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

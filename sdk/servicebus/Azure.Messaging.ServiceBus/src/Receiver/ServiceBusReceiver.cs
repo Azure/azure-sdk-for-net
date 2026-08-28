@@ -201,6 +201,8 @@ namespace Azure.Messaging.ServiceBus
                     identifier: Identifier,
                     sessionId: sessionId,
                     isSessionReceiver: IsSessionReceiver,
+                    isSessionExclusive: options.IsSessionExclusive,
+                    sessionLockToken: options.SessionLockToken,
                     isProcessor: isProcessor,
                     cancellationToken: cancellationToken);
                 _clientDiagnostics = new MessagingClientDiagnostics(

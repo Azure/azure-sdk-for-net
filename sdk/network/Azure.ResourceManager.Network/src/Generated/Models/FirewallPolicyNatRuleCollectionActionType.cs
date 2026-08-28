@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct FirewallPolicyNatRuleCollectionActionType : IEquatable<FirewallPolicyNatRuleCollectionActionType>
     {
         private readonly string _value;
+        /// <summary> DNAT. </summary>
+        private const string DnatValue = "DNAT";
 
         /// <summary> Initializes a new instance of <see cref="FirewallPolicyNatRuleCollectionActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FirewallPolicyNatRuleCollectionActionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DnatValue = "DNAT";
+            _value = value;
+        }
 
         /// <summary> DNAT. </summary>
         public static FirewallPolicyNatRuleCollectionActionType Dnat { get; } = new FirewallPolicyNatRuleCollectionActionType(DnatValue);
+
         /// <summary> Determines if two <see cref="FirewallPolicyNatRuleCollectionActionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FirewallPolicyNatRuleCollectionActionType left, FirewallPolicyNatRuleCollectionActionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FirewallPolicyNatRuleCollectionActionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FirewallPolicyNatRuleCollectionActionType left, FirewallPolicyNatRuleCollectionActionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FirewallPolicyNatRuleCollectionActionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FirewallPolicyNatRuleCollectionActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FirewallPolicyNatRuleCollectionActionType(string value) => new FirewallPolicyNatRuleCollectionActionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FirewallPolicyNatRuleCollectionActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FirewallPolicyNatRuleCollectionActionType?(string value) => value == null ? null : new FirewallPolicyNatRuleCollectionActionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FirewallPolicyNatRuleCollectionActionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FirewallPolicyNatRuleCollectionActionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

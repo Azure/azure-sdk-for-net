@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class IPv6FirewallRuleResource : IJsonModel<IPv6FirewallRuleData>
     {
-        private static IPv6FirewallRuleData s_dataDeserializationInstance;
-        private static IPv6FirewallRuleData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<IPv6FirewallRuleData> s_dataDeserializationInstance;
 
+        private static IJsonModel<IPv6FirewallRuleData> DataDeserializationInstance => s_dataDeserializationInstance ??= new IPv6FirewallRuleData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IPv6FirewallRuleData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IPv6FirewallRuleData>)Data).Write(writer, options);
 
-        IPv6FirewallRuleData IJsonModel<IPv6FirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IPv6FirewallRuleData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IPv6FirewallRuleData IJsonModel<IPv6FirewallRuleData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<IPv6FirewallRuleData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IPv6FirewallRuleData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         IPv6FirewallRuleData IPersistableModel<IPv6FirewallRuleData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IPv6FirewallRuleData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<IPv6FirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IPv6FirewallRuleData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IPv6FirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

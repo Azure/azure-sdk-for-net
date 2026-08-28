@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(DataBoxEdgeStorageAccountCredentialResource.ResourceType, out string dataBoxEdgeStorageAccountCredentialApiVersion);
             _storageAccountCredentialsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeStorageAccountCredentialResource.ResourceType.Namespace, Diagnostics);
-            _storageAccountCredentialsRestClient = new StorageAccountCredentials(_storageAccountCredentialsClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeStorageAccountCredentialApiVersion ?? "2023-12-01");
+            _storageAccountCredentialsRestClient = new StorageAccountCredentials(_storageAccountCredentialsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeStorageAccountCredentialApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _storageAccountCredentialsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DataBoxEdgeStorageAccountCredentialData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountCredentialResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountCredentialResource>(
-                    new DataBoxEdgeStorageAccountCredentialOperationSource(Client),
+                    new DataBoxEdgeStorageAccountCredentialResourceOperationSource(Client),
                     _storageAccountCredentialsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _storageAccountCredentialsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DataBoxEdgeStorageAccountCredentialData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountCredentialResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeStorageAccountCredentialResource>(
-                    new DataBoxEdgeStorageAccountCredentialOperationSource(Client),
+                    new DataBoxEdgeStorageAccountCredentialResourceOperationSource(Client),
                     _storageAccountCredentialsClientDiagnostics,
                     Pipeline,
                     message.Request,

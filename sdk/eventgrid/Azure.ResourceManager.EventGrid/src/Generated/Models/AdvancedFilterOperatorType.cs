@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,89 +15,142 @@ namespace Azure.ResourceManager.EventGrid.Models
     internal readonly partial struct AdvancedFilterOperatorType : IEquatable<AdvancedFilterOperatorType>
     {
         private readonly string _value;
+        /// <summary> NumberIn. </summary>
+        private const string NumberInValue = "NumberIn";
+        /// <summary> NumberNotIn. </summary>
+        private const string NumberNotInValue = "NumberNotIn";
+        /// <summary> NumberLessThan. </summary>
+        private const string NumberLessThanValue = "NumberLessThan";
+        /// <summary> NumberGreaterThan. </summary>
+        private const string NumberGreaterThanValue = "NumberGreaterThan";
+        /// <summary> NumberLessThanOrEquals. </summary>
+        private const string NumberLessThanOrEqualsValue = "NumberLessThanOrEquals";
+        /// <summary> NumberGreaterThanOrEquals. </summary>
+        private const string NumberGreaterThanOrEqualsValue = "NumberGreaterThanOrEquals";
+        /// <summary> BoolEquals. </summary>
+        private const string BoolEqualsValue = "BoolEquals";
+        /// <summary> StringIn. </summary>
+        private const string StringInValue = "StringIn";
+        /// <summary> StringNotIn. </summary>
+        private const string StringNotInValue = "StringNotIn";
+        /// <summary> StringBeginsWith. </summary>
+        private const string StringBeginsWithValue = "StringBeginsWith";
+        /// <summary> StringEndsWith. </summary>
+        private const string StringEndsWithValue = "StringEndsWith";
+        /// <summary> StringContains. </summary>
+        private const string StringContainsValue = "StringContains";
+        /// <summary> NumberInRange. </summary>
+        private const string NumberInRangeValue = "NumberInRange";
+        /// <summary> NumberNotInRange. </summary>
+        private const string NumberNotInRangeValue = "NumberNotInRange";
+        /// <summary> StringNotBeginsWith. </summary>
+        private const string StringNotBeginsWithValue = "StringNotBeginsWith";
+        /// <summary> StringNotEndsWith. </summary>
+        private const string StringNotEndsWithValue = "StringNotEndsWith";
+        /// <summary> StringNotContains. </summary>
+        private const string StringNotContainsValue = "StringNotContains";
+        /// <summary> IsNullOrUndefined. </summary>
+        private const string IsNullOrUndefinedValue = "IsNullOrUndefined";
+        /// <summary> IsNotNull. </summary>
+        private const string IsNotNullValue = "IsNotNull";
 
         /// <summary> Initializes a new instance of <see cref="AdvancedFilterOperatorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AdvancedFilterOperatorType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NumberInValue = "NumberIn";
-        private const string NumberNotInValue = "NumberNotIn";
-        private const string NumberLessThanValue = "NumberLessThan";
-        private const string NumberGreaterThanValue = "NumberGreaterThan";
-        private const string NumberLessThanOrEqualsValue = "NumberLessThanOrEquals";
-        private const string NumberGreaterThanOrEqualsValue = "NumberGreaterThanOrEquals";
-        private const string BoolEqualsValue = "BoolEquals";
-        private const string StringInValue = "StringIn";
-        private const string StringNotInValue = "StringNotIn";
-        private const string StringBeginsWithValue = "StringBeginsWith";
-        private const string StringEndsWithValue = "StringEndsWith";
-        private const string StringContainsValue = "StringContains";
-        private const string NumberInRangeValue = "NumberInRange";
-        private const string NumberNotInRangeValue = "NumberNotInRange";
-        private const string StringNotBeginsWithValue = "StringNotBeginsWith";
-        private const string StringNotEndsWithValue = "StringNotEndsWith";
-        private const string StringNotContainsValue = "StringNotContains";
-        private const string IsNullOrUndefinedValue = "IsNullOrUndefined";
-        private const string IsNotNullValue = "IsNotNull";
+            _value = value;
+        }
 
         /// <summary> NumberIn. </summary>
         public static AdvancedFilterOperatorType NumberIn { get; } = new AdvancedFilterOperatorType(NumberInValue);
+
         /// <summary> NumberNotIn. </summary>
         public static AdvancedFilterOperatorType NumberNotIn { get; } = new AdvancedFilterOperatorType(NumberNotInValue);
+
         /// <summary> NumberLessThan. </summary>
         public static AdvancedFilterOperatorType NumberLessThan { get; } = new AdvancedFilterOperatorType(NumberLessThanValue);
+
         /// <summary> NumberGreaterThan. </summary>
         public static AdvancedFilterOperatorType NumberGreaterThan { get; } = new AdvancedFilterOperatorType(NumberGreaterThanValue);
+
         /// <summary> NumberLessThanOrEquals. </summary>
         public static AdvancedFilterOperatorType NumberLessThanOrEquals { get; } = new AdvancedFilterOperatorType(NumberLessThanOrEqualsValue);
+
         /// <summary> NumberGreaterThanOrEquals. </summary>
         public static AdvancedFilterOperatorType NumberGreaterThanOrEquals { get; } = new AdvancedFilterOperatorType(NumberGreaterThanOrEqualsValue);
+
         /// <summary> BoolEquals. </summary>
         public static AdvancedFilterOperatorType BoolEquals { get; } = new AdvancedFilterOperatorType(BoolEqualsValue);
+
         /// <summary> StringIn. </summary>
         public static AdvancedFilterOperatorType StringIn { get; } = new AdvancedFilterOperatorType(StringInValue);
+
         /// <summary> StringNotIn. </summary>
         public static AdvancedFilterOperatorType StringNotIn { get; } = new AdvancedFilterOperatorType(StringNotInValue);
+
         /// <summary> StringBeginsWith. </summary>
         public static AdvancedFilterOperatorType StringBeginsWith { get; } = new AdvancedFilterOperatorType(StringBeginsWithValue);
+
         /// <summary> StringEndsWith. </summary>
         public static AdvancedFilterOperatorType StringEndsWith { get; } = new AdvancedFilterOperatorType(StringEndsWithValue);
+
         /// <summary> StringContains. </summary>
         public static AdvancedFilterOperatorType StringContains { get; } = new AdvancedFilterOperatorType(StringContainsValue);
+
         /// <summary> NumberInRange. </summary>
         public static AdvancedFilterOperatorType NumberInRange { get; } = new AdvancedFilterOperatorType(NumberInRangeValue);
+
         /// <summary> NumberNotInRange. </summary>
         public static AdvancedFilterOperatorType NumberNotInRange { get; } = new AdvancedFilterOperatorType(NumberNotInRangeValue);
+
         /// <summary> StringNotBeginsWith. </summary>
         public static AdvancedFilterOperatorType StringNotBeginsWith { get; } = new AdvancedFilterOperatorType(StringNotBeginsWithValue);
+
         /// <summary> StringNotEndsWith. </summary>
         public static AdvancedFilterOperatorType StringNotEndsWith { get; } = new AdvancedFilterOperatorType(StringNotEndsWithValue);
+
         /// <summary> StringNotContains. </summary>
         public static AdvancedFilterOperatorType StringNotContains { get; } = new AdvancedFilterOperatorType(StringNotContainsValue);
+
         /// <summary> IsNullOrUndefined. </summary>
         public static AdvancedFilterOperatorType IsNullOrUndefined { get; } = new AdvancedFilterOperatorType(IsNullOrUndefinedValue);
+
         /// <summary> IsNotNull. </summary>
         public static AdvancedFilterOperatorType IsNotNull { get; } = new AdvancedFilterOperatorType(IsNotNullValue);
+
         /// <summary> Determines if two <see cref="AdvancedFilterOperatorType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AdvancedFilterOperatorType left, AdvancedFilterOperatorType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AdvancedFilterOperatorType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AdvancedFilterOperatorType left, AdvancedFilterOperatorType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AdvancedFilterOperatorType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AdvancedFilterOperatorType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AdvancedFilterOperatorType(string value) => new AdvancedFilterOperatorType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AdvancedFilterOperatorType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AdvancedFilterOperatorType?(string value) => value == null ? null : new AdvancedFilterOperatorType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AdvancedFilterOperatorType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AdvancedFilterOperatorType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

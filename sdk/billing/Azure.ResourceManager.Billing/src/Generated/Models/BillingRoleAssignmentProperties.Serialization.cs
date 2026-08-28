@@ -8,16 +8,72 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Billing;
 
 namespace Azure.ResourceManager.Billing.Models
 {
-    public partial class BillingRoleAssignmentProperties : IUtf8JsonSerializable, IJsonModel<BillingRoleAssignmentProperties>
+    /// <summary> The properties of the billing role assignment. </summary>
+    public partial class BillingRoleAssignmentProperties : IJsonModel<BillingRoleAssignmentProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BillingRoleAssignmentProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <summary> Initializes a new instance of <see cref="BillingRoleAssignmentProperties"/> for deserialization. </summary>
+        internal BillingRoleAssignmentProperties()
+        {
+        }
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BillingRoleAssignmentProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BillingRoleAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeBillingRoleAssignmentProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(BillingRoleAssignmentProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<BillingRoleAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(BillingRoleAssignmentProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<BillingRoleAssignmentProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BillingRoleAssignmentProperties IPersistableModel<BillingRoleAssignmentProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<BillingRoleAssignmentProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="billingRoleAssignmentProperties"> The <see cref="BillingRoleAssignmentProperties"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(BillingRoleAssignmentProperties billingRoleAssignmentProperties)
+        {
+            if (billingRoleAssignmentProperties == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(billingRoleAssignmentProperties, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<BillingRoleAssignmentProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +85,11 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingRoleAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingRoleAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BillingRoleAssignmentProperties)} does not support writing '{format}' format.");
             }
-
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -182,15 +237,15 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("customerDisplayName"u8);
                 writer.WriteStringValue(CustomerDisplayName);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -199,652 +254,299 @@ namespace Azure.ResourceManager.Billing.Models
             }
         }
 
-        BillingRoleAssignmentProperties IJsonModel<BillingRoleAssignmentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BillingRoleAssignmentProperties IJsonModel<BillingRoleAssignmentProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BillingRoleAssignmentProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingRoleAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<BillingRoleAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(BillingRoleAssignmentProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeBillingRoleAssignmentProperties(document.RootElement, options);
         }
 
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static BillingRoleAssignmentProperties DeserializeBillingRoleAssignmentProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
-            if (hasPropertyOverride)
+            if (element.ValueKind == JsonValueKind.Null)
             {
-                builder.Append("  provisioningState: ");
-                builder.AppendLine(propertyOverride);
+                return null;
             }
-            else
+            BillingProvisioningState? provisioningState = default;
+            DateTimeOffset? createdOn = default;
+            Guid? createdByPrincipalTenantId = default;
+            string createdByPrincipalId = default;
+            string createdByPrincipalPuid = default;
+            string createdByUserEmailAddress = default;
+            DateTimeOffset? modifiedOn = default;
+            string modifiedByPrincipalPuid = default;
+            string modifiedByUserEmailAddress = default;
+            string modifiedByPrincipalId = default;
+            Guid? modifiedByPrincipalTenantId = default;
+            string principalPuid = default;
+            string principalId = default;
+            Guid? principalTenantId = default;
+            ResourceIdentifier roleDefinitionId = default;
+            string scope = default;
+            string userAuthenticationType = default;
+            string userEmailAddress = default;
+            string principalTenantName = default;
+            string principalDisplayName = default;
+            BillingPrincipalType? principalType = default;
+            ResourceIdentifier billingRequestId = default;
+            ResourceIdentifier billingAccountId = default;
+            string billingAccountDisplayName = default;
+            ResourceIdentifier billingProfileId = default;
+            string billingProfileDisplayName = default;
+            ResourceIdentifier invoiceSectionId = default;
+            string invoiceSectionDisplayName = default;
+            ResourceIdentifier customerId = default;
+            string customerDisplayName = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (Optional.IsDefined(ProvisioningState))
+                if (prop.NameEquals("provisioningState"u8))
                 {
-                    builder.Append("  provisioningState: ");
-                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioningState = new BillingProvisioningState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("createdOn"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("createdByPrincipalTenantId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    createdByPrincipalTenantId = new Guid(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("createdByPrincipalId"u8))
+                {
+                    createdByPrincipalId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("createdByPrincipalPuid"u8))
+                {
+                    createdByPrincipalPuid = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("createdByUserEmailAddress"u8))
+                {
+                    createdByUserEmailAddress = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("modifiedOn"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    modifiedOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("modifiedByPrincipalPuid"u8))
+                {
+                    modifiedByPrincipalPuid = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("modifiedByUserEmailAddress"u8))
+                {
+                    modifiedByUserEmailAddress = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("modifiedByPrincipalId"u8))
+                {
+                    modifiedByPrincipalId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("modifiedByPrincipalTenantId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    modifiedByPrincipalTenantId = new Guid(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("principalPuid"u8))
+                {
+                    principalPuid = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("principalId"u8))
+                {
+                    principalId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("principalTenantId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    principalTenantId = new Guid(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("roleDefinitionId"u8))
+                {
+                    roleDefinitionId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("scope"u8))
+                {
+                    scope = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("userAuthenticationType"u8))
+                {
+                    userAuthenticationType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("userEmailAddress"u8))
+                {
+                    userEmailAddress = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("principalTenantName"u8))
+                {
+                    principalTenantName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("principalDisplayName"u8))
+                {
+                    principalDisplayName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("principalType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    principalType = new BillingPrincipalType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("billingRequestId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingRequestId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("billingAccountId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingAccountId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("billingAccountDisplayName"u8))
+                {
+                    billingAccountDisplayName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("billingProfileId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    billingProfileId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("billingProfileDisplayName"u8))
+                {
+                    billingProfileDisplayName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("invoiceSectionId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    invoiceSectionId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("invoiceSectionDisplayName"u8))
+                {
+                    invoiceSectionDisplayName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("customerId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    customerId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("customerDisplayName"u8))
+                {
+                    customerDisplayName = prop.Value.GetString();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  createdOn: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CreatedOn))
-                {
-                    builder.Append("  createdOn: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedByPrincipalTenantId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  createdByPrincipalTenantId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CreatedByPrincipalTenantId))
-                {
-                    builder.Append("  createdByPrincipalTenantId: ");
-                    builder.AppendLine($"'{CreatedByPrincipalTenantId.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedByPrincipalId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  createdByPrincipalId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CreatedByPrincipalId))
-                {
-                    builder.Append("  createdByPrincipalId: ");
-                    if (CreatedByPrincipalId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CreatedByPrincipalId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CreatedByPrincipalId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedByPrincipalPuid), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  createdByPrincipalPuid: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CreatedByPrincipalPuid))
-                {
-                    builder.Append("  createdByPrincipalPuid: ");
-                    if (CreatedByPrincipalPuid.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CreatedByPrincipalPuid}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CreatedByPrincipalPuid}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedByUserEmailAddress), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  createdByUserEmailAddress: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CreatedByUserEmailAddress))
-                {
-                    builder.Append("  createdByUserEmailAddress: ");
-                    if (CreatedByUserEmailAddress.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CreatedByUserEmailAddress}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CreatedByUserEmailAddress}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ModifiedOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  modifiedOn: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ModifiedOn))
-                {
-                    builder.Append("  modifiedOn: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(ModifiedOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ModifiedByPrincipalPuid), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  modifiedByPrincipalPuid: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ModifiedByPrincipalPuid))
-                {
-                    builder.Append("  modifiedByPrincipalPuid: ");
-                    if (ModifiedByPrincipalPuid.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ModifiedByPrincipalPuid}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ModifiedByPrincipalPuid}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ModifiedByUserEmailAddress), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  modifiedByUserEmailAddress: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ModifiedByUserEmailAddress))
-                {
-                    builder.Append("  modifiedByUserEmailAddress: ");
-                    if (ModifiedByUserEmailAddress.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ModifiedByUserEmailAddress}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ModifiedByUserEmailAddress}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ModifiedByPrincipalId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  modifiedByPrincipalId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ModifiedByPrincipalId))
-                {
-                    builder.Append("  modifiedByPrincipalId: ");
-                    if (ModifiedByPrincipalId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{ModifiedByPrincipalId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{ModifiedByPrincipalId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ModifiedByPrincipalTenantId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  modifiedByPrincipalTenantId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(ModifiedByPrincipalTenantId))
-                {
-                    builder.Append("  modifiedByPrincipalTenantId: ");
-                    builder.AppendLine($"'{ModifiedByPrincipalTenantId.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalPuid), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  principalPuid: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrincipalPuid))
-                {
-                    builder.Append("  principalPuid: ");
-                    if (PrincipalPuid.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PrincipalPuid}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PrincipalPuid}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  principalId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrincipalId))
-                {
-                    builder.Append("  principalId: ");
-                    if (PrincipalId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PrincipalId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PrincipalId}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalTenantId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  principalTenantId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrincipalTenantId))
-                {
-                    builder.Append("  principalTenantId: ");
-                    builder.AppendLine($"'{PrincipalTenantId.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RoleDefinitionId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  roleDefinitionId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RoleDefinitionId))
-                {
-                    builder.Append("  roleDefinitionId: ");
-                    builder.AppendLine($"'{RoleDefinitionId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Scope), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  scope: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Scope))
-                {
-                    builder.Append("  scope: ");
-                    if (Scope.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Scope}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Scope}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserAuthenticationType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  userAuthenticationType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UserAuthenticationType))
-                {
-                    builder.Append("  userAuthenticationType: ");
-                    if (UserAuthenticationType.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{UserAuthenticationType}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{UserAuthenticationType}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UserEmailAddress), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  userEmailAddress: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(UserEmailAddress))
-                {
-                    builder.Append("  userEmailAddress: ");
-                    if (UserEmailAddress.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{UserEmailAddress}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{UserEmailAddress}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalTenantName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  principalTenantName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrincipalTenantName))
-                {
-                    builder.Append("  principalTenantName: ");
-                    if (PrincipalTenantName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PrincipalTenantName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PrincipalTenantName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalDisplayName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  principalDisplayName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrincipalDisplayName))
-                {
-                    builder.Append("  principalDisplayName: ");
-                    if (PrincipalDisplayName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{PrincipalDisplayName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{PrincipalDisplayName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrincipalType), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  principalType: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(PrincipalType))
-                {
-                    builder.Append("  principalType: ");
-                    builder.AppendLine($"'{PrincipalType.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BillingRequestId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  billingRequestId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(BillingRequestId))
-                {
-                    builder.Append("  billingRequestId: ");
-                    builder.AppendLine($"'{BillingRequestId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BillingAccountId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  billingAccountId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(BillingAccountId))
-                {
-                    builder.Append("  billingAccountId: ");
-                    builder.AppendLine($"'{BillingAccountId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BillingAccountDisplayName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  billingAccountDisplayName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(BillingAccountDisplayName))
-                {
-                    builder.Append("  billingAccountDisplayName: ");
-                    if (BillingAccountDisplayName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{BillingAccountDisplayName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{BillingAccountDisplayName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BillingProfileId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  billingProfileId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(BillingProfileId))
-                {
-                    builder.Append("  billingProfileId: ");
-                    builder.AppendLine($"'{BillingProfileId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BillingProfileDisplayName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  billingProfileDisplayName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(BillingProfileDisplayName))
-                {
-                    builder.Append("  billingProfileDisplayName: ");
-                    if (BillingProfileDisplayName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{BillingProfileDisplayName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{BillingProfileDisplayName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InvoiceSectionId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  invoiceSectionId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(InvoiceSectionId))
-                {
-                    builder.Append("  invoiceSectionId: ");
-                    builder.AppendLine($"'{InvoiceSectionId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InvoiceSectionDisplayName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  invoiceSectionDisplayName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(InvoiceSectionDisplayName))
-                {
-                    builder.Append("  invoiceSectionDisplayName: ");
-                    if (InvoiceSectionDisplayName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{InvoiceSectionDisplayName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{InvoiceSectionDisplayName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomerId), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  customerId: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CustomerId))
-                {
-                    builder.Append("  customerId: ");
-                    builder.AppendLine($"'{CustomerId.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomerDisplayName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  customerDisplayName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CustomerDisplayName))
-                {
-                    builder.Append("  customerDisplayName: ");
-                    if (CustomerDisplayName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CustomerDisplayName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CustomerDisplayName}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
+            return new BillingRoleAssignmentProperties(
+                provisioningState,
+                createdOn,
+                createdByPrincipalTenantId,
+                createdByPrincipalId,
+                createdByPrincipalPuid,
+                createdByUserEmailAddress,
+                modifiedOn,
+                modifiedByPrincipalPuid,
+                modifiedByUserEmailAddress,
+                modifiedByPrincipalId,
+                modifiedByPrincipalTenantId,
+                principalPuid,
+                principalId,
+                principalTenantId,
+                roleDefinitionId,
+                scope,
+                userAuthenticationType,
+                userEmailAddress,
+                principalTenantName,
+                principalDisplayName,
+                principalType,
+                billingRequestId,
+                billingAccountId,
+                billingAccountDisplayName,
+                billingProfileId,
+                billingProfileDisplayName,
+                invoiceSectionId,
+                invoiceSectionDisplayName,
+                customerId,
+                customerDisplayName,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<BillingRoleAssignmentProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingRoleAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerBillingContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(BillingRoleAssignmentProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        BillingRoleAssignmentProperties IPersistableModel<BillingRoleAssignmentProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<BillingRoleAssignmentProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeBillingRoleAssignmentProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(BillingRoleAssignmentProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<BillingRoleAssignmentProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

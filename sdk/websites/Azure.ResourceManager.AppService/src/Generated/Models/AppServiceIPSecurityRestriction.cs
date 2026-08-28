@@ -8,46 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// IP security restriction on an app.
-    /// Serialized Name: IpSecurityRestriction
-    /// </summary>
+    /// <summary> IP security restriction on an app. </summary>
     public partial class AppServiceIPSecurityRestriction
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceIPSecurityRestriction"/>. </summary>
         public AppServiceIPSecurityRestriction()
@@ -61,65 +30,31 @@ namespace Azure.ResourceManager.AppService.Models
         /// It can be in form of pure ipv4 address (required SubnetMask property) or
         /// CIDR notation such as ipv4/mask (leading bit match). For CIDR,
         /// SubnetMask property must not be specified.
-        /// Serialized Name: IpSecurityRestriction.ipAddress
         /// </param>
-        /// <param name="subnetMask">
-        /// Subnet mask for the range of IP addresses the restriction is valid for.
-        /// Serialized Name: IpSecurityRestriction.subnetMask
-        /// </param>
-        /// <param name="vnetSubnetResourceId">
-        /// Virtual network resource id
-        /// Serialized Name: IpSecurityRestriction.vnetSubnetResourceId
-        /// </param>
-        /// <param name="vnetTrafficTag">
-        /// (internal) Vnet traffic tag
-        /// Serialized Name: IpSecurityRestriction.vnetTrafficTag
-        /// </param>
-        /// <param name="subnetTrafficTag">
-        /// (internal) Subnet traffic tag
-        /// Serialized Name: IpSecurityRestriction.subnetTrafficTag
-        /// </param>
-        /// <param name="action">
-        /// Allow or Deny access for this IP range.
-        /// Serialized Name: IpSecurityRestriction.action
-        /// </param>
-        /// <param name="tag">
-        /// Defines what this IP filter will be used for. This is to support IP filtering on proxies.
-        /// Serialized Name: IpSecurityRestriction.tag
-        /// </param>
-        /// <param name="priority">
-        /// Priority of IP restriction rule.
-        /// Serialized Name: IpSecurityRestriction.priority
-        /// </param>
-        /// <param name="name">
-        /// IP restriction rule name.
-        /// Serialized Name: IpSecurityRestriction.name
-        /// </param>
-        /// <param name="description">
-        /// IP restriction rule description.
-        /// Serialized Name: IpSecurityRestriction.description
-        /// </param>
+        /// <param name="subnetMask"> Subnet mask for the range of IP addresses the restriction is valid for. </param>
+        /// <param name="vnetSubnetResourceId"> Virtual network resource id. </param>
+        /// <param name="vnetTrafficTag"> (internal) Vnet traffic tag. </param>
+        /// <param name="subnetTrafficTag"> (internal) Subnet traffic tag. </param>
+        /// <param name="action"> Allow or Deny access for this IP range. </param>
+        /// <param name="tag"> Defines what this IP filter will be used for. This is to support IP filtering on proxies. </param>
+        /// <param name="priority"> Priority of IP restriction rule. </param>
+        /// <param name="name"> IP restriction rule name. </param>
+        /// <param name="description"> IP restriction rule description. </param>
         /// <param name="headers">
         /// IP restriction rule headers.
         /// X-Forwarded-Host (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Host#Examples).
         /// The matching logic is ..
-        /// - If the property is null or empty (default), all hosts(or lack of) are allowed.
-        /// - A value is compared using ordinal-ignore-case (excluding port number).
-        /// - Subdomain wildcards are permitted but don't match the root domain. For example, *.contoso.com matches the subdomain foo.contoso.com
+        /// <list type="bullet"><item><description>If the property is null or empty (default), all hosts(or lack of) are allowed.</description></item><item><description>A value is compared using ordinal-ignore-case (excluding port number).</description></item><item><description>Subdomain wildcards are permitted but don't match the root domain. For example, *.contoso.com matches the subdomain foo.contoso.com</description></item></list>
         /// but not the root domain contoso.com or multi-level foo.bar.contoso.com
-        /// - Unicode host names are allowed but are converted to Punycode for matching.
-        ///
+        /// <list type="bullet"><item><description>Unicode host names are allowed but are converted to Punycode for matching.</description></item></list>
         /// X-Forwarded-For (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For#Examples).
         /// The matching logic is ..
-        /// - If the property is null or empty (default), any forwarded-for chains (or lack of) are allowed.
-        /// - If any address (excluding port number) in the chain (comma separated) matches the CIDR defined by the property.
-        ///
+        /// <list type="bullet"><item><description>If the property is null or empty (default), any forwarded-for chains (or lack of) are allowed.</description></item><item><description>If any address (excluding port number) in the chain (comma separated) matches the CIDR defined by the property.</description></item></list>
         /// X-Azure-FDID and X-FD-HealthProbe.
         /// The matching logic is exact match.
-        /// Serialized Name: IpSecurityRestriction.headers
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceIPSecurityRestriction(string ipAddressOrCidr, string subnetMask, ResourceIdentifier vnetSubnetResourceId, int? vnetTrafficTag, int? subnetTrafficTag, string action, AppServiceIPFilterTag? tag, int? priority, string name, string description, IDictionary<string, IList<string>> headers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceIPSecurityRestriction(string ipAddressOrCidr, string subnetMask, ResourceIdentifier vnetSubnetResourceId, int? vnetTrafficTag, int? subnetTrafficTag, string action, AppServiceIPFilterTag? tag, int? priority, string name, string description, IDictionary<string, IList<string>> headers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IPAddressOrCidr = ipAddressOrCidr;
             SubnetMask = subnetMask;
@@ -132,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
             Name = name;
             Description = description;
             Headers = headers;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary>
@@ -140,82 +75,58 @@ namespace Azure.ResourceManager.AppService.Models
         /// It can be in form of pure ipv4 address (required SubnetMask property) or
         /// CIDR notation such as ipv4/mask (leading bit match). For CIDR,
         /// SubnetMask property must not be specified.
-        /// Serialized Name: IpSecurityRestriction.ipAddress
         /// </summary>
         [WirePath("ipAddress")]
         public string IPAddressOrCidr { get; set; }
-        /// <summary>
-        /// Subnet mask for the range of IP addresses the restriction is valid for.
-        /// Serialized Name: IpSecurityRestriction.subnetMask
-        /// </summary>
+
+        /// <summary> Subnet mask for the range of IP addresses the restriction is valid for. </summary>
         [WirePath("subnetMask")]
         public string SubnetMask { get; set; }
-        /// <summary>
-        /// Virtual network resource id
-        /// Serialized Name: IpSecurityRestriction.vnetSubnetResourceId
-        /// </summary>
+
+        /// <summary> Virtual network resource id. </summary>
         [WirePath("vnetSubnetResourceId")]
         public ResourceIdentifier VnetSubnetResourceId { get; set; }
-        /// <summary>
-        /// (internal) Vnet traffic tag
-        /// Serialized Name: IpSecurityRestriction.vnetTrafficTag
-        /// </summary>
+
+        /// <summary> (internal) Vnet traffic tag. </summary>
         [WirePath("vnetTrafficTag")]
         public int? VnetTrafficTag { get; set; }
-        /// <summary>
-        /// (internal) Subnet traffic tag
-        /// Serialized Name: IpSecurityRestriction.subnetTrafficTag
-        /// </summary>
+
+        /// <summary> (internal) Subnet traffic tag. </summary>
         [WirePath("subnetTrafficTag")]
         public int? SubnetTrafficTag { get; set; }
-        /// <summary>
-        /// Allow or Deny access for this IP range.
-        /// Serialized Name: IpSecurityRestriction.action
-        /// </summary>
+
+        /// <summary> Allow or Deny access for this IP range. </summary>
         [WirePath("action")]
         public string Action { get; set; }
-        /// <summary>
-        /// Defines what this IP filter will be used for. This is to support IP filtering on proxies.
-        /// Serialized Name: IpSecurityRestriction.tag
-        /// </summary>
+
+        /// <summary> Defines what this IP filter will be used for. This is to support IP filtering on proxies. </summary>
         [WirePath("tag")]
         public AppServiceIPFilterTag? Tag { get; set; }
-        /// <summary>
-        /// Priority of IP restriction rule.
-        /// Serialized Name: IpSecurityRestriction.priority
-        /// </summary>
+
+        /// <summary> Priority of IP restriction rule. </summary>
         [WirePath("priority")]
         public int? Priority { get; set; }
-        /// <summary>
-        /// IP restriction rule name.
-        /// Serialized Name: IpSecurityRestriction.name
-        /// </summary>
+
+        /// <summary> IP restriction rule name. </summary>
         [WirePath("name")]
         public string Name { get; set; }
-        /// <summary>
-        /// IP restriction rule description.
-        /// Serialized Name: IpSecurityRestriction.description
-        /// </summary>
+
+        /// <summary> IP restriction rule description. </summary>
         [WirePath("description")]
         public string Description { get; set; }
+
         /// <summary>
         /// IP restriction rule headers.
         /// X-Forwarded-Host (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-Host#Examples).
         /// The matching logic is ..
-        /// - If the property is null or empty (default), all hosts(or lack of) are allowed.
-        /// - A value is compared using ordinal-ignore-case (excluding port number).
-        /// - Subdomain wildcards are permitted but don't match the root domain. For example, *.contoso.com matches the subdomain foo.contoso.com
+        /// <list type="bullet"><item><description>If the property is null or empty (default), all hosts(or lack of) are allowed.</description></item><item><description>A value is compared using ordinal-ignore-case (excluding port number).</description></item><item><description>Subdomain wildcards are permitted but don't match the root domain. For example, *.contoso.com matches the subdomain foo.contoso.com</description></item></list>
         /// but not the root domain contoso.com or multi-level foo.bar.contoso.com
-        /// - Unicode host names are allowed but are converted to Punycode for matching.
-        ///
+        /// <list type="bullet"><item><description>Unicode host names are allowed but are converted to Punycode for matching.</description></item></list>
         /// X-Forwarded-For (https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For#Examples).
         /// The matching logic is ..
-        /// - If the property is null or empty (default), any forwarded-for chains (or lack of) are allowed.
-        /// - If any address (excluding port number) in the chain (comma separated) matches the CIDR defined by the property.
-        ///
+        /// <list type="bullet"><item><description>If the property is null or empty (default), any forwarded-for chains (or lack of) are allowed.</description></item><item><description>If any address (excluding port number) in the chain (comma separated) matches the CIDR defined by the property.</description></item></list>
         /// X-Azure-FDID and X-FD-HealthProbe.
         /// The matching logic is exact match.
-        /// Serialized Name: IpSecurityRestriction.headers
         /// </summary>
         [WirePath("headers")]
         public IDictionary<string, IList<string>> Headers { get; }

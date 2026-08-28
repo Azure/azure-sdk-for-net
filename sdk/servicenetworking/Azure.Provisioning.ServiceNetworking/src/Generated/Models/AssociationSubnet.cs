@@ -41,6 +41,10 @@ namespace Azure.Provisioning.ServiceNetworking
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for AssociationSubnet that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

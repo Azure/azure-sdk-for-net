@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.DataMigration.Models
     public readonly partial struct DataMigrationBackupType : IEquatable<DataMigrationBackupType>
     {
         private readonly string _value;
+        /// <summary> Database. </summary>
+        private const string DatabaseValue = "Database";
+        /// <summary> TransactionLog. </summary>
+        private const string TransactionLogValue = "TransactionLog";
+        /// <summary> File. </summary>
+        private const string FileValue = "File";
+        /// <summary> DifferentialDatabase. </summary>
+        private const string DifferentialDatabaseValue = "DifferentialDatabase";
+        /// <summary> DifferentialFile. </summary>
+        private const string DifferentialFileValue = "DifferentialFile";
+        /// <summary> Partial. </summary>
+        private const string PartialValue = "Partial";
+        /// <summary> DifferentialPartial. </summary>
+        private const string DifferentialPartialValue = "DifferentialPartial";
 
         /// <summary> Initializes a new instance of <see cref="DataMigrationBackupType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public DataMigrationBackupType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string DatabaseValue = "Database";
-        private const string TransactionLogValue = "TransactionLog";
-        private const string FileValue = "File";
-        private const string DifferentialDatabaseValue = "DifferentialDatabase";
-        private const string DifferentialFileValue = "DifferentialFile";
-        private const string PartialValue = "Partial";
-        private const string DifferentialPartialValue = "DifferentialPartial";
+            _value = value;
+        }
 
         /// <summary> Database. </summary>
         public static DataMigrationBackupType Database { get; } = new DataMigrationBackupType(DatabaseValue);
+
         /// <summary> TransactionLog. </summary>
         public static DataMigrationBackupType TransactionLog { get; } = new DataMigrationBackupType(TransactionLogValue);
+
         /// <summary> File. </summary>
         public static DataMigrationBackupType File { get; } = new DataMigrationBackupType(FileValue);
+
         /// <summary> DifferentialDatabase. </summary>
         public static DataMigrationBackupType DifferentialDatabase { get; } = new DataMigrationBackupType(DifferentialDatabaseValue);
+
         /// <summary> DifferentialFile. </summary>
         public static DataMigrationBackupType DifferentialFile { get; } = new DataMigrationBackupType(DifferentialFileValue);
+
         /// <summary> Partial. </summary>
         public static DataMigrationBackupType Partial { get; } = new DataMigrationBackupType(PartialValue);
+
         /// <summary> DifferentialPartial. </summary>
         public static DataMigrationBackupType DifferentialPartial { get; } = new DataMigrationBackupType(DifferentialPartialValue);
+
         /// <summary> Determines if two <see cref="DataMigrationBackupType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(DataMigrationBackupType left, DataMigrationBackupType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="DataMigrationBackupType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(DataMigrationBackupType left, DataMigrationBackupType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="DataMigrationBackupType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="DataMigrationBackupType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator DataMigrationBackupType(string value) => new DataMigrationBackupType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="DataMigrationBackupType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator DataMigrationBackupType?(string value) => value == null ? null : new DataMigrationBackupType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is DataMigrationBackupType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(DataMigrationBackupType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -190,6 +190,71 @@ namespace Azure.Generator.Tests.Visitors
         }
 
         [Test]
+        public void SettingsConstructorPlacesCredentialAfterHoistedClientParameter()
+        {
+            // Reproduces the case where an additional client-level parameter (e.g. an
+            // instanceId hoisted onto the client via @clientInitialization) appears before
+            // the credential in the public credential constructor. The Settings constructor
+            // must place the credential argument at the credential parameter's actual
+            // position, not hard-coded at index 1, otherwise the credential and the hoisted
+            // parameter are passed into each other's slots and the code fails to compile.
+            var endpointParam = InputFactory.EndpointParameter(
+                "endpoint",
+                InputPrimitiveType.String,
+                isRequired: true,
+                isEndpoint: true);
+            var instanceIdParam = InputFactory.PathParameter(
+                "instanceId",
+                InputPrimitiveType.String,
+                isRequired: true,
+                scope: InputParameterScope.Client);
+            var client = InputFactory.Client(
+                "TestClient",
+                parameters: [endpointParam, instanceIdParam]);
+
+            MockHelpers.LoadMockGenerator(
+                oauth2Auth: () => new InputOAuth2Auth([new InputOAuth2Flow(["https://test.azure.com/.default"], null, null, null)]),
+                clients: () => [client]);
+
+            var clientProvider = AzureClientGenerator.Instance.OutputLibrary.TypeProviders
+                .OfType<ClientProvider>().FirstOrDefault();
+            Assert.IsNotNull(clientProvider);
+            Assert.IsNotNull(clientProvider!.ClientSettings,
+                "Client should have ClientSettings");
+
+            var settingsCtor = clientProvider.Constructors.FirstOrDefault(c =>
+                c.Signature.Parameters.Count == 1 &&
+                c.Signature.Parameters[0].Type.Equals(clientProvider.ClientSettings!.Type));
+            Assert.IsNotNull(settingsCtor, "Client should have a Settings constructor");
+
+            var initializer = settingsCtor!.Signature.Initializer;
+            Assert.IsNotNull(initializer, "Settings constructor should have an initializer");
+
+            // Find the public credential constructor the Settings constructor chains to.
+            var credentialCtor = clientProvider.Constructors.FirstOrDefault(c =>
+                c.Signature.Modifiers.HasFlag(MethodSignatureModifiers.Public) &&
+                c.Signature.Parameters.Count == initializer!.Arguments.Count &&
+                c.Signature.Parameters.Any(p => p.Type.Equals(typeof(TokenCredential))));
+            Assert.IsNotNull(credentialCtor,
+                "Client should have a public TokenCredential constructor matching the Settings chain arity");
+
+            int credentialIndex = credentialCtor!.Signature.Parameters
+                .ToList().FindIndex(p => p.Type.Equals(typeof(TokenCredential)));
+            Assert.Greater(credentialIndex, 1,
+                "With a hoisted client parameter, the credential is not the second parameter");
+
+            // The credential argument must be at the credential parameter's actual position.
+            var credentialArgDisplay = initializer!.Arguments[credentialIndex].ToDisplayString();
+            Assert.IsTrue(credentialArgDisplay.Contains("CredentialProvider"),
+                $"Credential argument should be at index {credentialIndex}. Found: {credentialArgDisplay}");
+
+            // The hoisted parameter's slot (index 1) must NOT receive the credential.
+            var hoistedArgDisplay = initializer.Arguments[1].ToDisplayString();
+            Assert.IsFalse(hoistedArgDisplay.Contains("CredentialProvider"),
+                $"The hoisted parameter slot should not receive the credential. Found: {hoistedArgDisplay}");
+        }
+
+        [Test]
         public void SettingsConstructorChainsToTokenCredentialConstructor()
         {
             var endpointParam = InputFactory.EndpointParameter(

@@ -1,0 +1,16 @@
+agent:
+  name: travel-agent-di-sample
+  model: gpt-4.1-mini
+  config: .agent_configs/baseline
+
+dataset_file: ./datasets/smoke-core/travel-tasks.jsonl
+
+evaluators:
+  - task_adherence
+
+options:
+  eval_model: gpt-4.1-mini
+  optimization_model: gpt-5.4
+  strategies:
+    - instruction
+  max_iterations: 3

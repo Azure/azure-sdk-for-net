@@ -50,7 +50,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
         {
             TryGetApiVersion(ResourceType, out string serviceGroupSiteApiVersion);
             _serviceGroupSitesClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.Tests", ResourceType.Namespace, Diagnostics);
-            _serviceGroupSitesRestClient = new ServiceGroupSites(_serviceGroupSitesClientDiagnostics, Pipeline, Endpoint, serviceGroupSiteApiVersion ?? "2024-05-01");
+            _serviceGroupSitesRestClient = new ServiceGroupSites(_serviceGroupSitesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceGroupSiteApiVersion ?? "2024-05-01");
             ValidateResourceId(id);
         }
 
@@ -225,7 +225,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _serviceGroupSitesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, ServiceGroupSiteData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<ServiceGroupSiteResource> operation = new TestsArmOperation<ServiceGroupSiteResource>(
-                    new ServiceGroupSiteOperationSource(Client),
+                    new ServiceGroupSiteResourceOperationSource(Client),
                     _serviceGroupSitesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -285,7 +285,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                 HttpMessage message = _serviceGroupSitesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, ServiceGroupSiteData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<ServiceGroupSiteResource> operation = new TestsArmOperation<ServiceGroupSiteResource>(
-                    new ServiceGroupSiteOperationSource(Client),
+                    new ServiceGroupSiteResourceOperationSource(Client),
                     _serviceGroupSitesClientDiagnostics,
                     Pipeline,
                     message.Request,

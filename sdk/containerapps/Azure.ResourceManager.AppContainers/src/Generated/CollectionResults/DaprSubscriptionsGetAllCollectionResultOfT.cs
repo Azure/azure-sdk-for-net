@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.AppContainers
                     yield break;
                 }
                 DaprSubscriptionsCollection result = DaprSubscriptionsCollection.FromResponse(response);
-                yield return Page<DaprSubscriptionData>.FromValues((IReadOnlyList<DaprSubscriptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DaprSubscriptionData>.FromValues((IReadOnlyList<DaprSubscriptionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

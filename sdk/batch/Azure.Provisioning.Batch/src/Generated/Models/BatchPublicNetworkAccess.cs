@@ -11,10 +11,10 @@ namespace Azure.Provisioning.Batch
     public enum BatchPublicNetworkAccess
     {
         /// <summary> Enables connectivity to Azure Batch through public DNS. </summary>
-        Enabled,
+        Enabled = 0,
         /// <summary> Disables public connectivity and enables private connectivity to Azure Batch Service through private endpoint resource. </summary>
-        Disabled,
+        Disabled = 1,
         /// <summary> Secures connectivity to Azure Batch through NSP configuration. </summary>
-        SecuredByPerimeter
+        SecuredByPerimeter = 2
     }
 }

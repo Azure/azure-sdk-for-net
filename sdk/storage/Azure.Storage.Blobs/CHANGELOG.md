@@ -1,6 +1,6 @@
 # Release History
 
-## 12.29.0-beta.2 (Unreleased)
+## 12.30.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,47 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 12.29.2 (2026-08-24)
+
+### Bugs Fixed
+- Fixed a bug where client-side encryption 2.0 could not detect a rearrangement of otherwise-untampered authenticated regions in blob content. This is now detected and exceptions are thrown. For data recovery purposes, this behavior can be reverted by enabling "Azure.Storage.CseV2AllowMisorderedAuthRegions" in the AppContext switch or "AZURE_STORAGE_CSE_V2_ALLOW_MISORDERED_AUTH_REGIONS" in environment variables.
+- Fixed a bug in client-side encryption where version downgrades were only detected at the start of a download.
+
+## 12.30.0-beta.2 (2026-08-24)
+
+### Bugs Fixed
+- Fixed a bug where client-side encryption 2.0 could not detect a rearrangement of otherwise-untampered authenticated regions in blob content. This is now detected and exceptions are thrown. For data recovery purposes, this behavior can be reverted by enabling "Azure.Storage.CseV2AllowMisorderedAuthRegions" in the AppContext switch or "AZURE_STORAGE_CSE_V2_ALLOW_MISORDERED_AUTH_REGIONS" in environment variables.
+- Fixed a bug in client-side encryption where version downgrades were only detected at the start of a download.
+
+## 12.30.0-beta.1 (2026-07-21)
+
+### Features Added
+- Added support for service version 2026-10-06.
+- Added `AccessTier`, `AccessTierInferred`, `AccessTierChangedOn`, and `SmartAccessTier` to `BlobDownloadDetails`.
+- Added support for PUT blob operations returning both the existing MD5 content hash and the new CRC64 checksum.
+- Added support for Apache Arrow response format for `GetBlobs` and `GetBlobsByHierarchy`.
+- Added support for the `EndBefore` property in `GetBlobs` and `GetBlobsByHierarchy`. Note that `EndBefore` is currently only available for Apache Arrow response format and is not returned for XML response format.
+
+### Breaking Changes
+- Block IDs generated during partitioned uploads are now randomly generated instead of based on sequential integers. This ensures uniqueness across concurrent uploads to the same blob but means block IDs are no longer predictable or ordered.
+
+### Other Changes
+- Improved performance of `DownloadToAsync` by buffering each range into memory concurrently instead of streaming one range at a time. This increases throughput but also increases memory consumption, as up to `MaximumConcurrency` ranges (each up to `MaximumTransferLength` in size) may be buffered simultaneously. Use `StorageTransferOptions.MaximumConcurrency` and `StorageTransferOptions.MaximumTransferLength` to control memory usage.
+
+## 12.29.1 (2026-06-23)
+
+### Bugs Fixed
+- Fixed an issue where the `GenerateSasUri` and `GenerateUserDelegationSasUri` convenience methods on blob clients did not honor the `RequestHeaders` and `RequestQueryParameters` properties, and where `GenerateUserDelegationSasUri` did not honor `DelegatedUserObjectId`, set on the supplied `BlobSasBuilder`.
+- Fixed an issue where structured-message Uploads with checksum validation could fail with a `ArgumentOutOfRangeException` for empty content
+
+## 12.29.0 (2026-06-04)
+
+### Features Added
+- Includes all features from 12.29.0-beta.1
+
+### Bugs Fixed
+- Added validation for length-prefixed fields when parsing Blob Query responses to prevent excessive memory allocation from malformed or untrusted payloads.
 
 ## 12.28.0 (2026-05-12)
 

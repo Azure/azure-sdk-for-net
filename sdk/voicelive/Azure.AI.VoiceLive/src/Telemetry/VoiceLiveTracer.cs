@@ -444,18 +444,21 @@ namespace Azure.AI.VoiceLive.Telemetry
                 { Keys.GenAiSystem, Keys.GenAiSystemValue },
                 { Keys.GenAiVoiceEventType, eventType }
             };
-            if (forceContent != null)
-                tags.Add(Keys.GenAiEventContent, forceContent);
-            else if (_enableContentRecording && !string.IsNullOrEmpty(jsonContent))
-                tags.Add(Keys.GenAiEventContent, jsonContent);
+            if (_enableContentRecording)
+            {
+                string content = forceContent ?? jsonContent;
+                if (!string.IsNullOrEmpty(content))
+                    tags.Add(Keys.GenAiEventContent, content);
+            }
             activity.AddEvent(new ActivityEvent("gen_ai.output.messages", tags: tags));
         }
 
         /// <summary>
         /// Extracts structured content from "done" recv events, matching the Python SDK convention.
         /// Returns a compact JSON object appropriate for the event type, or null for non-done events.
-        /// The returned content is emitted unconditionally (force_content) — done events always carry
-        /// useful structured metadata regardless of the content recording flag.
+        /// Whether the returned content is actually emitted on the span depends on the content
+        /// recording opt-in (OTEL_INSTRUMENTATION_GENAI_CAPTURE_MESSAGE_CONTENT or
+        /// AZURE_TRACING_GEN_AI_CONTENT_RECORDING_ENABLED).
         /// </summary>
         public static string ExtractDoneEventContent(string eventType, JsonElement root)
         {

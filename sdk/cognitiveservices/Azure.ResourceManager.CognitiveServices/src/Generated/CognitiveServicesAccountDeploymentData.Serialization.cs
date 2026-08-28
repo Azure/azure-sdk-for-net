@@ -127,6 +127,21 @@ namespace Azure.ResourceManager.CognitiveServices
                 }
                 writer.WriteEndObject();
             }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -158,11 +173,11 @@ namespace Azure.ResourceManager.CognitiveServices
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             CognitiveServicesAccountDeploymentProperties properties = default;
             CognitiveServicesSku sku = default;
             ETag? eTag = default;
             IDictionary<string, string> tags = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -255,11 +270,11 @@ namespace Azure.ResourceManager.CognitiveServices
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
                 properties,
                 sku,
                 eTag,
-                tags ?? new ChangeTrackingDictionary<string, string>());
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                additionalBinaryDataProperties);
         }
     }
 }

@@ -54,6 +54,12 @@
     <Compile Update="Samples\Sample01_HelloWorld.Data.cs" DependentUpon="Sample01_HelloWorld.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Samples\azure-search-overview.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
   <!-- Pull in Shared Source from Azure.Core -->
   <ItemGroup>
     <Compile Include="$(AzureCoreSharedSources)HashCodeBuilder.cs" LinkBase="Shared" />

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,14 +15,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningMountState : IEquatable<MachineLearningMountState>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningMountState"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public MachineLearningMountState(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string MountRequestedValue = "MountRequested";
         private const string MountedValue = "Mounted";
         private const string MountFailedValue = "MountFailed";
@@ -29,35 +22,64 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string UnmountFailedValue = "UnmountFailed";
         private const string UnmountedValue = "Unmounted";
 
-        /// <summary> MountRequested. </summary>
+        /// <summary> Initializes a new instance of <see cref="MachineLearningMountState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public MachineLearningMountState(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the MountRequested. </summary>
         public static MachineLearningMountState MountRequested { get; } = new MachineLearningMountState(MountRequestedValue);
-        /// <summary> Mounted. </summary>
+
+        /// <summary> Gets the Mounted. </summary>
         public static MachineLearningMountState Mounted { get; } = new MachineLearningMountState(MountedValue);
-        /// <summary> MountFailed. </summary>
+
+        /// <summary> Gets the MountFailed. </summary>
         public static MachineLearningMountState MountFailed { get; } = new MachineLearningMountState(MountFailedValue);
-        /// <summary> UnmountRequested. </summary>
+
+        /// <summary> Gets the UnmountRequested. </summary>
         public static MachineLearningMountState UnmountRequested { get; } = new MachineLearningMountState(UnmountRequestedValue);
-        /// <summary> UnmountFailed. </summary>
+
+        /// <summary> Gets the UnmountFailed. </summary>
         public static MachineLearningMountState UnmountFailed { get; } = new MachineLearningMountState(UnmountFailedValue);
-        /// <summary> Unmounted. </summary>
+
+        /// <summary> Gets the Unmounted. </summary>
         public static MachineLearningMountState Unmounted { get; } = new MachineLearningMountState(UnmountedValue);
+
         /// <summary> Determines if two <see cref="MachineLearningMountState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningMountState left, MachineLearningMountState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningMountState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningMountState left, MachineLearningMountState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningMountState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningMountState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningMountState(string value) => new MachineLearningMountState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningMountState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningMountState?(string value) => value == null ? null : new MachineLearningMountState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningMountState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningMountState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

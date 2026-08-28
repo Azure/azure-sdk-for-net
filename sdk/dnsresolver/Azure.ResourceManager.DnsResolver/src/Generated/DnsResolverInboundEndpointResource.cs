@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             TryGetApiVersion(ResourceType, out string dnsResolverInboundEndpointApiVersion);
             _inboundEndpointsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", ResourceType.Namespace, Diagnostics);
-            _inboundEndpointsRestClient = new InboundEndpoints(_inboundEndpointsClientDiagnostics, Pipeline, Endpoint, dnsResolverInboundEndpointApiVersion ?? "2025-10-01-preview");
+            _inboundEndpointsRestClient = new InboundEndpoints(_inboundEndpointsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsResolverInboundEndpointApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _inboundEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DnsResolverInboundEndpointPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation<DnsResolverInboundEndpointResource> operation = new DnsResolverArmOperation<DnsResolverInboundEndpointResource>(
-                    new DnsResolverInboundEndpointOperationSource(Client),
+                    new DnsResolverInboundEndpointResourceOperationSource(Client),
                     _inboundEndpointsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _inboundEndpointsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DnsResolverInboundEndpointPatch.ToRequestContent(patch), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation<DnsResolverInboundEndpointResource> operation = new DnsResolverArmOperation<DnsResolverInboundEndpointResource>(
-                    new DnsResolverInboundEndpointOperationSource(Client),
+                    new DnsResolverInboundEndpointResourceOperationSource(Client),
                     _inboundEndpointsClientDiagnostics,
                     Pipeline,
                     message.Request,

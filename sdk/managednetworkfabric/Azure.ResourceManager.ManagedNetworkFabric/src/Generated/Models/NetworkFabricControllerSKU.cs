@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkFabricControllerSKU : IEquatable<NetworkFabricControllerSKU>
     {
         private readonly string _value;
+        /// <summary> NfcSku-Basic. </summary>
+        private const string BasicValue = "Basic";
+        /// <summary> NfcSku-Standard. </summary>
+        private const string StandardValue = "Standard";
+        /// <summary> NfcSku-HighPerformance. </summary>
+        private const string HighPerformanceValue = "HighPerformance";
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricControllerSKU"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkFabricControllerSKU(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BasicValue = "Basic";
-        private const string StandardValue = "Standard";
-        private const string HighPerformanceValue = "HighPerformance";
+            _value = value;
+        }
 
         /// <summary> NfcSku-Basic. </summary>
         public static NetworkFabricControllerSKU Basic { get; } = new NetworkFabricControllerSKU(BasicValue);
+
         /// <summary> NfcSku-Standard. </summary>
         public static NetworkFabricControllerSKU Standard { get; } = new NetworkFabricControllerSKU(StandardValue);
+
         /// <summary> NfcSku-HighPerformance. </summary>
         public static NetworkFabricControllerSKU HighPerformance { get; } = new NetworkFabricControllerSKU(HighPerformanceValue);
+
         /// <summary> Determines if two <see cref="NetworkFabricControllerSKU"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkFabricControllerSKU left, NetworkFabricControllerSKU right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkFabricControllerSKU"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkFabricControllerSKU left, NetworkFabricControllerSKU right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricControllerSKU"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkFabricControllerSKU"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkFabricControllerSKU(string value) => new NetworkFabricControllerSKU(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkFabricControllerSKU"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkFabricControllerSKU?(string value) => value == null ? null : new NetworkFabricControllerSKU(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkFabricControllerSKU other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkFabricControllerSKU other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

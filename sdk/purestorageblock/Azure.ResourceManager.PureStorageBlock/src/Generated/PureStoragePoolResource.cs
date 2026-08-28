@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PureStorageBlock
         {
             TryGetApiVersion(ResourceType, out string pureStoragePoolApiVersion);
             _storagePoolsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock", ResourceType.Namespace, Diagnostics);
-            _storagePoolsRestClient = new StoragePools(_storagePoolsClientDiagnostics, Pipeline, Endpoint, pureStoragePoolApiVersion ?? "2024-11-01");
+            _storagePoolsRestClient = new StoragePools(_storagePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pureStoragePoolApiVersion ?? "2024-11-01");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 HttpMessage message = _storagePoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PureStoragePoolPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PureStorageBlockArmOperation<PureStoragePoolResource> operation = new PureStorageBlockArmOperation<PureStoragePoolResource>(
-                    new PureStoragePoolOperationSource(Client),
+                    new PureStoragePoolResourceOperationSource(Client),
                     _storagePoolsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.PureStorageBlock
                 HttpMessage message = _storagePoolsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PureStoragePoolPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PureStorageBlockArmOperation<PureStoragePoolResource> operation = new PureStorageBlockArmOperation<PureStoragePoolResource>(
-                    new PureStoragePoolOperationSource(Client),
+                    new PureStoragePoolResourceOperationSource(Client),
                     _storagePoolsClientDiagnostics,
                     Pipeline,
                     message.Request,

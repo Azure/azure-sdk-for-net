@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Models;
+using Azure.Generator.Management.Tests.TestHelpers;
 using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
@@ -398,6 +399,36 @@ namespace Azure.Generator.Mgmt.Tests
             // "childName" should not match anything in contextual path (it's a pass-through parameter)
             Assert.That(registry.TryGetValue("childName", out var childMapping), Is.True);
             Assert.That(childMapping!.ContextualParameter, Is.Null);
+        }
+
+        [Test]
+        public void ValidateParameterMapping_MatchesConstantSegmentsCaseInsensitive()
+        {
+            Assert.That(new RequestPathSegment("resourcegroups"), Is.EqualTo(new RequestPathSegment("resourceGroups")));
+
+            var contextualPathPattern = new RequestPathPattern("/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}");
+            var operationContext = OperationContext.Create(contextualPathPattern);
+            var operationPath = new RequestPathPattern("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/metricAlerts/{ruleName}/status/{statusName}");
+
+            var registry = operationContext.BuildParameterMapping(operationPath);
+
+            Assert.That(registry.TryGetValue("subscriptionId", out var subscriptionMapping), Is.True);
+            Assert.That(subscriptionMapping!.ContextualParameter, Is.Not.Null);
+            Assert.That(subscriptionMapping.ContextualParameter!.Key, Is.EqualTo("subscriptions"));
+            Assert.That(subscriptionMapping.ContextualParameter.VariableName, Is.EqualTo("subscriptionId"));
+
+            Assert.That(registry.TryGetValue("resourceGroupName", out var resourceGroupMapping), Is.True);
+            Assert.That(resourceGroupMapping!.ContextualParameter, Is.Not.Null);
+            Assert.That(resourceGroupMapping.ContextualParameter!.Key, Is.EqualTo("resourcegroups"));
+            Assert.That(resourceGroupMapping.ContextualParameter.VariableName, Is.EqualTo("resourceGroupName"));
+
+            Assert.That(registry.TryGetValue("ruleName", out var ruleMapping), Is.True);
+            Assert.That(ruleMapping!.ContextualParameter, Is.Not.Null);
+            Assert.That(ruleMapping.ContextualParameter!.Key, Is.EqualTo("metricAlerts"));
+            Assert.That(ruleMapping.ContextualParameter.VariableName, Is.EqualTo("ruleName"));
+
+            Assert.That(registry.TryGetValue("statusName", out var statusMapping), Is.True);
+            Assert.That(statusMapping!.ContextualParameter, Is.Null);
         }
 
         [Test]
@@ -904,8 +935,7 @@ namespace Azure.Generator.Mgmt.Tests
         public void PopulateArguments_StringBodyParameter_UsesRequestContentCreate()
         {
             // When the body parameter is a string (framework type), should generate
-            // RequestContent.Create(BinaryData.FromObjectAsJson(body)) instead of
-            // string.ToRequestContent(body) which doesn't exist.
+            // RequestContent.Create(body) instead of string.ToRequestContent(body) which doesn't exist.
             var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
 
             var requestContentParam = new ParameterProvider("content", $"", typeof(RequestContent));
@@ -928,6 +958,58 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(displayString, Does.Not.Contain("string.ToRequestContent"));
             Assert.That(displayString, Does.Contain("RequestContent"));
             Assert.That(displayString, Does.Not.Contain("FromObjectAsJson"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_CollectionBodyParameter_UsesBinaryContentHelper()
+        {
+            ManagementMockHelpers.LoadMockPlugin();
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestContentParam = new ParameterProvider("content", $"", typeof(RequestContent));
+            requestContentParam.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var bodyParam = new ParameterProvider("body", $"", new CSharpType(typeof(IEnumerable<>), typeof(string)));
+            bodyParam.Update(wireInfo: new WireInformation(default, string.Empty), location: ParameterLocation.Body);
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestContentParam },
+                contextVariable,
+                new List<ParameterProvider> { bodyParam });
+
+            Assert.That(arguments.Count, Is.EqualTo(1));
+            var displayString = arguments[0].ToDisplayString();
+            Assert.That(displayString, Does.Not.Contain("IEnumerable<string>.ToRequestContent"));
+            Assert.That(displayString, Does.Contain("BinaryContentHelper.FromEnumerable"));
+        }
+
+        [TestCase]
+        public void PopulateArguments_DictionaryBodyParameter_UsesBinaryContentHelper()
+        {
+            ManagementMockHelpers.LoadMockPlugin();
+            var registry = new ParameterContextRegistry(new List<ParameterContextMapping>());
+
+            var requestContentParam = new ParameterProvider("content", $"", typeof(RequestContent));
+            requestContentParam.Update(wireInfo: new WireInformation(default, string.Empty));
+
+            var contextVariable = new VariableExpression(typeof(RequestContext), "context");
+
+            var bodyParam = new ParameterProvider("body", $"", new CSharpType(typeof(IDictionary<,>), typeof(string), typeof(string)));
+            bodyParam.Update(wireInfo: new WireInformation(default, string.Empty), location: ParameterLocation.Body);
+
+            var arguments = registry.PopulateArguments(
+                _idVariable,
+                new List<ParameterProvider> { requestContentParam },
+                contextVariable,
+                new List<ParameterProvider> { bodyParam });
+
+            Assert.That(arguments.Count, Is.EqualTo(1));
+            var displayString = arguments[0].ToDisplayString();
+            Assert.That(displayString, Does.Not.Contain("IDictionary<string, string>.ToRequestContent"));
+            Assert.That(displayString, Does.Contain("BinaryContentHelper.FromDictionary"));
         }
 
         [TestCase]

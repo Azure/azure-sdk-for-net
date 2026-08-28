@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.WebPubSub
                     yield break;
                 }
                 SignalRServiceUsageList result = SignalRServiceUsageList.FromResponse(response);
-                yield return Page<SignalRServiceUsage>.FromValues((IReadOnlyList<SignalRServiceUsage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<SignalRServiceUsage>.FromValues((IReadOnlyList<SignalRServiceUsage>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

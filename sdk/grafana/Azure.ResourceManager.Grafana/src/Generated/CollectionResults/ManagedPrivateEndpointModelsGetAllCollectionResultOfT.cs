@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Grafana
                     yield break;
                 }
                 ManagedPrivateEndpointModelListResponse result = ManagedPrivateEndpointModelListResponse.FromResponse(response);
-                yield return Page<ManagedPrivateEndpointModelData>.FromValues((IReadOnlyList<ManagedPrivateEndpointModelData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ManagedPrivateEndpointModelData>.FromValues((IReadOnlyList<ManagedPrivateEndpointModelData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

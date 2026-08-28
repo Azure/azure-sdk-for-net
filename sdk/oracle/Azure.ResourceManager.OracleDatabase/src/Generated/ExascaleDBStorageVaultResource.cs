@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(ResourceType, out string exascaleDBStorageVaultApiVersion);
             _exascaleDbStorageVaultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            _exascaleDbStorageVaultsRestClient = new ExascaleDbStorageVaults(_exascaleDbStorageVaultsClientDiagnostics, Pipeline, Endpoint, exascaleDBStorageVaultApiVersion ?? "2025-09-01");
+            _exascaleDbStorageVaultsRestClient = new ExascaleDbStorageVaults(_exascaleDbStorageVaultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, exascaleDBStorageVaultApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _exascaleDbStorageVaultsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExascaleDBStorageVaultPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<ExascaleDBStorageVaultResource> operation = new OracleDatabaseArmOperation<ExascaleDBStorageVaultResource>(
-                    new ExascaleDBStorageVaultOperationSource(Client),
+                    new ExascaleDBStorageVaultResourceOperationSource(Client),
                     _exascaleDbStorageVaultsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _exascaleDbStorageVaultsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExascaleDBStorageVaultPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<ExascaleDBStorageVaultResource> operation = new OracleDatabaseArmOperation<ExascaleDBStorageVaultResource>(
-                    new ExascaleDBStorageVaultOperationSource(Client),
+                    new ExascaleDBStorageVaultResourceOperationSource(Client),
                     _exascaleDbStorageVaultsClientDiagnostics,
                     Pipeline,
                     message.Request,

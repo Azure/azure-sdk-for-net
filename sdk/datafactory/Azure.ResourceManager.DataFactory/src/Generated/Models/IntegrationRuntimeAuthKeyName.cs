@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.DataFactory.Models
     public readonly partial struct IntegrationRuntimeAuthKeyName : IEquatable<IntegrationRuntimeAuthKeyName>
     {
         private readonly string _value;
+        /// <summary> authKey1. </summary>
+        private const string AuthKey1Value = "authKey1";
+        /// <summary> authKey2. </summary>
+        private const string AuthKey2Value = "authKey2";
 
         /// <summary> Initializes a new instance of <see cref="IntegrationRuntimeAuthKeyName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public IntegrationRuntimeAuthKeyName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AuthKey1Value = "authKey1";
-        private const string AuthKey2Value = "authKey2";
+            _value = value;
+        }
 
         /// <summary> authKey1. </summary>
         public static IntegrationRuntimeAuthKeyName AuthKey1 { get; } = new IntegrationRuntimeAuthKeyName(AuthKey1Value);
+
         /// <summary> authKey2. </summary>
         public static IntegrationRuntimeAuthKeyName AuthKey2 { get; } = new IntegrationRuntimeAuthKeyName(AuthKey2Value);
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeAuthKeyName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(IntegrationRuntimeAuthKeyName left, IntegrationRuntimeAuthKeyName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="IntegrationRuntimeAuthKeyName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(IntegrationRuntimeAuthKeyName left, IntegrationRuntimeAuthKeyName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="IntegrationRuntimeAuthKeyName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="IntegrationRuntimeAuthKeyName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator IntegrationRuntimeAuthKeyName(string value) => new IntegrationRuntimeAuthKeyName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="IntegrationRuntimeAuthKeyName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator IntegrationRuntimeAuthKeyName?(string value) => value == null ? null : new IntegrationRuntimeAuthKeyName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is IntegrationRuntimeAuthKeyName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(IntegrationRuntimeAuthKeyName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

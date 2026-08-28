@@ -2,6 +2,6 @@
 {
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
-  "TagPrefix": "net/slis/Azure.ResourceManager.Monitor.Slis",
-  "Tag": ""
+  "TagPrefix": "net/monitor/Azure.ResourceManager.Monitor.Slis",
+  "Tag": "net/monitor/Azure.ResourceManager.Monitor.Slis_c31966aaa2"
 }

@@ -740,6 +740,146 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         }
 
         /// <summary>
+        /// Wraps the specified key using secure wrap.
+        /// </summary>
+        /// <param name="algorithm">The <see cref="SecureKeyWrapAlgorithm"/> to use.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>
+        /// The result of the secure wrap operation. The returned <see cref="SecureWrapResult"/> contains the wrapped key
+        /// along with all other information needed to unwrap it. This information should be stored with the wrapped key.
+        /// </returns>
+        /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
+        /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<SecureWrapResult> SecureWrapKeyAsync(SecureKeyWrapAlgorithm algorithm, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(SecureWrapKey)}");
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
+            scope.Start();
+
+            try
+            {
+                // Secure wrap is a remote-only operation; it cannot be performed by a local provider.
+                ThrowIfLocalOnly(nameof(SecureWrapKey));
+
+                return await _remoteProvider.SecureWrapKeyAsync(algorithm, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Wraps the specified key using secure wrap.
+        /// </summary>
+        /// <param name="algorithm">The <see cref="SecureKeyWrapAlgorithm"/> to use.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>
+        /// The result of the secure wrap operation. The returned <see cref="SecureWrapResult"/> contains the wrapped key
+        /// along with all other information needed to unwrap it. This information should be stored with the wrapped key.
+        /// </returns>
+        /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
+        /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual SecureWrapResult SecureWrapKey(SecureKeyWrapAlgorithm algorithm, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(SecureWrapKey)}");
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
+            scope.Start();
+
+            try
+            {
+                // Secure wrap is a remote-only operation; it cannot be performed by a local provider.
+                ThrowIfLocalOnly(nameof(SecureWrapKey));
+
+                return _remoteProvider.SecureWrapKey(algorithm, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Unwraps the specified wrapped key using secure unwrap.
+        /// </summary>
+        /// <param name="algorithm">The <see cref="SecureKeyWrapAlgorithm"/> to use.</param>
+        /// <param name="encryptedKey">The encrypted key bytes to unwrap.</param>
+        /// <param name="targetAttestationToken">The target attestation token for the unwrap operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>
+        /// The result of the unwrap operation. The returned <see cref="SecureUnwrapResult"/> contains the unwrapped key
+        /// along with all other information needed to identify it. This information should be stored with the unwrapped key.
+        /// </returns>
+        /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
+        /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual async Task<SecureUnwrapResult> SecureUnwrapKeyAsync(SecureKeyWrapAlgorithm algorithm, byte[] encryptedKey, string targetAttestationToken, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(SecureUnwrapKey)}");
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
+            scope.Start();
+
+            try
+            {
+                // Secure unwrap is a remote-only operation; it cannot be performed by a local provider.
+                ThrowIfLocalOnly(nameof(SecureUnwrapKey));
+
+                return await _remoteProvider.SecureUnwrapKeyAsync(algorithm, encryptedKey, targetAttestationToken, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Unwraps the specified wrapped key using secure unwrap.
+        /// </summary>
+        /// <param name="algorithm">The <see cref="SecureKeyWrapAlgorithm"/> to use.</param>
+        /// <param name="encryptedKey">The encrypted key bytes to unwrap.</param>
+        /// <param name="targetAttestationToken">The target attestation token for the unwrap operation.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> to cancel the operation.</param>
+        /// <returns>
+        /// The result of the unwrap operation. The returned <see cref="SecureUnwrapResult"/> contains the unwrapped key
+        /// along with all other information needed to identify it. This information should be stored with the unwrapped key.
+        /// </returns>
+        /// <exception cref="ArgumentException">The specified <paramref name="algorithm"/> does not match the key corresponding to the key identifier.</exception>
+        /// <exception cref="CryptographicException">The local cryptographic provider threw an exception.</exception>
+        /// <exception cref="InvalidOperationException">The key is invalid for the current operation.</exception>
+        /// <exception cref="NotSupportedException">The operation is not supported with the specified key.</exception>
+        /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
+        public virtual SecureUnwrapResult SecureUnwrapKey(SecureKeyWrapAlgorithm algorithm, byte[] encryptedKey, string targetAttestationToken, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _pipeline.CreateScope($"{nameof(CryptographyClient)}.{nameof(SecureUnwrapKey)}");
+            scope.AddAttribute(OTelKeyIdKey, _keyId);
+            scope.Start();
+
+            try
+            {
+                // Secure unwrap is a remote-only operation; it cannot be performed by a local provider.
+                ThrowIfLocalOnly(nameof(SecureUnwrapKey));
+
+                return _remoteProvider.SecureUnwrapKey(algorithm, encryptedKey, targetAttestationToken, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Signs the specified digest.
         /// </summary>
         /// <param name="algorithm">The <see cref="SignatureAlgorithm"/> to use.</param>

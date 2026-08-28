@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(ResourceType, out string frontDoorOriginApiVersion);
             _frontDoorOriginsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            _frontDoorOriginsRestClient = new FrontDoorOrigins(_frontDoorOriginsClientDiagnostics, Pipeline, Endpoint, frontDoorOriginApiVersion ?? "2025-09-01-preview");
+            _frontDoorOriginsRestClient = new FrontDoorOrigins(_frontDoorOriginsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorOriginApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _frontDoorOriginsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, FrontDoorOriginPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<FrontDoorOriginResource> operation = new CdnArmOperation<FrontDoorOriginResource>(
-                    new FrontDoorOriginOperationSource(Client),
+                    new FrontDoorOriginResourceOperationSource(Client),
                     _frontDoorOriginsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _frontDoorOriginsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, FrontDoorOriginPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<FrontDoorOriginResource> operation = new CdnArmOperation<FrontDoorOriginResource>(
-                    new FrontDoorOriginOperationSource(Client),
+                    new FrontDoorOriginResourceOperationSource(Client),
                     _frontDoorOriginsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -60,8 +60,8 @@ namespace Azure.ResourceManager.DnsResolver
                     yield break;
                 }
                 SubResourceListResult result = SubResourceListResult.FromResponse(response);
-                yield return Page<WritableSubResource>.FromValues((IReadOnlyList<WritableSubResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<WritableSubResource>.FromValues((IReadOnlyList<WritableSubResource>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

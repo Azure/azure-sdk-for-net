@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.Compute.Models
     /// <summary> The input for ScaleOut. </summary>
     public partial class VirtualMachineScaleSetScaleOutContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetScaleOutContent"/>. </summary>
         /// <param name="capacity"> Specifies the number of virtual machines in the scale set. </param>
@@ -55,32 +26,34 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetScaleOutContent"/>. </summary>
         /// <param name="capacity"> Specifies the number of virtual machines in the scale set. </param>
         /// <param name="properties"> The input properties for ScaleOut. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineScaleSetScaleOutContent(long capacity, VmScaleSetScaleOutInputProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal VirtualMachineScaleSetScaleOutContent(long capacity, VMScaleSetScaleOutInputProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Capacity = capacity;
             Properties = properties;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="VirtualMachineScaleSetScaleOutContent"/> for deserialization. </summary>
-        internal VirtualMachineScaleSetScaleOutContent()
-        {
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Specifies the number of virtual machines in the scale set. </summary>
         public long Capacity { get; }
+
         /// <summary> The input properties for ScaleOut. </summary>
-        internal VmScaleSetScaleOutInputProperties Properties { get; set; }
+        internal VMScaleSetScaleOutInputProperties Properties { get; set; }
+
         /// <summary> The zone in which the scale out is requested for the virtual machine scale set. </summary>
         public string VmScaleSetScaleOutInputZone
         {
-            get => Properties is null ? default : Properties.Zone;
+            get
+            {
+                return Properties is null ? default : Properties.VmScaleSetScaleOutInputZone;
+            }
             set
             {
                 if (Properties is null)
-                    Properties = new VmScaleSetScaleOutInputProperties();
-                Properties.Zone = value;
+                {
+                    Properties = new VMScaleSetScaleOutInputProperties();
+                }
+                Properties.VmScaleSetScaleOutInputZone = value;
             }
         }
     }

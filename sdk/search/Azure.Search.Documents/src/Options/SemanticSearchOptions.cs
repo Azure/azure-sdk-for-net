@@ -39,5 +39,26 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Allows the user to set an upper bound on the amount of time it takes for semantic enrichment to finish processing before the request fails. </summary>
         public TimeSpan? MaxWait { get; set; }
+
+        // search-preview:2026-05-01-preview {
+        /// <summary> A value that specifies the language of the search query. </summary>
+        public QueryLanguage? QueryLanguage { get; set; }
+
+        /// <summary> A value that specifies the type of the speller to use to spell-correct individual search query terms. </summary>
+        public QuerySpellerType? QuerySpeller { get; set; }
+
+        /// <summary>
+        /// This parameter is only valid if the query type is 'semantic'. When <see cref="QueryRewrites.RewritesType"/> is set to
+        /// <see cref="QueryRewritesType.Generative"/>, the query terms are sent to a generative model which produces alternative
+        /// query rewrites (10 by default) to help increase the recall of the request. The requested count can be configured via
+        /// <see cref="QueryRewrites.Count"/>, which serializes as e.g. 'generative|count-3'. Defaults to 'None'.
+        /// </summary>
+        public QueryRewrites QueryRewrites { get; set; }
+
+        /// <summary>
+        /// The list of field names used for semantic ranking.
+        /// </summary>
+        public IList<string> SemanticFields { get; internal set; } = new List<string>();
+        // search-preview:2026-05-01-preview }
     }
 }

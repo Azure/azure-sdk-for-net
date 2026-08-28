@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IotOperations
         {
             TryGetApiVersion(ResourceType, out string iotOperationsBrokerAuthenticationApiVersion);
             _brokerAuthenticationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.IotOperations", ResourceType.Namespace, Diagnostics);
-            _brokerAuthenticationRestClient = new BrokerAuthentication(_brokerAuthenticationClientDiagnostics, Pipeline, Endpoint, iotOperationsBrokerAuthenticationApiVersion ?? "2025-10-01");
+            _brokerAuthenticationRestClient = new BrokerAuthentication(_brokerAuthenticationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, iotOperationsBrokerAuthenticationApiVersion ?? "2025-10-01");
             ValidateResourceId(id);
         }
 
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _brokerAuthenticationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, IotOperationsBrokerAuthenticationData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 IotOperationsArmOperation<IotOperationsBrokerAuthenticationResource> operation = new IotOperationsArmOperation<IotOperationsBrokerAuthenticationResource>(
-                    new IotOperationsBrokerAuthenticationOperationSource(Client),
+                    new IotOperationsBrokerAuthenticationResourceOperationSource(Client),
                     _brokerAuthenticationClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.IotOperations
                 HttpMessage message = _brokerAuthenticationRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, IotOperationsBrokerAuthenticationData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 IotOperationsArmOperation<IotOperationsBrokerAuthenticationResource> operation = new IotOperationsArmOperation<IotOperationsBrokerAuthenticationResource>(
-                    new IotOperationsBrokerAuthenticationOperationSource(Client),
+                    new IotOperationsBrokerAuthenticationResourceOperationSource(Client),
                     _brokerAuthenticationClientDiagnostics,
                     Pipeline,
                     message.Request,

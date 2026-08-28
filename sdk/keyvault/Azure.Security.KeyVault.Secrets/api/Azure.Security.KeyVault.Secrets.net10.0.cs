@@ -1,5 +1,11 @@
 namespace Azure.Security.KeyVault.Secrets
 {
+    public partial class AzureSecurityKeyVaultSecretsContext : System.ClientModel.Primitives.ModelReaderWriterContext
+    {
+        internal AzureSecurityKeyVaultSecretsContext() { }
+        public static Azure.Security.KeyVault.Secrets.AzureSecurityKeyVaultSecretsContext Default { get { throw null; } }
+        protected override bool TryGetTypeBuilderCore(System.Type type, out System.ClientModel.Primitives.ModelReaderWriterTypeBuilder builder) { throw null; }
+    }
     public partial class DeletedSecret : Azure.Security.KeyVault.Secrets.KeyVaultSecret
     {
         internal DeletedSecret() : base (default(string), default(string)) { }

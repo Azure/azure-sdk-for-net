@@ -13,230 +13,140 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService
 {
-    /// <summary>
-    /// A class representing the WorkflowRunAction data model.
-    /// The workflow run action.
-    /// Serialized Name: WorkflowRunAction
-    /// </summary>
+    /// <summary> The workflow run action. </summary>
     public partial class WorkflowRunActionData : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionData"/>. </summary>
         public WorkflowRunActionData()
         {
-            RetryHistory = new ChangeTrackingList<WebAppRetryHistory>();
         }
 
         /// <summary> Initializes a new instance of <see cref="WorkflowRunActionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="startOn">
-        /// Gets the start time.
-        /// Serialized Name: WorkflowRunAction.properties.startTime
-        /// </param>
-        /// <param name="endOn">
-        /// Gets the end time.
-        /// Serialized Name: WorkflowRunAction.properties.endTime
-        /// </param>
-        /// <param name="status">
-        /// Gets the status.
-        /// Serialized Name: WorkflowRunAction.properties.status
-        /// </param>
-        /// <param name="code">
-        /// Gets the code.
-        /// Serialized Name: WorkflowRunAction.properties.code
-        /// </param>
-        /// <param name="error">
-        /// Gets the error.
-        /// Serialized Name: WorkflowRunAction.properties.error
-        /// </param>
-        /// <param name="trackingId">
-        /// Gets the tracking id.
-        /// Serialized Name: WorkflowRunAction.properties.trackingId
-        /// </param>
-        /// <param name="correlation">
-        /// The correlation properties.
-        /// Serialized Name: WorkflowRunAction.properties.correlation
-        /// </param>
-        /// <param name="inputsLink">
-        /// Gets the link to inputs.
-        /// Serialized Name: WorkflowRunAction.properties.inputsLink
-        /// </param>
-        /// <param name="outputsLink">
-        /// Gets the link to outputs.
-        /// Serialized Name: WorkflowRunAction.properties.outputsLink
-        /// </param>
-        /// <param name="trackedProperties">
-        /// Gets the tracked properties.
-        /// Serialized Name: WorkflowRunAction.properties.trackedProperties
-        /// </param>
-        /// <param name="retryHistory">
-        /// Gets the retry histories.
-        /// Serialized Name: WorkflowRunAction.properties.retryHistory
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowRunActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DateTimeOffset? startOn, DateTimeOffset? endOn, WorkflowStatus? status, string code, BinaryData error, string trackingId, WebAppRunActionCorrelation correlation, WebAppContentLink inputsLink, WebAppContentLink outputsLink, BinaryData trackedProperties, IReadOnlyList<WebAppRetryHistory> retryHistory, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The workflow run action properties. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WorkflowRunActionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WorkflowRunActionProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            StartOn = startOn;
-            EndOn = endOn;
-            Status = status;
-            Code = code;
-            Error = error;
-            TrackingId = trackingId;
-            Correlation = correlation;
-            InputsLink = inputsLink;
-            OutputsLink = outputsLink;
-            TrackedProperties = trackedProperties;
-            RetryHistory = retryHistory;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Gets the start time.
-        /// Serialized Name: WorkflowRunAction.properties.startTime
-        /// </summary>
+        /// <summary> The workflow run action properties. </summary>
+        [WirePath("properties")]
+        internal WorkflowRunActionProperties Properties { get; set; }
+
+        /// <summary> Gets the start time. </summary>
         [WirePath("properties.startTime")]
-        public DateTimeOffset? StartOn { get; }
-        /// <summary>
-        /// Gets the end time.
-        /// Serialized Name: WorkflowRunAction.properties.endTime
-        /// </summary>
+        public DateTimeOffset? StartOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StartOn;
+            }
+        }
+
+        /// <summary> Gets the end time. </summary>
         [WirePath("properties.endTime")]
-        public DateTimeOffset? EndOn { get; }
-        /// <summary>
-        /// Gets the status.
-        /// Serialized Name: WorkflowRunAction.properties.status
-        /// </summary>
+        public DateTimeOffset? EndOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndOn;
+            }
+        }
+
+        /// <summary> Gets the status. </summary>
         [WirePath("properties.status")]
-        public WorkflowStatus? Status { get; }
-        /// <summary>
-        /// Gets the code.
-        /// Serialized Name: WorkflowRunAction.properties.code
-        /// </summary>
+        public WorkflowStatus? Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+        }
+
+        /// <summary> Gets the code. </summary>
         [WirePath("properties.code")]
-        public string Code { get; }
-        /// <summary>
-        /// Gets the error.
-        /// Serialized Name: WorkflowRunAction.properties.error
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
+        public string Code
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Code;
+            }
+        }
+
+        /// <summary> Gets the error. </summary>
         [WirePath("properties.error")]
-        public BinaryData Error { get; }
-        /// <summary>
-        /// Gets the tracking id.
-        /// Serialized Name: WorkflowRunAction.properties.trackingId
-        /// </summary>
+        public BinaryData Error
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Error;
+            }
+        }
+
+        /// <summary> Gets the tracking id. </summary>
         [WirePath("properties.trackingId")]
-        public string TrackingId { get; }
-        /// <summary>
-        /// The correlation properties.
-        /// Serialized Name: WorkflowRunAction.properties.correlation
-        /// </summary>
+        public string TrackingId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TrackingId;
+            }
+        }
+
+        /// <summary> The correlation properties. </summary>
         [WirePath("properties.correlation")]
-        public WebAppRunActionCorrelation Correlation { get; set; }
-        /// <summary>
-        /// Gets the link to inputs.
-        /// Serialized Name: WorkflowRunAction.properties.inputsLink
-        /// </summary>
+        public WebAppRunActionCorrelation Correlation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Correlation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkflowRunActionProperties();
+                }
+                Properties.Correlation = value;
+            }
+        }
+
+        /// <summary> Gets the link to inputs. </summary>
         [WirePath("properties.inputsLink")]
-        public WebAppContentLink InputsLink { get; }
-        /// <summary>
-        /// Gets the link to outputs.
-        /// Serialized Name: WorkflowRunAction.properties.outputsLink
-        /// </summary>
+        public WebAppContentLink InputsLink
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InputsLink;
+            }
+        }
+
+        /// <summary> Gets the link to outputs. </summary>
         [WirePath("properties.outputsLink")]
-        public WebAppContentLink OutputsLink { get; }
-        /// <summary>
-        /// Gets the tracked properties.
-        /// Serialized Name: WorkflowRunAction.properties.trackedProperties
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
+        public WebAppContentLink OutputsLink
+        {
+            get
+            {
+                return Properties is null ? default : Properties.OutputsLink;
+            }
+        }
+
+        /// <summary> Gets the tracked properties. </summary>
         [WirePath("properties.trackedProperties")]
-        public BinaryData TrackedProperties { get; }
+        public BinaryData TrackedProperties
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TrackedProperties;
+            }
+        }
     }
 }

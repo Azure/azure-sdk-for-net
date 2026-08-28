@@ -3,7 +3,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Threading;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
@@ -128,6 +130,48 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.True(properties.TryGetValue("price", out string price));
             Assert.Equal("2.99", price);
             Assert.Equal(3, properties.Count);
+        }
+
+        [Fact]
+        public void FieldsAreCultureInvariant()
+        {
+            // This has to happen in a new thread because culture changes affect the current thread, which could affect other tests
+
+            Exception? testException = null;
+            var thread = new Thread(() =>
+            {
+                try {
+                    var logRecords = new List<LogRecord>();
+                    using var loggerFactory = LoggerFactory.Create(builder =>
+                        {
+                            builder.AddOpenTelemetry(options =>
+                            {
+                                options.IncludeFormattedMessage = true;
+                                options.AddInMemoryExporter(logRecords);
+                            });
+                            builder.AddFilter(typeof(LogsHelperTests).FullName, LogLevel.Trace);
+                        });
+                    var logger = loggerFactory.CreateLogger<LogsHelperTests>();
+                    logger.LogInformation("Price is {culturalprice}.", 2.99); // in the culture, is 2,99 not 2.99
+
+                    var properties = new ChangeTrackingDictionary<string, string>();
+                    LogsHelper.ProcessLogRecordProperties(logRecords[0], properties, out var message, out var eventName, out LogContextInfo logContext, out var availabilityInfo);
+
+                    Assert.Equal("Price is 2.99.", message); // we should emit a culture invariant number
+                    Assert.True(properties.TryGetValue("culturalprice", out string price));
+                    Assert.Equal("2.99", price);
+                } catch (Exception e) {
+                    testException = e;
+                }
+            })
+            {
+                CurrentCulture = CultureInfo.CreateSpecificCulture("pl-PL")
+            };
+            thread.Start();
+            thread.Join();
+            if (testException != null) {
+                throw testException;
+            }
         }
 
         [Theory]

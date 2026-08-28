@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.HDInsight
                     yield break;
                 }
                 ScriptActionExecutionHistoryList result = ScriptActionExecutionHistoryList.FromResponse(response);
-                yield return Page<RuntimeScriptActionDetail>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<RuntimeScriptActionDetail>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

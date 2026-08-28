@@ -1,6 +1,49 @@
 # Release History
 
-## 1.0.0-beta.9 (Unreleased)
+## 1.0.0-beta.13 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.12 (2026-07-31)
+
+### Bugs Fixed
+
+- Fixed asynchronous registration and receipt retrieval against a still-pending transaction. When a
+  write is routed to a backup node the service replies with a redirect whose `Location` (for example
+  `/entries/{entryId}`) omits the `api-version`. `CodeTransparencyRedirectPolicy` now carries the
+  originating request's `api-version` onto followed `303`/`307`/`308` redirect targets, so the
+  subsequent read stays on the versioned API instead of falling back to the service's unversioned
+  (legacy) behavior. On the versioned API a read of a not-yet-committed entry is answered with a
+  `302 Found` whose `Location` points back at the same entry URL; the followed read now treats that
+  `302` as retriable, and the client's default retry settings were raised (more, exponentially
+  backed-off retries starting at 200 ms) so the pipeline polls until the committed receipt (`200`).
+  All retry and delay values remain overridable through `CodeTransparencyClientOptions.Retry`.
+
+## 1.0.0-beta.11 (2026-07-15)
+
+### Bugs Fixed
+
+- Hardened receipt verification to reject empty inclusion-proof collections.
+
+## 1.0.0-beta.10 (2026-07-14)
+
+### Features Added
+
+- General availability release targeting REST API version `2026-03-26`
+- Added a utility method `CcfReceipt.GetRegistrationTransactionId(byte[] receiptCoseSign1Bytes)` to extract the entry ID (registration transaction id) from a receipt
+
+### Other Changes
+
+- Removed namespace `Azure.Security.CodeTransparency.Receipt`, all classes have been moved to `Azure.Security.CodeTransparency`.
+- Updated `CodeTransparencyRedirectPolicy` to also allow 303 redirects which is returned in the case of the entry create operation.
+
+## 1.0.0-beta.9 (2026-05-26)
 
 ### Features Added
 
@@ -9,6 +52,10 @@
 ### Bugs Fixed
 
 - Improved redirect performance for write operations by caching the latest primary node URL from redirect responses and reusing it for subsequent non-GET requests. The cache is lazily populated and refreshed whenever the service redirects to a different primary node.
+
+### Other Changes
+
+- Hardened redirect handling in the Code Transparency client. Credentials and request bodies are now only forwarded on HTTPS redirects whose target hostname matches the configured service endpoint or one of its subdomains, with the same port. Redirects to any other target are refused. Write-URL cache writes are now staged per-call and only committed after a successful trusted redirect chain.
 
 ## 1.0.0-beta.8 (2026-03-02)
 

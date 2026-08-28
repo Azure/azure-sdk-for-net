@@ -247,8 +247,12 @@ namespace Azure.Provisioning.KeyVault
             _regions = DefineListProperty<ManagedHsmGeoReplicatedRegion>(nameof(Regions), new string[] { "regions" });
             _privateEndpointConnections = DefineListProperty<ManagedHsmPrivateEndpointConnectionItemData>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _publicNetworkAccess = DefineProperty<ManagedHsmPublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
-            _scheduledPurgeOn = DefineProperty<DateTimeOffset>(nameof(ScheduledPurgeOn), new string[] { "scheduledPurgeDate" }, isOutput: true);
+            _scheduledPurgeOn = DefineProperty<DateTimeOffset>(nameof(ScheduledPurgeOn), new string[] { "scheduledPurgeDate" }, isOutput: true, format: "O");
             _securityDomainProperties = DefineModelProperty<ManagedHSMSecurityDomainProperties>(nameof(SecurityDomainProperties), new string[] { "securityDomainProperties" }, isOutput: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedHsmProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

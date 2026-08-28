@@ -8,16 +8,56 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
-    public partial class PolicySettings : IUtf8JsonSerializable, IJsonModel<PolicySettings>
+    /// <summary> Defines contents of a web application firewall global configuration. </summary>
+    public partial class PolicySettings : IJsonModel<PolicySettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PolicySettings>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PolicySettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializePolicySettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(PolicySettings)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<PolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(PolicySettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<PolicySettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PolicySettings IPersistableModel<PolicySettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<PolicySettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<PolicySettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +69,11 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PolicySettings)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
@@ -95,20 +134,20 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("jsChallengeCookieExpirationInMins"u8);
                 writer.WriteNumberValue(JsChallengeCookieExpirationInMins.Value);
             }
-            if (Optional.IsDefined(CaptchaCookieExpirationInMins))
+            if (Optional.IsDefined(CaptchaExpirationInMins))
             {
-                writer.WritePropertyName("captchaCookieExpirationInMins"u8);
-                writer.WriteNumberValue(CaptchaCookieExpirationInMins.Value);
+                writer.WritePropertyName("captchaExpirationInMins"u8);
+                writer.WriteNumberValue(CaptchaExpirationInMins.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -117,22 +156,27 @@ namespace Azure.ResourceManager.Network.Models
             }
         }
 
-        PolicySettings IJsonModel<PolicySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        PolicySettings IJsonModel<PolicySettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual PolicySettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicySettings>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<PolicySettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(PolicySettings)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializePolicySettings(document.RootElement, options);
         }
 
-        internal static PolicySettings DeserializePolicySettings(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static PolicySettings DeserializePolicySettings(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -149,130 +193,128 @@ namespace Azure.ResourceManager.Network.Models
             string customBlockResponseBody = default;
             PolicySettingsLogScrubbing logScrubbing = default;
             int? jsChallengeCookieExpirationInMins = default;
-            int? captchaCookieExpirationInMins = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            int? captchaExpirationInMins = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("state"u8))
+                if (prop.NameEquals("state"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    state = new WebApplicationFirewallEnabledState(property.Value.GetString());
+                    state = new WebApplicationFirewallEnabledState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("mode"u8))
+                if (prop.NameEquals("mode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    mode = new WebApplicationFirewallMode(property.Value.GetString());
+                    mode = new WebApplicationFirewallMode(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("requestBodyCheck"u8))
+                if (prop.NameEquals("requestBodyCheck"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    requestBodyCheck = property.Value.GetBoolean();
+                    requestBodyCheck = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("requestBodyInspectLimitInKB"u8))
+                if (prop.NameEquals("requestBodyInspectLimitInKB"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    requestBodyInspectLimitInKB = property.Value.GetInt32();
+                    requestBodyInspectLimitInKB = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("requestBodyEnforcement"u8))
+                if (prop.NameEquals("requestBodyEnforcement"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    requestBodyEnforcement = property.Value.GetBoolean();
+                    requestBodyEnforcement = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("maxRequestBodySizeInKb"u8))
+                if (prop.NameEquals("maxRequestBodySizeInKb"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxRequestBodySizeInKb = property.Value.GetInt32();
+                    maxRequestBodySizeInKb = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("fileUploadEnforcement"u8))
+                if (prop.NameEquals("fileUploadEnforcement"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fileUploadEnforcement = property.Value.GetBoolean();
+                    fileUploadEnforcement = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("fileUploadLimitInMb"u8))
+                if (prop.NameEquals("fileUploadLimitInMb"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fileUploadLimitInMb = property.Value.GetInt32();
+                    fileUploadLimitInMb = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("customBlockResponseStatusCode"u8))
+                if (prop.NameEquals("customBlockResponseStatusCode"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    customBlockResponseStatusCode = property.Value.GetInt32();
+                    customBlockResponseStatusCode = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("customBlockResponseBody"u8))
+                if (prop.NameEquals("customBlockResponseBody"u8))
                 {
-                    customBlockResponseBody = property.Value.GetString();
+                    customBlockResponseBody = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("logScrubbing"u8))
+                if (prop.NameEquals("logScrubbing"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    logScrubbing = PolicySettingsLogScrubbing.DeserializePolicySettingsLogScrubbing(property.Value, options);
+                    logScrubbing = PolicySettingsLogScrubbing.DeserializePolicySettingsLogScrubbing(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("jsChallengeCookieExpirationInMins"u8))
+                if (prop.NameEquals("jsChallengeCookieExpirationInMins"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    jsChallengeCookieExpirationInMins = property.Value.GetInt32();
+                    jsChallengeCookieExpirationInMins = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("captchaCookieExpirationInMins"u8))
+                if (prop.NameEquals("captchaExpirationInMins"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    captchaCookieExpirationInMins = property.Value.GetInt32();
+                    captchaExpirationInMins = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new PolicySettings(
                 state,
                 mode,
@@ -286,262 +328,8 @@ namespace Azure.ResourceManager.Network.Models
                 customBlockResponseBody,
                 logScrubbing,
                 jsChallengeCookieExpirationInMins,
-                captchaCookieExpirationInMins,
-                serializedAdditionalRawData);
+                captchaExpirationInMins,
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  state: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(State))
-                {
-                    builder.Append("  state: ");
-                    builder.AppendLine($"'{State.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  mode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Mode))
-                {
-                    builder.Append("  mode: ");
-                    builder.AppendLine($"'{Mode.Value.ToString()}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestBodyCheck), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  requestBodyCheck: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RequestBodyCheck))
-                {
-                    builder.Append("  requestBodyCheck: ");
-                    var boolValue = RequestBodyCheck.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestBodyInspectLimitInKB), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  requestBodyInspectLimitInKB: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RequestBodyInspectLimitInKB))
-                {
-                    builder.Append("  requestBodyInspectLimitInKB: ");
-                    builder.AppendLine($"{RequestBodyInspectLimitInKB.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestBodyEnforcement), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  requestBodyEnforcement: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RequestBodyEnforcement))
-                {
-                    builder.Append("  requestBodyEnforcement: ");
-                    var boolValue = RequestBodyEnforcement.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxRequestBodySizeInKb), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  maxRequestBodySizeInKb: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(MaxRequestBodySizeInKb))
-                {
-                    builder.Append("  maxRequestBodySizeInKb: ");
-                    builder.AppendLine($"{MaxRequestBodySizeInKb.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileUploadEnforcement), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  fileUploadEnforcement: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FileUploadEnforcement))
-                {
-                    builder.Append("  fileUploadEnforcement: ");
-                    var boolValue = FileUploadEnforcement.Value == true ? "true" : "false";
-                    builder.AppendLine($"{boolValue}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileUploadLimitInMb), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  fileUploadLimitInMb: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(FileUploadLimitInMb))
-                {
-                    builder.Append("  fileUploadLimitInMb: ");
-                    builder.AppendLine($"{FileUploadLimitInMb.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomBlockResponseStatusCode), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  customBlockResponseStatusCode: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CustomBlockResponseStatusCode))
-                {
-                    builder.Append("  customBlockResponseStatusCode: ");
-                    builder.AppendLine($"{CustomBlockResponseStatusCode.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomBlockResponseBody), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  customBlockResponseBody: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CustomBlockResponseBody))
-                {
-                    builder.Append("  customBlockResponseBody: ");
-                    if (CustomBlockResponseBody.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{CustomBlockResponseBody}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{CustomBlockResponseBody}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogScrubbing), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  logScrubbing: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(LogScrubbing))
-                {
-                    builder.Append("  logScrubbing: ");
-                    BicepSerializationHelpers.AppendChildObject(builder, LogScrubbing, options, 2, false, "  logScrubbing: ");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JsChallengeCookieExpirationInMins), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  jsChallengeCookieExpirationInMins: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(JsChallengeCookieExpirationInMins))
-                {
-                    builder.Append("  jsChallengeCookieExpirationInMins: ");
-                    builder.AppendLine($"{JsChallengeCookieExpirationInMins.Value}");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CaptchaCookieExpirationInMins), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  captchaCookieExpirationInMins: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(CaptchaCookieExpirationInMins))
-                {
-                    builder.Append("  captchaCookieExpirationInMins: ");
-                    builder.AppendLine($"{CaptchaCookieExpirationInMins.Value}");
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<PolicySettings>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicySettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerNetworkContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(PolicySettings)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        PolicySettings IPersistableModel<PolicySettings>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PolicySettings>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializePolicySettings(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PolicySettings)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<PolicySettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.Provisioning.ContainerService
         {
         }
 
-        /// <summary> Gets or sets the Revision. </summary>
+        /// <summary> Gets the Revision. </summary>
         public BicepValue<string> Revision
         {
             get
@@ -30,14 +30,9 @@ namespace Azure.Provisioning.ContainerService
                 Initialize();
                 return _revision;
             }
-            set
-            {
-                Initialize();
-                _revision.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the Upgrades. </summary>
+        /// <summary> Gets the Upgrades. </summary>
         public BicepList<string> Upgrades
         {
             get
@@ -45,25 +40,15 @@ namespace Azure.Provisioning.ContainerService
                 Initialize();
                 return _upgrades;
             }
-            set
-            {
-                Initialize();
-                _upgrades.Assign(value);
-            }
         }
 
-        /// <summary> Gets or sets the CompatibleWith. </summary>
+        /// <summary> Gets the CompatibleWith. </summary>
         public BicepList<CompatibleVersions> CompatibleWith
         {
             get
             {
                 Initialize();
                 return _compatibleWith;
-            }
-            set
-            {
-                Initialize();
-                _compatibleWith.Assign(value);
             }
         }
 
@@ -74,6 +59,10 @@ namespace Azure.Provisioning.ContainerService
             _revision = DefineProperty<string>(nameof(Revision), new string[] { "revision" });
             _upgrades = DefineListProperty<string>(nameof(Upgrades), new string[] { "upgrades" });
             _compatibleWith = DefineListProperty<CompatibleVersions>(nameof(CompatibleWith), new string[] { "compatibleWith" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for MeshRevision that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

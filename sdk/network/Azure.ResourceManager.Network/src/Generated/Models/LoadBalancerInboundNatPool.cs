@@ -7,7 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -21,22 +23,198 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerInboundNatPool"/>. </summary>
         /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="name"> Name of the resource. </param>
+        /// <param name="type"> Resource type. </param>
         /// <param name="properties"> Properties of load balancer inbound nat pool. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        internal LoadBalancerInboundNatPool(ResourceIdentifier id, string name, ResourceType? resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData, LoadBalancerInboundNatPoolProperties properties, ETag? etag) : base(id, name, resourceType, serializedAdditionalRawData)
+        /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
+        internal LoadBalancerInboundNatPool(ResourceIdentifier id, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string @type, LoadBalancerInboundNatPoolProperties properties, ETag? eTag) : base(id, additionalBinaryDataProperties, name, @type)
         {
             Properties = properties;
-            ETag = etag;
+            ETag = eTag;
         }
 
-        /// <summary> Properties of load balancer inbound nat pool. </summary>
-        [WirePath("properties")]
-        public LoadBalancerInboundNatPoolProperties Properties { get; set; }
         /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; }
+
+        /// <summary> The reference to the transport protocol used by the inbound NAT pool. </summary>
+        [WirePath("properties.protocol")]
+        public LoadBalancingTransportProtocol? Protocol
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Protocol;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new LoadBalancerInboundNatPoolProperties();
+                    }
+                    Properties.Protocol = value.Value;
+                }
+            }
+        }
+
+        /// <summary> The first port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65534. </summary>
+        [WirePath("properties.frontendPortRangeStart")]
+        public int? FrontendPortRangeStart
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FrontendPortRangeStart;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new LoadBalancerInboundNatPoolProperties();
+                    }
+                    Properties.FrontendPortRangeStart = value.Value;
+                }
+            }
+        }
+
+        /// <summary> The last port number in the range of external ports that will be used to provide Inbound Nat to NICs associated with a load balancer. Acceptable values range between 1 and 65535. </summary>
+        [WirePath("properties.frontendPortRangeEnd")]
+        public int? FrontendPortRangeEnd
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FrontendPortRangeEnd;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new LoadBalancerInboundNatPoolProperties();
+                    }
+                    Properties.FrontendPortRangeEnd = value.Value;
+                }
+            }
+        }
+
+        /// <summary> The port used for internal connections on the endpoint. Acceptable values are between 1 and 65535. </summary>
+        [WirePath("properties.backendPort")]
+        public int? BackendPort
+        {
+            get
+            {
+                return Properties is null ? default : Properties.BackendPort;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new LoadBalancerInboundNatPoolProperties();
+                    }
+                    Properties.BackendPort = value.Value;
+                }
+            }
+        }
+
+        /// <summary> The timeout for the TCP idle connection. The value can be set between 4 and 30 minutes. The default value is 4 minutes. This element is only used when the protocol is set to TCP. </summary>
+        [WirePath("properties.idleTimeoutInMinutes")]
+        public int? IdleTimeoutInMinutes
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IdleTimeoutInMinutes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancerInboundNatPoolProperties();
+                }
+                Properties.IdleTimeoutInMinutes = value;
+            }
+        }
+
+        /// <summary> Configures a virtual machine's endpoint for the floating IP capability required to configure a SQL AlwaysOn Availability Group. This setting is required when using the SQL AlwaysOn Availability Groups in SQL server. This setting can't be changed after you create the endpoint. </summary>
+        [WirePath("properties.enableFloatingIP")]
+        public bool? EnableFloatingIP
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableFloatingIP;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancerInboundNatPoolProperties();
+                }
+                Properties.EnableFloatingIP = value;
+            }
+        }
+
+        /// <summary> Receive bidirectional TCP Reset on TCP flow idle timeout or unexpected connection termination. This element is only used when the protocol is set to TCP. </summary>
+        [WirePath("properties.enableTcpReset")]
+        public bool? EnableTcpReset
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableTcpReset;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancerInboundNatPoolProperties();
+                }
+                Properties.EnableTcpReset = value;
+            }
+        }
+
+        /// <summary> The provisioning state of the inbound NAT pool resource. </summary>
+        [WirePath("properties.provisioningState")]
+        public NetworkProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Resource ID. </summary>
+        [WirePath("properties.frontendIPConfiguration.id")]
+        public ResourceIdentifier FrontendIPConfigurationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FrontendIPConfigurationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancerInboundNatPoolProperties();
+                }
+                Properties.FrontendIPConfigurationId = value;
+            }
+        }
+
+        /// <summary> Gets the AdditionalProperties. </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancerInboundNatPoolProperties();
+                }
+                return Properties.AdditionalProperties;
+            }
+        }
     }
 }

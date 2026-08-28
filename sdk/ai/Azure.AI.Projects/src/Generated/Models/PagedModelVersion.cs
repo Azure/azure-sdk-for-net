@@ -4,12 +4,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.Projects;
 
 namespace Azure.Core
 {
     /// <summary> Paged collection of ModelVersion items. </summary>
+    [Experimental("AAIP001")]
     internal partial class PagedModelVersion
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

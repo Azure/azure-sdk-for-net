@@ -21,7 +21,7 @@ namespace Azure.Provisioning.ContainerService
         {
         }
 
-        /// <summary> Gets or sets the ControlPlaneProfile. </summary>
+        /// <summary> Gets the ControlPlaneProfile. </summary>
         public ManagedClusterPoolUpgradeProfile ControlPlaneProfile
         {
             get
@@ -29,14 +29,9 @@ namespace Azure.Provisioning.ContainerService
                 Initialize();
                 return _controlPlaneProfile;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _controlPlaneProfile, value);
-            }
         }
 
-        /// <summary> Gets or sets the AgentPoolProfiles. </summary>
+        /// <summary> Gets the AgentPoolProfiles. </summary>
         public BicepList<ManagedClusterPoolUpgradeProfile> AgentPoolProfiles
         {
             get
@@ -44,19 +39,18 @@ namespace Azure.Provisioning.ContainerService
                 Initialize();
                 return _agentPoolProfiles;
             }
-            set
-            {
-                Initialize();
-                _agentPoolProfiles.Assign(value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for ManagedClusterUpgradeProfileProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _controlPlaneProfile = DefineModelProperty<ManagedClusterPoolUpgradeProfile>(nameof(ControlPlaneProfile), new string[] { "controlPlaneProfile" }, isRequired: true);
-            _agentPoolProfiles = DefineListProperty<ManagedClusterPoolUpgradeProfile>(nameof(AgentPoolProfiles), new string[] { "agentPoolProfiles" }, isRequired: true);
+            _controlPlaneProfile = DefineModelProperty<ManagedClusterPoolUpgradeProfile>(nameof(ControlPlaneProfile), new string[] { "controlPlaneProfile" });
+            _agentPoolProfiles = DefineListProperty<ManagedClusterPoolUpgradeProfile>(nameof(AgentPoolProfiles), new string[] { "agentPoolProfiles" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedClusterUpgradeProfileProperties that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

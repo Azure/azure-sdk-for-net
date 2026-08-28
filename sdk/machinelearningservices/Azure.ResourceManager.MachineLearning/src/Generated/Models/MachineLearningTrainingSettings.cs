@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Training related configuration. </summary>
     public partial class MachineLearningTrainingSettings
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningTrainingSettings"/>. </summary>
         public MachineLearningTrainingSettings()
@@ -51,52 +23,58 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningTrainingSettings"/>. </summary>
-        /// <param name="isOnnxCompatibleModelsEnabled"> Flag for enabling onnx compatible models. </param>
-        /// <param name="stackEnsembleSettings"> Stack ensemble settings for stack ensemble run. </param>
-        /// <param name="isStackEnsembleEnabled"> Enable stack ensemble run. </param>
-        /// <param name="isVoteEnsembleEnabled"> Enable voting ensemble run. </param>
+        /// <param name="enableDnnTraining"> Enable recommendation of DNN models. </param>
+        /// <param name="enableModelExplainability"> Flag to turn on explainability on best model. </param>
+        /// <param name="enableOnnxCompatibleModels"> Flag for enabling onnx compatible models. </param>
+        /// <param name="enableStackEnsemble"> Enable stack ensemble run. </param>
+        /// <param name="enableVoteEnsemble"> Enable voting ensemble run. </param>
         /// <param name="ensembleModelDownloadTimeout">
         /// During VotingEnsemble and StackEnsemble model generation, multiple fitted models from the previous child runs are downloaded.
         /// Configure this parameter with a higher value than 300 secs, if more time is needed.
         /// </param>
-        /// <param name="isModelExplainabilityEnabled"> Flag to turn on explainability on best model. </param>
-        /// <param name="isDnnTrainingEnabled"> Enable recommendation of DNN models. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningTrainingSettings(bool? isOnnxCompatibleModelsEnabled, MachineLearningStackEnsembleSettings stackEnsembleSettings, bool? isStackEnsembleEnabled, bool? isVoteEnsembleEnabled, TimeSpan? ensembleModelDownloadTimeout, bool? isModelExplainabilityEnabled, bool? isDnnTrainingEnabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="stackEnsembleSettings"> Stack ensemble settings for stack ensemble run. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningTrainingSettings(bool? enableDnnTraining, bool? enableModelExplainability, bool? enableOnnxCompatibleModels, bool? enableStackEnsemble, bool? enableVoteEnsemble, TimeSpan? ensembleModelDownloadTimeout, MachineLearningStackEnsembleSettings stackEnsembleSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            IsOnnxCompatibleModelsEnabled = isOnnxCompatibleModelsEnabled;
-            StackEnsembleSettings = stackEnsembleSettings;
-            IsStackEnsembleEnabled = isStackEnsembleEnabled;
-            IsVoteEnsembleEnabled = isVoteEnsembleEnabled;
+            EnableDnnTraining = enableDnnTraining;
+            EnableModelExplainability = enableModelExplainability;
+            EnableOnnxCompatibleModels = enableOnnxCompatibleModels;
+            EnableStackEnsemble = enableStackEnsemble;
+            EnableVoteEnsemble = enableVoteEnsemble;
             EnsembleModelDownloadTimeout = ensembleModelDownloadTimeout;
-            IsModelExplainabilityEnabled = isModelExplainabilityEnabled;
-            IsDnnTrainingEnabled = isDnnTrainingEnabled;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            StackEnsembleSettings = stackEnsembleSettings;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+
+        /// <summary> Enable recommendation of DNN models. </summary>
+        [WirePath("enableDnnTraining")]
+        public bool? EnableDnnTraining { get; set; }
+
+        /// <summary> Flag to turn on explainability on best model. </summary>
+        [WirePath("enableModelExplainability")]
+        public bool? EnableModelExplainability { get; set; }
 
         /// <summary> Flag for enabling onnx compatible models. </summary>
         [WirePath("enableOnnxCompatibleModels")]
-        public bool? IsOnnxCompatibleModelsEnabled { get; set; }
-        /// <summary> Stack ensemble settings for stack ensemble run. </summary>
-        [WirePath("stackEnsembleSettings")]
-        public MachineLearningStackEnsembleSettings StackEnsembleSettings { get; set; }
+        public bool? EnableOnnxCompatibleModels { get; set; }
+
         /// <summary> Enable stack ensemble run. </summary>
         [WirePath("enableStackEnsemble")]
-        public bool? IsStackEnsembleEnabled { get; set; }
+        public bool? EnableStackEnsemble { get; set; }
+
         /// <summary> Enable voting ensemble run. </summary>
         [WirePath("enableVoteEnsemble")]
-        public bool? IsVoteEnsembleEnabled { get; set; }
+        public bool? EnableVoteEnsemble { get; set; }
+
         /// <summary>
         /// During VotingEnsemble and StackEnsemble model generation, multiple fitted models from the previous child runs are downloaded.
         /// Configure this parameter with a higher value than 300 secs, if more time is needed.
         /// </summary>
         [WirePath("ensembleModelDownloadTimeout")]
         public TimeSpan? EnsembleModelDownloadTimeout { get; set; }
-        /// <summary> Flag to turn on explainability on best model. </summary>
-        [WirePath("enableModelExplainability")]
-        public bool? IsModelExplainabilityEnabled { get; set; }
-        /// <summary> Enable recommendation of DNN models. </summary>
-        [WirePath("enableDnnTraining")]
-        public bool? IsDnnTrainingEnabled { get; set; }
+
+        /// <summary> Stack ensemble settings for stack ensemble run. </summary>
+        [WirePath("stackEnsembleSettings")]
+        public MachineLearningStackEnsembleSettings StackEnsembleSettings { get; set; }
     }
 }

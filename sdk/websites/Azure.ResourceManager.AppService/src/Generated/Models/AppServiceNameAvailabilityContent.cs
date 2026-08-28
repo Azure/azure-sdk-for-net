@@ -7,56 +7,19 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Resource name availability request content.
-    /// Serialized Name: ResourceNameAvailabilityRequest
-    /// </summary>
+    /// <summary> Resource name availability request content. </summary>
     public partial class AppServiceNameAvailabilityContent
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AppServiceNameAvailabilityContent"/>. </summary>
-        /// <param name="name">
-        /// Resource name to verify.
-        /// Serialized Name: ResourceNameAvailabilityRequest.name
-        /// </param>
-        /// <param name="resourceType">
-        /// Resource type used for verification.
-        /// Serialized Name: ResourceNameAvailabilityRequest.type
-        /// </param>
+        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public AppServiceNameAvailabilityContent(string name, CheckNameResourceType resourceType)
         {
@@ -67,59 +30,33 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="AppServiceNameAvailabilityContent"/>. </summary>
-        /// <param name="name">
-        /// Resource name to verify.
-        /// Serialized Name: ResourceNameAvailabilityRequest.name
-        /// </param>
-        /// <param name="resourceType">
-        /// Resource type used for verification.
-        /// Serialized Name: ResourceNameAvailabilityRequest.type
-        /// </param>
-        /// <param name="isFqdn">
-        /// Is fully qualified domain name.
-        /// Serialized Name: ResourceNameAvailabilityRequest.isFqdn
-        /// </param>
-        /// <param name="environmentId">
-        /// Azure Resource Manager ID of the customer's selected Container Apps Environment on which to host the Function app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}
-        /// Serialized Name: ResourceNameAvailabilityRequest.environmentId
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppServiceNameAvailabilityContent(string name, CheckNameResourceType resourceType, bool? isFqdn, string environmentId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="name"> Resource name to verify. </param>
+        /// <param name="resourceType"> Resource type used for verification. </param>
+        /// <param name="isFqdn"> Is fully qualified domain name. </param>
+        /// <param name="environmentId"> Azure Resource Manager ID of the customer's selected Container Apps Environment on which to host the Function app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceNameAvailabilityContent(string name, CheckNameResourceType resourceType, bool? isFqdn, string environmentId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             ResourceType = resourceType;
             IsFqdn = isFqdn;
             EnvironmentId = environmentId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppServiceNameAvailabilityContent"/> for deserialization. </summary>
-        internal AppServiceNameAvailabilityContent()
-        {
-        }
-
-        /// <summary>
-        /// Resource name to verify.
-        /// Serialized Name: ResourceNameAvailabilityRequest.name
-        /// </summary>
+        /// <summary> Resource name to verify. </summary>
         [WirePath("name")]
         public string Name { get; }
-        /// <summary>
-        /// Resource type used for verification.
-        /// Serialized Name: ResourceNameAvailabilityRequest.type
-        /// </summary>
+
+        /// <summary> Resource type used for verification. </summary>
         [WirePath("type")]
         public CheckNameResourceType ResourceType { get; }
-        /// <summary>
-        /// Is fully qualified domain name.
-        /// Serialized Name: ResourceNameAvailabilityRequest.isFqdn
-        /// </summary>
+
+        /// <summary> Is fully qualified domain name. </summary>
         [WirePath("isFqdn")]
         public bool? IsFqdn { get; set; }
-        /// <summary>
-        /// Azure Resource Manager ID of the customer's selected Container Apps Environment on which to host the Function app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}
-        /// Serialized Name: ResourceNameAvailabilityRequest.environmentId
-        /// </summary>
+
+        /// <summary> Azure Resource Manager ID of the customer's selected Container Apps Environment on which to host the Function app. This must be of the form /subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.App/managedEnvironments/{managedEnvironmentName}. </summary>
         [WirePath("environmentId")]
         public string EnvironmentId { get; set; }
     }

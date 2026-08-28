@@ -42,15 +42,15 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
 
         private ClientDiagnostics PublicCloudConnectorsClientDiagnostics => _publicCloudConnectorsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PublicCloudConnectors PublicCloudConnectorsRestClient => _publicCloudConnectorsRestClient ??= new PublicCloudConnectors(PublicCloudConnectorsClientDiagnostics, Pipeline, Endpoint, "2024-12-01");
+        private PublicCloudConnectors PublicCloudConnectorsRestClient => _publicCloudConnectorsRestClient ??= new PublicCloudConnectors(PublicCloudConnectorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-01");
 
         private ClientDiagnostics SolutionTypesClientDiagnostics => _solutionTypesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private SolutionTypes SolutionTypesRestClient => _solutionTypesRestClient ??= new SolutionTypes(SolutionTypesClientDiagnostics, Pipeline, Endpoint, "2024-12-01");
+        private SolutionTypes SolutionTypesRestClient => _solutionTypesRestClient ??= new SolutionTypes(SolutionTypesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-01");
 
         private ClientDiagnostics GenerateAwsTemplateClientDiagnostics => _generateAwsTemplateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.HybridConnectivity.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GenerateAwsTemplate GenerateAwsTemplateRestClient => _generateAwsTemplateRestClient ??= new GenerateAwsTemplate(GenerateAwsTemplateClientDiagnostics, Pipeline, Endpoint, "2024-12-01");
+        private GenerateAwsTemplate GenerateAwsTemplateRestClient => _generateAwsTemplateRestClient ??= new GenerateAwsTemplate(GenerateAwsTemplateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-12-01");
 
         /// <summary>
         /// List PublicCloudConnector resources by subscription ID

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             TryGetApiVersion(ResourceType, out string dnsSecurityRuleApiVersion);
             _dnsSecurityRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", ResourceType.Namespace, Diagnostics);
-            _dnsSecurityRulesRestClient = new DnsSecurityRules(_dnsSecurityRulesClientDiagnostics, Pipeline, Endpoint, dnsSecurityRuleApiVersion ?? "2025-10-01-preview");
+            _dnsSecurityRulesRestClient = new DnsSecurityRules(_dnsSecurityRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsSecurityRuleApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _dnsSecurityRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DnsSecurityRulePatch.ToRequestContent(patch), ifMatch, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation<DnsSecurityRuleResource> operation = new DnsResolverArmOperation<DnsSecurityRuleResource>(
-                    new DnsSecurityRuleOperationSource(Client),
+                    new DnsSecurityRuleResourceOperationSource(Client),
                     _dnsSecurityRulesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _dnsSecurityRulesRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, DnsSecurityRulePatch.ToRequestContent(patch), ifMatch, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation<DnsSecurityRuleResource> operation = new DnsResolverArmOperation<DnsSecurityRuleResource>(
-                    new DnsSecurityRuleOperationSource(Client),
+                    new DnsSecurityRuleResourceOperationSource(Client),
                     _dnsSecurityRulesClientDiagnostics,
                     Pipeline,
                     message.Request,

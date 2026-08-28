@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
-    /// <summary> The AutomationCountType. </summary>
+    /// <summary></summary>
     public readonly partial struct AutomationCountType : IEquatable<AutomationCountType>
     {
         private readonly string _value;
+        /// <summary> status. </summary>
+        private const string StatusValue = "status";
+        /// <summary> nodeconfiguration. </summary>
+        private const string NodeConfigurationValue = "nodeconfiguration";
 
         /// <summary> Initializes a new instance of <see cref="AutomationCountType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public AutomationCountType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StatusValue = "status";
-        private const string NodeConfigurationValue = "nodeconfiguration";
+            _value = value;
+        }
 
         /// <summary> status. </summary>
         public static AutomationCountType Status { get; } = new AutomationCountType(StatusValue);
+
         /// <summary> nodeconfiguration. </summary>
         public static AutomationCountType NodeConfiguration { get; } = new AutomationCountType(NodeConfigurationValue);
+
         /// <summary> Determines if two <see cref="AutomationCountType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(AutomationCountType left, AutomationCountType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="AutomationCountType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(AutomationCountType left, AutomationCountType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AutomationCountType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="AutomationCountType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator AutomationCountType(string value) => new AutomationCountType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="AutomationCountType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator AutomationCountType?(string value) => value == null ? null : new AutomationCountType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is AutomationCountType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(AutomationCountType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

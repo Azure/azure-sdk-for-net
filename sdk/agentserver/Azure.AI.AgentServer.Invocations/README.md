@@ -57,7 +57,7 @@ For more control over the host (adding services, configuring middleware, composi
 
 ### InvocationHandler
 
-The abstract base class you subclass for HTTP-only handlers. Only `HandleAsync` is abstract — the remaining operations (`GetAsync`, `CancelAsync`, `GetOpenApiAsync`) return 404 by default and can be overridden as needed.
+The abstract base class you subclass for HTTP-only handlers. Only `HandleAsync` is abstract — the remaining operations (`GetAsync`, `CancelAsync`, `GetOpenApiAsync`, `GetAsyncApiJsonAsync`, `GetAsyncApiYamlAsync`) return 404 by default and can be overridden as needed.
 
 ### InvocationWebSocketHandler
 
@@ -73,7 +73,7 @@ Provides request metadata to the handler. All properties are read-only and resol
 | `SessionId` | `string` | Resolved multi-turn session identifier. For `POST /invocations`, resolved from the `agent_session_id` query parameter, `FOUNDRY_AGENT_SESSION_ID` env var, or a generated UUID — in that order. For `GET` and `Cancel`, the query parameter is not used; the value comes from the env var or a generated UUID. |
 | `ClientHeaders` | `IReadOnlyDictionary<string, string>` | Forwarded `x-client-*` headers from the original request — useful for propagating tracing context and client metadata. |
 | `QueryParameters` | `IReadOnlyDictionary<string, StringValues>` | All query parameters from the incoming request. Per the invocation protocol spec, all query parameters are forwarded unchanged. |
-| `Isolation` | `IsolationContext` | Isolation context extracted from `x-agent-user-isolation-key` and `x-agent-chat-isolation-key` headers. Useful for multi-tenant scenarios where per-user or per-chat data must be isolated. `IsolationContext.Empty` indicates no isolation headers were present. |
+| `PlatformContext` | `PlatformContext` | Platform context extracted from the `x-agent-user-id` and `x-agent-foundry-call-id` headers. Useful for multi-tenant scenarios where per-user data must be partitioned and the per-request call ID forwarded to 1P services. `PlatformContext.Empty` indicates no platform headers were present. |
 
 ### Customizing the host
 
@@ -87,6 +87,28 @@ When you need to add services, configure middleware, or compose multiple protoco
 ### Handler lifetime
 
 Handlers registered via `AddInvocations<THandler>()` or `InvocationsServer.Run<THandler>()` are resolved per request by default (scoped lifetime). Instance fields on your `InvocationHandler` subclass will not persist across requests. Store long-lived state in separate services or storage keyed by `InvocationContext.SessionId` or `InvocationContext.InvocationId`, or register a singleton handler explicitly if you require a single shared instance.
+
+### Serving discovery specs (OpenAPI / AsyncAPI)
+
+The Invocations host exposes three optional discovery endpoints for machine-readable agent contracts. Override the corresponding methods on your `InvocationHandler`; each returns `404` by default.
+
+| Method | Endpoint | Response media type |
+|---|---|---|
+| `GetOpenApiAsync` | `GET /invocations/docs/openapi.json` | `application/json` |
+| `GetAsyncApiJsonAsync` | `GET /invocations/docs/asyncapi.json` | `application/json` |
+| `GetAsyncApiYamlAsync` | `GET /invocations/docs/asyncapi.yaml` | `application/yaml` |
+
+AsyncAPI is the companion to OpenAPI for event-driven / streaming surfaces (e.g. the `invocations_ws` WebSocket protocol) that OpenAPI cannot express. The path extension is authoritative for the returned content type — there is no `Accept` negotiation and no format conversion between the JSON and YAML representations. Override `GetAsyncApiJsonAsync` and `GetAsyncApiYamlAsync` independently; publishing both is recommended for tooling compatibility.
+
+```C#
+public override async Task GetAsyncApiJsonAsync(
+    HttpRequest request, HttpResponse response, CancellationToken cancellationToken)
+{
+    response.StatusCode = 200;
+    response.ContentType = "application/json";
+    await response.WriteAsync(_asyncApiJson, cancellationToken);
+}
+```
 
 ### WebSocket protocol (`invocations_ws`)
 
@@ -127,6 +149,56 @@ What the SDK does for you when the registered handler derives from `InvocationWe
 
 The session ID honours `FOUNDRY_AGENT_SESSION_ID` (matching the HTTP `POST /invocations` precedence, minus the query-param override which has no ergonomic equivalent on a long-lived WS connection), falling back to a generated UUID. Both transports on the same container therefore report the same session ID.
 
+### Typed Voice relay
+
+`VoiceHandler` layers immutable Voice Live Bridge Protocol 1.0 messages over the existing `/invocations_ws` transport. The application explicitly sends readiness, responses, output, completion, control, and error messages.
+
+```C# Snippet:Invocations_ReadMe_VoiceHandler
+public class VoiceEchoHandler : VoiceHandler
+{
+    protected override Task OnSessionStartAsync(
+        VoiceSession session,
+        VoiceSessionStartEvent start,
+        CancellationToken cancellationToken) => start.ProtocolVersion == "1.0"
+            ? session.SendAsync(new VoiceSessionReadyMessage(), cancellationToken)
+            : session.SendAsync(
+                new VoiceSessionRejectedMessage("protocol_mismatch", retriable: false),
+                cancellationToken);
+
+    protected override async Task OnUserMessageAsync(
+        VoiceSession session,
+        VoiceUserMessageEvent message,
+        CancellationToken cancellationToken)
+    {
+        var responseId = VoiceIds.CreateResponseId();
+        var itemId = VoiceIds.CreateItemId();
+        var text = string.Concat(message.Content.Select(part => part.Text));
+
+        await session.SendAsync(
+            new VoiceResponseCreatedMessage(responseId, new[] { message.ItemId }),
+            cancellationToken);
+        await session.SendAsync(
+            new VoiceResponseOutputTextDoneMessage(responseId, itemId, $"You said: {text}"),
+            cancellationToken);
+        await session.SendAsync(new VoiceResponseDoneMessage(responseId), cancellationToken);
+    }
+}
+```
+
+```C# Snippet:Invocations_ReadMe_Voice_Startup
+VoiceServer.Run<VoiceEchoHandler>();
+```
+
+The Voice layer is deliberately a typed event relay:
+
+- It decodes one inbound text frame and dispatches one typed callback.
+- `VoiceSession.SendAsync` encodes one outbound message and serializes concurrent writes.
+- It retains no pending inputs, response state, message-ID ledger, timers, callback tasks, history, or reconnect state.
+- Callbacks are awaited in wire order. Start and track long-running model or tool work in application-owned tasks, then return so later barge-in, timeout, and cancellation events can be dispatched.
+- `OnConnectionTerminating` runs once after the session becomes unwritable and before transport close. Use it only to signal cancellation of application-owned work; do not block or send from it.
+
+See [Typed Voice relay](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples/SampleVoice1_TypedRelay.md) for a full sample with application-owned response tasks and cancellation.
+
 #### WebSocket configuration
 
 | Environment variable | Default | Description |
@@ -136,6 +208,58 @@ The session ID honours `FOUNDRY_AGENT_SESSION_ID` (matching the HTTP `POST /invo
 ## Examples
 
 You can familiarise yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Invocations/samples).
+
+### Multi-user session (per-request call ID)
+
+On container protocol `2.0.0` a single agent session can serve **multiple users**. Forwarding the per-request `x-agent-foundry-call-id` on outbound toolbox calls lets the tool server resolve *which* user made this request and act on their behalf. (`x-agent-user-id` is never forwarded; the tool resolves the user from the call ID server-side. Use `context.PlatformContext.UserIdKey` only for the container's own per-user state.)
+
+Register `FoundryCallIdHandler` on the Foundry `HttpClient` so the current request's call ID is echoed on every outbound call:
+
+```C# Snippet:Invocations_ReadMe_MultiUser_Startup
+builder.Services.AddAgentServerCore();
+
+// Any HttpClient with FoundryCallIdHandler echoes the CURRENT request's
+// x-agent-foundry-call-id — never bake one call's ID into static headers.
+builder.Services.AddHttpClient("foundry", c => c.BaseAddress = new Uri(projectEndpoint))
+    .AddHttpMessageHandler<FoundryCallIdHandler>();
+```
+
+```C# Snippet:Invocations_ReadMe_MultiUser
+// One agent session can serve many users. Forwarding the per-request call ID on the
+// outbound toolbox call lets the tool server resolve which user made this request and
+// act on their behalf. x-agent-user-id is never forwarded; use
+// context.PlatformContext.UserIdKey only for the container's own per-user state.
+public class MultiUserHandler : InvocationHandler
+{
+    private readonly IHttpClientFactory _httpClientFactory;
+
+    public MultiUserHandler(IHttpClientFactory httpClientFactory) =>
+        _httpClientFactory = httpClientFactory;
+
+    public override async Task HandleAsync(
+        HttpRequest request, HttpResponse response,
+        InvocationContext context, CancellationToken cancellationToken)
+    {
+        _ = context.PlatformContext.UserIdKey; // container's own per-user state
+
+        // The "foundry" client (registered with FoundryCallIdHandler) echoes this
+        // request's x-agent-foundry-call-id, so the toolbox acts for THIS user.
+        var foundry = _httpClientFactory.CreateClient("foundry");
+        using var toolResponse = await foundry.PostAsJsonAsync(
+            "/toolboxes/github/mcp",
+            new
+            {
+                jsonrpc = "2.0",
+                method = "tools/call",
+                @params = new { name = "list_my_assigned_issues", arguments = new { } },
+            },
+            cancellationToken);
+
+        await response.WriteAsync(
+            await toolResponse.Content.ReadAsStringAsync(cancellationToken), cancellationToken);
+    }
+}
+```
 
 ## Troubleshooting
 

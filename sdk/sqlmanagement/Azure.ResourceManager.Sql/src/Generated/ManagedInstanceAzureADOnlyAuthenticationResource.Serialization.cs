@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Sql
 {
+    /// <summary></summary>
     public partial class ManagedInstanceAzureADOnlyAuthenticationResource : IJsonModel<ManagedInstanceAzureADOnlyAuthenticationData>
     {
-        private static ManagedInstanceAzureADOnlyAuthenticationData s_dataDeserializationInstance;
-        private static ManagedInstanceAzureADOnlyAuthenticationData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<ManagedInstanceAzureADOnlyAuthenticationData> s_dataDeserializationInstance;
 
+        private static IJsonModel<ManagedInstanceAzureADOnlyAuthenticationData> DataDeserializationInstance => s_dataDeserializationInstance ??= new ManagedInstanceAzureADOnlyAuthenticationData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ManagedInstanceAzureADOnlyAuthenticationData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceAzureADOnlyAuthenticationData>)Data).Write(writer, options);
 
-        ManagedInstanceAzureADOnlyAuthenticationData IJsonModel<ManagedInstanceAzureADOnlyAuthenticationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<ManagedInstanceAzureADOnlyAuthenticationData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ManagedInstanceAzureADOnlyAuthenticationData IJsonModel<ManagedInstanceAzureADOnlyAuthenticationData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<ManagedInstanceAzureADOnlyAuthenticationData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<ManagedInstanceAzureADOnlyAuthenticationData>(Data, options, AzureResourceManagerSqlContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         ManagedInstanceAzureADOnlyAuthenticationData IPersistableModel<ManagedInstanceAzureADOnlyAuthenticationData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<ManagedInstanceAzureADOnlyAuthenticationData>(data, options, AzureResourceManagerSqlContext.Default);
 
-        string IPersistableModel<ManagedInstanceAzureADOnlyAuthenticationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<ManagedInstanceAzureADOnlyAuthenticationData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ManagedInstanceAzureADOnlyAuthenticationData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

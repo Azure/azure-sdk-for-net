@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.EdgeActions
         {
             TryGetApiVersion(EdgeActionVersionResource.ResourceType, out string edgeActionVersionApiVersion);
             _edgeActionVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.EdgeActions", EdgeActionVersionResource.ResourceType.Namespace, Diagnostics);
-            _edgeActionVersionsRestClient = new EdgeActionVersions(_edgeActionVersionsClientDiagnostics, Pipeline, Endpoint, edgeActionVersionApiVersion ?? "2025-12-01-preview");
+            _edgeActionVersionsRestClient = new EdgeActionVersions(_edgeActionVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeActionVersionApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.EdgeActions
                 HttpMessage message = _edgeActionVersionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, EdgeActionVersionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 EdgeActionsArmOperation<EdgeActionVersionResource> operation = new EdgeActionsArmOperation<EdgeActionVersionResource>(
-                    new EdgeActionVersionOperationSource(Client),
+                    new EdgeActionVersionResourceOperationSource(Client),
                     _edgeActionVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EdgeActions
                 HttpMessage message = _edgeActionVersionsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, version, EdgeActionVersionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 EdgeActionsArmOperation<EdgeActionVersionResource> operation = new EdgeActionsArmOperation<EdgeActionVersionResource>(
-                    new EdgeActionVersionOperationSource(Client),
+                    new EdgeActionVersionResourceOperationSource(Client),
                     _edgeActionVersionsClientDiagnostics,
                     Pipeline,
                     message.Request,

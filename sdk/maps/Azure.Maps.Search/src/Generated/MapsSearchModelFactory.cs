@@ -61,7 +61,7 @@ namespace Azure.Maps.Search.Models
         /// <param name="address"> The address of the result. </param>
         /// <param name="geocodePoints"> A collection of geocode points that differ in how they were calculated and their suggested use. </param>
         /// <returns> A new <see cref="Models.FeaturesItemProperties"/> instance for mocking. </returns>
-        public static FeaturesItemProperties FeaturesItemProperties(string type = null, ConfidenceEnum? confidence = null, IEnumerable<MatchCodesEnum> matchCodes = null, Address address = null, IEnumerable<GeocodePointsItem> geocodePoints = null)
+        public static FeaturesItemProperties FeaturesItemProperties(string type = null, ConfidenceEnum? confidence = null, IEnumerable<MatchCodesEnum> matchCodes = null, SearchAddress address = null, IEnumerable<GeocodePointsItem> geocodePoints = null)
         {
             matchCodes ??= new List<MatchCodesEnum>();
             geocodePoints ??= new List<GeocodePointsItem>();
@@ -69,7 +69,7 @@ namespace Azure.Maps.Search.Models
             return new FeaturesItemProperties(type, confidence, matchCodes?.ToList(), address, geocodePoints?.ToList());
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Address"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SearchAddress"/>. </summary>
         /// <param name="addressLine"> AddressLine that includes Street Name and Number. </param>
         /// <param name="locality"> locality property. </param>
         /// <param name="neighborhood"> neighborhood property. </param>
@@ -80,12 +80,12 @@ namespace Azure.Maps.Search.Models
         /// <param name="streetName"> The name of the street from formattedAddress. </param>
         /// <param name="streetNumber"> The number in the street, if available, from formattedAddress. </param>
         /// <param name="intersection"> The address of the result. </param>
-        /// <returns> A new <see cref="Models.Address"/> instance for mocking. </returns>
-        public static Address Address(string addressLine = null, string locality = null, string neighborhood = null, IEnumerable<AddressAdminDistrictsItem> adminDistricts = null, string postalCode = null, AddressCountryRegion countryRegion = null, string formattedAddress = null, string streetName = null, string streetNumber = null, Intersection intersection = null)
+        /// <returns> A new <see cref="Models.SearchAddress"/> instance for mocking. </returns>
+        public static SearchAddress SearchAddress(string addressLine = null, string locality = null, string neighborhood = null, IEnumerable<AddressAdminDistrictsItem> adminDistricts = null, string postalCode = null, AddressCountryRegion countryRegion = null, string formattedAddress = null, string streetName = null, string streetNumber = null, SearchIntersection intersection = null)
         {
             adminDistricts ??= new List<AddressAdminDistrictsItem>();
 
-            return new Address(
+            return new SearchAddress(
                 addressLine,
                 locality,
                 neighborhood,
@@ -124,16 +124,16 @@ namespace Azure.Maps.Search.Models
             return new AddressCountryRegion(iso, name);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.Intersection"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SearchIntersection"/>. </summary>
         /// <param name="baseStreet"> Primary street for the location. </param>
         /// <param name="secondaryStreet1"> The first intersecting street. </param>
         /// <param name="secondaryStreet2"> If any, the second intersecting street. </param>
         /// <param name="intersectionType"> Type of intersection. </param>
         /// <param name="displayName"> Complete name of the intersection. </param>
-        /// <returns> A new <see cref="Models.Intersection"/> instance for mocking. </returns>
-        public static Intersection Intersection(string baseStreet = null, string secondaryStreet1 = null, string secondaryStreet2 = null, string intersectionType = null, string displayName = null)
+        /// <returns> A new <see cref="Models.SearchIntersection"/> instance for mocking. </returns>
+        public static SearchIntersection SearchIntersection(string baseStreet = null, string secondaryStreet1 = null, string secondaryStreet2 = null, string intersectionType = null, string displayName = null)
         {
-            return new Intersection(baseStreet, secondaryStreet1, secondaryStreet2, intersectionType, displayName);
+            return new SearchIntersection(baseStreet, secondaryStreet1, secondaryStreet2, intersectionType, displayName);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ErrorDetail"/>. </summary>

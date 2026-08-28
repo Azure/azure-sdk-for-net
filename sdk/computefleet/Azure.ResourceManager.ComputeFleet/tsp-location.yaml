@@ -1,4 +1,6 @@
 directory: specification/azurefleet/resource-manager/Microsoft.AzureFleet/AzureFleet
-commit: 34ea346595eb4fa69845b39b8cbe0b813d31d083
+commit: 8f7fea5ba3635cfc07ea6fca3b4560990b9431dc
 repo: Azure/azure-rest-api-specs
-emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json

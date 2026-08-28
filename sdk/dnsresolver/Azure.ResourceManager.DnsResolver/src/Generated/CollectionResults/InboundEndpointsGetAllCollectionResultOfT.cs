@@ -58,8 +58,8 @@ namespace Azure.ResourceManager.DnsResolver
                     yield break;
                 }
                 InboundEndpointListResult result = InboundEndpointListResult.FromResponse(response);
-                yield return Page<DnsResolverInboundEndpointData>.FromValues((IReadOnlyList<DnsResolverInboundEndpointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DnsResolverInboundEndpointData>.FromValues((IReadOnlyList<DnsResolverInboundEndpointData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

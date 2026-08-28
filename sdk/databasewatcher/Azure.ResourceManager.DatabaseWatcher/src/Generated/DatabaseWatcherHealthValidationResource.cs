@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
         {
             TryGetApiVersion(ResourceType, out string databaseWatcherHealthValidationApiVersion);
             _healthValidationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DatabaseWatcher", ResourceType.Namespace, Diagnostics);
-            _healthValidationsRestClient = new HealthValidations(_healthValidationsClientDiagnostics, Pipeline, Endpoint, databaseWatcherHealthValidationApiVersion ?? "2025-01-02");
+            _healthValidationsRestClient = new HealthValidations(_healthValidationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, databaseWatcherHealthValidationApiVersion ?? "2025-01-02");
             ValidateResourceId(id);
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 HttpMessage message = _healthValidationsRestClient.CreateStartValidationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DatabaseWatcherArmOperation<DatabaseWatcherHealthValidationResource> operation = new DatabaseWatcherArmOperation<DatabaseWatcherHealthValidationResource>(
-                    new DatabaseWatcherHealthValidationOperationSource(Client),
+                    new DatabaseWatcherHealthValidationResourceOperationSource(Client),
                     _healthValidationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.DatabaseWatcher
                 HttpMessage message = _healthValidationsRestClient.CreateStartValidationRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DatabaseWatcherArmOperation<DatabaseWatcherHealthValidationResource> operation = new DatabaseWatcherArmOperation<DatabaseWatcherHealthValidationResource>(
-                    new DatabaseWatcherHealthValidationOperationSource(Client),
+                    new DatabaseWatcherHealthValidationResourceOperationSource(Client),
                     _healthValidationsClientDiagnostics,
                     Pipeline,
                     message.Request,

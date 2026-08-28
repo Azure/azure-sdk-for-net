@@ -1,23 +1,22 @@
 # Azure.Search.Documents — Architecture Reference
 
 ## Contents
-- [Source layout](#source-layout)
-- [Code generation](#code-generation)
-- [Generated vs. custom partial classes](#generated-vs-custom-partial-classes)
-- [Public client types](#public-client-types)
+- [Source Layout](#source-layout)
+- [Code Generation](#code-generation)
+- [Generated vs. Custom (Partial Classes)](#generated-vs-custom-partial-classes)
+- [Public Client Types](#public-client-types)
 - [Namespaces](#namespaces)
-- [Service version management](#service-version-management)
-- [ApiCompat and public API surface](#apicompat-and-public-api-surface)
-- [Backwards compatibility for removed API version types](#backwards-compatibility-for-removed-api-version-types)
-- [Checking previous releases via git tags](#checking-previous-releases-via-git-tags)
-- [Known retained types](#known-retained-types)
+- [Service Version Management](#service-version-management)
+- [ApiCompat and Public API Surface](#apicompat-and-public-api-surface)
+- [Backwards Compatibility for Removed API Version Types](#backwards-compatibility-for-removed-api-version-types)
 - [SearchModelFactory](#searchmodelfactory)
-- [SearchOptions architecture](#searchoptions-architecture)
-- [Custom deserialization sites](#custom-deserialization-sites)
-- [SearchDocument (dynamic documents)](#searchdocument-dynamic-documents)
-- [Buffered indexing](#buffered-indexing)
-- [Key supporting files](#key-supporting-files)
+- [SearchOptions Architecture](#searchoptions-architecture)
+- [Custom Deserialization Sites](#custom-deserialization-sites)
+- [SearchDocument (Dynamic Documents)](#searchdocument-dynamic-documents)
+- [Buffered Indexing](#buffered-indexing)
+- [Key Supporting Files](#key-supporting-files)
 - [Tests](#tests)
+- [Build Properties](#build-properties)
 
 ---
 
@@ -119,7 +118,7 @@ For customization attributes (`CodeGenType`, `CodeGenMember`, `CodeGenSuppress`)
 
 ## Service Version Management
 
-`SearchClientOptions.cs` (custom) defines the `ServiceVersion` enum. Five locations must stay in sync:
+`SearchClientOptions.cs` (custom) defines the `ServiceVersion` enum. Six locations must stay in sync:
 
 ```csharp
 // 1. Enum member
@@ -130,18 +129,56 @@ public enum ServiceVersion
     V2024_07_01 = 3,
     V2025_09_01 = 4,
     V2026_04_01 = 5,
+    // Preview versions are added here for beta releases and removed for GA.
+    // V2026_05_01_Preview = 6,
 }
 
-// 2. LatestVersion constant
+// 2. LatestVersion constant — points to latest GA or preview depending on release
 internal const ServiceVersion LatestVersion = ServiceVersion.V2026_04_01;
 
-// 3. Validate() — throws for invalid values
-// 4. ToVersionString() — enum → "2026-04-01"
-// 5. ToServiceVersion() — "2026-04-01" → enum (used by recordings)
+// 3. TryGetServiceVersion() — version string → enum
+// 4. Validate() — throws for invalid values
+// 5. ToVersionString() — enum → "2026-04-01"
+// 6. ToServiceVersion() — "2026-04-01" → enum (used by recordings)
 ```
 
-> **Rule**: Missing a switch case causes a runtime `ArgumentOutOfRangeException`, not a compile error. Always update all five.
-> For preview releases: only the latest preview version. For GA: no preview versions.
+> **Rule**: Missing a switch case causes a runtime `ArgumentOutOfRangeException`, not a compile error. Always update all six.
+> - **GA releases**: Only GA versions in the enum. Remove any preview versions and their switch arms.
+> - **Preview releases**: Add the latest preview version. Keep all GA versions.
+
+### Preview Tests
+
+Preview-specific tests live in dedicated `*.Preview.cs` files with their own `[ClientTestFixture]` targeting the preview version. Tag preview test classes and methods with `// search-preview:<api-version>` markers.
+
+**Detection:** Run `Find-PreviewFeatures.ps1` from `.github/skills/search-documents/scripts/` to list all preview markers across src and tests.
+
+#### Adding preview tests
+
+Create a `*.Preview.cs` file with its own `[ClientTestFixture(ServiceVersion.V<preview>)]` class:
+
+```csharp
+// SearchTests.Preview.cs
+// search-preview:2026-05-01-preview {
+namespace Azure.Search.Documents.Tests
+{
+    [ClientTestFixture(SearchClientOptions.ServiceVersion.V2026_05_01_Preview)]
+    public class SearchPreviewTests : SearchTestBase
+    {
+        public SearchPreviewTests(bool async, SearchClientOptions.ServiceVersion serviceVersion)
+            : base(async, serviceVersion, null) { }
+
+        // Preview-specific test methods here
+    }
+}
+// search-preview:2026-05-01-preview }
+```
+
+#### Promoting preview tests to GA
+
+When the preview version becomes GA:
+1. Remove `// search-preview:` markers.
+2. Merge test methods into the main test class or keep as a separate file with the GA version in `[ClientTestFixture]`.
+3. Remove the preview `ServiceVersion` enum value from `SearchClientOptions.cs`.
 
 ---
 
@@ -179,6 +216,7 @@ git show Azure.Search.Documents_11.7.0:sdk/search/Azure.Search.Documents/api/Azu
 - Type does not appear → deletion is safe.
 - Same logic can be used to check beta releases, but remember a type does not need to be restored if it ONLY exists in preview/beta, but MUST be restored if it is in GA.
 
+---
 
 ## SearchModelFactory
 
@@ -197,41 +235,99 @@ The custom file uses `[CodeGenType("DocumentsModelFactory")]`. See [customizatio
 
 `SearchOptions` uses `[CodeGenType("SearchRequest")]` to map onto the generated flat request model, but the public API groups related properties into two sub-objects: `SemanticSearchOptions` and `VectorSearchOptions`. Private `[CodeGenMember]` redirector properties bridge between them — the generated serializer reads/writes the redirectors, which transparently delegate to the sub-objects.
 
-### Why this matters
+### Why This Matters
 
 The generated serializer accesses properties by `[CodeGenMember]` name. If a new generated property is left as an auto-property instead of being routed through the correct sub-object, it will serialize correctly but be **invisible to users** (they'd need to set `searchOptions.QueryLanguage` instead of `searchOptions.SemanticSearch.QueryLanguage`), breaking the public API design.
 
-### Property routing rules
+### Property Wiring Diagram
+
+```
+Generated constructor / serialization
+  │
+  ├── QueryLanguage ──────► [CodeGenMember] bridge property ──► SemanticSearch.QueryLanguage
+  ├── QuerySpeller ───────► [CodeGenMember] bridge property ──► SemanticSearch.QuerySpeller
+  ├── QueryRewrites ──────► [CodeGenMember] bridge property ──► SemanticSearch.QueryRewrites
+  ├── SemanticFields ─────► [CodeGenMember] bridge property ──► SemanticSearch.SemanticFields
+  ├── SemanticQuery ──────► [CodeGenMember] bridge property ──► SemanticSearch.SemanticQuery
+  ├── SemanticConfig ─────► [CodeGenMember] bridge property ──► SemanticSearch.SemanticConfigurationName
+  ├── SemanticErrorMode ──► [CodeGenMember] bridge property ──► SemanticSearch.ErrorMode
+  ├── QueryAnswerRaw ─────► [CodeGenMember] bridge property ──► SemanticSearch.QueryAnswer.QueryAnswerRaw
+  ├── QueryCaptionRaw ────► [CodeGenMember] bridge property ──► SemanticSearch.QueryCaption.QueryCaptionRaw
+  ├── VectorQueries ──────► private bridge property ──────────► VectorSearch.Queries
+  ├── VectorFilterMode ───► [CodeGenMember] bridge property ──► VectorSearch.FilterMode
+  └── HybridSearch ───────► [CodeGenMember] bridge property ──► VectorSearch.HybridSearch
+```
+
+Users interact with `options.SemanticSearch.QueryLanguage` etc. The generated code interacts with the flat `QueryLanguage` property. The bridge properties translate between the two.
+
+### Property Routing Rules
 
 | If the new generated property is... | Route it to | Mechanism |
 |---|---|---|
 | Related to semantic search (language, speller, answers, captions, rewrites, semantic fields, semantic config, error mode, max wait, semantic query) | `SemanticSearchOptions` | Private `[CodeGenMember]` redirector in `Options/SearchOptions.cs` → public property on `SemanticSearchOptions` |
 | Related to vector/hybrid search (vector queries, filter mode, hybrid search config) | `VectorSearchOptions` | Private `[CodeGenMember]` redirector in `Options/SearchOptions.cs` → public property on `VectorSearchOptions` |
+| Typed as `XxxType?` but the doc comment shows a pipe-delimited compound format (e.g. `extractive\|count-5`, `generative\|count-3`) | Wrapper class on the appropriate sub-object | See [customization.md → Compound / magic-string properties](./customization.md#compound--magic-string-properties) |
 | A comma-separated string that users should see as a list | `SearchOptions` itself | Public `IList<string>` + private `[CodeGenMember]` `string` Raw accessor using `CommaJoin()`/`CommaSplit()` |
 | A simple property with acceptable generated name/type | `SearchOptions` itself | No custom code needed — the generated auto-property is the public API |
 | A simple property that needs renaming | `SearchOptions` itself | `[CodeGenMember("GeneratedName")]` on a public property in `Options/SearchOptions.cs` |
 
-### Adding a property to a sub-object
+### Adding a New Property — Decision Tree
 
-All four steps are required — skipping any one creates a silent bug:
+When a new API version adds a property to the generated `SearchOptions`:
 
-1. Add the public property to the sub-object class (`Options/SemanticSearchOptions.cs` or `Options/VectorSearchOptions.cs`).
-2. Add a private redirector in `Options/SearchOptions.cs`:
+1. **Add a public property** on `SemanticSearchOptions` or `VectorSearchOptions` (or create a new options class if it doesn't fit either).
+2. **Add a private bridge property** in `Options/SearchOptions.cs`:
    ```csharp
    [CodeGenMember("GeneratedPropertyName")]
-   private PropertyType PropertyName
+   private PropertyType GeneratedPropertyName
    {
-       get { return SubObject?.PropertyName; }
-       set { if (SubObject != null) { SubObject.PropertyName = value; } }
+       get { return SemanticSearch?.PropertyName; }
+       set
+       {
+           if (value != null)
+           {
+               SemanticSearch ??= new SemanticSearchOptions();
+           }
+           if (SemanticSearch != null)
+           {
+               SemanticSearch.PropertyName = value;
+           }
+       }
    }
    ```
-3. Update the **internal constructor** in `Options/SearchOptions.cs`:
+3. **Update the internal constructor** in `Options/SearchOptions.cs`:
    - Add the parameter (match the generated constructor's signature).
    - Add the parameter to the null-check that decides whether to create the sub-object.
    - Assign via the redirector.
-4. **Regenerate** so the generated `SearchOptions.cs` drops the auto-property (the `[CodeGenMember]` claim causes the generator to skip it).
+4. **Regenerate** so the generated `SearchOptions.cs` drops the auto-property (the `[CodeGenMember]` claim causes the generator to skip it). (Note: Do not regenerate code repeatedly, as this is a time consuming process)
 
-### Two constructors — different callers
+The **lazy initialization** (`??= new ...()`) in the setter is critical: the generated internal constructor assigns these properties before `SemanticSearch`/`VectorSearch` are initialized. Without it, values from deserialization are silently dropped.
+
+### Verifying Correctness
+
+After adding a wiring property, verify the following:
+
+1. **Build `src/`** — no CS0102 (duplicate member) or CS0103 (name not found) errors.
+2. **Build `tests/`** — no downstream breaks.
+3. **Check the generated constructor** (`Generated/Models/SearchOptions.cs`) assigns the property.
+4. **Check the generated serialization** (`Generated/Models/SearchOptions.Serialization.cs`) reads/writes the property. Serialization uses the property getter, so your bridge getter must return the correct value.
+5. **Check the `Copy` method** — since `Copy` assigns `SemanticSearch` and `VectorSearch` by reference, all bridge properties are automatically included. No update needed unless you create a new top-level options object.
+
+### Checking for Missing Wiring After Regeneration
+
+Compare the generated `SearchOptions.cs` properties against the custom bridge properties:
+
+```powershell
+# Properties defined in the generated file (public auto-properties)
+Select-String 'public .+ \{ get; \}' src/Generated/Models/SearchOptions.cs
+
+# Bridge properties defined in custom code
+Select-String '\[CodeGenMember\(' src/Options/SearchOptions.cs
+```
+
+Any generated public property that does NOT have a corresponding `[CodeGenMember]` bridge — and is not one of the flat properties handled directly (like `IncludeTotalCount`, `Filter`, etc.) — is a wiring gap. It means the property will exist on the generated class but won't be accessible through the user-facing `SemanticSearch`/`VectorSearch` objects.
+
+### Two Constructors — Different Callers
 
 The generated and hand-written files each define an internal constructor with nearly the same parameters. They serve different call sites:
 
@@ -242,7 +338,7 @@ The generated and hand-written files each define an internal constructor with ne
 
 When the generated constructor gains a new parameter, the hand-written constructor must gain the same parameter and route it through the correct redirector.
 
-### `Copy()` and continuation tokens
+### Copy() and Continuation Tokens
 
 `Copy()` in `Options/SearchOptions.cs` transfers state between instances for continuation token support. It copies **public** properties only (`SemanticSearch`, `VectorSearch`, `Facets`, etc.). When adding a new direct public property, add it to `Copy()`.
 
@@ -259,7 +355,7 @@ Several model types have **hand-written deserialization** that bypasses the gene
 | `Models/FacetResult.cs` | `DeserializeFacetResult(JsonElement, ModelReaderWriterOptions)` | `FacetResult` | Overrides the generated deserializer. New constructor params = new JSON properties to parse. |
 | `Models/SearchResults.cs` | `DeserializeEnvelope(...)` facets loop | `FacetResult` (inline) | Parses facets from the search response envelope. Same constructor — same new fields. |
 
-### Update pattern
+### Update Pattern
 
 When `FacetResult` (or any model with a custom deserializer) gains new constructor parameters:
 
@@ -269,7 +365,12 @@ When `FacetResult` (or any model with a custom deserializer) gains new construct
 4. **Update `SearchResults.cs`** inline facet construction to also parse and pass the new fields.
 5. Do NOT use `null`/`default` as a shortcut — the data will exist in service responses and must be deserialized.
 
-### How to detect new parameters after regen
+**Checklist after adding a new property to a model with custom deserialization:**
+1. Check `Generated/Models/<Type>.cs` for new properties.
+2. Check the custom partial's `Deserialize*` method — does it parse the new JSON keys?
+3. Check `SearchModelFactory` — does the custom factory method accept the new parameters? If not, add a new overload and mark the old one `[EditorBrowsable(Never)]`.
+
+### How to Detect New Parameters After Regen
 
 ```powershell
 # Find custom files that construct model types directly (non-generated call sites)
@@ -310,7 +411,48 @@ Get-ChildItem -Path src -Filter "*.cs" -Recurse -Exclude "Generated*" |
 
 ## Tests
 
-Tests use `Azure.Core.TestFramework`. Live tests run against a real service; recorded tests play back from `assets.json`.
+Tests use `Azure.Core.TestFramework`. Live tests run against a real service; recorded tests play back from `assets.json`. For detailed coverage tiers, test type selection, and post-regen test workflows, see [testing.md](./testing.md).
+
+### Service Version Test Matrix
+
+The `[ClientTestFixture]` attribute is declared **only on `SearchTestBase`** with the latest GA and latest preview versions. All derived test classes inherit it automatically via NUnit attribute inheritance (`Inherited = true`). This means when a new API version is added, **only `SearchTestBase` needs to be updated**.
+
+```csharp
+// SearchTestBase.cs — single source of truth for test versions
+[ClientTestFixture(
+    SearchClientOptions.ServiceVersion.V2026_04_01,          // latest GA
+    SearchClientOptions.ServiceVersion.V2026_05_01_Preview)] // latest preview
+public abstract partial class SearchTestBase : RecordedTestBase<SearchTestEnvironment>
+```
+
+**Do NOT** add `[ClientTestFixture]` to derived classes unless they need a *different* set of versions (e.g., testing only against older versions). If a derived class declares its own `[ClientTestFixture]`, it **shadows** the base class's attribute.
+
+### Gating Tests to Specific Versions
+
+Use `[ServiceVersion]` to restrict individual tests or classes to a version range:
+
+```csharp
+// Runs only on V2026_04_01 and later (skipped on older versions in the fixture)
+[ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
+public void TestNewFeature() { ... }
+
+// Runs only on preview versions
+[ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_05_01_Preview)]
+public void TestPreviewOnlyFeature() { ... }
+
+// Class-level: all tests in the class require V2026_04_01+
+[ServiceVersion(Min = SearchClientOptions.ServiceVersion.V2026_04_01)]
+public partial class Sample01_HelloWorld : SearchTestBase { ... }
+```
+
+### Updating Versions After Regeneration
+
+When a new `ServiceVersion` enum value is added to `SearchClientOptions`:
+1. Update `SearchTestBase`'s `[ClientTestFixture]` — set the latest GA and latest preview.
+2. No changes needed in derived test classes (they inherit).
+3. Add `[ServiceVersion(Min = ...)]` to any tests that use features only available in the new version.
+
+### Test Directory Structure
 
 ```
 tests/
@@ -334,4 +476,3 @@ tests/
 | `ApiCompatVersion` | Set to last GA version — enforces no binary-breaking changes |
 | `DisableEnhancedAnalysis` | `true` |
 | `AotCompatOptOut` | `true` |
-| `AZURE_SEARCH_PREVIEW` | Defined when `<Version>` contains `beta` — gates preview API surface at compile time |

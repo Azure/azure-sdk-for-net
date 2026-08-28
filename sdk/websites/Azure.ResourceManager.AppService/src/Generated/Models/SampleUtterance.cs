@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Sample utterance.
-    /// Serialized Name: SampleUtterance
-    /// </summary>
+    /// <summary> Sample utterance. </summary>
     public partial class SampleUtterance
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SampleUtterance"/>. </summary>
         public SampleUtterance()
@@ -55,43 +24,27 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="SampleUtterance"/>. </summary>
-        /// <param name="text">
-        /// Text attribute of sample utterance.
-        /// Serialized Name: SampleUtterance.text
-        /// </param>
-        /// <param name="links">
-        /// Links attribute of sample utterance.
-        /// Serialized Name: SampleUtterance.links
-        /// </param>
-        /// <param name="qid">
-        /// Question id of sample utterance (for stackoverflow questions titles).
-        /// Serialized Name: SampleUtterance.qid
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SampleUtterance(string text, IList<string> links, string qid, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="text"> Text attribute of sample utterance. </param>
+        /// <param name="links"> Links attribute of sample utterance. </param>
+        /// <param name="qid"> Question id of sample utterance (for stackoverflow questions titles). </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SampleUtterance(string text, IList<string> links, string qid, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Text = text;
             Links = links;
             Qid = qid;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// Text attribute of sample utterance.
-        /// Serialized Name: SampleUtterance.text
-        /// </summary>
+        /// <summary> Text attribute of sample utterance. </summary>
         [WirePath("text")]
         public string Text { get; set; }
-        /// <summary>
-        /// Links attribute of sample utterance.
-        /// Serialized Name: SampleUtterance.links
-        /// </summary>
+
+        /// <summary> Links attribute of sample utterance. </summary>
         [WirePath("links")]
         public IList<string> Links { get; }
-        /// <summary>
-        /// Question id of sample utterance (for stackoverflow questions titles).
-        /// Serialized Name: SampleUtterance.qid
-        /// </summary>
+
+        /// <summary> Question id of sample utterance (for stackoverflow questions titles). </summary>
         [WirePath("qid")]
         public string Qid { get; set; }
     }

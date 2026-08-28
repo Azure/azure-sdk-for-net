@@ -106,6 +106,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("semanticConfigurationName"u8);
                 writer.WriteStringValue(SemanticConfigurationName);
             }
+            if (Optional.IsDefined(BaseFilter))
+            {
+                writer.WritePropertyName("baseFilter"u8);
+                writer.WriteStringValue(BaseFilter);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -152,6 +157,7 @@ namespace Azure.Search.Documents.Indexes.Models
             IList<SearchIndexFieldReference> sourceDataFields = default;
             IList<SearchIndexFieldReference> searchFields = default;
             string semanticConfigurationName = default;
+            string baseFilter = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -193,12 +199,23 @@ namespace Azure.Search.Documents.Indexes.Models
                     semanticConfigurationName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("baseFilter"u8))
+                {
+                    baseFilter = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SearchIndexKnowledgeSourceParameters(searchIndexName, sourceDataFields ?? new ChangeTrackingList<SearchIndexFieldReference>(), searchFields ?? new ChangeTrackingList<SearchIndexFieldReference>(), semanticConfigurationName, additionalBinaryDataProperties);
+            return new SearchIndexKnowledgeSourceParameters(
+                searchIndexName,
+                sourceDataFields ?? new ChangeTrackingList<SearchIndexFieldReference>(),
+                searchFields ?? new ChangeTrackingList<SearchIndexFieldReference>(),
+                semanticConfigurationName,
+                baseFilter,
+                additionalBinaryDataProperties);
         }
     }
 }

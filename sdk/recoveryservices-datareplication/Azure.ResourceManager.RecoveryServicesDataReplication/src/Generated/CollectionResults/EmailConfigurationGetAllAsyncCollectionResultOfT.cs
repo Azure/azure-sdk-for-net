@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                     yield break;
                 }
                 EmailConfigurationModelListResult result = EmailConfigurationModelListResult.FromResponse(response);
-                yield return Page<DataReplicationEmailConfigurationData>.FromValues((IReadOnlyList<DataReplicationEmailConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataReplicationEmailConfigurationData>.FromValues((IReadOnlyList<DataReplicationEmailConfigurationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

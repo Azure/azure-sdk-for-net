@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
         {
             TryGetApiVersion(EdgeSolutionTemplateResource.ResourceType, out string edgeSolutionTemplateApiVersion);
             _solutionTemplatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.WorkloadOrchestration", EdgeSolutionTemplateResource.ResourceType.Namespace, Diagnostics);
-            _solutionTemplatesRestClient = new SolutionTemplates(_solutionTemplatesClientDiagnostics, Pipeline, Endpoint, edgeSolutionTemplateApiVersion ?? "2025-06-01");
+            _solutionTemplatesRestClient = new SolutionTemplates(_solutionTemplatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, edgeSolutionTemplateApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _solutionTemplatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, solutionTemplateName, EdgeSolutionTemplateData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 WorkloadOrchestrationArmOperation<EdgeSolutionTemplateResource> operation = new WorkloadOrchestrationArmOperation<EdgeSolutionTemplateResource>(
-                    new EdgeSolutionTemplateOperationSource(Client),
+                    new EdgeSolutionTemplateResourceOperationSource(Client),
                     _solutionTemplatesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.WorkloadOrchestration
                 HttpMessage message = _solutionTemplatesRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, solutionTemplateName, EdgeSolutionTemplateData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 WorkloadOrchestrationArmOperation<EdgeSolutionTemplateResource> operation = new WorkloadOrchestrationArmOperation<EdgeSolutionTemplateResource>(
-                    new EdgeSolutionTemplateOperationSource(Client),
+                    new EdgeSolutionTemplateResourceOperationSource(Client),
                     _solutionTemplatesClientDiagnostics,
                     Pipeline,
                     message.Request,

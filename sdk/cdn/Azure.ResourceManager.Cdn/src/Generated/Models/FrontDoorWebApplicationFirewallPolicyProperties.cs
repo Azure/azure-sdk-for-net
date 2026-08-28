@@ -30,16 +30,16 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> Properties of the web application firewall policy. </param>
         /// <param name="eTag"> Gets a unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="sku"> The pricing tier of web application firewall policy. Defaults to Classic_AzureFrontDoor if not specified. </param>
-        internal FrontDoorWebApplicationFirewallPolicyProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, WebApplicationFirewallPolicyProperties properties, ETag? eTag, CdnSku sku) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FrontDoorWebApplicationFirewallPolicyProperties(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, WebApplicationFirewallPolicyProperties properties, ETag? eTag, CdnSku sku, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
             ETag = eTag;
             Sku = sku;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Properties of the web application firewall policy. </summary>

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(BillingBenefitsReservationOrderAliasResource.ResourceType, out string billingBenefitsReservationOrderAliasApiVersion);
             _reservationOrderAliasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", BillingBenefitsReservationOrderAliasResource.ResourceType.Namespace, Diagnostics);
-            _reservationOrderAliasRestClient = new ReservationOrderAlias(_reservationOrderAliasClientDiagnostics, Pipeline, Endpoint, billingBenefitsReservationOrderAliasApiVersion ?? "2025-12-01-preview");
+            _reservationOrderAliasRestClient = new ReservationOrderAlias(_reservationOrderAliasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingBenefitsReservationOrderAliasApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _reservationOrderAliasRestClient.CreateCreateRequest(reservationOrderAliasName, BillingBenefitsReservationOrderAliasCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<BillingBenefitsReservationOrderAliasResource> operation = new BillingBenefitsArmOperation<BillingBenefitsReservationOrderAliasResource>(
-                    new BillingBenefitsReservationOrderAliasOperationSource(Client),
+                    new BillingBenefitsReservationOrderAliasResourceOperationSource(Client),
                     _reservationOrderAliasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _reservationOrderAliasRestClient.CreateCreateRequest(reservationOrderAliasName, BillingBenefitsReservationOrderAliasCreateOrUpdateContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<BillingBenefitsReservationOrderAliasResource> operation = new BillingBenefitsArmOperation<BillingBenefitsReservationOrderAliasResource>(
-                    new BillingBenefitsReservationOrderAliasOperationSource(Client),
+                    new BillingBenefitsReservationOrderAliasResourceOperationSource(Client),
                     _reservationOrderAliasClientDiagnostics,
                     Pipeline,
                     message.Request,

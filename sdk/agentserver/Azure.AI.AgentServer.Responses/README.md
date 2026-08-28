@@ -213,11 +213,11 @@ Every response includes an `x-request-id` header (set by Core's `RequestIdMiddle
 
 All error responses (4xx/5xx) include the `x-platform-error-source` header classifying the error origin as `user`, `platform`, or `upstream`. See the [Core README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Core#error-source-classification) for the full classification table.
 
-### Chat isolation and session ID
+### Platform context headers and session ID
 
-When the platform injects `x-agent-user-isolation-key` and `x-agent-chat-isolation-key` request headers, the library forwards them to the storage provider so that responses are scoped to the correct tenant and conversation. The resolved session ID is returned on every response via the `x-agent-session-id` header.
+When the platform injects `x-agent-user-id` and `x-agent-foundry-call-id` request headers, the library reads them into the platform context and forwards the per-request call ID to the storage provider so that responses resolve the correct caller context server-side. The resolved session ID is returned on every response via the `x-agent-session-id` header.
 
-Handlers can access the isolation context through `ResponseContext.Isolation` for custom partitioning logic.
+Handlers can access the platform context through `ResponseContext.PlatformContext` for custom partitioning logic.
 
 ### Persistence resilience
 
@@ -236,6 +236,63 @@ All service instances registered via `AddResponsesServer()` are thread-safe. Han
 ## Examples
 
 You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/agentserver/Azure.AI.AgentServer.Responses/samples).
+
+### Multi-user session (per-request call ID)
+
+On container protocol `2.0.0` a single agent session can serve **multiple users**. Forwarding the per-request `x-agent-foundry-call-id` on outbound toolbox calls lets the tool server resolve *which* user made this request and act on their behalf — so user A's and user B's requests to the same session each get a user-scoped result. (`x-agent-user-id` is never forwarded; the tool resolves the user from the call ID server-side. Use `context.PlatformContext.UserIdKey` only for the container's own per-user state.)
+
+Register `FoundryCallIdHandler` on the Foundry `HttpClient` so the current request's call ID is echoed on every outbound call:
+
+```C# Snippet:Responses_ReadMe_MultiUser_Startup
+builder.Services.AddAgentServerCore();
+
+// Any HttpClient with FoundryCallIdHandler echoes the CURRENT request's
+// x-agent-foundry-call-id — never bake one call's ID into static headers.
+builder.Services.AddHttpClient("foundry", c => c.BaseAddress = new Uri(projectEndpoint))
+    .AddHttpMessageHandler<FoundryCallIdHandler>();
+```
+
+```C# Snippet:Responses_ReadMe_MultiUser
+// One agent session can serve many users. Forwarding the per-request call ID on the
+// outbound toolbox call lets the tool server resolve which user made this request and
+// act on their behalf. x-agent-user-id is never forwarded; use
+// context.PlatformContext.UserIdKey only for the container's own per-user state.
+public class MultiUserHandler : ResponseHandler
+{
+    private readonly IHttpClientFactory _httpClientFactory;
+
+    public MultiUserHandler(IHttpClientFactory httpClientFactory) =>
+        _httpClientFactory = httpClientFactory;
+
+    public override IAsyncEnumerable<ResponseStreamEvent> CreateAsync(
+        CreateResponse request,
+        ResponseContext context,
+        CancellationToken cancellationToken)
+    {
+        return new TextResponse(context, request,
+            createText: async ct =>
+            {
+                var query = await context.GetInputTextAsync(cancellationToken: ct);
+
+                // The "foundry" client is registered with FoundryCallIdHandler, so this
+                // request's x-agent-foundry-call-id rides the toolbox tools/call.
+                var foundry = _httpClientFactory.CreateClient("foundry");
+                using var resp = await foundry.PostAsJsonAsync(
+                    "/toolboxes/github/mcp",
+                    new
+                    {
+                        jsonrpc = "2.0",
+                        method = "tools/call",
+                        @params = new { name = "list_my_assigned_issues", arguments = new { filter = query } },
+                    },
+                    ct);
+
+                // The toolbox resolved the caller from the call ID and returned THIS user's issues.
+                return await resp.Content.ReadAsStringAsync(ct);
+            });
+    }
+}
+```
 
 ## Troubleshooting
 

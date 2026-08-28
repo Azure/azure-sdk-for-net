@@ -1,0 +1,89 @@
+name: azsdk-common-pipeline-fixer-trigger-eval
+description: Trigger and anti-trigger tests for the azsdk-common-pipeline-fixer skill
+type: capability
+
+environment: azsdk-mcp-mock
+
+tags:
+  area: azsdk-common-pipeline-fixer
+  type: ci-gate
+
+config:
+  runs: 1
+  # Stimuli with a resolvable build reference (URL or build ID) make the agent
+  # run the full analyze→fix→verify workflow (~90-180s under claude-opus-4.6),
+  # so the per-stimulus cap matches the Vally scenario evals (5m). Non-build-ref
+  # routing prompts still complete in ~10-20s.
+  timeout: "5m"
+  model: claude-opus-4.6
+  executor: copilot-sdk
+
+scoring:
+  threshold: 0.8
+
+stimuli:
+  # Should trigger
+  - name: trigger-fix-pipeline-failure
+    prompt: "fix the pipeline failure for build 6447834"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-pipeline-fixer"]
+  - name: trigger-auto-fix-failing-tests
+    prompt: "My Azure SDK PR has failing tests in CI: https://dev.azure.com/azure-sdk/internal/_build/results?buildId=6447834. Can you fix them?"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-pipeline-fixer"]
+  - name: trigger-resolve-pipeline-failure
+    prompt: "resolve my Azure SDK pipeline failure"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-pipeline-fixer"]
+  - name: trigger-fix-build-error
+    prompt: "fix the build error in my Azure SDK CI"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-pipeline-fixer"]
+  - name: trigger-fix-mypy-type-error
+    prompt: "My Python SDK CI is failing with a mypy type error: https://dev.azure.com/azure-sdk/internal/_build/results?buildId=6447834. Can you fix it?"
+    graders:
+      - type: skill-invocation
+        config:
+          required: ["azsdk-common-pipeline-fixer"]
+
+  # Should NOT trigger
+  # Analysis-only prompts belong to azsdk-common-pipeline-analysis; this
+  # skill applies + verifies fixes and must stay out of pure-diagnosis requests.
+  - name: anti-trigger-analyze-only
+    prompt: "what went wrong in my pipeline build 12345? just tell me, don't fix anything"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-pipeline-fixer"]
+  - name: anti-trigger-why-is-ci-red
+    prompt: "why is my CI red? just diagnose the root cause, do not change any code"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-pipeline-fixer"]
+  - name: anti-trigger-write-a-typespec-definition
+    prompt: "write a TypeSpec definition"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-pipeline-fixer"]
+  - name: anti-trigger-release-sdk-package
+    prompt: "how do I release an SDK package"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-pipeline-fixer"]
+  - name: anti-trigger-create-a-new-skill
+    prompt: "create a new skill"
+    graders:
+      - type: skill-invocation
+        config:
+          disallowed: ["azsdk-common-pipeline-fixer"]

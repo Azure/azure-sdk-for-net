@@ -28,14 +28,16 @@ namespace Azure.ResourceManager.Qumulo.Models
         /// <param name="marketplaceDetails"> Marketplace details. </param>
         /// <param name="userDetails"> User Details. </param>
         /// <param name="delegatedSubnetId"> Delegated subnet id for Vnet injection. </param>
+        /// <param name="performanceTier"> Pre-Provisioned Performance of the Resource. </param>
         /// <param name="clusterLoginUri"></param>
         /// <param name="privateIPs"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FileSystemResourceUpdateProperties(MarketplaceDetails marketplaceDetails, QumuloUserDetails userDetails, ResourceIdentifier delegatedSubnetId, Uri clusterLoginUri, IList<string> privateIPs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FileSystemResourceUpdateProperties(MarketplaceDetails marketplaceDetails, QumuloUserDetails userDetails, ResourceIdentifier delegatedSubnetId, string performanceTier, Uri clusterLoginUri, IList<string> privateIPs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MarketplaceDetails = marketplaceDetails;
             UserDetails = userDetails;
             DelegatedSubnetId = delegatedSubnetId;
+            PerformanceTier = performanceTier;
             ClusterLoginUri = clusterLoginUri;
             PrivateIPs = privateIPs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -49,6 +51,9 @@ namespace Azure.ResourceManager.Qumulo.Models
 
         /// <summary> Delegated subnet id for Vnet injection. </summary>
         public ResourceIdentifier DelegatedSubnetId { get; set; }
+
+        /// <summary> Pre-Provisioned Performance of the Resource. </summary>
+        public string PerformanceTier { get; set; }
 
         /// <summary> User Email. </summary>
         public string UserDetailsEmail

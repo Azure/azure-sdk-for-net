@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Dell.Storage
         {
             TryGetApiVersion(DellFileSystemResource.ResourceType, out string dellFileSystemApiVersion);
             _fileSystemsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dell.Storage", DellFileSystemResource.ResourceType.Namespace, Diagnostics);
-            _fileSystemsRestClient = new FileSystems(_fileSystemsClientDiagnostics, Pipeline, Endpoint, dellFileSystemApiVersion ?? "2025-03-21");
+            _fileSystemsRestClient = new FileSystems(_fileSystemsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dellFileSystemApiVersion ?? "2025-03-21");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Dell.Storage
                 HttpMessage message = _fileSystemsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filesystemName, DellFileSystemData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 StorageArmOperation<DellFileSystemResource> operation = new StorageArmOperation<DellFileSystemResource>(
-                    new DellFileSystemOperationSource(Client),
+                    new DellFileSystemResourceOperationSource(Client),
                     _fileSystemsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Dell.Storage
                 HttpMessage message = _fileSystemsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, filesystemName, DellFileSystemData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 StorageArmOperation<DellFileSystemResource> operation = new StorageArmOperation<DellFileSystemResource>(
-                    new DellFileSystemOperationSource(Client),
+                    new DellFileSystemResourceOperationSource(Client),
                     _fileSystemsClientDiagnostics,
                     Pipeline,
                     message.Request,

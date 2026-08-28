@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Globalization;
 using Azure.Storage.Blobs.Models;
 
 namespace Azure.Storage.Blobs
@@ -12,9 +11,6 @@ namespace Azure.Storage.Blobs
     /// </summary>
     internal class BlobErrors : Errors
     {
-        public static ArgumentOutOfRangeException BlobConditionsMustBeDefault(params string[] conditions) =>
-            new ArgumentOutOfRangeException($"The {string.Join(" and ", conditions)} conditions must have their default values because they are ignored by the blob service");
-
         public static InvalidOperationException BlobOrContainerMissing(string leaseClient,
             string blobBaseClient,
             string blobContainerClient) =>
@@ -39,7 +35,20 @@ namespace Azure.Storage.Blobs
             }
         }
 
-        public static ArgumentException ParsingFullHttpRangeFailed(string range)
-            => new ArgumentException("Could not obtain the total length from HTTP range " + range);
+        public static void VerifyParallelismGreaterThanOne(int parallelism)
+        {
+            if (parallelism <= 1)
+            {
+                throw new ArgumentException("Parallel must be greater than 1 for parallel download.", nameof(parallelism));
+            }
+        }
+
+        public static void VerifyNoExtraData(int extraDataLength)
+        {
+            if (extraDataLength > 0)
+            {
+                throw new InvalidOperationException("The response contained more data than was indicated by the Content-Length header.");
+            }
+        }
     }
 }

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Network.Samples
             ApplicationGatewayResource applicationGateway = client.GetApplicationGatewayResource(applicationGatewayResourceId);
 
             // invoke the operation
-            await applicationGateway.DeleteAsync(WaitUntil.Completed);
+            await applicationGateway.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Network.Samples
             ApplicationGatewayResource applicationGateway = client.GetApplicationGatewayResource(applicationGatewayResourceId);
 
             // invoke the operation
-            await applicationGateway.StartAsync(WaitUntil.Completed);
+            await applicationGateway.StartAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Network.Samples
             ApplicationGatewayResource applicationGateway = client.GetApplicationGatewayResource(applicationGatewayResourceId);
 
             // invoke the operation
-            await applicationGateway.StopAsync(WaitUntil.Completed);
+            await applicationGateway.StopAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Network.Samples
             ApplicationGatewayResource applicationGateway = client.GetApplicationGatewayResource(applicationGatewayResourceId);
 
             // invoke the operation
-            ArmOperation<ApplicationGatewayBackendHealth> lro = await applicationGateway.BackendHealthAsync(WaitUntil.Completed);
+            ArmOperation<ApplicationGatewayBackendHealth> lro = await applicationGateway.BackendHealthAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
             ApplicationGatewayBackendHealth result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Network.Samples
                 BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/backendaddressPools/MFAnalyticsPool"),
                 BackendHttpSettingsId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/applicationGateways/appgw/backendHttpSettingsCollection/MFPoolSettings"),
             };
-            ArmOperation<ApplicationGatewayBackendHealthOnDemand> lro = await applicationGateway.BackendHealthOnDemandAsync(WaitUntil.Completed, probeRequest);
+            ArmOperation<ApplicationGatewayBackendHealthOnDemand> lro = await applicationGateway.BackendHealthOnDemandAsync(WaitUntil.Completed, probeRequest, cancellationToken: System.Threading.CancellationToken.None);
             ApplicationGatewayBackendHealthOnDemand result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Network.Samples
             ApplicationGatewayResource applicationGateway = client.GetApplicationGatewayResource(applicationGatewayResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ApplicationGatewayPrivateLinkResource item in applicationGateway.GetApplicationGatewayPrivateLinkResourcesAsync())
+            await foreach (ApplicationGatewayPrivateLinkResource item in applicationGateway.GetApplicationGatewayPrivateLinkResourcesAsync(System.Threading.CancellationToken.None))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }

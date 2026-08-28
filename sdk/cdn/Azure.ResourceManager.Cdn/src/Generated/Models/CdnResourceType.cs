@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.Cdn.Models
     public readonly partial struct CdnResourceType : IEquatable<CdnResourceType>
     {
         private readonly string _value;
-        private const string MicrosoftCdnProfilesEndpointsValue = "Microsoft.Cdn/Profiles/Endpoints";
-        private const string MicrosoftCdnProfilesAfdEndpointsValue = "Microsoft.Cdn/Profiles/AfdEndpoints";
+        private const string EndpointsValue = "Microsoft.Cdn/Profiles/Endpoints";
+        private const string FrontDoorEndpointsValue = "Microsoft.Cdn/Profiles/AfdEndpoints";
 
         /// <summary> Initializes a new instance of <see cref="CdnResourceType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -27,6 +27,12 @@ namespace Azure.ResourceManager.Cdn.Models
 
             _value = value;
         }
+
+        /// <summary> Gets the Endpoints. </summary>
+        public static CdnResourceType Endpoints { get; } = new CdnResourceType(EndpointsValue);
+
+        /// <summary> Gets the FrontDoorEndpoints. </summary>
+        public static CdnResourceType FrontDoorEndpoints { get; } = new CdnResourceType(FrontDoorEndpointsValue);
 
         /// <summary> Determines if two <see cref="CdnResourceType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -69,6 +69,12 @@ namespace Azure.Messaging.ServiceBus.Administration
                     case "SubscriptionCount":
                         topicRuntimeInfo.SubscriptionCount = int.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;
+                    case "SqlFilterCount":
+                        topicRuntimeInfo.SqlFilterCount = int.Parse(element.Value, CultureInfo.InvariantCulture);
+                        break;
+                    case "CorrelationFilterCount":
+                        topicRuntimeInfo.CorrelationFilterCount = int.Parse(element.Value, CultureInfo.InvariantCulture);
+                        break;
                     case "UpdatedAt":
                         topicRuntimeInfo.UpdatedAt = DateTimeOffset.Parse(element.Value, CultureInfo.InvariantCulture);
                         break;

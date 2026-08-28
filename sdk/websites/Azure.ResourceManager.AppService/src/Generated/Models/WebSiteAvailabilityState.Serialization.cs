@@ -11,6 +11,7 @@ namespace Azure.ResourceManager.AppService.Models
 {
     internal static partial class WebSiteAvailabilityStateExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this WebSiteAvailabilityState value) => value switch
         {
             WebSiteAvailabilityState.Normal => "Normal",
@@ -19,11 +20,21 @@ namespace Azure.ResourceManager.AppService.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebSiteAvailabilityState value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static WebSiteAvailabilityState ToWebSiteAvailabilityState(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Normal")) return WebSiteAvailabilityState.Normal;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Limited")) return WebSiteAvailabilityState.Limited;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DisasterRecoveryMode")) return WebSiteAvailabilityState.DisasterRecoveryMode;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Normal"))
+            {
+                return WebSiteAvailabilityState.Normal;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Limited"))
+            {
+                return WebSiteAvailabilityState.Limited;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "DisasterRecoveryMode"))
+            {
+                return WebSiteAvailabilityState.DisasterRecoveryMode;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown WebSiteAvailabilityState value.");
         }
     }

@@ -7,24 +7,14 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Function app runtime name. Available options: dotnet-isolated, node, java, powershell, python, custom
-    /// Serialized Name: RuntimeName
-    /// </summary>
+    /// <summary> Function app runtime name. Available options: dotnet-isolated, node, java, powershell, python, custom. </summary>
     public readonly partial struct FunctionAppRuntimeName : IEquatable<FunctionAppRuntimeName>
     {
         private readonly string _value;
-
-        /// <summary> Initializes a new instance of <see cref="FunctionAppRuntimeName"/>. </summary>
-        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public FunctionAppRuntimeName(string value)
-        {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
-
         private const string DotnetIsolatedValue = "dotnet-isolated";
         private const string NodeValue = "node";
         private const string JavaValue = "java";
@@ -32,53 +22,64 @@ namespace Azure.ResourceManager.AppService.Models
         private const string PythonValue = "python";
         private const string CustomValue = "custom";
 
-        /// <summary>
-        /// dotnet-isolated
-        /// Serialized Name: RuntimeName.dotnet-isolated
-        /// </summary>
+        /// <summary> Initializes a new instance of <see cref="FunctionAppRuntimeName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public FunctionAppRuntimeName(string value)
+        {
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
+        }
+
+        /// <summary> Gets the DotnetIsolated. </summary>
         public static FunctionAppRuntimeName DotnetIsolated { get; } = new FunctionAppRuntimeName(DotnetIsolatedValue);
-        /// <summary>
-        /// node
-        /// Serialized Name: RuntimeName.node
-        /// </summary>
+
+        /// <summary> Gets the Node. </summary>
         public static FunctionAppRuntimeName Node { get; } = new FunctionAppRuntimeName(NodeValue);
-        /// <summary>
-        /// java
-        /// Serialized Name: RuntimeName.java
-        /// </summary>
+
+        /// <summary> Gets the Java. </summary>
         public static FunctionAppRuntimeName Java { get; } = new FunctionAppRuntimeName(JavaValue);
-        /// <summary>
-        /// powershell
-        /// Serialized Name: RuntimeName.powershell
-        /// </summary>
+
+        /// <summary> Gets the Powershell. </summary>
         public static FunctionAppRuntimeName Powershell { get; } = new FunctionAppRuntimeName(PowershellValue);
-        /// <summary>
-        /// python
-        /// Serialized Name: RuntimeName.python
-        /// </summary>
+
+        /// <summary> Gets the Python. </summary>
         public static FunctionAppRuntimeName Python { get; } = new FunctionAppRuntimeName(PythonValue);
-        /// <summary>
-        /// custom
-        /// Serialized Name: RuntimeName.custom
-        /// </summary>
+
+        /// <summary> Gets the Custom. </summary>
         public static FunctionAppRuntimeName Custom { get; } = new FunctionAppRuntimeName(CustomValue);
+
         /// <summary> Determines if two <see cref="FunctionAppRuntimeName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(FunctionAppRuntimeName left, FunctionAppRuntimeName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="FunctionAppRuntimeName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(FunctionAppRuntimeName left, FunctionAppRuntimeName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="FunctionAppRuntimeName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="FunctionAppRuntimeName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator FunctionAppRuntimeName(string value) => new FunctionAppRuntimeName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="FunctionAppRuntimeName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator FunctionAppRuntimeName?(string value) => value == null ? null : new FunctionAppRuntimeName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is FunctionAppRuntimeName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(FunctionAppRuntimeName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

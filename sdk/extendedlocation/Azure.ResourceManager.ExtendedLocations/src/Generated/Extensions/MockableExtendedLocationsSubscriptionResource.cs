@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.ExtendedLocations.Mocking
 
         private ClientDiagnostics CustomLocationsClientDiagnostics => _customLocationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ExtendedLocations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CustomLocations CustomLocationsRestClient => _customLocationsRestClient ??= new CustomLocations(CustomLocationsClientDiagnostics, Pipeline, Endpoint, "2021-08-31-preview");
+        private CustomLocations CustomLocationsRestClient => _customLocationsRestClient ??= new CustomLocations(CustomLocationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2021-08-31-preview");
 
         /// <summary>
         /// Gets a list of Custom Locations in the specified subscription. The operation returns properties of each Custom Location

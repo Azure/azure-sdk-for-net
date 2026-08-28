@@ -49,8 +49,8 @@ namespace Azure.Generator.MgmtTypeSpec.Tests
                     yield break;
                 }
                 EndpointResourceListResult result = EndpointResourceListResult.FromResponse(response);
-                yield return Page<EndpointResourceData>.FromValues((IReadOnlyList<EndpointResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EndpointResourceData>.FromValues((IReadOnlyList<EndpointResourceData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

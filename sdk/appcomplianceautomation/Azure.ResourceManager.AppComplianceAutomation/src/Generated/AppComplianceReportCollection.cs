@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
         {
             TryGetApiVersion(AppComplianceReportResource.ResourceType, out string appComplianceReportApiVersion);
             _reportClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppComplianceAutomation", AppComplianceReportResource.ResourceType.Namespace, Diagnostics);
-            _reportRestClient = new Report(_reportClientDiagnostics, Pipeline, Endpoint, appComplianceReportApiVersion ?? "2024-06-27");
+            _reportRestClient = new Report(_reportClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, appComplianceReportApiVersion ?? "2024-06-27");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 HttpMessage message = _reportRestClient.CreateCreateOrUpdateRequest(reportName, AppComplianceReportData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppComplianceAutomationArmOperation<AppComplianceReportResource> operation = new AppComplianceAutomationArmOperation<AppComplianceReportResource>(
-                    new AppComplianceReportOperationSource(Client),
+                    new AppComplianceReportResourceOperationSource(Client),
                     _reportClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation
                 HttpMessage message = _reportRestClient.CreateCreateOrUpdateRequest(reportName, AppComplianceReportData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppComplianceAutomationArmOperation<AppComplianceReportResource> operation = new AppComplianceAutomationArmOperation<AppComplianceReportResource>(
-                    new AppComplianceReportOperationSource(Client),
+                    new AppComplianceReportResourceOperationSource(Client),
                     _reportClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -52,7 +52,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
         {
             TryGetApiVersion(ResourceType, out string barApiVersion);
             _barsClientDiagnostics = new ClientDiagnostics("Azure.Generator.MgmtTypeSpec.MultiService.Tests", ResourceType.Namespace, Diagnostics);
-            _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Endpoint, barApiVersion ?? "2024-06-01");
+            _barsRestClient = new Bars(_barsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, barApiVersion ?? "2024-06-01");
             ValidateResourceId(id);
         }
 
@@ -326,7 +326,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
                 HttpMessage message = _barsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BarData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 TestsArmOperation<BarResource> operation = new TestsArmOperation<BarResource>(
-                    new BarOperationSource(Client),
+                    new BarResourceOperationSource(Client),
                     _barsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -385,7 +385,7 @@ namespace Azure.Generator.MgmtTypeSpec.MultiService.Tests
                 HttpMessage message = _barsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, BarData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 TestsArmOperation<BarResource> operation = new TestsArmOperation<BarResource>(
-                    new BarOperationSource(Client),
+                    new BarResourceOperationSource(Client),
                     _barsClientDiagnostics,
                     Pipeline,
                     message.Request,

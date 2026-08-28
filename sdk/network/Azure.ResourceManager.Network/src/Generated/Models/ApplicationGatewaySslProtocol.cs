@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,37 +15,67 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct ApplicationGatewaySslProtocol : IEquatable<ApplicationGatewaySslProtocol>
     {
         private readonly string _value;
+        /// <summary> TLSv1_0. </summary>
+        private const string TLSv10Value = "TLSv1_0";
+        /// <summary> TLSv1_1. </summary>
+        private const string TLSv11Value = "TLSv1_1";
+        /// <summary> TLSv1_2. </summary>
+        private const string TLSv12Value = "TLSv1_2";
+        /// <summary> TLSv1_3. </summary>
+        private const string TLSv13Value = "TLSv1_3";
 
         /// <summary> Initializes a new instance of <see cref="ApplicationGatewaySslProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ApplicationGatewaySslProtocol(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string Tls1_0Value = "TLSv1_0";
-        private const string Tls1_1Value = "TLSv1_1";
-        private const string Tls1_2Value = "TLSv1_2";
-        private const string TLSv13Value = "TLSv1_3";
+        /// <summary> TLSv1_0. </summary>
+        public static ApplicationGatewaySslProtocol TLSv10 { get; } = new ApplicationGatewaySslProtocol(TLSv10Value);
+
+        /// <summary> TLSv1_1. </summary>
+        public static ApplicationGatewaySslProtocol TLSv11 { get; } = new ApplicationGatewaySslProtocol(TLSv11Value);
+
+        /// <summary> TLSv1_2. </summary>
+        public static ApplicationGatewaySslProtocol TLSv12 { get; } = new ApplicationGatewaySslProtocol(TLSv12Value);
+
         /// <summary> TLSv1_3. </summary>
         public static ApplicationGatewaySslProtocol TLSv13 { get; } = new ApplicationGatewaySslProtocol(TLSv13Value);
+
         /// <summary> Determines if two <see cref="ApplicationGatewaySslProtocol"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ApplicationGatewaySslProtocol left, ApplicationGatewaySslProtocol right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ApplicationGatewaySslProtocol"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ApplicationGatewaySslProtocol left, ApplicationGatewaySslProtocol right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ApplicationGatewaySslProtocol"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ApplicationGatewaySslProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ApplicationGatewaySslProtocol(string value) => new ApplicationGatewaySslProtocol(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ApplicationGatewaySslProtocol"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ApplicationGatewaySslProtocol?(string value) => value == null ? null : new ApplicationGatewaySslProtocol(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ApplicationGatewaySslProtocol other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ApplicationGatewaySslProtocol other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

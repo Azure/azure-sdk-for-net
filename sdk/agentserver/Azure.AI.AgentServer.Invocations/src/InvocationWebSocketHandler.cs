@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Net.WebSockets;
+using Azure.AI.AgentServer.Invocations.Internal;
 using Microsoft.AspNetCore.Http;
 
 namespace Azure.AI.AgentServer.Invocations;
@@ -37,6 +38,15 @@ namespace Azure.AI.AgentServer.Invocations;
 /// </remarks>
 public abstract class InvocationWebSocketHandler : InvocationHandler
 {
+    internal virtual async Task<InvocationsWebSocketCloseResult?> HandleWebSocketWithOutcomeAsync(
+        WebSocket webSocket,
+        InvocationContext context,
+        CancellationToken cancellationToken)
+    {
+        await HandleWebSocketAsync(webSocket, context, cancellationToken).ConfigureAwait(false);
+        return null;
+    }
+
     /// <summary>
     /// Handles a <c>POST /invocations</c> request. Returns <c>404 Not Found</c>
     /// by default — override to add HTTP support alongside the WebSocket

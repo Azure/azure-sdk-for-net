@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -334,6 +335,32 @@ namespace Azure.AI.VoiceLive.Tests.Infrastructure
                     return false;
                 }
             });
+        }
+
+        /// <summary>
+        /// Deserializes a model from a JSON string via its <see cref="IJsonModel{T}"/> interface,
+        /// using a <see cref="System.Text.Json.Utf8JsonReader"/> directly to avoid requiring
+        /// a direct <see cref="Azure.BinaryData"/> reference in test files.
+        /// </summary>
+        public static T DeserializeViaIJsonModel<T>(string json, IJsonModel<T> prototype)
+        {
+            var bytes = Encoding.UTF8.GetBytes(json);
+            var reader = new System.Text.Json.Utf8JsonReader(bytes);
+            return prototype.Create(ref reader, new ModelReaderWriterOptions("J"))!;
+        }
+
+        /// <summary>
+        /// Serializes a model via its <see cref="IJsonModel{T}"/> interface directly,
+        /// bypassing the <see cref="ModelReaderWriter"/> context routing that may go through
+        /// source-generated STJ serializers. Use this for round-trip and serialization tests.
+        /// </summary>
+        public static string SerializeViaIJsonModel<T>(T model) where T : IJsonModel<T>
+        {
+            using var ms = new MemoryStream();
+            using var writer = new Utf8JsonWriter(ms);
+            model.Write(writer, new ModelReaderWriterOptions("J"));
+            writer.Flush();
+            return Encoding.UTF8.GetString(ms.ToArray());
         }
 
         private static string EscapeString(string value)

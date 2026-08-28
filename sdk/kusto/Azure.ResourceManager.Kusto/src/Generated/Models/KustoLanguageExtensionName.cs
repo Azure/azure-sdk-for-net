@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Kusto.Models
     public readonly partial struct KustoLanguageExtensionName : IEquatable<KustoLanguageExtensionName>
     {
         private readonly string _value;
+        /// <summary> PYTHON. </summary>
+        private const string PythonValue = "PYTHON";
+        /// <summary> R. </summary>
+        private const string RValue = "R";
 
         /// <summary> Initializes a new instance of <see cref="KustoLanguageExtensionName"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoLanguageExtensionName(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PythonValue = "PYTHON";
-        private const string RValue = "R";
+            _value = value;
+        }
 
         /// <summary> PYTHON. </summary>
         public static KustoLanguageExtensionName Python { get; } = new KustoLanguageExtensionName(PythonValue);
+
         /// <summary> R. </summary>
         public static KustoLanguageExtensionName R { get; } = new KustoLanguageExtensionName(RValue);
+
         /// <summary> Determines if two <see cref="KustoLanguageExtensionName"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoLanguageExtensionName left, KustoLanguageExtensionName right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoLanguageExtensionName"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoLanguageExtensionName left, KustoLanguageExtensionName right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoLanguageExtensionName"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoLanguageExtensionName"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoLanguageExtensionName(string value) => new KustoLanguageExtensionName(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoLanguageExtensionName"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoLanguageExtensionName?(string value) => value == null ? null : new KustoLanguageExtensionName(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoLanguageExtensionName other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoLanguageExtensionName other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

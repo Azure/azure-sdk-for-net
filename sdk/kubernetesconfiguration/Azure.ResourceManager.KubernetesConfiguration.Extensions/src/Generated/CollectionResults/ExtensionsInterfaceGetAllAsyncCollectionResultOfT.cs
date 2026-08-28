@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
                     yield break;
                 }
                 ExtensionsList result = ExtensionsList.FromResponse(response);
-                yield return Page<KubernetesClusterExtensionData>.FromValues((IReadOnlyList<KubernetesClusterExtensionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<KubernetesClusterExtensionData>.FromValues((IReadOnlyList<KubernetesClusterExtensionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

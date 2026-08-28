@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources.Deployments.Models;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     internal partial class ArmDeploymentsGetAtScopeAsyncCollectionResultOfT : AsyncPageable<ArmDeploymentData>
     {
@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Resources
                     yield break;
                 }
                 ArmDeploymentListResult result = ArmDeploymentListResult.FromResponse(response);
-                yield return Page<ArmDeploymentData>.FromValues((IReadOnlyList<ArmDeploymentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ArmDeploymentData>.FromValues((IReadOnlyList<ArmDeploymentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

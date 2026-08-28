@@ -4,13 +4,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary>
     /// A single memory item stored in the memory store, containing content and metadata.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UserProfileMemoryItem"/> and <see cref="ChatSummaryMemoryItem"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UserProfileMemoryItem"/>, <see cref="ChatSummaryMemoryItem"/>, and <see cref="ProceduralMemoryItem"/>.
     /// </summary>
+    [Experimental("AAIP001")]
     public abstract partial class MemoryOutputItem
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
@@ -18,14 +20,14 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="MemoryOutputItem"/>. </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="updatedOn"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
         /// <param name="kind"> The kind of the memory item. </param>
-        private protected MemoryOutputItem(string memoryId, DateTimeOffset updatedAt, string scope, string content, MemoryItemKind kind)
+        private protected MemoryOutputItem(string memoryId, DateTimeOffset updatedOn, string scope, string content, MemoryItemKind kind)
         {
             MemoryId = memoryId;
-            UpdatedAt = updatedAt;
+            UpdatedOn = updatedOn;
             Scope = scope;
             Content = content;
             Kind = kind;
@@ -33,15 +35,15 @@ namespace Azure.AI.Extensions.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="MemoryOutputItem"/>. </summary>
         /// <param name="memoryId"> The unique ID of the memory item. </param>
-        /// <param name="updatedAt"> The last update time of the memory item. </param>
+        /// <param name="updatedOn"> The last update time of the memory item. </param>
         /// <param name="scope"> The namespace that logically groups and isolates memories, such as a user ID. </param>
         /// <param name="content"> The content of the memory. </param>
         /// <param name="kind"> The kind of the memory item. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MemoryOutputItem(string memoryId, DateTimeOffset updatedAt, string scope, string content, MemoryItemKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MemoryOutputItem(string memoryId, DateTimeOffset updatedOn, string scope, string content, MemoryItemKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MemoryId = memoryId;
-            UpdatedAt = updatedAt;
+            UpdatedOn = updatedOn;
             Scope = scope;
             Content = content;
             Kind = kind;
@@ -52,7 +54,7 @@ namespace Azure.AI.Extensions.OpenAI
         public string MemoryId { get; set; }
 
         /// <summary> The last update time of the memory item. </summary>
-        public DateTimeOffset UpdatedAt { get; set; }
+        public DateTimeOffset UpdatedOn { get; set; }
 
         /// <summary> The namespace that logically groups and isolates memories, such as a user ID. </summary>
         public string Scope { get; set; }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SelfHelp
         {
             TryGetApiVersion(ResourceType, out string selfHelpSimplifiedSolutionApiVersion);
             _simplifiedSolutionsResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SelfHelp", ResourceType.Namespace, Diagnostics);
-            _simplifiedSolutionsResourcesRestClient = new SimplifiedSolutionsResources(_simplifiedSolutionsResourcesClientDiagnostics, Pipeline, Endpoint, selfHelpSimplifiedSolutionApiVersion ?? "2024-03-01-preview");
+            _simplifiedSolutionsResourcesRestClient = new SimplifiedSolutionsResources(_simplifiedSolutionsResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, selfHelpSimplifiedSolutionApiVersion ?? "2024-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.SelfHelp
                 HttpMessage message = _simplifiedSolutionsResourcesRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, SelfHelpSimplifiedSolutionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 SelfHelpArmOperation<SelfHelpSimplifiedSolutionResource> operation = new SelfHelpArmOperation<SelfHelpSimplifiedSolutionResource>(
-                    new SelfHelpSimplifiedSolutionOperationSource(Client),
+                    new SelfHelpSimplifiedSolutionResourceOperationSource(Client),
                     _simplifiedSolutionsResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.SelfHelp
                 HttpMessage message = _simplifiedSolutionsResourcesRestClient.CreateCreateRequest(Id.Parent.ToString(), Id.Name, SelfHelpSimplifiedSolutionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 SelfHelpArmOperation<SelfHelpSimplifiedSolutionResource> operation = new SelfHelpArmOperation<SelfHelpSimplifiedSolutionResource>(
-                    new SelfHelpSimplifiedSolutionOperationSource(Client),
+                    new SelfHelpSimplifiedSolutionResourceOperationSource(Client),
                     _simplifiedSolutionsResourcesClientDiagnostics,
                     Pipeline,
                     message.Request,

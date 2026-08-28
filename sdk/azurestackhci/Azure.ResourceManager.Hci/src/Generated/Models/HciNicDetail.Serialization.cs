@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.Hci.Models
             string interfaceDescription = default;
             string componentId = default;
             string driverVersion = default;
-            string iPv4Address = default;
+            string ipv4Address = default;
             string subnetMask = default;
             string defaultGateway = default;
             IReadOnlyList<string> dnsServers = default;
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
                 if (prop.NameEquals("ip4Address"u8))
                 {
-                    iPv4Address = prop.Value.GetString();
+                    ipv4Address = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("subnetMask"u8))
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Hci.Models
                 interfaceDescription,
                 componentId,
                 driverVersion,
-                iPv4Address,
+                ipv4Address,
                 subnetMask,
                 defaultGateway,
                 dnsServers ?? new ChangeTrackingList<string>(),

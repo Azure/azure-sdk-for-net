@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ContainerAppSourceControlResource.ResourceType, out string containerAppSourceControlApiVersion);
             _containerAppsSourceControlsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppSourceControlResource.ResourceType.Namespace, Diagnostics);
-            _containerAppsSourceControlsRestClient = new ContainerAppsSourceControls(_containerAppsSourceControlsClientDiagnostics, Pipeline, Endpoint, containerAppSourceControlApiVersion ?? "2025-10-02-preview");
+            _containerAppsSourceControlsRestClient = new ContainerAppsSourceControls(_containerAppsSourceControlsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppSourceControlApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppsSourceControlsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sourceControlName, ContainerAppSourceControlData.ToRequestContent(data), xMsGithubAuxiliary, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppSourceControlResource> operation = new AppContainersArmOperation<ContainerAppSourceControlResource>(
-                    new ContainerAppSourceControlOperationSource(Client),
+                    new ContainerAppSourceControlResourceOperationSource(Client),
                     _containerAppsSourceControlsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _containerAppsSourceControlsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, sourceControlName, ContainerAppSourceControlData.ToRequestContent(data), xMsGithubAuxiliary, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppSourceControlResource> operation = new AppContainersArmOperation<ContainerAppSourceControlResource>(
-                    new ContainerAppSourceControlOperationSource(Client),
+                    new ContainerAppSourceControlResourceOperationSource(Client),
                     _containerAppsSourceControlsClientDiagnostics,
                     Pipeline,
                     message.Request,

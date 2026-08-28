@@ -21,16 +21,16 @@ namespace Azure.AI.VoiceLive
         /// <summary> Initializes a new instance of <see cref="RequestImageContentPart"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="url"></param>
+        /// <param name="uri"></param>
         /// <param name="detail"></param>
-        internal RequestImageContentPart(ContentPartType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string url, RequestImageContentPartDetail? detail) : base(@type, additionalBinaryDataProperties)
+        internal RequestImageContentPart(ContentPartType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri uri, RequestImageContentPartDetail? detail) : base(@type, additionalBinaryDataProperties)
         {
-            Url = url;
+            Uri = uri;
             Detail = detail;
         }
 
-        /// <summary> Gets or sets the Url. </summary>
-        public string Url { get; set; }
+        /// <summary> Gets or sets the Uri. </summary>
+        public Uri Uri { get; set; }
 
         /// <summary> Gets or sets the Detail. </summary>
         public RequestImageContentPartDetail? Detail { get; set; }

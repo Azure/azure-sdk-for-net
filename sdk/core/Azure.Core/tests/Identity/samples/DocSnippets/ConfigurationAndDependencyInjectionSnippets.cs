@@ -114,7 +114,7 @@ namespace Azure.Core.Tests.Identity.Samples.DocSnippets
             #endregion
         }
 
-        public void WithAzureCredentialEquivalence()
+        public void AddAzureClientEquivalence()
         {
             HostApplicationBuilder builder = Host.CreateApplicationBuilder();
 

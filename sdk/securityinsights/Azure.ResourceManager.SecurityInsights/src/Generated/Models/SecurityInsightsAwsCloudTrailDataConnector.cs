@@ -7,8 +7,10 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
@@ -16,41 +18,43 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     public partial class SecurityInsightsAwsCloudTrailDataConnector : SecurityInsightsDataConnectorData
     {
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>. </summary>
-        public SecurityInsightsAwsCloudTrailDataConnector()
+        public SecurityInsightsAwsCloudTrailDataConnector() : base(DataConnectorKind.AmazonWebServicesCloudTrail)
         {
-            Kind = DataConnectorKind.AmazonWebServicesCloudTrail;
         }
 
         /// <summary> Initializes a new instance of <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="kind"> The data connector kind. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="awsRoleArn"> The Aws Role Arn (with CloudTrailReadOnly policy) that is used to access the Aws account. </param>
-        /// <param name="logs"> Logs data type. </param>
-        internal SecurityInsightsAwsCloudTrailDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData, string awsRoleArn, DataConnectorDataTypeCommon logs) : base(id, name, resourceType, systemData, kind, etag, serializedAdditionalRawData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="kind"> Metadata used by portal/tooling/etc to render different UX experiences for resources of the same type; e.g. ApiApps are a kind of Microsoft.Web/sites type.  If supported, the resource provider must validate and persist this value. </param>
+        /// <param name="eTag"> Etag of the azure resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="properties"> Amazon Web Services CloudTrail data connector properties. </param>
+        internal SecurityInsightsAwsCloudTrailDataConnector(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataConnectorKind kind, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties, AwsCloudTrailDataConnectorProperties properties) : base(id, name, resourceType, systemData, kind, eTag, additionalBinaryDataProperties)
         {
-            AwsRoleArn = awsRoleArn;
-            Logs = logs;
-            Kind = kind;
+            Properties = properties;
         }
+
+        /// <summary> Amazon Web Services CloudTrail data connector properties. </summary>
+        [WirePath("properties")]
+        internal AwsCloudTrailDataConnectorProperties Properties { get; set; }
 
         /// <summary> The Aws Role Arn (with CloudTrailReadOnly policy) that is used to access the Aws account. </summary>
         [WirePath("properties.awsRoleArn")]
-        public string AwsRoleArn { get; set; }
-        /// <summary> Logs data type. </summary>
-        internal DataConnectorDataTypeCommon Logs { get; set; }
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        [WirePath("properties.logs.state")]
-        public SecurityInsightsDataTypeConnectionState? LogsState
+        public string AwsRoleArn
         {
-            get => Logs is null ? default(SecurityInsightsDataTypeConnectionState?) : Logs.State;
+            get
+            {
+                return Properties is null ? default : Properties.AwsRoleArn;
+            }
             set
             {
-                Logs = value.HasValue ? new DataConnectorDataTypeCommon(value.Value) : null;
+                if (Properties is null)
+                {
+                    Properties = new AwsCloudTrailDataConnectorProperties();
+                }
+                Properties.AwsRoleArn = value;
             }
         }
     }

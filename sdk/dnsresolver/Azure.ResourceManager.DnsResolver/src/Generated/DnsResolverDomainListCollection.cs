@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             TryGetApiVersion(DnsResolverDomainListResource.ResourceType, out string dnsResolverDomainListApiVersion);
             _dnsResolverDomainListsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DnsResolver", DnsResolverDomainListResource.ResourceType.Namespace, Diagnostics);
-            _dnsResolverDomainListsRestClient = new DnsResolverDomainLists(_dnsResolverDomainListsClientDiagnostics, Pipeline, Endpoint, dnsResolverDomainListApiVersion ?? "2025-10-01-preview");
+            _dnsResolverDomainListsRestClient = new DnsResolverDomainLists(_dnsResolverDomainListsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsResolverDomainListApiVersion ?? "2025-10-01-preview");
             ValidateResourceId(id);
         }
 
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _dnsResolverDomainListsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dnsResolverDomainListName, DnsResolverDomainListData.ToRequestContent(data), matchConditions, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DnsResolverArmOperation<DnsResolverDomainListResource> operation = new DnsResolverArmOperation<DnsResolverDomainListResource>(
-                    new DnsResolverDomainListOperationSource(Client),
+                    new DnsResolverDomainListResourceOperationSource(Client),
                     _dnsResolverDomainListsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DnsResolver
                 HttpMessage message = _dnsResolverDomainListsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, dnsResolverDomainListName, DnsResolverDomainListData.ToRequestContent(data), matchConditions, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DnsResolverArmOperation<DnsResolverDomainListResource> operation = new DnsResolverArmOperation<DnsResolverDomainListResource>(
-                    new DnsResolverDomainListOperationSource(Client),
+                    new DnsResolverDomainListResourceOperationSource(Client),
                     _dnsResolverDomainListsClientDiagnostics,
                     Pipeline,
                     message.Request,

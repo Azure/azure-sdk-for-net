@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -16,15 +17,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Initializes a new instance of <see cref="MachineLearningRecurrenceTrigger"/>. </summary>
         /// <param name="frequency"> [Required] The frequency to trigger schedule. </param>
         /// <param name="interval"> [Required] Specifies schedule interval in conjunction with frequency. </param>
-        public MachineLearningRecurrenceTrigger(MachineLearningRecurrenceFrequency frequency, int interval)
+        public MachineLearningRecurrenceTrigger(MachineLearningRecurrenceFrequency frequency, int interval) : base(MachineLearningTriggerType.Recurrence)
         {
             Frequency = frequency;
             Interval = interval;
-            TriggerType = TriggerType.Recurrence;
         }
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningRecurrenceTrigger"/>. </summary>
-        /// <param name="triggerType"> [Required]. </param>
         /// <param name="endTime">
         /// Specifies end time of schedule in ISO 8601, but without a UTC offset. Refer https://en.wikipedia.org/wiki/ISO_8601.
         /// Recommented format would be "2022-06-01T00:00:01"
@@ -35,29 +34,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// Specifies time zone in which the schedule runs.
         /// TimeZone should follow Windows time zone format. Refer: https://docs.microsoft.com/en-us/windows-hardware/manufacture/desktop/default-time-zones?view=windows-11
         /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="triggerType"> [Required]. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="frequency"> [Required] The frequency to trigger schedule. </param>
         /// <param name="interval"> [Required] Specifies schedule interval in conjunction with frequency. </param>
         /// <param name="schedule"> The recurrence schedule. </param>
-        internal MachineLearningRecurrenceTrigger(TriggerType triggerType, string endTime, string startTime, string timeZone, IDictionary<string, BinaryData> serializedAdditionalRawData, MachineLearningRecurrenceFrequency frequency, int interval, MachineLearningRecurrenceSchedule schedule) : base(triggerType, endTime, startTime, timeZone, serializedAdditionalRawData)
+        internal MachineLearningRecurrenceTrigger(string endTime, string startTime, string timeZone, MachineLearningTriggerType triggerType, IDictionary<string, BinaryData> additionalBinaryDataProperties, MachineLearningRecurrenceFrequency frequency, int interval, MachineLearningRecurrenceSchedule schedule) : base(endTime, startTime, timeZone, triggerType, additionalBinaryDataProperties)
         {
             Frequency = frequency;
             Interval = interval;
             Schedule = schedule;
-            TriggerType = triggerType;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="MachineLearningRecurrenceTrigger"/> for deserialization. </summary>
-        internal MachineLearningRecurrenceTrigger()
-        {
         }
 
         /// <summary> [Required] The frequency to trigger schedule. </summary>
         [WirePath("frequency")]
         public MachineLearningRecurrenceFrequency Frequency { get; set; }
+
         /// <summary> [Required] Specifies schedule interval in conjunction with frequency. </summary>
         [WirePath("interval")]
         public int Interval { get; set; }
+
         /// <summary> The recurrence schedule. </summary>
         [WirePath("schedule")]
         public MachineLearningRecurrenceSchedule Schedule { get; set; }

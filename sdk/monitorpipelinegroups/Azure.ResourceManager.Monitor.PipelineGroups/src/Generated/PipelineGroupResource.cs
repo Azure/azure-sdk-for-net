@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
         {
             TryGetApiVersion(ResourceType, out string pipelineGroupApiVersion);
             _pipelineGroupOperationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Monitor.PipelineGroups", ResourceType.Namespace, Diagnostics);
-            _pipelineGroupOperationsRestClient = new PipelineGroupOperations(_pipelineGroupOperationsClientDiagnostics, Pipeline, Endpoint, pipelineGroupApiVersion ?? "2026-04-01");
+            _pipelineGroupOperationsRestClient = new PipelineGroupOperations(_pipelineGroupOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, pipelineGroupApiVersion ?? "2026-04-01");
             ValidateResourceId(id);
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
                 HttpMessage message = _pipelineGroupOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PipelineGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PipelineGroupsArmOperation<PipelineGroupResource> operation = new PipelineGroupsArmOperation<PipelineGroupResource>(
-                    new PipelineGroupOperationSource(Client),
+                    new PipelineGroupResourceOperationSource(Client),
                     _pipelineGroupOperationsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Monitor.PipelineGroups
                 HttpMessage message = _pipelineGroupOperationsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, PipelineGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PipelineGroupsArmOperation<PipelineGroupResource> operation = new PipelineGroupsArmOperation<PipelineGroupResource>(
-                    new PipelineGroupOperationSource(Client),
+                    new PipelineGroupResourceOperationSource(Client),
                     _pipelineGroupOperationsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.EventGrid;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
@@ -14,53 +15,82 @@ namespace Azure.ResourceManager.EventGrid.Models
     public readonly partial struct EventGridNamespaceClientProvisioningState : IEquatable<EventGridNamespaceClientProvisioningState>
     {
         private readonly string _value;
+        /// <summary> Creating. </summary>
+        private const string CreatingValue = "Creating";
+        /// <summary> Updating. </summary>
+        private const string UpdatingValue = "Updating";
+        /// <summary> Deleting. </summary>
+        private const string DeletingValue = "Deleting";
+        /// <summary> Succeeded. </summary>
+        private const string SucceededValue = "Succeeded";
+        /// <summary> Canceled. </summary>
+        private const string CanceledValue = "Canceled";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
+        /// <summary> Deleted. </summary>
+        private const string DeletedValue = "Deleted";
 
         /// <summary> Initializes a new instance of <see cref="EventGridNamespaceClientProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public EventGridNamespaceClientProvisioningState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CreatingValue = "Creating";
-        private const string UpdatingValue = "Updating";
-        private const string DeletingValue = "Deleting";
-        private const string SucceededValue = "Succeeded";
-        private const string CanceledValue = "Canceled";
-        private const string FailedValue = "Failed";
-        private const string DeletedValue = "Deleted";
+            _value = value;
+        }
 
         /// <summary> Creating. </summary>
         public static EventGridNamespaceClientProvisioningState Creating { get; } = new EventGridNamespaceClientProvisioningState(CreatingValue);
+
         /// <summary> Updating. </summary>
         public static EventGridNamespaceClientProvisioningState Updating { get; } = new EventGridNamespaceClientProvisioningState(UpdatingValue);
+
         /// <summary> Deleting. </summary>
         public static EventGridNamespaceClientProvisioningState Deleting { get; } = new EventGridNamespaceClientProvisioningState(DeletingValue);
+
         /// <summary> Succeeded. </summary>
         public static EventGridNamespaceClientProvisioningState Succeeded { get; } = new EventGridNamespaceClientProvisioningState(SucceededValue);
+
         /// <summary> Canceled. </summary>
         public static EventGridNamespaceClientProvisioningState Canceled { get; } = new EventGridNamespaceClientProvisioningState(CanceledValue);
+
         /// <summary> Failed. </summary>
         public static EventGridNamespaceClientProvisioningState Failed { get; } = new EventGridNamespaceClientProvisioningState(FailedValue);
+
         /// <summary> Deleted. </summary>
         public static EventGridNamespaceClientProvisioningState Deleted { get; } = new EventGridNamespaceClientProvisioningState(DeletedValue);
+
         /// <summary> Determines if two <see cref="EventGridNamespaceClientProvisioningState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(EventGridNamespaceClientProvisioningState left, EventGridNamespaceClientProvisioningState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="EventGridNamespaceClientProvisioningState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(EventGridNamespaceClientProvisioningState left, EventGridNamespaceClientProvisioningState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="EventGridNamespaceClientProvisioningState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="EventGridNamespaceClientProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator EventGridNamespaceClientProvisioningState(string value) => new EventGridNamespaceClientProvisioningState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="EventGridNamespaceClientProvisioningState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator EventGridNamespaceClientProvisioningState?(string value) => value == null ? null : new EventGridNamespaceClientProvisioningState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is EventGridNamespaceClientProvisioningState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(EventGridNamespaceClientProvisioningState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

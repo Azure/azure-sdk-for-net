@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct VpnGatewayGeneration : IEquatable<VpnGatewayGeneration>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Generation1. </summary>
+        private const string Generation1Value = "Generation1";
+        /// <summary> Generation2. </summary>
+        private const string Generation2Value = "Generation2";
 
         /// <summary> Initializes a new instance of <see cref="VpnGatewayGeneration"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public VpnGatewayGeneration(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string Generation1Value = "Generation1";
-        private const string Generation2Value = "Generation2";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static VpnGatewayGeneration None { get; } = new VpnGatewayGeneration(NoneValue);
+
         /// <summary> Generation1. </summary>
         public static VpnGatewayGeneration Generation1 { get; } = new VpnGatewayGeneration(Generation1Value);
+
         /// <summary> Generation2. </summary>
         public static VpnGatewayGeneration Generation2 { get; } = new VpnGatewayGeneration(Generation2Value);
+
         /// <summary> Determines if two <see cref="VpnGatewayGeneration"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(VpnGatewayGeneration left, VpnGatewayGeneration right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="VpnGatewayGeneration"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(VpnGatewayGeneration left, VpnGatewayGeneration right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="VpnGatewayGeneration"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="VpnGatewayGeneration"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator VpnGatewayGeneration(string value) => new VpnGatewayGeneration(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="VpnGatewayGeneration"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator VpnGatewayGeneration?(string value) => value == null ? null : new VpnGatewayGeneration(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is VpnGatewayGeneration other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(VpnGatewayGeneration other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

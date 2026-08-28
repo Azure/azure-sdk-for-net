@@ -10,6 +10,16 @@
 
 ### Other Changes
 
+- Corrected the names of Summary Logs enum types. The previous names remain available as obsolete compatibility APIs.
+
+## 1.3.2 (2026-06-23)
+
+### Other Changes
+
+- Migrated SDK generation from Swagger/AutoRest to TypeSpec.
+- Upgraded dependent Azure.Core to 1.59.0.
+- Upgraded dependent Azure.ResourceManager to 1.14.0.
+
 ## 1.3.1 (2025-07-28)
 
 ### Features Added

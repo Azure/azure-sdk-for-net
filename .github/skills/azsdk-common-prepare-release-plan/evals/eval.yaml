@@ -39,6 +39,18 @@ stimuli:
         config:
           substring: "release plan"
 
+  # Regression for issue #15988: when the user provides a Release Plan ID, the
+  # agent can pass it directly to azsdk_update_sdk_details_in_release_plan. The
+  # tool resolves either a Release Plan ID or a work item ID, so the agent should
+  # NOT need a separate azsdk_get_release_plan call just to translate the ID.
+  - name: release-plan-resolve-work-item-id-001
+    prompt: "Update the SDK details in release plan 50001 for the TypeSpec project specification/contosowidgetmanager/Contoso.WidgetManager."
+    graders:
+      - type: tool-calls
+        config:
+          required:
+            - name: azure-sdk-mcp-azsdk_update_sdk_details_in_release_plan
+
   - name: release-plan-negative-001
     prompt: "Release the azure-mgmt-compute Python package to PyPI now."
     graders:

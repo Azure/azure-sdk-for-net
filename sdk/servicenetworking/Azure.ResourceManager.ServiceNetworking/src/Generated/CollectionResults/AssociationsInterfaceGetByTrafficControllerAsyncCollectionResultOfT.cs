@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.ServiceNetworking
                     yield break;
                 }
                 AssociationListResult result = AssociationListResult.FromResponse(response);
-                yield return Page<TrafficControllerAssociationData>.FromValues((IReadOnlyList<TrafficControllerAssociationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<TrafficControllerAssociationData>.FromValues((IReadOnlyList<TrafficControllerAssociationData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

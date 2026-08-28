@@ -49,7 +49,7 @@ jobs:
             --query value)
 
           echo "::add-mask::$LABEL_SERVICE_API_KEY"
-          echo "LABEL_SERVICE_API_KEY=$LABEL_SERVICE_API_KEY" >> $GITHUB_ENV
+          echo "LABEL_SERVICE_API_KEY=$LABEL_SERVICE_API_KEY" >> "$GITHUB_ENV"
 
           APP_CONFIG_ENDPOINT=$(az keyvault secret show \
             --vault-name issue-labeler \
@@ -58,7 +58,7 @@ jobs:
             --query value)
 
           echo "::add-mask::$APP_CONFIG_ENDPOINT"
-          echo "APP_CONFIG_ENDPOINT=$APP_CONFIG_ENDPOINT" >> $GITHUB_ENV
+          echo "APP_CONFIG_ENDPOINT=$APP_CONFIG_ENDPOINT" >> "$GITHUB_ENV"
 
       # To run github-event-processor built from source, for testing purposes, uncomment everything
       # in between the Start/End-Build From Source comments and comment everything in between the

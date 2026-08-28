@@ -3,6 +3,7 @@
 
 using Azure.Core;
 using Azure.Generator.Management.Primitives;
+using Azure.Generator.Management.Snippets;
 using Azure.ResourceManager;
 using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using Microsoft.TypeSpec.Generator.ClientModel.Snippets;
@@ -12,7 +13,9 @@ using Microsoft.TypeSpec.Generator.Providers;
 using Microsoft.TypeSpec.Generator.Statements;
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -25,6 +28,7 @@ namespace Azure.Generator.Management.Providers
         private readonly ResourceClientProvider? _resource;
         private readonly CSharpType _resultType;
         private readonly CSharpType _operationSourceInterface;
+        private readonly bool _isDynamicModel;
 
         private readonly FieldProvider? _clientField;
 
@@ -33,15 +37,18 @@ namespace Azure.Generator.Management.Providers
         {
             _resource = resource;
             _resultType = resource.Type;
+            _isDynamicModel = resource.ResourceData is ResourceDataModelProvider resourceData
+                && resourceData.InputModel.IsDynamicModel;
             _clientField = new FieldProvider(FieldModifiers.Private | FieldModifiers.ReadOnly, typeof(ArmClient), "_client", this);
             _operationSourceInterface = new CSharpType(typeof(IOperationSource<>), _resultType);
         }
 
         // Constructor for non-resource types
-        public OperationSourceProvider(CSharpType resultType)
+        public OperationSourceProvider(CSharpType resultType, bool isDynamicModel = false)
         {
             _resource = null;
             _resultType = resultType;
+            _isDynamicModel = isDynamicModel;
             _clientField = null;
             _operationSourceInterface = new CSharpType(typeof(IOperationSource<>), _resultType);
         }
@@ -50,14 +57,17 @@ namespace Azure.Generator.Management.Providers
         {
             if (_resource != null)
             {
-                return $"{_resource.ResourceName}OperationSource";
+                return $"{_resource.Name}OperationSource";
             }
-            else
-            {
-                // For non-resource types, use the type name
-                var typeName = _resultType.Name;
-                return $"{typeName}OperationSource";
-            }
+
+            var typeName = BuildTypeName(_resultType);
+            return $"{typeName}OperationSource";
+        }
+
+        private static string BuildTypeName(CSharpType type)
+        {
+            var argumentNames = string.Join("", type.Arguments.Select(BuildTypeName));
+            return $"{type.Name}{(argumentNames.Length > 0 ? "Of" : string.Empty)}{argumentNames}";
         }
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", "LongRunningOperation", $"{Name}.cs");
@@ -88,18 +98,19 @@ namespace Azure.Generator.Management.Providers
                 body = new MethodBodyStatement[]
                 {
                     UsingDeclare("document", typeof(JsonDocument), Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.ParseAsync), [KnownAzureParameters.Response.Property(nameof(Response.ContentStream)), Default, KnownAzureParameters.CancellationTokenWithoutDefault], true), out var documentVariable),
-                    Declare("data", _resource.ResourceData.Type, Static(_resource.ResourceData.Type).Invoke($"Deserialize{_resource.ResourceData.Name}", documentVariable.Property(nameof(JsonDocument.RootElement)), Static<ModelSerializationExtensionsDefinition>().Property("WireOptions").As<ModelReaderWriterOptions>()), out var dataVariable),
+                    Declare("data", _resource.ResourceData.Type, BuildDeserializeModel(_resource.ResourceData.Type, documentVariable), out var dataVariable),
                     Return(New.Instance(_resource.Type, [_clientField!, dataVariable])),
                 };
             }
             else
             {
                 // Non-resource type: just deserialize and return
-                body = new MethodBodyStatement[]
+                var statements = new List<MethodBodyStatement>
                 {
                     UsingDeclare("document", typeof(JsonDocument), Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.ParseAsync), [KnownAzureParameters.Response.Property(nameof(Response.ContentStream)), Default, KnownAzureParameters.CancellationTokenWithoutDefault], true), out var documentVariable),
-                    Return(BuildDeserializeNonResource(documentVariable)),
                 };
+                statements.AddRange(BuildDeserializeNonResourceStatements(documentVariable));
+                body = statements.ToArray();
             }
 
             return new MethodProvider(signature, body, this);
@@ -124,21 +135,43 @@ namespace Azure.Generator.Management.Providers
                 body = new MethodBodyStatement[]
                 {
                     UsingDeclare("document", typeof(JsonDocument), Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.Parse), [KnownAzureParameters.Response.Property(nameof(Response.ContentStream))]), out var documentVariable),
-                    Declare("data", _resource.ResourceData.Type, Static(_resource.ResourceData.Type).Invoke($"Deserialize{_resource.ResourceData.Name}", documentVariable.Property(nameof(JsonDocument.RootElement)), Static<ModelSerializationExtensionsDefinition>().Property("WireOptions").As<ModelReaderWriterOptions>()), out var dataVariable),
+                    Declare("data", _resource.ResourceData.Type, BuildDeserializeModel(_resource.ResourceData.Type, documentVariable), out var dataVariable),
                     Return(New.Instance(_resource.Type, [_clientField!, dataVariable])),
                 };
             }
             else
             {
                 // Non-resource type: just deserialize and return
-                body = new MethodBodyStatement[]
+                var statements = new List<MethodBodyStatement>
                 {
                     UsingDeclare("document", typeof(JsonDocument), Static(typeof(JsonDocument)).Invoke(nameof(JsonDocument.Parse), [KnownAzureParameters.Response.Property(nameof(Response.ContentStream))]), out var documentVariable),
-                    Return(BuildDeserializeNonResource(documentVariable)),
                 };
+                statements.AddRange(BuildDeserializeNonResourceStatements(documentVariable));
+                body = statements.ToArray();
             }
 
             return new MethodProvider(signature, body, this);
+        }
+
+        // Deserialize the document into _resultType.
+        // For framework collection types (e.g. IDictionary<string, BinaryData> from TypeSpec `Record<unknown>`), the value
+        // is built inline from JSON because such types are not IPersistableModel<T> and ModelReaderWriter.Read<T> is invalid.
+        // For all other types, defer to BuildDeserializeNonResource which returns a single expression.
+        private MethodBodyStatement[] BuildDeserializeNonResourceStatements(VariableExpression documentVariable)
+        {
+            if (JsonResponseDeserialization.IsInlineJsonDeserializable(_resultType))
+            {
+                var statements = new List<MethodBodyStatement>();
+                statements.AddRange(JsonResponseDeserialization.BuildDeserializeFromRootElement(
+                    _resultType,
+                    documentVariable.Property(nameof(JsonDocument.RootElement)),
+                    "value",
+                    out var valueVariable));
+                statements.Add(Return(valueVariable));
+                return statements.ToArray();
+            }
+
+            return [Return(BuildDeserializeNonResource(documentVariable))];
         }
 
         // Deserialize the document into _resultType.
@@ -167,7 +200,19 @@ namespace Azure.Generator.Management.Providers
                     false);
             }
 
-            return Static(_resultType).Invoke($"Deserialize{_resultType.Name}", rootElement, wireOptions);
+            return BuildDeserializeModel(_resultType, documentVariable);
+        }
+
+        private ValueExpression BuildDeserializeModel(CSharpType modelType, VariableExpression documentVariable)
+        {
+            var rootElement = documentVariable.Property(nameof(JsonDocument.RootElement));
+            var wireOptions = Static<ModelSerializationExtensionsDefinition>().Property("WireOptions").As<ModelReaderWriterOptions>();
+
+            return _isDynamicModel
+                ? Static(modelType).Invoke(
+                    $"Deserialize{modelType.Name}",
+                    [rootElement, rootElement.Invoke("GetUtf8Bytes"), wireOptions])
+                : Static(modelType).Invoke($"Deserialize{modelType.Name}", rootElement, wireOptions);
         }
 
         protected override FieldProvider[] BuildFields()

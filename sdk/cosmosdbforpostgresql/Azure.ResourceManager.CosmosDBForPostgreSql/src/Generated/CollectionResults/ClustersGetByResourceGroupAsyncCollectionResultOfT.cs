@@ -53,8 +53,8 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql
                     yield break;
                 }
                 ClusterListResult result = ClusterListResult.FromResponse(response);
-                yield return Page<CosmosDBForPostgreSqlClusterData>.FromValues((IReadOnlyList<CosmosDBForPostgreSqlClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<CosmosDBForPostgreSqlClusterData>.FromValues((IReadOnlyList<CosmosDBForPostgreSqlClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

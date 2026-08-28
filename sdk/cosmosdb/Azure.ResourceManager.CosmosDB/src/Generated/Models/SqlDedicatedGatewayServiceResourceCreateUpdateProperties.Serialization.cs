@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class SqlDedicatedGatewayServiceResourceCreateUpdateProperties : IUtf8JsonSerializable, IJsonModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>
+    /// <summary> Properties for Create or Update request for SqlDedicatedGatewayServiceResource. </summary>
+    public partial class SqlDedicatedGatewayServiceResourceCreateUpdateProperties : ServiceResourceCreateUpdateProperties, IJsonModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ServiceResourceCreateUpdateProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSqlDedicatedGatewayServiceResourceCreateUpdateProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SqlDedicatedGatewayServiceResourceCreateUpdateProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SqlDedicatedGatewayServiceResourceCreateUpdateProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlDedicatedGatewayServiceResourceCreateUpdateProperties IPersistableModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => (SqlDedicatedGatewayServiceResourceCreateUpdateProperties)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlDedicatedGatewayServiceResourceCreateUpdateProperties)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(DedicatedGatewayType))
             {
@@ -42,104 +82,76 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
         }
 
-        SqlDedicatedGatewayServiceResourceCreateUpdateProperties IJsonModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SqlDedicatedGatewayServiceResourceCreateUpdateProperties IJsonModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SqlDedicatedGatewayServiceResourceCreateUpdateProperties)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override ServiceResourceCreateUpdateProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SqlDedicatedGatewayServiceResourceCreateUpdateProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSqlDedicatedGatewayServiceResourceCreateUpdateProperties(document.RootElement, options);
         }
 
-        internal static SqlDedicatedGatewayServiceResourceCreateUpdateProperties DeserializeSqlDedicatedGatewayServiceResourceCreateUpdateProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SqlDedicatedGatewayServiceResourceCreateUpdateProperties DeserializeSqlDedicatedGatewayServiceResourceCreateUpdateProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DedicatedGatewayType? dedicatedGatewayType = default;
             CosmosDBServiceSize? instanceSize = default;
             int? instanceCount = default;
             CosmosDBServiceType serviceType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            DedicatedGatewayType? dedicatedGatewayType = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("dedicatedGatewayType"u8))
+                if (prop.NameEquals("instanceSize"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dedicatedGatewayType = new DedicatedGatewayType(property.Value.GetString());
+                    instanceSize = new CosmosDBServiceSize(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("instanceSize"u8))
+                if (prop.NameEquals("instanceCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    instanceSize = new CosmosDBServiceSize(property.Value.GetString());
+                    instanceCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("instanceCount"u8))
+                if (prop.NameEquals("serviceType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    serviceType = new CosmosDBServiceType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("dedicatedGatewayType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    instanceCount = property.Value.GetInt32();
-                    continue;
-                }
-                if (property.NameEquals("serviceType"u8))
-                {
-                    serviceType = new CosmosDBServiceType(property.Value.GetString());
+                    dedicatedGatewayType = new DedicatedGatewayType(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new SqlDedicatedGatewayServiceResourceCreateUpdateProperties(instanceSize, instanceCount, serviceType, serializedAdditionalRawData, dedicatedGatewayType);
+            return new SqlDedicatedGatewayServiceResourceCreateUpdateProperties(instanceSize, instanceCount, serviceType, additionalBinaryDataProperties, dedicatedGatewayType);
         }
-
-        BinaryData IPersistableModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerCosmosDBContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SqlDedicatedGatewayServiceResourceCreateUpdateProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SqlDedicatedGatewayServiceResourceCreateUpdateProperties IPersistableModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSqlDedicatedGatewayServiceResourceCreateUpdateProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SqlDedicatedGatewayServiceResourceCreateUpdateProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SqlDedicatedGatewayServiceResourceCreateUpdateProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

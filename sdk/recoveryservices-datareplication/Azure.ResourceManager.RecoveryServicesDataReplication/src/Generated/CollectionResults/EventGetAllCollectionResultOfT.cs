@@ -64,8 +64,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                     yield break;
                 }
                 EventModelListResult result = EventModelListResult.FromResponse(response);
-                yield return Page<DataReplicationEventData>.FromValues((IReadOnlyList<DataReplicationEventData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<DataReplicationEventData>.FromValues((IReadOnlyList<DataReplicationEventData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

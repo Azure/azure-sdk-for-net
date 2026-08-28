@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.EventHubs
                     yield break;
                 }
                 ArmDisasterRecoveryListResult result = ArmDisasterRecoveryListResult.FromResponse(response);
-                yield return Page<EventHubsDisasterRecoveryData>.FromValues((IReadOnlyList<EventHubsDisasterRecoveryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<EventHubsDisasterRecoveryData>.FromValues((IReadOnlyList<EventHubsDisasterRecoveryData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

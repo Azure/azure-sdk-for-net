@@ -17,9 +17,13 @@ namespace Azure.AI.Translation.Document
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="DocumentTranslateContent"/>. </summary>
+        /// <param name="multipartDocument"> Document to be translated in the form. </param>
+        /// <param name="multipartGlossary"> Glossary-translation memory will be used during translation in the form. . </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentTranslateContent(IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DocumentTranslateContent(MultipartFormFileData multipartDocument, IList<MultipartFormFileData> multipartGlossary, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
+            MultipartDocument = multipartDocument;
+            MultipartGlossary = multipartGlossary;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }

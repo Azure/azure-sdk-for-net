@@ -11,20 +11,20 @@ namespace Azure.Provisioning.KeyVault
     public enum ManagedHsmProvisioningState
     {
         /// <summary> The managed HSM Pool has been full provisioned. </summary>
-        Succeeded,
+        Succeeded = 0,
         /// <summary> The managed HSM Pool is currently being provisioned. </summary>
-        Provisioning,
+        Provisioning = 1,
         /// <summary> Provisioning of the managed HSM Pool has failed. </summary>
-        Failed,
+        Failed = 2,
         /// <summary> The managed HSM Pool is currently being updated. </summary>
-        Updating,
+        Updating = 3,
         /// <summary> The managed HSM Pool is currently being deleted. </summary>
-        Deleting,
+        Deleting = 4,
         /// <summary> The managed HSM pool is ready for normal use. </summary>
-        Activated,
+        Activated = 5,
         /// <summary> The managed HSM pool is waiting for a security domain restore action. </summary>
-        SecurityDomainRestore,
+        SecurityDomainRestore = 6,
         /// <summary> The managed HSM pool is being restored from full HSM backup. </summary>
-        Restoring
+        Restoring = 7
     }
 }

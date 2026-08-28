@@ -7,46 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
-    /// <summary>
-    /// Scale and concurrency settings for the HTTP trigger.
-    /// Serialized Name: FunctionsScaleAndConcurrencyTriggersHttp
-    /// </summary>
+    /// <summary> Scale and concurrency settings for the HTTP trigger. </summary>
     internal partial class FunctionsScaleAndConcurrencyTriggersHttp
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="FunctionsScaleAndConcurrencyTriggersHttp"/>. </summary>
         public FunctionsScaleAndConcurrencyTriggersHttp()
@@ -54,21 +23,15 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FunctionsScaleAndConcurrencyTriggersHttp"/>. </summary>
-        /// <param name="concurrentHttpPerInstanceConcurrency">
-        /// The maximum number of concurrent HTTP trigger invocations per instance.
-        /// Serialized Name: FunctionsScaleAndConcurrencyTriggersHttp.perInstanceConcurrency
-        /// </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FunctionsScaleAndConcurrencyTriggersHttp(int? concurrentHttpPerInstanceConcurrency, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="concurrentHttpPerInstanceConcurrency"> The maximum number of concurrent HTTP trigger invocations per instance. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal FunctionsScaleAndConcurrencyTriggersHttp(int? concurrentHttpPerInstanceConcurrency, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ConcurrentHttpPerInstanceConcurrency = concurrentHttpPerInstanceConcurrency;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary>
-        /// The maximum number of concurrent HTTP trigger invocations per instance.
-        /// Serialized Name: FunctionsScaleAndConcurrencyTriggersHttp.perInstanceConcurrency
-        /// </summary>
+        /// <summary> The maximum number of concurrent HTTP trigger invocations per instance. </summary>
         [WirePath("perInstanceConcurrency")]
         public int? ConcurrentHttpPerInstanceConcurrency { get; set; }
     }

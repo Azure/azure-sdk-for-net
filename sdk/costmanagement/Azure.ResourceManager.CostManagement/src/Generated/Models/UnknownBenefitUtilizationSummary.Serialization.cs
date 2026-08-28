@@ -58,7 +58,10 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BenefitUtilizationSummary IPersistableModel<BenefitUtilizationSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => (BenefitUtilizationSummary)PersistableModelCreateCore(data, options);
+        BenefitUtilizationSummary IPersistableModel<BenefitUtilizationSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            return (BenefitUtilizationSummary)PersistableModelCreateCore(data, options);
+        }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<BenefitUtilizationSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -86,7 +89,10 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        BenefitUtilizationSummary IJsonModel<BenefitUtilizationSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (BenefitUtilizationSummary)JsonModelCreateCore(ref reader, options);
+        BenefitUtilizationSummary IJsonModel<BenefitUtilizationSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            return (BenefitUtilizationSummary)JsonModelCreateCore(ref reader, options);
+        }
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -113,8 +119,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             string name = default;
             ResourceType resourceType = default;
             SystemData systemData = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             BillingAccountBenefitKind kind = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -164,8 +170,8 @@ namespace Azure.ResourceManager.CostManagement.Models
                 name,
                 resourceType,
                 systemData,
-                additionalBinaryDataProperties,
-                kind);
+                kind,
+                additionalBinaryDataProperties);
         }
     }
 }

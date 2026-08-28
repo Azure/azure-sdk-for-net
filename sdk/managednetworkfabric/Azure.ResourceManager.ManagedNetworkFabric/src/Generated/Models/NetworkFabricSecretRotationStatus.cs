@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     /// <summary> Status of a secret rotation for a device (Network Device or Terminal Server). </summary>
     public partial class NetworkFabricSecretRotationStatus
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricSecretRotationStatus"/>. </summary>
         internal NetworkFabricSecretRotationStatus()
@@ -55,22 +26,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="synchronizationStatus"> Whether the device has been configured with the latest version of the secret. </param>
         /// <param name="secretArchiveReference"> Reference to the currently configured version of the secret in a key vault. </param>
         /// <param name="secretType"> Identifies the secret according to its purpose. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NetworkFabricSecretRotationStatus(DateTimeOffset? lastRotationOn, NetworkFabricSynchronizationStatus? synchronizationStatus, NetworkFabricSecretArchiveReference secretArchiveReference, string secretType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal NetworkFabricSecretRotationStatus(DateTimeOffset? lastRotationOn, NetworkFabricSynchronizationStatus? synchronizationStatus, NetworkFabricSecretArchiveReference secretArchiveReference, string secretType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LastRotationOn = lastRotationOn;
             SynchronizationStatus = synchronizationStatus;
             SecretArchiveReference = secretArchiveReference;
             SecretType = secretType;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The date and time when the secret was last changed. </summary>
         public DateTimeOffset? LastRotationOn { get; }
+
         /// <summary> Whether the device has been configured with the latest version of the secret. </summary>
         public NetworkFabricSynchronizationStatus? SynchronizationStatus { get; }
+
         /// <summary> Reference to the currently configured version of the secret in a key vault. </summary>
         public NetworkFabricSecretArchiveReference SecretArchiveReference { get; }
+
         /// <summary> Identifies the secret according to its purpose. </summary>
         public string SecretType { get; }
     }

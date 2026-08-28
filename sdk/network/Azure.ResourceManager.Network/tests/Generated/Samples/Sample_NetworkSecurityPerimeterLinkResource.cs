@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Network.Samples
             NetworkSecurityPerimeterLinkResource networkSecurityPerimeterLink = client.GetNetworkSecurityPerimeterLinkResource(networkSecurityPerimeterLinkResourceId);
 
             // invoke the operation
-            await networkSecurityPerimeterLink.DeleteAsync(WaitUntil.Completed);
+            await networkSecurityPerimeterLink.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Samples
                 LocalInboundProfiles = { "*" },
                 RemoteInboundProfiles = { "*" },
             };
-            ArmOperation<NetworkSecurityPerimeterLinkResource> lro = await networkSecurityPerimeterLink.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<NetworkSecurityPerimeterLinkResource> lro = await networkSecurityPerimeterLink.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             NetworkSecurityPerimeterLinkResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

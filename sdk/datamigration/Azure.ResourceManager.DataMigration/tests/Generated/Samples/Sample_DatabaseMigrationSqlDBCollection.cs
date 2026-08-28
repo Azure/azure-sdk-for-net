@@ -33,14 +33,13 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string sqlDBInstanceName = "sqldbinstance";
 
             // get the collection of this DatabaseMigrationSqlDBResource
-            DatabaseMigrationSqlDBCollection collection = resourceGroupResource.GetDatabaseMigrationSqlDBs();
+            DatabaseMigrationSqlDBCollection collection = client.GetDatabaseMigrationSqlDBs(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDBInstanceName}"));
 
             // invoke the operation
-            string sqlDBInstanceName = "sqldbinstance";
             string targetDBName = "db1";
             DatabaseMigrationSqlDBData data = new DatabaseMigrationSqlDBData
             {
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
                     MigrationService = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.DataMigration/sqlMigrationServices/testagent"),
                 },
             };
-            ArmOperation<DatabaseMigrationSqlDBResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sqlDBInstanceName, targetDBName, data);
+            ArmOperation<DatabaseMigrationSqlDBResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, targetDBName, data);
             DatabaseMigrationSqlDBResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -96,14 +95,13 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string sqlDBInstanceName = "sqldbinstance";
 
             // get the collection of this DatabaseMigrationSqlDBResource
-            DatabaseMigrationSqlDBCollection collection = resourceGroupResource.GetDatabaseMigrationSqlDBs();
+            DatabaseMigrationSqlDBCollection collection = client.GetDatabaseMigrationSqlDBs(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDBInstanceName}"));
 
             // invoke the operation
-            string sqlDBInstanceName = "sqldbinstance";
             string targetDBName = "db1";
             DatabaseMigrationSqlDBData data = new DatabaseMigrationSqlDBData
             {
@@ -132,7 +130,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
                     MigrationService = new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/testrg/providers/Microsoft.DataMigration/sqlMigrationServices/testagent"),
                 },
             };
-            ArmOperation<DatabaseMigrationSqlDBResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, sqlDBInstanceName, targetDBName, data);
+            ArmOperation<DatabaseMigrationSqlDBResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, targetDBName, data);
             DatabaseMigrationSqlDBResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -158,17 +156,16 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string sqlDBInstanceName = "sqldbinstance";
 
             // get the collection of this DatabaseMigrationSqlDBResource
-            DatabaseMigrationSqlDBCollection collection = resourceGroupResource.GetDatabaseMigrationSqlDBs();
+            DatabaseMigrationSqlDBCollection collection = client.GetDatabaseMigrationSqlDBs(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDBInstanceName}"));
 
             // invoke the operation
-            string sqlDBInstanceName = "sqldbinstance";
             string targetDBName = "db1";
             string expand = "MigrationStatusDetails";
-            DatabaseMigrationSqlDBResource result = await collection.GetAsync(sqlDBInstanceName, targetDBName, expand: expand);
+            DatabaseMigrationSqlDBResource result = await collection.GetAsync(targetDBName, expand: expand);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -193,16 +190,15 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string sqlDBInstanceName = "sqldbinstance";
 
             // get the collection of this DatabaseMigrationSqlDBResource
-            DatabaseMigrationSqlDBCollection collection = resourceGroupResource.GetDatabaseMigrationSqlDBs();
+            DatabaseMigrationSqlDBCollection collection = client.GetDatabaseMigrationSqlDBs(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDBInstanceName}"));
 
             // invoke the operation
-            string sqlDBInstanceName = "sqldbinstance";
             string targetDBName = "db1";
-            DatabaseMigrationSqlDBResource result = await collection.GetAsync(sqlDBInstanceName, targetDBName);
+            DatabaseMigrationSqlDBResource result = await collection.GetAsync(targetDBName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -227,17 +223,16 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string sqlDBInstanceName = "sqldbinstance";
 
             // get the collection of this DatabaseMigrationSqlDBResource
-            DatabaseMigrationSqlDBCollection collection = resourceGroupResource.GetDatabaseMigrationSqlDBs();
+            DatabaseMigrationSqlDBCollection collection = client.GetDatabaseMigrationSqlDBs(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDBInstanceName}"));
 
             // invoke the operation
-            string sqlDBInstanceName = "sqldbinstance";
             string targetDBName = "db1";
             string expand = "MigrationStatusDetails";
-            bool result = await collection.ExistsAsync(sqlDBInstanceName, targetDBName, expand: expand);
+            bool result = await collection.ExistsAsync(targetDBName, expand: expand);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -258,16 +253,15 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string sqlDBInstanceName = "sqldbinstance";
 
             // get the collection of this DatabaseMigrationSqlDBResource
-            DatabaseMigrationSqlDBCollection collection = resourceGroupResource.GetDatabaseMigrationSqlDBs();
+            DatabaseMigrationSqlDBCollection collection = client.GetDatabaseMigrationSqlDBs(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDBInstanceName}"));
 
             // invoke the operation
-            string sqlDBInstanceName = "sqldbinstance";
             string targetDBName = "db1";
-            bool result = await collection.ExistsAsync(sqlDBInstanceName, targetDBName);
+            bool result = await collection.ExistsAsync(targetDBName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -288,17 +282,16 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string sqlDBInstanceName = "sqldbinstance";
 
             // get the collection of this DatabaseMigrationSqlDBResource
-            DatabaseMigrationSqlDBCollection collection = resourceGroupResource.GetDatabaseMigrationSqlDBs();
+            DatabaseMigrationSqlDBCollection collection = client.GetDatabaseMigrationSqlDBs(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDBInstanceName}"));
 
             // invoke the operation
-            string sqlDBInstanceName = "sqldbinstance";
             string targetDBName = "db1";
             string expand = "MigrationStatusDetails";
-            NullableResponse<DatabaseMigrationSqlDBResource> response = await collection.GetIfExistsAsync(sqlDBInstanceName, targetDBName, expand: expand);
+            NullableResponse<DatabaseMigrationSqlDBResource> response = await collection.GetIfExistsAsync(targetDBName, expand: expand);
             DatabaseMigrationSqlDBResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
@@ -331,16 +324,15 @@ namespace Azure.ResourceManager.DataMigration.Samples
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
             string subscriptionId = "00000000-1111-2222-3333-444444444444";
             string resourceGroupName = "testrg";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+            string sqlDBInstanceName = "sqldbinstance";
 
             // get the collection of this DatabaseMigrationSqlDBResource
-            DatabaseMigrationSqlDBCollection collection = resourceGroupResource.GetDatabaseMigrationSqlDBs();
+            DatabaseMigrationSqlDBCollection collection = client.GetDatabaseMigrationSqlDBs(
+                new ResourceIdentifier($"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/servers/{sqlDBInstanceName}"));
 
             // invoke the operation
-            string sqlDBInstanceName = "sqldbinstance";
             string targetDBName = "db1";
-            NullableResponse<DatabaseMigrationSqlDBResource> response = await collection.GetIfExistsAsync(sqlDBInstanceName, targetDBName);
+            NullableResponse<DatabaseMigrationSqlDBResource> response = await collection.GetIfExistsAsync(targetDBName);
             DatabaseMigrationSqlDBResource result = response.HasValue ? response.Value : null;
 
             if (result == null)

@@ -41,6 +41,10 @@ namespace Azure.Provisioning.KeyVault
         {
             base.DefineProvisionableProperties();
             _subnetId = DefineProperty<ResourceIdentifier>(nameof(SubnetId), new string[] { "id" }, isRequired: true);
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ManagedHsmVirtualNetworkRule that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

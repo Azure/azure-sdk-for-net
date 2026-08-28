@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.Kusto.Models
     public readonly partial struct MigrationClusterRole : IEquatable<MigrationClusterRole>
     {
         private readonly string _value;
+        /// <summary> Source. </summary>
+        private const string SourceValue = "Source";
+        /// <summary> Destination. </summary>
+        private const string DestinationValue = "Destination";
 
         /// <summary> Initializes a new instance of <see cref="MigrationClusterRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MigrationClusterRole(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string SourceValue = "Source";
-        private const string DestinationValue = "Destination";
+            _value = value;
+        }
 
         /// <summary> Source. </summary>
         public static MigrationClusterRole Source { get; } = new MigrationClusterRole(SourceValue);
+
         /// <summary> Destination. </summary>
         public static MigrationClusterRole Destination { get; } = new MigrationClusterRole(DestinationValue);
+
         /// <summary> Determines if two <see cref="MigrationClusterRole"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MigrationClusterRole left, MigrationClusterRole right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MigrationClusterRole"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MigrationClusterRole left, MigrationClusterRole right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MigrationClusterRole"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MigrationClusterRole"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MigrationClusterRole(string value) => new MigrationClusterRole(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MigrationClusterRole"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MigrationClusterRole?(string value) => value == null ? null : new MigrationClusterRole(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MigrationClusterRole other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MigrationClusterRole other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

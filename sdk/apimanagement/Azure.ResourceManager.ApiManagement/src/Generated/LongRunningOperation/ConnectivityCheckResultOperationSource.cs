@@ -8,23 +8,36 @@
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ApiManagement.Models;
 
 namespace Azure.ResourceManager.ApiManagement
 {
-    internal class ConnectivityCheckResultOperationSource : IOperationSource<ConnectivityCheckResult>
+    /// <summary></summary>
+    internal partial class ConnectivityCheckResultOperationSource : IOperationSource<ConnectivityCheckResult>
     {
-        ConnectivityCheckResult IOperationSource<ConnectivityCheckResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        /// <summary></summary>
+        internal ConnectivityCheckResultOperationSource()
         {
-            using var document = JsonDocument.Parse(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-            return ConnectivityCheckResult.DeserializeConnectivityCheckResult(document.RootElement);
         }
 
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
+        ConnectivityCheckResult IOperationSource<ConnectivityCheckResult>.CreateResult(Response response, CancellationToken cancellationToken)
+        {
+            using JsonDocument document = JsonDocument.Parse(response.ContentStream);
+            return ConnectivityCheckResult.DeserializeConnectivityCheckResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="response"> The response from the service. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns></returns>
         async ValueTask<ConnectivityCheckResult> IOperationSource<ConnectivityCheckResult>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
-            using var document = await JsonDocument.ParseAsync(response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-            return ConnectivityCheckResult.DeserializeConnectivityCheckResult(document.RootElement);
+            using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+            return ConnectivityCheckResult.DeserializeConnectivityCheckResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

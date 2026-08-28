@@ -49,8 +49,8 @@ namespace Azure.ResourceManager.Cdn
                     yield break;
                 }
                 ManagedRuleSetDefinitionList result = ManagedRuleSetDefinitionList.FromResponse(response);
-                yield return Page<ManagedRuleSetDefinition>.FromValues((IReadOnlyList<ManagedRuleSetDefinition>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ManagedRuleSetDefinition>.FromValues((IReadOnlyList<ManagedRuleSetDefinition>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

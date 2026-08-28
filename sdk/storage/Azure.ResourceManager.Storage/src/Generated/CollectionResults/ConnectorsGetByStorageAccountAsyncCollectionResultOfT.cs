@@ -56,8 +56,8 @@ namespace Azure.ResourceManager.Storage
                     yield break;
                 }
                 ConnectorListResult result = ConnectorListResult.FromResponse(response);
-                yield return Page<StorageConnectorData>.FromValues((IReadOnlyList<StorageConnectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<StorageConnectorData>.FromValues((IReadOnlyList<StorageConnectorData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

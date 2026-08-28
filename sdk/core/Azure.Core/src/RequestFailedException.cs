@@ -195,12 +195,24 @@ namespace Azure
 
         private static void AppendContentAndHeaders(Response response, StringBuilder messageBuilder)
         {
-            if (response.ContentStream is MemoryStream && ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out Encoding _))
+            // Formatting the diagnostic message must never throw: a failure here would replace the
+            // meaningful RequestFailedException with a misleading secondary exception and mask the
+            // real service failure. Guard the content section (which reads the response body) so the
+            // exception still carries the status, reason phrase, and headers if reading content fails.
+            if (response.ContentStream is MemoryStream contentStream && contentStream is { Length: > 0 } && ContentTypeUtilities.TryGetTextEncoding(response.Headers.ContentType, out Encoding _))
             {
-                messageBuilder
-                    .AppendLine()
-                    .AppendLine("Content:")
-                    .AppendLine(response.Content.ToString());
+                try
+                {
+                    messageBuilder
+                        .AppendLine()
+                        .AppendLine("Content:")
+                        .AppendLine(response.Content.ToString());
+                }
+                catch (Exception)
+                {
+                    messageBuilder
+                        .AppendLine("   (response content could not be read)");
+                }
             }
 
             messageBuilder

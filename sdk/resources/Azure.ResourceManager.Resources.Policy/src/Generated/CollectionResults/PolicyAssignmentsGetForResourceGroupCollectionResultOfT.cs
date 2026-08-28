@@ -61,8 +61,8 @@ namespace Azure.ResourceManager.Resources.Policy
                     yield break;
                 }
                 PolicyAssignmentListResult result = PolicyAssignmentListResult.FromResponse(response);
-                yield return Page<PolicyAssignmentData>.FromValues((IReadOnlyList<PolicyAssignmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<PolicyAssignmentData>.FromValues((IReadOnlyList<PolicyAssignmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

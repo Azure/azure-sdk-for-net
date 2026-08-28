@@ -9,6 +9,8 @@ extends:
     ServiceDirectory: monitor
     LimitForPullRequest: true
     Artifacts:
+    - name: Azure.ResourceManager.Monitor.Workspaces
+      safeName: AzureResourceManagerMonitorWorkspaces
     - name: Azure.ResourceManager.Monitor
       safeName: AzureResourceManagerMonitor
     - name: Azure.ResourceManager.Monitor.Slis

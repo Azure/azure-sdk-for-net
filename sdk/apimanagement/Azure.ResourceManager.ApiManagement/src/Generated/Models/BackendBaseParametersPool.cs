@@ -19,9 +19,11 @@ namespace Azure.ResourceManager.ApiManagement.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BackendBaseParametersPool"/>. </summary>
-        /// <param name="services"> The list of backend entities belonging to a pool. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackendBaseParametersPool(IList<BackendPoolItem> services, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(services, serializedAdditionalRawData)
+        /// <param name="poolServices"> The list of backend entities belonging to a pool. </param>
+        /// <param name="failureResponse"> The response to be returned when all the backends in the pool are inactive. </param>
+        /// <param name="sessionAffinity"> The session stickiness properties of the backend pool. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BackendBaseParametersPool(IList<BackendPoolItem> poolServices, BackendFailureResponse failureResponse, BackendSessionAffinity sessionAffinity, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(poolServices, failureResponse, sessionAffinity, additionalBinaryDataProperties)
         {
         }
     }

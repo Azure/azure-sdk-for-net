@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Cdn
                     yield break;
                 }
                 SecretListResult result = SecretListResult.FromResponse(response);
-                yield return Page<FrontDoorSecretData>.FromValues((IReadOnlyList<FrontDoorSecretData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<FrontDoorSecretData>.FromValues((IReadOnlyList<FrontDoorSecretData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

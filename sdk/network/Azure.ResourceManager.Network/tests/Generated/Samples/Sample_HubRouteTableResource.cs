@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Samples
             HubRouteTableResource hubRouteTable = client.GetHubRouteTableResource(hubRouteTableResourceId);
 
             // invoke the operation
-            await hubRouteTable.DeleteAsync(WaitUntil.Completed);
+            await hubRouteTable.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Samples
                 Routes = { new HubRoute("route1", "CIDR", new string[] { "10.0.0.0/8", "20.0.0.0/8", "30.0.0.0/8" }, "ResourceId", "/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/azureFirewalls/azureFirewall1") },
                 Labels = { "label1", "label2" },
             };
-            ArmOperation<HubRouteTableResource> lro = await hubRouteTable.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<HubRouteTableResource> lro = await hubRouteTable.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             HubRouteTableResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well

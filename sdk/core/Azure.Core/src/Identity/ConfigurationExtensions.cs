@@ -53,7 +53,7 @@ namespace Azure.Identity
             params CredentialResolver[] resolvers)
             where T : ClientSettings, new()
         {
-            CredentialResolver[] combined = [.. resolvers ?? [], AzureCredentialResolver.Instance];
+            CredentialResolver[] combined = [.. resolvers ?? [], AzureCredentialResolver.Default];
 
             ApplyAzureOpenAIDefaultScopeIfNeeded(configuration, sectionName);
 
@@ -83,7 +83,7 @@ namespace Azure.Identity
             Action<IConfigurationSection> configureOverrides)
             where T : ClientSettings, new()
         {
-            CredentialResolver[] combined = [.. resolvers ?? [], AzureCredentialResolver.Instance];
+            CredentialResolver[] combined = [.. resolvers ?? [], AzureCredentialResolver.Default];
 
             ApplyAzureOpenAIDefaultScopeIfNeeded(configuration, sectionName);
 
@@ -128,7 +128,7 @@ namespace Azure.Identity
             this IConfiguration configuration,
             string sectionName,
             params CredentialResolver[] resolvers)
-            => configuration.GetCredentialSettings(sectionName, [.. resolvers ?? [], AzureCredentialResolver.Instance]);
+            => configuration.GetCredentialSettings(sectionName, [.. resolvers ?? [], AzureCredentialResolver.Default]);
 
         /// <summary>
         /// Returns the <see cref="CredentialSettings"/> bound from the named credential section,
@@ -148,7 +148,7 @@ namespace Azure.Identity
             string sectionName,
             IEnumerable<CredentialResolver> resolvers,
             Action<IConfigurationSection> configureOverrides)
-            => configuration.GetCredentialSettings(sectionName, [.. resolvers ?? [], AzureCredentialResolver.Instance], configureOverrides);
+            => configuration.GetCredentialSettings(sectionName, [.. resolvers ?? [], AzureCredentialResolver.Default], configureOverrides);
 
         /// <summary>
         /// Registers <see cref="AzureCredentialResolver"/> in the service collection.
@@ -164,12 +164,12 @@ namespace Azure.Identity
             }
 
             // Register the static singleton instance so DI and the standalone
-            // helpers (which use AzureCredentialResolver.Instance directly) share
+            // helpers (which use AzureCredentialResolver.Default directly) share
             // the same resolver identity. SCM's CredentialCache keys entries by
             // (sectionHash, resolver reference), so sharing the instance lets both
             // paths reuse cached credentials when their bound sections are
             // content-identical. TryAddEnumerable dedupes by implementation type.
-            services.TryAddEnumerable(ServiceDescriptor.Singleton<CredentialResolver>(AzureCredentialResolver.Instance));
+            services.TryAddEnumerable(ServiceDescriptor.Singleton<CredentialResolver>(AzureCredentialResolver.Default));
             return services;
         }
 
@@ -294,7 +294,7 @@ namespace Azure.Identity
             => AddAzureClientCore<TClient, TSettings>(host, sectionName, host.AddKeyedClient<TClient, TSettings>(key, sectionName, configureSettings));
 
         // Centralizes the Azure-flavored DI setup: registers the static
-        // AzureCredentialResolver.Instance and (when the section's endpoint
+        // AzureCredentialResolver.Default and (when the section's endpoint
         // matches the AzureOpenAI default-scope quirk) writes the default
         // scope directly to the credential section so subsequent reads of
         // the source configuration are consistent with the resolved credential.
@@ -309,78 +309,6 @@ namespace Azure.Identity
             host.AddAzureCredentialResolver();
             ApplyAzureOpenAIDefaultScopeIfNeeded(host.Configuration, sectionName);
             return builder;
-        }
-
-        /// <summary>
-        /// Sets the <see cref="ClientSettings.CredentialProvider"/> to an instance of <see cref="TokenCredential"/>.
-        /// </summary>
-        /// <typeparam name="T">The type of <see cref="ClientSettings"/>.</typeparam>
-        /// <param name="settings">The <see cref="ClientSettings"/> instance.</param>
-        public static T WithAzureCredential<T>(this T settings)
-            where T : ClientSettings
-        {
-            if (settings.Credential is null)
-            {
-                throw new InvalidOperationException("Credential settings must be provided to use Azure Credential.");
-            }
-
-            AddDefaultScope(settings);
-
-            settings.PostConfigure(config =>
-            {
-                IConfigurationSection credentialSection = config.GetSection("Credential");
-                settings.CredentialProvider = ConfigurableCredentialCache.GetOrAdd(credentialSection, () =>
-                {
-                    DefaultAzureCredentialOptions options = new(settings.Credential, credentialSection);
-                    return new ConfigurableCredential(options);
-                });
-            });
-            return settings;
-        }
-
-        private static void AddDefaultScope(ClientSettings settings)
-        {
-            settings.PostConfigure(section =>
-            {
-                // For packages that support both non azure services and azure services we need to set the default
-                // scope when the configuration is pointed at the azure endpoint.  OpenAI is currently the only
-                // service that falls into this category. Scope is written at the root of the credential section,
-                // which is where SCM reads it from.
-                string endpoint = section["Options:Endpoint"];
-                if (endpoint is not null &&
-                    endpoint.AsSpan().Contains(".openai.azure.com".AsSpan(), StringComparison.OrdinalIgnoreCase) &&
-                    section.GetSection("Credential").Exists())
-                {
-                    IConfigurationSection scope = section.GetSection("Credential:Scope");
-                    if (!scope.Exists() || scope.Value is null)
-                    {
-                        scope.Value = "https://cognitiveservices.azure.com/.default";
-                    }
-                }
-            });
-        }
-
-        /// <summary>
-        /// Registers a credential factory to return a <see cref="TokenCredential"/> to use for the current <see cref="IClientBuilder"/>.
-        /// If the same credential configuration has already been registered, the existing credential instance is reused.
-        /// </summary>
-        /// <param name="clientBuilder">The <see cref="IClientBuilder"/> to add the credential to.</param>
-        public static IClientBuilder WithAzureCredential(this IClientBuilder clientBuilder)
-        {
-            clientBuilder.PostConfigure(settings =>
-            {
-                AddDefaultScope(settings);
-                settings.PostConfigure(config =>
-                {
-                    IConfigurationSection credentialSection = config.GetSection("Credential");
-                    settings.CredentialProvider = ConfigurableCredentialCache.GetOrAdd(credentialSection, () =>
-                    {
-                        DefaultAzureCredentialOptions options = new(settings.Credential, credentialSection);
-                        return new ConfigurableCredential(options);
-                    });
-                });
-            });
-            return clientBuilder;
         }
     }
 }

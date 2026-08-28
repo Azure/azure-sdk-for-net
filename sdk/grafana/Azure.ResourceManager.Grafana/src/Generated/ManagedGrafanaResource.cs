@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Grafana
         {
             TryGetApiVersion(ResourceType, out string managedGrafanaApiVersion);
             _managedGrafanasClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Grafana", ResourceType.Namespace, Diagnostics);
-            _managedGrafanasRestClient = new ManagedGrafanas(_managedGrafanasClientDiagnostics, Pipeline, Endpoint, managedGrafanaApiVersion ?? "2025-09-01-preview");
+            _managedGrafanasRestClient = new ManagedGrafanas(_managedGrafanasClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedGrafanaApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Grafana
                 HttpMessage message = _managedGrafanasRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ManagedGrafanaPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 GrafanaArmOperation<ManagedGrafanaResource> operation = new GrafanaArmOperation<ManagedGrafanaResource>(
-                    new ManagedGrafanaOperationSource(Client),
+                    new ManagedGrafanaResourceOperationSource(Client),
                     _managedGrafanasClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Grafana
                 HttpMessage message = _managedGrafanasRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, ManagedGrafanaPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 GrafanaArmOperation<ManagedGrafanaResource> operation = new GrafanaArmOperation<ManagedGrafanaResource>(
-                    new ManagedGrafanaOperationSource(Client),
+                    new ManagedGrafanaResourceOperationSource(Client),
                     _managedGrafanasClientDiagnostics,
                     Pipeline,
                     message.Request,

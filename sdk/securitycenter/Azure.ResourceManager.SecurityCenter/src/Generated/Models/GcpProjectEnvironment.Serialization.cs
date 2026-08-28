@@ -9,31 +9,52 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
-    public partial class GcpProjectEnvironment : IUtf8JsonSerializable, IJsonModel<GcpProjectEnvironment>
+    /// <summary> The GCP project connector environment data. </summary>
+    public partial class GcpProjectEnvironment : SecurityConnectorEnvironment, IJsonModel<GcpProjectEnvironment>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GcpProjectEnvironment>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<GcpProjectEnvironment>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SecurityConnectorEnvironment PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
+            string format = options.Format == "W" ? ((IPersistableModel<GcpProjectEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeGcpProjectEnvironment(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(GcpProjectEnvironment)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<GcpProjectEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(GcpProjectEnvironment)} does not support writing '{options.Format}' format.");
+            }
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GcpProjectEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GcpProjectEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GcpProjectEnvironment)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(OrganizationalData))
             {
@@ -52,104 +73,72 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
         }
 
-        GcpProjectEnvironment IJsonModel<GcpProjectEnvironment>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override SecurityConnectorEnvironment JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<GcpProjectEnvironment>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GcpProjectEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(GcpProjectEnvironment)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeGcpProjectEnvironment(document.RootElement, options);
         }
 
-        internal static GcpProjectEnvironment DeserializeGcpProjectEnvironment(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static GcpProjectEnvironment DeserializeGcpProjectEnvironment(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            EnvironmentType environmentType = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             GcpOrganizationalInfo organizationalData = default;
             GcpProjectDetails projectDetails = default;
             long? scanInterval = default;
-            EnvironmentType environmentType = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("organizationalData"u8))
+                if (prop.NameEquals("environmentType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    environmentType = new EnvironmentType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("organizationalData"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    organizationalData = GcpOrganizationalInfo.DeserializeGcpOrganizationalInfo(property.Value, options);
+                    organizationalData = GcpOrganizationalInfo.DeserializeGcpOrganizationalInfo(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("projectDetails"u8))
+                if (prop.NameEquals("projectDetails"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    projectDetails = GcpProjectDetails.DeserializeGcpProjectDetails(property.Value, options);
+                    projectDetails = GcpProjectDetails.DeserializeGcpProjectDetails(prop.Value, options);
                     continue;
                 }
-                if (property.NameEquals("scanInterval"u8))
+                if (prop.NameEquals("scanInterval"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    scanInterval = property.Value.GetInt64();
-                    continue;
-                }
-                if (property.NameEquals("environmentType"u8))
-                {
-                    environmentType = new EnvironmentType(property.Value.GetString());
+                    scanInterval = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new GcpProjectEnvironment(environmentType, serializedAdditionalRawData, organizationalData, projectDetails, scanInterval);
+            return new GcpProjectEnvironment(environmentType, additionalBinaryDataProperties, organizationalData, projectDetails, scanInterval);
         }
-
-        BinaryData IPersistableModel<GcpProjectEnvironment>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GcpProjectEnvironment>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerSecurityCenterContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(GcpProjectEnvironment)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        GcpProjectEnvironment IPersistableModel<GcpProjectEnvironment>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<GcpProjectEnvironment>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeGcpProjectEnvironment(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(GcpProjectEnvironment)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<GcpProjectEnvironment>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

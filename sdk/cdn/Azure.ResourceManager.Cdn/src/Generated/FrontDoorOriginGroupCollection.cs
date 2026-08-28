@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(FrontDoorOriginGroupResource.ResourceType, out string frontDoorOriginGroupApiVersion);
             _frontDoorOriginGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", FrontDoorOriginGroupResource.ResourceType.Namespace, Diagnostics);
-            _frontDoorOriginGroupsRestClient = new FrontDoorOriginGroups(_frontDoorOriginGroupsClientDiagnostics, Pipeline, Endpoint, frontDoorOriginGroupApiVersion ?? "2025-09-01-preview");
+            _frontDoorOriginGroupsRestClient = new FrontDoorOriginGroups(_frontDoorOriginGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorOriginGroupApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _frontDoorOriginGroupsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, originGroupName, FrontDoorOriginGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<FrontDoorOriginGroupResource> operation = new CdnArmOperation<FrontDoorOriginGroupResource>(
-                    new FrontDoorOriginGroupOperationSource(Client),
+                    new FrontDoorOriginGroupResourceOperationSource(Client),
                     _frontDoorOriginGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _frontDoorOriginGroupsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, originGroupName, FrontDoorOriginGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<FrontDoorOriginGroupResource> operation = new CdnArmOperation<FrontDoorOriginGroupResource>(
-                    new FrontDoorOriginGroupOperationSource(Client),
+                    new FrontDoorOriginGroupResourceOperationSource(Client),
                     _frontDoorOriginGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,

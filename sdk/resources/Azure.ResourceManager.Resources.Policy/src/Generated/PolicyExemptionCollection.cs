@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             TryGetApiVersion(PolicyExemptionResource.ResourceType, out string policyExemptionApiVersion);
             _policyExemptionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Policy", PolicyExemptionResource.ResourceType.Namespace, Diagnostics);
-            _policyExemptionsRestClient = new PolicyExemptions(_policyExemptionsClientDiagnostics, Pipeline, Endpoint, policyExemptionApiVersion ?? "2025-12-01-preview");
+            _policyExemptionsRestClient = new PolicyExemptions(_policyExemptionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, policyExemptionApiVersion ?? "2025-12-01-preview");
         }
 
         /// <summary>

@@ -14,18 +14,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     public partial class AsrJobDetails : SiteRecoveryJobDetails
     {
         /// <summary> Initializes a new instance of <see cref="AsrJobDetails"/>. </summary>
-        internal AsrJobDetails()
+        internal AsrJobDetails() : base("AsrJobDetails")
         {
-            InstanceType = "AsrJobDetails";
         }
 
         /// <summary> Initializes a new instance of <see cref="AsrJobDetails"/>. </summary>
         /// <param name="instanceType"> Gets the type of job details (see JobDetailsTypes enum for possible values). </param>
         /// <param name="affectedObjectDetails"> The affected object properties like source server, source cloud, target server, target cloud etc. based on the workflow object details. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AsrJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(instanceType, affectedObjectDetails, serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal AsrJobDetails(string instanceType, IReadOnlyDictionary<string, string> affectedObjectDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(instanceType, affectedObjectDetails, additionalBinaryDataProperties)
         {
-            InstanceType = instanceType ?? "AsrJobDetails";
         }
     }
 }

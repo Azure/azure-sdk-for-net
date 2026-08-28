@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.AppContainers
                     yield break;
                 }
                 RevisionCollection result = RevisionCollection.FromResponse(response);
-                yield return Page<ContainerAppRevisionData>.FromValues((IReadOnlyList<ContainerAppRevisionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ContainerAppRevisionData>.FromValues((IReadOnlyList<ContainerAppRevisionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

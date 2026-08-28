@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         }
 
         /// <summary> Gets the VolumeMounts. </summary>
-        public IList<ContainerVolumeMount> VolumeMounts { get; }
+        public IList<ContainerVolumeMount> VolumeMounts { get; } = new ChangeTrackingList<ContainerVolumeMount>();
     }
 }

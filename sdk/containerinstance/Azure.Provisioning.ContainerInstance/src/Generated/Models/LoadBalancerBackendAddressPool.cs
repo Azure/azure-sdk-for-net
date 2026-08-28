@@ -40,6 +40,10 @@ namespace Azure.Provisioning.ContainerInstance
         {
             base.DefineProvisionableProperties();
             _resource = DefineProperty<string>(nameof(Resource), new string[] { "resource" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for LoadBalancerBackendAddressPool that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

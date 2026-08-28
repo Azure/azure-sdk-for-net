@@ -4,7 +4,6 @@
 #nullable disable
 
 using System;
-using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -14,29 +13,10 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.TrafficManager
 {
+    // Preserve the public resource type name shipped by the previous SDK.
     [CodeGenType("TrafficManagerUserMetricResource")]
     public partial class TrafficManagerUserMetricsResource
     {
-        /// <summary> Backward-compatible CreateOrUpdate. </summary>
-        /// <param name="waitUntil"> Completion option. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual ArmOperation<TrafficManagerUserMetricsResource> CreateOrUpdate(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            return Update(waitUntil, cancellationToken);
-        }
-
-        /// <summary> Backward-compatible CreateOrUpdateAsync. </summary>
-        /// <param name="waitUntil"> Completion option. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        [ForwardsClientCalls]
-        public virtual async Task<ArmOperation<TrafficManagerUserMetricsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
-        {
-            return await UpdateAsync(waitUntil, cancellationToken).ConfigureAwait(false);
-        }
-
         /// <summary> Delete a subscription-level key used for Real User Metrics collection. </summary>
         /// <param name="waitUntil"> Completion option. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -50,7 +30,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trafficManagerUserMetricsKeysRestClient.CreateDeleteRequest(Id.SubscriptionId, context);
+                HttpMessage message = _trafficManagerUserMetricsKeysRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<TrafficManagerDeleteOperationResult> response = Response.FromValue(TrafficManagerDeleteOperationResult.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -82,7 +62,7 @@ namespace Azure.ResourceManager.TrafficManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _trafficManagerUserMetricsKeysRestClient.CreateDeleteRequest(Id.SubscriptionId, context);
+                HttpMessage message = _trafficManagerUserMetricsKeysRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<TrafficManagerDeleteOperationResult> response = Response.FromValue(TrafficManagerDeleteOperationResult.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;

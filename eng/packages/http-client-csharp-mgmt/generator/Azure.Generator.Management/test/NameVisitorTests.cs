@@ -38,12 +38,51 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(type?.Properties[0].Name, Is.EqualTo(testPropertyName.Replace("Url", "Uri")));
         }
 
+        [TestCase("StartTime", "StartsOn")]
+        [TestCase("EndTime", "EndsOn")]
+        [TestCase("CreationTime", "CreatedOn")]
+        [TestCase("ExpirationTime", "ExpiresOn")]
+        [TestCase("ModificationTime", "ModifiedOn")]
+        [TestCase("DeletionDate", "DeletedOn")]
+        [TestCase("LastModifiedTime", "LastModifiedOn")]
+        [TestCase("FirstSeenTime", "FirstSeenOn")]
+        [TestCase("TestDate", "TestOn")]
+        [TestCase("TestDateTime", "TestOn")]
+        // Names that must be preserved: the From/To prefixes and the PointInTime suffix are
+        // excluded by the visitor, and bare "Time"/"Date" are too short to carry a prefix.
+        [TestCase("FromTime", "FromTime")]
+        [TestCase("ToTime", "ToTime")]
+        [TestCase("RestorePointInTime", "RestorePointInTime")]
+        [TestCase("Time", "Time")]
+        [TestCase("Date", "Date")]
+        public void TestTransformTimePropertyName(string testPropertyName, string expectedPropertyName)
+        {
+            Assert.That(TransformDateTimePropertyName(testPropertyName, InputPrimitiveType.PlainDate), Is.EqualTo(expectedPropertyName));
+        }
+
+        // The rename keys off the input type rather than the mapped C# type, so utcDateTime must
+        // produce exactly the same names as plainDate.
+        [TestCase("StartTime", "StartsOn")]
+        [TestCase("EndTime", "EndsOn")]
+        [TestCase("CreationTime", "CreatedOn")]
+        [TestCase("ExpirationTime", "ExpiresOn")]
+        [TestCase("RestorePointInTime", "RestorePointInTime")]
+        public void TestTransformTimePropertyNameForUtcDateTime(string testPropertyName, string expectedPropertyName)
+        {
+            var utcDateTime = new InputDateTimeType(DateTimeKnownEncoding.Rfc3339, "utcDateTime", "TypeSpec.utcDateTime", InputPrimitiveType.String);
+            Assert.That(TransformDateTimePropertyName(testPropertyName, utcDateTime), Is.EqualTo(expectedPropertyName));
+        }
+
         [Test]
-        public void TestTransformTimePropertyName()
+        public void TestNonDateTimePropertyNameIsNotTransformed()
+        {
+            Assert.That(TransformDateTimePropertyName("StartTime", InputPrimitiveType.String), Is.EqualTo("StartTime"));
+        }
+
+        private static string? TransformDateTimePropertyName(string testPropertyName, InputType propertyType)
         {
             const string testModelName = "TestModel";
-            const string testPropertyName = "StartTime";
-            var modelProperty = InputFactory.Property(testPropertyName, InputPrimitiveType.PlainDate, serializedName: "testName", isRequired: true);
+            var modelProperty = InputFactory.Property(testPropertyName, propertyType, serializedName: "testName", isRequired: true);
             var model = InputFactory.Model(testModelName, properties: [modelProperty]);
             var responseType = InputFactory.OperationResponse(statusCodes: [200], bodytype: model);
             var testNameParameter = InputFactory.MethodParameter("testName", InputPrimitiveType.String, location: InputRequestLocation.Path);
@@ -59,7 +98,7 @@ namespace Azure.Generator.Mgmt.Tests
 
             // PreVisitModel is called during the model creation
             var type = plugin.Object.TypeFactory.CreateModel(model);
-            Assert.That(type?.Properties[0].Name, Is.EqualTo(testPropertyName.Replace("Time", "On")));
+            return type?.Properties[0].Name;
         }
 
         [Test]
@@ -139,6 +178,17 @@ namespace Azure.Generator.Mgmt.Tests
             // PreVisitModel is called during the model creation
             var type = plugin.Object.TypeFactory.CreateModel(model);
             Assert.That(type?.Properties[0].Name, Is.EqualTo("ETag"));
+        }
+
+        [Test]
+        public void TestPatchModelRenameRespectsResourceDerivedClientNameOverride()
+        {
+            var (client, models, patchModel) = InputResourceData.ClientWithResourcePatchBodyEquivalentModelInstance();
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => models, clients: () => [client]);
+
+            var type = plugin.Object.TypeFactory.CreateModel(patchModel);
+
+            Assert.That(type?.Name, Is.EqualTo("OperationSpecificUpdateShape"));
         }
     }
 }

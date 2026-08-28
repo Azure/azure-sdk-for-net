@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct ControlPlaneAclActionType : IEquatable<ControlPlaneAclActionType>
     {
         private readonly string _value;
+        /// <summary> AclActionType Permit. </summary>
+        private const string PermitValue = "Permit";
+        /// <summary> AclActionType Deny. </summary>
+        private const string DenyValue = "Deny";
+        /// <summary> AclActionType Remark. </summary>
+        private const string RemarkValue = "Remark";
 
         /// <summary> Initializes a new instance of <see cref="ControlPlaneAclActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ControlPlaneAclActionType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PermitValue = "Permit";
-        private const string DenyValue = "Deny";
-        private const string RemarkValue = "Remark";
+            _value = value;
+        }
 
         /// <summary> AclActionType Permit. </summary>
         public static ControlPlaneAclActionType Permit { get; } = new ControlPlaneAclActionType(PermitValue);
+
         /// <summary> AclActionType Deny. </summary>
         public static ControlPlaneAclActionType Deny { get; } = new ControlPlaneAclActionType(DenyValue);
+
         /// <summary> AclActionType Remark. </summary>
         public static ControlPlaneAclActionType Remark { get; } = new ControlPlaneAclActionType(RemarkValue);
+
         /// <summary> Determines if two <see cref="ControlPlaneAclActionType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ControlPlaneAclActionType left, ControlPlaneAclActionType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ControlPlaneAclActionType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ControlPlaneAclActionType left, ControlPlaneAclActionType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ControlPlaneAclActionType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ControlPlaneAclActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ControlPlaneAclActionType(string value) => new ControlPlaneAclActionType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ControlPlaneAclActionType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ControlPlaneAclActionType?(string value) => value == null ? null : new ControlPlaneAclActionType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ControlPlaneAclActionType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ControlPlaneAclActionType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -37,7 +37,7 @@ public class BasicKustoTests
                 };
                 infra.Add(kustoDBName);
                 // Create Kusto cluster
-                KustoCluster kustoCluster = new("kustoCluster", KustoCluster.ResourceVersions.V2024_04_13)
+                KustoCluster kustoCluster = new("kustoCluster", KustoCluster.ResourceVersions.V2025_02_14)
                 {
                     Name = kustoClusterName,
                     Sku = new KustoSku
@@ -54,7 +54,7 @@ public class BasicKustoTests
                 };
                 infra.Add(kustoCluster);
                 // Create Kusto database
-                KustoReadWriteDatabase kustoDatabase = new("kustoDatabase", KustoDatabase.ResourceVersions.V2024_04_13)
+                KustoReadWriteDatabase kustoDatabase = new("kustoDatabase", KustoDatabase.ResourceVersions.V2025_02_14)
                 {
                     Name = kustoDBName,
                     Parent = kustoCluster,
@@ -83,27 +83,27 @@ public class BasicKustoTests
             @description('The location for the resource(s) to be deployed.')
             param location string = resourceGroup().location
 
-            resource kustoCluster 'Microsoft.Kusto/clusters@2024-04-13' = {
+            resource kustoCluster 'Microsoft.Kusto/clusters@2025-02-14' = {
               name: kustoClusterName
+              tags: {
+                'Created By': 'GitHub quickstart template'
+              }
               location: location
               sku: {
                 name: 'Standard_E8d_v4'
                 capacity: 2
                 tier: 'Standard'
               }
-              tags: {
-                'Created By': 'GitHub quickstart template'
-              }
             }
 
-            resource kustoDatabase 'Microsoft.Kusto/clusters/databases@2024-04-13' = {
+            resource kustoDatabase 'Microsoft.Kusto/clusters/databases@2025-02-14' = {
               name: kustoDBName
               location: location
               parent: kustoCluster
               kind: 'ReadWrite'
               properties: {
-                hotCachePeriod: 'P31D'
                 softDeletePeriod: 'P365D'
+                hotCachePeriod: 'P31D'
               }
             }
             """);
@@ -214,7 +214,7 @@ public class BasicKustoTests
                     }
                 };
                 infra.Add(cosmosDbContainer);
-                KustoCluster cluster = new(nameof(cluster), KustoCluster.ResourceVersions.V2024_04_13)
+                KustoCluster cluster = new(nameof(cluster), KustoCluster.ResourceVersions.V2025_02_14)
                 {
                     Name = clusterName,
                     Location = location,
@@ -238,13 +238,13 @@ public class BasicKustoTests
                     Scope = cosmosDbAccount.Id
                 };
                 infra.Add(cosmosDBSqlRoleAssignment);
-                KustoDatabase kustoDb = new KustoReadWriteDatabase(nameof(kustoDb), KustoDatabase.ResourceVersions.V2024_04_13)
+                KustoDatabase kustoDb = new KustoReadWriteDatabase(nameof(kustoDb), KustoDatabase.ResourceVersions.V2025_02_14)
                 {
                     Name = kustoDatabaseName,
                     Parent = cluster,
                 };
                 infra.Add(kustoDb);
-                KustoScript kustoScript = new("kustoScript", KustoScript.ResourceVersions.V2024_04_13)
+                KustoScript kustoScript = new("kustoScript", KustoScript.ResourceVersions.V2025_02_14)
                 {
                     Name = "db-script",
                     Parent = kustoDb,
@@ -252,7 +252,7 @@ public class BasicKustoTests
                     ShouldContinueOnErrors = false
                 };
                 infra.Add(kustoScript);
-                KustoDataConnection cosmosDbConnection = new KustoCosmosDBDataConnection("cosmosDbConnection", KustoDataConnection.ResourceVersions.V2024_04_13)
+                KustoDataConnection cosmosDbConnection = new KustoCosmosDBDataConnection("cosmosDbConnection", KustoDataConnection.ResourceVersions.V2025_02_14)
                 {
                     Name = "cosmosDbConnection",
                     Parent = kustoDb,
@@ -354,7 +354,7 @@ public class BasicKustoTests
               parent: cosmosDbDatabase
             }
 
-            resource cluster 'Microsoft.Kusto/clusters@2024-04-13' = {
+            resource cluster 'Microsoft.Kusto/clusters@2025-02-14' = {
               name: clusterName
               location: location
               sku: {
@@ -376,14 +376,14 @@ public class BasicKustoTests
               parent: cosmosDbAccount
             }
 
-            resource kustoDb 'Microsoft.Kusto/clusters/databases@2024-04-13' = {
+            resource kustoDb 'Microsoft.Kusto/clusters/databases@2025-02-14' = {
               name: kustoDatabaseName
               location: location
               parent: cluster
               kind: 'ReadWrite'
             }
 
-            resource kustoScript 'Microsoft.Kusto/clusters/databases/scripts@2024-04-13' = {
+            resource kustoScript 'Microsoft.Kusto/clusters/databases/scripts@2025-02-14' = {
               name: 'db-script'
               properties: {
                 scriptContent: loadTextContent('script.kql')
@@ -392,18 +392,18 @@ public class BasicKustoTests
               parent: kustoDb
             }
 
-            resource cosmosDbConnection 'Microsoft.Kusto/clusters/databases/dataConnections@2024-04-13' = {
+            resource cosmosDbConnection 'Microsoft.Kusto/clusters/databases/dataConnections@2025-02-14' = {
               name: 'cosmosDbConnection'
               location: location
               parent: kustoDb
               kind: 'CosmosDb'
               properties: {
-                cosmosDbAccountResourceId: cosmosDbAccount.id
-                cosmosDbContainer: cosmosDbContainerName
-                cosmosDbDatabase: cosmosDbDatabaseName
-                managedIdentityResourceId: cluster.id
-                mappingRuleName: 'DocumentMapping'
                 tableName: 'TestTable'
+                mappingRuleName: 'DocumentMapping'
+                managedIdentityResourceId: cluster.id
+                cosmosDbAccountResourceId: cosmosDbAccount.id
+                cosmosDbDatabase: cosmosDbDatabaseName
+                cosmosDbContainer: cosmosDbContainerName
               }
               dependsOn: [
                 kustoScript
@@ -605,7 +605,7 @@ public class BasicKustoTests
                 infra.Add(newBlobSubscription);
 
                 // Kusto cluster
-                KustoCluster cluster = new("cluster", KustoCluster.ResourceVersions.V2024_04_13)
+                KustoCluster cluster = new("cluster", KustoCluster.ResourceVersions.V2025_02_14)
                 {
                     Name = clusterName,
                     Location = location,
@@ -623,7 +623,7 @@ public class BasicKustoTests
                 };
                 infra.Add(cluster);
 
-                KustoReadWriteDatabase kustoDb = new("kustoDb", KustoDatabase.ResourceVersions.V2024_04_13)
+                KustoReadWriteDatabase kustoDb = new("kustoDb", KustoDatabase.ResourceVersions.V2025_02_14)
                 {
                     Name = databaseName,
                     Parent = cluster,
@@ -631,7 +631,7 @@ public class BasicKustoTests
                 };
                 infra.Add(kustoDb);
 
-                KustoScript kustoScript = new("kustoScript", KustoScript.ResourceVersions.V2024_04_13)
+                KustoScript kustoScript = new("kustoScript", KustoScript.ResourceVersions.V2025_02_14)
                 {
                     Name = "db-script",
                     Parent = kustoDb,
@@ -640,7 +640,7 @@ public class BasicKustoTests
                 };
                 infra.Add(kustoScript);
 
-                KustoEventGridDataConnection eventConnection = new("eventConnection", KustoDataConnection.ResourceVersions.V2024_04_13)
+                KustoEventGridDataConnection eventConnection = new("eventConnection", KustoDataConnection.ResourceVersions.V2025_02_14)
                 {
                     Name = "eventConnection",
                     Parent = kustoDb,
@@ -795,9 +795,12 @@ public class BasicKustoTests
               parent: blobTopic
             }
 
-            resource cluster 'Microsoft.Kusto/clusters@2024-04-13' = {
+            resource cluster 'Microsoft.Kusto/clusters@2025-02-14' = {
               name: clusterName
               location: location
+              properties: {
+                enableStreamingIngest: true
+              }
               sku: {
                 name: 'Standard_D12_v2'
                 capacity: skuCapacity
@@ -806,19 +809,16 @@ public class BasicKustoTests
               identity: {
                 type: 'SystemAssigned'
               }
-              properties: {
-                enableStreamingIngest: true
-              }
             }
 
-            resource kustoDb 'Microsoft.Kusto/clusters/databases@2024-04-13' = {
+            resource kustoDb 'Microsoft.Kusto/clusters/databases@2025-02-14' = {
               name: databaseName
               location: location
               parent: cluster
               kind: 'ReadWrite'
             }
 
-            resource kustoScript 'Microsoft.Kusto/clusters/databases/scripts@2024-04-13' = {
+            resource kustoScript 'Microsoft.Kusto/clusters/databases/scripts@2025-02-14' = {
               name: 'db-script'
               properties: {
                 scriptContent: loadTextContent('script.kql')
@@ -827,21 +827,21 @@ public class BasicKustoTests
               parent: kustoDb
             }
 
-            resource eventConnection 'Microsoft.Kusto/clusters/databases/dataConnections@2024-04-13' = {
+            resource eventConnection 'Microsoft.Kusto/clusters/databases/dataConnections@2025-02-14' = {
               name: 'eventConnection'
               location: location
               parent: kustoDb
               kind: 'EventGrid'
               properties: {
-                blobStorageEventType: 'Microsoft.Storage.BlobCreated'
-                consumerGroup: kustoConsumerGroup.name
-                dataFormat: 'CSV'
+                storageAccountResourceId: storage.id
                 eventGridResourceId: newBlobSubscription.id
                 eventHubResourceId: eventHub.id
-                ignoreFirstRecord: true
-                managedIdentityResourceId: cluster.id
-                storageAccountResourceId: storage.id
+                consumerGroup: kustoConsumerGroup.name
                 tableName: 'People'
+                dataFormat: 'CSV'
+                ignoreFirstRecord: true
+                blobStorageEventType: 'Microsoft.Storage.BlobCreated'
+                managedIdentityResourceId: cluster.id
               }
               dependsOn: [
                 kustoScript

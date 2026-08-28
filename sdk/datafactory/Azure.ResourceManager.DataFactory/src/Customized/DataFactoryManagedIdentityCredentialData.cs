@@ -4,52 +4,37 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
+using System.ClientModel.Primitives;
 using System.ComponentModel;
-using Azure.Core;
+using System.Text.Json;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DataFactory
 {
+    // Customization restores the DataFactoryManagedIdentityCredentialData back-compat surface.
+    //
+    // Spec context: the DataFactory ARM provider exposes a single credential resource type
+    // `Microsoft.DataFactory/factories/credentials` (TypeSpec CredentialResource.tsp,
+    // swagger path /factories/{factoryName}/credentials/{credentialName}). Neither swagger nor Bicep
+    // defines a separate /managedIdentityCredentials/ resource type. `ManagedIdentityCredential`
+    // is only a discriminator value (type: "ManagedIdentity") of the polymorphic `Credential` model.
+    //
+    // The pre-MPG AutoRest SDK historically projected the same REST endpoint as two SDK-only "views":
+    // the general DataFactoryServiceCredential family and this specialized
+    // DataFactoryManagedIdentityCredential family. Because the second view has no spec representation,
+    // the MPG generator emits only the general view. This partial reconstructs the specialized data
+    // model as a thin delegating wrapper around DataFactoryServiceCredentialData, preserving the
+    // published API surface without altering wire serialization. Marked EditorBrowsableNever to
+    // discourage new usage.
     /// <summary>
     /// A class representing the DataFactoryManagedIdentityCredential data model.
     /// Credential resource type.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public partial class DataFactoryManagedIdentityCredentialData : ResourceData
+    public partial class DataFactoryManagedIdentityCredentialData : ResourceData, IJsonModel<DataFactoryManagedIdentityCredentialData>, IPersistableModel<DataFactoryManagedIdentityCredentialData>
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private readonly DataFactoryServiceCredentialData _inner;
 
         /// <summary> Initializes a new instance of <see cref="DataFactoryManagedIdentityCredentialData"/>. </summary>
         /// <param name="properties"> Managed Identity Credential properties. </param>
@@ -58,32 +43,46 @@ namespace Azure.ResourceManager.DataFactory
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
-            Properties = properties;
+            _inner = new DataFactoryServiceCredentialData(properties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedIdentityCredentialData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> Managed Identity Credential properties. </param>
-        /// <param name="eTag"> Etag identifies change in the resource. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataFactoryManagedIdentityCredentialData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, DataFactoryManagedIdentityCredentialProperties properties, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal DataFactoryManagedIdentityCredentialData(DataFactoryServiceCredentialData inner)
+            : base(inner?.Id, inner?.Name, inner?.ResourceType ?? default, inner?.SystemData)
         {
-            Properties = properties;
-            ETag = eTag;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _inner = inner ?? new DataFactoryServiceCredentialData(new DataFactoryManagedIdentityCredentialProperties());
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataFactoryManagedIdentityCredentialData"/> for deserialization. </summary>
-        internal DataFactoryManagedIdentityCredentialData()
-        {
-        }
+        internal DataFactoryServiceCredentialData ToServiceCredentialData() => _inner;
 
         /// <summary> Managed Identity Credential properties. </summary>
-        public DataFactoryManagedIdentityCredentialProperties Properties { get; set; }
+        public DataFactoryManagedIdentityCredentialProperties Properties
+        {
+            get => _inner.Properties as DataFactoryManagedIdentityCredentialProperties;
+            set => _inner.Properties = value;
+        }
+
         /// <summary> Etag identifies change in the resource. </summary>
-        public ETag? ETag { get; }
+        public ETag? ETag => _inner.ETag;
+
+        DataFactoryManagedIdentityCredentialData IJsonModel<DataFactoryManagedIdentityCredentialData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var inner = ((IJsonModel<DataFactoryServiceCredentialData>)_inner).Create(ref reader, options);
+            return new DataFactoryManagedIdentityCredentialData(inner);
+        }
+
+        void IJsonModel<DataFactoryManagedIdentityCredentialData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+            => ((IJsonModel<DataFactoryServiceCredentialData>)_inner).Write(writer, options);
+
+        DataFactoryManagedIdentityCredentialData IPersistableModel<DataFactoryManagedIdentityCredentialData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var inner = ((IPersistableModel<DataFactoryServiceCredentialData>)_inner).Create(data, options);
+            return new DataFactoryManagedIdentityCredentialData(inner);
+        }
+
+        string IPersistableModel<DataFactoryManagedIdentityCredentialData>.GetFormatFromOptions(ModelReaderWriterOptions options)
+            => ((IPersistableModel<DataFactoryServiceCredentialData>)_inner).GetFormatFromOptions(options);
+
+        BinaryData IPersistableModel<DataFactoryManagedIdentityCredentialData>.Write(ModelReaderWriterOptions options)
+            => ((IPersistableModel<DataFactoryServiceCredentialData>)_inner).Write(options);
     }
 }

@@ -1,6 +1,6 @@
 # Release History
 
-## 2.1.0-beta.3 (Unreleased)
+## 3.0.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,66 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 3.0.0-beta.1 (2026-08-24)
+
+### Features Added
+
+- Added distributed tracing support.
+
+### Breaking Changes
+
+- The Agent optimization-related classes were renamed
+
+| Old (2.x) | New (3.0.0-beta.1) |
+| --- | --- |
+| `OptimizationCandidate` | `AgentOptimizationCandidate` |
+| `OptimizationDatasetCriterion` | `AgentOptimizationDatasetCriterion` |
+| `OptimizationDatasetInput` | `AgentOptimizationDatasetInput` |
+| `OptimizationDatasetItem` | `AgentOptimizationDatasetItem` |
+| `OptimizationEvaluatorRef` | `AgentOptimizationEvaluatorRef` |
+| `OptimizationInlineDatasetInput` | `AgentOptimizationInlineDatasetInput` |
+| `OptimizationJob` | `AgentOptimizationJob` |
+| `OptimizationJobInputs` | `AgentOptimizationJobInputs` |
+| `OptimizationJobListItem` | `AgentOptimizationJobListItem` |
+| `OptimizationJobProgress` | `AgentOptimizationJobProgress` |
+| `OptimizationJobResult` | `AgentOptimizationJobResult` |
+| `OptimizationOptions` | `AgentOptimizationOptions` |
+| `OptimizationReferenceDatasetInput` | `AgentOptimizationReferenceDatasetInput` |
+| `OptimizationAgentIdentifier` | `OptimizedAgentIdentifier` |
+
+### Bugs Fixed
+- Fixed listing of Agent Optimization Jobs.
+- Fixed the `StopSession` and `StopSessionAsync` calls.
+
+### Other Changes
+- Updated the `OpenAI` package dependency to `2.12.0`.
+
+### Sample Updates
+- Added sample demonstrating disabling and enabling Hosted Agent.
+- Added samples for Agent optimization jobs.
+- Added sample for creating Agent version drafts.
+
+## 2.1.0-beta.4 (2026-06-30)
+
+### Breaking Changes
+
+- Hosted Agents do not need the `Foundry-Features: HostedAgents=V1Preview` header and warning suppression anymore.
+- The deployment of hosted Agent using code does not require the `Foundry-Features: CodeAgents=V1Preview` header and warning suppression anymore.
+- Using toolboxes does not require the `Foundry-Features: Toolboxes=V1Preview` header and warning suppression anymore.
+
+## 2.1.0-beta.3 (2026-05-29)
+
+### Features Added
+
+- Added client for Agent optimization Jobs.
+
+### Breaking Changes
+
+- `CreateSkillFromPackage` and `CreateSkillFromPackageAsync` methods of `ProjectAgentSkills` client were replaced by `CreateSkillVersionFromFiles` and `CreateSkillVersionFromFilesAsync` respectively.
+- `DownloadSkill` and `DownloadSkillAsync`  methods of `ProjectAgentSkills` client were replaced by `GetSkillContent` and `GetSkillContentAsync` respectively.
+- `UpdateSkill` and `UpdateSkillAsync`  methods of `ProjectAgentSkills` now can only set the default version of `AgentsSkill`.
+- `OptimizationTaskResult.Tokens` was changed from `int` to `long`.
 
 ## 2.1.0-beta.2 (2026-05-14)
 

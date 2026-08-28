@@ -11,14 +11,14 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
     public enum ConfigurationStoreProvisioningState
     {
         /// <summary> The resource is being created. </summary>
-        Creating,
+        Creating = 0,
         /// <summary> The resource has been created. </summary>
-        Succeeded,
+        Succeeded = 1,
         /// <summary> The resource is being deleted. </summary>
-        Deleting,
+        Deleting = 2,
         /// <summary> The resource creation or deletion has failed. </summary>
-        Failed,
+        Failed = 3,
         /// <summary> The resource creation or deletion has been canceled. </summary>
-        Canceled
+        Canceled = 4
     }
 }

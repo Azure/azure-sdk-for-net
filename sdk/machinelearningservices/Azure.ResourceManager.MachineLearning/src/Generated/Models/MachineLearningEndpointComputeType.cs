@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -14,41 +15,59 @@ namespace Azure.ResourceManager.MachineLearning.Models
     public readonly partial struct MachineLearningEndpointComputeType : IEquatable<MachineLearningEndpointComputeType>
     {
         private readonly string _value;
+        private const string ManagedValue = "Managed";
+        private const string KubernetesValue = "Kubernetes";
+        private const string AzureMLComputeValue = "AzureMLCompute";
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointComputeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public MachineLearningEndpointComputeType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ManagedValue = "Managed";
-        private const string KubernetesValue = "Kubernetes";
-        private const string AmlComputeValue = "AzureMLCompute";
-
-        /// <summary> Managed. </summary>
+        /// <summary> Gets the Managed. </summary>
         public static MachineLearningEndpointComputeType Managed { get; } = new MachineLearningEndpointComputeType(ManagedValue);
-        /// <summary> Kubernetes. </summary>
+
+        /// <summary> Gets the Kubernetes. </summary>
         public static MachineLearningEndpointComputeType Kubernetes { get; } = new MachineLearningEndpointComputeType(KubernetesValue);
-        /// <summary> AzureMLCompute. </summary>
-        public static MachineLearningEndpointComputeType AmlCompute { get; } = new MachineLearningEndpointComputeType(AmlComputeValue);
+
+        /// <summary> Gets the AzureMLCompute. </summary>
+        public static MachineLearningEndpointComputeType AzureMLCompute { get; } = new MachineLearningEndpointComputeType(AzureMLComputeValue);
+
         /// <summary> Determines if two <see cref="MachineLearningEndpointComputeType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(MachineLearningEndpointComputeType left, MachineLearningEndpointComputeType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="MachineLearningEndpointComputeType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(MachineLearningEndpointComputeType left, MachineLearningEndpointComputeType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="MachineLearningEndpointComputeType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="MachineLearningEndpointComputeType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator MachineLearningEndpointComputeType(string value) => new MachineLearningEndpointComputeType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="MachineLearningEndpointComputeType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator MachineLearningEndpointComputeType?(string value) => value == null ? null : new MachineLearningEndpointComputeType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is MachineLearningEndpointComputeType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(MachineLearningEndpointComputeType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

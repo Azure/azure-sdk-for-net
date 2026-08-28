@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.ResourceManager.AppNetwork;
 
 namespace Azure.ResourceManager.AppNetwork.Models
 {
@@ -34,6 +35,6 @@ namespace Azure.ResourceManager.AppNetwork.Models
         }
 
         /// <summary> Istio versions. </summary>
-        public IList<AppLinkVersionInfo> Versions { get; }
+        public IList<AppLinkVersionInfo> Versions { get; } = new ChangeTrackingList<AppLinkVersionInfo>();
     }
 }

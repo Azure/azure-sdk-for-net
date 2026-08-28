@@ -22,15 +22,15 @@ namespace Azure.Communication.CallAutomation
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string AzureCommunicationServicesValue = "AzureCommunicationServices";
-        private const string TeamsValue = "Teams";
-        private const string TeamsComplianceValue = "TeamsCompliance";
+        private const string AzureCommunicationServicesValue = "azureCommunicationServices";
+        private const string TeamsValue = "teams";
+        private const string TeamsComplianceValue = "teamsCompliance";
 
-        /// <summary> Recording initiated by Azure Communication Services. </summary>
+        /// <summary> azureCommunicationServices. </summary>
         public static RecordingKind AzureCommunicationServices { get; } = new RecordingKind(AzureCommunicationServicesValue);
-        /// <summary> Recording initiated by Teams user. </summary>
+        /// <summary> teams. </summary>
         public static RecordingKind Teams { get; } = new RecordingKind(TeamsValue);
-        /// <summary> Recording initiated by Teams compliance policy. </summary>
+        /// <summary> teamsCompliance. </summary>
         public static RecordingKind TeamsCompliance { get; } = new RecordingKind(TeamsComplianceValue);
         /// <summary> Determines if two <see cref="RecordingKind"/> values are the same. </summary>
         public static bool operator ==(RecordingKind left, RecordingKind right) => left.Equals(right);

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerInstance
         {
             TryGetApiVersion(NGroupResource.ResourceType, out string nGroupApiVersion);
             _nGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerInstance", NGroupResource.ResourceType.Namespace, Diagnostics);
-            _nGroupsRestClient = new NGroups(_nGroupsClientDiagnostics, Pipeline, Endpoint, nGroupApiVersion ?? "2025-09-01");
+            _nGroupsRestClient = new NGroups(_nGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, nGroupApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 HttpMessage message = _nGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ngroupsName, NGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 ContainerInstanceArmOperation<NGroupResource> operation = new ContainerInstanceArmOperation<NGroupResource>(
-                    new NGroupOperationSource(Client),
+                    new NGroupResourceOperationSource(Client),
                     _nGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerInstance
                 HttpMessage message = _nGroupsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, ngroupsName, NGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 ContainerInstanceArmOperation<NGroupResource> operation = new ContainerInstanceArmOperation<NGroupResource>(
-                    new NGroupOperationSource(Client),
+                    new NGroupResourceOperationSource(Client),
                     _nGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -91,6 +91,10 @@ namespace Azure.Provisioning.ContainerInstance
             _resourceGroupName = DefineProperty<string>(nameof(ResourceGroupName), new string[] { "resourceGroupName" });
             _storageAccountName = DefineProperty<string>(nameof(StorageAccountName), new string[] { "storageAccountName" });
             _properties = DefineModelProperty<ContainerGroupFileShareProperties>(nameof(Properties), new string[] { "properties" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerGroupFileShare that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

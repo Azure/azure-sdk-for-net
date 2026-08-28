@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,38 +15,57 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkDeviceInterfaceType : IEquatable<NetworkDeviceInterfaceType>
     {
         private readonly string _value;
+        /// <summary> InterfaceType-Management. </summary>
+        private const string ManagementValue = "Management";
+        /// <summary> InterfaceType-Data. </summary>
+        private const string DataValue = "Data";
 
         /// <summary> Initializes a new instance of <see cref="NetworkDeviceInterfaceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkDeviceInterfaceType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ManagementValue = "Management";
-        private const string DataValue = "Data";
+            _value = value;
+        }
 
         /// <summary> InterfaceType-Management. </summary>
         public static NetworkDeviceInterfaceType Management { get; } = new NetworkDeviceInterfaceType(ManagementValue);
+
         /// <summary> InterfaceType-Data. </summary>
         public static NetworkDeviceInterfaceType Data { get; } = new NetworkDeviceInterfaceType(DataValue);
+
         /// <summary> Determines if two <see cref="NetworkDeviceInterfaceType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkDeviceInterfaceType left, NetworkDeviceInterfaceType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkDeviceInterfaceType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkDeviceInterfaceType left, NetworkDeviceInterfaceType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkDeviceInterfaceType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkDeviceInterfaceType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkDeviceInterfaceType(string value) => new NetworkDeviceInterfaceType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkDeviceInterfaceType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkDeviceInterfaceType?(string value) => value == null ? null : new NetworkDeviceInterfaceType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkDeviceInterfaceType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkDeviceInterfaceType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

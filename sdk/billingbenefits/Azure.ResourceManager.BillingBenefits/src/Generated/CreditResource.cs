@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(ResourceType, out string creditApiVersion);
             _creditsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", ResourceType.Namespace, Diagnostics);
-            _creditsRestClient = new Credits(_creditsClientDiagnostics, Pipeline, Endpoint, creditApiVersion ?? "2025-12-01-preview");
+            _creditsRestClient = new Credits(_creditsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, creditApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _creditsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CreditPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<CreditResource> operation = new BillingBenefitsArmOperation<CreditResource>(
-                    new CreditOperationSource(Client),
+                    new CreditResourceOperationSource(Client),
                     _creditsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _creditsRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CreditPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<CreditResource> operation = new BillingBenefitsArmOperation<CreditResource>(
-                    new CreditOperationSource(Client),
+                    new CreditResourceOperationSource(Client),
                     _creditsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _creditsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<CreditResource> operation = new BillingBenefitsArmOperation<CreditResource>(
-                    new CreditOperationSource(Client),
+                    new CreditResourceOperationSource(Client),
                     _creditsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _creditsRestClient.CreateCancelRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<CreditResource> operation = new BillingBenefitsArmOperation<CreditResource>(
-                    new CreditOperationSource(Client),
+                    new CreditResourceOperationSource(Client),
                     _creditsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Storage
                     yield break;
                 }
                 NetworkSecurityPerimeterConfigurationList result = NetworkSecurityPerimeterConfigurationList.FromResponse(response);
-                yield return Page<NetworkSecurityPerimeterConfigurationData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetworkSecurityPerimeterConfigurationData>.FromValues(result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

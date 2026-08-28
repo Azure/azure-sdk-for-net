@@ -5,7 +5,6 @@ using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Threading;
@@ -19,6 +18,7 @@ using OpenAI.Evals;
 using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Tests.Samples.Evaluation;
+#pragma warning disable AAIP001
 
 public class Sample_ScheduledEvaluations : EvaluationSampleBase
 {
@@ -366,7 +366,7 @@ public class Sample_ScheduledEvaluations : EvaluationSampleBase
         {
             Description = "Taxonomy for red teaming evaluation"
         };
-        EvaluationTaxonomy taxonomy = await projectClient.EvaluationTaxonomies.CreateAsync(agentVersion.Name, taxonomy: evalTaxonomyInput);
+        EvaluationTaxonomy taxonomy = await projectClient.EvaluationTaxonomies.CreateAsync(agentVersion.Name, body: evalTaxonomyInput);
         DirectoryInfo dataPath = Directory.CreateDirectory("data_folder");
         string taxonomyPath = Path.Combine(dataPath.FullName, $"taxonomy_{agentVersion.Name}.json");
         BinaryData taxonomyJson = ((IJsonModel<EvaluationTaxonomy>)taxonomy).Write(ModelReaderWriterOptions.Json);
@@ -432,7 +432,7 @@ public class Sample_ScheduledEvaluations : EvaluationSampleBase
         {
             Description = "Taxonomy for red teaming evaluation"
         };
-        EvaluationTaxonomy taxonomy = projectClient.EvaluationTaxonomies.Create(agentVersion.Name, taxonomy: evalTaxonomyInput);
+        EvaluationTaxonomy taxonomy = projectClient.EvaluationTaxonomies.Create(agentVersion.Name, body: evalTaxonomyInput);
         DirectoryInfo dataPath = Directory.CreateDirectory("data_folder");
         string taxonomyPath = Path.Combine(dataPath.FullName, $"taxonomy_{agentVersion.Name}.json");
         BinaryData taxonomyJson = ((IJsonModel<EvaluationTaxonomy>)taxonomy).Write(ModelReaderWriterOptions.Json);

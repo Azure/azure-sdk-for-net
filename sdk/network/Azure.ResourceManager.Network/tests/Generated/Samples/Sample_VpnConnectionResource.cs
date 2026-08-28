@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Network.Samples
             VpnConnectionResource vpnConnection = client.GetVpnConnectionResource(vpnConnectionResourceId);
 
             // invoke the operation
-            await vpnConnection.DeleteAsync(WaitUntil.Completed);
+            await vpnConnection.DeleteAsync(WaitUntil.Completed, cancellationToken: System.Threading.CancellationToken.None);
 
             Console.WriteLine("Succeeded");
         }
@@ -109,7 +109,6 @@ VpnConnectionProtocolType = VirtualNetworkGatewayConnectionProtocol.IkeV2,
 ConnectionBandwidth = 200,
 SharedKey = "key",
 UsePolicyBasedTrafficSelectors = false,
-Name = "Connection-Link1",
 }},
                 RoutingConfiguration = new RoutingConfiguration
                 {
@@ -132,7 +131,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
                     OutboundRouteMapId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualHubs/virtualHub1/routeMaps/routeMap2"),
                 },
             };
-            ArmOperation<VpnConnectionResource> lro = await vpnConnection.UpdateAsync(WaitUntil.Completed, data);
+            ArmOperation<VpnConnectionResource> lro = await vpnConnection.UpdateAsync(WaitUntil.Completed, data, cancellationToken: System.Threading.CancellationToken.None);
             VpnConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
@@ -169,7 +168,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
                 FilterData = "{'TracingFlags': 11,'MaxPacketBufferSize': 120,'MaxFileSize': 200,'Filters': [{'SourceSubnets': ['20.1.1.0/24'],'DestinationSubnets': ['10.1.1.0/24'],'SourcePort': [500],'DestinationPort': [4500],'Protocol': 6,'TcpFlags': 16,'CaptureSingleDirectionTrafficOnly': true}]}",
                 LinkConnectionNames = { "siteLink1", "siteLink2" },
             };
-            ArmOperation<string> lro = await vpnConnection.StartPacketCaptureAsync(WaitUntil.Completed, content: content);
+            ArmOperation<string> lro = await vpnConnection.StartPacketCaptureAsync(WaitUntil.Completed, content: content, cancellationToken: System.Threading.CancellationToken.None);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -201,7 +200,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
             {
                 LinkConnectionNames = { "siteLink1", "siteLink2" },
             };
-            ArmOperation<string> lro = await vpnConnection.StartPacketCaptureAsync(WaitUntil.Completed, content: content);
+            ArmOperation<string> lro = await vpnConnection.StartPacketCaptureAsync(WaitUntil.Completed, content: content, cancellationToken: System.Threading.CancellationToken.None);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -234,7 +233,7 @@ Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/M
                 SasUri = new Uri("https://teststorage.blob.core.windows.net/?sv=2018-03-28&ss=bfqt&srt=sco&sp=rwdlacup&se=2019-09-13T07:44:05Z&st=2019-09-06T23:44:05Z&spr=https&sig=V1h9D1riltvZMI69d6ihENnFo%2FrCvTqGgjO2lf%2FVBhE%3D"),
                 LinkConnectionNames = { "vpnSiteLink1", "vpnSiteLink2" },
             };
-            ArmOperation<string> lro = await vpnConnection.StopPacketCaptureAsync(WaitUntil.Completed, content: content);
+            ArmOperation<string> lro = await vpnConnection.StopPacketCaptureAsync(WaitUntil.Completed, content: content, cancellationToken: System.Threading.CancellationToken.None);
             string result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

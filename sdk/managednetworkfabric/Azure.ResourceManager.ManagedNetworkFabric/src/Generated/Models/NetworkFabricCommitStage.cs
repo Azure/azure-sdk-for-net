@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
     public readonly partial struct NetworkFabricCommitStage : IEquatable<NetworkFabricCommitStage>
     {
         private readonly string _value;
+        /// <summary> CommitStage-Start indicates to prepare the device configuration for the devices which is decided by policy type. </summary>
+        private const string StartValue = "Start";
+        /// <summary> CommitStage-Continue indicates to push the configuration to the devices provided. Either CE1 or CE2 is allowed. </summary>
+        private const string ContinueValue = "Continue";
+        /// <summary> CommitStage-Rollback indicates to revert to the previous configuration for the devices to which configuration is pushed as part of staging. </summary>
+        private const string RollbackValue = "Rollback";
 
         /// <summary> Initializes a new instance of <see cref="NetworkFabricCommitStage"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkFabricCommitStage(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string StartValue = "Start";
-        private const string ContinueValue = "Continue";
-        private const string RollbackValue = "Rollback";
+            _value = value;
+        }
 
         /// <summary> CommitStage-Start indicates to prepare the device configuration for the devices which is decided by policy type. </summary>
         public static NetworkFabricCommitStage Start { get; } = new NetworkFabricCommitStage(StartValue);
+
         /// <summary> CommitStage-Continue indicates to push the configuration to the devices provided. Either CE1 or CE2 is allowed. </summary>
         public static NetworkFabricCommitStage Continue { get; } = new NetworkFabricCommitStage(ContinueValue);
+
         /// <summary> CommitStage-Rollback indicates to revert to the previous configuration for the devices to which configuration is pushed as part of staging. </summary>
         public static NetworkFabricCommitStage Rollback { get; } = new NetworkFabricCommitStage(RollbackValue);
+
         /// <summary> Determines if two <see cref="NetworkFabricCommitStage"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkFabricCommitStage left, NetworkFabricCommitStage right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkFabricCommitStage"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkFabricCommitStage left, NetworkFabricCommitStage right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkFabricCommitStage"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkFabricCommitStage"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkFabricCommitStage(string value) => new NetworkFabricCommitStage(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkFabricCommitStage"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkFabricCommitStage?(string value) => value == null ? null : new NetworkFabricCommitStage(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkFabricCommitStage other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkFabricCommitStage other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

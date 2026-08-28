@@ -8,15 +8,59 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
+    /// <summary>
+    /// Replication provider specific cluster recovery point details.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="A2AClusterRecoveryPointDetails"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownClusterProviderSpecificRecoveryPointDetails))]
-    public partial class ClusterProviderSpecificRecoveryPointDetails : IUtf8JsonSerializable, IJsonModel<ClusterProviderSpecificRecoveryPointDetails>
+    public abstract partial class ClusterProviderSpecificRecoveryPointDetails : IJsonModel<ClusterProviderSpecificRecoveryPointDetails>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ClusterProviderSpecificRecoveryPointDetails>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ClusterProviderSpecificRecoveryPointDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterProviderSpecificRecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeClusterProviderSpecificRecoveryPointDetails(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ClusterProviderSpecificRecoveryPointDetails)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterProviderSpecificRecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ClusterProviderSpecificRecoveryPointDetails)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ClusterProviderSpecificRecoveryPointDetails>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClusterProviderSpecificRecoveryPointDetails IPersistableModel<ClusterProviderSpecificRecoveryPointDetails>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ClusterProviderSpecificRecoveryPointDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ClusterProviderSpecificRecoveryPointDetails>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,23 +72,25 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterProviderSpecificRecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterProviderSpecificRecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterProviderSpecificRecoveryPointDetails)} does not support writing '{format}' format.");
             }
-
-            writer.WritePropertyName("instanceType"u8);
-            writer.WriteStringValue(InstanceType);
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W")
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("instanceType"u8);
+                writer.WriteStringValue(InstanceType);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -53,65 +99,40 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             }
         }
 
-        ClusterProviderSpecificRecoveryPointDetails IJsonModel<ClusterProviderSpecificRecoveryPointDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ClusterProviderSpecificRecoveryPointDetails IJsonModel<ClusterProviderSpecificRecoveryPointDetails>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ClusterProviderSpecificRecoveryPointDetails JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterProviderSpecificRecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ClusterProviderSpecificRecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ClusterProviderSpecificRecoveryPointDetails)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeClusterProviderSpecificRecoveryPointDetails(document.RootElement, options);
         }
 
-        internal static ClusterProviderSpecificRecoveryPointDetails DeserializeClusterProviderSpecificRecoveryPointDetails(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ClusterProviderSpecificRecoveryPointDetails DeserializeClusterProviderSpecificRecoveryPointDetails(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("instanceType", out JsonElement discriminator))
+            if (element.TryGetProperty("instanceType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "A2A": return A2AClusterRecoveryPointDetails.DeserializeA2AClusterRecoveryPointDetails(element, options);
+                    case "A2A":
+                        return A2AClusterRecoveryPointDetails.DeserializeA2AClusterRecoveryPointDetails(element, options);
                 }
             }
             return UnknownClusterProviderSpecificRecoveryPointDetails.DeserializeUnknownClusterProviderSpecificRecoveryPointDetails(element, options);
         }
-
-        BinaryData IPersistableModel<ClusterProviderSpecificRecoveryPointDetails>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterProviderSpecificRecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerRecoveryServicesSiteRecoveryContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ClusterProviderSpecificRecoveryPointDetails)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ClusterProviderSpecificRecoveryPointDetails IPersistableModel<ClusterProviderSpecificRecoveryPointDetails>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ClusterProviderSpecificRecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeClusterProviderSpecificRecoveryPointDetails(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ClusterProviderSpecificRecoveryPointDetails)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ClusterProviderSpecificRecoveryPointDetails>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.IotHub
 {
+    /// <summary></summary>
     public partial class IotHubDescriptionResource : IJsonModel<IotHubDescriptionData>
     {
-        private static IotHubDescriptionData s_dataDeserializationInstance;
-        private static IotHubDescriptionData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<IotHubDescriptionData> s_dataDeserializationInstance;
 
+        private static IJsonModel<IotHubDescriptionData> DataDeserializationInstance => s_dataDeserializationInstance ??= new IotHubDescriptionData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<IotHubDescriptionData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<IotHubDescriptionData>)Data).Write(writer, options);
 
-        IotHubDescriptionData IJsonModel<IotHubDescriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<IotHubDescriptionData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        IotHubDescriptionData IJsonModel<IotHubDescriptionData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<IotHubDescriptionData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<IotHubDescriptionData>(Data, options, AzureResourceManagerIotHubContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         IotHubDescriptionData IPersistableModel<IotHubDescriptionData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<IotHubDescriptionData>(data, options, AzureResourceManagerIotHubContext.Default);
 
-        string IPersistableModel<IotHubDescriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<IotHubDescriptionData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<IotHubDescriptionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

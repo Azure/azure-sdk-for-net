@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -14,47 +15,72 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public readonly partial struct OperationalInsightsWorkspaceFailoverState : IEquatable<OperationalInsightsWorkspaceFailoverState>
     {
         private readonly string _value;
+        /// <summary> Inactive. </summary>
+        private const string InactiveValue = "Inactive";
+        /// <summary> Activating. </summary>
+        private const string ActivatingValue = "Activating";
+        /// <summary> Active. </summary>
+        private const string ActiveValue = "Active";
+        /// <summary> Deactivating. </summary>
+        private const string DeactivatingValue = "Deactivating";
+        /// <summary> Failed. </summary>
+        private const string FailedValue = "Failed";
 
         /// <summary> Initializes a new instance of <see cref="OperationalInsightsWorkspaceFailoverState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public OperationalInsightsWorkspaceFailoverState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string InactiveValue = "Inactive";
-        private const string ActivatingValue = "Activating";
-        private const string ActiveValue = "Active";
-        private const string DeactivatingValue = "Deactivating";
-        private const string FailedValue = "Failed";
+            _value = value;
+        }
 
         /// <summary> Inactive. </summary>
         public static OperationalInsightsWorkspaceFailoverState Inactive { get; } = new OperationalInsightsWorkspaceFailoverState(InactiveValue);
+
         /// <summary> Activating. </summary>
         public static OperationalInsightsWorkspaceFailoverState Activating { get; } = new OperationalInsightsWorkspaceFailoverState(ActivatingValue);
+
         /// <summary> Active. </summary>
         public static OperationalInsightsWorkspaceFailoverState Active { get; } = new OperationalInsightsWorkspaceFailoverState(ActiveValue);
+
         /// <summary> Deactivating. </summary>
         public static OperationalInsightsWorkspaceFailoverState Deactivating { get; } = new OperationalInsightsWorkspaceFailoverState(DeactivatingValue);
+
         /// <summary> Failed. </summary>
         public static OperationalInsightsWorkspaceFailoverState Failed { get; } = new OperationalInsightsWorkspaceFailoverState(FailedValue);
+
         /// <summary> Determines if two <see cref="OperationalInsightsWorkspaceFailoverState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(OperationalInsightsWorkspaceFailoverState left, OperationalInsightsWorkspaceFailoverState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="OperationalInsightsWorkspaceFailoverState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(OperationalInsightsWorkspaceFailoverState left, OperationalInsightsWorkspaceFailoverState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="OperationalInsightsWorkspaceFailoverState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="OperationalInsightsWorkspaceFailoverState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator OperationalInsightsWorkspaceFailoverState(string value) => new OperationalInsightsWorkspaceFailoverState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="OperationalInsightsWorkspaceFailoverState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator OperationalInsightsWorkspaceFailoverState?(string value) => value == null ? null : new OperationalInsightsWorkspaceFailoverState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is OperationalInsightsWorkspaceFailoverState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(OperationalInsightsWorkspaceFailoverState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

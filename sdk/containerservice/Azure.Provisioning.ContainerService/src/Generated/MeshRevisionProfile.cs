@@ -24,7 +24,7 @@ namespace Azure.Provisioning.ContainerService
         /// <summary> Creates a new MeshRevisionProfile. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public MeshRevisionProfile(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/locations/meshRevisionProfiles", resourceVersion ?? "2026-01-01")
+        internal MeshRevisionProfile(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.ContainerService/locations/meshRevisionProfiles", resourceVersion ?? "2026-01-01")
         {
         }
 
@@ -63,7 +63,7 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
+        /// <summary> Gets the Properties. </summary>
         internal MeshRevisionProfileProperties Properties
         {
             get
@@ -71,27 +71,14 @@ namespace Azure.Provisioning.ContainerService
                 Initialize();
                 return _properties;
             }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
-            }
         }
 
-        /// <summary> Gets or sets the MeshRevisions. </summary>
+        /// <summary> Gets the MeshRevisions. </summary>
         public BicepList<MeshRevision> MeshRevisions
         {
             get
             {
-                return Properties is null ? default : Properties.MeshRevisions;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new MeshRevisionProfileProperties();
-                }
-                Properties.MeshRevisions = value;
+                return Properties.MeshRevisions;
             }
         }
 

@@ -74,6 +74,10 @@ namespace Azure.Provisioning.ContainerInstance
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _mountPath = DefineProperty<string>(nameof(MountPath), new string[] { "mountPath" }, isRequired: true);
             _isReadOnly = DefineProperty<bool>(nameof(IsReadOnly), new string[] { "readOnly" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for ContainerVolumeMount that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

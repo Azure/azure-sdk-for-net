@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct LoadBalancerBackendAddressAdminState : IEquatable<LoadBalancerBackendAddressAdminState>
     {
         private readonly string _value;
+        /// <summary> None. </summary>
+        private const string NoneValue = "None";
+        /// <summary> Up. </summary>
+        private const string UpValue = "Up";
+        /// <summary> Down. </summary>
+        private const string DownValue = "Down";
 
         /// <summary> Initializes a new instance of <see cref="LoadBalancerBackendAddressAdminState"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public LoadBalancerBackendAddressAdminState(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string NoneValue = "None";
-        private const string UpValue = "Up";
-        private const string DownValue = "Down";
+            _value = value;
+        }
 
         /// <summary> None. </summary>
         public static LoadBalancerBackendAddressAdminState None { get; } = new LoadBalancerBackendAddressAdminState(NoneValue);
+
         /// <summary> Up. </summary>
         public static LoadBalancerBackendAddressAdminState Up { get; } = new LoadBalancerBackendAddressAdminState(UpValue);
+
         /// <summary> Down. </summary>
         public static LoadBalancerBackendAddressAdminState Down { get; } = new LoadBalancerBackendAddressAdminState(DownValue);
+
         /// <summary> Determines if two <see cref="LoadBalancerBackendAddressAdminState"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(LoadBalancerBackendAddressAdminState left, LoadBalancerBackendAddressAdminState right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="LoadBalancerBackendAddressAdminState"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(LoadBalancerBackendAddressAdminState left, LoadBalancerBackendAddressAdminState right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="LoadBalancerBackendAddressAdminState"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="LoadBalancerBackendAddressAdminState"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator LoadBalancerBackendAddressAdminState(string value) => new LoadBalancerBackendAddressAdminState(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="LoadBalancerBackendAddressAdminState"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator LoadBalancerBackendAddressAdminState?(string value) => value == null ? null : new LoadBalancerBackendAddressAdminState(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is LoadBalancerBackendAddressAdminState other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(LoadBalancerBackendAddressAdminState other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DataBoxEdge
         {
             TryGetApiVersion(DataBoxEdgeRoleResource.ResourceType, out string dataBoxEdgeRoleApiVersion);
             _rolesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataBoxEdge", DataBoxEdgeRoleResource.ResourceType.Namespace, Diagnostics);
-            _rolesRestClient = new Roles(_rolesClientDiagnostics, Pipeline, Endpoint, dataBoxEdgeRoleApiVersion ?? "2023-12-01");
+            _rolesRestClient = new Roles(_rolesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataBoxEdgeRoleApiVersion ?? "2023-12-01");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _rolesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DataBoxEdgeRoleData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 DataBoxEdgeArmOperation<DataBoxEdgeRoleResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeRoleResource>(
-                    new DataBoxEdgeRoleOperationSource(Client),
+                    new DataBoxEdgeRoleResourceOperationSource(Client),
                     _rolesClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 HttpMessage message = _rolesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, name, DataBoxEdgeRoleData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 DataBoxEdgeArmOperation<DataBoxEdgeRoleResource> operation = new DataBoxEdgeArmOperation<DataBoxEdgeRoleResource>(
-                    new DataBoxEdgeRoleOperationSource(Client),
+                    new DataBoxEdgeRoleResourceOperationSource(Client),
                     _rolesClientDiagnostics,
                     Pipeline,
                     message.Request,

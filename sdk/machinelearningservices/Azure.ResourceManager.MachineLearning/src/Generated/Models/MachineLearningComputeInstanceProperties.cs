@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Compute Instance properties. </summary>
     public partial class MachineLearningComputeInstanceProperties
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningComputeInstanceProperties"/>. </summary>
         public MachineLearningComputeInstanceProperties()
@@ -61,6 +33,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="vmSize"> Virtual Machine Size. </param>
         /// <param name="subnet"> Virtual network subnet resource ID the compute nodes belong to. </param>
         /// <param name="applicationSharingPolicy"> Policy for sharing applications on this compute instance among users of parent workspace. If Personal, only the creator can access applications on this compute instance. When Shared, any workspace user can access applications on this instance depending on his/her assigned role. </param>
+        /// <param name="autologgerSettings"> Specifies settings for autologger. </param>
         /// <param name="sshSettings"> Specifies policy and settings for SSH access. </param>
         /// <param name="customServices"> List of Custom Services added to the compute. </param>
         /// <param name="osImageMetadata"> Returns metadata about the operating system image for this compute instance. </param>
@@ -70,21 +43,27 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="errors"> Collection of errors encountered on this ComputeInstance. </param>
         /// <param name="state"> The current state of this ComputeInstance. </param>
         /// <param name="computeInstanceAuthorizationType"> The Compute Instance Authorization type. Available values are personal (default). </param>
+        /// <param name="enableOSPatching"> Enable Auto OS Patching. Possible values are: true, false. </param>
+        /// <param name="enableRootAccess"> Enable root access. Possible values are: true, false. </param>
+        /// <param name="enableSSO"> Enable SSO (single sign on). Possible values are: true, false. </param>
+        /// <param name="shouldReleaseQuotaOnStop"> Release quota if compute instance stopped. Possible values are: true - release quota if compute instance stopped. false - don't release quota when compute instance stopped. </param>
         /// <param name="personalComputeInstanceSettings"> Settings for a personal compute instance. </param>
         /// <param name="setupScriptsSettings"> Details of customized scripts to execute for setting up the cluster. </param>
         /// <param name="lastOperation"> The last operation on ComputeInstance. </param>
         /// <param name="schedules"> The list of schedules to be applied on the computes. </param>
+        /// <param name="idleTimeBeforeShutdown"> Stops compute instance after user defined period of inactivity. Time is defined in ISO8601 format. Minimum is 15 min, maximum is 3 days. </param>
         /// <param name="enableNodePublicIP"> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </param>
         /// <param name="containers"> Describes informations of containers on this ComputeInstance. </param>
         /// <param name="dataDisks"> Describes informations of dataDisks on this ComputeInstance. </param>
         /// <param name="dataMounts"> Describes informations of dataMounts on this ComputeInstance. </param>
         /// <param name="versions"> ComputeInstance version. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningComputeInstanceProperties(string vmSize, ResourceId subnet, MachineLearningApplicationSharingPolicy? applicationSharingPolicy, MachineLearningComputeInstanceSshSettings sshSettings, IList<CustomService> customServices, ImageMetadata osImageMetadata, MachineLearningComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<MachineLearningComputeInstanceApplication> applications, MachineLearningComputeInstanceCreatedBy createdBy, IReadOnlyList<MachineLearningError> errors, MachineLearningComputeInstanceState? state, MachineLearningComputeInstanceAuthorizationType? computeInstanceAuthorizationType, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScriptsSettings, MachineLearningComputeInstanceLastOperation lastOperation, ComputeSchedules schedules, bool? enableNodePublicIP, IReadOnlyList<MachineLearningComputeInstanceContainer> containers, IReadOnlyList<MachineLearningComputeInstanceDataDisk> dataDisks, IReadOnlyList<MachineLearningComputeInstanceDataMount> dataMounts, ComputeInstanceVersion versions, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningComputeInstanceProperties(string vmSize, ResourceId subnet, MachineLearningApplicationSharingPolicy? applicationSharingPolicy, ComputeInstanceAutologgerSettings autologgerSettings, MachineLearningComputeInstanceSshSettings sshSettings, IList<CustomService> customServices, ImageMetadata osImageMetadata, MachineLearningComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<MachineLearningComputeInstanceApplication> applications, MachineLearningComputeInstanceCreatedBy createdBy, IReadOnlyList<MachineLearningError> errors, MachineLearningComputeInstanceState? state, MachineLearningComputeInstanceAuthorizationType? computeInstanceAuthorizationType, bool? enableOSPatching, bool? enableRootAccess, bool? enableSSO, bool? shouldReleaseQuotaOnStop, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScriptsSettings, MachineLearningComputeInstanceLastOperation lastOperation, ComputeSchedules schedules, string idleTimeBeforeShutdown, bool? enableNodePublicIP, IReadOnlyList<MachineLearningComputeInstanceContainer> containers, IReadOnlyList<MachineLearningComputeInstanceDataDisk> dataDisks, IReadOnlyList<MachineLearningComputeInstanceDataMount> dataMounts, ComputeInstanceVersion versions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSize = vmSize;
             Subnet = subnet;
             ApplicationSharingPolicy = applicationSharingPolicy;
+            AutologgerSettings = autologgerSettings;
             SshSettings = sshSettings;
             CustomServices = customServices;
             OSImageMetadata = osImageMetadata;
@@ -94,96 +73,195 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Errors = errors;
             State = state;
             ComputeInstanceAuthorizationType = computeInstanceAuthorizationType;
+            EnableOSPatching = enableOSPatching;
+            EnableRootAccess = enableRootAccess;
+            EnableSSO = enableSSO;
+            ShouldReleaseQuotaOnStop = shouldReleaseQuotaOnStop;
             PersonalComputeInstanceSettings = personalComputeInstanceSettings;
             SetupScriptsSettings = setupScriptsSettings;
             LastOperation = lastOperation;
             Schedules = schedules;
+            IdleTimeBeforeShutdown = idleTimeBeforeShutdown;
             EnableNodePublicIP = enableNodePublicIP;
             Containers = containers;
             DataDisks = dataDisks;
             DataMounts = dataMounts;
             Versions = versions;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Virtual Machine Size. </summary>
         [WirePath("vmSize")]
         public string VmSize { get; set; }
+
         /// <summary> Virtual network subnet resource ID the compute nodes belong to. </summary>
+        [WirePath("subnet")]
         internal ResourceId Subnet { get; set; }
-        /// <summary> The ID of the resource. </summary>
-        [WirePath("subnet.id")]
-        public ResourceIdentifier SubnetId
-        {
-            get => Subnet is null ? default : Subnet.Id;
-            set => Subnet = new ResourceId(value);
-        }
 
         /// <summary> Policy for sharing applications on this compute instance among users of parent workspace. If Personal, only the creator can access applications on this compute instance. When Shared, any workspace user can access applications on this instance depending on his/her assigned role. </summary>
         [WirePath("applicationSharingPolicy")]
         public MachineLearningApplicationSharingPolicy? ApplicationSharingPolicy { get; set; }
+
+        /// <summary> Specifies settings for autologger. </summary>
+        [WirePath("autologgerSettings")]
+        internal ComputeInstanceAutologgerSettings AutologgerSettings { get; set; }
+
         /// <summary> Specifies policy and settings for SSH access. </summary>
         [WirePath("sshSettings")]
         public MachineLearningComputeInstanceSshSettings SshSettings { get; set; }
+
         /// <summary> List of Custom Services added to the compute. </summary>
         [WirePath("customServices")]
         public IList<CustomService> CustomServices { get; set; }
+
         /// <summary> Returns metadata about the operating system image for this compute instance. </summary>
         [WirePath("osImageMetadata")]
         public ImageMetadata OSImageMetadata { get; }
+
         /// <summary> Describes all connectivity endpoints available for this ComputeInstance. </summary>
         [WirePath("connectivityEndpoints")]
         public MachineLearningComputeInstanceConnectivityEndpoints ConnectivityEndpoints { get; }
+
         /// <summary> Describes available applications and their endpoints on this ComputeInstance. </summary>
         [WirePath("applications")]
         public IReadOnlyList<MachineLearningComputeInstanceApplication> Applications { get; }
+
         /// <summary> Describes information on user who created this ComputeInstance. </summary>
         [WirePath("createdBy")]
         public MachineLearningComputeInstanceCreatedBy CreatedBy { get; }
-        /// <summary> Collection of errors encountered on this ComputeInstance. </summary>
-        [WirePath("errors")]
-        public IReadOnlyList<MachineLearningError> Errors { get; }
+
         /// <summary> The current state of this ComputeInstance. </summary>
         [WirePath("state")]
         public MachineLearningComputeInstanceState? State { get; }
+
         /// <summary> The Compute Instance Authorization type. Available values are personal (default). </summary>
         [WirePath("computeInstanceAuthorizationType")]
         public MachineLearningComputeInstanceAuthorizationType? ComputeInstanceAuthorizationType { get; set; }
+
+        /// <summary> Enable Auto OS Patching. Possible values are: true, false. </summary>
+        [WirePath("enableOSPatching")]
+        public bool? EnableOSPatching { get; set; }
+
+        /// <summary> Enable root access. Possible values are: true, false. </summary>
+        [WirePath("enableRootAccess")]
+        public bool? EnableRootAccess { get; set; }
+
+        /// <summary> Enable SSO (single sign on). Possible values are: true, false. </summary>
+        [WirePath("enableSSO")]
+        public bool? EnableSSO { get; set; }
+
+        /// <summary> Release quota if compute instance stopped. Possible values are: true - release quota if compute instance stopped. false - don't release quota when compute instance stopped. </summary>
+        [WirePath("releaseQuotaOnStop")]
+        public bool? ShouldReleaseQuotaOnStop { get; set; }
+
         /// <summary> Settings for a personal compute instance. </summary>
+        [WirePath("personalComputeInstanceSettings")]
         internal PersonalComputeInstanceSettings PersonalComputeInstanceSettings { get; set; }
-        /// <summary> A user explicitly assigned to a personal compute instance. </summary>
-        [WirePath("personalComputeInstanceSettings.assignedUser")]
-        public MachineLearningComputeInstanceAssignedUser PersonalComputeInstanceAssignedUser
-        {
-            get => PersonalComputeInstanceSettings is null ? default : PersonalComputeInstanceSettings.AssignedUser;
-            set
-            {
-                if (PersonalComputeInstanceSettings is null)
-                    PersonalComputeInstanceSettings = new PersonalComputeInstanceSettings();
-                PersonalComputeInstanceSettings.AssignedUser = value;
-            }
-        }
 
         /// <summary> Details of customized scripts to execute for setting up the cluster. </summary>
+        [WirePath("setupScripts")]
         internal SetupScripts SetupScriptsSettings { get; set; }
-        /// <summary> Customized setup scripts. </summary>
-        [WirePath("setupScripts.scripts")]
-        public MachineLearningScriptsToExecute Scripts
-        {
-            get => SetupScriptsSettings is null ? default : SetupScriptsSettings.Scripts;
-            set
-            {
-                if (SetupScriptsSettings is null)
-                    SetupScriptsSettings = new SetupScripts();
-                SetupScriptsSettings.Scripts = value;
-            }
-        }
 
         /// <summary> The last operation on ComputeInstance. </summary>
         [WirePath("lastOperation")]
         public MachineLearningComputeInstanceLastOperation LastOperation { get; }
+
         /// <summary> The list of schedules to be applied on the computes. </summary>
+        [WirePath("schedules")]
         internal ComputeSchedules Schedules { get; set; }
+
+        /// <summary> Stops compute instance after user defined period of inactivity. Time is defined in ISO8601 format. Minimum is 15 min, maximum is 3 days. </summary>
+        [WirePath("idleTimeBeforeShutdown")]
+        public string IdleTimeBeforeShutdown { get; set; }
+
+        /// <summary> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </summary>
+        [WirePath("enableNodePublicIp")]
+        public bool? EnableNodePublicIP { get; set; }
+
+        /// <summary> Describes informations of containers on this ComputeInstance. </summary>
+        [WirePath("containers")]
+        public IReadOnlyList<MachineLearningComputeInstanceContainer> Containers { get; }
+
+        /// <summary> Describes informations of dataDisks on this ComputeInstance. </summary>
+        [WirePath("dataDisks")]
+        public IReadOnlyList<MachineLearningComputeInstanceDataDisk> DataDisks { get; }
+
+        /// <summary> Describes informations of dataMounts on this ComputeInstance. </summary>
+        [WirePath("dataMounts")]
+        public IReadOnlyList<MachineLearningComputeInstanceDataMount> DataMounts { get; }
+
+        /// <summary> ComputeInstance version. </summary>
+        [WirePath("versions")]
+        internal ComputeInstanceVersion Versions { get; }
+
+        /// <summary> The ID of the resource. </summary>
+        [WirePath("subnet.id")]
+        public ResourceIdentifier SubnetId
+        {
+            get
+            {
+                return Subnet is null ? default : Subnet.Id;
+            }
+            set
+            {
+                Subnet = new ResourceId(value);
+            }
+        }
+
+        /// <summary> Indicates whether mlflow autologger is enabled for notebooks. </summary>
+        [WirePath("autologgerSettings.mlflowAutologger")]
+        public MlflowAutologger? MlflowAutologger
+        {
+            get
+            {
+                return AutologgerSettings is null ? default : AutologgerSettings.MlflowAutologger;
+            }
+            set
+            {
+                if (AutologgerSettings is null)
+                {
+                    AutologgerSettings = new ComputeInstanceAutologgerSettings();
+                }
+                AutologgerSettings.MlflowAutologger = value;
+            }
+        }
+
+        /// <summary> A user explicitly assigned to a personal compute instance. </summary>
+        [WirePath("personalComputeInstanceSettings.assignedUser")]
+        public MachineLearningComputeInstanceAssignedUser PersonalComputeInstanceAssignedUser
+        {
+            get
+            {
+                return PersonalComputeInstanceSettings is null ? default : PersonalComputeInstanceSettings.AssignedUser;
+            }
+            set
+            {
+                if (PersonalComputeInstanceSettings is null)
+                {
+                    PersonalComputeInstanceSettings = new PersonalComputeInstanceSettings();
+                }
+                PersonalComputeInstanceSettings.AssignedUser = value;
+            }
+        }
+
+        /// <summary> Customized setup scripts. </summary>
+        [WirePath("setupScripts.scripts")]
+        public MachineLearningScriptsToExecute Scripts
+        {
+            get
+            {
+                return SetupScriptsSettings is null ? default : SetupScriptsSettings.Scripts;
+            }
+            set
+            {
+                if (SetupScriptsSettings is null)
+                {
+                    SetupScriptsSettings = new SetupScripts();
+                }
+                SetupScriptsSettings.Scripts = value;
+            }
+        }
+
         /// <summary> The list of compute start stop schedules to be applied. </summary>
         [WirePath("schedules.computeStartStop")]
         public IReadOnlyList<MachineLearningComputeStartStopSchedule> SchedulesComputeStartStop
@@ -191,30 +269,21 @@ namespace Azure.ResourceManager.MachineLearning.Models
             get
             {
                 if (Schedules is null)
+                {
                     Schedules = new ComputeSchedules();
+                }
                 return Schedules.ComputeStartStop;
             }
         }
 
-        /// <summary> Enable or disable node public IP address provisioning. Possible values are: Possible values are: true - Indicates that the compute nodes will have public IPs provisioned. false - Indicates that the compute nodes will have a private endpoint and no public IPs. </summary>
-        [WirePath("enableNodePublicIp")]
-        public bool? EnableNodePublicIP { get; set; }
-        /// <summary> Describes informations of containers on this ComputeInstance. </summary>
-        [WirePath("containers")]
-        public IReadOnlyList<MachineLearningComputeInstanceContainer> Containers { get; }
-        /// <summary> Describes informations of dataDisks on this ComputeInstance. </summary>
-        [WirePath("dataDisks")]
-        public IReadOnlyList<MachineLearningComputeInstanceDataDisk> DataDisks { get; }
-        /// <summary> Describes informations of dataMounts on this ComputeInstance. </summary>
-        [WirePath("dataMounts")]
-        public IReadOnlyList<MachineLearningComputeInstanceDataMount> DataMounts { get; }
-        /// <summary> ComputeInstance version. </summary>
-        internal ComputeInstanceVersion Versions { get; }
         /// <summary> Runtime of compute instance. </summary>
         [WirePath("versions.runtime")]
         public string VersionsRuntime
         {
-            get => Versions?.Runtime;
+            get
+            {
+                return Versions is null ? default : Versions.Runtime;
+            }
         }
     }
 }

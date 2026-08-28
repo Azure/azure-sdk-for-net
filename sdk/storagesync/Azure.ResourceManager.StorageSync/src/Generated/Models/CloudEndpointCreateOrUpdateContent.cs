@@ -28,12 +28,12 @@ namespace Azure.ResourceManager.StorageSync.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="properties"> The parameters used to create the cloud endpoint. </param>
-        internal CloudEndpointCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, CloudEndpointCreateParametersProperties properties) : base(id, name, resourceType, systemData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CloudEndpointCreateOrUpdateContent(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CloudEndpointCreateParametersProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
             Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The parameters used to create the cloud endpoint. </summary>
@@ -104,6 +104,23 @@ namespace Azure.ResourceManager.StorageSync.Models
                     Properties = new CloudEndpointCreateParametersProperties();
                 }
                 Properties.FriendlyName = value;
+            }
+        }
+
+        /// <summary> The interval for enumerating changes on the cloud endpoint. </summary>
+        public int? ChangeEnumerationIntervalDays
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ChangeEnumerationIntervalDays;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CloudEndpointCreateParametersProperties();
+                }
+                Properties.ChangeEnumerationIntervalDays = value;
             }
         }
     }

@@ -11,8 +11,8 @@ namespace Azure.Provisioning.ContainerService
     public enum ContainerServiceStateCode
     {
         /// <summary> The cluster is running. </summary>
-        Running,
+        Running = 0,
         /// <summary> The cluster is stopped. </summary>
-        Stopped
+        Stopped = 1
     }
 }

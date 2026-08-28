@@ -15,6 +15,7 @@ public class BasicComputeTests
         return new Trycep().Define(
             ctx =>
             {
+                #region Snippet:ComputeAvailabilitySetBasic
                 Infrastructure infra = new();
 
                 ProvisioningParameter availabilitySetName = new(nameof(availabilitySetName), typeof(string))
@@ -46,6 +47,7 @@ public class BasicComputeTests
                     PlatformUpdateDomainCount = updateDomainCount
                 };
                 infra.Add(avset);
+                #endregion
 
                 return infra;
             });
@@ -75,8 +77,8 @@ public class BasicComputeTests
               name: availabilitySetName
               location: location
               properties: {
-                platformFaultDomainCount: faultDomainCount
                 platformUpdateDomainCount: updateDomainCount
+                platformFaultDomainCount: faultDomainCount
               }
               sku: {
                 name: 'Aligned'
@@ -274,18 +276,6 @@ public class BasicComputeTests
                 hardwareProfile: {
                   vmSize: vmSize
                 }
-                networkProfile: {
-                  networkInterfaces: [
-                    {
-                      id: nic.id
-                    }
-                  ]
-                }
-                osProfile: {
-                  computerName: 'myVM'
-                  adminUsername: adminUsername
-                  adminPassword: adminPassword
-                }
                 storageProfile: {
                   imageReference: {
                     publisher: 'MicrosoftWindowsServer'
@@ -299,6 +289,18 @@ public class BasicComputeTests
                       storageAccountType: 'Standard_LRS'
                     }
                   }
+                }
+                osProfile: {
+                  computerName: 'myVM'
+                  adminUsername: adminUsername
+                  adminPassword: adminPassword
+                }
+                networkProfile: {
+                  networkInterfaces: [
+                    {
+                      id: nic.id
+                    }
+                  ]
                 }
               }
             }

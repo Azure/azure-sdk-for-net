@@ -13,21 +13,21 @@ namespace Azure.Provisioning.ContainerService
     public enum ContainerServiceOSSku
     {
         /// <summary> Use Ubuntu as the OS for node images. </summary>
-        Ubuntu,
+        Ubuntu = 0,
         /// <summary> Use AzureLinux as the OS for node images. Azure Linux is a container-optimized Linux distro built by Microsoft, visit https://aka.ms/azurelinux for more information. </summary>
-        AzureLinux,
+        AzureLinux = 1,
         /// <summary> Use AzureLinux3 as the OS for node images. Azure Linux is a container-optimized Linux distro built by Microsoft, visit https://aka.ms/azurelinux for more information. For limitations, visit https://aka.ms/aks/node-images. For OS migration guidance, see https://aka.ms/aks/upgrade-os-version. </summary>
-        AzureLinux3,
+        AzureLinux3 = 2,
         /// <summary> Deprecated OSSKU. Microsoft recommends that new deployments choose 'AzureLinux' instead. </summary>
         [DataMember(Name = "CBLMariner")]
-        CblMariner,
+        CblMariner = 3,
         /// <summary> Use Windows2019 as the OS for node images. Unsupported for system node pools. Windows2019 only supports Windows2019 containers; it cannot run Windows2022 containers and vice versa. </summary>
-        Windows2019,
+        Windows2019 = 4,
         /// <summary> Use Windows2022 as the OS for node images. Unsupported for system node pools. Windows2022 only supports Windows2022 containers; it cannot run Windows2019 containers and vice versa. </summary>
-        Windows2022,
+        Windows2022 = 5,
         /// <summary> Use Ubuntu2204 as the OS for node images, however, Ubuntu 22.04 may not be supported for all nodepools. For limitations and supported kubernetes versions, see https://aka.ms/aks/supported-ubuntu-versions. </summary>
-        Ubuntu2204,
+        Ubuntu2204 = 6,
         /// <summary> Use Ubuntu2404 as the OS for node images, however, Ubuntu 24.04 may not be supported for all nodepools. For limitations and supported kubernetes versions, see see https://aka.ms/aks/supported-ubuntu-versions. </summary>
-        Ubuntu2404
+        Ubuntu2404 = 7
     }
 }

@@ -7,45 +7,65 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Kusto;
 
 namespace Azure.ResourceManager.Kusto.Models
 {
     /// <summary> Kind of the database. </summary>
-    internal readonly partial struct KustoKind : IEquatable<KustoKind>
+    public readonly partial struct KustoKind : IEquatable<KustoKind>
     {
         private readonly string _value;
+        /// <summary> ReadWrite. </summary>
+        private const string ReadWriteValue = "ReadWrite";
+        /// <summary> ReadOnlyFollowing. </summary>
+        private const string ReadOnlyFollowingValue = "ReadOnlyFollowing";
 
         /// <summary> Initializes a new instance of <see cref="KustoKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public KustoKind(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string ReadWriteValue = "ReadWrite";
-        private const string ReadOnlyFollowingValue = "ReadOnlyFollowing";
+            _value = value;
+        }
 
         /// <summary> ReadWrite. </summary>
         public static KustoKind ReadWrite { get; } = new KustoKind(ReadWriteValue);
+
         /// <summary> ReadOnlyFollowing. </summary>
         public static KustoKind ReadOnlyFollowing { get; } = new KustoKind(ReadOnlyFollowingValue);
+
         /// <summary> Determines if two <see cref="KustoKind"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(KustoKind left, KustoKind right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="KustoKind"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(KustoKind left, KustoKind right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="KustoKind"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="KustoKind"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator KustoKind(string value) => new KustoKind(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="KustoKind"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator KustoKind?(string value) => value == null ? null : new KustoKind(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is KustoKind other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(KustoKind other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

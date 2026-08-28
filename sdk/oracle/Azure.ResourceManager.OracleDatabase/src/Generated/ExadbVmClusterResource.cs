@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.OracleDatabase
         {
             TryGetApiVersion(ResourceType, out string exadbVmClusterApiVersion);
             _exadbVmClustersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", ResourceType.Namespace, Diagnostics);
-            _exadbVmClustersRestClient = new ExadbVmClusters(_exadbVmClustersClientDiagnostics, Pipeline, Endpoint, exadbVmClusterApiVersion ?? "2025-09-01");
+            _exadbVmClustersRestClient = new ExadbVmClusters(_exadbVmClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, exadbVmClusterApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _exadbVmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExadbVmClusterPatch.ToRequestContent(patch), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<ExadbVmClusterResource> operation = new OracleDatabaseArmOperation<ExadbVmClusterResource>(
-                    new ExadbVmClusterOperationSource(Client),
+                    new ExadbVmClusterResourceOperationSource(Client),
                     _exadbVmClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _exadbVmClustersRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ExadbVmClusterPatch.ToRequestContent(patch), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<ExadbVmClusterResource> operation = new OracleDatabaseArmOperation<ExadbVmClusterResource>(
-                    new ExadbVmClusterOperationSource(Client),
+                    new ExadbVmClusterResourceOperationSource(Client),
                     _exadbVmClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _exadbVmClustersRestClient.CreateRemoveVmsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RemoveVirtualMachineFromExadbVmClusterDetails.ToRequestContent(details), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 OracleDatabaseArmOperation<ExadbVmClusterResource> operation = new OracleDatabaseArmOperation<ExadbVmClusterResource>(
-                    new ExadbVmClusterOperationSource(Client),
+                    new ExadbVmClusterResourceOperationSource(Client),
                     _exadbVmClustersClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.OracleDatabase
                 HttpMessage message = _exadbVmClustersRestClient.CreateRemoveVmsRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, RemoveVirtualMachineFromExadbVmClusterDetails.ToRequestContent(details), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 OracleDatabaseArmOperation<ExadbVmClusterResource> operation = new OracleDatabaseArmOperation<ExadbVmClusterResource>(
-                    new ExadbVmClusterOperationSource(Client),
+                    new ExadbVmClusterResourceOperationSource(Client),
                     _exadbVmClustersClientDiagnostics,
                     Pipeline,
                     message.Request,

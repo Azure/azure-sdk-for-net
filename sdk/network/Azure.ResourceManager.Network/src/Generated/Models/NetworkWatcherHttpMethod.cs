@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.Network.Models
     public readonly partial struct NetworkWatcherHttpMethod : IEquatable<NetworkWatcherHttpMethod>
     {
         private readonly string _value;
+        /// <summary> Get. </summary>
+        private const string GetValue = "Get";
 
         /// <summary> Initializes a new instance of <see cref="NetworkWatcherHttpMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public NetworkWatcherHttpMethod(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string GetValue = "Get";
+            _value = value;
+        }
 
         /// <summary> Get. </summary>
         public static NetworkWatcherHttpMethod Get { get; } = new NetworkWatcherHttpMethod(GetValue);
+
         /// <summary> Determines if two <see cref="NetworkWatcherHttpMethod"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(NetworkWatcherHttpMethod left, NetworkWatcherHttpMethod right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="NetworkWatcherHttpMethod"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(NetworkWatcherHttpMethod left, NetworkWatcherHttpMethod right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="NetworkWatcherHttpMethod"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="NetworkWatcherHttpMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator NetworkWatcherHttpMethod(string value) => new NetworkWatcherHttpMethod(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="NetworkWatcherHttpMethod"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator NetworkWatcherHttpMethod?(string value) => value == null ? null : new NetworkWatcherHttpMethod(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is NetworkWatcherHttpMethod other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(NetworkWatcherHttpMethod other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

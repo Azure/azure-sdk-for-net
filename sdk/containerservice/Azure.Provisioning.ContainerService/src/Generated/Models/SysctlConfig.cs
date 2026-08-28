@@ -26,7 +26,7 @@ namespace Azure.Provisioning.ContainerService
         private BicepValue<int> _netIPv4TcpKeepaliveTime;
         private BicepValue<int> _netIPv4TcpKeepaliveProbes;
         private BicepValue<int> _netIPv4TcpKeepaliveIntvl;
-        private BicepValue<bool> _isNetIpv4TcpTwReuseEnabled;
+        private BicepValue<bool> _isNetIPv4TcpTwReuseEnabled;
         private BicepValue<string> _netIPv4IPLocalPortRange;
         private BicepValue<int> _netIPv4NeighDefaultGcThresh1;
         private BicepValue<int> _netIPv4NeighDefaultGcThresh2;
@@ -242,18 +242,18 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets or sets the IsNetIpv4TcpTwReuseEnabled. </summary>
-        public BicepValue<bool> IsNetIpv4TcpTwReuseEnabled
+        /// <summary> Gets or sets the IsNetIPv4TcpTwReuseEnabled. </summary>
+        public BicepValue<bool> IsNetIPv4TcpTwReuseEnabled
         {
             get
             {
                 Initialize();
-                return _isNetIpv4TcpTwReuseEnabled;
+                return _isNetIPv4TcpTwReuseEnabled;
             }
             set
             {
                 Initialize();
-                _isNetIpv4TcpTwReuseEnabled.Assign(value);
+                _isNetIPv4TcpTwReuseEnabled.Assign(value);
             }
         }
 
@@ -484,7 +484,7 @@ namespace Azure.Provisioning.ContainerService
             _netIPv4TcpKeepaliveTime = DefineProperty<int>(nameof(NetIPv4TcpKeepaliveTime), new string[] { "netIpv4TcpKeepaliveTime" });
             _netIPv4TcpKeepaliveProbes = DefineProperty<int>(nameof(NetIPv4TcpKeepaliveProbes), new string[] { "netIpv4TcpKeepaliveProbes" });
             _netIPv4TcpKeepaliveIntvl = DefineProperty<int>(nameof(NetIPv4TcpKeepaliveIntvl), new string[] { "netIpv4TcpkeepaliveIntvl" });
-            _isNetIpv4TcpTwReuseEnabled = DefineProperty<bool>(nameof(IsNetIpv4TcpTwReuseEnabled), new string[] { "netIpv4TcpTwReuse" });
+            _isNetIPv4TcpTwReuseEnabled = DefineProperty<bool>(nameof(IsNetIPv4TcpTwReuseEnabled), new string[] { "netIpv4TcpTwReuse" });
             _netIPv4IPLocalPortRange = DefineProperty<string>(nameof(NetIPv4IPLocalPortRange), new string[] { "netIpv4IpLocalPortRange" });
             _netIPv4NeighDefaultGcThresh1 = DefineProperty<int>(nameof(NetIPv4NeighDefaultGcThresh1), new string[] { "netIpv4NeighDefaultGcThresh1" });
             _netIPv4NeighDefaultGcThresh2 = DefineProperty<int>(nameof(NetIPv4NeighDefaultGcThresh2), new string[] { "netIpv4NeighDefaultGcThresh2" });
@@ -499,6 +499,10 @@ namespace Azure.Provisioning.ContainerService
             _vmMaxMapCount = DefineProperty<int>(nameof(VmMaxMapCount), new string[] { "vmMaxMapCount" });
             _vmSwappiness = DefineProperty<int>(nameof(VmSwappiness), new string[] { "vmSwappiness" });
             _vmVfsCachePressure = DefineProperty<int>(nameof(VmVfsCachePressure), new string[] { "vmVfsCachePressure" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for SysctlConfig that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

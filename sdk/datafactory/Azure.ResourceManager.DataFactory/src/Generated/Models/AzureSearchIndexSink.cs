@@ -15,9 +15,8 @@ namespace Azure.ResourceManager.DataFactory.Models
     public partial class AzureSearchIndexSink : CopySink
     {
         /// <summary> Initializes a new instance of <see cref="AzureSearchIndexSink"/>. </summary>
-        public AzureSearchIndexSink()
+        public AzureSearchIndexSink() : base("AzureSearchIndexSink")
         {
-            CopySinkType = "AzureSearchIndexSink";
         }
 
         /// <summary> Initializes a new instance of <see cref="AzureSearchIndexSink"/>. </summary>
@@ -28,12 +27,11 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="sinkRetryWait"> Sink retry wait. Type: string (or Expression with resultType string), pattern: ((\d+)\.)?(\d\d):(60|([0-5][0-9])):(60|([0-5][0-9])). </param>
         /// <param name="maxConcurrentConnections"> The maximum concurrent connection count for the sink data store. Type: integer (or Expression with resultType integer). </param>
         /// <param name="disableMetricsCollection"> If true, disable data store metrics collection. Default is false. Type: boolean (or Expression with resultType boolean). </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="writeBehavior"> Specify the write behavior when upserting documents into Azure Search Index. </param>
         internal AzureSearchIndexSink(string copySinkType, DataFactoryElement<int> writeBatchSize, DataFactoryElement<string> writeBatchTimeout, DataFactoryElement<int> sinkRetryCount, DataFactoryElement<string> sinkRetryWait, DataFactoryElement<int> maxConcurrentConnections, DataFactoryElement<bool> disableMetricsCollection, IDictionary<string, BinaryData> additionalProperties, AzureSearchIndexWriteBehaviorType? writeBehavior) : base(copySinkType, writeBatchSize, writeBatchTimeout, sinkRetryCount, sinkRetryWait, maxConcurrentConnections, disableMetricsCollection, additionalProperties)
         {
             WriteBehavior = writeBehavior;
-            CopySinkType = copySinkType ?? "AzureSearchIndexSink";
         }
 
         /// <summary> Specify the write behavior when upserting documents into Azure Search Index. </summary>

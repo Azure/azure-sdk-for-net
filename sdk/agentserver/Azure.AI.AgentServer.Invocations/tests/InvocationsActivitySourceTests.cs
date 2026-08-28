@@ -43,7 +43,7 @@ public class InvocationsActivitySourceTests
             "inv-123", "sess-456",
             new Dictionary<string, string>(),
             new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
-            IsolationContext.Empty);
+            PlatformContext.Empty);
 
         source.PropagateInvocationBaggage(context, new HeaderDictionary());
 
@@ -69,7 +69,7 @@ public class InvocationsActivitySourceTests
             "inv-1", "sess-1",
             new Dictionary<string, string>(),
             new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
-            IsolationContext.Empty);
+            PlatformContext.Empty);
 
         source.PropagateInvocationBaggage(context, new HeaderDictionary());
 
@@ -94,7 +94,7 @@ public class InvocationsActivitySourceTests
             "inv-1", "sess-2",
             new Dictionary<string, string>(),
             new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
-            IsolationContext.Empty);
+            PlatformContext.Empty);
 
         var headers = new HeaderDictionary { ["x-request-id"] = "req-abc-123" };
 
@@ -120,7 +120,7 @@ public class InvocationsActivitySourceTests
             "inv-1", "sess-1",
             new Dictionary<string, string>(),
             new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
-            IsolationContext.Empty);
+            PlatformContext.Empty);
 
         var longRequestId = new string('x', 300);
         var headers = new HeaderDictionary { ["x-request-id"] = longRequestId };
@@ -142,7 +142,7 @@ public class InvocationsActivitySourceTests
             "inv-1", "sess-2",
             new Dictionary<string, string>(),
             new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
-            IsolationContext.Empty);
+            PlatformContext.Empty);
 
         // Should not throw
         source.PropagateInvocationBaggage(context, new HeaderDictionary());
@@ -167,7 +167,7 @@ public class InvocationsActivitySourceTests
             "inv-1", "sess-2",
             new Dictionary<string, string>(),
             new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(),
-            IsolationContext.Empty);
+            PlatformContext.Empty);
 
         source.PropagateInvocationBaggage(context, new HeaderDictionary());
 

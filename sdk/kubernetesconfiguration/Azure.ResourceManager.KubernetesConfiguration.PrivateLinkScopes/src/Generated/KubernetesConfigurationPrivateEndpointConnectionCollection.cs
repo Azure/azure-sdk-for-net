@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
         {
             TryGetApiVersion(KubernetesConfigurationPrivateEndpointConnectionResource.ResourceType, out string kubernetesConfigurationPrivateEndpointConnectionApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes", KubernetesConfigurationPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, kubernetesConfigurationPrivateEndpointConnectionApiVersion ?? "2024-11-01-preview");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kubernetesConfigurationPrivateEndpointConnectionApiVersion ?? "2024-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, KubernetesConfigurationPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 PrivateLinkScopesArmOperation<KubernetesConfigurationPrivateEndpointConnectionResource> operation = new PrivateLinkScopesArmOperation<KubernetesConfigurationPrivateEndpointConnectionResource>(
-                    new KubernetesConfigurationPrivateEndpointConnectionOperationSource(Client),
+                    new KubernetesConfigurationPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
                 HttpMessage message = _privateEndpointConnectionsRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, privateEndpointConnectionName, KubernetesConfigurationPrivateEndpointConnectionData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 PrivateLinkScopesArmOperation<KubernetesConfigurationPrivateEndpointConnectionResource> operation = new PrivateLinkScopesArmOperation<KubernetesConfigurationPrivateEndpointConnectionResource>(
-                    new KubernetesConfigurationPrivateEndpointConnectionOperationSource(Client),
+                    new KubernetesConfigurationPrivateEndpointConnectionResourceOperationSource(Client),
                     _privateEndpointConnectionsClientDiagnostics,
                     Pipeline,
                     message.Request,

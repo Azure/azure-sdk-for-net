@@ -1,12 +1,72 @@
 # Release History
 
-## 1.0.0-beta.24 (2026-05-19)
+## 1.0.0-beta.29 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.0.0-beta.28 (2026-08-12)
+
+### Features Added
+
+- `FoundryStateStore` item operations now accept an explicit `callId` and forward
+  the ambient `FoundryAgentRequestContext.Current.CallId` by default. Resilient
+  task handlers restore a top-level persisted `call_id` for every execution attempt.
+- Added resilient **task** and **streaming** primitives for building durable, long-running agents (`Azure.AI.AgentServer.Core.Tasks` and `Azure.AI.AgentServer.Core.Streaming`):
+  - Register one-shot and multi-turn tasks with `IServiceCollection.AddResilientTasks()` and the `ResilientTaskBuilder` (`AddTask` / `AddMultiTurnTask`), including overloads that accept a source-generated `JsonTypeInfo<TInput>` for Native-AOT / trimming-safe input serialization. The reflection-based overloads carry `[RequiresUnreferencedCode]` / `[RequiresDynamicCode]` so trimming/AOT builds get a compile-time warning steering them to the `JsonTypeInfo<TInput>` overloads.
+  - Run and resume tasks through `ITaskInvoker` (`RunAsync`, `StartAsync`, `GetActiveRunAsync`) with the `TaskRun<TOutput>` handle (await its `Completion` task, or `Completion.WaitAsync(token)` to cancel only your wait) and the `TaskContext<TInput>` handler surface (entry mode, retry attempt, cooperative cancellation, shutdown, and steering signals).
+  - Configure per-task durability with `TaskRegistrationOptions` (title, timeout, retry) and `TaskRetryPolicy` (attempt count + an `Azure.Core.DelayStrategy` for the backoff).
+  - Resumable event streaming with `AgentEventStreamRegistry` / `AgentEventStream` and `AddAgentEventStreams()`, supporting in-memory live, in-memory replay, and file-backed replay backings via `AgentEventStreamOptions`. The event representation is `System.Net.ServerSentEvents.SseItem<string>`: the caller places the serialized event text in `SseItem<string>.Data` and an opaque `SseItem<string>.EventId` is the resume/reconnect token (`Subscribe(afterEventId)`, `GetLastEventIdAsync()`). Because the data is already a string, there is no payload codec — `SseFormatter` can frame a `Subscribe(...)` stream directly onto an HTTP response.
+  - A single `ResilientTaskException` carrying an extensible `ResilientTaskErrorCode` (`HandlerError`, `ExhaustedRetries`, `Conflict`, `PreconditionFailed`, `QueueFull`) with code-specific data exposed as nullable properties (`CurrentStatus`, `ActualLastInputId`, `Failure`). Argument validation surfaces as `ArgumentException` and cancellation as `OperationCanceledException`; recovery deferral (`ExitForRecoveryAsync`) is an internal lifecycle handoff and never surfaces as an exception. The streaming layer keeps its `AgentEventStreamException` hierarchy.
+
+### Bugs Fixed
+
+- Kept the task lease renewed across retry backoff delays so a long inter-attempt backoff cannot let the lease lapse and allow a concurrent re-invocation of the same task turn.
+- Hardened the resilient-task engine shutdown signalling against a benign race between a completing turn and host disposal.
+- A one-shot task whose durable completion write fails, and a multi-turn task whose durable suspend write fails, now surface the failure to the caller instead of reporting success while the record remains `in_progress` (which a later recovery scan could re-run).
+- The local file-backed task store now serializes its existence check and record write under the same lock as patch/delete, so two concurrent creates for the same id can no longer both succeed with the later write silently overwriting the earlier record.
+- The file-backed event-stream custom serializer/deserializer are now `Func<object, string>` / `Func<string, object>` (previously `byte[]`), matching the UTF-8 JSON-string on-disk format so a custom codec cannot silently corrupt non-UTF-8 payloads.
+- The local file-backed task store now writes each record through a temporary file and an atomic replace, so a crash mid-write can no longer leave a truncated record that reads back as a parse error and renders the task id permanently unusable.
+- The per-task write gate is no longer disposed when its bookkeeping entry is removed, closing a race where a concurrent write could observe `ObjectDisposedException` on a gate that was torn down while still in use.
+- A turn transition that replaces and disposes a handler's cancellation source concurrently with a cancel/steering signal no longer surfaces `ObjectDisposedException` from the cancel path.
+- `AddResilientTasks` and `AddAgentEventStreams` are now safe against repeated registration: `AddResilientTasks` no longer registers the durability hosted service more than once (and rejects a conflicting second credential), and `AddAgentEventStreams` rejects a second configuring call instead of silently discarding its configuration.
+- Steering inputs that were queued but not yet drained when a process crashed are no longer stranded: on recovery the persisted `pending_inputs` queue is rehydrated into the in-process steering FIFO, so a recovered chain drains them instead of silently dropping them. Each queued input's per-turn `InputId` is persisted alongside it so a recovered turn keeps its own identity and advances the chain head (`last_input_id`) exactly as it would without a crash.
+
+## 1.0.0-beta.27 (2026-07-29)
+
+### Features Added
+- Added a durable key-value **state store** client under `Azure.AI.AgentServer.Core.Storage`. `FoundryStateStore.GetOrCreateAsync` binds (creating if needed) a named, Foundry-backed store; instances expose async `GetAsync`/`UpdateAsync`/`DeleteAsync` for the store and `CreateItemAsync`/`SetItemAsync`/`GetItemAsync`/`DeleteItemAsync`/`ListKeysAsync` for its items, with optimistic concurrency (`If-Match`/`ETag`), optional per-user isolation, and store-level item TTL. The .NET analogue of the Python SDK's `FoundryStateStore`.
+- Added support for Microsoft Entra authentication when exporting telemetry to Azure Monitor. When `APPLICATIONINSIGHTS_AUTH_MODE` is set to `Entra`, the Azure Monitor exporter attempts to use a system-assigned managed identity credential (falling back to connection-string authentication if the credential cannot be created).
+
+## 1.0.0-beta.26 (2026-06-28)
+
+### Features Added
+- Container protocol version `2.0.0` support: added the platform identity header constants `PlatformHeaders.UserId` (`x-agent-user-id`) and `PlatformHeaders.FoundryCallId` (`x-agent-foundry-call-id`).
+- Added `FoundryEnvironment.AgentId` exposing the agent's stable GUID from the `FOUNDRY_AGENT_ID` environment variable.
+- Added the request-scoped `FoundryAgentRequestContext` (`AsyncLocal`-backed, never-null `Current`) that captures the inbound `x-agent-foundry-call-id` / `x-agent-user-id` via an SDK middleware, and `FoundryCallIdHandler` (a `DelegatingHandler`) that echoes **only** the call ID on outbound Foundry-bound `HttpClient` calls (`x-agent-user-id` is never echoed). The .NET analogue of the Python SDK's `get_request_context()`.
+
+### Breaking Changes
+- Renamed `IsolationContext` to `PlatformContext`. Its members are now `UserIdKey` (from `x-agent-user-id`) and `CallId` (from `x-agent-foundry-call-id`), replacing `UserIsolationKey` / `ChatIsolationKey`.
+- Replaced the `PlatformHeaders.UserIsolationKey` / `PlatformHeaders.ChatIsolationKey` constants with `PlatformHeaders.UserId` and `PlatformHeaders.FoundryCallId` per container protocol version `2.0.0`.
+
+## 1.0.0-beta.25 (2026-05-25)
+
+### Bugs Fixed
+
+- Corrected `FoundryEnrichmentProcessor` to emit the Agent365 blueprint telemetry key as `microsoft.a365.agent.blueprint.id` (previously emitted as `gen_ai.agent.blueprint.id` in this code path).
+
+## 1.0.0-beta.24 (2026-05-21)
 
 ### Features Added
 
 - Added Agent365 tracing export support with managed identity token acquisition when `FOUNDRY_AGENT365_TRACING_ENABLED` is set.
 - Added `AgentInstanceClientId`, `AgentBlueprintClientId`, `AgentTenantId`, and `IsAgent365TracingEnabled` properties to `FoundryEnvironment`.
-- Added `FoundryEnrichmentProcessor` attributes: `gen_ai.agent.blueprint.id`, `microsoft.tenant.id`, and `microsoft.foundry.agent.type` on telemetry spans.
+- Added `FoundryEnrichmentProcessor` attributes: `microsoft.a365.agent.blueprint.id`, `microsoft.tenant.id`, and `microsoft.foundry.agent.type` on telemetry spans.
 - Added `W3CBaggagePropagator` middleware that parses the W3C `baggage` header into `Activity.Baggage` on all target frameworks (net8.0, net9.0, net10.0).
 - Configured W3C Trace Context and Baggage propagators via `Sdk.SetDefaultTextMapPropagator` for outgoing request propagation.
 - Added conditional exporter registration: Azure Monitor, OTLP, and Agent365 exporters activate only when their respective environment variables are set.

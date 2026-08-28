@@ -14,7 +14,7 @@ using Azure.ResourceManager.Maintenance;
 
 namespace Azure.ResourceManager.Maintenance.Models
 {
-    /// <summary> Response of scheduled event acknowledge. </summary>
+    /// <summary> Response of ScheduledEvents acknowledge. </summary>
     public partial class MaintenanceScheduledEventApproveResult : IJsonModel<MaintenanceScheduledEventApproveResult>
     {
         /// <param name="data"> The data to parse. </param>

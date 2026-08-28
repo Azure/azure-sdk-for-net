@@ -1,12 +1,6 @@
 # Release History
 
-## 7.21.0-beta.1 (Unreleased)
-
-### Acknowledgments
-
-Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
-
-- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
+## 7.21.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -14,6 +8,32 @@ Thank you to our developer community members who helped to make the Service Bus 
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 7.21.0-beta.1 (2026-08-21)
+
+### Features Added
+
+- Added `SqlFilterCount` and `CorrelationFilterCount` properties to `TopicRuntimeProperties`, exposing the total number of SQL filters and correlation filters across all of a topic's subscriptions. These are populated by `GetTopicRuntimePropertiesAsync` and `GetTopicsRuntimePropertiesAsync`.
+- Added `ServiceBusAdministrationClientOptions.ServiceVersion.V2024_05` and made it the default service version. The topic filter counts above are served by the `2024-05` service API version, so the administration client now sends `api-version=2024-05` by default.
+- Added `GetMessageSessionsAsync` overloads on `ServiceBusClient` for queues and subscriptions. The no-filter overload returns the IDs of sessions that have active messages or session state, and the `sessionStateUpdatedAfter` overload returns session IDs whose session state was updated after the specified timestamp. Implements the `com.microsoft:get-message-sessions` AMQP management operation. ([#58761](https://github.com/Azure/azure-sdk-for-net/pull/58761))
+- Added opt-in support for non-exclusive session locking on `ServiceBusSessionReceiver`, allowing a session to be cooperatively taken over by another receiver. Set `ServiceBusSessionReceiverOptions.EnableNonExclusiveSession` to accept a session non-exclusively, then read the token from `ServiceBusSessionReceiver.SessionLockToken` and pass it as `ServiceBusSessionReceiverOptions.SessionLockToken = Guid.Parse(token)` to take that session over. `ServiceBusSessionReceiver.IsSessionExclusive` reports the mode the session was established under. Dispositions for a non-exclusive session are routed over the management link so that settlement keeps working across a takeover, which lowers settlement throughput compared to an exclusive session. This applies to `ServiceBusSessionReceiver` only; `ServiceBusSessionProcessor` continues to lock sessions exclusively. Accepting a session with `EnableNonExclusiveSession` set throws `NotSupportedException` when the endpoint declines it, either by refusing the request outright or by accepting it without assigning a lock token, which is how a caller detects whether the feature is available for a namespace. An endpoint that declines in some other way surfaces the exception its own error maps to. ([#60060](https://github.com/Azure/azure-sdk-for-net/pull/60060))
+
+### Other Changes
+
+- The default `ServiceBusAdministrationClient` service version is now `2024-05` (previously `2021-05`). Existing operations are unaffected in behavior; the change is required to surface the new topic filter count properties.
+
+## 7.20.2 (2026-07-08)
+
+### Acknowledgments
+
+Thank you to our developer community members who helped to make the Service Bus client library better with their contributions to this release:
+
+- Daniel Marbach  _([GitHub](https://github.com/danielmarbach))_
+
+### Bugs Fixed
+
+- Fixed a bug where `ServiceBusAdministrationClient` operations (such as `GetQueueAsync`, `GetTopicAsync`, `QueueExistsAsync`, and `TopicExistsAsync`) threw a `ServiceBusException` wrapping an `ArgumentException` ("Value cannot be empty or contain only white-space characters") when an entity had a shared access authorization rule whose key values were masked (returned empty) by the service for callers lacking the `listkeys/action` permission. The deserialization path now accepts empty key values, and creating `CreateQueueOptions`/`CreateTopicOptions` from the returned properties no longer throws, matching the behavior of the other Azure Service Bus SDKs. ([#60469](https://github.com/Azure/azure-sdk-for-net/issues/60469))
 - Fixed a bug in the `ServiceBusProcessor` where terminal errors (such as DNS resolution failures) caused a tight retry loop with no delay between attempts, potentially overwhelming logs and consuming excessive resources.  ([#54572](https://github.com/Azure/azure-sdk-for-net/issues/54572))
 - Fixed a race condition in `AmqpSender` where concurrent calls to `CreateMessageBatchAsync` during initial AMQP link creation could observe an inconsistent `MaxBatchSize`, causing a spurious `ArgumentOutOfRangeException`. ([#56301](https://github.com/Azure/azure-sdk-for-net/issues/56301))
 

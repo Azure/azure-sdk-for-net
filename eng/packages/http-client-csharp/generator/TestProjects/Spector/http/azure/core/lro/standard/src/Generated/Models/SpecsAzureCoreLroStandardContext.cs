@@ -6,13 +6,10 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
-using Azure.Core;
 
 namespace Specs.Azure.Core.Lro.Standard
 {
     [ModelReaderWriterBuildable(typeof(ExportedUser))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(User))]
     public partial class SpecsAzureCoreLroStandardContext : ModelReaderWriterContext
     {

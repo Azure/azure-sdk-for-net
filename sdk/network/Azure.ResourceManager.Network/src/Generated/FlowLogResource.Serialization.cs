@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.Network
 {
+    /// <summary></summary>
     public partial class FlowLogResource : IJsonModel<FlowLogData>
     {
-        private static FlowLogData s_dataDeserializationInstance;
-        private static FlowLogData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<FlowLogData> s_dataDeserializationInstance;
 
+        private static IJsonModel<FlowLogData> DataDeserializationInstance => s_dataDeserializationInstance ??= new FlowLogData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FlowLogData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<FlowLogData>)Data).Write(writer, options);
 
-        FlowLogData IJsonModel<FlowLogData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<FlowLogData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FlowLogData IJsonModel<FlowLogData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<FlowLogData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<FlowLogData>(Data, options, AzureResourceManagerNetworkContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         FlowLogData IPersistableModel<FlowLogData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<FlowLogData>(data, options, AzureResourceManagerNetworkContext.Default);
 
-        string IPersistableModel<FlowLogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<FlowLogData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FlowLogData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using Microsoft.TypeSpec.Generator.Customizations;
 using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.Files.DataLake.Models
@@ -12,6 +13,8 @@ namespace Azure.Storage.Files.DataLake.Models
     /// <summary>
     /// DataLakeModelFactory provides utilities for mocking.
     /// </summary>
+    [CodeGenType("FilesDataLakeModelFactory")]
+    [CodeGenSuppress("FileSystemItem", typeof(string))]
     public static partial class DataLakeModelFactory
     {
         #region DataLakeFileReadResult
@@ -437,8 +440,8 @@ namespace Azure.Storage.Files.DataLake.Models
             PathPermissions permissions)
             => new PathSystemProperties()
             {
-                CreationTime = creationTime,
-                LastModifiedTime = lastModifiedTime,
+                CreatedOn = creationTime,
+                LastModifiedOn = lastModifiedTime,
                 ETag = eTag,
                 ContentLength = contentLength,
                 IsDirectory = isDirectory,
@@ -1102,5 +1105,57 @@ namespace Azure.Storage.Files.DataLake.Models
                 Tags = tags
             };
         #endregion GetPathTagResult
+
+        #region FileSystemAccessPolicy
+        /// <summary>
+        /// Creates a new <see cref="Models.FileSystemAccessPolicy"/> instance for mocking.
+        /// </summary>
+        public static FileSystemAccessPolicy FileSystemAccessPolicy(
+            PublicAccessType dataLakePublicAccess,
+            ETag eTag,
+            DateTimeOffset lastModified,
+            IEnumerable<DataLakeSignedIdentifier> signedIdentifiers)
+            => new FileSystemAccessPolicy()
+            {
+                DataLakePublicAccess = dataLakePublicAccess,
+                ETag = eTag,
+                LastModified = lastModified,
+                SignedIdentifiers = signedIdentifiers
+            };
+        #endregion FileSystemAccessPolicy
+
+        #region PathDeletedItem
+        /// <summary>
+        /// Creates a new <see cref="Models.PathDeletedItem"/> instance for mocking.
+        /// </summary>
+        public static PathDeletedItem PathDeletedItem(
+            string path,
+            string deletionId,
+            DateTimeOffset? deletedOn,
+            int? remainingRetentionDays)
+            => new PathDeletedItem()
+            {
+                Path = path,
+                DeletionId = deletionId,
+                DeletedOn = deletedOn,
+                RemainingRetentionDays = remainingRetentionDays
+            };
+        #endregion PathDeletedItem
+
+        #region AccessControlChangeResult
+        /// <summary>
+        /// Creates a new <see cref="Models.AccessControlChangeResult"/> instance for mocking.
+        /// </summary>
+        public static AccessControlChangeResult AccessControlChangeResult(
+            AccessControlChangeCounters counters,
+            string continuationToken,
+            AccessControlChangeFailure[] batchFailures)
+            => new AccessControlChangeResult()
+            {
+                Counters = counters,
+                ContinuationToken = continuationToken,
+                BatchFailures = batchFailures
+            };
+        #endregion AccessControlChangeResult
     }
 }

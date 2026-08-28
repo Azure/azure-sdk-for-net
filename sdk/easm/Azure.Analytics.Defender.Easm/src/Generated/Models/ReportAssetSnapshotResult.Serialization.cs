@@ -96,10 +96,10 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("labelName"u8);
                 writer.WriteStringValue(LabelName);
             }
-            if (Optional.IsDefined(UpdatedAt))
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedAt"u8);
-                writer.WriteStringValue(UpdatedAt.Value, "O");
+                writer.WriteStringValue(UpdatedOn.Value, "O");
             }
             if (Optional.IsDefined(Description))
             {
@@ -156,7 +156,7 @@ namespace Azure.Analytics.Defender.Easm
             string displayName = default;
             string metric = default;
             string labelName = default;
-            DateTimeOffset? updatedAt = default;
+            DateTimeOffset? updatedOn = default;
             string description = default;
             AssetPageResult assets = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -183,7 +183,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    updatedAt = prop.Value.GetDateTimeOffset("O");
+                    updatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("description"u8))
@@ -209,7 +209,7 @@ namespace Azure.Analytics.Defender.Easm
                 displayName,
                 metric,
                 labelName,
-                updatedAt,
+                updatedOn,
                 description,
                 assets,
                 additionalBinaryDataProperties);

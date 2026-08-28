@@ -17,6 +17,14 @@ public static class FoundryEnvironment
     public static string? AgentName { get; private set; }
 
     /// <summary>
+    /// The agent's stable identifier (GUID). Sourced from the <c>FOUNDRY_AGENT_ID</c>
+    /// environment variable. Available for container-side logic such as per-agent
+    /// routing, telemetry tagging, or custom storage partitioning. Stable across
+    /// all requests to the same agent.
+    /// </summary>
+    public static string? AgentId { get; private set; }
+
+    /// <summary>
     /// The agent version. Sourced from the <c>FOUNDRY_AGENT_VERSION</c> environment variable.
     /// </summary>
     public static string? AgentVersion { get; private set; }
@@ -51,6 +59,17 @@ public static class FoundryEnvironment
     /// The Application Insights connection string. Sourced from the <c>APPLICATIONINSIGHTS_CONNECTION_STRING</c> environment variable.
     /// </summary>
     public static string? AppInsightsConnectionString { get; private set; }
+
+    /// <summary>
+    /// Indicates whether Microsoft Entra (AAD) authentication is requested for
+    /// Azure Monitor export. Returns <c>true</c> when the
+    /// <c>APPLICATIONINSIGHTS_AUTH_MODE</c> environment variable is set to
+    /// <c>"Entra"</c> (case-insensitive). When enabled, the Azure Monitor
+    /// exporter is configured with a system-assigned
+    /// <see cref="Azure.Identity.ManagedIdentityCredential"/> instead of relying
+    /// on the connection string's instrumentation key alone.
+    /// </summary>
+    public static bool IsAppInsightsEntraAuth { get; private set; }
 
     /// <summary>
     /// The SSE keep-alive comment frame interval. Sourced from the <c>SSE_KEEPALIVE_INTERVAL</c>
@@ -97,7 +116,7 @@ public static class FoundryEnvironment
     /// <summary>
     /// The managed identity client ID of the agent blueprint.
     /// Sourced from the <c>FOUNDRY_AGENT_BLUEPRINT_CLIENT_ID</c> environment variable.
-    /// Stamped as <c>gen_ai.agent.blueprint.id</c> on telemetry spans.
+    /// Stamped as <c>microsoft.a365.agent.blueprint.id</c> on telemetry spans.
     /// </summary>
     public static string? AgentBlueprintClientId { get; private set; }
 
@@ -124,12 +143,19 @@ public static class FoundryEnvironment
     internal static void Reload()
     {
         AgentName = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_NAME");
+        AgentId = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_ID");
         AgentVersion = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_VERSION");
         ProjectEndpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
         ProjectArmId = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ARM_ID");
         SessionId = Environment.GetEnvironmentVariable("FOUNDRY_AGENT_SESSION_ID");
         OtlpEndpoint = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT");
         AppInsightsConnectionString = Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING");
+
+        // Entra (AAD) auth for Azure Monitor export when APPLICATIONINSIGHTS_AUTH_MODE=Entra.
+        IsAppInsightsEntraAuth = string.Equals(
+            Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_AUTH_MODE"),
+            "Entra",
+            StringComparison.OrdinalIgnoreCase);
 
         // Port: default 8088, validate range 1-65535.
         var portEnv = Environment.GetEnvironmentVariable("PORT");

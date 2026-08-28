@@ -32,6 +32,8 @@ description: Samples for the Azure.Messaging.ServiceBus client library
 - [Long-running processing](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample18_LongRunningProcessing.md)
 - [Distributed tracing and monitoring](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample19_DistributedTracing.md)
 - [Performance patterns](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample20_PerformancePatterns.md)
+- [Auto-forwarding into a session-enabled queue](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample21_AutoForwardIntoSession.md)
+- [List message sessions](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/servicebus/Azure.Messaging.ServiceBus/samples/Sample22_GetMessageSessions.md)
 
 ## Application samples
 

@@ -1,0 +1,163 @@
+name: Azure .NET Provisioning SDK PR Review Trigger
+
+on:
+  check_run:
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "Open pull request number to backfill"
+        required: true
+        type: string
+
+permissions:
+  actions: write
+  checks: write
+  contents: read
+  pull-requests: read
+
+jobs:
+  dispatch-provisioning-review:
+    if: >
+      github.event_name != 'check_run' ||
+      (github.event.check_run.name == 'net - pullrequest' &&
+      (github.event.check_run.conclusion == 'success' || github.event.check_run.conclusion == 'failure'))
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch provisioning review when in scope
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          PR_NUMBER: ${{ github.event.check_run.pull_requests[0].number }}
+          CHECK_RUN_CONCLUSION: ${{ github.event.check_run.conclusion }}
+          CHECK_RUN_HEAD_SHA: ${{ github.event.check_run.head_sha }}
+          CHECK_RUN_URL: ${{ github.event.check_run.html_url }}
+          MANUAL_PR_NUMBER: ${{ inputs.pr_number }}
+        run: |
+          set -euo pipefail
+
+          find_open_pr_for_head_sha() {
+            local head_sha="$1"
+            if [ -z "$head_sha" ]; then
+              return 0
+            fi
+
+            gh api --paginate "repos/$REPOSITORY/pulls?state=open&per_page=100" \
+              --jq ".[] | select(.head.sha == \"$head_sha\") | [.updated_at, .number] | @tsv" |
+              sort -r |
+              sed -n '1s/^[^\t]*\t//p'
+          }
+
+          has_active_provisioning_review_check() {
+            local head_sha="$1"
+            local review_check_ids
+            review_check_ids="$(gh api --paginate "repos/$REPOSITORY/commits/$head_sha/check-runs?per_page=100" \
+              --jq '.check_runs[] | select(.name == "Azure .NET Provisioning SDK PR Review" and (.status == "queued" or .status == "in_progress")) | .id')"
+            [ -n "$review_check_ids" ]
+          }
+
+          create_provisioning_review_check() {
+            local head_sha="$1"
+            local details_url="${GITHUB_SERVER_URL:-https://github.com}/$REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+
+            if has_active_provisioning_review_check "$head_sha"; then
+              echo "Provisioning review check is already active for $head_sha."
+              return 0
+            fi
+
+            gh api --method POST "repos/$REPOSITORY/check-runs" \
+              -f name='Azure .NET Provisioning SDK PR Review' \
+              -f head_sha="$head_sha" \
+              -f status='in_progress' \
+              -f details_url="$details_url" \
+              -f 'output[title]=Azure .NET Provisioning SDK PR Review' \
+              -f "output[summary]=Provisioning SDK PR review is running. See $details_url" >/dev/null
+          }
+
+          get_terminal_net_pullrequest_check() {
+            local head_sha="$1"
+            gh api --paginate "repos/$REPOSITORY/commits/$head_sha/check-runs?per_page=100" \
+              --jq '.check_runs[] | select(.name == "net - pullrequest" and (.conclusion == "success" or .conclusion == "failure")) | [.completed_at, .conclusion, .head_sha, .html_url] | @tsv' |
+              sort |
+              tail -n 1 |
+              cut -f 2-
+          }
+
+          dispatch_provisioning_review() {
+            local pr_number="$1"
+            local check_run_conclusion="$2"
+            local check_run_head_sha="$3"
+            local check_run_url="$4"
+
+            if [ -z "$pr_number" ]; then
+              echo "No pull request associated with this check run."
+              return 0
+            fi
+
+            if [ "$(gh pr view "$pr_number" --repo "$REPOSITORY" --json isDraft --jq '.isDraft')" = "true" ]; then
+              echo "Skipping draft PR #$pr_number."
+              return 0
+            fi
+
+            local current_head_sha
+            current_head_sha="$(gh pr view "$pr_number" --repo "$REPOSITORY" --json headRefOid --jq '.headRefOid')"
+            if [ "$check_run_head_sha" != "$current_head_sha" ]; then
+              echo "Skipping PR #$pr_number; check run SHA $check_run_head_sha no longer matches current PR head $current_head_sha."
+              return 0
+            fi
+
+            local changed_filenames
+            changed_filenames="$(gh api --paginate "repos/$REPOSITORY/pulls/$pr_number/files?per_page=100" --jq '.[].filename')"
+            if ! grep -Eq '^sdk/[^/]+/Azure\.Provisioning\.[^/]+/' <<< "$changed_filenames"; then
+              echo "Skipping PR #$pr_number; no Azure.Provisioning.* package files changed."
+              return 0
+            fi
+
+            if has_active_provisioning_review_check "$check_run_head_sha"; then
+              echo "Skipping PR #$pr_number; provisioning review check is already active for $check_run_head_sha."
+              return 0
+            fi
+
+            AW_CONTEXT=$(printf '{"item_type":"pull_request","item_number":%s}' "$pr_number")
+
+            gh workflow run provisioning-review.lock.yml \
+              --repo "$REPOSITORY" \
+              --ref "$DEFAULT_BRANCH" \
+              -f aw_context="$AW_CONTEXT" \
+              -f pr_number="$pr_number" \
+              -f check_run_conclusion="$check_run_conclusion" \
+              -f check_run_head_sha="$check_run_head_sha" \
+              -f check_run_url="$check_run_url"
+
+            create_provisioning_review_check "$check_run_head_sha"
+            echo "Dispatched provisioning review for PR #$pr_number."
+          }
+
+          if [ "$GITHUB_EVENT_NAME" = "check_run" ]; then
+            if [ -z "$PR_NUMBER" ]; then
+              PR_NUMBER="$(find_open_pr_for_head_sha "$CHECK_RUN_HEAD_SHA")"
+            fi
+
+            dispatch_provisioning_review "$PR_NUMBER" "$CHECK_RUN_CONCLUSION" "$CHECK_RUN_HEAD_SHA" "$CHECK_RUN_URL"
+            exit 0
+          fi
+
+          if ! head_sha="$(gh api "repos/$REPOSITORY/pulls/$MANUAL_PR_NUMBER" --jq 'select(.state == "open") | .head.sha' 2>/dev/null)"; then
+            echo "Skipping PR #$MANUAL_PR_NUMBER; PR was not found or is inaccessible."
+            exit 0
+          fi
+
+          if [ -z "$head_sha" ]; then
+            echo "Skipping PR #$MANUAL_PR_NUMBER; PR is not open."
+            exit 0
+          fi
+
+          check_run="$(get_terminal_net_pullrequest_check "$head_sha")"
+          if [ -z "$check_run" ]; then
+            echo "Skipping PR #$MANUAL_PR_NUMBER; net - pullrequest is not complete."
+            exit 0
+          fi
+
+          IFS=$'\t' read -r check_run_conclusion check_run_head_sha check_run_url <<< "$check_run"
+          dispatch_provisioning_review "$MANUAL_PR_NUMBER" "$check_run_conclusion" "$check_run_head_sha" "$check_run_url"

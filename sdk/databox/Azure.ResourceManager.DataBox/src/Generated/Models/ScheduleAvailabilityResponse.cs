@@ -33,6 +33,6 @@ namespace Azure.ResourceManager.DataBox.Models
         }
 
         /// <summary> List of dates available to schedule. </summary>
-        public IReadOnlyList<DateTimeOffset> AvailableDates { get; }
+        public IReadOnlyList<DateTimeOffset> AvailableDates { get; } = new ChangeTrackingList<DateTimeOffset>();
     }
 }

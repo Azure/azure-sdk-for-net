@@ -7,43 +7,15 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
     /// <summary> Service Token. </summary>
     public partial class MachineLearningEndpointAuthToken
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointAuthToken"/>. </summary>
         internal MachineLearningEndpointAuthToken()
@@ -52,30 +24,33 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Initializes a new instance of <see cref="MachineLearningEndpointAuthToken"/>. </summary>
         /// <param name="accessToken"> Access token for endpoint authentication. </param>
+        /// <param name="expiryTimeUtc"> Access token expiry time (UTC). </param>
+        /// <param name="refreshAfterTimeUtc"> Refresh access token after time (UTC). </param>
         /// <param name="tokenType"> Access token type. </param>
-        /// <param name="expireOn"> Access token expiry time (UTC). </param>
-        /// <param name="refreshOn"> Refresh access token after time (UTC). </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningEndpointAuthToken(string accessToken, string tokenType, DateTimeOffset? expireOn, DateTimeOffset? refreshOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal MachineLearningEndpointAuthToken(string accessToken, long? expiryTimeUtc, long? refreshAfterTimeUtc, string tokenType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AccessToken = accessToken;
+            ExpiryTimeUtc = expiryTimeUtc;
+            RefreshAfterTimeUtc = refreshAfterTimeUtc;
             TokenType = tokenType;
-            ExpireOn = expireOn;
-            RefreshOn = refreshOn;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Access token for endpoint authentication. </summary>
         [WirePath("accessToken")]
         public string AccessToken { get; }
+
+        /// <summary> Access token expiry time (UTC). </summary>
+        [WirePath("expiryTimeUtc")]
+        public long? ExpiryTimeUtc { get; }
+
+        /// <summary> Refresh access token after time (UTC). </summary>
+        [WirePath("refreshAfterTimeUtc")]
+        public long? RefreshAfterTimeUtc { get; }
+
         /// <summary> Access token type. </summary>
         [WirePath("tokenType")]
         public string TokenType { get; }
-        /// <summary> Access token expiry time (UTC). </summary>
-        [WirePath("expiryTimeUtc")]
-        public DateTimeOffset? ExpireOn { get; }
-        /// <summary> Refresh access token after time (UTC). </summary>
-        [WirePath("refreshAfterTimeUtc")]
-        public DateTimeOffset? RefreshOn { get; }
     }
 }

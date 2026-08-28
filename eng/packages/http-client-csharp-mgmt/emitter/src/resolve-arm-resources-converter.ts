@@ -57,7 +57,7 @@ import {
   extractNameConstraintOverrides,
   isResourceIdPatternPrefixMatch
 } from "./resource-metadata.js";
-import { CSharpEmitterContext } from "@typespec/http-client-csharp";
+import type { CSharpEmitterContext } from "./code-model-types.js";
 import {
   getCrossLanguageDefinitionId,
   getClientType,
@@ -68,6 +68,7 @@ import {
 import { getAllSdkClients } from "./sdk-client-utils.js";
 import {
   extensionResourceOperationName,
+  isResourceCollectionAction,
   legacyExtensionResourceOperationName,
   legacyResourceOperationName,
   builtInResourceOperationName
@@ -419,7 +420,9 @@ function convertResolvedResourceToMetadata(
           methodId,
           kind: isResourceList
             ? ResourceOperationKind.List
-            : ResourceOperationKind.Action,
+            : isResourceCollectionAction(sdkMethod)
+              ? ResourceOperationKind.CollectionAction
+              : ResourceOperationKind.Action,
           operationPath: opPath,
           scope: buildScopeInfoFromPath(opPath)
         });

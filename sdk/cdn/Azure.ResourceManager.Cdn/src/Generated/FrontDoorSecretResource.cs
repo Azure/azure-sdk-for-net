@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(ResourceType, out string frontDoorSecretApiVersion);
             _secretsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", ResourceType.Namespace, Diagnostics);
-            _secretsRestClient = new Secrets(_secretsClientDiagnostics, Pipeline, Endpoint, frontDoorSecretApiVersion ?? "2025-09-01-preview");
+            _secretsRestClient = new Secrets(_secretsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, frontDoorSecretApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _secretsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorSecretData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<FrontDoorSecretResource> operation = new CdnArmOperation<FrontDoorSecretResource>(
-                    new FrontDoorSecretOperationSource(Client),
+                    new FrontDoorSecretResourceOperationSource(Client),
                     _secretsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _secretsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, FrontDoorSecretData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<FrontDoorSecretResource> operation = new CdnArmOperation<FrontDoorSecretResource>(
-                    new FrontDoorSecretOperationSource(Client),
+                    new FrontDoorSecretResourceOperationSource(Client),
                     _secretsClientDiagnostics,
                     Pipeline,
                     message.Request,

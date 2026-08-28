@@ -24,15 +24,15 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         /// <summary> Initializes a new instance of <see cref="HciVmInstanceOSProfileLinuxConfiguration"/>. </summary>
         /// <param name="disablePasswordAuthentication"> DisablePasswordAuthentication - whether password authentication should be disabled. </param>
         /// <param name="ssh"> Specifies the ssh key configuration for a Linux OS. </param>
-        /// <param name="provisionVmAgent"> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </param>
-        /// <param name="provisionVmConfigAgent"> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </param>
+        /// <param name="shouldProvisionVmAgent"> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </param>
+        /// <param name="shouldProvisionVmConfigAgent"> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HciVmInstanceOSProfileLinuxConfiguration(bool? disablePasswordAuthentication, HciVmOSProfileSshConfiguration ssh, bool? provisionVmAgent, bool? provisionVmConfigAgent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HciVmInstanceOSProfileLinuxConfiguration(bool? disablePasswordAuthentication, HciVmOSProfileSshConfiguration ssh, bool? shouldProvisionVmAgent, bool? shouldProvisionVmConfigAgent, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisablePasswordAuthentication = disablePasswordAuthentication;
             Ssh = ssh;
-            ProvisionVmAgent = provisionVmAgent;
-            ProvisionVmConfigAgent = provisionVmConfigAgent;
+            ShouldProvisionVmAgent = shouldProvisionVmAgent;
+            ShouldProvisionVmConfigAgent = shouldProvisionVmConfigAgent;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,10 +43,10 @@ namespace Azure.ResourceManager.Hci.Vm.Models
         internal HciVmOSProfileSshConfiguration Ssh { get; set; }
 
         /// <summary> Used to indicate whether Arc for Servers agent onboarding should be triggered during the virtual machine instance creation process. </summary>
-        public bool? ProvisionVmAgent { get; set; }
+        public bool? ShouldProvisionVmAgent { get; set; }
 
         /// <summary> Used to indicate whether the VM Config Agent should be installed during the virtual machine creation process. </summary>
-        public bool? ProvisionVmConfigAgent { get; set; }
+        public bool? ShouldProvisionVmConfigAgent { get; set; }
 
         /// <summary> The list of SSH public keys used to authenticate with linux based VMs. </summary>
         public IList<HciVmOSProfileSshPublicKey> SshPublicKeys

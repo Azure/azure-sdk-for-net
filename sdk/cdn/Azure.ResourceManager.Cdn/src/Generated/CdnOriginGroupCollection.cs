@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Cdn
         {
             TryGetApiVersion(CdnOriginGroupResource.ResourceType, out string cdnOriginGroupApiVersion);
             _originGroupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Cdn", CdnOriginGroupResource.ResourceType.Namespace, Diagnostics);
-            _originGroupsRestClient = new OriginGroups(_originGroupsClientDiagnostics, Pipeline, Endpoint, cdnOriginGroupApiVersion ?? "2025-09-01-preview");
+            _originGroupsRestClient = new OriginGroups(_originGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cdnOriginGroupApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _originGroupsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, CdnOriginGroupData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 CdnArmOperation<CdnOriginGroupResource> operation = new CdnArmOperation<CdnOriginGroupResource>(
-                    new CdnOriginGroupOperationSource(Client),
+                    new CdnOriginGroupResourceOperationSource(Client),
                     _originGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Cdn
                 HttpMessage message = _originGroupsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, originGroupName, CdnOriginGroupData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 CdnArmOperation<CdnOriginGroupResource> operation = new CdnArmOperation<CdnOriginGroupResource>(
-                    new CdnOriginGroupOperationSource(Client),
+                    new CdnOriginGroupResourceOperationSource(Client),
                     _originGroupsClientDiagnostics,
                     Pipeline,
                     message.Request,

@@ -7,61 +7,81 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApiManagement;
 
 namespace Azure.ResourceManager.ApiManagement.Models
 {
     /// <summary> Backend pool information. </summary>
     internal partial class BackendPool
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="BackendPool"/>. </summary>
         public BackendPool()
         {
-            Services = new ChangeTrackingList<BackendPoolItem>();
+            PoolServices = new ChangeTrackingList<BackendPoolItem>();
         }
 
         /// <summary> Initializes a new instance of <see cref="BackendPool"/>. </summary>
-        /// <param name="services"> The list of backend entities belonging to a pool. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BackendPool(IList<BackendPoolItem> services, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="poolServices"> The list of backend entities belonging to a pool. </param>
+        /// <param name="failureResponse"> The response to be returned when all the backends in the pool are inactive. </param>
+        /// <param name="sessionAffinity"> The session stickiness properties of the backend pool. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal BackendPool(IList<BackendPoolItem> poolServices, BackendFailureResponse failureResponse, BackendSessionAffinity sessionAffinity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Services = services;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            PoolServices = poolServices;
+            FailureResponse = failureResponse;
+            SessionAffinity = sessionAffinity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of backend entities belonging to a pool. </summary>
         [WirePath("services")]
-        public IList<BackendPoolItem> Services { get; }
+        public IList<BackendPoolItem> PoolServices { get; } = new ChangeTrackingList<BackendPoolItem>();
+
+        /// <summary> The response to be returned when all the backends in the pool are inactive. </summary>
+        [WirePath("failureResponse")]
+        internal BackendFailureResponse FailureResponse { get; set; }
+
+        /// <summary> The session stickiness properties of the backend pool. </summary>
+        [WirePath("sessionAffinity")]
+        internal BackendSessionAffinity SessionAffinity { get; set; }
+
+        /// <summary> The status code of the response. </summary>
+        [WirePath("failureResponse.statusCode")]
+        public int? FailureResponseStatusCode
+        {
+            get
+            {
+                return FailureResponse is null ? default : FailureResponse.StatusCode;
+            }
+            set
+            {
+                if (FailureResponse is null)
+                {
+                    FailureResponse = new BackendFailureResponse();
+                }
+                FailureResponse.StatusCode = value;
+            }
+        }
+
+        /// <summary> The id that identifies the requests belonging to the same session. </summary>
+        [WirePath("sessionAffinity.sessionId")]
+        public BackendSessionId SessionId
+        {
+            get
+            {
+                return SessionAffinity is null ? default : SessionAffinity.SessionId;
+            }
+            set
+            {
+                if (SessionAffinity is null)
+                {
+                    SessionAffinity = new BackendSessionAffinity();
+                }
+                SessionAffinity.SessionId = value;
+            }
+        }
     }
 }

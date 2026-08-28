@@ -11,16 +11,16 @@ namespace Azure.Provisioning.Batch
     public enum BatchPrivateEndpointConnectionProvisioningState
     {
         /// <summary> The connection is creating. </summary>
-        Creating,
+        Creating = 0,
         /// <summary> The user has requested that the connection status be updated, but the update operation has not yet completed. You may not reference the connection when connecting the Batch account. </summary>
-        Updating,
+        Updating = 1,
         /// <summary> The connection is deleting. </summary>
-        Deleting,
+        Deleting = 2,
         /// <summary> The connection status is final and is ready for use if Status is Approved. </summary>
-        Succeeded,
+        Succeeded = 3,
         /// <summary> The user requested that the connection be updated and it failed. You may retry the update operation. </summary>
-        Failed,
+        Failed = 4,
         /// <summary> The user has cancelled the connection creation. </summary>
-        Cancelled
+        Cancelled = 5
     }
 }

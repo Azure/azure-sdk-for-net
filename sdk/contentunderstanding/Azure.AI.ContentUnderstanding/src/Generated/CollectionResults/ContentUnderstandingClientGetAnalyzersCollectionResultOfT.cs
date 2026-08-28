@@ -45,8 +45,8 @@ namespace Azure.AI.ContentUnderstanding
                     yield break;
                 }
                 PagedContentAnalyzer result = (PagedContentAnalyzer)response;
-                yield return Page<ContentAnalyzer>.FromValues((IReadOnlyList<ContentAnalyzer>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ContentAnalyzer>.FromValues((IReadOnlyList<ContentAnalyzer>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

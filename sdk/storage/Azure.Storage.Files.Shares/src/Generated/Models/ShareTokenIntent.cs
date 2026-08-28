@@ -7,42 +7,60 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.Files.Shares.Models
 {
-    /// <summary> The ShareTokenIntent. </summary>
+    /// <summary> The share token intent. </summary>
     public readonly partial struct ShareTokenIntent : IEquatable<ShareTokenIntent>
     {
         private readonly string _value;
+        /// <summary> backup. </summary>
+        private const string BackupValue = "backup";
 
         /// <summary> Initializes a new instance of <see cref="ShareTokenIntent"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ShareTokenIntent(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string BackupValue = "backup";
+            _value = value;
+        }
 
         /// <summary> backup. </summary>
         public static ShareTokenIntent Backup { get; } = new ShareTokenIntent(BackupValue);
+
         /// <summary> Determines if two <see cref="ShareTokenIntent"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ShareTokenIntent left, ShareTokenIntent right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ShareTokenIntent"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ShareTokenIntent left, ShareTokenIntent right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ShareTokenIntent"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ShareTokenIntent"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ShareTokenIntent(string value) => new ShareTokenIntent(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ShareTokenIntent"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ShareTokenIntent?(string value) => value == null ? null : new ShareTokenIntent(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ShareTokenIntent other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ShareTokenIntent other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

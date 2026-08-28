@@ -59,8 +59,8 @@ namespace Azure.ResourceManager.NetApp
                     yield break;
                 }
                 VolumeList result = VolumeList.FromResponse(response);
-                yield return Page<NetAppVolumeData>.FromValues((IReadOnlyList<NetAppVolumeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<NetAppVolumeData>.FromValues((IReadOnlyList<NetAppVolumeData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

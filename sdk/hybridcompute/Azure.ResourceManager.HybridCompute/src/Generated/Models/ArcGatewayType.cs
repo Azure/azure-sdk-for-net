@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridCompute;
 
 namespace Azure.ResourceManager.HybridCompute.Models
 {
@@ -14,35 +15,52 @@ namespace Azure.ResourceManager.HybridCompute.Models
     public readonly partial struct ArcGatewayType : IEquatable<ArcGatewayType>
     {
         private readonly string _value;
+        /// <summary> Public. </summary>
+        private const string PublicValue = "Public";
 
         /// <summary> Initializes a new instance of <see cref="ArcGatewayType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public ArcGatewayType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string PublicValue = "Public";
+            _value = value;
+        }
 
         /// <summary> Public. </summary>
         public static ArcGatewayType Public { get; } = new ArcGatewayType(PublicValue);
+
         /// <summary> Determines if two <see cref="ArcGatewayType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(ArcGatewayType left, ArcGatewayType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="ArcGatewayType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(ArcGatewayType left, ArcGatewayType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="ArcGatewayType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="ArcGatewayType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator ArcGatewayType(string value) => new ArcGatewayType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="ArcGatewayType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator ArcGatewayType?(string value) => value == null ? null : new ArcGatewayType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is ArcGatewayType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(ArcGatewayType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

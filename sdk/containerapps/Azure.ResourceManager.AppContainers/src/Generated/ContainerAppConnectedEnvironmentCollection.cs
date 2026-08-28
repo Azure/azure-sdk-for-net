@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ContainerAppConnectedEnvironmentResource.ResourceType, out string containerAppConnectedEnvironmentApiVersion);
             _connectedEnvironmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppConnectedEnvironmentResource.ResourceType.Namespace, Diagnostics);
-            _connectedEnvironmentsRestClient = new ConnectedEnvironments(_connectedEnvironmentsClientDiagnostics, Pipeline, Endpoint, containerAppConnectedEnvironmentApiVersion ?? "2025-10-02-preview");
+            _connectedEnvironmentsRestClient = new ConnectedEnvironments(_connectedEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppConnectedEnvironmentApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _connectedEnvironmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, connectedEnvironmentName, ContainerAppConnectedEnvironmentData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 AppContainersArmOperation<ContainerAppConnectedEnvironmentResource> operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentResource>(
-                    new ContainerAppConnectedEnvironmentOperationSource(Client),
+                    new ContainerAppConnectedEnvironmentResourceOperationSource(Client),
                     _connectedEnvironmentsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppContainers
                 HttpMessage message = _connectedEnvironmentsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, connectedEnvironmentName, ContainerAppConnectedEnvironmentData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 AppContainersArmOperation<ContainerAppConnectedEnvironmentResource> operation = new AppContainersArmOperation<ContainerAppConnectedEnvironmentResource>(
-                    new ContainerAppConnectedEnvironmentOperationSource(Client),
+                    new ContainerAppConnectedEnvironmentResourceOperationSource(Client),
                     _connectedEnvironmentsClientDiagnostics,
                     Pipeline,
                     message.Request,

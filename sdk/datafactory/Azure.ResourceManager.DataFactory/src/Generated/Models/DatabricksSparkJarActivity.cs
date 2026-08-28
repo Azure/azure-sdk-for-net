@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
+using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -23,10 +24,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             Argument.AssertNotNull(name, nameof(name));
             Argument.AssertNotNull(mainClassName, nameof(mainClassName));
 
-            MainClassName = mainClassName;
-            Parameters = new ChangeTrackingList<BinaryData>();
-            Libraries = new ChangeTrackingList<IDictionary<string, BinaryData>>();
-            ActivityType = "DatabricksSparkJar";
+            TypeProperties = new DatabricksSparkJarActivityTypeProperties(mainClassName);
         }
 
         /// <summary> Initializes a new instance of <see cref="DatabricksSparkJarActivity"/>. </summary>
@@ -37,88 +35,59 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="onInactiveMarkAs"> Status result of the activity when the state is set to Inactive. This is an optional property and if not provided when the activity is inactive, the status will be Succeeded by default. </param>
         /// <param name="dependsOn"> Activity depends on condition. </param>
         /// <param name="userProperties"> Activity user properties. </param>
-        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <param name="additionalProperties"></param>
         /// <param name="linkedServiceName"> Linked service reference. </param>
         /// <param name="policy"> Activity policy. </param>
-        /// <param name="mainClassName"> The full name of the class containing the main method to be executed. This class must be contained in a JAR provided as a library. Type: string (or Expression with resultType string). </param>
-        /// <param name="parameters"> Parameters that will be passed to the main method. </param>
-        /// <param name="libraries"> A list of libraries to be installed on the cluster that will execute the job. </param>
-        internal DatabricksSparkJarActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, DataFactoryElement<string> mainClassName, IList<BinaryData> parameters, IList<IDictionary<string, BinaryData>> libraries) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        /// <param name="typeProperties"> Databricks SparkJar activity properties. </param>
+        internal DatabricksSparkJarActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, DatabricksSparkJarActivityTypeProperties typeProperties) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
-            MainClassName = mainClassName;
-            Parameters = parameters;
-            Libraries = libraries;
-            ActivityType = activityType ?? "DatabricksSparkJar";
+            TypeProperties = typeProperties;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DatabricksSparkJarActivity"/> for deserialization. </summary>
-        internal DatabricksSparkJarActivity()
-        {
-        }
+        /// <summary> Databricks SparkJar activity properties. </summary>
+        internal DatabricksSparkJarActivityTypeProperties TypeProperties { get; set; }
 
         /// <summary> The full name of the class containing the main method to be executed. This class must be contained in a JAR provided as a library. Type: string (or Expression with resultType string). </summary>
-        public DataFactoryElement<string> MainClassName { get; set; }
-        /// <summary>
-        /// Parameters that will be passed to the main method.
-        /// <para>
-        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IList<BinaryData> Parameters { get; }
-        /// <summary>
-        /// A list of libraries to be installed on the cluster that will execute the job.
-        /// <para>
-        /// To assign an object to the element of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public IList<IDictionary<string, BinaryData>> Libraries { get; }
+        public DataFactoryElement<string> MainClassName
+        {
+            get
+            {
+                return TypeProperties is null ? default : TypeProperties.MainClassName;
+            }
+            set
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DatabricksSparkJarActivityTypeProperties();
+                }
+                TypeProperties.MainClassName = value;
+            }
+        }
+
+        /// <summary> Parameters that will be passed to the main method. </summary>
+        public IList<BinaryData> Parameters
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DatabricksSparkJarActivityTypeProperties();
+                }
+                return TypeProperties.Parameters;
+            }
+        }
+
+        /// <summary> A list of libraries to be installed on the cluster that will execute the job. </summary>
+        public IList<IDictionary<string, BinaryData>> Libraries
+        {
+            get
+            {
+                if (TypeProperties is null)
+                {
+                    TypeProperties = new DatabricksSparkJarActivityTypeProperties();
+                }
+                return TypeProperties.Libraries;
+            }
+        }
     }
 }

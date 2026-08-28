@@ -89,6 +89,21 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type);
             }
+            if (options.Format != "W" && Optional.IsDefined(Model))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(Model);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Manufacturer))
+            {
+                writer.WritePropertyName("manufacturer"u8);
+                writer.WriteStringValue(Manufacturer);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsSupported))
+            {
+                writer.WritePropertyName("isSupported"u8);
+                writer.WriteBooleanValue(IsSupported.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -134,6 +149,9 @@ namespace Azure.ResourceManager.Hci.Models
             string id = default;
             string sizeInBytes = default;
             string @type = default;
+            string model = default;
+            string manufacturer = default;
+            bool? isSupported = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -152,12 +170,38 @@ namespace Azure.ResourceManager.Hci.Models
                     @type = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("model"u8))
+                {
+                    model = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("manufacturer"u8))
+                {
+                    manufacturer = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("isSupported"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isSupported = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new EdgeDeviceDisks(id, sizeInBytes, @type, additionalBinaryDataProperties);
+            return new EdgeDeviceDisks(
+                id,
+                sizeInBytes,
+                @type,
+                model,
+                manufacturer,
+                isSupported,
+                additionalBinaryDataProperties);
         }
     }
 }

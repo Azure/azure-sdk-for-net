@@ -74,6 +74,10 @@ namespace Azure.Provisioning.Batch
             _containerType = DefineProperty<BatchVmContainerType>(nameof(ContainerType), new string[] { "type" }, isRequired: true);
             _containerImageNames = DefineListProperty<string>(nameof(ContainerImageNames), new string[] { "containerImageNames" });
             _containerRegistries = DefineListProperty<BatchVmContainerRegistry>(nameof(ContainerRegistries), new string[] { "containerRegistries" });
+            DefineAdditionalProperties();
         }
+
+        /// <summary> Define additional provisionable properties for BatchVmContainerConfiguration that are not part of the generated code. </summary>
+        partial void DefineAdditionalProperties();
     }
 }

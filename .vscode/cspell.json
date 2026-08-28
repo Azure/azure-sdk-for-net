@@ -69,6 +69,7 @@
     "apos",
     "azsdk",
     "blazor",
+    "bleu",
     "byok",
     "centralus",
     "clippy",
@@ -143,7 +144,6 @@
     "otel",
     "overridden",
     "parallelization",
-    "personalizer",
     "petabit",
     "picometer",
     "pids",
@@ -165,6 +165,7 @@
     "skus",
     "somaxconn",
     "southcentralus",
+    "sovcloud",
     "structs",
     "sybase",
     "sysctls",
@@ -774,13 +775,6 @@
       ]
     },
     {
-      "filename": "**/sdk/kubernetesconfiguration/**/*.cs",
-      "words": [
-        "kustomization",
-        "kustomizations"
-      ]
-    },
-    {
       "filename": "**/sdk/logic/**/*.cs",
       "words": [
         "ccyymmdd",
@@ -1272,6 +1266,7 @@
         "hkey",
         "mcas",
         "mdatp",
+        "mdti",
         "msti",
         "nlstext",
         "puid",

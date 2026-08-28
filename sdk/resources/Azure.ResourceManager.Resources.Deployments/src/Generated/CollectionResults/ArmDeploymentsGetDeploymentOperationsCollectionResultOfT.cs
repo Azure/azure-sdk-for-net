@@ -10,9 +10,9 @@ using System.Collections.Generic;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.Resources.Models;
+using Azure.ResourceManager.Resources.Deployments.Models;
 
-namespace Azure.ResourceManager.Resources
+namespace Azure.ResourceManager.Resources.Deployments
 {
     internal partial class ArmDeploymentsGetDeploymentOperationsCollectionResultOfT : Pageable<ArmDeploymentOperation>
     {
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Resources
                     yield break;
                 }
                 ArmDeploymentOperationsListResult result = ArmDeploymentOperationsListResult.FromResponse(response);
-                yield return Page<ArmDeploymentOperation>.FromValues((IReadOnlyList<ArmDeploymentOperation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 nextPage = result.NextLink;
+                yield return Page<ArmDeploymentOperation>.FromValues((IReadOnlyList<ArmDeploymentOperation>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

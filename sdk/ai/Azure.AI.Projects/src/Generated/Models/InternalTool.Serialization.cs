@@ -143,26 +143,28 @@ namespace Azure.AI.Projects
                         return CaptureStructuredOutputsTool.DeserializeCaptureStructuredOutputsTool(element, options);
                     case "a2a_preview":
                         return A2APreviewTool.DeserializeA2APreviewTool(element, options);
+                    case "a2a":
+                        return A2ATool.DeserializeA2ATool(element, options);
                     case "work_iq_preview":
                         return WorkIQPreviewTool.DeserializeWorkIQPreviewTool(element, options);
                     case "fabric_iq_preview":
                         return FabricIQPreviewTool.DeserializeFabricIQPreviewTool(element, options);
+                    case "web_iq_preview":
+                        return WebIQPreviewTool.DeserializeWebIQPreviewTool(element, options);
                     case "memory_search_preview":
                         return MemorySearchPreviewTool.DeserializeMemorySearchPreviewTool(element, options);
-                    case "toolbox_search_preview":
-                        return ToolboxSearchPreviewTool.DeserializeToolboxSearchPreviewTool(element, options);
                     case "code_interpreter":
                         return InternalCodeInterpreterTool.DeserializeInternalCodeInterpreterTool(element, options);
-                    case "function":
-                        return InternalFunctionTool.DeserializeInternalFunctionTool(element, options);
                     case "file_search":
                         return InternalFileSearchTool.DeserializeInternalFileSearchTool(element, options);
-                    case "computer_use_preview":
-                        return InternalComputerUsePreviewTool.DeserializeInternalComputerUsePreviewTool(element, options);
                     case "web_search":
                         return WebSearchTool.DeserializeWebSearchTool(element, options);
                     case "mcp":
                         return InternalMCPTool.DeserializeInternalMCPTool(element, options);
+                    case "function":
+                        return InternalFunctionTool.DeserializeInternalFunctionTool(element, options);
+                    case "computer_use_preview":
+                        return InternalComputerUsePreviewTool.DeserializeInternalComputerUsePreviewTool(element, options);
                     case "image_generation":
                         return InternalImageGenTool.DeserializeInternalImageGenTool(element, options);
                     case "local_shell":

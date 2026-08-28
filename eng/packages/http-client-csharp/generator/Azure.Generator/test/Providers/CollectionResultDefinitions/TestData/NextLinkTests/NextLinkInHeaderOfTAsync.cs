@@ -47,12 +47,16 @@ namespace Samples
                     yield break;
                 }
                 global::Samples.Models.Page result = ((global::Samples.Models.Page)response);
-                yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)result.Cats), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if ((response.Headers.TryGetValue("nextCat", out string value) && !string.IsNullOrEmpty(value)))
                 {
                     nextPage = new global::System.Uri(value, global::System.UriKind.RelativeOrAbsolute);
                 }
                 else
+                {
+                    nextPage = null;
+                }
+                yield return global::Azure.Page<global::Samples.Models.Cat>.FromValues(((global::System.Collections.Generic.IReadOnlyList<global::Samples.Models.Cat>)result.Cats), (nextPage?.IsAbsoluteUri == true) ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                if ((nextPage == null))
                 {
                     yield break;
                 }

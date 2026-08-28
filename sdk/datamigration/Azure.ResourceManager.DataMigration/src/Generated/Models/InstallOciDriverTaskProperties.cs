@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -14,47 +15,47 @@ namespace Azure.ResourceManager.DataMigration.Models
     public partial class InstallOciDriverTaskProperties : DataMigrationProjectTaskProperties
     {
         /// <summary> Initializes a new instance of <see cref="InstallOciDriverTaskProperties"/>. </summary>
-        public InstallOciDriverTaskProperties()
+        public InstallOciDriverTaskProperties() : base(DataMigrationTaskType.ServiceInstallOCI)
         {
             Output = new ChangeTrackingList<InstallOciDriverTaskOutput>();
-            TaskType = DataMigrationTaskType.ServiceInstallOci;
         }
 
         /// <summary> Initializes a new instance of <see cref="InstallOciDriverTaskProperties"/>. </summary>
         /// <param name="taskType"> Task type. </param>
         /// <param name="errors"> Array of errors. This is ignored if submitted. </param>
         /// <param name="state"> The state of the task. This is ignored if submitted. </param>
-        /// <param name="commands">
-        /// Array of command properties.
-        /// Please note <see cref="DataMigrationCommandProperties"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DataMigrationMongoDBCancelCommand"/>, <see cref="DataMigrationMongoDBFinishCommand"/>, <see cref="MigrateMISyncCompleteCommandProperties"/>, <see cref="MigrateSyncCompleteCommandProperties"/> and <see cref="DataMigrationMongoDBRestartCommand"/>.
-        /// </param>
+        /// <param name="commands"> Array of command properties. </param>
         /// <param name="clientData"> Key value pairs of client data to attach meta data information to task. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="input"> Input for the service task to install an OCI driver. </param>
         /// <param name="output"> Task output. This is ignored if submitted. </param>
-        internal InstallOciDriverTaskProperties(DataMigrationTaskType taskType, IReadOnlyList<DataMigrationODataError> errors, DataMigrationTaskState? state, IReadOnlyList<DataMigrationCommandProperties> commands, IDictionary<string, string> clientData, IDictionary<string, BinaryData> serializedAdditionalRawData, InstallOciDriverTaskInput input, IReadOnlyList<InstallOciDriverTaskOutput> output) : base(taskType, errors, state, commands, clientData, serializedAdditionalRawData)
+        internal InstallOciDriverTaskProperties(DataMigrationTaskType taskType, IReadOnlyList<DataMigrationODataError> errors, DataMigrationTaskState? state, IReadOnlyList<DataMigrationCommandProperties> commands, IDictionary<string, string> clientData, IDictionary<string, BinaryData> additionalBinaryDataProperties, InstallOciDriverTaskInput input, IReadOnlyList<InstallOciDriverTaskOutput> output) : base(taskType, errors, state, commands, clientData, additionalBinaryDataProperties)
         {
             Input = input;
             Output = output;
-            TaskType = taskType;
         }
 
         /// <summary> Input for the service task to install an OCI driver. </summary>
         internal InstallOciDriverTaskInput Input { get; set; }
-        /// <summary> Name of the uploaded driver package to install. </summary>
-        public string InputDriverPackageName
-        {
-            get => Input is null ? default : Input.DriverPackageName;
-            set
-            {
-                if (Input is null)
-                    Input = new InstallOciDriverTaskInput();
-                Input.DriverPackageName = value;
-            }
-        }
 
         /// <summary> Task output. This is ignored if submitted. </summary>
         public IReadOnlyList<InstallOciDriverTaskOutput> Output { get; }
+
+        /// <summary> Name of the uploaded driver package to install. </summary>
+        public string InputDriverPackageName
+        {
+            get
+            {
+                return Input is null ? default : Input.DriverPackageName;
+            }
+            set
+            {
+                if (Input is null)
+                {
+                    Input = new InstallOciDriverTaskInput();
+                }
+                Input.DriverPackageName = value;
+            }
+        }
     }
 }

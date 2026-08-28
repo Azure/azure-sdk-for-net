@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
@@ -756,12 +757,21 @@ namespace Azure.Search.Documents.Indexes
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetIndexes(RequestContext context)
+        public virtual Pageable<BinaryData> GetIndexes(int? top, int? skip, bool? count, RequestContext context)
         {
-            return new SearchIndexClientGetIndexesCollectionResult(this, context, "SearchIndexClient.GetIndexes");
+            return new SearchIndexClientGetIndexesCollectionResult(
+                this,
+                top,
+                skip,
+                count,
+                context,
+                "SearchIndexClient.GetIndexes");
         }
 
         /// <summary>
@@ -772,12 +782,55 @@ namespace Azure.Search.Documents.Indexes
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetIndexesAsync(RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetIndexesAsync(int? top, int? skip, bool? count, RequestContext context)
         {
-            return new SearchIndexClientGetIndexesAsyncCollectionResult(this, context, "SearchIndexClient.GetIndexes");
+            return new SearchIndexClientGetIndexesAsyncCollectionResult(
+                this,
+                top,
+                skip,
+                count,
+                context,
+                "SearchIndexClient.GetIndexes");
+        }
+
+        /// <summary> Lists all indexes available for a search service. </summary>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<SearchIndex> GetIndexes(int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
+        {
+            return new SearchIndexClientGetIndexesCollectionResultOfT(
+                this,
+                top,
+                skip,
+                count,
+                cancellationToken.ToRequestContext(),
+                "SearchIndexClient.GetIndexes");
+        }
+
+        /// <summary> Lists all indexes available for a search service. </summary>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<SearchIndex> GetIndexesAsync(int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
+        {
+            return new SearchIndexClientGetIndexesAsyncCollectionResultOfT(
+                this,
+                top,
+                skip,
+                count,
+                cancellationToken.ToRequestContext(),
+                "SearchIndexClient.GetIndexes");
         }
 
         /// <summary>
@@ -789,12 +842,22 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Pageable<BinaryData> GetIndexesWithSelectedProperties(IEnumerable<string> @select, RequestContext context)
+        public virtual Pageable<BinaryData> GetIndexesWithSelectedProperties(IEnumerable<string> @select, int? top, int? skip, bool? count, RequestContext context)
         {
-            return new SearchIndexClientGetIndexesWithSelectedPropertiesCollectionResult(this, @select, context, "SearchIndexClient.GetIndexesWithSelectedProperties");
+            return new SearchIndexClientGetIndexesWithSelectedPropertiesCollectionResult(
+                this,
+                @select,
+                top,
+                skip,
+                count,
+                context,
+                "SearchIndexClient.GetIndexesWithSelectedProperties");
         }
 
         /// <summary>
@@ -806,30 +869,60 @@ namespace Azure.Search.Documents.Indexes
         /// </list>
         /// </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual AsyncPageable<BinaryData> GetIndexesWithSelectedPropertiesAsync(IEnumerable<string> @select, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetIndexesWithSelectedPropertiesAsync(IEnumerable<string> @select, int? top, int? skip, bool? count, RequestContext context)
         {
-            return new SearchIndexClientGetIndexesWithSelectedPropertiesAsyncCollectionResult(this, @select, context, "SearchIndexClient.GetIndexesWithSelectedProperties");
+            return new SearchIndexClientGetIndexesWithSelectedPropertiesAsyncCollectionResult(
+                this,
+                @select,
+                top,
+                skip,
+                count,
+                context,
+                "SearchIndexClient.GetIndexesWithSelectedProperties");
         }
 
         /// <summary> Lists all indexes available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Pageable<SearchIndexResponse> GetIndexesWithSelectedProperties(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        public virtual Pageable<SearchIndexResponse> GetIndexesWithSelectedProperties(IEnumerable<string> @select = default, int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetIndexesWithSelectedPropertiesCollectionResultOfT(this, @select, cancellationToken.ToRequestContext(), "SearchIndexClient.GetIndexesWithSelectedProperties");
+            return new SearchIndexClientGetIndexesWithSelectedPropertiesCollectionResultOfT(
+                this,
+                @select,
+                top,
+                skip,
+                count,
+                cancellationToken.ToRequestContext(),
+                "SearchIndexClient.GetIndexesWithSelectedProperties");
         }
 
         /// <summary> Lists all indexes available for a search service. </summary>
         /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual AsyncPageable<SearchIndexResponse> GetIndexesWithSelectedPropertiesAsync(IEnumerable<string> @select = default, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<SearchIndexResponse> GetIndexesWithSelectedPropertiesAsync(IEnumerable<string> @select = default, int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
         {
-            return new SearchIndexClientGetIndexesWithSelectedPropertiesAsyncCollectionResultOfT(this, @select, cancellationToken.ToRequestContext(), "SearchIndexClient.GetIndexesWithSelectedProperties");
+            return new SearchIndexClientGetIndexesWithSelectedPropertiesAsyncCollectionResultOfT(
+                this,
+                @select,
+                top,
+                skip,
+                count,
+                cancellationToken.ToRequestContext(),
+                "SearchIndexClient.GetIndexesWithSelectedProperties");
         }
 
         /// <summary>
@@ -2339,6 +2432,296 @@ namespace Azure.Search.Documents.Indexes
         }
 
         /// <summary>
+        /// [Protocol Method] Uploads a file to a File knowledge source for processing and indexing.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="contentDisposition">
+        /// The Content-Disposition header specifying the filename of the uploaded file.
+        /// Must follow the format: `attachment; filename="&lt;filename&gt;"`.
+        /// For example: `attachment; filename="installation-guide.pdf"`.
+        /// </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="contentDisposition"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="contentDisposition"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response UploadKnowledgeSourceFile(string sourceName, string contentDisposition, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.UploadKnowledgeSourceFile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                Argument.AssertNotNullOrEmpty(contentDisposition, nameof(contentDisposition));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateUploadKnowledgeSourceFileRequest(sourceName, contentDisposition, content, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Uploads a file to a File knowledge source for processing and indexing.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="contentDisposition">
+        /// The Content-Disposition header specifying the filename of the uploaded file.
+        /// Must follow the format: `attachment; filename="&lt;filename&gt;"`.
+        /// For example: `attachment; filename="installation-guide.pdf"`.
+        /// </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="contentDisposition"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="contentDisposition"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> UploadKnowledgeSourceFileAsync(string sourceName, string contentDisposition, RequestContent content, RequestContext context = null)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.UploadKnowledgeSourceFile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+                Argument.AssertNotNullOrEmpty(contentDisposition, nameof(contentDisposition));
+                Argument.AssertNotNull(content, nameof(content));
+
+                using HttpMessage message = CreateUploadKnowledgeSourceFileRequest(sourceName, contentDisposition, content, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Uploads a file to a File knowledge source for processing and indexing. </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="contentDisposition">
+        /// The Content-Disposition header specifying the filename of the uploaded file.
+        /// Must follow the format: `attachment; filename="&lt;filename&gt;"`.
+        /// For example: `attachment; filename="installation-guide.pdf"`.
+        /// </param>
+        /// <param name="file"> The file content to upload. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="contentDisposition"/> or <paramref name="file"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="contentDisposition"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response<KnowledgeSourceFile> UploadKnowledgeSourceFile(string sourceName, string contentDisposition, BinaryData @file, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            Argument.AssertNotNullOrEmpty(contentDisposition, nameof(contentDisposition));
+            Argument.AssertNotNull(@file, nameof(@file));
+
+            Response result = UploadKnowledgeSourceFile(sourceName, contentDisposition, RequestContent.Create(@file), cancellationToken.ToRequestContext());
+            return Response.FromValue((KnowledgeSourceFile)result, result);
+        }
+
+        /// <summary> Uploads a file to a File knowledge source for processing and indexing. </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="contentDisposition">
+        /// The Content-Disposition header specifying the filename of the uploaded file.
+        /// Must follow the format: `attachment; filename="&lt;filename&gt;"`.
+        /// For example: `attachment; filename="installation-guide.pdf"`.
+        /// </param>
+        /// <param name="file"> The file content to upload. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/>, <paramref name="contentDisposition"/> or <paramref name="file"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> or <paramref name="contentDisposition"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response<KnowledgeSourceFile>> UploadKnowledgeSourceFileAsync(string sourceName, string contentDisposition, BinaryData @file, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+            Argument.AssertNotNullOrEmpty(contentDisposition, nameof(contentDisposition));
+            Argument.AssertNotNull(@file, nameof(@file));
+
+            Response result = await UploadKnowledgeSourceFileAsync(sourceName, contentDisposition, RequestContent.Create(@file), cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            return Response.FromValue((KnowledgeSourceFile)result, result);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists all files in a File knowledge source.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetKnowledgeSourceFiles(string sourceName, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            return new SearchIndexClientGetKnowledgeSourceFilesCollectionResult(this, sourceName, context, "SearchIndexClient.GetKnowledgeSourceFiles");
+        }
+
+        /// <summary>
+        /// [Protocol Method] Lists all files in a File knowledge source.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetKnowledgeSourceFilesAsync(string sourceName, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            return new SearchIndexClientGetKnowledgeSourceFilesAsyncCollectionResult(this, sourceName, context, "SearchIndexClient.GetKnowledgeSourceFiles");
+        }
+
+        /// <summary> Lists all files in a File knowledge source. </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<KnowledgeSourceFile> GetKnowledgeSourceFiles(string sourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            return new SearchIndexClientGetKnowledgeSourceFilesCollectionResultOfT(this, sourceName, cancellationToken.ToRequestContext(), "SearchIndexClient.GetKnowledgeSourceFiles");
+        }
+
+        /// <summary> Lists all files in a File knowledge source. </summary>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<KnowledgeSourceFile> GetKnowledgeSourceFilesAsync(string sourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            return new SearchIndexClientGetKnowledgeSourceFilesAsyncCollectionResultOfT(this, sourceName, cancellationToken.ToRequestContext(), "SearchIndexClient.GetKnowledgeSourceFiles");
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes a file from a File knowledge source and removes all indexed content derived from it.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fileId"> The unique identifier of the file to delete. </param>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Response DeleteKnowledgeSourceFile(string fileId, string sourceName, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.DeleteKnowledgeSourceFile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+                using HttpMessage message = CreateDeleteKnowledgeSourceFileRequest(fileId, sourceName, context);
+                return Pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes a file from a File knowledge source and removes all indexed content derived from it.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="fileId"> The unique identifier of the file to delete. </param>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual async Task<Response> DeleteKnowledgeSourceFileAsync(string fileId, string sourceName, RequestContext context)
+        {
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("SearchIndexClient.DeleteKnowledgeSourceFile");
+            scope.Start();
+            try
+            {
+                Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+                Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+                using HttpMessage message = CreateDeleteKnowledgeSourceFileRequest(fileId, sourceName, context);
+                return await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Deletes a file from a File knowledge source and removes all indexed content derived from it. </summary>
+        /// <param name="fileId"> The unique identifier of the file to delete. </param>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Response DeleteKnowledgeSourceFile(string fileId, string sourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            return DeleteKnowledgeSourceFile(fileId, sourceName, cancellationToken.ToRequestContext());
+        }
+
+        /// <summary> Deletes a file from a File knowledge source and removes all indexed content derived from it. </summary>
+        /// <param name="fileId"> The unique identifier of the file to delete. </param>
+        /// <param name="sourceName"> The name of the knowledge source. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="fileId"/> or <paramref name="sourceName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual async Task<Response> DeleteKnowledgeSourceFileAsync(string fileId, string sourceName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(fileId, nameof(fileId));
+            Argument.AssertNotNullOrEmpty(sourceName, nameof(sourceName));
+
+            return await DeleteKnowledgeSourceFileAsync(fileId, sourceName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// [Protocol Method] Gets service level statistics for a search service.
         /// <list type="bullet">
         /// <item>
@@ -2409,5 +2792,111 @@ namespace Azure.Search.Documents.Indexes
             Response result = await GetServiceStatisticsAsync(cancellationToken.ToRequestContext()).ConfigureAwait(false);
             return Response.FromValue((SearchServiceStatistics)result, result);
         }
+
+        /// <summary>
+        /// [Protocol Method] Retrieves a summary of statistics for all indexes in the search service.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual Pageable<BinaryData> GetIndexStatsSummary(int? top, int? skip, bool? count, RequestContext context)
+        {
+            return new SearchIndexClientGetIndexStatsSummaryCollectionResult(
+                this,
+                top,
+                skip,
+                count,
+                context,
+                "SearchIndexClient.GetIndexStatsSummary");
+        }
+
+        /// <summary>
+        /// [Protocol Method] Retrieves a summary of statistics for all indexes in the search service.
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
+        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        public virtual AsyncPageable<BinaryData> GetIndexStatsSummaryAsync(int? top, int? skip, bool? count, RequestContext context)
+        {
+            return new SearchIndexClientGetIndexStatsSummaryAsyncCollectionResult(
+                this,
+                top,
+                skip,
+                count,
+                context,
+                "SearchIndexClient.GetIndexStatsSummary");
+        }
+
+        /// <summary> Retrieves a summary of statistics for all indexes in the search service. </summary>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual Pageable<IndexStatisticsSummary> GetIndexStatsSummary(int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
+        {
+            return new SearchIndexClientGetIndexStatsSummaryCollectionResultOfT(
+                this,
+                top,
+                skip,
+                count,
+                cancellationToken.ToRequestContext(),
+                "SearchIndexClient.GetIndexStatsSummary");
+        }
+
+        /// <summary> Retrieves a summary of statistics for all indexes in the search service. </summary>
+        /// <param name="top"> The number of items to retrieve. Default is 50, maximum is 1000. </param>
+        /// <param name="skip"> The number of items to skip. </param>
+        /// <param name="count"> A value that specifies whether to fetch the total count of items. Default is false. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        public virtual AsyncPageable<IndexStatisticsSummary> GetIndexStatsSummaryAsync(int? top = default, int? skip = default, bool? count = default, CancellationToken cancellationToken = default)
+        {
+            return new SearchIndexClientGetIndexStatsSummaryAsyncCollectionResultOfT(
+                this,
+                top,
+                skip,
+                count,
+                cancellationToken.ToRequestContext(),
+                "SearchIndexClient.GetIndexStatsSummary");
+        }
+
+        /// <summary> Lists all indexes available for a search service. </summary>
+        /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual Pageable<SearchIndexResponse> GetIndexesWithSelectedProperties(IEnumerable<string> @select, CancellationToken cancellationToken)
+        {
+            return GetIndexesWithSelectedProperties(@select: @select, top: default, skip: default, count: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+
+        /// <summary> Lists all indexes available for a search service. </summary>
+        /// <param name="select"> Selects which top-level properties to retrieve. Specified as a comma-separated list of JSON property names, or '*' for all properties. The default is all properties. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+#pragma warning disable AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual AsyncPageable<SearchIndexResponse> GetIndexesWithSelectedPropertiesAsync(IEnumerable<string> @select, CancellationToken cancellationToken)
+        {
+            return GetIndexesWithSelectedPropertiesAsync(@select: @select, top: default, skip: default, count: default, cancellationToken: cancellationToken);
+        }
+#pragma warning restore AZC0002 // Back-compat overload preserves the previous method signature where CancellationToken was the trailing parameter. Making it optional would introduce an ambiguous call with the new method.
     }
 }

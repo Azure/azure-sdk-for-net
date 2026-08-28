@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.BillingBenefits
         {
             TryGetApiVersion(MaccResource.ResourceType, out string maccApiVersion);
             _maccsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.BillingBenefits", MaccResource.ResourceType.Namespace, Diagnostics);
-            _maccsRestClient = new Maccs(_maccsClientDiagnostics, Pipeline, Endpoint, maccApiVersion ?? "2025-12-01-preview");
+            _maccsRestClient = new Maccs(_maccsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, maccApiVersion ?? "2025-12-01-preview");
             ValidateResourceId(id);
         }
 
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _maccsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, maccName, MaccData.ToRequestContent(data), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 BillingBenefitsArmOperation<MaccResource> operation = new BillingBenefitsArmOperation<MaccResource>(
-                    new MaccOperationSource(Client),
+                    new MaccResourceOperationSource(Client),
                     _maccsClientDiagnostics,
                     Pipeline,
                     message.Request,
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.BillingBenefits
                 HttpMessage message = _maccsRestClient.CreateCreateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, maccName, MaccData.ToRequestContent(data), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 BillingBenefitsArmOperation<MaccResource> operation = new BillingBenefitsArmOperation<MaccResource>(
-                    new MaccOperationSource(Client),
+                    new MaccResourceOperationSource(Client),
                     _maccsClientDiagnostics,
                     Pipeline,
                     message.Request,
