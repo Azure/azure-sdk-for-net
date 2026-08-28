@@ -367,6 +367,80 @@ namespace Azure.Generator.Provisioning.Tests
         }
 
         [Test]
+        public void MultiLevelDiscriminatorUsesCanonicalInternalEnum()
+        {
+            var discriminatorEnum = CreateStringEnum("DiscriminatorKind", null);
+            var repeatedDiscriminatorEnum = CreateStringEnum("DiscriminatorKind", "public");
+            var discriminator = CreateProperty("kind", discriminatorEnum, isDiscriminator: true);
+            var baseModel = new InputModelType(
+                "BaseModel",
+                "Sample.Models",
+                "Sample.Models.BaseModel",
+                "public",
+                null,
+                string.Empty,
+                "Base model.",
+                InputModelTypeUsage.Input | InputModelTypeUsage.Output,
+                [discriminator],
+                null,
+                [],
+                null,
+                discriminator,
+                new Dictionary<string, InputModelType>(),
+                null,
+                false,
+                new InputSerializationOptions(),
+                false);
+            var intermediateDiscriminator = CreateProperty(
+                "kind",
+                repeatedDiscriminatorEnum.Values.Single(value => Equals(value.Value, "derived")),
+                isDiscriminator: true);
+            var intermediateModel = CreateDerivedModel(
+                "IntermediateModel",
+                "derived",
+                baseModel,
+                properties: [intermediateDiscriminator],
+                discriminatorProperty: intermediateDiscriminator,
+                includeInheritedDiscriminator: false);
+            var leafDiscriminator = CreateProperty(
+                "kind",
+                repeatedDiscriminatorEnum.Values.Single(value => Equals(value.Value, "One")),
+                isDiscriminator: true);
+            var leafModel = CreateDerivedModel(
+                "LeafModel",
+                "One",
+                intermediateModel,
+                properties: [leafDiscriminator],
+                includeInheritedDiscriminator: false);
+            ((IDictionary<string, InputModelType>)baseModel.DiscriminatedSubtypes).Add("derived", intermediateModel);
+            ((IDictionary<string, InputModelType>)baseModel.DiscriminatedSubtypes).Add("One", leafModel);
+            ((IDictionary<string, InputModelType>)intermediateModel.DiscriminatedSubtypes).Add("One", leafModel);
+            var generator = ProvisioningMockHelpers.LoadMockPlugin(
+                inputEnums: () => [discriminatorEnum],
+                inputModels: () => [baseModel, intermediateModel, leafModel],
+                armProviderSchema: () => new ArmProviderSchema([], []));
+            var providers = generator.Object.OutputLibrary.TypeProviders;
+            var enumProvider = providers.Single(provider => provider.Name == discriminatorEnum.Name);
+            var intermediateProvider = generator.Object.TypeFactory.CreateModel(intermediateModel)!;
+            var leafProvider = generator.Object.TypeFactory.CreateModel(leafModel)!;
+            var analyzer = typeof(CodeModelGenerator).Assembly.GetType(
+                "Microsoft.TypeSpec.Generator.ProviderReferenceMapAnalyzer")!;
+            var prepare = analyzer.GetMethod(
+                "PrepareForGeneration",
+                BindingFlags.Public | BindingFlags.Static)!;
+
+            using var session = (IDisposable)prepare.Invoke(null, [providers])!;
+
+            Assert.That(enumProvider.DeclarationModifiers.HasFlag(TypeSignatureModifiers.Internal), Is.True);
+            Assert.That(
+                intermediateProvider.Constructors.Single().BodyStatements!.ToDisplayString(),
+                Does.Contain("DiscriminatorKind.Derived"));
+            Assert.That(
+                leafProvider.Constructors.Single().BodyStatements!.ToDisplayString(),
+                Does.Contain("DiscriminatorKind.One"));
+        }
+
+        [Test]
         public void EnumUsedByPublicPropertyIsPublicized()
         {
             var inputEnum = CreateStringEnum("PublicKind", null);

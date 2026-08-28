@@ -125,8 +125,7 @@ namespace Azure.Generator.Provisioning.Providers
             {
                 foreach (var inputProperty in model.Properties)
                 {
-                    if (ReferenceEquals(model, _inputModel)
-                        && ProvisioningTypeFactory.IsInheritedDiscriminatorProperty(_inputModel, inputProperty))
+                    if (ProvisioningTypeFactory.IsInheritedDiscriminatorProperty(model, inputProperty))
                     {
                         continue;
                     }
@@ -261,7 +260,7 @@ namespace Azure.Generator.Provisioning.Providers
                     [],
                     null,
                     initializer);
-                var discriminatorProperty = BaseModelProvider?.CanonicalView.Properties
+                var discriminatorProperty = GetBaseProperties().Values
                     .FirstOrDefault(property => property.IsDiscriminator);
                 MethodBodyStatement body = MethodBodyStatement.Empty;
                 if (discriminatorProperty != null)

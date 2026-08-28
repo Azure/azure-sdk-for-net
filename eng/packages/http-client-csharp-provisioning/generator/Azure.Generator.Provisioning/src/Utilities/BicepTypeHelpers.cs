@@ -90,7 +90,17 @@ namespace Azure.Generator.Provisioning.Utilities
             var discriminatorValue = model.DiscriminatorValue
                 ?? throw new InvalidOperationException($"Model {model.Name} does not define a discriminator value.");
 
-            if (model.BaseModel?.DiscriminatorProperty?.Type is InputEnumType inputEnum)
+            InputEnumType? inputEnum = null;
+            for (var baseModel = model.BaseModel; baseModel != null; baseModel = baseModel.BaseModel)
+            {
+                if (baseModel.DiscriminatorProperty?.Type is InputEnumType enumType)
+                {
+                    inputEnum = enumType;
+                    break;
+                }
+            }
+
+            if (inputEnum != null)
             {
                 var enumProvider = ProvisioningGenerator.Instance.TypeFactory.CreateEnum(inputEnum)
                     ?? throw new InvalidOperationException($"Unable to create discriminator enum {inputEnum.Name}.");
