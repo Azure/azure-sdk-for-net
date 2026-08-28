@@ -15,7 +15,7 @@
       <DataCollector friendlyName="XPlat Code Coverage" enabled="true">
         <Configuration>
           <Format>cobertura</Format>
-          <ExcludeByAttribute>ExcludeFromCodeCoverageAttribute,GeneratedCodeAttribute,Obsolete</ExcludeByAttribute
+          <ExcludeByAttribute>ExcludeFromCodeCoverageAttribute,GeneratedCodeAttribute,Obsolete</ExcludeByAttribute>
           <ExcludeByFile>$(CodeCoverageExcludeByFile)</ExcludeByFile>
           <IncludeTestAssembly>false</IncludeTestAssembly>
           <SingleHit>false</SingleHit>
