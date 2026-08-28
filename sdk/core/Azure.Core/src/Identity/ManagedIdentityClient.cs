@@ -85,20 +85,38 @@ namespace Azure.Identity
             if (requiresManagedIdentityCapabilities)
             {
                 MSAL.ManagedIdentityCapabilities capabilities;
+                CancellationTokenSource capabilitiesTimeoutCts = null;
                 try
                 {
+                    CancellationToken capabilitiesCancellationToken = cancellationToken;
+                    if (_isChainedCredential && _options.InitialImdsConnectionTimeout.HasValue)
+                    {
+                        capabilitiesTimeoutCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+                        capabilitiesTimeoutCts.CancelAfter(_options.InitialImdsConnectionTimeout.Value);
+                        capabilitiesCancellationToken = capabilitiesTimeoutCts.Token;
+                    }
+
 #pragma warning disable AZC0106 // Non-public asynchronous method needs 'async' parameter.
-                    capabilities = await _msalManagedIdentityClient.GetManagedIdentityCapabilitiesCoreAsync(async, context, cancellationToken).ConfigureAwait(false);
+                    capabilities = await _msalManagedIdentityClient.GetManagedIdentityCapabilitiesCoreAsync(async, context, capabilitiesCancellationToken).ConfigureAwait(false);
 #pragma warning restore AZC0106 // Non-public asynchronous method needs 'async' parameter.
                 }
                 catch (CredentialUnavailableException)
                 {
                     throw;
                 }
+                catch (OperationCanceledException e) when (capabilitiesTimeoutCts?.IsCancellationRequested == true && !cancellationToken.IsCancellationRequested)
+                {
+                    AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(ImdsManagedIdentityProbeSource.GetImdsUri(), e);
+                    throw new CredentialUnavailableException(MsiUnavailableError, e);
+                }
                 catch (Exception e) when (_isChainedCredential && e is not OperationCanceledException)
                 {
                     AzureIdentityEventSource.Singleton.ImdsEndpointUnavailable(ImdsManagedIdentityProbeSource.GetImdsUri(), e);
                     throw new CredentialUnavailableException(MsiUnavailableError, e);
+                }
+                finally
+                {
+                    capabilitiesTimeoutCts?.Dispose();
                 }
 
                 availableSource = capabilities.Source;
