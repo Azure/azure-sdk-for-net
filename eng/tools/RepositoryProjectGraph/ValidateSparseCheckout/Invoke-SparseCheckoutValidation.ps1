@@ -364,6 +364,10 @@ else {
         ConvertTo-Json | Set-Content -LiteralPath $checkoutMarkerPath -Encoding utf8
 }
 
+# Windows test recordings can exceed the legacy MAX_PATH limit inside the detached clone. Enable
+# Git's long-path handling before the first cleanup so one case cannot block all following cases.
+Invoke-CheckedGit @('config', 'core.longPaths', 'true') $WorktreeRoot
+
 $env:NUGET_PACKAGES = $NuGetPackages
 $env:DOTNET_CLI_TELEMETRY_OPTOUT = '1'
 $env:DOTNET_NOLOGO = '1'
