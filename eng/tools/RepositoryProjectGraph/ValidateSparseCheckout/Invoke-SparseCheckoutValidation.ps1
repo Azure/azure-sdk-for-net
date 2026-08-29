@@ -2,10 +2,10 @@
 
 <#
 .SYNOPSIS
-Runs singleton artifact/matrix cases in a detached Git sparse worktree.
+Runs singleton artifact/matrix cases in a detached Git sparse checkout.
 
 .DESCRIPTION
-VALIDATION ONLY. The worktree is dedicated to this harness and is reset/cleaned between cases.
+VALIDATION ONLY. The checkout is dedicated to this harness and is reset/cleaned between cases.
 Every resolver fallback or setup/test failure is recorded as a failed case. Use FailureMode=Stop for
 interactive diagnosis and FailureMode=Continue for unattended Windows or complete inventory runs.
 #>
@@ -336,29 +336,32 @@ if ($ListOnly) {
 }
 
 New-Item -ItemType Directory -Path $ResultsRoot, $NuGetPackages, $CacheRoot -Force | Out-Null
-$worktreeMarkerPath = "$WorktreeRoot.validation-worktree.json"
-$existingWorktree = Test-Path -LiteralPath $WorktreeRoot
-if ($existingWorktree) {
-    if (!(Test-Path -LiteralPath $worktreeMarkerPath)) {
-        throw "Refusing to clean unmarked worktree '$WorktreeRoot'. Expected harness marker '$worktreeMarkerPath'."
+$checkoutMarkerPath = "$WorktreeRoot.validation-checkout.json"
+$existingCheckout = Test-Path -LiteralPath $WorktreeRoot
+if ($existingCheckout) {
+    if (!(Test-Path -LiteralPath $checkoutMarkerPath)) {
+        throw "Refusing to clean unmarked checkout '$WorktreeRoot'. Expected harness marker '$checkoutMarkerPath'."
     }
-    $worktreeMarker = Get-Content -Raw -LiteralPath $worktreeMarkerPath | ConvertFrom-Json
-    if ($worktreeMarker.schemaVersion -ne 1 -or $worktreeMarker.repoRoot -ne $RepoRoot) {
-        throw "Worktree marker '$worktreeMarkerPath' does not belong to repository '$RepoRoot'."
+    $checkoutMarker = Get-Content -Raw -LiteralPath $checkoutMarkerPath | ConvertFrom-Json
+    if ($checkoutMarker.schemaVersion -ne 1 -or $checkoutMarker.repoRoot -ne $RepoRoot -or
+        $checkoutMarker.repositoryKind -ne 'shared-clone') {
+        throw "Checkout marker '$checkoutMarkerPath' does not belong to repository '$RepoRoot'."
     }
     & git -C $WorktreeRoot rev-parse --is-inside-work-tree *> $null
-    if ($LASTEXITCODE -ne 0) {
-        throw "Worktree path exists but is not a Git worktree: $WorktreeRoot"
+    if ($LASTEXITCODE -ne 0 -or !(Test-Path -LiteralPath (Join-Path $WorktreeRoot '.git') -PathType Container)) {
+        throw "Checkout path is not the harness's Git clone: $WorktreeRoot"
     }
 }
 else {
     $parent = Split-Path -Parent $WorktreeRoot
     New-Item -ItemType Directory -Path $parent -Force | Out-Null
-    Invoke-CheckedGit @('worktree', 'prune') $RepoRoot
-    Invoke-CheckedGit @('worktree', 'add', '--detach', '--no-checkout', $WorktreeRoot, $manifest.sourceCommit) $RepoRoot
+    # A local shared clone avoids copying objects while providing normal .git directory semantics.
+    # Some repository tests intentionally discover their root from that directory.
+    Invoke-CheckedGit @('clone', '--shared', '--no-checkout', '--no-tags', $RepoRoot, $WorktreeRoot) $RepoRoot
     Invoke-CheckedGit @('sparse-checkout', 'init', '--no-cone') $WorktreeRoot
-    [pscustomobject][ordered]@{ schemaVersion = 1; repoRoot = $RepoRoot } |
-        ConvertTo-Json | Set-Content -LiteralPath $worktreeMarkerPath -Encoding utf8
+    Invoke-CheckedGit @('checkout', '--detach', $manifest.sourceCommit) $WorktreeRoot
+    [pscustomobject][ordered]@{ schemaVersion = 1; repoRoot = $RepoRoot; repositoryKind = 'shared-clone' } |
+        ConvertTo-Json | Set-Content -LiteralPath $checkoutMarkerPath -Encoding utf8
 }
 
 $env:NUGET_PACKAGES = $NuGetPackages
@@ -521,7 +524,8 @@ foreach ($case in $cases) {
             '--blame-hang-dump-type', 'full',
             '--blame-hang-timeout', "$TestTimeoutInMinutes`minutes",
             '/p:SDKType=all', '/p:ServiceDirectory=*',
-            '/p:IncludeSrc=false', '/p:IncludeSamples=false', '/p:IncludePerf=false',
+            "/p:IncludeSrc=$(([string][bool]$case.includeSourceProjects).ToLowerInvariant())",
+            '/p:IncludeSamples=false', '/p:IncludePerf=false',
             '/p:IncludeStress=false', '/p:IncludeIntegrationTests=false',
             '/p:RunApiCompat=false', '/p:InheritDocEnabled=false',
             "/p:Configuration=$($case.buildConfiguration)",

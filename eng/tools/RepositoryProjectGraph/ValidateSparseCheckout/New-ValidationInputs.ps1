@@ -269,6 +269,7 @@ foreach ($package in $packages) {
                 additionalTestArguments = [string](Get-ObjectValue $parameters 'AdditionalTestArguments' '')
                 additionalTestFilters = [string](Get-ObjectValue $parameters 'AdditionalTestFilters' 'Placeholder!=DefaultIgnoreMe')
                 collectCoverage = [bool](Get-ObjectValue $parameters 'CollectCoverage' $false)
+                includeSourceProjects = !(Test-SparseCheckoutArtifactHasTestProjects $checkoutGraph ([string]$package.ArtifactName))
                 # Preserve custom matrix variables because tests may branch on their environment form.
                 matrixParameters = [pscustomobject]$parameters
                 matrixConfig = [string](Get-ObjectValue $configReference 'Path')

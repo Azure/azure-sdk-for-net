@@ -83,7 +83,7 @@ foreach ($required in @('8.', '9.', "$dotnet10Version [")) {
 if (!(Test-Command 'node') -or [int]((& node --version).TrimStart('v').Split('.')[0]) -lt 22) {
     throw 'Node.js 22 or newer is required for Azurite setup.'
 }
-if (!(Test-Command 'git')) { throw 'Git is required for sparse worktrees.' }
+if (!(Test-Command 'git')) { throw 'Git is required for sparse validation checkouts.' }
 
 $net462ReferenceAssemblies = Join-Path ${env:ProgramFiles(x86)} 'Reference Assemblies\Microsoft\Framework\.NETFramework\v4.6.2'
 if (!(Test-Path -LiteralPath $net462ReferenceAssemblies)) {

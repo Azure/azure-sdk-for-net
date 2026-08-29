@@ -107,6 +107,7 @@ $cases = foreach ($artifactName in $requestedArtifacts) {
         additionalTestArguments = $AdditionalTestArguments
         additionalTestFilters = $AdditionalTestFilters
         collectCoverage = $collectCoverageValue
+        includeSourceProjects = !(Test-SparseCheckoutArtifactHasTestProjects $checkoutGraph $artifactName)
         # The generated job already exposes every custom matrix value in its process environment.
         matrixParameters = [pscustomobject]@{}
         matrixConfig = 'azure-pipelines-generated-job'

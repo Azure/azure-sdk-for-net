@@ -7,14 +7,14 @@ generation or `Language-Settings.ps1`; the root pull-request test jobs invoke it
 
 The root ADO pull-request pipeline uses this same runner on native Windows, Linux, and macOS agents.
 Existing `ProjectNames` batches remain scheduling shards, but each job expands its shard and cleans
-the worktree between singleton artifacts. A failure is recorded without preventing later cases in
-the same job from running; the job fails only after publishing the complete summary. The validation
-seed deliberately replaces change-impact selection with every shipping PackageInfo artifact. Build
-generates the shared graph, PackageInfo, and three host matrices once; separate Linux, Windows, and
-macOS stages are each capped at 20 jobs, keeping the complete campaign at 60 validation jobs or
-fewer. Matrix generation adds validation-only singleton roots for test projects outside every
-shipping PackageInfo, then increases scheduling batch size when necessary without removing a
-singleton or matrix leg.
+the sparse checkout between singleton artifacts. A failure is recorded without preventing later
+cases in the same job from running; the job fails only after publishing the complete summary. The
+validation seed deliberately replaces change-impact selection with every shipping PackageInfo
+artifact. Build generates the shared graph, PackageInfo, and three host matrices once; separate
+Linux, Windows, and macOS stages are each capped at 20 jobs, keeping the complete campaign at 60
+validation jobs or fewer. Matrix generation adds validation-only singleton roots for test projects
+outside every shipping PackageInfo, then increases scheduling batch size when necessary without
+removing a singleton or matrix leg.
 
 The primary goal is practical file-availability coverage:
 
@@ -22,7 +22,7 @@ The primary goal is practical file-availability coverage:
    clean full checkout at an exact commit;
 2. expand the repository's real sparse platform matrix;
 3. resolve every singleton PackageInfo artifact to a narrowed checkout;
-4. materialize that checkout in a detached Git worktree; and
+4. materialize that checkout in a detached local Git clone; and
 5. invoke the same `eng/service.proj` selection and test properties used by the auto-PR test job.
 
 Every fallback, missing artifact seed, setup failure, timeout, or test failure is a failed case.
@@ -36,7 +36,7 @@ The default contract models the root `net - pullrequest` unit-test workflow:
 ```text
 SDKType=all
 ServiceDirectory=*
-IncludeSrc=false
+IncludeSrc=false (true only for artifacts with no test projects)
 IncludeSamples=false
 IncludePerf=false
 IncludeStress=false
@@ -87,7 +87,7 @@ claim equivalence with every service or live-test pipeline.
   PackageInfo entries for projects outside all shipping artifact roots. A project that exposes only
   a subset of modern TFMs receives a generated matrix containing only compatible framework legs.
 - `Validation.Common.ps1` fingerprints executable harness files for safe cross-run reuse.
-- `Invoke-SparseCheckoutValidation.ps1` reuses a detached sparse worktree to execute each case.
+- `Invoke-SparseCheckoutValidation.ps1` reuses a detached sparse local clone to execute each case.
 - `Install-WindowsPrerequisites.ps1` installs/checks the Windows SDK and targeting-pack baseline.
 - `Invoke-WindowsValidation.ps1` prepares and runs the same fail-closed harness on Windows.
 - `RESULTS.md` is the durable index of completed validation campaigns. Per-case logs and generated
@@ -123,7 +123,7 @@ artifacts/validation/RepositoryProjectGraph/sparse-checkout/
 Useful iteration controls:
 
 ```pwsh
-# Inspect the expanded cases without creating a worktree.
+# Inspect the expanded cases without creating a checkout.
 .../Invoke-LinuxDocker.ps1 -ListOnly
 
 # Run one artifact/matrix while diagnosing a failure.
@@ -137,7 +137,7 @@ Useful iteration controls:
 ```
 
 The named Docker volume preserves the clean clone, Git object store, NuGet cache, recording clone
-cache, and sparse worktree between invocations. Results are keyed by source commit, checkout-graph
+cache, and sparse checkout between invocations. Results are keyed by source commit, checkout-graph
 hash, artifact, matrix entry, harness version, and setup policy; incompatible results are not
 reused. Reusable input files are also regenerated if any commit, host-scope, harness, or graph-hash
 check fails.
@@ -156,7 +156,7 @@ eng/tools/RepositoryProjectGraph/ValidateSparseCheckout/Invoke-WindowsValidation
   -FailureMode Continue
 ```
 
-Windows also uses a real detached Git sparse worktree. Symlinks and junctions are deliberately not
+Windows also uses a real detached Git sparse clone. Symlinks and junctions are deliberately not
 used because their targets could expose files from the full checkout and hide an incomplete map.
 The runner invokes the prerequisite script in check-only mode and verifies the .NET Framework
 4.6.2 targeting pack before validation starts.

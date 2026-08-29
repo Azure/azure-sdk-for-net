@@ -242,13 +242,21 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
         New-Item -ItemType Directory -Path $inputPackageInfo -Force | Out-Null
         Copy-Item -LiteralPath (Join-Path $packageInfo 'Azure.A.json') -Destination $inputPackageInfo
         Copy-Item -LiteralPath $checkoutGraphPath -Destination $inputGraph
+        @{
+            ArtifactName = 'Azure.B'
+            DirectoryPath = 'sdk/beta/B'
+        } | ConvertTo-Json | Set-Content (Join-Path $inputPackageInfo 'Azure.B.json')
+        $pipelineGraph = Get-Content -Raw -LiteralPath $inputGraph | ConvertFrom-Json -Depth 100
+        $pipelineGraph.artifacts | Add-Member -NotePropertyName 'Azure.B' -NotePropertyValue @(
+            'configuration:sdk/beta/B/src/B.csproj|net8.0')
+        $pipelineGraph | ConvertTo-Json -Depth 100 | Set-Content -LiteralPath $inputGraph
 
         & $script:NewPipelineInputsPath `
             -RepoRoot $repo `
             -InputRoot $inputRoot `
             -PackageInfoDirectory $inputPackageInfo `
             -CheckoutGraphPath $inputGraph `
-            -ArtifactNames 'Azure.A' `
+            -ArtifactNames 'Azure.A,Azure.B' `
             -SourceCommit $sourceCommit `
             -TargetHost Linux `
             -MatrixName Linux_net80 `
@@ -261,11 +269,14 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
         $cases = @(Get-Content -Raw -LiteralPath (Join-Path $inputRoot 'cases.json') |
             ConvertFrom-Json)
         $manifest.sourceCommit | Should -Be $sourceCommit
-        $manifest.caseCount | Should -Be 1
+        $manifest.caseCount | Should -Be 2
         $manifest.packageInfoDirectory | Should -Be 'PackageInfo'
-        $cases[0].artifactName | Should -Be 'Azure.A'
-        $cases[0].matrixName | Should -Be 'Linux_net80'
-        $cases[0].additionalTestArguments | Should -Be '/p:UseProjectReferenceToAzureClients=false'
+        ($cases | Where-Object artifactName -eq 'Azure.A').includeSourceProjects | Should -BeFalse
+        ($cases | Where-Object artifactName -eq 'Azure.B').includeSourceProjects | Should -BeTrue
+        foreach ($case in $cases) {
+            $case.matrixName | Should -Be 'Linux_net80'
+            $case.additionalTestArguments | Should -Be '/p:UseProjectReferenceToAzureClients=false'
+        }
     }
 
     It 'adds validation-only singleton artifacts for unowned test projects' {

@@ -23,6 +23,18 @@ function Get-SparseCheckoutValidationHarnessVersion([string] $ScriptRoot) {
     }
 }
 
+function Test-SparseCheckoutArtifactHasTestProjects($CheckoutGraph, [string] $ArtifactName) {
+    # Artifact seeds are configuration keys whose project path is repository-relative. Source-only
+    # artifacts must retain their source projects when service.proj applies its normal exclusions.
+    $artifact = $CheckoutGraph.artifacts.PSObject.Properties[$ArtifactName]
+    if ($null -eq $artifact) {
+        throw "Sparse checkout graph has no artifact '$ArtifactName'."
+    }
+    return @($artifact.Value | Where-Object {
+        [string]$_ -match '^configuration:.*/tests/.*\.csproj\|'
+    }).Count -gt 0
+}
+
 function Get-SparseCheckoutValidationDirectoryHash([string] $Directory) {
     $relativePaths = [System.Collections.Generic.List[string]]::new()
     foreach ($file in Get-ChildItem -LiteralPath $Directory -File -Recurse) {
