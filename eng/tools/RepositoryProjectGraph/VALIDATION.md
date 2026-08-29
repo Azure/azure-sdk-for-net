@@ -3,14 +3,15 @@
 This plan validates two production contracts:
 
 1. `Language-Settings.ps1` selects exactly the same indirect packages through the
-   repository graph as through the existing `ResolveReferences` implementation.
+   repository graph as through the established `ProjectDependsOn`/`ResolveReferences` behavior.
 2. Every test artifact can restore, build, and test from its individual sparse-checkout
    closure. Because matrix batches are unions of artifact closures, validating each
    artifact proves path availability for every possible batch.
 
 The plan separates three kinds of evidence:
 
-- **Relation parity** compares the complete old and new dependency-selection outputs.
+- **Relation parity** compares the independent MSBuildProjectReferenceOracle with the
+  repository graph's dependency-selection output.
 - **Evaluated structural auditing** proves that all declared MSBuild dependencies and
   inputs are contained in each artifact closure across supported build modes.
 - **Dynamic artifact validation** runs the real restore/build/test workflow in an exact
@@ -60,9 +61,11 @@ For a changed package set `S`, both implementations select a union:
 Dependents(S)=\bigcup_{p\in S}Dependents(p)
 \]
 
-Therefore, proving `R_legacy = R_graph` proves identical indirect-package output for
-every possible PR package set. It is unnecessary and wasteful to invoke the legacy
-target once per package.
+The **MSBuildProjectReferenceOracle** is a validation-only collector over the established
+`ProjectDependsOn`/`ResolveReferences` path. It is independent of graph generation and is not
+used by production dependency selection or sparse checkout. Therefore, proving
+`R_oracle = R_graph` proves identical indirect-package output for every possible PR package set.
+It is unnecessary and wasteful to invoke the oracle once per package.
 
 ### Sparse-checkout artifact closure
 
@@ -128,10 +131,19 @@ source/
   repository-project-graph.reader.json.packages.records
 
 dependency-relation/
-  legacy.tsv
+  # Validation-only MSBuildProjectReferenceOracle evidence:
+  msbuild-project-reference-oracle.raw.records
+  msbuild-project-reference-oracle-records.tsv
+  msbuild-project-reference-oracle.tsv
+  msbuild-project-reference-oracle-only.tsv
+  msbuild-project-reference-oracle-package-info.tsv
+  msbuild-project-reference-oracle-unmapped-package-roots.tsv
+
+  # Candidate graph evidence and exact differences:
   graph.tsv
-  legacy-only.tsv
   graph-only.tsv
+  graph-package-info.tsv
+  graph-unmapped-package-roots.tsv
   provenance.json
 
 structural-sparse-checkout/
@@ -258,14 +270,16 @@ Name | ArtifactName | normalized DirectoryPath | IncludedForValidation
 Production PackageInfo discovery already emits shipping projects only. Do not add a
 second, differently evaluated shipping-package filter in the validator.
 
-The legacy implementation compares changed package names with `ReferencePath.Filename`,
-while the graph uses package identities. The comparator must preserve that real behavior
-and expose any package/assembly naming mismatch rather than normalizing it away.
+The MSBuildProjectReferenceOracle compares changed package names with
+`ReferencePath.Filename`, while the graph uses package identities. The comparator must preserve
+that real behavior and expose any package/assembly naming mismatch rather than normalizing it
+away.
 
-### 2.2 Collect the complete legacy relation in one pass
+### 2.2 Collect the complete MSBuildProjectReferenceOracle relation in one pass
 
-Add a validation-only target or injected targets file that runs the existing
-`ResolveReferences` path over the same candidate roots and TFMs as `ProjectDependsOn`.
+Use the validation-only `CollectMSBuildProjectReferenceOracle.targets` injection to run the
+established `ResolveReferences` path over the same candidate roots and TFMs as
+`ProjectDependsOn`. This target must never be imported by production graph generation.
 For every client, non-generator candidate configuration, emit:
 
 ```text
@@ -279,7 +293,7 @@ repository package-name universe and reduce records to sorted, unique relation p
 repository package name<TAB>dependent package root
 ```
 
-The collector must preserve the legacy filters:
+The oracle collector must preserve the established dependency-selection filters:
 
 - `IsClientLibrary=true`;
 - `IsGeneratorLibrary!=true`;
@@ -309,8 +323,8 @@ must not invoke a new PowerShell process or reparse JSON for every package.
 Require exact relation equality:
 
 ```text
-legacy-only = empty
-graph-only  = empty
+msbuild-project-reference-oracle-only = empty
+graph-only                            = empty
 ```
 
 For diagnosis, classify every graph pair by the first relevant provenance available in
@@ -321,9 +335,9 @@ the intermediate records:
 3. NuGet-derived `TransitivePackageReference`.
 
 Enumerate NuGet-only repository identities from the current records; never hard-code a
-snapshot list. The final legacy relation remains the behavior oracle for these difficult
-paths because it includes `ResolvePackageAssets`, RAR, compile-asset filtering, and the
-actual filename comparison used before this branch.
+snapshot list. The final MSBuildProjectReferenceOracle relation is authoritative for parity on
+these difficult paths because it includes `ResolvePackageAssets`, RAR, compile-asset filtering,
+and the actual filename comparison used by `ProjectDependsOn`.
 
 Any extra graph pair is a behavior change even if it would only run additional tests.
 The stated transition goal is parity, so conservative over-selection must be reviewed and
@@ -463,6 +477,9 @@ OS-neutral.
 
 Dynamic validation is a one-time productionization burn-in and a targeted regression tool,
 not a cheap per-commit unit test.
+
+The implementation and durable campaign-results index live under
+[`ValidateSparseCheckout/`](ValidateSparseCheckout/README.md).
 
 ### 5.1 Primary host
 
@@ -604,12 +621,12 @@ repository-wide evaluation bottleneck.
 
 ## Final acceptance criteria
 
-The repository graph is ready to replace legacy package selection when all of the following
-are true:
+The repository graph is ready to replace the established package-selection implementation when
+all of the following are true:
 
 - focused build and Pester checks pass;
 - canonical graph diagnostics are complete and package resolution has zero unresolved roots;
-- the full legacy and graph dependency relations are exactly equal;
+- the full MSBuildProjectReferenceOracle and graph dependency relations are exactly equal;
 - final direct/indirect PackageInfo sets are equal for relation fixtures and full-repository
   comparison;
 - every artifact has valid seeds and a singleton sparse closure;
@@ -627,7 +644,7 @@ skipped.
 
 ## Recommended implementation and execution order
 
-1. Add fixtures and the one-pass legacy relation collector.
+1. Add fixtures and the one-pass MSBuildProjectReferenceOracle relation collector.
 2. Implement the in-memory graph relation exporter and exact comparator.
 3. Run full relation parity and resolve every mismatch before sparse validation.
 4. Add the validation-only evaluated input collector.
