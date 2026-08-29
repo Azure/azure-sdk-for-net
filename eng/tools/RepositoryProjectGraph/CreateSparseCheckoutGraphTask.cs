@@ -16,7 +16,7 @@ namespace Azure.Sdk.Tools.RepositoryProjectGraph;
 /// </summary>
 public sealed class CreateSparseCheckoutGraphTask : Task
 {
-    private const int SourceSchemaVersion = 7;
+    private const int SourceSchemaVersion = 8;
     private static readonly string[] AlwaysIncludedPaths = ["/*", "!/*/", "/eng", "/.config", "/common"];
     private static readonly StringComparer KeyComparer = StringComparer.OrdinalIgnoreCase;
     private static readonly JsonSerializerOptions ReadOptions = new()
@@ -160,7 +160,7 @@ public sealed class CreateSparseCheckoutGraphTask : Task
             }
         }
 
-        // Schema 7 stores only dynamic SDK service roots. Common and build infrastructure are
+        // Schema 8 stores only dynamic SDK service roots. Common and build infrastructure are
         // unconditional, so their configurations correctly have no entry in this index.
         var paths = NewTable();
         foreach ((string configuration, string[] checkoutRoots) in graph.CheckoutRoots)
@@ -531,7 +531,7 @@ public sealed class CreateSparseCheckoutGraphTask : Task
         }
     }
 
-    // Minimal schema-7 input model. System.Text.Json ignores canonical fields that projection does
+    // Minimal schema-8 input model. System.Text.Json ignores canonical fields that projection does
     // not consume, keeping the sparse-checkout contract narrower than the source artifact schema.
     private sealed class SourceGraph
     {

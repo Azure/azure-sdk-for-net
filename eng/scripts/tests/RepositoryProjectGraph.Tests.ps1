@@ -48,7 +48,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
 
     It "builds a versioned artifact that unions evaluated target frameworks" {
         $graph = Get-Content -Raw $graphPath | ConvertFrom-Json -Depth 100
-        $graph.schemaVersion | Should -Be 7
+        $graph.schemaVersion | Should -Be 8
         $graph.sourceCommit | Should -Be $sourceCommit
         $graph.diagnostics.isComplete | Should -BeTrue
         $graph.diagnostics.configurationCount | Should -Be 5
@@ -68,6 +68,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
             $_.kind -eq "ProjectReference" -and $_.fromProject -like "*/A.Tests.csproj" -and $_.fromTargetFramework -eq "net9.0"
         }
         $configurationEdge.toTargetFramework | Should -Be "net9.0"
+        $configurationEdge.referenceOutputAssembly | Should -BeTrue
         $graph.diagnostics.unmappedRepositoryPackageReferences | Should -Contain "Azure.External"
         $graph.diagnostics.hasUnresolvedExternalPackageClosure | Should -BeTrue
         $graph.PSObject.Properties.Name | Should -Not -Contain "inputs"
@@ -117,6 +118,30 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         & $scriptPath -Operation Reverse -GraphPath $graphPath -Dependencies "Azure.B" -OutputPath $outputPath
         if ($LASTEXITCODE) { throw "Reverse query failed with exit code $LASTEXITCODE" }
         Get-Content $outputPath | Should -Be '$(RepoRoot)sdk/example/A/tests/A.Tests.csproj'
+    }
+
+    It "retains non-assembly project references for forward queries but excludes them from reverse queries" {
+        $nonAssemblyRecordsPath = Join-Path $TestDrive "non-assembly.records"
+        $nonAssemblyGraphPath = Join-Path $TestDrive "non-assembly.json"
+        $outputPath = Join-Path $TestDrive "non-assembly-output.txt"
+        @(
+            "Node|$projectB|net8.0|Azure.B|$packageB|true||true"
+            "Node|$testProject|net8.0|Azure.A.Tests|$testPackage|true||"
+            "ProjectReference|$testProject|net8.0|$projectB|false||||net8.0"
+            "DeclaredProject|$projectB"
+            "DeclaredProject|$testProject"
+            "Root|$testProject"
+        ) | Set-Content $nonAssemblyRecordsPath
+
+        & $scriptPath -Operation Build -GraphPath $nonAssemblyGraphPath -RecordsPath $nonAssemblyRecordsPath -RepoRoot $repoRoot
+        if ($LASTEXITCODE) { throw "Graph build failed with exit code $LASTEXITCODE" }
+        & $scriptPath -Operation Reverse -GraphPath $nonAssemblyGraphPath -Dependencies "Azure.B" -OutputPath $outputPath
+        if ($LASTEXITCODE) { throw "Reverse query failed with exit code $LASTEXITCODE" }
+        @(Get-Content $outputPath).Count | Should -Be 0
+
+        & $scriptPath -Operation Forward -GraphPath $nonAssemblyGraphPath -RootProjects "sdk/example/A/tests/A.Tests.csproj" -OutputPath $outputPath
+        if ($LASTEXITCODE) { throw "Forward query failed with exit code $LASTEXITCODE" }
+        Get-Content $outputPath | Should -Contain "Project|sdk/example/B/src/B.csproj"
     }
 
     It "unions root configurations without combining dependency paths from different TFMs" {
@@ -443,6 +468,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         })
         @($taskProjectEdges.fromTargetFramework | Select-Object -Unique) | Should -Be @("net9.0")
         @($taskProjectEdges.toTargetFramework | Sort-Object) | Should -Be @("net8.0", "netstandard2.0")
+        @($taskProjectEdges.referenceOutputAssembly | Select-Object -Unique) | Should -Be @($false)
         Get-Content $taskRecordsPath | Should -Contain "ProjectReference|$fixtureA|net9.0|$fixtureB|false||||net8.0"
         @($taskGraph.PSObject.Properties.Name) | Should -Not -Contain "inputs"
         @(Get-Content $taskRecordsPath | Where-Object { $_ -like 'Input|*' }) | Should -BeNullOrEmpty
@@ -548,7 +574,7 @@ Describe "RepositoryProjectGraph" -Tag "UnitTest" {
         $LASTEXITCODE | Should -Be 0
         $output = & dotnet msbuild -nologo -v:minimal -t:BuildGraph $driverPath 2>&1
         $LASTEXITCODE | Should -Not -Be 0
-        $output | Out-String | Should -Match "dependency-only configurations that schema 7 cannot represent"
+        $output | Out-String | Should -Match "dependency-only configurations that schema 8 cannot represent"
         Test-Path $recordsPath | Should -BeFalse
     }
 }

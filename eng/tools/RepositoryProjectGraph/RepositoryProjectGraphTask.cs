@@ -262,7 +262,7 @@ public sealed class RepositoryProjectGraphTask : Task
                 ", ",
                 dependencyOnlyNodes.Take(5).Select(FormatConfiguration));
             throw new InvalidOperationException(
-                $"ProjectGraph contains {dependencyOnlyNodes.Length} dependency-only configurations that schema 7 cannot represent: {examples}. " +
+                $"ProjectGraph contains {dependencyOnlyNodes.Length} dependency-only configurations that schema 8 cannot represent: {examples}. " +
                 "Preserve the complete global-property identity before using this graph for dependency selection.");
         }
 

@@ -73,6 +73,17 @@ not consume the in-memory `ProjectGraph`; it reads the records emitted by phase 
 Both C# phases run in an isolated MSBuild process, which exits before PowerShell
 constructs the canonical JSON and releases the repository-wide evaluated graph.
 
+### Validation-only MSBuildProjectReferenceOracle
+
+[`Validate-RepositoryProjectGraph.ps1`](../../scripts/Validate-RepositoryProjectGraph.ps1)
+and [`CollectMSBuildProjectReferenceOracle.targets`](CollectMSBuildProjectReferenceOracle.targets)
+are validation artifacts, not production graph components. The collector injects the established
+`ProjectDependsOn`/`ResolveReferences` behavior into a full-checkout validation run and calls that
+independent baseline the **MSBuildProjectReferenceOracle**. The validator compares its complete
+package-to-dependent-root relation with the repository graph and writes evidence only beneath
+`artifacts/validation/RepositoryProjectGraph`. Neither file is imported by
+`Language-Settings.ps1`, normal graph generation, or sparse-checkout projection.
+
 ## Phase 1: Project discovery and graph expansion
 
 **Related components**
@@ -217,7 +228,7 @@ indirect external-package resolution may conservatively over-select.
 **Related components**
 
 - [`RepositoryProjectGraph.ps1`](../../scripts/RepositoryProjectGraph.ps1) reads both
-  record files, validates completeness, builds schema 7, and implements forward and
+  record files, validates completeness, builds schema 8, and implements forward and
   reverse queries.
 - [`service.proj`](../../service.proj) invokes the PowerShell builder only after the
   isolated graph/NuGet process exits.
@@ -242,6 +253,8 @@ record CanonicalGraph(
 
     // Edges remain project/TFM-aware so traversal cannot leak dependencies between
     // target frameworks. Package destinations use repository package identities.
+    // Project references retain ReferenceOutputAssembly so reverse dependency selection
+    // can match ReferencePath while forward sparse-checkout traversal keeps analyzer inputs.
     ConfigurationEdge[] ConfigurationEdges,
 
     // Configuration key -> one or more /sdk/<service>/* Git patterns.

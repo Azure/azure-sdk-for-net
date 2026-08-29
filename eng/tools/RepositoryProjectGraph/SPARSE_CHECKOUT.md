@@ -15,7 +15,7 @@ classification, batching, and each job's `ProjectNames` remain unchanged.
    and completeness diagnostics match. Passes that skip dependency analysis construct
    the same canonical graph once as a fallback.
 3. `RepositoryProjectGraphTask` evaluates explicit inputs but emits only deduplicated
-   `/sdk/<service>/*` checkout-root records. Schema 7 groups them into a compact
+   `/sdk/<service>/*` checkout-root records. Schema 8 groups them into a compact
    configuration index; exact file paths and generated output paths never enter the artifact.
    `CreateSparseCheckoutGraphTask` publishes artifact seeds, configuration/package adjacency,
    and those SDK roots.
@@ -53,7 +53,8 @@ This is conservative repository identity reachability, not proof of normal
 restore/build equivalence. The source graph continues to report
 `restoreEquivalent=false`.
 
-- **Target frameworks:** schema 7 preserves source-TFM to destination-TFM edges.
+- **Target frameworks:** schema 8 preserves source-TFM to destination-TFM edges and
+  whether each project reference contributes an assembly to `ReferencePath`.
   When MSBuild exposes an outer-build project reference, every concrete destination
   inner build is retained. Checkout may over-select incompatible destination TFMs,
   but it does not invent a nearest-framework policy that could omit source.
@@ -91,7 +92,7 @@ restore/build equivalence. The source graph continues to report
   Projection requires the same `Build.SourceVersion`, `Debug`, and evaluated
   input checkout roots, verifies `HEAD`, and rejects tracked worktree changes. Every test job verifies
   the same commit before using the projected graph.
-- **Identity:** schema 7 rejects dependency-only global-property nodes and
+- **Identity:** schema 8 rejects dependency-only global-property nodes and
   fails rather than silently dropping an alternate MSBuild node that its path/TFM
   identity cannot represent.
 
