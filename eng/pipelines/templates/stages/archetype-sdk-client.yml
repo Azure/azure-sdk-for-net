@@ -123,6 +123,37 @@ extends:
                 - ${{ parameters.MatrixReplace }}
               TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
 
+      # Keep each complete host matrix in a separate stage while reusing the graph and PackageInfo
+      # generated once in Build. Matrix generation limits each host to one third of the 60-job budget.
+      - ${{ if and(parameters.EnableTestCheckoutNarrowing, eq(parameters.ServiceDirectory, 'auto')) }}:
+        - template: /eng/pipelines/templates/stages/sparse-checkout-validation.yml
+          parameters:
+            StageName: SparseCheckoutValidationLinux
+            DisplayName: Sparse checkout validation (Linux)
+            MatrixPoolName: Linux
+            OSName: linux
+            SDKType: ${{ parameters.SDKType }}
+            TestSetupSteps: ${{ parameters.TestSetupSteps }}
+            TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+        - template: /eng/pipelines/templates/stages/sparse-checkout-validation.yml
+          parameters:
+            StageName: SparseCheckoutValidationWindows
+            DisplayName: Sparse checkout validation (Windows)
+            MatrixPoolName: Windows
+            OSName: windows
+            SDKType: ${{ parameters.SDKType }}
+            TestSetupSteps: ${{ parameters.TestSetupSteps }}
+            TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+        - template: /eng/pipelines/templates/stages/sparse-checkout-validation.yml
+          parameters:
+            StageName: SparseCheckoutValidationMac
+            DisplayName: Sparse checkout validation (macOS)
+            MatrixPoolName: Mac
+            OSName: macOS
+            SDKType: ${{ parameters.SDKType }}
+            TestSetupSteps: ${{ parameters.TestSetupSteps }}
+            TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+
       # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
       - ${{if and(not(and(eq(parameters.SkipPrValidation, true), eq(variables['Build.Reason'], 'Manual'))), ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:
 

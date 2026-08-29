@@ -577,7 +577,7 @@ If the requirement changes from sparse-checkout correctness to complete cross-pl
 test correctness, run the full hosted PR matrix; a single local host cannot prove Windows
 custom-target or net462 runtime behavior.
 
-## Phase 6: Failure and fallback validation
+## Phase 6: Fail-closed validation
 
 Validate fail-closed behavior independently of successful closures:
 
@@ -593,13 +593,13 @@ Validate fail-closed behavior independently of successful closures:
 - unknown edge kind; and
 - non-SDK dynamic checkout path.
 
-Every case must produce no narrowed paths and cause the test job to select the full-checkout
-fallback. Verify the stable observability markers:
+Every case must produce no narrowed paths and fail the graph seed or affected test job before
+`dotnet test` can use the complete orchestration checkout. Verify the stable observability markers:
 
 ```text
 REPOSITORY_PROJECT_GRAPH_RESULT=reused|generated
-SPARSE_CHECKOUT_GRAPH_RESULT=available|fallback
-SPARSE_CHECKOUT_RESULT=narrowed pathCount=<n>|full
+SPARSE_CHECKOUT_GRAPH_RESULT=available|failed
+SPARSE_CHECKOUT_CASE_RESULT=materialized|passed|failed artifact=<name> ...
 ```
 
 ## Phase 7: Performance and resource validation
@@ -635,7 +635,7 @@ all of the following are true:
 - Linux dynamic validation has no sparse-only artifact failures;
 - Windows differential and net462 validation has no sparse-only failures;
 - macOS differential or representative smoke validation passes;
-- all incomplete/stale/unsupported cases fall back to full checkout; and
+- all incomplete/stale/unsupported cases fail before testing from a complete checkout; and
 - timing and memory evidence shows the workflow can run without sustained swapping.
 
 The final report must state exactly which source commit, hosts, matrix modes, artifacts,

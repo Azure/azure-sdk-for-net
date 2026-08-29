@@ -1,0 +1,37 @@
+parameters:
+  - name: StageName
+    type: string
+  - name: DisplayName
+    type: string
+  - name: MatrixPoolName
+    type: string
+  - name: OSName
+    type: string
+  - name: SDKType
+    type: string
+  - name: TestSetupSteps
+    type: stepList
+    default: []
+  - name: TestTimeoutInMinutes
+    type: number
+
+stages:
+  - stage: ${{ parameters.StageName }}
+    displayName: ${{ parameters.DisplayName }}
+    dependsOn: Build
+    # Build may contain unrelated compilation or analysis failures. Run whenever its matrix
+    # generation completed far enough to provide an output; an absent matrix fails closed.
+    condition: and(succeededOrFailed(), ne(dependencies.Build.result, 'Skipped'))
+    variables:
+      - template: /eng/pipelines/templates/variables/globals.yml
+      - template: /eng/pipelines/templates/variables/image.yml
+    jobs:
+      - template: /eng/pipelines/templates/jobs/ci.tests.yml
+        parameters:
+          SDKType: ${{ parameters.SDKType }}
+          ServiceDirectory: auto
+          TestSetupSteps: ${{ parameters.TestSetupSteps }}
+          TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+          EnableTestCheckoutNarrowing: true
+          OSName: ${{ parameters.OSName }}
+          Matrix: stageDependencies.Build.generate_target_service_test_matrix.outputs['vm_job_matrix_pr_${{ parameters.MatrixPoolName }}.matrix']

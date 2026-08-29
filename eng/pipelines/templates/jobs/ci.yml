@@ -225,6 +225,7 @@ jobs:
       parameters:
         GenerateJobName: generate_target_service_test_matrix
         JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
+        JobTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
         MatrixConfigs: ${{ parameters.MatrixConfigs }}
         MatrixFilters: ${{ parameters.MatrixFilters }}
         MatrixReplace: ${{ parameters.MatrixReplace }}
@@ -235,11 +236,19 @@ jobs:
             - "/*"
             - "!SessionRecords"
           EnablePRGeneration: true
+          # The repository-wide campaign runs each host matrix in its own stage. The Build stage
+          # produces the shared graph, PackageInfo, and output matrices but emits no test jobs.
+          ${{ if parameters.EnableTestCheckoutNarrowing }}:
+            EmitGeneratedJobs: false
           PRMatrixSetting: ProjectNames
           # Runtime weighting first creates small balanced buckets. Linux and Windows
           # combine three buckets while slower macOS keeps one bucket per job. If
           # runtime weighting fails, the presteps retain count-based batching.
           PRJobBatchSize: 10
+          # Split the 60-job validation budget evenly across the three host stages. Batching is
+          # scheduling-only: each job still expands its assigned artifacts into singleton cases.
+          ${{ if parameters.EnableTestCheckoutNarrowing }}:
+            MaxPRMatrixJobs: 20
           PRJobBatchSizeByPool:
             Linux: $(TestMatrixEntriesPerJobLinux)
             Windows: $(TestMatrixEntriesPerJobWindows)

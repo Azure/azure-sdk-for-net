@@ -41,7 +41,7 @@ $queue = [System.Collections.Generic.Queue[string]]::new()
 foreach ($artifact in $artifacts) {
   if (-not $graph.artifacts.ContainsKey($artifact) -or $null -eq $graph.artifacts[$artifact] -or
       @($graph.artifacts[$artifact]).Count -eq 0) {
-    Write-Warning "Artifact '$artifact' has no complete MSBuild seeds; using a full checkout."
+    Write-Warning "Artifact '$artifact' has no complete MSBuild seeds; no narrowed paths will be returned."
     return $null
   }
   foreach ($seed in @($graph.artifacts[$artifact])) {
@@ -79,7 +79,7 @@ foreach ($configuration in $visited) {
     # Dynamic roots are deliberately limited to SDK services. Common and build
     # infrastructure must come from alwaysIncludedPaths instead of graph inputs.
     if ($path -notmatch '^/sdk/[^/]+/\*$') {
-      Write-Warning "Sparse checkout graph contains unsupported dynamic path '$path'; using a full checkout."
+      Write-Warning "Sparse checkout graph contains unsupported dynamic path '$path'; no narrowed paths will be returned."
       return $null
     }
     if ($seen.Add([string] $path)) {
@@ -90,7 +90,7 @@ foreach ($configuration in $visited) {
 
 $result = @($alwaysIncluded) + @($dynamicPaths)
 if ($result.Count -eq 0) {
-  Write-Warning 'The sparse checkout graph produced no paths; using a full checkout.'
+  Write-Warning 'The sparse checkout graph produced no narrowed paths.'
   return $null
 }
 

@@ -12,8 +12,9 @@ for two directions:
 The graph models identities and reachability, not compiler files or authoritative
 restore assets. It evaluates the repository once in `Debug`, preserves every declared
 target framework as a distinct configuration, and fails closed when exact repository
-reachability cannot be established. Sparse checkout is only an optimization: stale,
-incomplete, or unsupported data causes a full checkout.
+reachability cannot be established. The root pull-request validation pipeline rejects stale,
+incomplete, or unsupported sparse data rather than testing from its complete orchestration
+checkout.
 
 For detailed design alternatives and limitations, see [`trade-off.md`](trade-off.md).
 For hosted sparse-checkout findings and validation, see
@@ -316,11 +317,11 @@ record PackageInfo(
 }
 ```
 
-Weighted batching retains one representative PackageInfo file and changes its
-`ArtifactName` to a comma-separated batch such as
-`Azure.Core,Azure.Identity,Azure.Storage.Blobs`. The test matrix passes that value as
-`$(ProjectNames)`; each original name remains independently queryable in the sparse
-projection.
+Weighted batching retains one representative PackageInfo file and changes its `ArtifactName` to a
+comma-separated scheduling shard such as `Azure.Core,Azure.Identity,Azure.Storage.Blobs`.
+Packages with different `CIMatrixConfigs` cannot share a test shard. The generated test job expands
+`$(ProjectNames)` back into singleton cases; every original PackageInfo remains available from the
+unbatched pipeline artifact.
 
 ## Phase 5: Sparse-checkout projection
 
@@ -359,40 +360,55 @@ record SparseCheckoutProjection(
 ```
 
 Projection validates source commit, schema, `Debug` generation policy, input-root
-coverage, NuGet closure completeness, artifact seeds, and SDK-only paths. Failure
-produces an explicitly incomplete projection rather than a narrowed partial result.
+coverage, NuGet closure completeness, artifact seeds, and SDK-only paths. Failure aborts the
+fail-closed matrix seed rather than publishing a narrowed partial result.
 
 ## Phase 6: Per-job sparse checkout
 
 **Related components**
 
 - [`Resolve-SparseCheckoutPaths.ps1`](../../scripts/Resolve-SparseCheckoutPaths.ps1)
-  performs the per-batch forward traversal.
+  performs the per-singleton forward traversal.
+- [`New-PipelineValidationInputs.ps1`](ValidateSparseCheckout/New-PipelineValidationInputs.ps1)
+  expands a generated job's scheduling shard into one case per artifact.
+- [`Add-UnownedTestProjects.ps1`](ValidateSparseCheckout/Add-UnownedTestProjects.ps1)
+  turns test projects outside all shipping PackageInfo roots into marked validation-only
+  singleton artifacts, failing if any source-graph test project remains uncovered.
+- [`Invoke-SparseCheckoutValidation.ps1`](ValidateSparseCheckout/Invoke-SparseCheckoutValidation.ps1)
+  promotes every resolver fallback to an error and reuses a clean detached worktree across cases.
 - [`ci.tests.yml`](../../pipelines/templates/jobs/ci.tests.yml) downloads
-  `TestCheckoutGraph`, resolves `$(ProjectNames)`, and sets the Azure DevOps variable
-  `TestSparseCheckoutPaths`.
-- [`sparse-checkout.yml`](../../common/pipelines/templates/steps/sparse-checkout.yml)
-  initializes non-cone sparse checkout and passes the resolved patterns to Git.
+  `TestCheckoutGraph` and unbatched PackageInfo, invokes the singleton runner, and publishes
+  per-case sparse-checkout evidence.
+- [`sparse-checkout-validation.yml`](../../pipelines/templates/stages/sparse-checkout-validation.yml)
+  runs each host matrix in its own stage and limits it to 20 jobs, keeping the complete Linux,
+  Windows, and macOS campaign at 60 validation jobs or fewer.
 
-**Input:** a comma-separated test batch, `checkout-graph.json`, and the expected source
-commit.
+**Input:** a comma-separated test batch containing shipping or validation-only test artifacts,
+`checkout-graph.json`, and the expected source commit.
 
 **Working data:** PowerShell hash tables plus a queue and visited set for breadth-first
 search.
 
-**Output:** an in-memory list serialized through the Azure DevOps variable boundary,
-then written by Git to `.git/info/sparse-checkout`.
+**Output:** a detached non-cone sparse worktree reused only after `git clean -ffdx`, plus
+`sparse-paths.txt`, TRX, logs, binlogs, and JSON evidence for every singleton.
 
 ```text
 ProjectNames
-    -> artifact configuration seeds
-    -> forward BFS through project/package adjacency
-    -> reached configurations
-    -> union /sdk/<service>/* checkout roots
-    -> add unconditional root/eng/.config/common patterns
-    -> git sparse-checkout add
+    -> split scheduling shard into singleton artifacts
+    -> for each artifact:
+         configuration seeds -> forward BFS through project/package adjacency
+         -> reached configurations
+         -> union /sdk/<service>/* checkout roots
+         -> add unconditional root/eng/.config/common patterns
+         -> git clean -ffdx
+         -> git sparse-checkout set --no-cone --stdin
+         -> setup, build, test, and retain case evidence
+    -> report all case failures after the shard finishes
 ```
 
 An unknown artifact, stale commit, incomplete graph, missing index, unsupported path,
-or empty result returns no paths. The test job then logs `SPARSE_CHECKOUT_RESULT=full`
-and uses the full-checkout fallback; a known-partial graph never narrows source.
+or empty result fails that singleton. The runner continues with the other singleton artifacts in
+the scheduling shard, then fails the job after writing a complete summary. Independent matrix jobs
+and host stages also continue. Matrix generation may combine additional scheduling buckets to keep
+each host stage at 20 jobs or fewer and the three-host campaign at 60 jobs or fewer, but it does not
+remove an artifact or configuration. No test command runs from the complete orchestration checkout.

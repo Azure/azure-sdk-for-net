@@ -2,7 +2,19 @@
 
 This directory contains a validation-only harness for exercising each PR test artifact from the
 same Git sparse-checkout closure that production CI computes. It is not imported by graph
-generation, `Language-Settings.ps1`, or normal test jobs.
+generation or `Language-Settings.ps1`; the root pull-request test jobs invoke it only when
+`EnableTestCheckoutNarrowing` is enabled.
+
+The root ADO pull-request pipeline uses this same runner on native Windows, Linux, and macOS agents.
+Existing `ProjectNames` batches remain scheduling shards, but each job expands its shard and cleans
+the worktree between singleton artifacts. A failure is recorded without preventing later cases in
+the same job from running; the job fails only after publishing the complete summary. The validation
+seed deliberately replaces change-impact selection with every shipping PackageInfo artifact. Build
+generates the shared graph, PackageInfo, and three host matrices once; separate Linux, Windows, and
+macOS stages are each capped at 20 jobs, keeping the complete campaign at 60 validation jobs or
+fewer. Matrix generation adds validation-only singleton roots for test projects outside every
+shipping PackageInfo, then increases scheduling batch size when necessary without removing a
+singleton or matrix leg.
 
 The primary goal is practical file-availability coverage:
 
@@ -52,6 +64,9 @@ custom environment flags. The default sparse matrix is:
 | Windows | net9.0 | ProjectRef | Release |
 | Windows | net10.0 | PackageRef | Debug |
 | Windows | net10.0 coverage | PackageRef | Debug (public PR default) |
+| macOS | net8.0 | ProjectRef | Release |
+| macOS | net9.0 | PackageRef | Debug |
+| macOS | net10.0 | ProjectRef | Release |
 
 The harness restores shared recordings and conditionally installs Azurite for Storage artifacts.
 The root auto-PR pipeline has no service-specific `TestSetupSteps`; therefore these runs do not
@@ -66,6 +81,11 @@ claim equivalence with every service or live-test pipeline.
 - `New-ValidationInputs.ps1` creates PackageInfo, the source graph, checkout projection, and case
   manifest once. Its manifest uses relative paths so the Linux-generated input directory can be
   copied unchanged to Windows.
+- `New-PipelineValidationInputs.ps1` creates the same manifest contract from one generated ADO
+  matrix leg and expands its scheduling shard into singleton cases.
+- `Add-UnownedTestProjects.ps1` audits source-graph test projects and adds validation-only
+  PackageInfo entries for projects outside all shipping artifact roots. A project that exposes only
+  a subset of modern TFMs receives a generated matrix containing only compatible framework legs.
 - `Validation.Common.ps1` fingerprints executable harness files for safe cross-run reuse.
 - `Invoke-SparseCheckoutValidation.ps1` reuses a detached sparse worktree to execute each case.
 - `Install-WindowsPrerequisites.ps1` installs/checks the Windows SDK and targeting-pack baseline.
@@ -170,18 +190,21 @@ runs/<host>/
 evidence location to `RESULTS.md`; do not commit large logs or generated graph artifacts.
 
 `project-coverage.json` independently inventories test projects from the source graph and lists
-the PackageInfo artifacts whose directory roots own them. Unowned projects are explicit coverage
-exceptions: they are not silently assigned to an unrelated artifact, and a campaign with any such
-entry cannot be described as validation of every repository test project.
+the PackageInfo artifacts whose directory roots own them. Local input preparation reports unowned
+projects as explicit coverage exceptions. Hosted input preparation instead creates one marked,
+validation-only PackageInfo root per unowned test project and publishes `test-project-coverage.json`
+with the graph; any project still uncovered fails matrix generation.
 
 ## Interpretation
 
 A sparse-only failure is a production checkout bug when the same command succeeds from a clean
 full checkout. Failures common to sparse and full checkouts are environment or test failures and
 must remain separately classified. A passing singleton campaign proves broad path availability for
-artifact unions, but does not cover macOS, live tests, service-specific setup, skipped runtime paths,
-or arbitrary behavior triggered only by adding another artifact's files.
+artifact unions, but does not cover live tests, service-specific setup, skipped runtime paths, or
+arbitrary behavior triggered only by adding another artifact's files. The hosted campaign adds the
+native sparse matrix's macOS cases; the local Docker and Windows entry points remain useful for
+repeatable diagnosis and full-versus-sparse comparisons.
 
 Before a production-readiness claim, combine this evidence with dependency-relation parity,
 structural host/mode auditing, Windows results, macOS differential coverage, and stale/incomplete
-graph fallback tests described in [`../VALIDATION.md`](../VALIDATION.md).
+graph fail-closed tests described in [`../VALIDATION.md`](../VALIDATION.md).

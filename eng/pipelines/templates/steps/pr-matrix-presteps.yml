@@ -53,6 +53,19 @@ steps:
       PackageInfoDirectory: $(Build.ArtifactStagingDirectory)/PackageInfoPublishing
       ExcludePaths: ${{ parameters.ExcludePaths }}
 
+  - ${{ if parameters.EnableTestCheckoutNarrowing }}:
+    - pwsh: |
+        # This is a repository-wide validation campaign, not change-impact selection. Rebuild the
+        # test matrix from every shipping PackageInfo so CI runners cover every singleton artifact.
+        $directory = "$(Build.ArtifactStagingDirectory)/PackageInfoPublishing"
+        Remove-Item -LiteralPath $directory -Recurse -Force -ErrorAction SilentlyContinue
+        & "$(Build.SourcesDirectory)/eng/common/scripts/Save-Package-Properties.ps1" `
+          -OutDirectory $directory
+        if ($LASTEXITCODE -ne 0) {
+          throw "Repository-wide PackageInfo discovery failed with exit code $LASTEXITCODE."
+        }
+      displayName: Select all singleton test artifacts
+
   # when we publish the packageinfo as an artifact, it actually cleans up the original files. Since we need them during matrix generation steps
   # that will execute directly after the pregeneration steps here, we output them to a publishing directory, copy from there into the target PackageInfoDirectory,
   # and then publish the originals
@@ -86,12 +99,25 @@ steps:
           }
         }
 
+        function Add-UnownedTestProjectArtifacts {
+          & "$(Build.SourcesDirectory)/eng/tools/RepositoryProjectGraph/ValidateSparseCheckout/Add-UnownedTestProjects.ps1" `
+            -SourceGraphPath $graphPath `
+            -PackageInfoDirectories @( `
+              "$(Build.ArtifactStagingDirectory)/PackageInfo", `
+              "$(Build.ArtifactStagingDirectory)/PackageInfoPublishing") `
+            -CoverageOutputPath "$checkoutGraphDirectory/test-project-coverage.json" `
+            -RepoRoot "$(Build.SourcesDirectory)" `
+            -DefaultMatrixConfigPath "$(Build.SourcesDirectory)/eng/pipelines/templates/stages/platform-matrix.json" `
+            -GeneratedMatrixDirectory "$(Build.SourcesDirectory)/artifacts/obj/RepositoryProjectGraph/SparseCheckoutValidationMatrices"
+        }
+
         try {
           $reusedGraph = $false
           if (Test-Path -LiteralPath $graphPath) {
             try {
               # Projection validates commit provenance, Debug input coverage, NuGet
               # completeness, and schema policy before accepting the reusable artifact.
+              Add-UnownedTestProjectArtifacts
               New-SparseCheckoutProjection
               $reusedGraph = $true
               Write-Host 'REPOSITORY_PROJECT_GRAPH_RESULT=reused'
@@ -115,28 +141,17 @@ steps:
               throw "RepositoryProjectGraph generation failed with exit code $LASTEXITCODE."
             }
 
+            Add-UnownedTestProjectArtifacts
             New-SparseCheckoutProjection
             Write-Host 'REPOSITORY_PROJECT_GRAPH_RESULT=generated'
           }
           Write-Host 'SPARSE_CHECKOUT_GRAPH_RESULT=available'
         }
         catch {
-          # Sparse checkout is an optimization. Publish an explicit fallback artifact so graph
-          # incompleteness never prevents matrix generation or narrows a later test checkout.
           $reason = $_.Exception.Message -replace "`r?`n", ' '
-          Write-Host "##vso[task.logissue type=warning]Sparse checkout graph is unavailable: $reason Tests will use a full checkout."
-          [ordered]@{
-            schemaVersion = 1
-            sourceCommit = "$(Build.SourceVersion)"
-            isComplete = $false
-            failureReason = $reason
-            alwaysIncludedPaths = @()
-            artifacts = @{}
-            adjacency = @{}
-            paths = @{}
-            diagnostics = @{}
-          } | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath $checkoutGraphPath -Encoding utf8NoBOM
-          Write-Host 'SPARSE_CHECKOUT_GRAPH_RESULT=fallback'
+          Write-Host "##vso[task.logissue type=error]Sparse checkout graph is required for fail-closed PR validation: $reason"
+          Write-Host 'SPARSE_CHECKOUT_GRAPH_RESULT=failed'
+          throw
         }
 
         Copy-Item ./eng/scripts/Resolve-SparseCheckoutPaths.ps1 `
@@ -224,10 +239,11 @@ steps:
           eng/scripts/Apply-WeightedBatching.ps1 `
             -PackageInfoFolder "$(Build.ArtifactStagingDirectory)/PackageInfo" `
             -WeightsFile $weightsFile `
-            -Target 240
+            -Target 240 `
+            -PreserveCIMatrixConfigs
 
-          # PackageInfo entries now represent weighted buckets. Slower macOS runs one
-          # bucket per job, while Linux and Windows amortize setup over three buckets.
+          # PackageInfo entries now represent matrix-compatible weighted buckets. Test jobs expand
+          # each bucket back into clean singleton closures; grouping controls only runner scheduling.
           Write-Host "##vso[task.setvariable variable=TestMatrixEntriesPerJobLinux]3"
           Write-Host "##vso[task.setvariable variable=TestMatrixEntriesPerJobWindows]3"
           Write-Host "##vso[task.setvariable variable=TestMatrixEntriesPerJobMac]1"

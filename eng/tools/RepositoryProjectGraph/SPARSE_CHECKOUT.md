@@ -2,28 +2,42 @@
 
 ## Scope and data flow
 
-This integration narrows only the PR test jobs emitted by
-`generate_target_service_test_matrix`. Matrix selection, direct/indirect package
-classification, batching, and each job's `ProjectNames` remain unchanged.
+This integration replaces only the PR test jobs emitted by
+`generate_target_service_test_matrix`. The validation seed selects every shipping PackageInfo,
+expands each artifact's declared sparse matrix, and uses weighted shards only to distribute
+singleton cases across the available runners.
 
-1. During package selection, `Language-Settings.ps1` constructs the reverse-dependency
+1. During change-impact package selection, `Language-Settings.ps1` constructs the reverse-dependency
    graph at the canonical service.proj path
    `artifacts/obj/RepositoryProjectGraph/repository-project-graph.reader.json`.
    When checkout narrowing is enabled, it requests the `Debug`, input-checkout-root-enabled
    NuGet graph needed by both dependency analysis and sparse checkout.
-2. The matrix seed reuses that artifact when its commit, generation policy, schema,
-   and completeness diagnostics match. Passes that skip dependency analysis construct
-   the same canonical graph once as a fallback.
+2. For sparse validation, the seed replaces the change-selected PackageInfo set with every shipping
+   artifact, all marked direct. It audits every source-graph project under `tests` and creates a
+   marked, validation-only singleton PackageInfo for each project outside the shipping roots. Any
+   project still uncovered fails the seed; projects exposing only a subset of modern TFMs receive a
+   generated matrix with only compatible framework legs. The matrix seed reuses the canonical graph
+   when its commit, generation policy, schema, and completeness diagnostics match. Passes that skip
+   dependency analysis construct the same canonical graph once as a fallback.
 3. `RepositoryProjectGraphTask` evaluates explicit inputs but emits only deduplicated
    `/sdk/<service>/*` checkout-root records. Schema 8 groups them into a compact
    configuration index; exact file paths and generated output paths never enter the artifact.
    `CreateSparseCheckoutGraphTask` publishes artifact seeds, configuration/package adjacency,
    and those SDK roots.
-4. Each fanned-out test job runs `Resolve-SparseCheckoutPaths.ps1`. The resolver
-   traverses only its comma-separated `ProjectNames` batch and extracts the path
-   union before the existing sparse checkout step.
-5. Missing, malformed, incomplete, dirty, or stale graph data returns no paths.
-   The test job then uses the existing full-checkout fallback.
+4. Each fanned-out test job keeps a complete, shallow orchestration checkout and downloads the graph
+   plus original PackageInfo. `New-PipelineValidationInputs.ps1` expands its comma-separated
+   `ProjectNames` scheduling shard into one case per artifact.
+5. `Invoke-SparseCheckoutValidation.ps1` reuses one detached worktree but runs `git clean -ffdx`,
+   resolves one artifact closure, and materializes only that closure before each test invocation.
+   PackageInfo selection, recording restore, test-proxy setup, Azurite setup, `dotnet test`, dumps,
+   coverage, and result collection therefore operate on a singleton checkout.
+6. Existing matrix entries and runtime-weighted scheduling remain. Weighted buckets cannot cross
+   `CIMatrixConfigs`, and batching determines only which runner executes a case. Linux, Windows,
+   and macOS run in separate stages; each matrix may increase its scheduling batch size to remain at
+   20 jobs or fewer, keeping the campaign at 60 validation jobs or fewer without dropping a case.
+   Every case runs after an earlier singleton failure; the job reports aggregate failure last.
+7. Missing, malformed, incomplete, dirty, stale, or unsupported graph data fails the seed or test
+   job. The root pull-request validation path never substitutes a full checkout.
 
 ```text
 package selection
@@ -35,10 +49,11 @@ matrix seed (same full checkout)
     -> publish TestCheckoutGraph
 
 test batch
-    -> artifact seeds for ProjectNames
-    -> forward BFS
-    -> checkout path union
-    -> sparse checkout
+    -> singleton artifact cases
+    -> for each: artifact seeds -> forward BFS -> checkout path union
+    -> clean detached sparse worktree
+    -> setup, build, test, and per-case result collection
+    -> aggregate result after every case
 ```
 
 The previous implementations either rescanned every graph node and input for every
@@ -97,25 +112,30 @@ restore/build equivalence. The source graph continues to report
   identity cannot represent.
 
 The compact graph explicitly recognizes `ProjectReference` and `PackageReference`
-configuration edges. A new edge kind, unknown artifact,
-duplicate malformed artifact, missing index, unresolved package root, or non-NuGet
-source graph causes a full-checkout fallback.
+configuration edges. A new edge kind, unknown artifact, duplicate malformed artifact, missing
+index, unresolved package root, or non-NuGet source graph fails closed before tests run.
 
 ## Failure and observability behavior
 
-Graph generation is an optimization and must not prevent matrix generation. The
-seed job catches graph/projection failures and publishes an explicit incomplete
-`checkout-graph.json`. Test jobs log:
+Graph generation and worktree materialization are required validation steps in the root
+pull-request pipeline. A graph/projection failure stops matrix generation; a missing graph,
+unknown artifact, stale commit, unsupported path, or Git worktree failure stops the affected test
+job. Independent host stages and matrix jobs continue, so one pipeline run still reports every
+other shard. Within a job, the runner records a failed singleton and proceeds to the remaining
+cases. Test jobs publish
+`sparse_checkout_<job>` evidence containing a summary and each singleton's paths, PackageInfo,
+command, logs, TRX, binlog, diagnostics, and result. The root pipeline gives both the matrix seed
+and every generated test job the public hosted-agent maximum of 360 minutes. Logs include:
 
-- `SPARSE_CHECKOUT_GRAPH_RESULT=available|fallback` in the seed job;
+- `SPARSE_CHECKOUT_GRAPH_RESULT=available|failed` in the seed job;
 - `REPOSITORY_PROJECT_GRAPH_RESULT=reused|generated` in the seed job;
-- `SPARSE_CHECKOUT_RESULT=narrowed pathCount=<n>|full` in each test job; and
+- `SPARSE_CHECKOUT_CASE_RESULT=materialized|passed|failed artifact=<name> ...` for each singleton; and
 - graph/project/configuration/edge/checkout-root/artifact counts, projection bytes, phase times,
   peak working set, isolated MSBuild process time, and PowerShell record parsing/model/write times,
   plus each query's artifact, reachable-node, and path counts.
 
-The fallback is intentionally broad. A known-partial graph is never used to narrow
-a checkout.
+The complete orchestration checkout is never used as a test fallback. It exists only to obtain the
+committed script and graph artifact before Git materializes the isolated sparse worktree.
 
 ## Productionization findings and validation (2026-08-26)
 
@@ -171,8 +191,9 @@ Focused validation also showed:
 - the task build and focused Pester suites cover configuration conflicts,
   dependency-only nodes, `ReferenceOutputAssembly=false`, all-inner destination
   edges, analyzer-derived SDK roots, case-insensitive repository package expansion, transitive
-  package edges, stale provenance, duplicate artifacts, and full-checkout fallback.
-  The graph suite passed 14/14 and the sparse projection suite passed 5/5.
+  package edges, stale provenance, duplicate artifacts, resolver fallback, and fail-closed
+  worktree materialization. The graph suite passed 15/15 and the sparse projection suite passed
+  7/7.
 - a local sparse clone using the Schema Registry closure restored and built the full
   `UseProjectReferenceToAzureClients=true` source closure. Test execution then aborted
   because this arm64 host has no x64 .NET test host, not because a checkout input was
@@ -210,3 +231,6 @@ hosted rerun.
   Windows net462 legs, but the corrected artifact seeding still needs a rerun and
   explicit full-versus-sparse output comparisons across linked-input and
   cross-service representatives.
+- Hosted PR jobs retain runtime-weighted `ProjectNames` batches only as scheduling shards. They split
+  each shard back into singleton artifact closures before checkout, so another artifact in the same
+  job cannot mask an omission. The local and hosted paths use the same validation runner.

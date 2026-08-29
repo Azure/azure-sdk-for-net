@@ -14,7 +14,7 @@ param(
     [Parameter(Mandatory = $true)][string] $RepoRoot,
     [Parameter(Mandatory = $true)][string] $InputRoot,
     [Parameter(Mandatory = $true)][string] $ResultsRoot,
-    [ValidateSet('Linux', 'Windows')][string] $TargetHost,
+    [ValidateSet('Linux', 'Windows', 'macOS')][string] $TargetHost,
     [string] $WorktreeRoot,
     [string] $NuGetPackages,
     [string] $CacheRoot,
@@ -26,7 +26,9 @@ param(
     [switch] $Resume,
     [switch] $ListOnly,
     [switch] $SkipRecordings,
-    [switch] $SkipAzurite
+    [switch] $SkipAzurite,
+    [switch] $PreserveCurrentEnvironment,
+    [ValidateRange(1, 360)][int] $TestTimeoutInMinutes = 60
 )
 
 Set-StrictMode -Version 3.0
@@ -47,13 +49,71 @@ function Invoke-LoggedCommand {
         [Parameter(Mandatory = $true)][string] $FilePath,
         [Parameter(Mandatory = $true)][string[]] $ArgumentList,
         [Parameter(Mandatory = $true)][string] $WorkingDirectory,
-        [Parameter(Mandatory = $true)][string] $LogPath
+        [Parameter(Mandatory = $true)][string] $LogPath,
+        [int] $TimeoutInMinutes = 0
     )
 
     $parent = Split-Path -Parent $LogPath
     New-Item -ItemType Directory -Path $parent -Force | Out-Null
     [System.IO.File]::WriteAllText($LogPath, "> $FilePath $($ArgumentList -join ' ')`n")
     Write-Host "> $FilePath $($ArgumentList -join ' ')"
+
+    if ($TimeoutInMinutes -gt 0) {
+        # Run the complete process tree behind a real wall-clock timeout. VSTest's blame-hang
+        # timeout only covers an unresponsive test, not a hung restore, build, or custom target.
+        $startInfo = [System.Diagnostics.ProcessStartInfo]::new()
+        $startInfo.FileName = $FilePath
+        $startInfo.WorkingDirectory = $WorkingDirectory
+        $startInfo.UseShellExecute = $false
+        $startInfo.RedirectStandardOutput = $true
+        $startInfo.RedirectStandardError = $true
+        foreach ($argument in $ArgumentList) {
+            $startInfo.ArgumentList.Add($argument)
+        }
+
+        $process = [System.Diagnostics.Process]::new()
+        $process.StartInfo = $startInfo
+        $startedAt = [DateTime]::UtcNow
+        try {
+            if (!$process.Start()) {
+                throw "Unable to start '$FilePath'."
+            }
+            # Drain both streams concurrently to prevent a full pipe from blocking the child.
+            $standardOutput = $process.StandardOutput.ReadToEndAsync()
+            $standardError = $process.StandardError.ReadToEndAsync()
+            $nextHeartbeat = $startedAt.AddMinutes(1)
+            $timedOut = $false
+            while (!$process.WaitForExit(1000)) {
+                $now = [DateTime]::UtcNow
+                if ($now -ge $startedAt.AddMinutes($TimeoutInMinutes)) {
+                    $timedOut = $true
+                    $process.Kill($true)
+                    break
+                }
+                if ($now -ge $nextHeartbeat) {
+                    Write-Host "$FilePath is still running ($([math]::Round(($now - $startedAt).TotalMinutes, 1)) minutes elapsed)."
+                    $nextHeartbeat = $now.AddMinutes(1)
+                }
+            }
+            $process.WaitForExit()
+            $output = @($standardOutput.Result, $standardError.Result) -join ''
+            if ($output) {
+                [System.IO.File]::AppendAllText($LogPath, $output)
+                $output -split "`r?`n" | Where-Object { $_ } | ForEach-Object { Write-Host $_ }
+            }
+            if ($timedOut) {
+                $message = "Command exceeded its $TimeoutInMinutes-minute singleton timeout; the process tree was terminated."
+                [System.IO.File]::AppendAllText($LogPath, "`n$message`n")
+                Write-Warning $message
+                return 124
+            }
+            return $process.ExitCode
+        }
+        finally {
+            $process.Dispose()
+        }
+    }
+
     Push-Location $WorkingDirectory
     try {
         & $FilePath @ArgumentList 2>&1 | ForEach-Object {
@@ -118,6 +178,35 @@ function Set-MatrixEnvironment($Parameters, [System.Collections.Generic.HashSet[
     }
 }
 
+function Copy-CaseEvidence([string] $Worktree, [string] $CaseDirectory, [bool] $CollectCoverage, [bool] $CollectDumps) {
+    $patterns = [System.Collections.Generic.List[object]]::new()
+    if ($CollectCoverage) {
+        $patterns.Add([pscustomobject]@{
+            Root = Join-Path $Worktree 'sdk'
+            Filter = 'coverage.cobertura.xml'
+            Destination = 'coverage'
+        })
+    }
+    if ($CollectDumps) {
+        $patterns.Add([pscustomobject]@{
+            Root = $Worktree
+            Filter = '*.dmp'
+            Destination = 'dumps'
+        })
+    }
+
+    foreach ($pattern in $patterns) {
+        if (!(Test-Path -LiteralPath $pattern.Root)) { continue }
+        foreach ($file in Get-ChildItem -LiteralPath $pattern.Root -Filter $pattern.Filter -File -Recurse -ErrorAction SilentlyContinue) {
+            # Preserve relative paths so same-named outputs from multiple projects do not collide.
+            $relative = [System.IO.Path]::GetRelativePath($Worktree, $file.FullName)
+            $destination = Join-Path (Join-Path $CaseDirectory $pattern.Destination) $relative
+            New-Item -ItemType Directory -Path (Split-Path -Parent $destination) -Force | Out-Null
+            Copy-Item -LiteralPath $file.FullName -Destination $destination -Force
+        }
+    }
+}
+
 function Write-RunSummary([object[]] $Results, $Manifest, [string] $Destination, [string] $HostName) {
     $passed = @($Results | Where-Object status -eq 'passed').Count
     $failed = @($Results | Where-Object status -eq 'failed').Count
@@ -163,9 +252,11 @@ $RepoRoot = [System.IO.Path]::GetFullPath($RepoRoot)
 $InputRoot = [System.IO.Path]::GetFullPath($InputRoot)
 $ResultsRoot = [System.IO.Path]::GetFullPath($ResultsRoot)
 if (!$TargetHost) {
-    $TargetHost = $IsWindows ? 'Windows' : 'Linux'
+    $TargetHost = $IsWindows ? 'Windows' : ($IsMacOS ? 'macOS' : 'Linux')
 }
-if (!$ListOnly -and (($TargetHost -eq 'Linux' -and !$IsLinux) -or ($TargetHost -eq 'Windows' -and !$IsWindows))) {
+if (!$ListOnly -and (($TargetHost -eq 'Linux' -and !$IsLinux) -or
+    ($TargetHost -eq 'Windows' -and !$IsWindows) -or
+    ($TargetHost -eq 'macOS' -and !$IsMacOS))) {
     throw "TargetHost '$TargetHost' does not match the current operating system."
 }
 if (!$WorktreeRoot) {
@@ -202,6 +293,16 @@ $checkoutGraphPath = Resolve-ManifestPath $InputRoot $manifest.checkoutGraphPath
 $casesPath = Resolve-ManifestPath $InputRoot $manifest.casesPath
 foreach ($path in @($packageInfoDirectory, $checkoutGraphPath, $casesPath)) {
     if (!(Test-Path -LiteralPath $path)) { throw "Manifest input does not exist: $path" }
+}
+$packageInfoFileByArtifact = @{}
+foreach ($file in Get-ChildItem -LiteralPath $packageInfoDirectory -Filter '*.json' -File -Recurse) {
+    $package = Get-Content -Raw -LiteralPath $file.FullName | ConvertFrom-Json -Depth 100
+    $artifactName = [string]$package.ArtifactName
+    if (!$artifactName) { throw "PackageInfo '$($file.FullName)' has no ArtifactName." }
+    if ($packageInfoFileByArtifact.ContainsKey($artifactName)) {
+        throw "PackageInfo contains duplicate artifact '$artifactName'."
+    }
+    $packageInfoFileByArtifact[$artifactName] = $file.FullName
 }
 $actualGraphHash = (Get-FileHash -Algorithm SHA256 -LiteralPath $checkoutGraphPath).Hash.ToLowerInvariant()
 if ($actualGraphHash -ne $manifest.checkoutGraphSha256) {
@@ -308,7 +409,9 @@ foreach ($case in $cases) {
 
     try {
         $phase = 'configure-matrix'
-        Set-MatrixEnvironment $case.matrixParameters $matrixEnvironmentNames
+        if (!$PreserveCurrentEnvironment) {
+            Set-MatrixEnvironment $case.matrixParameters $matrixEnvironmentNames
+        }
 
         # This is a dedicated validation worktree. Cleaning prevents generated files from a prior
         # artifact from satisfying the next artifact's sparse checkout accidentally.
@@ -335,10 +438,15 @@ foreach ($case in $cases) {
         $patterns | & git -C $WorktreeRoot sparse-checkout set --no-cone --stdin
         if ($LASTEXITCODE -ne 0) { throw 'git sparse-checkout set failed.' }
         Invoke-CheckedGit @('reset', '--hard', $manifest.sourceCommit) $WorktreeRoot
+        Write-Host "SPARSE_CHECKOUT_CASE_RESULT=materialized artifact=$($case.artifactName) pathCount=$($paths.Count)"
 
         $phase = 'create-project-list'
         $casePackageInfo = Join-Path $caseDirectory 'PackageInfo'
-        Copy-Item -LiteralPath $packageInfoDirectory -Destination $casePackageInfo -Recurse
+        New-Item -ItemType Directory -Path $casePackageInfo -Force | Out-Null
+        if (!$packageInfoFileByArtifact.ContainsKey([string]$case.artifactName)) {
+            throw "PackageInfo has no singleton artifact '$($case.artifactName)'."
+        }
+        Copy-Item -LiteralPath $packageInfoFileByArtifact[[string]$case.artifactName] -Destination $casePackageInfo
         $projectListDirectory = Join-Path $WorktreeRoot 'projlist'
         & (Join-Path $WorktreeRoot 'eng/scripts/splittestdependencies/set-artifact-packages.ps1') `
             -ProjectNames $case.artifactName `
@@ -411,7 +519,7 @@ foreach ($case in $cases) {
             '--logger', 'console;verbosity=normal',
             '--blame-crash-dump-type', 'full',
             '--blame-hang-dump-type', 'full',
-            '--blame-hang-timeout', '60minutes',
+            '--blame-hang-timeout', "$TestTimeoutInMinutes`minutes",
             '/p:SDKType=all', '/p:ServiceDirectory=*',
             '/p:IncludeSrc=false', '/p:IncludeSamples=false', '/p:IncludePerf=false',
             '/p:IncludeStress=false', '/p:IncludeIntegrationTests=false',
@@ -442,7 +550,8 @@ foreach ($case in $cases) {
             $_ -match '\s' ? "`"$($_.Replace('"', '\"'))`"" : $_
         }) -join ' '
         $commandText | Set-Content -LiteralPath (Join-Path $caseDirectory 'command.txt') -Encoding utf8
-        $exitCode = Invoke-LoggedCommand 'dotnet' $arguments.ToArray() $WorktreeRoot (Join-Path $caseDirectory 'test.log')
+        $exitCode = Invoke-LoggedCommand 'dotnet' $arguments.ToArray() $WorktreeRoot `
+            (Join-Path $caseDirectory 'test.log') -TimeoutInMinutes $TestTimeoutInMinutes
         if ($exitCode -ne 0) {
             throw "dotnet test failed with exit code $exitCode."
         }
@@ -453,6 +562,23 @@ foreach ($case in $cases) {
     catch {
         $message = $_.Exception.Message
         Write-Warning "$($case.artifactName) / $($case.matrixName) failed during $phase`: $message"
+    }
+
+    try {
+        # The next singleton starts from git clean -ffdx, so retain generated diagnostics first.
+        Copy-CaseEvidence $WorktreeRoot $caseDirectory ([bool]$case.collectCoverage) ($status -eq 'failed')
+    }
+    catch {
+        $evidenceMessage = "Evidence collection failed: $($_.Exception.Message)"
+        if ($status -eq 'passed') {
+            $status = 'failed'
+            $phase = 'collect-evidence'
+            $message = $evidenceMessage
+        }
+        else {
+            $message = "$message $evidenceMessage"
+        }
+        Write-Warning "$($case.artifactName) / $($case.matrixName): $evidenceMessage"
     }
 
     $finished = [DateTime]::UtcNow
@@ -482,6 +608,7 @@ foreach ($case in $cases) {
     }
     $result | ConvertTo-Json -Depth 20 | Set-Content -LiteralPath $resultPath -Encoding utf8
     $runResults.Add($result)
+    Write-Host "SPARSE_CHECKOUT_CASE_RESULT=$status artifact=$($case.artifactName) phase=$phase"
     if ($status -eq 'failed' -and $FailureMode -eq 'Stop') {
         $stopRequested = $true
         break

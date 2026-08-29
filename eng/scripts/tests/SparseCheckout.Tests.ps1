@@ -8,6 +8,10 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
         $script:RepositoryRoot = Resolve-Path (Join-Path $PSScriptRoot '..' '..' '..')
         $script:TaskProject = Join-Path $script:RepositoryRoot 'eng/tools/RepositoryProjectGraph/RepositoryProjectGraph.csproj'
         $script:ResolvePathsPath = Join-Path $PSScriptRoot '..' 'Resolve-SparseCheckoutPaths.ps1'
+        $script:NewPipelineInputsPath = Join-Path $script:RepositoryRoot `
+            'eng/tools/RepositoryProjectGraph/ValidateSparseCheckout/New-PipelineValidationInputs.ps1'
+        $script:AddUnownedTestsPath = Join-Path $script:RepositoryRoot `
+            'eng/tools/RepositoryProjectGraph/ValidateSparseCheckout/Add-UnownedTestProjects.ps1'
 
         function Invoke-SparseCheckoutProjection(
             [string] $PackageInfoDirectory,
@@ -43,6 +47,7 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
             'sdk/gamma/C/src/C.csproj',
             'sdk/delta/D/src/D.csproj',
             'sdk/epsilon/E/src/E.csproj',
+            'sdk/unused/U/src/U.csproj',
             'common/Perf/Azure.Test.Perf/Azure.Test.Perf.csproj',
             'sdk/shared/Shared/Shared.cs')) {
             $fullPath = Join-Path $repo $path
@@ -192,7 +197,7 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
         @($checkoutGraph.artifacts.'Azure.A').Count | Should -Be 3
     }
 
-    It 'unions artifact batches and falls back on missing or stale graph data' {
+    It 'unions artifact batches and returns no paths for missing or stale graph data' {
         [ordered]@{
             schemaVersion = 1
             sourceCommit = $sourceCommit
@@ -227,5 +232,100 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
         $checkoutGraph | ConvertTo-Json -Depth 10 | Set-Content $checkoutGraphPath
         @(& $script:ResolvePathsPath -GraphPath $checkoutGraphPath -ArtifactNames 'Azure.A' `
             -ExpectedSourceCommit $sourceCommit) | Should -BeNullOrEmpty
+    }
+
+    It 'expands a generated pipeline batch into singleton validation cases' {
+        Invoke-SparseCheckoutProjection $packageInfo $repo $graphPath $checkoutGraphPath $sourceCommit
+        $inputRoot = Join-Path $TestDrive 'pipeline-inputs'
+        $inputPackageInfo = Join-Path $inputRoot 'PackageInfo'
+        $inputGraph = Join-Path $inputRoot 'checkout-graph.json'
+        New-Item -ItemType Directory -Path $inputPackageInfo -Force | Out-Null
+        Copy-Item -LiteralPath (Join-Path $packageInfo 'Azure.A.json') -Destination $inputPackageInfo
+        Copy-Item -LiteralPath $checkoutGraphPath -Destination $inputGraph
+
+        & $script:NewPipelineInputsPath `
+            -RepoRoot $repo `
+            -InputRoot $inputRoot `
+            -PackageInfoDirectory $inputPackageInfo `
+            -CheckoutGraphPath $inputGraph `
+            -ArtifactNames 'Azure.A' `
+            -SourceCommit $sourceCommit `
+            -TargetHost Linux `
+            -MatrixName Linux_net80 `
+            -TargetFramework net8.0 `
+            -BuildConfiguration Debug `
+            -AdditionalTestArguments '/p:UseProjectReferenceToAzureClients=false'
+
+        $manifest = Get-Content -Raw -LiteralPath (Join-Path $inputRoot 'manifest.json') |
+            ConvertFrom-Json
+        $cases = @(Get-Content -Raw -LiteralPath (Join-Path $inputRoot 'cases.json') |
+            ConvertFrom-Json)
+        $manifest.sourceCommit | Should -Be $sourceCommit
+        $manifest.caseCount | Should -Be 1
+        $manifest.packageInfoDirectory | Should -Be 'PackageInfo'
+        $cases[0].artifactName | Should -Be 'Azure.A'
+        $cases[0].matrixName | Should -Be 'Linux_net80'
+        $cases[0].additionalTestArguments | Should -Be '/p:UseProjectReferenceToAzureClients=false'
+    }
+
+    It 'adds validation-only singleton artifacts for unowned test projects' {
+        $publishingPackageInfo = Join-Path $TestDrive 'PackageInfoPublishing'
+        New-Item -ItemType Directory -Path $publishingPackageInfo -Force | Out-Null
+        Copy-Item -LiteralPath (Join-Path $packageInfo 'Azure.A.json') -Destination $publishingPackageInfo
+
+        $coverageGraphPath = Join-Path $TestDrive 'coverage-graph.json'
+        $coverageGraph = Get-Content -Raw -LiteralPath $graphPath | ConvertFrom-Json -Depth 100
+        $coverageGraph.nodes += [pscustomobject]@{
+            projectPath = 'sdk/tools/Standalone/tests/Standalone.Tests.csproj'
+            packageRoot = 'sdk/tools/Standalone/tests'
+            targetFrameworks = @('net10.0')
+            packageId = 'Standalone.Tests'
+            isShippingLibrary = $false
+        }
+        $coverageGraph.nodes += [pscustomobject]@{
+            projectPath = 'sdk/tools/Modern/tests/Modern.Tests.csproj'
+            packageRoot = 'sdk/tools/Modern/tests'
+            targetFrameworks = @('net8.0', 'net9.0', 'net10.0')
+            packageId = 'Modern.Tests'
+            isShippingLibrary = $false
+        }
+        $coverageGraph | ConvertTo-Json -Depth 20 | Set-Content -LiteralPath $coverageGraphPath
+        $coverageOutput = Join-Path $TestDrive 'test-project-coverage.json'
+
+        & $script:AddUnownedTestsPath `
+            -SourceGraphPath $coverageGraphPath `
+            -PackageInfoDirectories @($packageInfo, $publishingPackageInfo) `
+            -CoverageOutputPath $coverageOutput `
+            -RepoRoot $script:RepositoryRoot `
+            -DefaultMatrixConfigPath (Join-Path $script:RepositoryRoot `
+                'eng/pipelines/templates/stages/platform-matrix.json') `
+            -GeneratedMatrixDirectory (Join-Path $TestDrive 'generated-matrices')
+
+        $coverage = Get-Content -Raw -LiteralPath $coverageOutput | ConvertFrom-Json
+        $coverage.testProjectCount | Should -Be 3
+        $coverage.syntheticArtifactCount | Should -Be 2
+        $coverage.uncoveredTestProjectCount | Should -Be 0
+        $synthetic = @(Get-ChildItem -LiteralPath $packageInfo -Filter 'SparseCheckoutValidation.*.json')
+        $synthetic.Count | Should -Be 2
+        $syntheticPackages = @($synthetic | ForEach-Object {
+            Get-Content -Raw -LiteralPath $_.FullName | ConvertFrom-Json
+        })
+        $syntheticPackage = $syntheticPackages | Where-Object {
+            $_.SourceTestProject -eq 'sdk/tools/Standalone/tests/Standalone.Tests.csproj'
+        }
+        $syntheticPackage.DirectoryPath | Should -Be 'sdk/tools/Standalone/tests'
+        $syntheticPackage.SourceTestProject | Should -Be 'sdk/tools/Standalone/tests/Standalone.Tests.csproj'
+        $syntheticPackage.CIParameters.CIMatrixConfigs.Count | Should -Be 1
+        $generatedMatrix = Join-Path $script:RepositoryRoot `
+            $syntheticPackage.CIParameters.CIMatrixConfigs[0].Path
+        $matrix = Get-Content -Raw -LiteralPath $generatedMatrix | ConvertFrom-Json
+        @($matrix.matrix.ValidationCase.PSObject.Properties.Value.TestTargetFramework |
+            Sort-Object -Unique) | Should -Be @('net10.0')
+        ($syntheticPackages | Where-Object {
+            $_.SourceTestProject -eq 'sdk/tools/Modern/tests/Modern.Tests.csproj'
+        }).CIParameters.CIMatrixConfigs.Count | Should -Be 0
+        foreach ($file in $synthetic) {
+            Test-Path -LiteralPath (Join-Path $publishingPackageInfo $file.Name) | Should -BeTrue
+        }
     }
 }
