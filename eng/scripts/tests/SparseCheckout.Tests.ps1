@@ -316,8 +316,10 @@ Describe 'ProjectGraph sparse checkout projection' -Tag 'UnitTest' {
         $syntheticPackage.DirectoryPath | Should -Be 'sdk/tools/Standalone/tests'
         $syntheticPackage.SourceTestProject | Should -Be 'sdk/tools/Standalone/tests/Standalone.Tests.csproj'
         $syntheticPackage.CIParameters.CIMatrixConfigs.Count | Should -Be 1
-        $generatedMatrix = Join-Path $script:RepositoryRoot `
-            $syntheticPackage.CIParameters.CIMatrixConfigs[0].Path
+        $matrixReference = $syntheticPackage.CIParameters.CIMatrixConfigs[0].Path
+        # Path.GetRelativePath returns a rooted path when Windows inputs reside on another drive.
+        $generatedMatrix = [System.IO.Path]::IsPathRooted($matrixReference) ? $matrixReference :
+            (Join-Path $script:RepositoryRoot $matrixReference)
         $matrix = Get-Content -Raw -LiteralPath $generatedMatrix | ConvertFrom-Json
         @($matrix.matrix.ValidationCase.PSObject.Properties.Value.TestTargetFramework |
             Sort-Object -Unique) | Should -Be @('net10.0')
