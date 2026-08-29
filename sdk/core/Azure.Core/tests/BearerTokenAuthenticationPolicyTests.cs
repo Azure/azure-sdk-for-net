@@ -1251,6 +1251,7 @@ namespace Azure.Core.Tests
             var contexts = new List<TokenRequestContext>();
             var gate = new ManualResetEventSlim(initialState: false);
             var firstCallStarted = new ManualResetEventSlim(false);
+            var secondCallReached = new ManualResetEventSlim(false);
             var credential = new TokenCredentialStub((requestContext, cancellationToken) =>
                 {
                     int index;
@@ -1266,6 +1267,12 @@ namespace Azure.Core.Tests
                         // in flight (Task not yet RanToCompletion) when the second request
                         // enters the cache's RefreshTokenRequestState.
                         gate.Wait(cancellationToken);
+                    }
+                    else
+                    {
+                        // The second request issued its own credential call instead of coalescing
+                        // onto the first request's URI-bound in-flight acquisition.
+                        secondCallReached.Set();
                     }
                     return new AccessToken(
                         $"pop-token-{index}",
@@ -1284,13 +1291,17 @@ namespace Azure.Core.Tests
 
             var secondRequest = Task.Run(() => SendGetRequest(transport, policy, uri: new Uri("https://example.com/resource-b")));
 
-            // Give the second request a moment to fully enter RefreshTokenRequestState before
-            // the gate opens, so this test reliably reproduces the race the fix addresses.
-            await Task.Delay(100).ConfigureAwait(false);
+            // Deterministic synchronization: wait until the second request has independently reached its
+            // own credential call while the first acquisition is still blocked in flight. A broken
+            // implementation coalesces the second request onto the first (no second credential call), so
+            // this wait times out and the assertion below fails instead of passing on a lucky schedule.
+            bool secondReached = secondCallReached.Wait(TimeSpan.FromSeconds(30));
             gate.Set();
 
             await Task.WhenAll(firstRequest, secondRequest).ConfigureAwait(false);
 
+            Assert.IsTrue(secondReached,
+                "A second request for a different URI must trigger its own PoP acquisition while the first is in flight, not reuse the first request's URI-bound token.");
             Assert.AreEqual(2, contexts.Count,
                 "The in-flight acquisition must not be shared across distinct request URIs when PoP is requested.");
             // Order depends on scheduling, so just assert the set of URIs seen.
@@ -1403,6 +1414,44 @@ namespace Azure.Core.Tests
             Assert.AreEqual(2, contexts.Count, "Expected a fresh credential call when only the PoP nonce changes.");
             Assert.AreEqual("nonce-1", contexts[0].ProofOfPossessionNonce);
             Assert.AreEqual("nonce-2", contexts[1].ProofOfPossessionNonce);
+        }
+
+        [Test]
+        public async Task BearerTokenAuthenticationPolicy_ReAcquiresProofOfPossessionTokenPerRequestMethod()
+        {
+            // A PoP token is bound to the HTTP method as well as the URI and nonce, so the same URI with a
+            // different method (GET then POST) must re-invoke the credential rather than reuse the cached token.
+            using var bindingCertificate = MakeSelfSignedCertificate();
+            var contexts = new List<TokenRequestContext>();
+            var credential = new TokenCredentialStub((requestContext, _) =>
+                {
+                    lock (contexts)
+                    {
+                        contexts.Add(requestContext);
+                        return new AccessToken(
+                            $"pop-token-{contexts.Count}",
+                            DateTimeOffset.UtcNow.AddHours(1),
+                            refreshOn: null,
+                            tokenType: "PoP",
+                            bindingCertificate: bindingCertificate);
+                    }
+                },
+                IsAsync);
+
+            var policy = new ProofOfPossessionTestPolicy(credential, "scope");
+            MockTransport transport = CreateMockTransport(new MockResponse(200), new MockResponse(200));
+
+            var uri = new Uri("https://example.com/same-resource");
+            await SendGetRequest(transport, policy, uri: uri);
+            await SendRequestAsync(transport, message =>
+            {
+                message.Request.Method = RequestMethod.Post;
+                message.Request.Uri.Reset(uri);
+            }, policy);
+
+            Assert.AreEqual(2, contexts.Count, "Expected a fresh credential call when only the request method changes.");
+            Assert.AreEqual("GET", contexts[0].ResourceRequestMethod);
+            Assert.AreEqual("POST", contexts[1].ResourceRequestMethod);
         }
 
         private static X509Certificate2 MakeSelfSignedCertificate()
