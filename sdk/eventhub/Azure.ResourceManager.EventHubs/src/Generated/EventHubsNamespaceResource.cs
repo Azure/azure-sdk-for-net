@@ -824,7 +824,7 @@ namespace Azure.ResourceManager.EventHubs
                 else
                 {
                     EventHubsNamespaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    EventHubsNamespaceData patch = new EventHubsNamespaceData(current.Location);
+                    EventHubsNamespaceData patch = new EventHubsNamespaceData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -872,7 +872,7 @@ namespace Azure.ResourceManager.EventHubs
                 else
                 {
                     EventHubsNamespaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    EventHubsNamespaceData patch = new EventHubsNamespaceData(current.Location);
+                    EventHubsNamespaceData patch = new EventHubsNamespaceData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -919,7 +919,7 @@ namespace Azure.ResourceManager.EventHubs
                 else
                 {
                     EventHubsNamespaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    EventHubsNamespaceData patch = new EventHubsNamespaceData(current.Location);
+                    EventHubsNamespaceData patch = new EventHubsNamespaceData();
                     patch.Tags.ReplaceWith(tags);
                     Response<EventHubsNamespaceResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -962,7 +962,7 @@ namespace Azure.ResourceManager.EventHubs
                 else
                 {
                     EventHubsNamespaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    EventHubsNamespaceData patch = new EventHubsNamespaceData(current.Location);
+                    EventHubsNamespaceData patch = new EventHubsNamespaceData();
                     patch.Tags.ReplaceWith(tags);
                     Response<EventHubsNamespaceResource> result = Update(patch, cancellationToken: cancellationToken);
                     return Response.FromValue(result.Value, result.GetRawResponse());
@@ -1004,7 +1004,7 @@ namespace Azure.ResourceManager.EventHubs
                 else
                 {
                     EventHubsNamespaceData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    EventHubsNamespaceData patch = new EventHubsNamespaceData(current.Location);
+                    EventHubsNamespaceData patch = new EventHubsNamespaceData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -1050,7 +1050,7 @@ namespace Azure.ResourceManager.EventHubs
                 else
                 {
                     EventHubsNamespaceData current = Get(cancellationToken: cancellationToken).Value.Data;
-                    EventHubsNamespaceData patch = new EventHubsNamespaceData(current.Location);
+                    EventHubsNamespaceData patch = new EventHubsNamespaceData();
                     foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
