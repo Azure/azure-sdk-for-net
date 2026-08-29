@@ -831,7 +831,7 @@ namespace Azure.Storage.Files.DataLake.Tests
         /// </summary>
         private Blobs.BlobClientOptions GetBlobOptionsForProvider(HttpPipelinePolicy countingPolicy)
         {
-            var options = new Blobs.BlobClientOptions();
+            var options = new Blobs.BlobClientOptions(_serviceVersion.AsBlobsVersion());
             options.AddPolicy(countingPolicy, HttpPipelinePosition.PerRetry);
             return InstrumentClientOptions(options);
         }
