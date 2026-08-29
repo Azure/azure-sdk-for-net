@@ -107,8 +107,6 @@ internal abstract class ExternalBicepTool
                 return fullPath;
             }
         }
-
-        // CI experiment: include this package in the 20-package timing workload.
         return null;
     }
 }

@@ -23,5 +23,3 @@ public partial class MigrationConfiguration
         public static readonly string V2024_01_01 = "2024-01-01";
     }
 }
-
-// CI experiment: include this package in the 20-package timing workload.

@@ -58,5 +58,3 @@ namespace Azure.Messaging.ServiceBus
             "For troubleshooting information, see https://aka.ms/azsdk/net/servicebus/exceptions/troubleshoot.";
     }
 }
-
-// CI experiment: include this package in the 20-package timing workload.

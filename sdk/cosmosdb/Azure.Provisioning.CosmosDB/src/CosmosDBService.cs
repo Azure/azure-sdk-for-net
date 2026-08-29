@@ -22,5 +22,3 @@ public partial class CosmosDBService
         get => throw new NotSupportedException("TODO: Needs to be implemented using extensibility API.");
     }
 }
-
-// CI experiment: include this package in the 20-package timing workload.
