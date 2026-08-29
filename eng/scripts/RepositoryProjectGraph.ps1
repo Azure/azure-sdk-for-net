@@ -76,8 +76,8 @@ function Read-Graph([string] $Path) {
     throw "Repository project graph does not exist: $Path"
   }
   $graph = Get-Content -Raw $Path | ConvertFrom-Json -Depth 100
-  if ($graph.schemaVersion -ne 7) {
-    throw "Unsupported repository project graph schema version '$($graph.schemaVersion)'. Expected 7."
+  if ($graph.schemaVersion -ne 8) {
+    throw "Unsupported repository project graph schema version '$($graph.schemaVersion)'. Expected 8."
   }
   return $graph
 }
@@ -106,7 +106,12 @@ function New-GraphIndexes($Graph) {
       default { throw "Unsupported repository project graph edge kind '$($edge.kind)'." }
     }
     Add-AdjacencyEdge $forward $from $to
-    Add-AdjacencyEdge $reverse $to $from
+    # Non-assembly project references are source/build inputs (for example analyzers), but
+    # ResolveReferences does not place their output in ReferencePath. Keep them for forward
+    # sparse-checkout traversal without selecting dependents in the reverse query.
+    if ($edge.kind -ne 'ProjectReference' -or $edge.referenceOutputAssembly) {
+      Add-AdjacencyEdge $reverse $to $from
+    }
   }
 
   foreach ($node in $Graph.nodes) {
@@ -274,6 +279,7 @@ function Build-Graph {
             fromTargetFramework = $parts[2]
             to = $to
             toTargetFramework = $toTargetFramework
+            referenceOutputAssembly = $parts[4] -ne 'false'
           }
         }
       }
@@ -389,6 +395,7 @@ function Build-Graph {
         fromTargetFramework = $edge.fromTargetFramework
         to = $edge.to
         toTargetFramework = $toTargetFramework
+        referenceOutputAssembly = $edge.referenceOutputAssembly
       }
     }
   }
@@ -487,7 +494,7 @@ function Build-Graph {
   })
 
   $graph = [ordered]@{
-    schemaVersion = 7
+    schemaVersion = 8
     repositoryRoot = $root.Replace('\', '/')
     sourceCommit = Get-SourceCommit $root
     nodes = @($nodes.Values | Sort-Object projectPath | ForEach-Object {
