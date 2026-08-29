@@ -108,7 +108,7 @@ namespace Azure.Provisioning.Compute
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastModifiedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> OtherPatchCount { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> RebootPending { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.PatchOperationStatus> Status { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -701,7 +701,7 @@ namespace Azure.Provisioning.Compute
         public Azure.Provisioning.BicepValue<string> FederatedClientId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastKeyRotationTimestamp { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastKeyRotationOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.KeyForDiskEncryptionSet> PreviousKeys { get { throw null; } }
@@ -1607,8 +1607,8 @@ namespace Azure.Provisioning.Compute
         public ImmutabilityPolicy() { }
         public Azure.Provisioning.BicepValue<int> ImmutabilityDurationDays { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsPolicyExpired { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> PolicyExpirationOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> PolicyStartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> PolicyExpiresOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> PolicyStartsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.ImmutabilityPolicyType> Type { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -1731,7 +1731,7 @@ namespace Azure.Provisioning.Compute
         public Azure.Provisioning.BicepValue<bool> MaintenanceWindowExceeded { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> NotSelectedPatchCount { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> PendingPatchCount { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.PatchOperationStatus> Status { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -1790,10 +1790,10 @@ namespace Azure.Provisioning.Compute
         public Azure.Provisioning.BicepValue<bool> IsCustomerInitiatedMaintenanceAllowed { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> LastOperationMessage { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.MaintenanceOperationResultCodeType> LastOperationResultCode { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceWindowEndOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceWindowStartOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> PreMaintenanceWindowEndOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> PreMaintenanceWindowStartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceWindowEndsOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> MaintenanceWindowStartsOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> PreMaintenanceWindowEndsOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> PreMaintenanceWindowStartsOn { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class ManagedDisk : Azure.Provisioning.Primitives.ProvisionableResource
@@ -2215,7 +2215,7 @@ namespace Azure.Provisioning.Compute
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.RollingUpgradeStatusCode> Code { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.RollingUpgradeActionType> LastAction { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastActionOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum RollingUpgradeStatusCode
@@ -2974,13 +2974,13 @@ namespace Azure.Provisioning.Compute
     public partial class VirtualMachineRunCommandInstanceView : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public VirtualMachineRunCommandInstanceView() { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Error { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ExecutionMessage { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Compute.ExecutionState> ExecutionState { get { throw null; } }
         public Azure.Provisioning.BicepValue<int> ExitCode { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Output { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Compute.InstanceViewStatus> Statuses { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }

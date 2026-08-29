@@ -7097,8 +7097,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// RestoreRequestResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include , , , , , , , , , , , , ,  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include , , , , , , , , , , , , ,  and .
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.TriggerRestoreContent"/> instance for mocking. </returns>
@@ -7126,8 +7126,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// ProtectableContainerResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include  and .
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.ProtectableContainerResource"/> instance for mocking. </returns>
@@ -7155,8 +7155,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// WorkloadItemResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include , , , , ,  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include , , , , ,  and .
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.WorkloadItemResource"/> instance for mocking. </returns>
@@ -7184,8 +7184,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// BackupRequestResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include ,  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include ,  and .
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.TriggerBackupContent"/> instance for mocking. </returns>
@@ -7213,8 +7213,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// ILRRequestResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include  and .
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.ProvisionIlrConnectionContent"/> instance for mocking. </returns>
@@ -7242,8 +7242,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="location"> The location. </param>
         /// <param name="properties">
         /// WorkloadProtectableItemResource properties
-        ///             Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///             The available derived classes include , , , , , , , , , , , ,  and .
+        ///                         Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        ///                         The available derived classes include , , , , , , , , , , , ,  and .
         /// </param>
         /// <param name="eTag"> Optional ETag. </param>
         /// <returns> A new <see cref="Models.WorkloadProtectableItemResource"/> instance for mocking. </returns>
