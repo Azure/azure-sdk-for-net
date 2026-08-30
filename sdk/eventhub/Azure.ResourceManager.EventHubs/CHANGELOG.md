@@ -7,12 +7,6 @@
 - Added support for the `2026-07-01-preview` API version.
 - Added APIs for managing Fabric shortcuts and Event Hubs upgrade preferences, including maintenance and exception windows.
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
 ## 1.3.0 (2026-07-28)
 
 ### Features Added
