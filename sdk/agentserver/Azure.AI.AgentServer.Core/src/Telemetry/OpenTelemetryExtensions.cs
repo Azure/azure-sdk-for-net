@@ -169,6 +169,7 @@ internal static class OpenTelemetryExtensions
             double.TryParse(samplerArgument, NumberStyles.Float, CultureInfo.InvariantCulture, out var tracesPerSecond) &&
             tracesPerSecond >= 0)
         {
+            options.SamplingRatio = 1.0F;
             options.TracesPerSecond = tracesPerSecond;
             return;
         }

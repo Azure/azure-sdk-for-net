@@ -95,9 +95,10 @@ public class OpenTelemetryExtensionsTests
         Environment.SetEnvironmentVariable("OTEL_TRACES_SAMPLER_ARG", "7");
         FoundryEnvironment.Reload();
 
-        var options = new AzureMonitorOptions();
+        var options = new AzureMonitorOptions { SamplingRatio = 0.25F };
         OpenTelemetryExtensions.ConfigureAzureMonitorSampling(options);
 
+        Assert.That(options.SamplingRatio, Is.EqualTo(1.0F));
         Assert.That(options.TracesPerSecond, Is.EqualTo(7));
     }
 
@@ -234,15 +235,17 @@ public class OpenTelemetryExtensionsTests
         try
         {
             var endpoint = (IPEndPoint)listener.LocalEndpoint;
-            using var client = new HttpClient { Timeout = TimeSpan.FromSeconds(10) };
-            var responseTask = client.GetAsync($"http://127.0.0.1:{endpoint.Port}/");
-            using var connection = await listener.AcceptTcpClientAsync();
+            using var cancellationSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            var cancellationToken = cancellationSource.Token;
+            using var client = new HttpClient();
+            var responseTask = client.GetAsync($"http://127.0.0.1:{endpoint.Port}/", cancellationToken);
+            using var connection = await listener.AcceptTcpClientAsync(cancellationToken);
             await using var stream = connection.GetStream();
             var requestBuffer = new byte[4096];
-            _ = await stream.ReadAsync(requestBuffer);
+            _ = await stream.ReadAsync(requestBuffer, cancellationToken);
             var responseBytes = Encoding.ASCII.GetBytes(
                 "HTTP/1.1 200 OK\r\nContent-Length: 0\r\nConnection: close\r\n\r\n");
-            await stream.WriteAsync(responseBytes);
+            await stream.WriteAsync(responseBytes, cancellationToken);
             using var response = await responseTask;
             response.EnsureSuccessStatusCode();
         }
