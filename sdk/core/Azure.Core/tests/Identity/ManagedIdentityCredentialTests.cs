@@ -372,6 +372,46 @@ namespace Azure.Core.Tests.Identity
 
         [NonParallelizable]
         [Test]
+        public async Task ChainedProofOfPossessionImdsSourceSkipsBearerProbe()
+        {
+            using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
+
+            int probeCallCount = 0;
+            MockMsalManagedIdentityClient mockMsal = null;
+            var credential = BuildManagedIdentityCredential(
+                new TokenCredentialOptions
+                {
+                    Transport = new MockTransport(_ =>
+                    {
+                        probeCallCount++;
+                        return CreateSuccessResponse(ExpectedToken);
+                    }),
+                    IsChainedCredential = true
+                },
+                ManagedIdentityId.SystemAssigned,
+                configureMockMsal: mock =>
+                {
+                    mockMsal = mock;
+                    mock.GetManagedIdentityCapabilitiesFactory = (_, _) =>
+                        MockMsalManagedIdentityClient.CreateCapabilities(
+                            Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.Imds,
+                            Microsoft.Identity.Client.AppConfig.MtlsBindingStrength.Software);
+                    mock.AcquireTokenForManagedIdentityAsyncFactory = (_, _) => AuthenticationResultFactory.Create(accessToken: ExpectedToken);
+                },
+                instrument: false,
+                initialImdsConnectionTimeout: TimeSpan.FromSeconds(1));
+
+            AccessToken token = await GetTokenAsync(
+                credential,
+                new TokenRequestContext(MockScopes.Default, isProofOfPossessionEnabled: true));
+
+            Assert.AreEqual(ExpectedToken, token.Token);
+            Assert.Zero(probeCallCount);
+            Assert.IsTrue(mockMsal.LastIsTokenBindingAvailable);
+        }
+
+        [NonParallelizable]
+        [Test]
         public void ChainedProofOfPossessionCapabilitiesTimeoutThrowsCredentialUnavailable()
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });

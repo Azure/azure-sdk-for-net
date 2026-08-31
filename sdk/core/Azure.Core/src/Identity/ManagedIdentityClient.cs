@@ -134,9 +134,10 @@ namespace Azure.Identity
             // MSAL versions report either DefaultToImds or None when no environment-based source is configured.
             // For ordinary chained requests, both mean that Azure.Core should use its bounded IMDS probe.
 #pragma warning disable CS0618 // DefaultToImds is obsolete but still returned by the sync GetManagedIdentitySource path
-            bool shouldProbeImds = availableSource == MSAL.ManagedIdentitySource.DefaultToImds ||
-                availableSource == MSAL.ManagedIdentitySource.Imds ||
-                (!requiresManagedIdentityCapabilities && availableSource == MSAL.ManagedIdentitySource.None);
+            bool shouldProbeImds = !requiresManagedIdentityCapabilities &&
+                (availableSource == MSAL.ManagedIdentitySource.DefaultToImds ||
+                 availableSource == MSAL.ManagedIdentitySource.Imds ||
+                 availableSource == MSAL.ManagedIdentitySource.None);
 #pragma warning restore CS0618
             if (shouldProbeImds && _isChainedCredential && !_probeRequestSent)
             {
