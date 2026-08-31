@@ -11,8 +11,8 @@ namespace Azure.Provisioning.Sql
     public enum DataMaskingState
     {
         /// <summary> Enabled. </summary>
-        Enabled = 0,
+        Enabled = 1,
         /// <summary> Disabled. </summary>
-        Disabled = 1
+        Disabled = 0
     }
 }

@@ -226,8 +226,8 @@ namespace Azure.Provisioning.Sql
     }
     public enum DataMaskingState
     {
-        Enabled = 0,
-        Disabled = 1,
+        Disabled = 0,
+        Enabled = 1,
     }
     public partial class DataWarehouseUserActivity : Azure.Provisioning.Primitives.ProvisionableResource
     {
@@ -544,8 +544,8 @@ namespace Azure.Provisioning.Sql
     }
     public enum GeoBackupPolicyState
     {
-        Enabled = 0,
-        Disabled = 1,
+        Disabled = 0,
+        Enabled = 1,
     }
     public enum GeoSecondaryInstanceType
     {
@@ -1643,22 +1643,22 @@ namespace Azure.Provisioning.Sql
     }
     public enum ManagedInstancePropertiesProvisioningState
     {
-        Created = 0,
-        InProgress = 1,
-        Succeeded = 2,
-        Failed = 3,
-        Canceled = 4,
-        Creating = 5,
-        Deleting = 6,
-        Updating = 7,
-        Unknown = 8,
-        Accepted = 9,
-        Deleted = 10,
-        Unrecognized = 11,
-        Running = 12,
-        NotSpecified = 13,
-        Registering = 14,
-        TimedOut = 15,
+        Creating = 0,
+        Deleting = 1,
+        Updating = 2,
+        Unknown = 3,
+        Succeeded = 4,
+        Failed = 5,
+        Accepted = 6,
+        Created = 7,
+        Deleted = 8,
+        Unrecognized = 9,
+        Running = 10,
+        Canceled = 11,
+        NotSpecified = 12,
+        Registering = 13,
+        TimedOut = 14,
+        InProgress = 15,
     }
     public enum ManagedInstanceProxyOverride
     {

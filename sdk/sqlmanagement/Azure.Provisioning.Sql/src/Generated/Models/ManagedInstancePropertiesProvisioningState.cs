@@ -11,36 +11,36 @@ namespace Azure.Provisioning.Sql
     public enum ManagedInstancePropertiesProvisioningState
     {
         /// <summary> Created. </summary>
-        Created = 0,
+        Created = 7,
         /// <summary> InProgress. </summary>
-        InProgress = 1,
+        InProgress = 15,
         /// <summary> Succeeded. </summary>
-        Succeeded = 2,
+        Succeeded = 4,
         /// <summary> Failed. </summary>
-        Failed = 3,
+        Failed = 5,
         /// <summary> Canceled. </summary>
-        Canceled = 4,
+        Canceled = 11,
         /// <summary> Creating. </summary>
-        Creating = 5,
+        Creating = 0,
         /// <summary> Deleting. </summary>
-        Deleting = 6,
+        Deleting = 1,
         /// <summary> Updating. </summary>
-        Updating = 7,
+        Updating = 2,
         /// <summary> Unknown. </summary>
-        Unknown = 8,
+        Unknown = 3,
         /// <summary> Accepted. </summary>
-        Accepted = 9,
+        Accepted = 6,
         /// <summary> Deleted. </summary>
-        Deleted = 10,
+        Deleted = 8,
         /// <summary> Unrecognized. </summary>
-        Unrecognized = 11,
+        Unrecognized = 9,
         /// <summary> Running. </summary>
-        Running = 12,
+        Running = 10,
         /// <summary> NotSpecified. </summary>
-        NotSpecified = 13,
+        NotSpecified = 12,
         /// <summary> Registering. </summary>
-        Registering = 14,
+        Registering = 13,
         /// <summary> TimedOut. </summary>
-        TimedOut = 15
+        TimedOut = 14
     }
 }
