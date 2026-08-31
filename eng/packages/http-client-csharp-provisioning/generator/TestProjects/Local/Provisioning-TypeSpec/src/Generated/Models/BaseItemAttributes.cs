@@ -12,7 +12,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary> Base attributes for items. </summary>
-    internal partial class BaseItemAttributes : ProvisionableConstruct
+    public partial class BaseItemAttributes : ProvisionableConstruct
     {
         private BicepValue<bool> _enabled;
         private BicepValue<string> _displayName;

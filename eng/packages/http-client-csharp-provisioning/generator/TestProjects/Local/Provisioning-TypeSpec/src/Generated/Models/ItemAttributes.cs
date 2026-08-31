@@ -11,7 +11,7 @@ using Azure.Provisioning;
 namespace Azure.Provisioning.ProvisioningTypeSpec
 {
     /// <summary> Item-specific attributes that inherit all base properties. </summary>
-    internal partial class ItemAttributes : BaseItemAttributes
+    public partial class ItemAttributes : BaseItemAttributes
     {
         private BicepValue<DateTimeOffset> _expires;
         private BicepValue<string> _displayName;

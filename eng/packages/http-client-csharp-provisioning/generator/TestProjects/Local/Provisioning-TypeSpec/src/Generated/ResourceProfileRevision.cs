@@ -65,7 +65,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         }
 
         /// <summary> Gets the Properties. </summary>
-        public ResourceProfileRevisionProperties Properties
+        internal ResourceProfileRevisionProperties Properties
         {
             get
             {
@@ -86,6 +86,15 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             {
                 Initialize();
                 _parent.Value = value;
+            }
+        }
+
+        /// <summary> Gets the Description. </summary>
+        public BicepValue<string> ResourceProfileRevisionDescription
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
             }
         }
 

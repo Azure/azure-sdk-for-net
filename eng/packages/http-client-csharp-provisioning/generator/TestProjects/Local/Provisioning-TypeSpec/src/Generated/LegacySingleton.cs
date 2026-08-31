@@ -59,7 +59,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        public LegacySingletonProperties Properties
+        internal LegacySingletonProperties Properties
         {
             get
             {
@@ -70,6 +70,23 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             {
                 Initialize();
                 AssignOrReplace(ref _properties, value);
+            }
+        }
+
+        /// <summary> Gets or sets the Enabled. </summary>
+        public BicepValue<bool> LegacySingletonEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Enabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LegacySingletonProperties();
+                }
+                Properties.Enabled = value;
             }
         }
 

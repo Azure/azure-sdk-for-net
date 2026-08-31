@@ -64,7 +64,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        public ExtensionAssignmentProperties Properties
+        internal ExtensionAssignmentProperties Properties
         {
             get
             {
@@ -90,6 +90,23 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             {
                 Initialize();
                 _scope.Value = value;
+            }
+        }
+
+        /// <summary> Gets or sets the DisplayName. </summary>
+        public BicepValue<string> ExtensionAssignmentDisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExtensionAssignmentProperties();
+                }
+                Properties.DisplayName = value;
             }
         }
 

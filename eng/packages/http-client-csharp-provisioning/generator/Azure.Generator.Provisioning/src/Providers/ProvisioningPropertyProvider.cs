@@ -47,13 +47,14 @@ namespace Azure.Generator.Provisioning.Providers
             string name,
             MethodPropertyBody body,
             TypeProvider enclosingType,
+            PropertyWireInformation? wireInfo,
             string[] bicepPath,
             bool isOutput,
             bool isSettable,
             bool isRequired,
             string? defaultValue,
             string? format)
-            : base(null, MethodSignatureModifiers.Public, type, name, body, enclosingType)
+            : base(null, MethodSignatureModifiers.Public, type, name, body, enclosingType, wireInfo: wireInfo)
         {
             InputProperty = inputProperty;
             BackingField = backingField;
@@ -76,6 +77,7 @@ namespace Azure.Generator.Provisioning.Providers
             bool isOutput,
             bool isSettable,
             bool isRequired,
+            PropertyWireInformation? wireInfo,
             string[] bicepPath,
             string? defaultValue,
             string? format,
@@ -119,7 +121,7 @@ namespace Azure.Generator.Provisioning.Providers
 
             return new ProvisioningPropertyProvider(
                 inputProperty, field, bicepType, resolvedName, body, enclosingType,
-                bicepPath, isOutput, isSettable, isRequired, defaultValue, format);
+                wireInfo, bicepPath, isOutput, isSettable, isRequired, defaultValue, format);
         }
     }
 }

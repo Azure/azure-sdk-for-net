@@ -60,7 +60,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        public SingletonSettingProperties Properties
+        internal SingletonSettingProperties Properties
         {
             get
             {
@@ -86,6 +86,23 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             {
                 Initialize();
                 _parent.Value = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Enabled. </summary>
+        public BicepValue<bool> SingletonSettingEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Enabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SingletonSettingProperties();
+                }
+                Properties.Enabled = value;
             }
         }
 

@@ -75,7 +75,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         }
 
         /// <summary> Gets or sets the Sku. </summary>
-        public ConfigurationStoreSku Sku
+        internal ConfigurationStoreSku Sku
         {
             get
             {
@@ -371,6 +371,23 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             {
                 Initialize();
                 _jsonMetadata.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the Name. </summary>
+        public BicepValue<string> SkuName
+        {
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                if (Sku is null)
+                {
+                    Sku = new ConfigurationStoreSku();
+                }
+                Sku.Name = value;
             }
         }
 

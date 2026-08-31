@@ -64,7 +64,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        public OrphanedSingletonProperties Properties
+        internal OrphanedSingletonProperties Properties
         {
             get
             {
@@ -75,6 +75,23 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             {
                 Initialize();
                 AssignOrReplace(ref _properties, value);
+            }
+        }
+
+        /// <summary> Gets or sets the Enabled. </summary>
+        public BicepValue<bool> OrphanedSingletonEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Enabled;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new OrphanedSingletonProperties();
+                }
+                Properties.Enabled = value;
             }
         }
 
