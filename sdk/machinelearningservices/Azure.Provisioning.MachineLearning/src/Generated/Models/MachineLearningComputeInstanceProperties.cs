@@ -406,7 +406,7 @@ namespace Azure.Provisioning.MachineLearning
         {
             get
             {
-                return Versions is null ? default : Versions.Runtime;
+                return Versions.Runtime;
             }
         }
 

@@ -19,7 +19,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            WebhookType.Assign("AzureDevOps");
+            DefineProperty<string>("webhookType", new string[] { "webhookType" }, defaultValue: "AzureDevOps");
             DefineAdditionalProperties();
         }
 

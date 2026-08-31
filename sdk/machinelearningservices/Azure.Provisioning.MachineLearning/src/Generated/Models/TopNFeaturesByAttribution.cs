@@ -38,7 +38,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            FilterType.Assign("TopNByAttribution");
+            DefineProperty<string>("filterType", new string[] { "filterType" }, defaultValue: "TopNByAttribution");
             _top = DefineProperty<int>(nameof(Top), new string[] { "top" });
             DefineAdditionalProperties();
         }

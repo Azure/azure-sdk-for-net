@@ -18,7 +18,6 @@ namespace Azure.Provisioning.MachineLearning
         private BicepValue<bool> _appInsightsEnabled;
         private DataCollector _dataCollector;
         private BicepValue<MachineLearningEgressPublicNetworkAccessType> _egressPublicNetworkAccess;
-        private BicepValue<string> _endpointComputeType;
         private BicepValue<string> _instanceType;
         private MachineLearningProbeSettings _livenessProbe;
         private BicepValue<string> _model;
@@ -76,16 +75,6 @@ namespace Azure.Provisioning.MachineLearning
             {
                 Initialize();
                 _egressPublicNetworkAccess.Assign(value);
-            }
-        }
-
-        /// <summary> [Required] The compute type of the endpoint. </summary>
-        internal BicepValue<string> EndpointComputeType
-        {
-            get
-            {
-                Initialize();
-                return _endpointComputeType;
             }
         }
 
@@ -226,7 +215,6 @@ namespace Azure.Provisioning.MachineLearning
             _appInsightsEnabled = DefineProperty<bool>(nameof(AppInsightsEnabled), new string[] { "appInsightsEnabled" });
             _dataCollector = DefineModelProperty<DataCollector>(nameof(DataCollector), new string[] { "dataCollector" });
             _egressPublicNetworkAccess = DefineProperty<MachineLearningEgressPublicNetworkAccessType>(nameof(EgressPublicNetworkAccess), new string[] { "egressPublicNetworkAccess" });
-            _endpointComputeType = DefineProperty<string>(nameof(EndpointComputeType), new string[] { "endpointComputeType" }, isRequired: true);
             _instanceType = DefineProperty<string>(nameof(InstanceType), new string[] { "instanceType" });
             _livenessProbe = DefineModelProperty<MachineLearningProbeSettings>(nameof(LivenessProbe), new string[] { "livenessProbe" });
             _model = DefineProperty<string>(nameof(Model), new string[] { "model" });

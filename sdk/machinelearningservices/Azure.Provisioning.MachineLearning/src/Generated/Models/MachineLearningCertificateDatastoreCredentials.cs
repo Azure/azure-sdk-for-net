@@ -71,7 +71,7 @@ namespace Azure.Provisioning.MachineLearning
         }
 
         /// <summary> Gets or sets the Secrets. </summary>
-        public MachineLearningCertificateDatastoreSecrets Secrets
+        internal MachineLearningCertificateDatastoreSecrets Secrets
         {
             get
             {
@@ -115,11 +115,28 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
+        /// <summary> Gets or sets the Certificate. </summary>
+        public BicepValue<string> SecretsCertificate
+        {
+            get
+            {
+                return Secrets is null ? default : Secrets.Certificate;
+            }
+            set
+            {
+                if (Secrets is null)
+                {
+                    Secrets = new MachineLearningCertificateDatastoreSecrets();
+                }
+                Secrets.Certificate = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for MachineLearningCertificateDatastoreCredentials. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            CredentialsType.Assign("Certificate");
+            DefineProperty<string>("credentialsType", new string[] { "credentialsType" }, defaultValue: "Certificate");
             _authorityUri = DefineProperty<Uri>(nameof(AuthorityUri), new string[] { "authorityUrl" });
             _clientId = DefineProperty<Guid>(nameof(ClientId), new string[] { "clientId" }, isRequired: true);
             _resourceUri = DefineProperty<Uri>(nameof(ResourceUri), new string[] { "resourceUrl" });

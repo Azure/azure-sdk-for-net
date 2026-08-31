@@ -19,7 +19,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            ComputeIdentityType.Assign("AmlToken");
+            DefineProperty<string>("computeIdentityType", new string[] { "computeIdentityType" }, defaultValue: "AmlToken");
             DefineAdditionalProperties();
         }
 

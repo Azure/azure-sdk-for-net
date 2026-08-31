@@ -54,7 +54,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            Type.Assign("PrivateEndpoint");
+            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "PrivateEndpoint");
             _destination = DefineModelProperty<PrivateEndpointDestination>(nameof(Destination), new string[] { "destination" });
             _fqdns = DefineListProperty<string>(nameof(Fqdns), new string[] { "fqdns" });
             DefineAdditionalProperties();

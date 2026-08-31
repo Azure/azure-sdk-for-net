@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using Azure.Provisioning;
+
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary> SAS datastore credentials configuration. </summary>
@@ -18,7 +20,7 @@ namespace Azure.Provisioning.MachineLearning
         }
 
         /// <summary> Gets or sets the Secrets. </summary>
-        public MachineLearningSasDatastoreSecrets Secrets
+        internal MachineLearningSasDatastoreSecrets Secrets
         {
             get
             {
@@ -32,11 +34,28 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
+        /// <summary> Gets or sets the SasToken. </summary>
+        public BicepValue<string> SecretsSasToken
+        {
+            get
+            {
+                return Secrets is null ? default : Secrets.SasToken;
+            }
+            set
+            {
+                if (Secrets is null)
+                {
+                    Secrets = new MachineLearningSasDatastoreSecrets();
+                }
+                Secrets.SasToken = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for MachineLearningSasDatastoreCredentials. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            CredentialsType.Assign("Sas");
+            DefineProperty<string>("credentialsType", new string[] { "credentialsType" }, defaultValue: "Sas");
             _secrets = DefineModelProperty<MachineLearningSasDatastoreSecrets>(nameof(Secrets), new string[] { "secrets" }, isRequired: true);
             DefineAdditionalProperties();
         }

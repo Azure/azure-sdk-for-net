@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
@@ -17,28 +16,15 @@ namespace Azure.Provisioning.MachineLearning
     /// </summary>
     public partial class SamplingAlgorithm : ProvisionableConstruct
     {
-        private BicepValue<string> _samplingAlgorithmType;
-
         /// <summary> Creates a new SamplingAlgorithm. </summary>
         public SamplingAlgorithm()
         {
-        }
-
-        /// <summary> [Required] The algorithm used for generating hyperparameter values, along with configuration properties. </summary>
-        internal BicepValue<string> SamplingAlgorithmType
-        {
-            get
-            {
-                Initialize();
-                return _samplingAlgorithmType;
-            }
         }
 
         /// <summary> Define all the provisionable properties for SamplingAlgorithm. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _samplingAlgorithmType = DefineProperty<string>(nameof(SamplingAlgorithmType), new string[] { "samplingAlgorithmType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

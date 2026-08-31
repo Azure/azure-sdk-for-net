@@ -19,7 +19,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            SamplingAlgorithmType.Assign("Bayesian");
+            DefineProperty<string>("samplingAlgorithmType", new string[] { "samplingAlgorithmType" }, defaultValue: "Bayesian");
             DefineAdditionalProperties();
         }
 

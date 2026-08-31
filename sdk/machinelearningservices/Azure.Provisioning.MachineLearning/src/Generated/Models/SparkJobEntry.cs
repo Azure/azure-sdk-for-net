@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
@@ -16,28 +15,15 @@ namespace Azure.Provisioning.MachineLearning
     /// </summary>
     public partial class SparkJobEntry : ProvisionableConstruct
     {
-        private BicepValue<string> _sparkJobEntryType;
-
         /// <summary> Creates a new SparkJobEntry. </summary>
         public SparkJobEntry()
         {
-        }
-
-        /// <summary> [Required] Type of the job's entry point. </summary>
-        internal BicepValue<string> SparkJobEntryType
-        {
-            get
-            {
-                Initialize();
-                return _sparkJobEntryType;
-            }
         }
 
         /// <summary> Define all the provisionable properties for SparkJobEntry. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _sparkJobEntryType = DefineProperty<string>(nameof(SparkJobEntryType), new string[] { "sparkJobEntryType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

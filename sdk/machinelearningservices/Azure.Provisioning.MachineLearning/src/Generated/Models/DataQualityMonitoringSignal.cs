@@ -118,7 +118,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            SignalType.Assign("DataQuality");
+            DefineProperty<string>("signalType", new string[] { "signalType" }, defaultValue: "DataQuality");
             _featureDataTypeOverride = DefineDictionaryProperty<MonitoringFeatureDataType>(nameof(FeatureDataTypeOverride), new string[] { "featureDataTypeOverride" });
             _featureImportanceSettings = DefineModelProperty<FeatureImportanceSettings>(nameof(FeatureImportanceSettings), new string[] { "featureImportanceSettings" });
             _features = DefineModelProperty<MonitoringFeatureFilterBase>(nameof(Features), new string[] { "features" });

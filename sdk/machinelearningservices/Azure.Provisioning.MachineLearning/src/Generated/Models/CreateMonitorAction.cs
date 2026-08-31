@@ -36,7 +36,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            ActionType.Assign("CreateMonitor");
+            DefineProperty<string>("actionType", new string[] { "actionType" }, defaultValue: "CreateMonitor");
             _monitorDefinition = DefineModelProperty<MonitorDefinition>(nameof(MonitorDefinition), new string[] { "monitorDefinition" }, isRequired: true);
             DefineAdditionalProperties();
         }

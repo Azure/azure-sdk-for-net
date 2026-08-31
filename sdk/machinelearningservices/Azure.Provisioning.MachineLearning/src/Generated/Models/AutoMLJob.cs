@@ -139,7 +139,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            JobType.Assign("AutoML");
+            DefineProperty<string>("jobType", new string[] { "jobType" }, defaultValue: "AutoML");
             _environmentId = DefineProperty<string>(nameof(EnvironmentId), new string[] { "environmentId" });
             _environmentVariables = DefineDictionaryProperty<string>(nameof(EnvironmentVariables), new string[] { "environmentVariables" });
             _outputs = DefineDictionaryProperty<MachineLearningJobOutput>(nameof(Outputs), new string[] { "outputs" });

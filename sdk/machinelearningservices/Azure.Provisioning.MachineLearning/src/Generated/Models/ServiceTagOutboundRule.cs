@@ -36,7 +36,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            Type.Assign("ServiceTag");
+            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "ServiceTag");
             _destination = DefineModelProperty<ServiceTagDestination>(nameof(Destination), new string[] { "destination" });
             DefineAdditionalProperties();
         }

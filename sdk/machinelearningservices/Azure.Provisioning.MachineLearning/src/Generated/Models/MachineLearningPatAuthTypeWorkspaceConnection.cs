@@ -55,7 +55,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            AuthType.Assign("PAT");
+            DefineProperty<string>("authType", new string[] { "authType" }, defaultValue: "PAT");
             _credentials = DefineModelProperty<WorkspaceConnectionPersonalAccessToken>(nameof(Credentials), new string[] { "credentials" });
             DefineAdditionalProperties();
         }

@@ -10,7 +10,7 @@ using Azure.Provisioning;
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary> Datastore account key secrets. </summary>
-    public partial class MachineLearningAccountKeyDatastoreSecrets : MachineLearningDatastoreSecrets
+    internal partial class MachineLearningAccountKeyDatastoreSecrets : MachineLearningDatastoreSecrets
     {
         private BicepValue<string> _key;
 
@@ -38,7 +38,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            SecretsType.Assign("AccountKey");
+            DefineProperty<string>("secretsType", new string[] { "secretsType" }, defaultValue: "AccountKey");
             _key = DefineProperty<string>(nameof(Key), new string[] { "key" });
             DefineAdditionalProperties();
         }

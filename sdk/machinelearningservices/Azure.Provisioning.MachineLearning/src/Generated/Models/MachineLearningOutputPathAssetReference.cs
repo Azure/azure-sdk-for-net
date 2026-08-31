@@ -55,7 +55,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            ReferenceType.Assign("OutputPath");
+            DefineProperty<string>("referenceType", new string[] { "referenceType" }, defaultValue: "OutputPath");
             _jobId = DefineProperty<ResourceIdentifier>(nameof(JobId), new string[] { "jobId" });
             _path = DefineProperty<string>(nameof(Path), new string[] { "path" });
             DefineAdditionalProperties();

@@ -8,7 +8,7 @@
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary> The LakeHouseArtifact. </summary>
-    public partial class LakeHouseArtifact : OneLakeArtifact
+    internal partial class LakeHouseArtifact : OneLakeArtifact
     {
         /// <summary> Creates a new LakeHouseArtifact. </summary>
         public LakeHouseArtifact()
@@ -19,7 +19,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            ArtifactType.Assign("LakeHouse");
+            DefineProperty<string>("artifactType", new string[] { "artifactType" }, defaultValue: "LakeHouse");
             DefineAdditionalProperties();
         }
 
