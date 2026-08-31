@@ -198,12 +198,12 @@ namespace Azure.Provisioning.ResourceHealth
             }
         }
 
-        /// <summary> Gets the ImpactStartOn. </summary>
-        public BicepValue<DateTimeOffset> ImpactStartOn
+        /// <summary> Gets the ImpactStartsOn. </summary>
+        public BicepValue<DateTimeOffset> ImpactStartsOn
         {
             get
             {
-                return Properties.ImpactStartOn;
+                return Properties.ImpactStartsOn;
             }
         }
 

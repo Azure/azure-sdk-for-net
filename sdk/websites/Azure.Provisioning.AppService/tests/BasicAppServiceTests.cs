@@ -131,14 +131,14 @@ public class BasicAppServiceTests
 
             resource storage 'Microsoft.Storage/storageAccounts@2024-01-01' = {
               name: take('storage${uniqueString(resourceGroup().id)}', 24)
-              kind: 'Storage'
               location: location
+              kind: 'Storage'
+              properties: {
+                defaultToOAuthAuthentication: true
+                supportsHttpsTrafficOnly: true
+              }
               sku: {
                 name: 'Standard_LRS'
-              }
-              properties: {
-                supportsHttpsTrafficOnly: true
-                defaultToOAuthAuthentication: true
               }
             }
 
@@ -166,9 +166,13 @@ public class BasicAppServiceTests
             resource functionApp 'Microsoft.Web/sites@2023-12-01' = {
               name: funcAppName
               location: location
+              identity: {
+                type: 'SystemAssigned'
+              }
+              kind: 'functionapp'
               properties: {
-                serverFarmId: hostingPlan.id
                 httpsOnly: true
+                serverFarmId: hostingPlan.id
                 siteConfig: {
                   appSettings: [
                     {
@@ -200,14 +204,10 @@ public class BasicAppServiceTests
                       value: appInsights.properties.InstrumentationKey
                     }
                   ]
-                  minTlsVersion: '1.2'
                   ftpsState: 'FtpsOnly'
+                  minTlsVersion: '1.2'
                 }
               }
-              identity: {
-                type: 'SystemAssigned'
-              }
-              kind: 'functionapp'
             }
             """);
     }
