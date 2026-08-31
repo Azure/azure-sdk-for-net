@@ -77,7 +77,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.EventType;
+                return Properties is null ? default : Properties.EventType;
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.EventSubType;
+                return Properties is null ? default : Properties.EventSubType;
             }
         }
 
@@ -95,7 +95,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.EventSource;
+                return Properties is null ? default : Properties.EventSource;
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.Title;
+                return Properties is null ? default : Properties.Title;
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.Summary;
+                return Properties is null ? default : Properties.Summary;
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.Header;
+                return Properties is null ? default : Properties.Header;
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.Level;
+                return Properties is null ? default : Properties.Level;
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.EventLevel;
+                return Properties is null ? default : Properties.EventLevel;
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.IsEventSensitive;
+                return Properties is null ? default : Properties.IsEventSensitive;
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.ExternalIncidentId;
+                return Properties is null ? default : Properties.ExternalIncidentId;
             }
         }
 
@@ -176,7 +176,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.Reason;
+                return Properties is null ? default : Properties.Reason;
             }
         }
 
@@ -185,7 +185,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.Article;
+                return Properties is null ? default : Properties.Article;
             }
         }
 
@@ -194,7 +194,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.Links;
+                return Properties is null ? default : Properties.Links;
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.ImpactStartsOn;
+                return Properties is null ? default : Properties.ImpactStartsOn;
             }
         }
 
@@ -212,7 +212,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.ImpactMitigationOn;
+                return Properties is null ? default : Properties.ImpactMitigationOn;
             }
         }
 
@@ -221,7 +221,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.Impact;
+                return Properties is null ? default : Properties.Impact;
             }
         }
 
@@ -230,7 +230,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.RecommendedActions;
+                return Properties is null ? default : Properties.RecommendedActions;
             }
         }
 
@@ -239,7 +239,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.Faqs;
+                return Properties is null ? default : Properties.Faqs;
             }
         }
 
@@ -248,7 +248,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.IsHirEvent;
+                return Properties is null ? default : Properties.IsHirEvent;
             }
         }
 
@@ -257,7 +257,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.IsMicrosoftSupportEnabled;
+                return Properties is null ? default : Properties.IsMicrosoftSupportEnabled;
             }
         }
 
@@ -266,7 +266,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
@@ -275,7 +275,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.IsPlatformInitiated;
+                return Properties is null ? default : Properties.IsPlatformInitiated;
             }
         }
 
@@ -284,7 +284,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.IsChatWithUsEnabled;
+                return Properties is null ? default : Properties.IsChatWithUsEnabled;
             }
         }
 
@@ -293,7 +293,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.Priority;
+                return Properties is null ? default : Properties.Priority;
             }
         }
 
@@ -302,7 +302,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.LastUpdateOn;
+                return Properties is null ? default : Properties.LastUpdateOn;
             }
         }
 
@@ -311,7 +311,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.HirStage;
+                return Properties is null ? default : Properties.HirStage;
             }
         }
 
@@ -320,7 +320,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.Duration;
+                return Properties is null ? default : Properties.Duration;
             }
         }
 
@@ -329,7 +329,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.ImpactType;
+                return Properties is null ? default : Properties.ImpactType;
             }
         }
 
@@ -338,7 +338,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.EventTags;
+                return Properties is null ? default : Properties.EventTags;
             }
         }
 
@@ -347,7 +347,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.NewRate;
+                return Properties is null ? default : Properties.NewRate;
             }
         }
 
@@ -356,7 +356,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.OldRate;
+                return Properties is null ? default : Properties.OldRate;
             }
         }
 
@@ -365,7 +365,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.CurrencyType;
+                return Properties is null ? default : Properties.CurrencyType;
             }
         }
 
@@ -374,7 +374,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.BillingId;
+                return Properties is null ? default : Properties.BillingId;
             }
         }
 
@@ -383,7 +383,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.AdditionalInformationMessage;
+                return Properties is null ? default : Properties.AdditionalInformationMessage;
             }
         }
 
